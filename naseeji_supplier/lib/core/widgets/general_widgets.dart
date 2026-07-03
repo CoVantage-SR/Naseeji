@@ -86,6 +86,7 @@ class CustomTextField extends StatelessWidget {
   final bool obscureText;
   final IconData? prefixIcon;
   final Widget? suffixIcon;
+  final String? prefixText;
   final bool enabled;
   final int? maxLines;
 
@@ -99,6 +100,7 @@ class CustomTextField extends StatelessWidget {
     this.obscureText = false,
     this.prefixIcon,
     this.suffixIcon,
+    this.prefixText,
     this.enabled = true,
     this.maxLines = 1,
   });
@@ -116,6 +118,7 @@ class CustomTextField extends StatelessWidget {
         labelText: labelText,
         hintText: hintText,
         prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: AppColors.outline) : null,
+        prefixText: prefixText,
         suffixIcon: suffixIcon,
       ),
     );

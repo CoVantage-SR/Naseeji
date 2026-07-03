@@ -22,7 +22,6 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   
-  String? _selectedCountry = 'eg';
   bool _acceptTerms = false;
   bool _obscurePassword = true;
 
@@ -121,33 +120,9 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
       controller: _phoneController,
       labelText: 'رقم الهاتف',
       keyboardType: TextInputType.phone,
+      prefixText: '+20 ',
       validator: (val) {
         if (val == null || val.trim().isEmpty) {
-          return 'مطلوب';
-        }
-        return null;
-      },
-    );
-
-    final countryField = DropdownButtonFormField<String>(
-      initialValue: _selectedCountry,
-      decoration: const InputDecoration(
-        labelText: 'الدولة',
-        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      ),
-      items: const [
-        DropdownMenuItem(value: 'eg', child: Text('جمهورية مصر العربية')),
-        DropdownMenuItem(value: 'sa', child: Text('المملكة العربية السعودية')),
-        DropdownMenuItem(value: 'ae', child: Text('الإمارات العربية المتحدة')),
-        DropdownMenuItem(value: 'kw', child: Text('الكويت')),
-      ],
-      onChanged: (val) {
-        setState(() {
-          _selectedCountry = val;
-        });
-      },
-      validator: (val) {
-        if (val == null) {
           return 'مطلوب';
         }
         return null;
@@ -248,20 +223,8 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
           ],
           const SizedBox(height: 16),
 
-          // Row 3: Country & City
-          if (isMobile) ...[
-            countryField,
-            const SizedBox(height: 16),
-            cityField,
-          ] else ...[
-            Row(
-              children: [
-                Expanded(child: countryField),
-                const SizedBox(width: 16),
-                Expanded(child: cityField),
-              ],
-            ),
-          ],
+          // Row 3: City (Full width)
+          cityField,
           const SizedBox(height: 16),
 
           // Row 4: Passwords
