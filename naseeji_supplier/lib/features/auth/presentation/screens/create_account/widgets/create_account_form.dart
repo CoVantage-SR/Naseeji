@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_final_fields
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -23,8 +21,8 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
   final _cityController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-
-  String? _selectedCountry;
+  
+  String? _selectedCountry = 'eg';
   bool _acceptTerms = false;
   bool _obscurePassword = true;
 
@@ -61,27 +59,19 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
       return;
     }
 
-    // Update details in state
-    ref
-        .read(registrationControllerProvider.notifier)
-        .updateBasicAccount(
+    ref.read(registrationControllerProvider.notifier).updateBasicAccount(
           name: _managerController.text.trim(),
           email: _emailController.text.trim(),
           phone: _phoneController.text.trim(),
           password: _passwordController.text,
         );
 
-    // Call Send OTP
-    final success = await ref
-        .read(registrationControllerProvider.notifier)
-        .sendOtp();
+    final success = await ref.read(registrationControllerProvider.notifier).sendOtp();
     if (mounted) {
       if (success) {
         context.push('/verify-otp');
       } else {
-        final errorMsg =
-            ref.read(registrationControllerProvider).errorMessage ??
-            'حدث خطأ ما';
+        final errorMsg = ref.read(registrationControllerProvider).errorMessage ?? 'حدث خطأ ما';
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(errorMsg), backgroundColor: AppColors.error),
         );
@@ -91,161 +81,205 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 600;
+
+    final companyField = CustomTextField(
+      controller: _companyController,
+      labelText: 'اسم الشركة',
+      validator: (val) {
+        if (val == null || val.trim().isEmpty) {
+          return 'مطلوب';
+        }
+        return null;
+      },
+    );
+
+    final managerField = CustomTextField(
+      controller: _managerController,
+      labelText: 'اسم المسؤول',
+      validator: (val) {
+        if (val == null || val.trim().isEmpty) {
+          return 'مطلوب';
+        }
+        return null;
+      },
+    );
+
+    final emailField = CustomTextField(
+      controller: _emailController,
+      labelText: 'البريد الإلكتروني',
+      keyboardType: TextInputType.emailAddress,
+      validator: (val) {
+        if (val == null || val.trim().isEmpty) {
+          return 'مطلوب';
+        }
+        return null;
+      },
+    );
+
+    final phoneField = CustomTextField(
+      controller: _phoneController,
+      labelText: 'رقم الهاتف',
+      keyboardType: TextInputType.phone,
+      validator: (val) {
+        if (val == null || val.trim().isEmpty) {
+          return 'مطلوب';
+        }
+        return null;
+      },
+    );
+
+    final countryField = DropdownButtonFormField<String>(
+      initialValue: _selectedCountry,
+      decoration: const InputDecoration(
+        labelText: 'الدولة',
+        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      ),
+      items: const [
+        DropdownMenuItem(value: 'eg', child: Text('جمهورية مصر العربية')),
+        DropdownMenuItem(value: 'sa', child: Text('المملكة العربية السعودية')),
+        DropdownMenuItem(value: 'ae', child: Text('الإمارات العربية المتحدة')),
+        DropdownMenuItem(value: 'kw', child: Text('الكويت')),
+      ],
+      onChanged: (val) {
+        setState(() {
+          _selectedCountry = val;
+        });
+      },
+      validator: (val) {
+        if (val == null) {
+          return 'مطلوب';
+        }
+        return null;
+      },
+    );
+
+    final cityField = CustomTextField(
+      controller: _cityController,
+      labelText: 'المدينة',
+      validator: (val) {
+        if (val == null || val.trim().isEmpty) {
+          return 'مطلوب';
+        }
+        return null;
+      },
+    );
+
+    final passwordField = CustomTextField(
+      controller: _passwordController,
+      labelText: 'كلمة المرور',
+      obscureText: _obscurePassword,
+      suffixIcon: IconButton(
+        icon: Icon(
+          _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+          color: AppColors.outline,
+        ),
+        onPressed: () {
+          setState(() {
+            _obscurePassword = !_obscurePassword;
+          });
+        },
+      ),
+      validator: (val) {
+        if (val == null || val.isEmpty) {
+          return 'مطلوب';
+        }
+        return null;
+      },
+    );
+
+    final confirmPasswordField = CustomTextField(
+      controller: _confirmPasswordController,
+      labelText: 'تأكيد كلمة المرور',
+      obscureText: _obscurePassword,
+      suffixIcon: IconButton(
+        icon: Icon(
+          _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+          color: AppColors.outline,
+        ),
+        onPressed: () {
+          setState(() {
+            _obscurePassword = !_obscurePassword;
+          });
+        },
+      ),
+      validator: (val) {
+        if (val == null || val.isEmpty) {
+          return 'مطلوب';
+        }
+        return null;
+      },
+    );
+
     return Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Row: Company Name & Manager Name
-          Row(
-            children: [
-              Expanded(
-                child: CustomTextField(
-                  controller: _companyController,
-                  labelText: 'اسم الشركة',
-                  validator: (val) {
-                    if (val == null || val.trim().isEmpty) {
-                      return 'مطلوب';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: CustomTextField(
-                  controller: _managerController,
-                  labelText: 'اسم المسؤول',
-                  validator: (val) {
-                    if (val == null || val.trim().isEmpty) {
-                      return 'مطلوب';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-            ],
-          ),
+          // Row 1: Company & Manager
+          if (isMobile) ...[
+            companyField,
+            const SizedBox(height: 16),
+            managerField,
+          ] else ...[
+            Row(
+              children: [
+                Expanded(child: companyField),
+                const SizedBox(width: 16),
+                Expanded(child: managerField),
+              ],
+            ),
+          ],
           const SizedBox(height: 16),
-          // Row: Email & Phone
-          Row(
-            children: [
-              Expanded(
-                child: CustomTextField(
-                  controller: _emailController,
-                  labelText: 'البريد الإلكتروني',
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (val) {
-                    if (val == null || val.trim().isEmpty) {
-                      return 'مطلوب';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: CustomTextField(
-                  controller: _phoneController,
-                  labelText: 'رقم الهاتف',
-                  keyboardType: TextInputType.phone,
-                  validator: (val) {
-                    if (val == null || val.trim().isEmpty) {
-                      return 'مطلوب';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-            ],
-          ),
+
+          // Row 2: Email & Phone
+          if (isMobile) ...[
+            emailField,
+            const SizedBox(height: 16),
+            phoneField,
+          ] else ...[
+            Row(
+              children: [
+                Expanded(child: emailField),
+                const SizedBox(width: 16),
+                Expanded(child: phoneField),
+              ],
+            ),
+          ],
           const SizedBox(height: 16),
-          // Row: Country & City
-          Row(
-            children: [
-              Expanded(
-                child: DropdownButtonFormField<String>(
-                  initialValue: _selectedCountry,
-                  decoration: const InputDecoration(
-                    labelText: 'الدولة',
-                    contentPadding: EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 16,
-                    ),
-                  ),
-                  items: const [
-                    DropdownMenuItem(
-                      value: 'sa',
-                      child: Text('المملكة العربية السعودية'),
-                    ),
-                    DropdownMenuItem(
-                      value: 'ae',
-                      child: Text('الإمارات العربية المتحدة'),
-                    ),
-                    DropdownMenuItem(value: 'kw', child: Text('الكويت')),
-                  ],
-                  onChanged: (val) {
-                    setState(() {
-                      _selectedCountry = val;
-                    });
-                  },
-                  validator: (val) {
-                    if (val == null) {
-                      return 'مطلوب';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: CustomTextField(
-                  controller: _cityController,
-                  labelText: 'المدينة',
-                  validator: (val) {
-                    if (val == null || val.trim().isEmpty) {
-                      return 'مطلوب';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-            ],
-          ),
+
+          // Row 3: Country & City
+          if (isMobile) ...[
+            countryField,
+            const SizedBox(height: 16),
+            cityField,
+          ] else ...[
+            Row(
+              children: [
+                Expanded(child: countryField),
+                const SizedBox(width: 16),
+                Expanded(child: cityField),
+              ],
+            ),
+          ],
           const SizedBox(height: 16),
-          // Row: Passwords
-          Row(
-            children: [
-              Expanded(
-                child: CustomTextField(
-                  controller: _passwordController,
-                  labelText: 'كلمة المرور',
-                  obscureText: _obscurePassword,
-                  validator: (val) {
-                    if (val == null || val.isEmpty) {
-                      return 'مطلوب';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: CustomTextField(
-                  controller: _confirmPasswordController,
-                  labelText: 'تأكيد كلمة المرور',
-                  obscureText: _obscurePassword,
-                  validator: (val) {
-                    if (val == null || val.isEmpty) {
-                      return 'مطلوب';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-            ],
-          ),
+
+          // Row 4: Passwords
+          if (isMobile) ...[
+            passwordField,
+            const SizedBox(height: 16),
+            confirmPasswordField,
+          ] else ...[
+            Row(
+              children: [
+                Expanded(child: passwordField),
+                const SizedBox(width: 16),
+                Expanded(child: confirmPasswordField),
+              ],
+            ),
+          ],
           const SizedBox(height: 16),
+
           // Terms Checkbox
           Row(
             children: [
@@ -261,15 +295,13 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
               const Expanded(
                 child: Text(
                   'أوافق على الشروط والأحكام وسياسة الخصوصية.',
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: AppColors.onSurfaceVariant,
-                  ),
+                  style: TextStyle(fontSize: 13, color: AppColors.onSurfaceVariant),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 24),
+
           // Action Button
           PrimaryButton(
             text: 'إنشاء حساب',
@@ -277,6 +309,7 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
             suffixIcon: Icons.arrow_back,
           ),
           const SizedBox(height: 16),
+
           // Divider
           const Row(
             children: [
@@ -292,6 +325,7 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
             ],
           ),
           const SizedBox(height: 16),
+
           // Social Buttons
           Row(
             children: [
@@ -305,11 +339,7 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
                     ),
                     side: const BorderSide(color: AppColors.outlineVariant),
                   ),
-                  icon: const Icon(
-                    Icons.apple,
-                    color: AppColors.onSurface,
-                    size: 20,
-                  ),
+                  icon: const Icon(Icons.apple, color: AppColors.onSurface, size: 20),
                   label: const Text(
                     'Apple',
                     style: TextStyle(color: AppColors.onSurfaceVariant),
@@ -327,11 +357,7 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
                     ),
                     side: const BorderSide(color: AppColors.outlineVariant),
                   ),
-                  icon: const Icon(
-                    Icons.g_mobiledata_rounded,
-                    color: Colors.red,
-                    size: 24,
-                  ),
+                  icon: const Icon(Icons.g_mobiledata_rounded, color: Colors.red, size: 24),
                   label: const Text(
                     'Google',
                     style: TextStyle(color: AppColors.onSurfaceVariant),
