@@ -114,11 +114,11 @@ class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistratio
               ),
               const SizedBox(height: 24),
               PrimaryButton(
-                text: 'تسجيل الدخول',
+                text: 'الانتقال للرئيسية',
                 onPressed: () {
                   Navigator.of(context).pop();
                   ref.read(registrationControllerProvider.notifier).resetSuccess();
-                  context.go('/login');
+                  context.go('/home');
                 },
               ),
             ],

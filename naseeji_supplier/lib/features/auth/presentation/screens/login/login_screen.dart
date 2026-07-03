@@ -105,6 +105,7 @@ class LoginScreen extends ConsumerWidget {
             ),
           ),
         );
+        context.go('/home');
       }
     });
 

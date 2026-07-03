@@ -8,6 +8,11 @@ import '../../features/auth/presentation/screens/login/login_screen.dart';
 import '../../features/auth/presentation/screens/create_account/create_account_screen.dart';
 import '../../features/auth/presentation/screens/otp_verification/otp_verification_screen.dart';
 import '../../features/auth/presentation/screens/supplier_registration/supplier_registration_screen.dart';
+import '../../features/dashboard/presentation/screens/home/home_screen.dart';
+import '../../features/dashboard/presentation/screens/analytics/analytics_screen.dart';
+import '../../features/notifications/presentation/screens/notifications_center_screen.dart';
+import '../../features/search/presentation/screens/global_search_screen.dart';
+import '../../features/profile/presentation/screens/supplier_profile_screen.dart';
 
 part 'app_router.g.dart';
 
@@ -51,6 +56,31 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/supplier-registration',
         name: 'supplier-registration',
         builder: (context, state) => const SupplierRegistrationScreen(),
+      ),
+      GoRoute(
+        path: '/home',
+        name: 'home',
+        builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: '/analytics',
+        name: 'analytics',
+        builder: (context, state) => const AnalyticsScreen(),
+      ),
+      GoRoute(
+        path: '/notifications',
+        name: 'notifications',
+        builder: (context, state) => const NotificationsCenterScreen(),
+      ),
+      GoRoute(
+        path: '/search',
+        name: 'search',
+        builder: (context, state) => const GlobalSearchScreen(),
+      ),
+      GoRoute(
+        path: '/profile',
+        name: 'profile',
+        builder: (context, state) => const SupplierProfileScreen(),
       ),
     ],
   );
