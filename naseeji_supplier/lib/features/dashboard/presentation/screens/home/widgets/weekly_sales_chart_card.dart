@@ -1,0 +1,141 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import 'line_chart_painter.dart';
+
+class WeeklySalesChartCard extends StatelessWidget {
+  final List<double> weeklySales;
+
+  const WeeklySalesChartCard({super.key, required this.weeklySales});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: AppColors.outlineVariant.withValues(
+            alpha: 0.3,
+          ),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.02),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'تحليل المبيعات الأسبوعي',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.onSurface,
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                  vertical: 4,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.surfaceContainerLow,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: const [
+                    Text(
+                      'آخر 7 أيام',
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: AppColors.onSurfaceVariant,
+                      ),
+                    ),
+                    SizedBox(width: 4),
+                    Icon(
+                      Icons.expand_more,
+                      size: 14,
+                      color: AppColors.onSurfaceVariant,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            height: 120,
+            width: double.infinity,
+            child: CustomPaint(
+              painter: LineChartPainter(weeklySales),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text(
+                'السبت',
+                style: TextStyle(
+                  fontSize: 9,
+                  color: AppColors.outline,
+                ),
+              ),
+              Text(
+                'الأحد',
+                style: TextStyle(
+                  fontSize: 9,
+                  color: AppColors.outline,
+                ),
+              ),
+              Text(
+                'الاثنين',
+                style: TextStyle(
+                  fontSize: 9,
+                  color: AppColors.outline,
+                ),
+              ),
+              Text(
+                'الثلاثاء',
+                style: TextStyle(
+                  fontSize: 9,
+                  color: AppColors.outline,
+                ),
+              ),
+              Text(
+                'الأربعاء',
+                style: TextStyle(
+                  fontSize: 9,
+                  color: AppColors.outline,
+                ),
+              ),
+              Text(
+                'الخميس',
+                style: TextStyle(
+                  fontSize: 9,
+                  color: AppColors.outline,
+                ),
+              ),
+              Text(
+                'الجمعة',
+                style: TextStyle(
+                  fontSize: 9,
+                  color: AppColors.outline,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}

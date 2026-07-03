@@ -39,8 +39,8 @@ class LoginScreen extends ConsumerWidget {
             backgroundColor: Colors.transparent,
             elevation: 0,
             duration: const Duration(seconds: 4),
-            margin: EdgeInsets.only(
-              bottom: MediaQuery.of(context).size.height - 180,
+            margin: const EdgeInsets.only(
+              bottom: 100,
               left: 16,
               right: 16,
             ),
