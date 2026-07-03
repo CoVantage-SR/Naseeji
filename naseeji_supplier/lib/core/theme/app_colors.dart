@@ -22,5 +22,8 @@ class AppColors {
   static const outlineVariant = Color(0xFFC4C5D9);
   
   static const surfaceContainerLow = Color(0xFFF3F2FF);
+  static const surfaceContainerHigh = Color(0xFFE7E7F4);
   static const surfaceContainerHighest = Color(0xFFE2E1EF);
+  
+  static const tertiary = Color(0xFF993100);
 }
