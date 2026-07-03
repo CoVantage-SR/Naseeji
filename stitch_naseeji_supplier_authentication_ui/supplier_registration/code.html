@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Naseeji - التحقق من النشاط التجاري</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&amp;family=IBM+Plex+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'IBM Plex Sans Arabic', 'IBM Plex Sans', sans-serif;
+            background-color: #fbf8ff;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .step-active {
+            box-shadow: 0 0 0 4px rgba(0, 64, 224, 0.1);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#005047",
+                        "surface-container-low": "#f3f2ff",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#124af0",
+                        "primary-container": "#2e5bff",
+                        "secondary-fixed": "#72f8e4",
+                        "primary-fixed": "#dde1ff",
+                        "surface-container-high": "#e7e7f4",
+                        "on-secondary-container": "#007165",
+                        "surface-dim": "#d9d9e6",
+                        "on-surface": "#191b24",
+                        "tertiary": "#993100",
+                        "background": "#fbf8ff",
+                        "on-primary-fixed": "#001356",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#c4c5d9",
+                        "tertiary-container": "#c24100",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#0035be",
+                        "secondary": "#006b5f",
+                        "secondary-fixed-dim": "#51dbc8",
+                        "on-secondary-fixed": "#00201c",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-container": "#ffece6",
+                        "on-surface-variant": "#434656",
+                        "surface-container-highest": "#e2e1ef",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#747688",
+                        "on-tertiary-fixed": "#380d00",
+                        "surface-bright": "#fbf8ff",
+                        "surface": "#fbf8ff",
+                        "inverse-on-surface": "#f0effd",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed": "#ffdbcf",
+                        "primary": "#0040e0",
+                        "on-primary-container": "#efefff",
+                        "tertiary-fixed-dim": "#ffb59b",
+                        "surface-variant": "#e2e1ef",
+                        "secondary-container": "#72f8e4",
+                        "inverse-surface": "#2e303a",
+                        "error": "#ba1a1a",
+                        "on-background": "#191b24",
+                        "surface-container": "#ededfa",
+                        "inverse-primary": "#b8c3ff",
+                        "on-tertiary-fixed-variant": "#812800",
+                        "on-primary": "#ffffff",
+                        "primary-fixed-dim": "#b8c3ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "gutter": "24px",
+                        "margin-desktop": "32px",
+                        "unit": "4px",
+                        "max-width": "1440px"
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background min-h-screen pb-12 overflow-x-hidden">
+<!-- Top Navigation Suppression: Not shown for transactional flow -->
+<header class="w-full h-16 flex items-center justify-between px-margin-mobile md:px-margin-desktop sticky top-0 z-50 bg-surface/80 backdrop-blur-md">
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors active:scale-95">
+<span class="material-symbols-outlined text-on-surface-variant">arrow_forward</span>
+</button>
+<h1 class="font-bold text-headline-md text-primary">Naseeji</h1>
+</div>
+<div class="hidden md:flex items-center gap-4 text-on-surface-variant font-label-lg">
+<span>مساعدة؟</span>
+</div>
+</header>
+<main class="max-w-4xl mx-auto px-margin-mobile md:px-margin-desktop pt-8">
+<!-- Stepper & Header -->
+<div class="mb-8 text-center md:text-right">
+<p class="text-primary font-label-lg mb-2">الخطوة 1 من 3</p>
+<h2 class="text-3xl font-bold text-on-surface mb-4">التحقق من النشاط التجاري</h2>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-primary w-1/3 h-full rounded-full transition-all duration-500"></div>
+</div>
+</div>
+<!-- Form Layout: Asymmetric Bento Style -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Information Fields -->
+<div class="md:col-span-8 space-y-6">
+<section class="bg-surface-container-lowest p-6 rounded-3xl shadow-sm border border-outline-variant/30">
+<h3 class="text-title-md text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">business_center</span>
+                        المعلومات الأساسية
+                    </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="flex flex-col gap-1.5">
+<label class="text-label-sm text-on-surface-variant px-1">اسم النشاط التجاري</label>
+<input class="w-full h-12 px-4 rounded-xl border-outline-variant bg-surface focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="أدخل اسم الشركة أو المصنع" type="text"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-label-sm text-on-surface-variant px-1">نوع النشاط</label>
+<select class="w-full h-12 px-4 rounded-xl border-outline-variant bg-surface focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+<option>تصنيع أقمشة</option>
+<option>توريد مواد خام</option>
+<option>تجهيز وصبغ</option>
+<option>إكسسوارات ملابس</option>
+</select>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-label-sm text-on-surface-variant px-1">سنوات الخبرة</label>
+<input class="w-full h-12 px-4 rounded-xl border-outline-variant bg-surface focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="مثال: 10" type="number"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-label-sm text-on-surface-variant px-1">عدد الموظفين</label>
+<input class="w-full h-12 px-4 rounded-xl border-outline-variant bg-surface focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="مثال: 50-100" type="text"/>
+</div>
+</div>
+</section>
+<section class="bg-surface-container-lowest p-6 rounded-3xl shadow-sm border border-outline-variant/30">
+<h3 class="text-title-md text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">description</span>
+                        الوثائق القانونية
+                    </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="flex flex-col gap-1.5">
+<label class="text-label-sm text-on-surface-variant px-1">السجل التجاري</label>
+<input class="w-full h-12 px-4 rounded-xl border-outline-variant bg-surface focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="رقم السجل التجاري الموحد" type="text"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-label-sm text-on-surface-variant px-1">رقم البطاقة الضريبية</label>
+<input class="w-full h-12 px-4 rounded-xl border-outline-variant bg-surface focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="000-000-000" type="text"/>
+</div>
+</div>
+<!-- Location Picker -->
+<div class="mt-8">
+<label class="text-label-sm text-on-surface-variant block mb-3 px-1">موقع المنشأة على الخريطة</label>
+<button class="w-full h-32 rounded-2xl border-2 border-dashed border-outline-variant hover:border-primary hover:bg-primary-container/5 transition-all group flex flex-col items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 opacity-10 bg-cover bg-center" data-alt="A stylized aerial vector map of an industrial zone with clean minimalist lines and soft blue tones, representing a modern logistics hub location picker interface." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC3owhGPgg8Ey5cnJ9aF1gs5qcFtr0bU6-fbDGFrI5DpR4cdSxIM_9pgi2nMehcnPrG_Ckbqn5nK5saA4HByf5ksDGBV2jgZ5BNEvUohPu7gPH6OyS0XCbK9iSRLWrOjL0Fzk-CyzFJebXuZPdEQMP3uue21nDU1Z437MJXNLWAlYl_vmAanuuZc_fOygikniyEo8uH9PYjmgIPZ4j8MuUftE1YdoGp4DcnXARp2zSXkMLrZz-obuN-BQRixXQ5uBAm2XHjlNqhDyo')"></div>
+<span class="material-symbols-outlined text-4xl text-outline group-hover:text-primary mb-2">location_on</span>
+<span class="text-label-lg text-on-surface-variant group-hover:text-primary">تحديد الموقع الجغرافي</span>
+</button>
+</div>
+</section>
+</div>
+<!-- Uploads Sidebar -->
+<div class="md:col-span-4 space-y-4">
+<div class="bg-surface-container-high/40 p-5 rounded-3xl border border-outline-variant/20 h-full">
+<h3 class="text-label-lg text-on-surface mb-4">المرفقات المطلوبة</h3>
+<div class="space-y-4">
+<!-- Profile/Logo Upload -->
+<div class="group relative flex flex-col items-center p-4 bg-surface rounded-2xl border-2 border-dashed border-outline-variant hover:border-primary transition-all cursor-pointer">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mb-2 overflow-hidden border border-outline-variant/30">
+<span class="material-symbols-outlined text-outline group-hover:text-primary">add_a_photo</span>
+</div>
+<span class="text-label-sm text-on-surface-variant">رفع شعار الشركة</span>
+</div>
+<!-- Document Uploads -->
+<div class="grid grid-cols-1 gap-3">
+<div class="p-4 bg-surface rounded-2xl border-2 border-dashed border-outline-variant hover:border-primary hover:shadow-md transition-all cursor-pointer flex items-center gap-3">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">upload_file</span>
+<div class="flex flex-col">
+<span class="text-label-sm text-on-surface">صورة السجل التجاري</span>
+<span class="text-[10px] text-outline">PDF, JPG (Max 5MB)</span>
+</div>
+</div>
+<div class="p-4 bg-surface rounded-2xl border-2 border-dashed border-outline-variant hover:border-primary hover:shadow-md transition-all cursor-pointer flex items-center gap-3">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">upload_file</span>
+<div class="flex flex-col">
+<span class="text-label-sm text-on-surface">البطاقة الضريبية</span>
+<span class="text-[10px] text-outline">PDF, JPG (Max 5MB)</span>
+</div>
+</div>
+<div class="p-4 bg-surface rounded-2xl border-2 border-dashed border-outline-variant hover:border-primary hover:shadow-md transition-all cursor-pointer flex flex-col gap-2">
+<div class="w-full h-24 bg-surface-container rounded-xl overflow-hidden relative">
+<div class="absolute inset-0 bg-cover bg-center opacity-40" data-alt="A professional high-end photograph of a modern textile factory floor with organized machinery, soft industrial lighting, and a clean, efficient atmosphere, representing a corporate facility image." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuApeETnc3sHlPDxyXdzyjCHWV2Cy3WdQ_rPYQs3x14rco_iyyBH9sXHdLDuIw5M4QpZnV_gu0wcMYWYc03av_3qbhii4inT514xbamoYP3ifdPw7AZQW77kSQWnTAEYZvQiw3UXCvsAy1DGePXeVTbTreCsKTdIjTOD2k2QDkOcyz0HnXMqYehxgGpy_QQE6MeHDBcIvky3sWtHlTVkgRmW56fc1EM-Gob4v6LzhhArMdwWb3beCXl70TeAMwUTR9KLogzL-aiEj1k')"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant">add_photo_alternate</span>
+</div>
+</div>
+<span class="text-label-sm text-center text-on-surface-variant">صورة المصنع / المنشأة</span>
+</div>
+</div>
+</div>
+<div class="mt-6 p-4 bg-primary-container/10 rounded-2xl border border-primary/20">
+<div class="flex gap-2 mb-1">
+<span class="material-symbols-outlined text-primary text-sm">info</span>
+<span class="text-label-sm text-on-primary-fixed-variant">لماذا نحتاج هذه البيانات؟</span>
+</div>
+<p class="text-[11px] text-on-surface-variant leading-relaxed">
+                            نلتزم بأعلى معايير الأمان والتحقق لضمان جودة الموردين وحماية العمليات التجارية بين المصانع والشركاء في نسيجي.
+                        </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Bar -->
+<div class="mt-10 flex flex-col md:flex-row-reverse items-center justify-between gap-4">
+<button class="w-full md:w-64 h-14 bg-primary hover:bg-primary-container text-white font-bold rounded-2xl shadow-lg shadow-primary/20 transition-all active:scale-95 flex items-center justify-center gap-2">
+<span>التالي</span>
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors font-label-lg">
+                إلغاء التسجيل
+            </button>
+</div>
+</main>
+<!-- Background Decorative Elements -->
+<div class="fixed top-0 right-0 -z-10 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full translate-x-1/2 -translate-y-1/2"></div>
+<div class="fixed bottom-0 left-0 -z-10 w-[300px] h-[300px] bg-secondary/5 blur-[100px] rounded-full -translate-x-1/2 translate-y-1/2"></div>
+<script>
+        // Micro-interactions for form fields
+        document.querySelectorAll('input, select').forEach(el => {
+            el.addEventListener('focus', () => {
+                el.parentElement.classList.add('scale-[1.01]');
+            });
+            el.addEventListener('blur', () => {
+                el.parentElement.classList.remove('scale-[1.01]');
+            });
+        });
+
+        // Simple button active states for mobile
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('touchstart', () => btn.classList.add('opacity-80'));
+            btn.addEventListener('touchend', () => btn.classList.remove('opacity-80'));
+        });
+    </script>
+</body></html>
