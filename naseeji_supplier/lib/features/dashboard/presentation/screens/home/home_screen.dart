@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
-import '../../controllers/dashboard_controller.dart';
+import 'package:naseeji_supplier/features/dashboard/presentation/controllers/dashboard_controller.dart';
 import '../drawer/navigation_drawer_view.dart';
+import 'widgets/line_chart_painter.dart';
+import 'widgets/quick_action_card.dart';
+import 'widgets/stat_card.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -34,7 +37,7 @@ class HomeScreen extends ConsumerWidget {
               ),
             ),
             const SizedBox(width: 4),
-            Icon(
+            const Icon(
               Icons.verified,
               color: AppColors.primary,
               size: 16,
@@ -119,21 +122,21 @@ class HomeScreen extends ConsumerWidget {
                     mainAxisSpacing: 12,
                     childAspectRatio: 1.4,
                     children: [
-                      _buildStatCard(
+                      StatCard(
                         title: 'مبيعات اليوم',
                         value: '\$${stats.todaySales.toStringAsFixed(0)}',
                         trend: '+12%',
                         color: AppColors.primary,
                         icon: Icons.trending_up,
                       ),
-                      _buildStatCard(
+                      StatCard(
                         title: 'الإيرادات الشهرية',
                         value: '\$${(stats.monthlyEarnings / 1000).toStringAsFixed(0)}k',
                         trend: '+8%',
                         color: AppColors.secondary,
                         icon: Icons.trending_up,
                       ),
-                      _buildStatCard(
+                      StatCard(
                         title: 'طلبات معلقة',
                         value: stats.pendingOrders.toString(),
                         trend: 'تحتاج انتباه',
@@ -141,7 +144,7 @@ class HomeScreen extends ConsumerWidget {
                         icon: Icons.priority_high,
                         isWarning: true,
                       ),
-                      _buildStatCard(
+                      StatCard(
                         title: 'منتجات نشطة',
                         value: stats.activeProducts.toString(),
                         trend: 'مخزون جيد',
@@ -236,28 +239,28 @@ class HomeScreen extends ConsumerWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      _buildQuickAction(
+                      QuickActionCard(
                         icon: Icons.add_box,
                         label: 'إضافة منتج',
                         backgroundColor: AppColors.primaryContainer.withValues(alpha: 0.1),
                         iconColor: AppColors.primary,
                         onTap: () {},
                       ),
-                      _buildQuickAction(
+                      QuickActionCard(
                         icon: Icons.shopping_bag,
                         label: 'الطلبات',
                         backgroundColor: AppColors.secondaryContainer.withValues(alpha: 0.1),
                         iconColor: AppColors.secondary,
                         onTap: () {},
                       ),
-                      _buildQuickAction(
+                      QuickActionCard(
                         icon: Icons.request_quote,
                         label: 'الفواتير',
                         backgroundColor: AppColors.surfaceContainerHigh,
                         iconColor: AppColors.onSurfaceVariant,
                         onTap: () {},
                       ),
-                      _buildQuickAction(
+                      QuickActionCard(
                         icon: Icons.account_circle,
                         label: 'الملف الشخصي',
                         backgroundColor: AppColors.surfaceContainerHigh,
@@ -274,164 +277,4 @@ class HomeScreen extends ConsumerWidget {
       ),
     );
   }
-
-  Widget _buildStatCard({
-    required String title,
-    required String value,
-    required String trend,
-    required Color color,
-    required IconData icon,
-    bool isWarning = false,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border(
-          right: BorderSide(color: color, width: 4),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: isWarning ? AppColors.tertiary : color,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Row(
-            children: [
-              Icon(
-                icon,
-                size: 12,
-                color: isWarning ? AppColors.error : AppColors.secondary,
-              ),
-              const SizedBox(width: 4),
-              Text(
-                trend,
-                style: TextStyle(
-                  fontSize: 10,
-                  color: isWarning ? AppColors.error : AppColors.secondary,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _buildQuickAction({
-    required IconData icon,
-    required String label,
-    required Color backgroundColor,
-    required Color iconColor,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Column(
-        children: [
-          Container(
-            width: 52,
-            height: 52,
-            decoration: BoxDecoration(
-              color: backgroundColor,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Icon(icon, color: iconColor, size: 24),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            label,
-            style: const TextStyle(fontSize: 11, color: AppColors.onSurface),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class LineChartPainter extends CustomPainter {
-  final List<double> data;
-
-  LineChartPainter(this.data);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    if (data.isEmpty) return;
-
-    final paintLine = Paint()
-      ..color = AppColors.primary
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 3
-      ..strokeCap = StrokeCap.round;
-
-    final paintFill = Paint()
-      ..style = PaintingStyle.fill
-      ..shader = LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          AppColors.primary.withValues(alpha: 0.25),
-          AppColors.primary.withValues(alpha: 0.0),
-        ],
-      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
-
-    final path = Path();
-    final stepX = size.width / (data.length - 1);
-    
-    // Normalize data points to fit scale
-    final maxVal = data.reduce((a, b) => a > b ? a : b);
-    final minVal = data.reduce((a, b) => a < b ? a : b);
-    final range = maxVal - minVal == 0 ? 1 : maxVal - minVal;
-
-    double getX(int index) => index * stepX;
-    double getY(double val) {
-      final normalized = (val - minVal) / range;
-      // Invert Y axis for screen space
-      return size.height - (normalized * (size.height - 20) + 10);
-    }
-
-    path.moveTo(getX(0), getY(data[0]));
-    for (int i = 1; i < data.length; i++) {
-      path.lineTo(getX(i), getY(data[i]));
-    }
-
-    final fillPath = Path.from(path);
-    fillPath.lineTo(size.width, size.height);
-    fillPath.lineTo(0, size.height);
-    fillPath.close();
-
-    canvas.drawPath(fillPath, paintFill);
-    canvas.drawPath(path, paintLine);
-
-    // Draw bullet points on lines
-    final paintCircle = Paint()..color = AppColors.primary;
-    for (int i = 0; i < data.length; i += 2) {
-      canvas.drawCircle(Offset(getX(i), getY(data[i])), 4, paintCircle);
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
