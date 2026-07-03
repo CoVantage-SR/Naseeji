@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/session/session_tracker.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
-import '../../../profile/presentation/controllers/profile_controller.dart';
+import 'package:naseeji_supplier/features/profile/presentation/controllers/profile_controller.dart';
 
 class NavigationDrawerView extends ConsumerWidget {
   const NavigationDrawerView({super.key});
