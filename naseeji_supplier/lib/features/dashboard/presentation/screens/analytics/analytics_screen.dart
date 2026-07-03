@@ -73,9 +73,9 @@ class AnalyticsScreen extends ConsumerWidget {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
+                        children: [
                           Text('س', style: TextStyle(fontSize: 10, color: AppColors.outline)),
                           Text('ح', style: TextStyle(fontSize: 10, color: AppColors.outline)),
                           Text('ن', style: TextStyle(fontSize: 10, color: AppColors.outline)),
