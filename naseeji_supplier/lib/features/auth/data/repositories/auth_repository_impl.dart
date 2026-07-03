@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../core/network/api_client.dart';
+import '../../domain/entities/supplier_registration_data.dart';
 import '../../domain/models/user_model.dart';
 import '../../domain/repositories/auth_repository.dart';
 
@@ -14,17 +15,41 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<UserModel> login(String email, String password) async {
-    // Simulate API delay for prototype/MVP
     await Future.delayed(const Duration(seconds: 1));
-    
-    // In a real application, you would do:
-    // final response = await _dio.post('/auth/login', data: {'email': email, 'password': password});
-    // return UserModel.fromJson(response.data);
 
-    if (email == "test@naseeji.com" && password == "password") {
+    if (email.isNotEmpty && password.length >= 6) {
       return UserModel(id: '100', name: 'Naseeji Supplier', email: email);
     } else {
-      throw Exception('Invalid email or password');
+      throw Exception('البريد الإلكتروني أو كلمة المرور غير صالحة');
+    }
+  }
+
+  @override
+  Future<void> sendOtp(String phone) async {
+    // Simulate sending OTP via SMS
+    await Future.delayed(const Duration(seconds: 1));
+    if (phone.isEmpty) {
+      throw Exception('رقم الهاتف مطلوب');
+    }
+  }
+
+  @override
+  Future<UserModel> verifyOtp(String phone, String code) async {
+    // Simulate OTP verification
+    await Future.delayed(const Duration(seconds: 1));
+    if (code == "1234") {
+      return UserModel(id: '100', name: 'Naseeji Supplier', email: 'verified@naseeji.com');
+    } else {
+      throw Exception('رمز التحقق غير صحيح. جرب رمز 1234');
+    }
+  }
+
+  @override
+  Future<void> registerSupplier(SupplierRegistrationData data) async {
+    // Simulate registration API call
+    await Future.delayed(const Duration(seconds: 1.5));
+    if (data.companyName.isEmpty) {
+      throw Exception('اسم الشركة مطلوب لإكمال التسجيل');
     }
   }
 }
