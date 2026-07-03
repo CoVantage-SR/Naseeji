@@ -1,5 +1,6 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, unnecessary_import
 
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
@@ -31,7 +32,7 @@ class PrimaryButton extends StatelessWidget {
                   color: AppColors.primary.withOpacity(0.2),
                   blurRadius: 20,
                   offset: const Offset(0, 10),
-                )
+                ),
               ],
       ),
       child: ElevatedButton(
@@ -117,7 +118,9 @@ class CustomTextField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,
-        prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: AppColors.outline) : null,
+        prefixIcon: prefixIcon != null
+            ? Icon(prefixIcon, color: AppColors.outline)
+            : null,
         prefixText: prefixText,
         suffixIcon: suffixIcon,
       ),
@@ -125,7 +128,7 @@ class CustomTextField extends StatelessWidget {
   }
 }
 
-/// Full screen semi-transparent loading overlay.
+/// Full screen semi-transparent loading overlay with glassmorphism blur.
 class LoadingOverlay extends StatelessWidget {
   final Widget child;
   final bool isLoading;
@@ -142,14 +145,55 @@ class LoadingOverlay extends StatelessWidget {
       children: [
         child,
         if (isLoading)
-          Container(
-            color: Colors.black.withOpacity(0.3),
-            child: const Center(
-              child: Card(
-                elevation: 4,
-                child: Padding(
-                  padding: EdgeInsets.all(24.0),
-                  child: CircularProgressIndicator(),
+          Positioned.fill(
+            child: ClipRRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
+                child: Container(
+                  color: Colors.white.withValues(alpha: 0.6),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(24),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.primary.withValues(
+                                  alpha: 0.15,
+                                ),
+                                blurRadius: 30,
+                                spreadRadius: 5,
+                              ),
+                            ],
+                          ),
+                          child: const SizedBox(
+                            width: 40,
+                            height: 40,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 3.5,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                AppColors.primary,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        const Text(
+                          'جاري التحميل...',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primary,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
