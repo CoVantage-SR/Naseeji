@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
-import '../controllers/profile_controller.dart';
+import '../../controllers/profile_controller.dart';
+import 'widgets/profile_badge.dart';
+import 'widgets/profile_section_tile.dart';
 
 class SupplierProfileScreen extends ConsumerWidget {
   const SupplierProfileScreen({super.key});
@@ -104,7 +106,7 @@ class SupplierProfileScreen extends ConsumerWidget {
                   child: Row(
                     children: [
                       Expanded(
-                        child: _buildBadge(
+                        child: ProfileBadge(
                           icon: Icons.star,
                           label: 'التقييم',
                           value: '${profile.rating} / 5.0',
@@ -113,7 +115,7 @@ class SupplierProfileScreen extends ConsumerWidget {
                       ),
                       const SizedBox(width: 8),
                       Expanded(
-                        child: _buildBadge(
+                        child: ProfileBadge(
                           icon: Icons.done_all,
                           label: 'معدل التوريد',
                           value: '${profile.completionRate}%',
@@ -126,17 +128,17 @@ class SupplierProfileScreen extends ConsumerWidget {
                 const SizedBox(height: 24),
 
                 // Profile Sections List
-                _buildSectionTile(
+                ProfileSectionTile(
                   icon: Icons.business,
                   title: 'بيانات الشركة والمسؤول',
                   subtitle: 'المسؤول: ${profile.managerName}',
                 ),
-                _buildSectionTile(
+                ProfileSectionTile(
                   icon: Icons.email_outlined,
                   title: 'معلومات الاتصال',
                   subtitle: '${profile.email}\n${profile.phone}',
                 ),
-                _buildSectionTile(
+                ProfileSectionTile(
                   icon: Icons.inventory_2_outlined,
                   title: 'إحصائيات المنتجات',
                   subtitle: 'إجمالي المنتجات: ${profile.productsCount} | طلبات ناجحة: ${profile.ordersCount}',
@@ -146,69 +148,6 @@ class SupplierProfileScreen extends ConsumerWidget {
             ),
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildBadge({
-    required IconData icon,
-    required String label,
-    required String value,
-    required Color color,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
-      ),
-      child: Column(
-        children: [
-          Icon(icon, color: color, size: 20),
-          const SizedBox(height: 6),
-          Text(label, style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant)),
-          const SizedBox(height: 2),
-          Text(value, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSectionTile({
-    required IconData icon,
-    required String title,
-    required String subtitle,
-  }) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.2)),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, color: AppColors.primary, size: 24),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  subtitle,
-                  style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant, height: 1.4),
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }
