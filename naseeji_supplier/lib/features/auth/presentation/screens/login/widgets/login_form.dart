@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../../core/theme/app_colors.dart';
-import '../../../../../core/widgets/general_widgets.dart';
-import '../../controllers/auth_controller.dart';
+import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import 'package:naseeji_supplier/core/widgets/general_widgets.dart';
+import 'package:naseeji_supplier/features/auth/presentation/controllers/auth_controller.dart';
 
 class LoginForm extends ConsumerStatefulWidget {
   const LoginForm({super.key});
