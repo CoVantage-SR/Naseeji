@@ -17,7 +17,6 @@ class AppTheme {
         onError: AppColors.onError,
         surface: AppColors.surface,
         onSurface: AppColors.onSurface,
-        surfaceVariant: AppColors.surfaceVariant,
         onSurfaceVariant: AppColors.onSurfaceVariant,
         outline: AppColors.outline,
         outlineVariant: AppColors.outlineVariant,
@@ -40,7 +39,7 @@ class AppTheme {
           ),
           textStyle: const TextStyle(
             fontSize: 16,
-            fontWeight: FontWeight.w640,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),

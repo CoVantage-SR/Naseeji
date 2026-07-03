@@ -47,7 +47,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<void> registerSupplier(SupplierRegistrationData data) async {
     // Simulate registration API call
-    await Future.delayed(const Duration(seconds: 1.5));
+    await Future.delayed(const Duration(milliseconds: 1500));
     if (data.companyName.isEmpty) {
       throw Exception('اسم الشركة مطلوب لإكمال التسجيل');
     }

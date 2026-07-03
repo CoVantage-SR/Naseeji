@@ -113,7 +113,7 @@ class _CreateAccountScreenState extends ConsumerState<CreateAccountScreen> {
                   CustomTextField(
                     controller: _emailController,
                     labelText: 'البريد الإلكتروني للعمل',
-                    prefixIcon: Icons.email_outline,
+                    prefixIcon: Icons.email_outlined,
                     keyboardType: TextInputType.emailAddress,
                     validator: (val) {
                       if (val == null || val.trim().isEmpty) {
