@@ -13,13 +13,14 @@ class LoginForm extends ConsumerStatefulWidget {
 
 class _LoginFormState extends ConsumerState<LoginForm> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
+  final _identifierController = TextEditingController(); // Can be email or phone
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
+  bool _rememberMe = false;
 
   @override
   void dispose() {
-    _emailController.dispose();
+    _identifierController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -27,7 +28,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
   Future<void> _submit() async {
     if (_formKey.currentState!.validate()) {
       await ref.read(authControllerProvider.notifier).login(
-            _emailController.text.trim(),
+            _identifierController.text.trim(),
             _passwordController.text,
           );
     }
@@ -40,27 +41,46 @@ class _LoginFormState extends ConsumerState<LoginForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          // Input: Email/Phone
+          const Text(
+            'البريد الإلكتروني أو رقم الهاتف',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: AppColors.onSurfaceVariant,
+            ),
+          ),
+          const SizedBox(height: 8),
           CustomTextField(
-            controller: _emailController,
-            labelText: 'البريد الإلكتروني',
-            prefixIcon: Icons.email_outlined,
-            keyboardType: TextInputType.emailAddress,
+            controller: _identifierController,
+            labelText: 'example@naseeji.com',
+            prefixIcon: Icons.person_outline,
             validator: (val) {
               if (val == null || val.trim().isEmpty) {
-                return 'يرجى إدخال البريد الإلكتروني';
+                return 'يرجى إدخال البريد الإلكتروني أو رقم الهاتف';
               }
               return null;
             },
           ),
           const SizedBox(height: 16),
+          // Input: Password
+          const Text(
+            'كلمة المرور',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: AppColors.onSurfaceVariant,
+            ),
+          ),
+          const SizedBox(height: 8),
           CustomTextField(
             controller: _passwordController,
-            labelText: 'كلمة المرور',
+            labelText: '••••••••',
             prefixIcon: Icons.lock_outline,
             obscureText: _obscurePassword,
             suffixIcon: IconButton(
               icon: Icon(
-                _obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
                 color: AppColors.outline,
               ),
               onPressed: () {
@@ -76,10 +96,107 @@ class _LoginFormState extends ConsumerState<LoginForm> {
               return null;
             },
           ),
+          const SizedBox(height: 16),
+          // Options: Remember Me & Forgot Password
+          Row(
+            mainAxisAlignment: MainAxisAlignment.between,
+            children: [
+              Row(
+                children: [
+                  Checkbox(
+                    value: _rememberMe,
+                    activeColor: AppColors.primary,
+                    onChanged: (val) {
+                      setState(() {
+                        _rememberMe = val ?? false;
+                      });
+                    },
+                  ),
+                  const Text(
+                    'تذكرني',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: AppColors.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ),
+              TextButton(
+                onPressed: () {
+                  // Forgot password action
+                },
+                child: const Text(
+                  'نسيت كلمة المرور؟',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
           const SizedBox(height: 24),
+          // Submit Button
           PrimaryButton(
             text: 'تسجيل الدخول',
             onPressed: _submit,
+          ),
+          const SizedBox(height: 24),
+          // Or Divider
+          const Row(
+            children: [
+              Expanded(child: Divider(color: AppColors.outlineVariant)),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text(
+                  'أو',
+                  style: TextStyle(color: AppColors.outline, fontSize: 14),
+                ),
+              ),
+              Expanded(child: Divider(color: AppColors.outlineVariant)),
+            ],
+          ),
+          const SizedBox(height: 24),
+          // Social Buttons
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: () {},
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    side: const BorderSide(color: AppColors.outlineVariant),
+                  ),
+                  icon: const Icon(Icons.apple, color: AppColors.onSurface, size: 20),
+                  label: const Text(
+                    'آبل',
+                    style: TextStyle(color: AppColors.onSurfaceVariant),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: () {},
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    side: const BorderSide(color: AppColors.outlineVariant),
+                  ),
+                  icon: const Icon(Icons.g_mobiledata_rounded, color: Colors.red, size: 24),
+                  label: const Text(
+                    'جوجل',
+                    style: TextStyle(color: AppColors.onSurfaceVariant),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
