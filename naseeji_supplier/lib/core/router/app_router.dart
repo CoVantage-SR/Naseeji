@@ -11,7 +11,7 @@ import '../../features/auth/presentation/screens/supplier_registration/supplier_
 import '../../features/dashboard/presentation/screens/home/home_screen.dart';
 import '../../features/dashboard/presentation/screens/analytics/analytics_screen.dart';
 import '../../features/notifications/presentation/screens/notifications_center/notifications_center_screen.dart';
-import '../../features/search/presentation/screens/global_search_screen.dart';
+import '../../features/search/presentation/screens/global_search/global_search_screen.dart';
 import '../../features/profile/presentation/screens/supplier_profile/supplier_profile_screen.dart';
 
 part 'app_router.g.dart';
