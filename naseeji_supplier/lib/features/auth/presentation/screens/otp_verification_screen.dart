@@ -61,6 +61,7 @@ class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
     if (!_canResend) return;
 
     final success = await ref.read(registrationControllerProvider.notifier).sendOtp();
+    if (!mounted) return;
     if (success) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('تم إعادة إرسال رمز التحقق بنجاح.')),

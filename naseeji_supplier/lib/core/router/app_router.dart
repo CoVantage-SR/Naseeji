@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'session_router_observer.dart';
 import '../../features/auth/presentation/screens/splash_screen.dart';
 import '../../features/auth/presentation/screens/onboarding_screen.dart';
 import '../../features/auth/presentation/screens/choose_supplier_type_screen.dart';
@@ -14,6 +15,7 @@ part 'app_router.g.dart';
 GoRouter goRouter(GoRouterRef ref) {
   return GoRouter(
     initialLocation: '/',
+    observers: [SessionRouterObserver(ref)],
     routes: [
       GoRoute(
         path: '/',
