@@ -7,6 +7,7 @@ import '../../domain/repositories/auth_repository.dart';
 part 'auth_repository_impl.g.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
+  // ignore: unused_field
   final Dio _dio;
 
   AuthRepositoryImpl(this._dio);

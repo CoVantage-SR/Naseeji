@@ -18,7 +18,7 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Watch GoRouter configuration provider
-    final router = ref.watch(goRouterNotifierProvider);
+    final router = ref.watch(goRouterProvider);
 
     return MaterialApp.router(
       title: 'Naseeji Supplier',
