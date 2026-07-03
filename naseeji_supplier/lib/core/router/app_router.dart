@@ -1,13 +1,13 @@
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'session_router_observer.dart';
-import '../../features/auth/presentation/screens/splash_screen.dart';
-import '../../features/auth/presentation/screens/onboarding_screen.dart';
-import '../../features/auth/presentation/screens/choose_supplier_type_screen.dart';
-import '../../features/auth/presentation/screens/login_screen.dart';
-import '../../features/auth/presentation/screens/create_account_screen.dart';
-import '../../features/auth/presentation/screens/otp_verification_screen.dart';
-import '../../features/auth/presentation/screens/supplier_registration_screen.dart';
+import '../../features/auth/presentation/screens/splash/splash_screen.dart';
+import '../../features/auth/presentation/screens/onboarding/onboarding_screen.dart';
+import '../../features/auth/presentation/screens/choose_supplier_type/choose_supplier_type_screen.dart';
+import '../../features/auth/presentation/screens/login/login_screen.dart';
+import '../../features/auth/presentation/screens/create_account/create_account_screen.dart';
+import '../../features/auth/presentation/screens/otp_verification/otp_verification_screen.dart';
+import '../../features/auth/presentation/screens/supplier_registration/supplier_registration_screen.dart';
 
 part 'app_router.g.dart';
 

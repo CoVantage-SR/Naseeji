@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/widgets/general_widgets.dart';
+import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/widgets/general_widgets.dart';
 import '../controllers/registration_controller.dart';
+import 'widgets/category_selector.dart';
+import 'widgets/document_uploader.dart';
 
 class SupplierRegistrationScreen extends ConsumerStatefulWidget {
   const SupplierRegistrationScreen({super.key});
@@ -65,7 +67,6 @@ class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistratio
       return;
     }
 
-    // 1. Update details in controller state
     ref.read(registrationControllerProvider.notifier).updateCompanyDetails(
           companyName: _companyController.text.trim(),
           commercialRegistry: _crController.text.trim(),
@@ -73,10 +74,8 @@ class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistratio
           categories: _selectedCategories,
         );
 
-    // 2. Submit data
     final success = await ref.read(registrationControllerProvider.notifier).submitSupplierRegistration();
     if (mounted && success) {
-      // Show Success Dialog & go to login screen
       _showSuccessDialog();
     } else if (mounted) {
       final errorMsg = ref.read(registrationControllerProvider).errorMessage ?? 'حدث خطأ أثناء حفظ البيانات';
@@ -168,7 +167,6 @@ class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistratio
                     ),
                   ),
                   const SizedBox(height: 32),
-                  // Company Name
                   CustomTextField(
                     controller: _companyController,
                     labelText: 'الاسم التجاري للمؤسسة / المصنع',
@@ -181,7 +179,6 @@ class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistratio
                     },
                   ),
                   const SizedBox(height: 16),
-                  // CR Number
                   CustomTextField(
                     controller: _crController,
                     labelText: 'رقم السجل التجاري',
@@ -195,7 +192,6 @@ class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistratio
                     },
                   ),
                   const SizedBox(height: 16),
-                  // Tax number
                   CustomTextField(
                     controller: _taxController,
                     labelText: 'الرقم الضريبي للمؤسسة',
@@ -209,72 +205,27 @@ class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistratio
                     },
                   ),
                   const SizedBox(height: 24),
-                  // Categories Label
                   const Text(
                     'التصنيفات والمنتجات التي توردها',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
-                  Wrap(
-                    spacing: 8.0,
-                    runSpacing: 8.0,
-                    children: _availableCategories.map((category) {
-                      final isSelected = _selectedCategories.contains(category);
-                      return ChoiceChip(
-                        label: Text(category),
-                        selected: isSelected,
-                        onSelected: (_) => _toggleCategory(category),
-                        selectedColor: AppColors.primaryContainer,
-                        labelStyle: TextStyle(
-                          color: isSelected ? Colors.white : AppColors.onSurface,
-                        ),
-                      );
-                    }).toList(),
+                  CategorySelector(
+                    availableCategories: _availableCategories,
+                    selectedCategories: _selectedCategories,
+                    onToggle: _toggleCategory,
                   ),
                   const SizedBox(height: 24),
-                  // File uploader card design
                   const Text(
                     'إرفاق السجل التجاري (PDF)',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
-                  GestureDetector(
+                  DocumentUploader(
+                    uploadedFileName: _uploadedFileName,
                     onTap: _simulateFileUpload,
-                    child: Container(
-                      padding: const EdgeInsets.all(24),
-                      decoration: BoxDecoration(
-                        color: AppColors.background,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          color: AppColors.outlineVariant,
-                          style: BorderStyle.solid,
-                          width: 1.5,
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          const Icon(Icons.cloud_upload_outlined, size: 40, color: AppColors.primary),
-                          const SizedBox(height: 12),
-                          Text(
-                            _uploadedFileName ?? 'اضغط هنا لرفع نسخة من السجل التجاري',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: _uploadedFileName != null ? FontWeight.bold : FontWeight.normal,
-                              color: _uploadedFileName != null ? AppColors.primary : AppColors.onSurfaceVariant,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          const Text(
-                            'الحد الأقصى للملف 10 ميجا بايت (صيغة PDF)',
-                            style: TextStyle(fontSize: 12, color: AppColors.outline),
-                          ),
-                        ],
-                      ),
-                    ),
                   ),
                   const SizedBox(height: 40),
-                  // Submit
                   PrimaryButton(
                     text: 'إرسال طلب التوثيق',
                     onPressed: _submit,
