@@ -97,30 +97,19 @@ class CreateAccountScreen extends ConsumerWidget {
                                   // Context features list
                                   const Row(
                                     children: [
-                                      Icon(
-                                        Icons.verified,
-                                        color: AppColors.secondary,
-                                        size: 20,
-                                      ),
-                                      const SizedBox(width: 8),
+                                      Icon(Icons.verified, color: AppColors.secondary, size: 20),
+                                      SizedBox(width: 8),
                                       Text(
                                         'موردين معتمدين',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                                       ),
                                     ],
                                   ),
                                   const SizedBox(height: 12),
                                   const Row(
                                     children: [
-                                      Icon(
-                                        Icons.bolt,
-                                        color: AppColors.secondary,
-                                        size: 20,
-                                      ),
-                                      const SizedBox(width: 8),
+                                      Icon(Icons.bolt, color: AppColors.secondary, size: 20),
+                                      SizedBox(width: 8),
                                       Text(
                                         'توريد ذكي وسريع',
                                         style: TextStyle(

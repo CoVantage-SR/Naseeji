@@ -165,7 +165,7 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
             children: [
               Expanded(
                 child: DropdownButtonFormField<String>(
-                  value: _selectedCountry,
+                  initialValue: _selectedCountry,
                   decoration: const InputDecoration(
                     labelText: 'الدولة',
                     contentPadding: EdgeInsets.symmetric(
