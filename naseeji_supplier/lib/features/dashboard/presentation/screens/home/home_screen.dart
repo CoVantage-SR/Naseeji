@@ -127,14 +127,14 @@ class HomeScreen extends ConsumerWidget {
                           StatCard(
                             title: 'مبيعات اليوم',
                             value: '\$${stats.todaySales.toStringAsFixed(0)}k',
-                            trend: '12%+',
+                            trend: '+12%',
                             color: AppColors.primary,
                             icon: Icons.trending_up,
                           ),
                           StatCard(
                             title: 'الإيرادات الشهرية',
                             value: '\$${(stats.monthlyEarnings / 1000).toStringAsFixed(0)}k',
-                            trend: '6%+',
+                            trend: '+8%',
                             color: AppColors.secondary,
                             icon: Icons.trending_up,
                           ),
@@ -391,6 +391,10 @@ class HomeScreen extends ConsumerWidget {
               BottomNavigationBarItem(
                 icon: Icon(Icons.chat_bubble_outline),
                 label: 'Messages',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person_outline),
+                label: 'Account',
               ),
             ],
           ),
