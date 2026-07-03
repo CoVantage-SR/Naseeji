@@ -1,4 +1,4 @@
-enum NotificationType { alert, update, info }
+enum NotificationType { alert, update, info, message, system }
 
 class AppNotification {
   final String id;
@@ -7,6 +7,7 @@ class AppNotification {
   final DateTime timestamp;
   final bool isRead;
   final NotificationType type;
+  final String? avatarUrl;
 
   const AppNotification({
     required this.id,
@@ -15,6 +16,7 @@ class AppNotification {
     required this.timestamp,
     required this.isRead,
     required this.type,
+    this.avatarUrl,
   });
 
   AppNotification copyWith({
@@ -24,6 +26,7 @@ class AppNotification {
     DateTime? timestamp,
     bool? isRead,
     NotificationType? type,
+    String? avatarUrl,
   }) {
     return AppNotification(
       id: id ?? this.id,
@@ -32,6 +35,7 @@ class AppNotification {
       timestamp: timestamp ?? this.timestamp,
       isRead: isRead ?? this.isRead,
       type: type ?? this.type,
+      avatarUrl: avatarUrl ?? this.avatarUrl,
     );
   }
 }

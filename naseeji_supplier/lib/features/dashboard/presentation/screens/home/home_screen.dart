@@ -107,52 +107,38 @@ class HomeScreen extends ConsumerWidget {
           );
         },
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border(
-            top: BorderSide(
-              color: AppColors.outlineVariant.withValues(alpha: 0.3),
-              width: 0.5,
-            ),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: 0,
+        backgroundColor: Colors.white,
+        elevation: 8,
+        indicatorColor: const Color(0xFF72F8E4).withValues(alpha: 0.6),
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.home_outlined, color: AppColors.onSurfaceVariant),
+            selectedIcon: Icon(Icons.home, color: AppColors.secondary),
+            label: 'Home',
           ),
-        ),
-        child: SafeArea(
-          child: BottomNavigationBar(
-            currentIndex: 0,
-            backgroundColor: Colors.white,
-            selectedItemColor: AppColors.primary,
-            unselectedItemColor: AppColors.onSurfaceVariant,
-            type: BottomNavigationBarType.fixed,
-            selectedLabelStyle: const TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-            ),
-            unselectedLabelStyle: const TextStyle(fontSize: 11),
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home_filled),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.category_outlined),
-                label: 'Products',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart_outlined),
-                label: 'Orders',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.chat_bubble_outline),
-                label: 'Messages',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person_outline),
-                label: 'Account',
-              ),
-            ],
+          NavigationDestination(
+            icon: Icon(Icons.category_outlined, color: AppColors.onSurfaceVariant),
+            selectedIcon: Icon(Icons.category, color: AppColors.secondary),
+            label: 'Products',
           ),
-        ),
+          NavigationDestination(
+            icon: Icon(Icons.shopping_cart_outlined, color: AppColors.onSurfaceVariant),
+            selectedIcon: Icon(Icons.shopping_cart, color: AppColors.secondary),
+            label: 'Orders',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.chat_bubble_outline, color: AppColors.onSurfaceVariant),
+            selectedIcon: Icon(Icons.chat_bubble, color: AppColors.secondary),
+            label: 'Messages',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.person_outline, color: AppColors.onSurfaceVariant),
+            selectedIcon: Icon(Icons.person, color: AppColors.secondary),
+            label: 'Account',
+          ),
+        ],
       ),
     );
   }
