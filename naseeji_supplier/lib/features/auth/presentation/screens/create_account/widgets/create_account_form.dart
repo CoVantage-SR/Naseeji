@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_final_fields
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -21,7 +23,7 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
   final _cityController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  
+
   String? _selectedCountry;
   bool _acceptTerms = false;
   bool _obscurePassword = true;
@@ -60,7 +62,9 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
     }
 
     // Update details in state
-    ref.read(registrationControllerProvider.notifier).updateBasicAccount(
+    ref
+        .read(registrationControllerProvider.notifier)
+        .updateBasicAccount(
           name: _managerController.text.trim(),
           email: _emailController.text.trim(),
           phone: _phoneController.text.trim(),
@@ -68,12 +72,16 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
         );
 
     // Call Send OTP
-    final success = await ref.read(registrationControllerProvider.notifier).sendOtp();
+    final success = await ref
+        .read(registrationControllerProvider.notifier)
+        .sendOtp();
     if (mounted) {
       if (success) {
         context.push('/verify-otp');
       } else {
-        final errorMsg = ref.read(registrationControllerProvider).errorMessage ?? 'حدث خطأ ما';
+        final errorMsg =
+            ref.read(registrationControllerProvider).errorMessage ??
+            'حدث خطأ ما';
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(errorMsg), backgroundColor: AppColors.error),
         );
@@ -160,11 +168,20 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
                   value: _selectedCountry,
                   decoration: const InputDecoration(
                     labelText: 'الدولة',
-                    contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 16,
+                    ),
                   ),
                   items: const [
-                    DropdownMenuItem(value: 'sa', child: Text('المملكة العربية السعودية')),
-                    DropdownMenuItem(value: 'ae', child: Text('الإمارات العربية المتحدة')),
+                    DropdownMenuItem(
+                      value: 'sa',
+                      child: Text('المملكة العربية السعودية'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'ae',
+                      child: Text('الإمارات العربية المتحدة'),
+                    ),
                     DropdownMenuItem(value: 'kw', child: Text('الكويت')),
                   ],
                   onChanged: (val) {
@@ -244,7 +261,10 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
               const Expanded(
                 child: Text(
                   'أوافق على الشروط والأحكام وسياسة الخصوصية.',
-                  style: TextStyle(fontSize: 13, color: AppColors.onSurfaceVariant),
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: AppColors.onSurfaceVariant,
+                  ),
                 ),
               ),
             ],
@@ -285,7 +305,11 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
                     ),
                     side: const BorderSide(color: AppColors.outlineVariant),
                   ),
-                  icon: const Icon(Icons.apple, color: AppColors.onSurface, size: 20),
+                  icon: const Icon(
+                    Icons.apple,
+                    color: AppColors.onSurface,
+                    size: 20,
+                  ),
                   label: const Text(
                     'Apple',
                     style: TextStyle(color: AppColors.onSurfaceVariant),
@@ -303,7 +327,11 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
                     ),
                     side: const BorderSide(color: AppColors.outlineVariant),
                   ),
-                  icon: const Icon(Icons.g_mobiledata_rounded, color: Colors.red, size: 24),
+                  icon: const Icon(
+                    Icons.g_mobiledata_rounded,
+                    color: Colors.red,
+                    size: 24,
+                  ),
                   label: const Text(
                     'Google',
                     style: TextStyle(color: AppColors.onSurfaceVariant),
