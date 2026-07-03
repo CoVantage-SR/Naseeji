@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/session/session_tracker.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/general_widgets.dart';
 import '../controllers/auth_controller.dart';
@@ -46,6 +47,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         );
       }
       if (next.hasValue && next.value != null) {
+        ref.read(sessionTrackerProvider.notifier).startSession(next.value!.id);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('مرحباً بك: ${next.value!.name}'),
