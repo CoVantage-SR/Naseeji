@@ -17,15 +17,92 @@ class LoginScreen extends ConsumerWidget {
     ref.listen(authControllerProvider, (previous, next) {
       if (next.hasError) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(next.error.toString()), backgroundColor: AppColors.error),
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: AppColors.error,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            content: Row(
+              children: [
+                const Icon(Icons.error_outline, color: Colors.white),
+                const SizedBox(width: 8),
+                Expanded(child: Text(next.error.toString())),
+              ],
+            ),
+          ),
         );
       }
       if (next.hasValue && next.value != null) {
         ref.read(sessionTrackerProvider.notifier).startSession(next.value!.id);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('مرحباً بك: ${next.value!.name}'),
-            backgroundColor: AppColors.secondary,
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            duration: const Duration(seconds: 4),
+            margin: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.height - 180,
+              left: 16,
+              right: 16,
+            ),
+            content: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: AppColors.outlineVariant.withValues(alpha: 0.5),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.1),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: AppColors.primary.withValues(alpha: 0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.notifications_active,
+                      color: AppColors.primary,
+                      size: 24,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Text(
+                          'نسيجي للموردين',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          'أهلاً بك شريكنا المورد: ${next.value!.name} 👋 تم تسجيل الدخول بنجاح.',
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: AppColors.onSurfaceVariant,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         );
       }
