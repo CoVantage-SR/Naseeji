@@ -99,7 +99,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
           const SizedBox(height: 16),
           // Options: Remember Me & Forgot Password
           Row(
-            mainAxisAlignment: MainAxisAlignment.between,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
