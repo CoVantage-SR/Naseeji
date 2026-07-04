@@ -11,10 +11,12 @@ class NotificationsCenterScreen extends ConsumerStatefulWidget {
   const NotificationsCenterScreen({super.key});
 
   @override
-  ConsumerState<NotificationsCenterScreen> createState() => _NotificationsCenterScreenState();
+  ConsumerState<NotificationsCenterScreen> createState() =>
+      _NotificationsCenterScreenState();
 }
 
-class _NotificationsCenterScreenState extends ConsumerState<NotificationsCenterScreen> {
+class _NotificationsCenterScreenState
+    extends ConsumerState<NotificationsCenterScreen> {
   String _selectedFilter = 'الكل';
 
   @override
@@ -49,39 +51,6 @@ class _NotificationsCenterScreenState extends ConsumerState<NotificationsCenterS
                 return NotificationsList(items: filteredList);
               },
             ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: 1,
-        backgroundColor: Colors.white,
-        elevation: 8,
-        indicatorColor: const Color(0xFF72F8E4).withValues(alpha: 0.6),
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.home, color: AppColors.secondary),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.chat_bubble_outline, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.chat_bubble, color: AppColors.secondary),
-            label: 'Notifications',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.shopping_cart_outlined, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.shopping_cart, color: AppColors.secondary),
-            label: 'Orders',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.chat_bubble_outline, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.chat_bubble, color: AppColors.secondary),
-            label: 'Messages',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person_outline, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.person, color: AppColors.secondary),
-            label: 'Account',
           ),
         ],
       ),
