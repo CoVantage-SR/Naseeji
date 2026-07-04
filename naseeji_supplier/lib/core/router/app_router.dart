@@ -13,6 +13,7 @@ import '../../features/dashboard/presentation/screens/analytics/analytics_screen
 import '../../features/notifications/presentation/screens/notifications_center/notifications_center_screen.dart';
 import '../../features/search/presentation/screens/global_search/global_search_screen.dart';
 import '../../features/profile/presentation/screens/supplier_profile/supplier_profile_screen.dart';
+import '../../features/products/presentation/screens/add_product/add_product_screen.dart';
 
 part 'app_router.g.dart';
 
@@ -81,6 +82,11 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/profile',
         name: 'profile',
         builder: (context, state) => const SupplierProfileScreen(),
+      ),
+      GoRoute(
+        path: '/add-product',
+        name: 'add-product',
+        builder: (context, state) => const AddNewProductScreen(),
       ),
     ],
   );

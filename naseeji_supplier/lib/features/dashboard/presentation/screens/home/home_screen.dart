@@ -91,7 +91,7 @@ class HomeScreen extends ConsumerWidget {
                 bottom: 24,
                 left: 16,
                 child: FloatingActionButton.extended(
-                  onPressed: () {},
+                  onPressed: () => context.push('/add-product'),
                   backgroundColor: AppColors.primary,
                   icon: const Icon(Icons.add, color: Colors.white),
                   label: const Text(
