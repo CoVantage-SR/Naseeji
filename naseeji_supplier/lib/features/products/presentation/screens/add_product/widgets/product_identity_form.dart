@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
-import '../controllers/add_product_controller.dart';
+import '../../../controllers/add_product_controller.dart';
 
 class ProductIdentityForm extends ConsumerStatefulWidget {
   const ProductIdentityForm({super.key});

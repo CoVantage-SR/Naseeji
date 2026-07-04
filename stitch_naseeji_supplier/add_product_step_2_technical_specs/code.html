@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TextileHub Pro - إضافة منتج</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#2e5bff",
+                    "on-secondary-fixed": "#00201c",
+                    "tertiary-fixed-dim": "#ffb59b",
+                    "surface-container-highest": "#e2e1ef",
+                    "on-tertiary-fixed-variant": "#812800",
+                    "inverse-primary": "#b8c3ff",
+                    "on-secondary-container": "#007165",
+                    "surface-bright": "#fbf8ff",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed": "#380d00",
+                    "surface-dim": "#d9d9e6",
+                    "inverse-surface": "#2e303a",
+                    "secondary-fixed-dim": "#51dbc8",
+                    "outline": "#747688",
+                    "tertiary-fixed": "#ffdbcf",
+                    "tertiary": "#993100",
+                    "secondary-fixed": "#72f8e4",
+                    "outline-variant": "#c4c5d9",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed-dim": "#b8c3ff",
+                    "on-surface-variant": "#434656",
+                    "surface-container-low": "#f3f2ff",
+                    "primary-fixed": "#dde1ff",
+                    "on-primary": "#ffffff",
+                    "surface": "#fbf8ff",
+                    "background": "#fbf8ff",
+                    "on-surface": "#191b24",
+                    "on-secondary-fixed-variant": "#005047",
+                    "on-background": "#191b24",
+                    "on-tertiary-container": "#ffece6",
+                    "error-container": "#ffdad6",
+                    "on-error": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "tertiary-container": "#c24100",
+                    "on-primary-fixed-variant": "#0035be",
+                    "on-error-container": "#93000a",
+                    "surface-tint": "#124af0",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container": "#ededfa",
+                    "on-primary-container": "#efefff",
+                    "inverse-on-surface": "#f0effd",
+                    "secondary-container": "#72f8e4",
+                    "primary": "#0040e0",
+                    "on-primary-fixed": "#001356",
+                    "secondary": "#006b5f",
+                    "surface-variant": "#e2e1ef"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "max-width": "1440px",
+                    "margin-desktop": "32px",
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "title-lg": ["IBM Plex Sans Arabic"],
+                    "headline-lg": ["IBM Plex Sans Arabic"],
+                    "title-md": ["IBM Plex Sans Arabic"],
+                    "label-lg": ["IBM Plex Sans Arabic"],
+                    "body-lg": ["IBM Plex Sans Arabic"],
+                    "display-lg": ["IBM Plex Sans Arabic"],
+                    "label-sm": ["IBM Plex Sans Arabic"],
+                    "headline-md": ["IBM Plex Sans Arabic"],
+                    "body-md": ["IBM Plex Sans Arabic"],
+                    "headline-lg-mobile": ["IBM Plex Sans Arabic"]
+            },
+            "fontSize": {
+                    "title-lg": ["22px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "title-md": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "500"}],
+                    "display-lg": ["57px", {"lineHeight": "64px", "letterSpacing": "-0.25px", "fontWeight": "700"}],
+                    "label-sm": ["11px", {"lineHeight": "16px", "fontWeight": "600"}],
+                    "headline-md": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            background-color: #fbf8ff;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .step-active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: #0040e0;
+            border-radius: 99px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface shadow-sm flex justify-between items-center px-4 md:px-8 h-16 w-full">
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-primary">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">TextileHub Pro</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-on-surface-variant">search</span>
+</button>
+</div>
+</header>
+<main class="pt-24 pb-32 px-4 md:px-8 max-w-5xl mx-auto">
+<!-- Progress Stepper -->
+<nav class="mb-10 overflow-x-auto">
+<div class="flex justify-between items-center min-w-[600px] border-b border-outline-variant pb-2">
+<!-- Step 1 -->
+<div class="flex items-center gap-3 px-4 py-2 opacity-60">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold">1</div>
+<span class="font-label-lg text-label-lg">المعلومات الأساسية</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_left</span>
+<!-- Step 2 (Active) -->
+<div class="flex items-center gap-3 px-4 py-2 relative step-active">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold">2</div>
+<span class="font-label-lg text-label-lg text-primary">المواصفات التقنية</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_left</span>
+<!-- Step 3 -->
+<div class="flex items-center gap-3 px-4 py-2 opacity-40">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold">3</div>
+<span class="font-label-lg text-label-lg">التسعير</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant">chevron_left</span>
+<!-- Step 4 -->
+<div class="flex items-center gap-3 px-4 py-2 opacity-40">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold">4</div>
+<span class="font-label-lg text-label-lg">الوسائط</span>
+</div>
+</div>
+</nav>
+<!-- Main Form Container -->
+<section class="bg-white rounded-xl shadow-sm border border-surface-container overflow-hidden">
+<div class="p-6 md:p-8 border-b border-surface-container">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">المواصفات التقنية</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">قم بتعريف الخصائص الفنية الدقيقة لمنتج النسيج لضمان الدقة في التصنيع الذكي.</p>
+</div>
+<button class="flex items-center gap-2 bg-primary-container text-on-primary-container px-6 py-3 rounded-xl font-label-lg text-label-lg hover:shadow-md transition-all active:scale-95" id="add-spec-btn">
+<span class="material-symbols-outlined">add</span>
+                        إضافة مواصفة جديدة
+                    </button>
+</div>
+</div>
+<!-- Dynamic Specs Table -->
+<div class="p-6 md:p-8">
+<div class="grid grid-cols-1 gap-6" id="specs-container">
+<!-- Spec Row 1: Material -->
+<div class="group relative bg-surface-container-low rounded-xl p-6 border border-transparent hover:border-primary-container/30 transition-all">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
+<div class="md:col-span-5">
+<label class="block font-label-lg text-label-lg text-on-surface-variant mb-2">اسم المواصفة</label>
+<input class="w-full bg-white border border-outline-variant rounded-xl px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none font-body-md text-body-md" type="text" value="الخامة (Material)"/>
+</div>
+<div class="md:col-span-5">
+<label class="block font-label-lg text-label-lg text-on-surface-variant mb-2">القيمة</label>
+<input class="w-full bg-white border border-outline-variant rounded-xl px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none font-body-md text-body-md" type="text" value="قطن 100% (Cotton 100%)"/>
+</div>
+<div class="md:col-span-2 flex justify-end">
+<button class="p-3 text-error hover:bg-error-container/20 rounded-full transition-colors active:scale-90">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Spec Row 2: Fabric Type -->
+<div class="group relative bg-surface-container-low rounded-xl p-6 border border-transparent hover:border-primary-container/30 transition-all">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
+<div class="md:col-span-5">
+<label class="block font-label-lg text-label-lg text-on-surface-variant mb-2">اسم المواصفة</label>
+<input class="w-full bg-white border border-outline-variant rounded-xl px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none font-body-md text-body-md" type="text" value="نوع القماش (Fabric Type)"/>
+</div>
+<div class="md:col-span-5">
+<label class="block font-label-lg text-label-lg text-on-surface-variant mb-2">القيمة</label>
+<input class="w-full bg-white border border-outline-variant rounded-xl px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none font-body-md text-body-md" type="text" value="جيرسيه (Jersey)"/>
+</div>
+<div class="md:col-span-2 flex justify-end">
+<button class="p-3 text-error hover:bg-error-container/20 rounded-full transition-colors active:scale-90">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Spec Row 3: Width -->
+<div class="group relative bg-surface-container-low rounded-xl p-6 border border-transparent hover:border-primary-container/30 transition-all">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
+<div class="md:col-span-5">
+<label class="block font-label-lg text-label-lg text-on-surface-variant mb-2">اسم المواصفة</label>
+<input class="w-full bg-white border border-outline-variant rounded-xl px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none font-body-md text-body-md" type="text" value="العرض (Width)"/>
+</div>
+<div class="md:col-span-5">
+<label class="block font-label-lg text-label-lg text-on-surface-variant mb-2">القيمة</label>
+<input class="w-full bg-white border border-outline-variant rounded-xl px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none font-body-md text-body-md" type="text" value="150 سم"/>
+</div>
+<div class="md:col-span-2 flex justify-end">
+<button class="p-3 text-error hover:bg-error-container/20 rounded-full transition-colors active:scale-90">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Spec Row 4: Weight -->
+<div class="group relative bg-surface-container-low rounded-xl p-6 border border-transparent hover:border-primary-container/30 transition-all">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
+<div class="md:col-span-5">
+<label class="block font-label-lg text-label-lg text-on-surface-variant mb-2">اسم المواصفة</label>
+<input class="w-full bg-white border border-outline-variant rounded-xl px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none font-body-md text-body-md" type="text" value="الوزن (Weight)"/>
+</div>
+<div class="md:col-span-5">
+<label class="block font-label-lg text-label-lg text-on-surface-variant mb-2">القيمة</label>
+<input class="w-full bg-white border border-outline-variant rounded-xl px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none font-body-md text-body-md" type="text" value="180 GSM"/>
+</div>
+<div class="md:col-span-2 flex justify-end">
+<button class="p-3 text-error hover:bg-error-container/20 rounded-full transition-colors active:scale-90">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Navigation -->
+<div class="mt-12 flex flex-col md:flex-row gap-4 border-t border-surface-container pt-8">
+<button class="flex-1 bg-surface-container-highest text-on-surface-variant px-8 py-4 rounded-xl font-label-lg text-label-lg hover:bg-outline-variant transition-colors active:scale-95 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">arrow_forward</span>
+                        العودة للسابق
+                    </button>
+<button class="flex-[2] bg-primary text-on-primary px-8 py-4 rounded-xl font-label-lg text-label-lg shadow-lg hover:shadow-primary/20 hover:brightness-110 transition-all active:scale-95 flex items-center justify-center gap-2">
+                        حفظ ومتابعة للتسعير
+                        <span class="material-symbols-outlined">arrow_back</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Technical Tips Bento -->
+<section class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="md:col-span-2 bg-secondary-container/20 p-6 rounded-2xl border border-secondary-container/30 flex items-start gap-4">
+<span class="material-symbols-outlined text-secondary text-3xl">info</span>
+<div>
+<h3 class="font-title-md text-title-md text-secondary mb-2">تأثير المواصفات على التصنيع</h3>
+<p class="font-body-md text-body-md text-on-secondary-fixed-variant leading-relaxed">المواصفات التقنية الدقيقة تسمح لمحرك الذكاء الاصطناعي في المصانع بضبط آلات النسيج تلقائياً، مما يقلل الهدر بنسبة 15%.</p>
+</div>
+</div>
+<div class="bg-white p-6 rounded-2xl shadow-sm border border-surface-container flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-primary-container text-4xl mb-3">speed</span>
+<h3 class="font-label-lg text-label-lg text-on-surface mb-1">دقة البيانات</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">98% مكتملة</p>
+<div class="w-full bg-surface-container-highest h-2 rounded-full mt-4">
+<div class="bg-primary h-full rounded-full" style="width: 98%"></div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center py-2 px-4 pb-safe bg-surface border-t border-outline-variant z-50">
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-sm text-label-sm">المنتجات</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-sm text-label-sm">المخزون</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1">
+<span class="material-symbols-outlined">add_box</span>
+<span class="font-label-sm text-label-sm">إضافة</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-sm text-label-sm">الطلبات</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-label-sm text-label-sm">رؤى</span>
+</div>
+</nav>
+<script>
+        document.getElementById('add-spec-btn').addEventListener('click', () => {
+            const container = document.getElementById('specs-container');
+            const newRow = document.createElement('div');
+            newRow.className = 'group relative bg-surface-container-low rounded-xl p-6 border border-transparent hover:border-primary-container/30 transition-all opacity-0 translate-y-4 animate-fade-in';
+            newRow.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-end">
+                    <div class="md:col-span-5">
+                        <label class="block font-label-lg text-label-lg text-on-surface-variant mb-2">اسم المواصفة</label>
+                        <input type="text" placeholder="مثلاً: درجة الانكماش" class="w-full bg-white border border-outline-variant rounded-xl px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none font-body-md text-body-md">
+                    </div>
+                    <div class="md:col-span-5">
+                        <label class="block font-label-lg text-label-lg text-on-surface-variant mb-2">القيمة</label>
+                        <input type="text" placeholder="مثلاً: < 2%" class="w-full bg-white border border-outline-variant rounded-xl px-4 py-3 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none font-body-md text-body-md">
+                    </div>
+                    <div class="md:col-span-2 flex justify-end">
+                        <button class="remove-btn p-3 text-error hover:bg-error-container/20 rounded-full transition-colors active:scale-90">
+                            <span class="material-symbols-outlined">delete</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+            container.appendChild(newRow);
+            
+            // Trigger animation
+            setTimeout(() => {
+                newRow.classList.remove('opacity-0', 'translate-y-4');
+                newRow.classList.add('opacity-100', 'translate-y-0');
+            }, 10);
+
+            // Add delete listener
+            newRow.querySelector('.remove-btn').addEventListener('click', () => {
+                newRow.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => newRow.remove(), 200);
+            });
+        });
+
+        // Initialize existing delete buttons
+        document.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const row = e.target.closest('.group');
+                row.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => row.remove(), 200);
+            });
+        });
+    </script>
+<style>
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(1rem); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</body></html>

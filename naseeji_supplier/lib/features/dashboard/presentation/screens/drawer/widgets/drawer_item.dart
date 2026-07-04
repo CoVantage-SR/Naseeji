@@ -22,21 +22,22 @@ class DrawerItem extends StatelessWidget {
     final isActive = currentRoute == path;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
-      decoration: BoxDecoration(
+      child: Material(
         color: isActive ? AppColors.primary : Colors.transparent,
         borderRadius: BorderRadius.circular(12),
-      ),
-      child: ListTile(
-        leading: Icon(icon, color: isActive ? Colors.white : AppColors.onSurfaceVariant),
-        title: Text(
-          title,
-          style: TextStyle(
-            color: isActive ? Colors.white : AppColors.onSurface,
-            fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
-            fontSize: 13,
+        clipBehavior: Clip.antiAlias,
+        child: ListTile(
+          leading: Icon(icon, color: isActive ? Colors.white : AppColors.onSurfaceVariant),
+          title: Text(
+            title,
+            style: TextStyle(
+              color: isActive ? Colors.white : AppColors.onSurface,
+              fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+              fontSize: 13,
+            ),
           ),
+          onTap: onTap,
         ),
-        onTap: onTap,
       ),
     );
   }
