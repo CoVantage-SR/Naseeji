@@ -57,6 +57,16 @@ class NavigationDrawerView extends ConsumerWidget {
                     },
                   ),
                   DrawerItem(
+                    icon: Icons.analytics_outlined,
+                    title: 'التقارير والإحصائيات',
+                    path: '/analytics',
+                    currentRoute: currentRoute,
+                    onTap: () {
+                      Navigator.pop(context);
+                      context.go('/analytics');
+                    },
+                  ),
+                  DrawerItem(
                     icon: Icons.inventory_2_outlined,
                     title: 'المنتجات',
                     path: '/products',
