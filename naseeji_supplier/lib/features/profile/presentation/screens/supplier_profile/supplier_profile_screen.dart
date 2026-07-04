@@ -6,7 +6,6 @@ import '../../controllers/profile_controller.dart';
 import 'widgets/achievements_card.dart';
 import 'widgets/business_info_card.dart';
 import 'widgets/latest_textiles_section.dart';
-import 'widgets/profile_app_bar.dart';
 import 'widgets/profile_hero_banner.dart';
 import 'widgets/profile_info_block.dart';
 import 'widgets/recent_activity_timeline.dart';
@@ -20,7 +19,6 @@ class SupplierProfileScreen extends ConsumerWidget {
     final profileAsync = ref.watch(profileControllerProvider);
 
     return Scaffold(
-      appBar: const ProfileAppBar(),
       body: profileAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, stack) => Center(child: Text('خطأ: $err')),
