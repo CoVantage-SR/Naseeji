@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import '../../controllers/analytics_controller.dart';
-import '../drawer/navigation_drawer_view.dart';
 import 'widgets/analytics_filter_row.dart';
 import 'widgets/orders_distribution_card.dart';
 import 'widgets/performance_metrics_grid.dart';

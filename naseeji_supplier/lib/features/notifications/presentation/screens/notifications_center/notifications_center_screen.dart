@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import '../../../domain/entities/app_notification.dart';
 import '../../controllers/notifications_controller.dart';
 import 'widgets/filter_pills_row.dart';
