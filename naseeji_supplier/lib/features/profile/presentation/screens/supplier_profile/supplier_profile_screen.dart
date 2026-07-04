@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import '../../controllers/profile_controller.dart';
-import 'widgets/profile_badge.dart';
-import 'widgets/profile_section_tile.dart';
+import 'widgets/achievements_card.dart';
+import 'widgets/business_info_card.dart';
+import 'widgets/latest_textiles_section.dart';
+import 'widgets/profile_app_bar.dart';
+import 'widgets/profile_hero_banner.dart';
+import 'widgets/profile_info_block.dart';
+import 'widgets/recent_activity_timeline.dart';
+import 'widgets/stats_metrics_section.dart';
 
 class SupplierProfileScreen extends ConsumerWidget {
   const SupplierProfileScreen({super.key});
@@ -13,12 +19,7 @@ class SupplierProfileScreen extends ConsumerWidget {
     final profileAsync = ref.watch(profileControllerProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('الملف الشخصي للمورد'),
-        backgroundColor: Colors.white,
-        foregroundColor: AppColors.onSurface,
-        elevation: 0.5,
-      ),
+      appBar: const ProfileAppBar(),
       body: profileAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, stack) => Center(child: Text('خطأ: $err')),
@@ -27,127 +28,76 @@ class SupplierProfileScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Banner & Logo Stack
-                SizedBox(
-                  height: 180,
-                  child: Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Image.network(
-                        profile.bannerUrl,
-                        width: double.infinity,
-                        height: 140,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) => Container(
-                          height: 140,
-                          color: AppColors.primaryContainer.withValues(alpha: 0.1),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 0,
-                        right: 24,
-                        child: Container(
-                          width: 80,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                            border: Border.all(color: Colors.white, width: 4),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.1),
-                                blurRadius: 8,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(40),
-                            child: Image.network(
-                              profile.logoUrl,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) =>
-                                  const Icon(Icons.business, size: 40, color: AppColors.primary),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                // Top cover banner and logo
+                ProfileHeroBanner(
+                  bannerUrl: profile.bannerUrl,
+                  logoUrl: profile.logoUrl,
                 ),
                 const SizedBox(height: 12),
 
-                // Company Name & City
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        profile.companyName,
-                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.onSurface),
-                      ),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          const Icon(Icons.location_on_outlined, size: 16, color: AppColors.onSurfaceVariant),
-                          const SizedBox(width: 4),
-                          Text(profile.city, style: const TextStyle(fontSize: 13, color: AppColors.onSurfaceVariant)),
-                        ],
-                      ),
-                    ],
-                  ),
+                // Name & action buttons
+                ProfileInfoBlock(
+                  companyName: profile.companyName,
+                  rating: profile.rating,
                 ),
                 const SizedBox(height: 24),
 
-                // Stats Dashboard Bar
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: ProfileBadge(
-                          icon: Icons.star,
-                          label: 'التقييم',
-                          value: '${profile.rating} / 5.0',
-                          color: Colors.amber,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: ProfileBadge(
-                          icon: Icons.done_all,
-                          label: 'معدل التوريد',
-                          value: '${profile.completionRate}%',
-                          color: AppColors.secondary,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                // Business info (Location, experience years, categories)
+                BusinessInfoCard(location: profile.city),
+                const SizedBox(height: 16),
+
+                // Achievements and B2B credentials
+                const AchievementsCard(),
+                const SizedBox(height: 16),
+
+                // Stats metric progress bars
+                const StatsMetricsSection(),
                 const SizedBox(height: 24),
 
-                // Profile Sections List
-                ProfileSectionTile(
-                  icon: Icons.business,
-                  title: 'بيانات الشركة والمسؤول',
-                  subtitle: 'المسؤول: ${profile.managerName}',
-                ),
-                ProfileSectionTile(
-                  icon: Icons.email_outlined,
-                  title: 'معلومات الاتصال',
-                  subtitle: '${profile.email}\n${profile.phone}',
-                ),
-                ProfileSectionTile(
-                  icon: Icons.inventory_2_outlined,
-                  title: 'إحصائيات المنتجات',
-                  subtitle: 'إجمالي المنتجات: ${profile.productsCount} | طلبات ناجحة: ${profile.ordersCount}',
-                ),
-                const SizedBox(height: 32),
+                // Product gallery list
+                const LatestTextilesSection(),
+                const SizedBox(height: 24),
+
+                // Activity timeline history log
+                const RecentActivityTimeline(),
+                const SizedBox(height: 40),
               ],
             ),
           );
         },
+      ),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: 4, // Profile Account tab is index 4
+        backgroundColor: Colors.white,
+        elevation: 8,
+        indicatorColor: const Color(0xFF72F8E4).withValues(alpha: 0.6),
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.home_outlined, color: AppColors.onSurfaceVariant),
+            selectedIcon: Icon(Icons.home, color: AppColors.secondary),
+            label: 'Home',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.chat_bubble_outline, color: AppColors.onSurfaceVariant),
+            selectedIcon: Icon(Icons.chat_bubble, color: AppColors.secondary),
+            label: 'Notifications',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.shopping_cart_outlined, color: AppColors.onSurfaceVariant),
+            selectedIcon: Icon(Icons.shopping_cart, color: AppColors.secondary),
+            label: 'Orders',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.chat_bubble_outline, color: AppColors.onSurfaceVariant),
+            selectedIcon: Icon(Icons.chat_bubble, color: AppColors.secondary),
+            label: 'Messages',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.person_outline, color: AppColors.onSurfaceVariant),
+            selectedIcon: Icon(Icons.person, color: AppColors.secondary),
+            label: 'Account',
+          ),
+        ],
       ),
     );
   }
