@@ -343,6 +343,7 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       // Move to next step or submit
+                      controller.setStep(2);
                     }
                   },
                   style: ElevatedButton.styleFrom(
