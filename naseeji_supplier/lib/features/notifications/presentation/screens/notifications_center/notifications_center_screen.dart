@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import '../../../domain/entities/app_notification.dart';
 import '../../controllers/notifications_controller.dart';
-import 'widgets/notification_tile.dart';
+import 'widgets/filter_pills_row.dart';
+import 'widgets/notifications_app_bar.dart';
+import 'widgets/notifications_list.dart';
 
 class NotificationsCenterScreen extends ConsumerStatefulWidget {
   const NotificationsCenterScreen({super.key});
@@ -12,92 +14,91 @@ class NotificationsCenterScreen extends ConsumerStatefulWidget {
   ConsumerState<NotificationsCenterScreen> createState() => _NotificationsCenterScreenState();
 }
 
-class _NotificationsCenterScreenState extends ConsumerState<NotificationsCenterScreen>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 4, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
+class _NotificationsCenterScreenState extends ConsumerState<NotificationsCenterScreen> {
+  String _selectedFilter = 'الكل';
 
   @override
   Widget build(BuildContext context) {
     final notificationsAsync = ref.watch(notificationsControllerProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('مركز الإشعارات'),
-        backgroundColor: Colors.white,
-        foregroundColor: AppColors.onSurface,
-        elevation: 0.5,
-        bottom: TabBar(
-          controller: _tabController,
-          labelColor: AppColors.primary,
-          unselectedLabelColor: AppColors.onSurfaceVariant,
-          indicatorColor: AppColors.primary,
-          tabs: const [
-            Tab(text: 'الكل'),
-            Tab(text: 'غير مقروء'),
-            Tab(text: 'تنبيهات'),
-            Tab(text: 'تحديثات'),
-          ],
-        ),
-      ),
-      body: notificationsAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, stack) => Center(child: Text('خطأ: $err')),
-        data: (notifications) {
-          return TabBarView(
-            controller: _tabController,
-            children: [
-              _buildNotificationList(notifications),
-              _buildNotificationList(notifications.where((n) => !n.isRead).toList()),
-              _buildNotificationList(
-                notifications.where((n) => n.type == NotificationType.alert).toList(),
-              ),
-              _buildNotificationList(
-                notifications.where((n) => n.type == NotificationType.update).toList(),
-              ),
-            ],
-          );
+      appBar: NotificationsAppBar(
+        onMarkAllRead: () {
+          ref.invalidate(notificationsControllerProvider);
         },
+      ),
+      body: Column(
+        children: [
+          // Filter pills selector row
+          FilterPillsRow(
+            selectedFilter: _selectedFilter,
+            onFilterChanged: (filter) {
+              setState(() {
+                _selectedFilter = filter;
+              });
+            },
+          ),
+
+          // Scrollable Notifications list
+          Expanded(
+            child: notificationsAsync.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (err, stack) => Center(child: Text('خطأ: $err')),
+              data: (notifications) {
+                final filteredList = _applyFilter(notifications);
+                return NotificationsList(items: filteredList);
+              },
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: 1,
+        backgroundColor: Colors.white,
+        elevation: 8,
+        indicatorColor: const Color(0xFF72F8E4).withValues(alpha: 0.6),
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.home_outlined, color: AppColors.onSurfaceVariant),
+            selectedIcon: Icon(Icons.home, color: AppColors.secondary),
+            label: 'Home',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.chat_bubble_outline, color: AppColors.onSurfaceVariant),
+            selectedIcon: Icon(Icons.chat_bubble, color: AppColors.secondary),
+            label: 'Notifications',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.shopping_cart_outlined, color: AppColors.onSurfaceVariant),
+            selectedIcon: Icon(Icons.shopping_cart, color: AppColors.secondary),
+            label: 'Orders',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.chat_bubble_outline, color: AppColors.onSurfaceVariant),
+            selectedIcon: Icon(Icons.chat_bubble, color: AppColors.secondary),
+            label: 'Messages',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.person_outline, color: AppColors.onSurfaceVariant),
+            selectedIcon: Icon(Icons.person, color: AppColors.secondary),
+            label: 'Account',
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildNotificationList(List<AppNotification> list) {
-    if (list.isEmpty) {
-      return const Center(
-        child: Text(
-          'لا توجد إشعارات حالياً',
-          style: TextStyle(color: AppColors.outline),
-        ),
-      );
+  List<AppNotification> _applyFilter(List<AppNotification> list) {
+    switch (_selectedFilter) {
+      case 'الطلبات':
+        return list.where((n) => n.type == NotificationType.alert).toList();
+      case 'الشحن':
+        return list.where((n) => n.type == NotificationType.info).toList();
+      case 'الدفع':
+        return list.where((n) => n.type == NotificationType.update).toList();
+      case 'الكل':
+      default:
+        return list;
     }
-
-    return ListView.separated(
-      itemCount: list.length,
-      padding: const EdgeInsets.all(16),
-      separatorBuilder: (context, index) => const SizedBox(height: 12),
-      itemBuilder: (context, index) {
-        final item = list[index];
-        return NotificationTile(
-          item: item,
-          onTap: () {
-            if (!item.isRead) {
-              ref.read(notificationsControllerProvider.notifier).markAsRead(item.id);
-            }
-          },
-        );
-      },
-    );
   }
 }
