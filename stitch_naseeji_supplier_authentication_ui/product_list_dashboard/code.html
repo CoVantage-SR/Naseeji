@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Naseeji | Product List Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&amp;family=IBM+Plex+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'IBM Plex Sans Arabic', 'IBM Plex Sans', sans-serif;
+            background-color: #fbf8ff; /* surface */
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.5);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c4c5d9;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-background": "#191b24",
+                      "surface-container-lowest": "#ffffff",
+                      "primary-container": "#2e5bff",
+                      "primary": "#0040e0",
+                      "inverse-on-surface": "#f0effd",
+                      "surface-bright": "#fbf8ff",
+                      "on-primary": "#ffffff",
+                      "surface": "#fbf8ff",
+                      "surface-container-low": "#f3f2ff",
+                      "on-secondary-fixed-variant": "#005047",
+                      "error-container": "#ffdad6",
+                      "surface-variant": "#e2e1ef",
+                      "error": "#ba1a1a",
+                      "secondary-fixed-dim": "#51dbc8",
+                      "on-error": "#ffffff",
+                      "background": "#fbf8ff",
+                      "on-primary-fixed-variant": "#0035be",
+                      "on-primary-fixed": "#001356",
+                      "inverse-primary": "#b8c3ff",
+                      "surface-dim": "#d9d9e6",
+                      "on-tertiary-container": "#ffece6",
+                      "on-secondary-container": "#007165",
+                      "outline-variant": "#c4c5d9",
+                      "on-tertiary": "#ffffff",
+                      "secondary-container": "#72f8e4",
+                      "surface-container": "#ededfa",
+                      "on-secondary-fixed": "#00201c",
+                      "on-secondary": "#ffffff",
+                      "on-surface": "#191b24",
+                      "on-tertiary-fixed": "#380d00",
+                      "primary-fixed": "#dde1ff",
+                      "on-tertiary-fixed-variant": "#812800",
+                      "tertiary-fixed": "#ffdbcf",
+                      "outline": "#747688",
+                      "surface-container-high": "#e7e7f4",
+                      "secondary-fixed": "#72f8e4",
+                      "tertiary-fixed-dim": "#ffb59b",
+                      "on-primary-container": "#efefff",
+                      "inverse-surface": "#2e303a",
+                      "tertiary-container": "#c24100",
+                      "surface-tint": "#124af0",
+                      "primary-fixed-dim": "#b8c3ff",
+                      "on-surface-variant": "#434656",
+                      "tertiary": "#993100",
+                      "surface-container-highest": "#e2e1ef",
+                      "on-error-container": "#93000a",
+                      "secondary": "#006b5f"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "margin-desktop": "32px",
+                      "gutter": "24px",
+                      "max-width": "1440px",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "title-md": ["IBM Plex Sans Arabic", "IBM Plex Sans"],
+                      "display-lg": ["IBM Plex Sans Arabic", "IBM Plex Sans"],
+                      "body-md": ["IBM Plex Sans Arabic", "IBM Plex Sans"],
+                      "headline-lg-mobile": ["IBM Plex Sans Arabic", "IBM Plex Sans"],
+                      "body-lg": ["IBM Plex Sans Arabic", "IBM Plex Sans"],
+                      "title-lg": ["IBM Plex Sans Arabic", "IBM Plex Sans"],
+                      "label-sm": ["IBM Plex Sans Arabic", "IBM Plex Sans"],
+                      "label-lg": ["IBM Plex Sans Arabic", "IBM Plex Sans"],
+                      "headline-lg": ["IBM Plex Sans Arabic", "IBM Plex Sans"],
+                      "headline-md": ["IBM Plex Sans Arabic", "IBM Plex Sans"]
+              },
+              "fontSize": {
+                      "title-md": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                      "display-lg": ["57px", {"lineHeight": "64px", "letterSpacing": "-0.25px", "fontWeight": "700"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "500"}],
+                      "title-lg": ["22px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "label-sm": ["11px", {"lineHeight": "16px", "fontWeight": "600"}],
+                      "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                      "headline-md": ["28px", {"lineHeight": "36px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-24 md:pb-0">
+<!-- Top AppBar (JSON Mapping: TopAppBar) -->
+<header class="bg-surface sticky top-0 z-40 flex items-center justify-between px-margin-mobile md:px-margin-desktop h-16 w-full">
+<div class="flex items-center gap-4">
+<button class="cursor-pointer active:scale-95 text-on-surface">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-display-lg text-title-lg text-primary">Naseeji</h1>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<div class="relative">
+<input class="bg-surface-container-low border-none rounded-full py-2 pr-10 pl-4 w-80 focus:ring-2 focus:ring-primary text-body-md" placeholder="ابحث عن منتج..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+</div>
+<div class="flex gap-4">
+<button class="cursor-pointer active:scale-95 text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="cursor-pointer active:scale-95 text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">tune</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border-2 border-primary-container">
+<img class="w-full h-full object-cover" data-alt="Close-up professional headshot of a Middle Eastern male administrator in a modern business office. He is smiling warmly, wearing a professional dark suit and a crisp white shirt. The background is a soft-focus corporate environment with warm wood tones and elegant blue accents, reflecting a high-end textile company's aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBu7onTxaxaxoAX7ahSbm2YMLzqFIbs64JKkbydFyWPCIQqqsw8d2UsSPU-ZytoRH_kZZvY3jSn_rOukIirAD7HKyQRESWj59bh9uNLtMBKbv33KNJ4a9rqyw_a_XDvuC8CcD6OtK_iPcoh8CneAI_ZyFR-Hk5tRSjcJGFKotZRgLy0iNZacC9K3iSEhIuZWEO8e5sBHpyJVpDHoDPLRBUP0qSno2MvZUMVFIi2wbtexvvobkRSpXdCUhNDaV_R8D3cTD5m-WY22T4"/>
+</div>
+</div>
+</div>
+<!-- Mobile Action Cluster -->
+<div class="flex md:hidden items-center gap-2">
+<button class="cursor-pointer active:scale-95 text-on-surface-variant p-2">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="cursor-pointer active:scale-95 text-on-surface-variant p-2">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<main class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-6">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+<div>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-1">لوحة إدارة المنتجات</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">مرحباً بك مجدداً، إليك نظرة سريعة على مخزون الأقمشة اليوم.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 bg-surface-container-high text-on-surface py-2.5 px-5 rounded-xl font-label-lg text-label-lg hover:bg-surface-variant transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]">sort</span>
+<span>ترتيب بحسب</span>
+</button>
+<button class="flex items-center gap-2 bg-primary text-on-primary py-2.5 px-6 rounded-xl font-label-lg text-label-lg shadow-md hover:shadow-lg transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span class="hidden md:inline">إضافة منتج جديد</span>
+<span class="md:hidden">إضافة</span>
+</button>
+</div>
+</div>
+<!-- Statistics Bento Grid -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-gutter mb-10">
+<!-- Stat 1 -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm border-t-4 border-primary transition-transform hover:-translate-y-1">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-primary-fixed text-on-primary-fixed rounded-lg">
+<span class="material-symbols-outlined">inventory_2</span>
+</div>
+<span class="text-secondary font-label-sm text-label-sm bg-secondary-container/20 px-2 py-0.5 rounded-full">+12%</span>
+</div>
+<p class="font-label-lg text-label-lg text-on-surface-variant">إجمالي المنتجات</p>
+<h3 class="font-headline-md text-headline-md text-on-surface">1,284</h3>
+</div>
+<!-- Stat 2 -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm border-t-4 border-secondary transition-transform hover:-translate-y-1">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-secondary-container text-on-secondary-container rounded-lg">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+<span class="text-secondary font-label-sm text-label-sm bg-secondary-container/20 px-2 py-0.5 rounded-full">نشط</span>
+</div>
+<p class="font-label-lg text-label-lg text-on-surface-variant">المنتجات النشطة</p>
+<h3 class="font-headline-md text-headline-md text-on-surface">1,120</h3>
+</div>
+<!-- Stat 3 -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm border-t-4 border-outline-variant transition-transform hover:-translate-y-1">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-surface-container text-on-surface-variant rounded-lg">
+<span class="material-symbols-outlined">visibility_off</span>
+</div>
+<span class="text-on-surface-variant font-label-sm text-label-sm bg-surface-container-high px-2 py-0.5 rounded-full">مخفي</span>
+</div>
+<p class="font-label-lg text-label-lg text-on-surface-variant">المنتجات المخفية</p>
+<h3 class="font-headline-md text-headline-md text-on-surface">94</h3>
+</div>
+<!-- Stat 4 -->
+<div class="bg-surface-container-lowest p-5 rounded-2xl shadow-sm border-t-4 border-error transition-transform hover:-translate-y-1">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-error-container text-on-error-container rounded-lg">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<span class="text-error font-label-sm text-label-sm bg-error-container/40 px-2 py-0.5 rounded-full">حرج</span>
+</div>
+<p class="font-label-lg text-label-lg text-on-surface-variant">نفذ من المخزن</p>
+<h3 class="font-headline-md text-headline-md text-on-surface">70</h3>
+</div>
+</div>
+<!-- Search & Filter Bar (Mobile Optimized) -->
+<div class="md:hidden mb-6">
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-xl py-3 pr-12 pl-4 text-body-md focus:ring-2 focus:ring-primary shadow-sm" placeholder="ابحث عن منتج..." type="text"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+</div>
+</div>
+<!-- Product Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-gutter">
+<!-- Product Card 1 -->
+<div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all group border border-surface-container">
+<div class="relative h-56">
+<img class="w-full h-full object-cover" data-alt="High-quality macro photograph of luxurious dark indigo silk fabric with intricate woven patterns. The lighting is dramatic and studio-quality, highlighting the shimmering texture and fine craftsmanship of the textile. Professional product photography style, clean background, premium textile feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNe1GfvRhasfKK4CtlLTVTeThJE_MGAW4VxXNxv_gyJ-w2xNFrhHfS_oFrbwNLBZfT-VG6OwE7zFSSbRw_dAAoZ8bgCpSukZept-bCKYwYdXoIYDUtWP9iiTSPkVSYZzxDAC66FyaBGVHzBb2Vf61ZpYeD0YxRJ78a0qGq35ZFycOk8BQZwFo1TXD8Nl9czdzcFf99NIBN1rWFwfnPZqm6Yg6UFCO5Qka7STsZ_Rq5u6uHNVs4W7bL-iEdJ0qUmLvEsmUtPBmMefI"/>
+<div class="absolute top-4 right-4 flex gap-2">
+<span class="bg-secondary text-on-secondary px-3 py-1 rounded-full text-label-sm font-label-sm shadow-sm">متوفر</span>
+</div>
+</div>
+<div class="p-5">
+<div class="flex justify-between items-start mb-2">
+<div>
+<span class="text-primary font-label-sm text-label-sm mb-1 block">أقمشة حريرية</span>
+<h4 class="font-title-lg text-title-lg text-on-surface">حرير نسيجي بريميوم</h4>
+</div>
+<div class="text-left">
+<span class="font-title-md text-title-md text-primary">145 ر.س</span>
+<span class="block text-outline font-label-sm text-label-sm">للمتر</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 py-4 border-y border-surface-container my-4">
+<div>
+<p class="text-outline font-label-sm text-label-sm mb-0.5">رقم القطعة (SKU)</p>
+<p class="text-on-surface font-body-md text-body-md">NSJ-SLK-001</p>
+</div>
+<div>
+<p class="text-outline font-label-sm text-label-sm mb-0.5">أدنى كمية (MOQ)</p>
+<p class="text-on-surface font-body-md text-body-md">50 متر</p>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="text-on-surface-variant font-body-md text-body-md">المخزون: 1,200 م</span>
+</div>
+<div class="flex gap-1">
+<button class="p-2 rounded-lg hover:bg-primary-container/10 text-primary transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-surface-variant text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">content_copy</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-surface-variant text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all group border border-surface-container">
+<div class="relative h-56">
+<img class="w-full h-full object-cover" data-alt="Exquisite detailed shot of teal-colored Egyptian cotton textile. The weave is dense and high-quality, presented in soft, natural daylight that captures the subtle sheen and organic texture. Minimalist composition, clean B2B professional aesthetic, high-end production value." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC50GCmHSjWg23zn62ldoIJlVpJHQjsqszM1OW5tSYFIO0VzWzZCHXEEzqHY_4bj93dh7W4GOFGr_tf1urwLVU9Z7zlPRZ9--xZUd8-u5dPDHLxTj4HZnfULbII2Jh-h9LbIl1RI0330SZ8E2ri03OgGLp9cvZ7tpLHpb9xennQomnBAtFPpbXO2eOXV9RVLn7KdzXvS_t0Ibwf8jW6d2ZRy26gSyGwDpiM2ev8mHKTrrpkqzFLCYWJyR4UWMy4abTd8yKH4cuZpgw"/>
+<div class="absolute top-4 right-4 flex gap-2">
+<span class="bg-error text-on-error px-3 py-1 rounded-full text-label-sm font-label-sm shadow-sm">منخفض</span>
+</div>
+</div>
+<div class="p-5">
+<div class="flex justify-between items-start mb-2">
+<div>
+<span class="text-primary font-label-sm text-label-sm mb-1 block">أقطان طبيعية</span>
+<h4 class="font-title-lg text-title-lg text-on-surface">قطن مصري طويل التيلة</h4>
+</div>
+<div class="text-left">
+<span class="font-title-md text-title-md text-primary">85 ر.س</span>
+<span class="block text-outline font-label-sm text-label-sm">للمتر</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 py-4 border-y border-surface-container my-4">
+<div>
+<p class="text-outline font-label-sm text-label-sm mb-0.5">رقم القطعة (SKU)</p>
+<p class="text-on-surface font-body-md text-body-md">NSJ-CTN-442</p>
+</div>
+<div>
+<p class="text-outline font-label-sm text-label-sm mb-0.5">أدنى كمية (MOQ)</p>
+<p class="text-on-surface font-body-md text-body-md">100 متر</p>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<span class="text-on-surface-variant font-body-md text-body-md">المخزون: 12 م</span>
+</div>
+<div class="flex gap-1">
+<button class="p-2 rounded-lg hover:bg-primary-container/10 text-primary transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-surface-variant text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">content_copy</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-surface-variant text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all group border border-surface-container">
+<div class="relative h-56">
+<img class="w-full h-full object-cover" data-alt="High-contrast close-up of textured charcoal wool fabric for luxury suits. The lighting captures the depth of the weave and the premium quality of the material. Sophisticated corporate textile style with deep neutral tones and a sharp, professional focus. Cinematic lighting, professional catalog style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJhZREDsQr0YWheWAEtdzJ3aX70MPYUwkE4tdMiKIbyw0k4MBxV4bn3g7z1cNXcmLr9Qrpv_O-Na5CZ8TfuzPNMxlNSwA1vAD9GSh2qIvVTvlfbgrXfadc2xjalEvRbBP2PxXwpEXJd-YZlIsVbrVPVlxHsBPbaopFVwQhHlOf6RKBF1oKyhuLM6RSEkGtZZWznJws9d1ig80Kky_GPuikXMBmPsCHdTCp4MenlmqZvcbYtxJxohTf1GvUNBRN3w6TXTW0bPfB2NM"/>
+<div class="absolute top-4 right-4 flex gap-2">
+<span class="bg-outline text-on-surface px-3 py-1 rounded-full text-label-sm font-label-sm shadow-sm">مخفي</span>
+</div>
+</div>
+<div class="p-5">
+<div class="flex justify-between items-start mb-2">
+<div>
+<span class="text-primary font-label-sm text-label-sm mb-1 block">صوف فاخر</span>
+<h4 class="font-title-lg text-title-lg text-on-surface">صوف شتوي إيطالي</h4>
+</div>
+<div class="text-left">
+<span class="font-title-md text-title-md text-primary">320 ر.س</span>
+<span class="block text-outline font-label-sm text-label-sm">للمتر</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4 py-4 border-y border-surface-container my-4">
+<div>
+<p class="text-outline font-label-sm text-label-sm mb-0.5">رقم القطعة (SKU)</p>
+<p class="text-on-surface font-body-md text-body-md">NSJ-WOL-098</p>
+</div>
+<div>
+<p class="text-outline font-label-sm text-label-sm mb-0.5">أدنى كمية (MOQ)</p>
+<p class="text-on-surface font-body-md text-body-md">20 متر</p>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<span class="text-on-surface-variant font-body-md text-body-md">المخزون: 450 م</span>
+</div>
+<div class="flex gap-1">
+<button class="p-2 rounded-lg hover:bg-primary-container/10 text-primary transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-surface-variant text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">content_copy</span>
+</button>
+<button class="p-2 rounded-lg hover:bg-surface-variant text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB for adding new product (Contextual) -->
+<button class="fixed bottom-24 left-6 md:bottom-8 md:left-8 w-14 h-14 bg-secondary text-on-secondary rounded-2xl shadow-xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-40 group">
+<span class="material-symbols-outlined text-[32px]">add</span>
+<span class="absolute right-full mr-4 bg-inverse-surface text-inverse-on-surface px-4 py-2 rounded-lg text-label-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none shadow-lg">إضافة منتج جديد</span>
+</button>
+<!-- Bottom Navigation (JSON Mapping: BottomNavBar) -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center py-3 px-2 bg-surface-container md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-lg text-label-lg">الرئيسية</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-5 py-1 transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-lg text-label-lg">المنتجات</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-lg text-label-lg">الطلبات</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">chat</span>
+<span class="font-label-lg text-label-lg">الرسائل</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-lg text-label-lg">الحساب</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions and effects
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.group');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    // Visual feedback handled by Tailwind classes mostly
+                });
+            });
+
+            // Quick search filter logic placeholder
+            const searchInput = document.querySelector('input[type="text"]');
+            searchInput.addEventListener('input', (e) => {
+                console.log('Filtering products for:', e.target.value);
+                // Implementation for real-time filtering would go here
+            });
+        });
+    </script>
+</body></html>

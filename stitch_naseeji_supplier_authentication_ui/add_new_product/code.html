@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'IBM Plex Sans Arabic', 'IBM Plex Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .step-active {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#191b24",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#2e5bff",
+                        "primary": "#0040e0",
+                        "inverse-on-surface": "#f0effd",
+                        "surface-bright": "#fbf8ff",
+                        "on-primary": "#ffffff",
+                        "surface": "#fbf8ff",
+                        "surface-container-low": "#f3f2ff",
+                        "on-secondary-fixed-variant": "#005047",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e2e1ef",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#51dbc8",
+                        "on-error": "#ffffff",
+                        "background": "#fbf8ff",
+                        "on-primary-fixed-variant": "#0035be",
+                        "on-primary-fixed": "#001356",
+                        "inverse-primary": "#b8c3ff",
+                        "surface-dim": "#d9d9e6",
+                        "on-tertiary-container": "#ffece6",
+                        "on-secondary-container": "#007165",
+                        "outline-variant": "#c4c5d9",
+                        "on-tertiary": "#ffffff",
+                        "secondary-container": "#72f8e4",
+                        "surface-container": "#ededfa",
+                        "on-secondary-fixed": "#00201c",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#191b24",
+                        "on-tertiary-fixed": "#380d00",
+                        "primary-fixed": "#dde1ff",
+                        "on-tertiary-fixed-variant": "#812800",
+                        "tertiary-fixed": "#ffdbcf",
+                        "outline": "#747688",
+                        "surface-container-high": "#e7e7f4",
+                        "secondary-fixed": "#72f8e4",
+                        "tertiary-fixed-dim": "#ffb59b",
+                        "on-primary-container": "#efefff",
+                        "inverse-surface": "#2e303a",
+                        "tertiary-container": "#c24100",
+                        "surface-tint": "#124af0",
+                        "primary-fixed-dim": "#b8c3ff",
+                        "on-surface-variant": "#434656",
+                        "tertiary": "#993100",
+                        "surface-container-highest": "#e2e1ef",
+                        "on-error-container": "#93000a",
+                        "secondary": "#006b5f"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "margin-desktop": "32px",
+                        "gutter": "24px",
+                        "max-width": "1440px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "title-md": ["IBM Plex Sans Arabic"],
+                        "display-lg": ["IBM Plex Sans Arabic"],
+                        "body-md": ["IBM Plex Sans Arabic"],
+                        "headline-lg": ["IBM Plex Sans Arabic"],
+                        "headline-md": ["IBM Plex Sans Arabic"],
+                        "label-lg": ["IBM Plex Sans Arabic"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-on-background flex items-center justify-between px-margin-mobile md:px-margin-desktop h-16 w-full sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<button aria-label="Back" class="material-symbols-outlined text-primary cursor-pointer active:scale-95 transition-transform">arrow_forward</button>
+<h1 class="font-display-lg text-title-lg text-primary">Naseeji</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer active:scale-95">search</span>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a Middle Eastern male executive in a sleek, modern corporate office. The lighting is soft and professional with a shallow depth of field, highlighting high-end textile samples in the background. The aesthetic is clean, luxurious, and emphasizes trustworthiness and smart factory leadership." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwdcc7_JG_FpqYPM_3USUy2u_gX1xKNh2O8AjHeN4bAASsFm6R57Bjz0ZoPFzPuZ3eLTSvU9sIMlKh4KRg0KUdRf1du2ZHmrdK4tLNeHYfj7tGOSiCQlVfUFElxH3MFUEnGUWFYEyBQuCNm7QAvcuFhXI9TO3eH5yKEVHsmPx3zHJTNjVVxkUGfPOLFbQ0m7hGLDmzNW6555G3hnH5n_ESPxddlQspF8xPOlagzv5WMsCD2HjpfNSZONdZI3R8b5RlmMQJvYj6bAY"/>
+</div>
+</div>
+</header>
+<main class="flex-grow w-full max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop py-8">
+<!-- Page Header -->
+<div class="mb-10">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">إضافة منتج جديد</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">أدخل التفاصيل الأساسية للمنسوجات الخاصة بك للبدء</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Progress Stepper (Left/Side Column for Desktop) -->
+<div class="lg:col-span-3 space-y-6">
+<div class="flex flex-col gap-8 relative">
+<!-- Progress Line -->
+<div class="absolute right-5 top-4 bottom-4 w-0.5 bg-surface-container-highest"></div>
+<!-- Step 1 (Active) -->
+<div class="flex items-center gap-4 relative z-10">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-md">
+<span class="font-label-lg text-label-lg">1</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-primary">المعلومات الأساسية</span>
+<span class="text-xs text-on-surface-variant">الاسم، الوصف، الفئة</span>
+</div>
+</div>
+<!-- Step 2 (Pending) -->
+<div class="flex items-center gap-4 relative z-10">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center">
+<span class="font-label-lg text-label-lg">2</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface-variant">المواصفات الفنية</span>
+<span class="text-xs text-outline">الوزن، الكثافة، الغرز</span>
+</div>
+</div>
+<!-- Step 3 (Pending) -->
+<div class="flex items-center gap-4 relative z-10">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center">
+<span class="font-label-lg text-label-lg">3</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface-variant">التسعير والمخزون</span>
+<span class="text-xs text-outline">الأسعار، الكميات المتاحة</span>
+</div>
+</div>
+<!-- Step 4 (Pending) -->
+<div class="flex items-center gap-4 relative z-10">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center">
+<span class="font-label-lg text-label-lg">4</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface-variant">الصور والملفات</span>
+<span class="text-xs text-outline">رفع الوسائط والشهادات</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Form Content -->
+<div class="lg:col-span-9">
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-sm border border-surface-variant/50">
+<form class="space-y-8">
+<!-- Section: Identity -->
+<div class="space-y-6">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">info</span>
+<h3 class="font-title-md text-title-md text-on-surface">هوية المنتج</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Product Name -->
+<div class="flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-on-surface-variant mr-1">اسم المنتج</label>
+<input class="w-full h-14 px-4 rounded-xl border border-outline-variant bg-surface-bright focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all font-body-md text-body-md" placeholder="مثال: قطن مصري فاخر 100%" type="text" value="قطن مصري فاخر 100%"/>
+</div>
+<!-- Category -->
+<div class="flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-on-surface-variant mr-1">الفئة</label>
+<div class="relative">
+<select class="w-full h-14 px-4 rounded-xl border border-outline-variant bg-surface-bright focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all appearance-none font-body-md text-body-md">
+<option>خيوط طبيعية</option>
+<option>أقمشة قطنية</option>
+<option>حرير طبيعي</option>
+<option>منسوجات صناعية</option>
+</select>
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Short Description -->
+<div class="flex flex-col gap-2">
+<label class="font-label-lg text-label-lg text-on-surface-variant mr-1">وصف مختصر</label>
+<textarea class="w-full p-4 rounded-xl border border-outline-variant bg-surface-bright focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all font-body-md text-body-md resize-none" placeholder="أدخل وصفاً موجزاً للمنتج ومميزاته الرئيسية..." rows="3"></textarea>
+<p class="text-xs text-outline text-left">0 / 200 حرف</p>
+</div>
+</div>
+<!-- Section: Classification -->
+<div class="space-y-6 pt-6 border-t border-surface-variant">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">category</span>
+<h3 class="font-title-md text-title-md text-on-surface">نوع المنتج والاستخدام</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Product Type Selection -->
+<div class="flex flex-col gap-4">
+<label class="font-label-lg text-label-lg text-on-surface-variant">طبيعة المنتج</label>
+<div class="flex gap-4">
+<label class="flex-1 cursor-pointer group">
+<input checked="" class="hidden peer" name="prod_type" type="radio"/>
+<div class="h-20 flex flex-col items-center justify-center rounded-xl border border-outline-variant bg-surface-bright peer-checked:border-primary peer-checked:bg-primary-container peer-checked:text-on-primary-container transition-all group-hover:bg-surface-container-low">
+<span class="material-symbols-outlined mb-1">storefront</span>
+<span class="font-label-lg text-label-lg">تجزئة</span>
+</div>
+</label>
+<label class="flex-1 cursor-pointer group">
+<input class="hidden peer" name="prod_type" type="radio"/>
+<div class="h-20 flex flex-col items-center justify-center rounded-xl border border-outline-variant bg-surface-bright peer-checked:border-primary peer-checked:bg-primary-container peer-checked:text-on-primary-container transition-all group-hover:bg-surface-container-low">
+<span class="material-symbols-outlined mb-1">factory</span>
+<span class="font-label-lg text-label-lg">صناعي</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Visibility/Status -->
+<div class="flex flex-col gap-4">
+<label class="font-label-lg text-label-lg text-on-surface-variant">حالة العرض</label>
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl border border-outline-variant">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface">متاح للطلب المباشر</span>
+<span class="text-xs text-on-surface-variant">سيتمكن العملاء من الشراء فوراً</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-outline-variant peer-focus:outline-none rounded-full peer peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- Form Actions -->
+<div class="flex items-center justify-end gap-4 pt-10">
+<button class="px-8 h-12 rounded-full border border-primary text-primary font-title-md text-title-md hover:bg-surface-container-low active:scale-95 transition-all" type="button">حفظ كمسودة</button>
+<button class="px-10 h-12 rounded-full bg-primary text-on-primary font-title-md text-title-md shadow-md hover:shadow-lg hover:bg-primary-container transition-all active:scale-95 flex items-center gap-2" type="submit">
+                                التالي
+                                <span class="material-symbols-outlined">arrow_back</span>
+</button>
+</div>
+</form>
+</div>
+<!-- Guidance Card -->
+<div class="mt-8 p-6 bg-secondary-container/20 border border-secondary-container/40 rounded-xl flex gap-4">
+<span class="material-symbols-outlined text-on-secondary-container">lightbulb</span>
+<div>
+<h4 class="font-title-md text-title-md text-on-secondary-container mb-1">نصيحة للموردين</h4>
+<p class="font-body-md text-body-md text-on-secondary-container/80 leading-relaxed">استخدام أسماء وصفية دقيقة مثل "قطن جيزة 86 طويل التيلة" يساعد المصانع الذكية في العثور على منتجاتك بشكل أسرع في نتائج البحث المتقدمة.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center py-3 px-2 bg-surface-container shadow-sm rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-lg text-label-lg">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-5 py-1 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-lg text-label-lg">Products</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-lg text-label-lg">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">chat</span>
+<span class="font-label-lg text-label-lg">Messages</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-lg text-label-lg">Account</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions for form focus
+        const inputs = document.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.closest('.flex-col')?.classList.add('scale-[1.01]');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.closest('.flex-col')?.classList.remove('scale-[1.01]');
+            });
+        });
+
+        // Simple character count update
+        const textarea = document.querySelector('textarea');
+        const charCount = document.querySelector('.text-left');
+        textarea.addEventListener('input', (e) => {
+            charCount.textContent = `${e.target.value.length} / 200 حرف`;
+        });
+    </script>
+</body></html>

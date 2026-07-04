@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Technical Specifications Management - Naseeji</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-background": "#191b24",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#2e5bff",
+                    "primary": "#0040e0",
+                    "inverse-on-surface": "#f0effd",
+                    "surface-bright": "#fbf8ff",
+                    "on-primary": "#ffffff",
+                    "surface": "#fbf8ff",
+                    "surface-container-low": "#f3f2ff",
+                    "on-secondary-fixed-variant": "#005047",
+                    "error-container": "#ffdad6",
+                    "surface-variant": "#e2e1ef",
+                    "error": "#ba1a1a",
+                    "secondary-fixed-dim": "#51dbc8",
+                    "on-error": "#ffffff",
+                    "background": "#fbf8ff",
+                    "on-primary-fixed-variant": "#0035be",
+                    "on-primary-fixed": "#001356",
+                    "inverse-primary": "#b8c3ff",
+                    "surface-bright": "#fbf8ff",
+                    "on-tertiary-container": "#ffece6",
+                    "on-secondary-container": "#007165",
+                    "outline-variant": "#c4c5d9",
+                    "on-tertiary": "#ffffff",
+                    "secondary-container": "#72f8e4",
+                    "surface-container": "#ededfa",
+                    "on-secondary-fixed": "#00201c",
+                    "on-secondary": "#ffffff",
+                    "on-surface": "#191b24",
+                    "on-tertiary-fixed": "#380d00",
+                    "primary-fixed": "#dde1ff",
+                    "on-tertiary-fixed-variant": "#812800",
+                    "tertiary-fixed": "#ffdbcf",
+                    "outline": "#747688",
+                    "surface-container-high": "#e7e7f4",
+                    "secondary-fixed": "#72f8e4",
+                    "tertiary-fixed-dim": "#ffb59b",
+                    "on-primary-container": "#efefff",
+                    "inverse-surface": "#2e303a",
+                    "tertiary-container": "#c24100",
+                    "surface-tint": "#124af0",
+                    "primary-fixed-dim": "#b8c3ff",
+                    "on-surface-variant": "#434656",
+                    "tertiary": "#993100",
+                    "surface-container-highest": "#e2e1ef",
+                    "on-error-container": "#93000a",
+                    "secondary": "#006b5f"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "margin-desktop": "32px",
+                    "gutter": "24px",
+                    "max-width": "1440px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "title-md": ["IBM Plex Sans"],
+                    "display-lg": ["IBM Plex Sans"],
+                    "body-md": ["IBM Plex Sans"],
+                    "headline-lg-mobile": ["IBM Plex Sans"],
+                    "body-lg": ["IBM Plex Sans"],
+                    "title-lg": ["IBM Plex Sans"],
+                    "label-sm": ["IBM Plex Sans"],
+                    "label-lg": ["IBM Plex Sans"],
+                    "headline-lg": ["IBM Plex Sans"],
+                    "headline-md": ["IBM Plex Sans"]
+            },
+            "fontSize": {
+                    "title-md": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "display-lg": ["57px", {"lineHeight": "64px", "letterSpacing": "-0.25px", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "500"}],
+                    "title-lg": ["22px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-sm": ["11px", {"lineHeight": "16px", "fontWeight": "600"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-md": ["28px", {"lineHeight": "36px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background-color: #fbf8ff;
+        }
+        .glass-header {
+            backdrop-filter: blur(12px);
+            background: rgba(251, 248, 255, 0.85);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f3f2ff;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c4c5d9;
+            border-radius: 10px;
+        }
+        .premium-shadow {
+            box-shadow: 0 4px 20px rgba(0,0,0, 0.04);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface overflow-x-hidden">
+<!-- Top AppBar -->
+<header class="glass-header sticky top-0 z-40 w-full flex items-center justify-between px-margin-mobile md:px-margin-desktop h-16 bg-surface">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary cursor-pointer active:scale-95 transition-transform">menu</button>
+<h1 class="font-display-lg text-title-lg text-primary font-bold">Naseeji</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="hidden md:block font-label-lg text-on-surface-variant">Admin Console</span>
+<button class="material-symbols-outlined text-primary cursor-pointer active:scale-95">search</button>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold">NA</div>
+</div>
+</header>
+<main class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-8 pb-32">
+<!-- Breadcrumbs & Product Code -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+<div>
+<nav class="flex items-center gap-2 text-on-surface-variant mb-2">
+<span class="font-label-lg">المخزون</span>
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+<span class="font-label-lg">إدارة المنتجات</span>
+</nav>
+<h2 class="font-headline-md text-headline-md text-on-surface">Technical Specifications Management</h2>
+<p class="text-on-surface-variant font-body-md mt-1">تعديل الخصائص التقنية والبيانات الهندسية للمنسوجات</p>
+</div>
+<div class="bg-primary-container/10 border border-primary-container px-4 py-2 rounded-xl flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">qr_code_2</span>
+<div>
+<p class="text-xs text-primary font-bold uppercase tracking-wider">كود المنتج</p>
+<p class="font-title-md text-primary">TX-9920</p>
+</div>
+</div>
+</div>
+<!-- Main Content Area: Bento Style -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Technical Specs Table Section -->
+<div class="lg:col-span-8 bg-surface-container-lowest rounded-xl premium-shadow overflow-hidden border border-surface-variant flex flex-col">
+<div class="p-6 border-b border-surface-variant flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">settings_input_component</span>
+<h3 class="font-title-md">جدول المواصفات</h3>
+</div>
+<button class="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-full font-label-lg hover:bg-primary-container transition-colors active:scale-95" onclick="addRow()">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>إضافة مواصفة</span>
+</button>
+</div>
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-right border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant">
+<th class="p-4 font-label-lg border-b border-surface-variant">المعلمة (Parameter)</th>
+<th class="p-4 font-label-lg border-b border-surface-variant">القيمة (Value)</th>
+<th class="p-4 font-label-lg border-b border-surface-variant">الوحدة (Unit)</th>
+<th class="p-4 font-label-lg border-b border-surface-variant w-16">إجراء</th>
+</tr>
+</thead>
+<tbody id="specs-body">
+<!-- Pre-filled Rows -->
+<tr class="border-b border-surface-variant hover:bg-surface-bright transition-colors group">
+<td class="p-4"><input class="w-full bg-transparent border-none focus:ring-2 focus:ring-primary/20 rounded-lg font-body-md text-on-surface" type="text" value="Material"/></td>
+<td class="p-4"><input class="w-full bg-transparent border-none focus:ring-2 focus:ring-primary/20 rounded-lg font-body-md text-on-surface" type="text" value="Organic Cotton"/></td>
+<td class="p-4"><input class="w-full bg-transparent border-none focus:ring-2 focus:ring-primary/20 rounded-lg font-body-md text-on-surface" type="text" value="%"/></td>
+<td class="p-4"><button class="material-symbols-outlined text-outline hover:text-error transition-colors opacity-0 group-hover:opacity-100" onclick="removeRow(this)">delete</button></td>
+</tr>
+<tr class="border-b border-surface-variant hover:bg-surface-bright transition-colors group">
+<td class="p-4"><input class="w-full bg-transparent border-none focus:ring-2 focus:ring-primary/20 rounded-lg font-body-md text-on-surface" type="text" value="Fabric Type"/></td>
+<td class="p-4"><input class="w-full bg-transparent border-none focus:ring-2 focus:ring-primary/20 rounded-lg font-body-md text-on-surface" type="text" value="Jacquard Weave"/></td>
+<td class="p-4"><input class="w-full bg-transparent border-none focus:ring-2 focus:ring-primary/20 rounded-lg font-body-md text-on-surface" type="text" value="N/A"/></td>
+<td class="p-4"><button class="material-symbols-outlined text-outline hover:text-error transition-colors opacity-0 group-hover:opacity-100" onclick="removeRow(this)">delete</button></td>
+</tr>
+<tr class="border-b border-surface-variant hover:bg-surface-bright transition-colors group">
+<td class="p-4"><input class="w-full bg-transparent border-none focus:ring-2 focus:ring-primary/20 rounded-lg font-body-md text-on-surface" type="text" value="Width"/></td>
+<td class="p-4"><input class="w-full bg-transparent border-none focus:ring-2 focus:ring-primary/20 rounded-lg font-body-md text-on-surface" type="text" value="150"/></td>
+<td class="p-4"><input class="w-full bg-transparent border-none focus:ring-2 focus:ring-primary/20 rounded-lg font-body-md text-on-surface" type="text" value="cm"/></td>
+<td class="p-4"><button class="material-symbols-outlined text-outline hover:text-error transition-colors opacity-0 group-hover:opacity-100" onclick="removeRow(this)">delete</button></td>
+</tr>
+<tr class="border-b border-surface-variant hover:bg-surface-bright transition-colors group">
+<td class="p-4"><input class="w-full bg-transparent border-none focus:ring-2 focus:ring-primary/20 rounded-lg font-body-md text-on-surface" type="text" value="Thickness"/></td>
+<td class="p-4"><input class="w-full bg-transparent border-none focus:ring-2 focus:ring-primary/20 rounded-lg font-body-md text-on-surface" type="text" value="0.45"/></td>
+<td class="p-4"><input class="w-full bg-transparent border-none focus:ring-2 focus:ring-primary/20 rounded-lg font-body-md text-on-surface" type="text" value="mm"/></td>
+<td class="p-4"><button class="material-symbols-outlined text-outline hover:text-error transition-colors opacity-0 group-hover:opacity-100" onclick="removeRow(this)">delete</button></td>
+</tr>
+<tr class="border-b border-surface-variant hover:bg-surface-bright transition-colors group">
+<td class="p-4"><input class="w-full bg-transparent border-none focus:ring-2 focus:ring-primary/20 rounded-lg font-body-md text-on-surface" type="text" value="Weight"/></td>
+<td class="p-4"><input class="w-full bg-transparent border-none focus:ring-2 focus:ring-primary/20 rounded-lg font-body-md text-on-surface" type="text" value="280"/></td>
+<td class="p-4"><input class="w-full bg-transparent border-none focus:ring-2 focus:ring-primary/20 rounded-lg font-body-md text-on-surface" type="text" value="gsm"/></td>
+<td class="p-4"><button class="material-symbols-outlined text-outline hover:text-error transition-colors opacity-0 group-hover:opacity-100" onclick="removeRow(this)">delete</button></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 bg-surface-container-low text-center">
+<p class="text-on-surface-variant font-label-sm">استخدم الحقول أعلاه لتعديل البيانات التقنية مباشرة. يتم الحفظ التلقائي في المسودات.</p>
+</div>
+</div>
+<!-- Side Cards / Metadata -->
+<div class="lg:col-span-4 flex flex-col gap-gutter">
+<!-- Product Preview -->
+<div class="bg-surface-container-lowest rounded-xl premium-shadow p-6 border border-surface-variant">
+<h3 class="font-title-md mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">image</span>
+                        معاينة النسيج
+                    </h3>
+<div class="relative w-full aspect-video rounded-lg overflow-hidden mb-4">
+<img class="w-full h-full object-cover" data-alt="High resolution macro shot of a luxurious dark blue organic cotton jacquard weave fabric showing intricate textile patterns and texture. The lighting is soft studio light highlighting the premium finish and thickness of the material. Minimalist modern B2B aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtPuKgA8iqbZywPd_Qn2FwQ4e1EMn7Piww4dUYRlx_fGfa-uI4rwDwIRl5w0gd-uWyINA2koWUOp-iMH8QUCT6kQvpi6w2IYPDQO0UOlFsd0PMrfZhvgNfacHnn8j-Rrl60ZgbR_OOiTze4hA2H3WXYNPaPd6rE2vkUBUQkrTdQ-PCuoIFqljkgPJnUjifm7A1O3Bp6-0GslTc-BrE7U_krxm64p_ZU1eQfC1SIdlhz91y7C2mluIeWKndpL5I6zM_DXSeSAkaxVY"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+<div class="absolute bottom-3 right-3 text-white">
+<p class="font-label-lg">Cotton-Mix 2024</p>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center py-2 border-b border-surface-variant">
+<span class="text-on-surface-variant font-body-md">الحالة</span>
+<span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-xs font-bold">نشط</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-surface-variant">
+<span class="text-on-surface-variant font-body-md">آخر تحديث</span>
+<span class="text-on-surface font-body-md">12 مارس 2024</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="text-on-surface-variant font-body-md">المسؤول</span>
+<span class="text-on-surface font-body-md">سارة أحمد</span>
+</div>
+</div>
+</div>
+<!-- Info Card -->
+<div class="bg-primary text-on-primary rounded-xl p-6 premium-shadow relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="font-title-md mb-2">تأثير المواصفات</h3>
+<p class="font-body-md opacity-90 leading-relaxed">تؤثر هذه القيم مباشرة على حسابات التكلفة اللوجستية وقدرة الماكينات الذكية في المصنع على معالجة المنتج.</p>
+<div class="mt-4 flex items-center gap-2">
+<span class="material-symbols-outlined">info</span>
+<span class="text-xs font-label-lg">تأكد من دقة أوزان الـ gsm</span>
+</div>
+</div>
+<!-- Decorative background icon -->
+<span class="material-symbols-outlined absolute -bottom-6 -left-6 text-[120px] opacity-10 pointer-events-none">factory</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Actions Bar -->
+<div class="fixed bottom-0 w-full z-50 bg-surface-container-lowest border-t border-surface-variant px-margin-mobile md:px-margin-desktop py-4 flex items-center justify-between">
+<div class="flex gap-4">
+<button class="bg-primary text-on-primary px-8 py-3 rounded-full font-title-md hover:bg-primary-container transition-all active:scale-95 shadow-md">
+                حفظ التغييرات
+            </button>
+<button class="text-primary border border-primary px-8 py-3 rounded-full font-title-md hover:bg-primary/5 transition-all active:scale-95">
+                إلغاء
+            </button>
+</div>
+<div class="hidden md:flex items-center gap-4 text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+<span class="font-label-sm">اتصال آمن</span>
+</div>
+<div class="w-px h-6 bg-surface-variant"></div>
+<span class="font-label-sm">آخر مزامنة: منذ دقيقتين</span>
+</div>
+</div>
+<!-- Mobile Bottom Nav Spacer -->
+<div class="h-16 md:hidden"></div>
+<script>
+        function addRow() {
+            const body = document.getElementById('specs-body');
+            const newRow = document.createElement('tr');
+            newRow.className = 'border-b border-surface-variant hover:bg-surface-bright transition-colors group animate-in fade-in slide-in-from-top-2 duration-300';
+            newRow.innerHTML = `
+                <td class="p-4"><input type="text" placeholder="Parameter" class="w-full bg-transparent border-none focus:ring-2 focus:ring-primary/20 rounded-lg font-body-md text-on-surface" /></td>
+                <td class="p-4"><input type="text" placeholder="Value" class="w-full bg-transparent border-none focus:ring-2 focus:ring-primary/20 rounded-lg font-body-md text-on-surface" /></td>
+                <td class="p-4"><input type="text" placeholder="Unit" class="w-full bg-transparent border-none focus:ring-2 focus:ring-primary/20 rounded-lg font-body-md text-on-surface" /></td>
+                <td class="p-4"><button onclick="removeRow(this)" class="material-symbols-outlined text-outline hover:text-error transition-colors opacity-0 group-hover:opacity-100">delete</button></td>
+            `;
+            body.appendChild(newRow);
+        }
+
+        function removeRow(btn) {
+            const row = btn.closest('tr');
+            row.classList.add('animate-out', 'fade-out', 'zoom-out-95', 'duration-200');
+            setTimeout(() => {
+                row.remove();
+            }, 150);
+        }
+
+        // Quick interaction for inputs
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', () => {
+                input.closest('tr').classList.add('bg-primary/5');
+            });
+            input.addEventListener('blur', () => {
+                input.closest('tr').classList.remove('bg-primary/5');
+            });
+        });
+    </script>
+</body></html>

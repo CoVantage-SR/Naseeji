@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&amp;family=IBM+Plex+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'IBM Plex Sans Arabic', 'IBM Plex Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e1ef;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#191b24",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#2e5bff",
+                        "primary": "#0040e0",
+                        "inverse-on-surface": "#f0effd",
+                        "surface-bright": "#fbf8ff",
+                        "on-primary": "#ffffff",
+                        "surface": "#fbf8ff",
+                        "surface-container-low": "#f3f2ff",
+                        "on-secondary-fixed-variant": "#005047",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e2e1ef",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#51dbc8",
+                        "on-error": "#ffffff",
+                        "background": "#fbf8ff",
+                        "on-primary-fixed-variant": "#0035be",
+                        "on-primary-fixed": "#001356",
+                        "inverse-primary": "#b8c3ff",
+                        "surface-dim": "#d9d9e6",
+                        "on-tertiary-container": "#ffece6",
+                        "on-secondary-container": "#007165",
+                        "outline-variant": "#c4c5d9",
+                        "on-tertiary": "#ffffff",
+                        "secondary-container": "#72f8e4",
+                        "surface-container": "#ededfa",
+                        "on-secondary-fixed": "#00201c",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#191b24",
+                        "on-tertiary-fixed": "#380d00",
+                        "primary-fixed": "#dde1ff",
+                        "on-tertiary-fixed-variant": "#812800",
+                        "tertiary-fixed": "#ffdbcf",
+                        "outline": "#747688",
+                        "surface-container-high": "#e7e7f4",
+                        "secondary-fixed": "#72f8e4",
+                        "tertiary-fixed-dim": "#ffb59b",
+                        "on-primary-container": "#efefff",
+                        "inverse-surface": "#2e303a",
+                        "tertiary-container": "#c24100",
+                        "surface-tint": "#124af0",
+                        "primary-fixed-dim": "#b8c3ff",
+                        "on-surface-variant": "#434656",
+                        "tertiary": "#993100",
+                        "surface-container-highest": "#e2e1ef",
+                        "on-error-container": "#93000a",
+                        "secondary": "#006b5f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "margin-desktop": "32px",
+                        "gutter": "24px",
+                        "max-width": "1440px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "title-md": ["IBM Plex Sans Arabic"],
+                        "display-lg": ["IBM Plex Sans Arabic"],
+                        "body-md": ["IBM Plex Sans Arabic"],
+                        "headline-lg-mobile": ["IBM Plex Sans Arabic"],
+                        "body-lg": ["IBM Plex Sans Arabic"],
+                        "title-lg": ["IBM Plex Sans Arabic"],
+                        "label-sm": ["IBM Plex Sans Arabic"],
+                        "label-lg": ["IBM Plex Sans Arabic"],
+                        "headline-lg": ["IBM Plex Sans Arabic"],
+                        "headline-md": ["IBM Plex Sans Arabic"]
+                    },
+                    "fontSize": {
+                        "title-md": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "display-lg": ["57px", {"lineHeight": "64px", "letterSpacing": "-0.25px", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "500"}],
+                        "title-lg": ["22px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-sm": ["11px", {"lineHeight": "16px", "fontWeight": "600"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-md": ["28px", {"lineHeight": "36px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-24 md:pb-0">
+<!-- Top Navigation -->
+<nav class="bg-surface sticky top-0 z-50 flex items-center justify-between px-margin-mobile md:px-margin-desktop h-16 w-full shadow-sm">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface hover:bg-surface-container-low transition-colors p-2 rounded-full cursor-pointer active:scale-95">arrow_forward</button>
+<h1 class="font-headline-md text-headline-md text-primary">مشاركة المنتج</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="material-symbols-outlined text-primary hover:bg-surface-container-low transition-colors p-2 rounded-full cursor-pointer active:scale-95">search</button>
+<button class="material-symbols-outlined text-on-surface hover:bg-surface-container-low transition-colors p-2 rounded-full cursor-pointer active:scale-95">more_vert</button>
+</div>
+</nav>
+<main class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-8 grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Right Column: Product Preview & Direct Actions -->
+<div class="lg:col-span-7 space-y-6">
+<!-- Product Identity Card -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm border-t-4 border-primary">
+<div class="flex gap-6 items-start">
+<div class="w-32 h-32 rounded-lg bg-surface-container overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="High-resolution studio photograph of premium jacquard silk textile roll in deep indigo and gold patterns. The lighting is soft and cinematic, highlighting the intricate texture and weave of the fabric. The background is a clean, modern textile showroom with minimalist architectural details and warm directional light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQ5W3dUl7p5ldqCepyv_fQc7dYdTl_UYLl8hZvrcsfkBqPFQFJuuX6hGfqd-sYGyvytjFTbkCJ3LdEllodPTD45Ldaft9r12bxgbWpA1UP-xlrsLAUt0v8ij_GBfEnTx5WaiR0nmb5FMuhYNG0P3cESkyMMzksSCZzbf4olS0VpibloJbPyrycWS4ADMpL_xfdTnWxMId3qdZgSHX8td6JOcJebhnpLZZlLEBmqtUtjbFIzSohOFwkG7fu3YIZcMicnLOpwI7qVik"/>
+</div>
+<div class="flex-1">
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-label-sm font-label-sm mb-2 inline-block">منتج متميز</span>
+<h2 class="font-title-lg text-title-lg text-on-background mb-1">نسيج الحرير الفاخر - مجموعة 2024</h2>
+<p class="font-body-md text-body-md text-outline mb-4">SKU: NSJ-8842-SILK</p>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 px-4 py-2 bg-primary-container text-on-primary-container rounded-full font-label-lg text-label-lg transition-transform active:scale-95" onclick="copyToClipboard()">
+<span class="material-symbols-outlined">content_copy</span>
+                                نسخ الرابط
+                            </button>
+<button class="flex items-center gap-2 px-4 py-2 outline outline-1 outline-primary text-primary rounded-full font-label-lg text-label-lg transition-transform active:scale-95">
+<span class="material-symbols-outlined">qr_code_2</span>
+                                رمز QR
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Social Sharing Bento Grid -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<a class="flex flex-col items-center justify-center p-6 bg-surface-container-lowest rounded-xl hover:bg-surface-container-low transition-all active:scale-95 border border-transparent hover:border-primary/20" href="#">
+<div class="w-12 h-12 rounded-full bg-[#25D366]/10 flex items-center justify-center mb-3">
+<img alt="WhatsApp" class="w-6 h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCV1h_kHfoGHcE6lYfNveLLao-WpdvwQaxwpQ0kU5F-tojSYxvQiHg1dlQ6hvTdHcpV_3DAnsN1OzF9mA4B3qUc0vkj4CWqE4DXh0ivAWd7dRNGDnTC4rBlYXtB81BLFHPpG4uHteotGHKXCtfOmAD-p6-HGW0N_Vnmhmqr2DXEqGv6CA4VhU8W2J7Qs0HCBOK175mYaG1NUbR-husY4qKJUifWyn2cxbV5r6dgwtCVAkKN3TCn_MHSIifNanHo5__4NkzpOOezpU"/>
+</div>
+<span class="font-label-lg text-label-lg">واتساب</span>
+</a>
+<a class="flex flex-col items-center justify-center p-6 bg-surface-container-lowest rounded-xl hover:bg-surface-container-low transition-all active:scale-95 border border-transparent hover:border-primary/20" href="#">
+<div class="w-12 h-12 rounded-full bg-[#1877F2]/10 flex items-center justify-center mb-3">
+<img alt="Facebook" class="w-6 h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDx3GS75SOLmbEpGzA7A_Yth28i93Qm_NunqjivNDH4g-ZcsEahpPJ810kKG5l07VQsfJYO6mguvNXTO_bgYAV-eQmCMj3u2cTJGSExWEHc54_xiT4u6szazPTSfgUK0TV-nVxbB1On5urTfvDL-lskHW0Pbe7U9EZJNbqbeEyWyfdBx_jAMxpsaq4Ve4TxaxzA98i907BPt5BCY31GCuhiSjKBRNysv3zAV-4NPgDm0NMFlW9JsyWnUp95netIQPWjl0qYk6NITdI"/>
+</div>
+<span class="font-label-lg text-label-lg">فيسبوك</span>
+</a>
+<a class="flex flex-col items-center justify-center p-6 bg-surface-container-lowest rounded-xl hover:bg-surface-container-low transition-all active:scale-95 border border-transparent hover:border-primary/20" href="#">
+<div class="w-12 h-12 rounded-full bg-[#0A66C2]/10 flex items-center justify-center mb-3">
+<img alt="LinkedIn" class="w-6 h-6" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYDkvo7CbvOAR9iilX7HTGe6CQGuIMdEQI_2KcOxVzBUNbM2K8FxdJWoPLDTSveooedFUd6PcOZt3m1kjSI3yJNGTY3s19RK8helHzJsGgHlprumKRSSbDY3OFgCqKuXi2_MVYngUDou969LJcoZ3xx397-odKDkCLiEuQsl8MGv9xI7Q8z6g3xQPNC_DZx8YyVGHEEeOW7kmidfJcsk8wzsQ7q_tXSD8chtBKdl7o2MUnoOK_VwiW5K4-kw_G_joJVLZz9anPJRY"/>
+</div>
+<span class="font-label-lg text-label-lg">لينكد إن</span>
+</a>
+<a class="flex flex-col items-center justify-center p-6 bg-surface-container-lowest rounded-xl hover:bg-surface-container-low transition-all active:scale-95 border border-transparent hover:border-primary/20" href="#">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3 text-primary">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<span class="font-label-lg text-label-lg">البريد</span>
+</a>
+</div>
+<!-- Export Actions -->
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-sm">
+<h3 class="font-title-md text-title-md mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">file_download</span>
+                    خيارات التصدير المتقدمة
+                </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<button class="flex items-center justify-between p-4 rounded-lg bg-surface-bright border border-outline-variant hover:border-primary transition-colors group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-error-container/20 flex items-center justify-center text-error">
+<span class="material-symbols-outlined">picture_as_pdf</span>
+</div>
+<div class="text-right">
+<p class="font-label-lg text-label-lg text-on-surface">تصدير كملف PDF</p>
+<p class="text-xs text-outline">يتضمن الصور والمواصفات</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transform -rotate-180">chevron_left</span>
+</button>
+<button class="flex items-center justify-between p-4 rounded-lg bg-surface-bright border border-outline-variant hover:border-primary transition-colors group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">link</span>
+</div>
+<div class="text-right">
+<p class="font-label-lg text-label-lg text-on-surface">رابط الكتالوج</p>
+<p class="text-xs text-outline">إنشاء رابط مباشر للعملاء</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transform -rotate-180">chevron_left</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Left Column: Analytics & Stats -->
+<div class="lg:col-span-5 space-y-6">
+<!-- Share Analytics Card -->
+<div class="bg-inverse-surface text-inverse-on-surface rounded-xl p-8 shadow-md relative overflow-hidden">
+<div class="absolute -right-12 -top-12 w-48 h-48 bg-primary opacity-20 rounded-full blur-3xl"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-center mb-8">
+<h3 class="font-title-lg text-title-lg">تحليلات المشاركة</h3>
+<span class="bg-primary-container text-on-primary-container px-3 py-1 rounded-full text-xs">آخر 7 أيام</span>
+</div>
+<div class="grid grid-cols-2 gap-6 mb-10">
+<div>
+<p class="text-surface-variant text-sm mb-1">إجمالي المشاهدات</p>
+<p class="font-display-lg text-headline-lg">1,284</p>
+<span class="text-secondary-fixed text-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">trending_up</span>
+                                +12% عن أمس
+                            </span>
+</div>
+<div>
+<p class="text-surface-variant text-sm mb-1">مرات التحميل</p>
+<p class="font-display-lg text-headline-lg">342</p>
+<span class="text-secondary-fixed text-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">trending_up</span>
+                                +5% عن أمس
+                            </span>
+</div>
+</div>
+<div class="space-y-4">
+<p class="text-sm font-label-lg mb-2">أكثر المنصات تفاعلاً</p>
+<div class="space-y-3">
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span>واتساب</span>
+<span>65%</span>
+</div>
+<div class="w-full bg-surface-variant/20 h-1.5 rounded-full overflow-hidden">
+<div class="bg-[#25D366] h-full rounded-full" style="width: 65%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span>البريد المباشر</span>
+<span>22%</span>
+</div>
+<div class="w-full bg-surface-variant/20 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 22%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Activity List -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm">
+<h3 class="font-title-md text-title-md mb-4">النشاط الأخير</h3>
+<div class="space-y-4">
+<div class="flex items-center gap-3 p-3 bg-surface-bright rounded-lg border-r-4 border-secondary">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined">visibility</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium">مشاهدة جديدة من دبي، الإمارات</p>
+<p class="text-xs text-outline">منذ 5 دقائق عبر واتساب</p>
+</div>
+</div>
+<div class="flex items-center gap-3 p-3 bg-surface-bright rounded-lg border-r-4 border-primary">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined">download</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium">تم تحميل ملف PDF للمواصفات</p>
+<p class="text-xs text-outline">منذ ساعتين عبر رابط مباشر</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-2 text-primary font-label-lg text-label-lg hover:bg-surface-container-low rounded-lg transition-colors">عرض التقرير الكامل</button>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile) -->
+<div class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center py-3 px-2 bg-surface-container shadow-sm rounded-t-xl">
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-lg text-label-lg">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-lg text-label-lg">Products</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-lg text-label-lg">Orders</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-5 py-1 active:scale-90 duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">share</span>
+<span class="font-label-lg text-label-lg">Share</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-lg text-label-lg">Account</span>
+</button>
+</div>
+<!-- Success Toast (Hidden by default) -->
+<div class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface px-6 py-3 rounded-full shadow-lg flex items-center gap-3 opacity-0 pointer-events-none transition-all duration-300 translate-y-4" id="toast">
+<span class="material-symbols-outlined text-secondary-fixed">check_circle</span>
+<span class="font-label-lg text-label-lg">تم نسخ الرابط بنجاح!</span>
+</div>
+<script>
+        function copyToClipboard() {
+            const toast = document.getElementById('toast');
+            // Trigger feedback
+            toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+            toast.classList.add('opacity-100', 'translate-y-0');
+            
+            setTimeout(() => {
+                toast.classList.add</script></body></html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e1ef;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#191b24",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-container": "#2e5bff",
+                        "primary": "#0040e0",
+                        "inverse-on-surface": "#f0effd",
+                        "surface-bright": "#fbf8ff",
+                        "on-primary": "#ffffff",
+                        "surface": "#fbf8ff",
+                        "surface-container-low": "#f3f2ff",
+                        "on-secondary-fixed-variant": "#005047",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e2e1ef",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#51dbc8",
+                        "on-error": "#ffffff",
+                        "background": "#fbf8ff",
+                        "on-primary-fixed-variant": "#0035be",
+                        "on-primary-fixed": "#001356",
+                        "inverse-primary": "#b8c3ff",
+                        "surface-dim": "#d9d9e6",
+                        "on-tertiary-container": "#ffece6",
+                        "on-secondary-container": "#007165",
+                        "outline-variant": "#c4c5d9",
+                        "on-tertiary": "#ffffff",
+                        "secondary-container": "#72f8e4",
+                        "surface-container": "#ededfa",
+                        "on-secondary-fixed": "#00201c",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#191b24",
+                        "on-tertiary-fixed": "#380d00",
+                        "primary-fixed": "#dde1ff",
+                        "on-tertiary-fixed-variant": "#812800",
+                        "tertiary-fixed": "#ffdbcf",
+                        "outline": "#747688",
+                        "surface-container-high": "#e7e7f4",
+                        "secondary-fixed": "#72f8e4",
+                        "tertiary-fixed-dim": "#ffb59b",
+                        "on-primary-container": "#efefff",
+                        "inverse-surface": "#2e303a",
+                        "tertiary-container": "#c24100",
+                        "surface-tint": "#124af0",
+                        "primary-fixed-dim": "#b8c3ff",
+                        "on-surface-variant": "#434656",
+                        "tertiary": "#993100",
+                        "surface-container-highest": "#e2e1ef",
+                        "on-error-container": "#93000a",
+                        "secondary": "#006b5f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "margin-desktop": "32px",
+                        "gutter": "24px",
+                        "max-width": "1440px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "title-md": ["IBM Plex Sans"],
+                        "display-lg": ["IBM Plex Sans"],
+                        "body-md": ["IBM Plex Sans"],
+                        "headline-lg-mobile": ["IBM Plex Sans"],
+                        "body-lg": ["IBM Plex Sans"],
+                        "title-lg": ["IBM Plex Sans"],
+                        "label-sm": ["IBM Plex Sans"],
+                        "label-lg": ["IBM Plex Sans"],
+                        "headline-lg": ["IBM Plex Sans"],
+                        "headline-md": ["IBM Plex Sans"]
+                    },
+                    "fontSize": {
+                        "title-md": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "display-lg": ["57px", {"lineHeight": "64px", "letterSpacing": "-0.25px", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "500"}],
+                        "title-lg": ["22px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-sm": ["11px", {"lineHeight": "16px", "fontWeight": "600"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-md": ["28px", {"lineHeight": "36px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen pb-24">
+<!-- Top App Bar -->
+<header class="sticky top-0 z-50 bg-surface/80 backdrop-blur-md flex items-center justify-between px-4 md:px-margin-desktop h-16 w-full">
+<div class="flex items-center gap-4">
+<button class="p-2 cursor-pointer active:scale-95 transition-transform text-on-surface">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-display-lg text-title-lg text-primary">Naseeji</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 cursor-pointer active:scale-95 transition-transform text-on-surface">
+<span class="material-symbols-outlined">search</span>
+</button>
+</div>
+</header>
+<main class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-8">
+<!-- Title Section -->
+<div class="mb-8">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">بلد المنشأ والشهادات</h2>
+<p class="font-body-md text-on-surface-variant">إدارة معلومات التصنيع والتوثيقات الرسمية للمصنع</p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Location & Origin -->
+<div class="lg:col-span-5 space-y-gutter">
+<section class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/30 transition-all hover:shadow-md">
+<h3 class="font-title-md text-title-md text-primary mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined">public</span>
+                        تفاصيل المنشأ
+                    </h3>
+<div class="space-y-6">
+<!-- Country Selector -->
+<div class="relative">
+<label class="block font-label-lg text-label-lg text-on-surface-variant mb-2">بلد المنشأ</label>
+<div class="relative group">
+<div class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-lg">flag</span>
+</div>
+<select class="w-full h-14 pr-12 pl-12 bg-surface rounded-xl border border-outline focus:border-primary focus:ring-1 focus:ring-primary appearance-none font-body-lg text-body-lg transition-all">
+<option selected="">المملكة العربية السعودية</option>
+<option>الإمارات العربية المتحدة</option>
+<option>مصر</option>
+<option>تركيا</option>
+<option>إيطاليا</option>
+</select>
+<div class="absolute inset-y-0 left-4 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Manufacturing Region -->
+<div>
+<label class="block font-label-lg text-label-lg text-on-surface-variant mb-2">منطقة التصنيع</label>
+<div class="relative">
+<div class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-on-surface-variant">
+<span class="material-symbols-outlined text-lg">location_on</span>
+</div>
+<input class="w-full h-14 pr-12 pl-4 bg-surface rounded-xl border border-outline focus:border-primary focus:ring-1 focus:ring-primary font-body-lg text-body-lg transition-all" placeholder="أدخل اسم المنطقة أو المدينة" type="text" value="المنطقة الصناعية الثالثة، الرياض"/>
+</div>
+</div>
+<!-- Search Preview Map -->
+<div class="mt-4 rounded-xl overflow-hidden h-48 relative border border-outline-variant">
+<div class="absolute inset-0 z-0 bg-surface-variant/50" data-location="Riyadh Industrial City" style="">
+<div class="w-full h-full bg-cover bg-center" data-alt="A high-fidelity minimalist digital map of an industrial district in Riyadh, Saudi Arabia. The map features clean lines, a sophisticated neutral color palette with subtle primary blue accents for landmarks. The style is modern corporate, professional, and clear, reflecting a high-end logistics and manufacturing interface with soft ambient shadows and elegant UI elements." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAEU6FGVN7O56TYMg4EwIg6zcITfegdboKxb3Y6mfhGpJeecJnWZacIeGD3CObQLk0mWPpex0bMiR7bzAvhqssyRLSw-Wb-7hf4Nsy1iQKwUEJDb82gw_AxOWBex5NPy9EsfUvU7hnS2psp-NSAnB_tAyuyrsfnQORFFanqlybAFElCU_R_bRojmcrhKDVO6rfpffe8sBfxNB_RXzA6gLefmn_Pum3bnfOX1XKVT18b8194RhbFGBimnF28XiFvKkQOL_BTiez-gdc')"></div>
+</div>
+<div class="absolute bottom-4 right-4 z-10 glass-effect px-4 py-2 rounded-full shadow-sm">
+<p class="text-xs font-bold text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">my_location</span>
+                                    موقع المصنع المسجل
+                                </p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Certificates Gallery -->
+<div class="lg:col-span-7 space-y-gutter">
+<section class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border border-outline-variant/30 flex flex-col h-full">
+<div class="flex items-center justify-between mb-8">
+<h3 class="font-title-md text-title-md text-primary flex items-center gap-2">
+<span class="material-symbols-outlined">verified</span>
+                            الشهادات المرفوعة
+                        </h3>
+<button class="flex items-center gap-2 bg-secondary text-on-secondary px-6 py-3 rounded-full font-label-lg text-label-lg hover:shadow-lg transition-all active:scale-95">
+<span class="material-symbols-outlined text-lg">add</span>
+                            إضافة شهادة جديدة
+                        </button>
+</div>
+<!-- Certificate Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Certificate Item 1 -->
+<div class="group relative overflow-hidden bg-surface-container-low rounded-xl border border-outline-variant/20 hover:border-primary/40 transition-all">
+<div class="aspect-[4/3] w-full overflow-hidden relative">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A professional close-up shot of an ISO 9001 quality management system certificate. The document is displayed on a clean, light surface with professional studio lighting. The aesthetic is corporate and high-end, featuring metallic textures and official stamps in a minimalist blue and white color scheme, conveying trust and international standards." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCD5OHNI-uqyVTuZL-A1zhakcY0VkYk7gZ_jlLmlVyxkLPui-LwdlIjXEsoSZg0OATpzLReaGNaHzv06bT469UIpsKqa3KVVRqwUBPuFiOncIlMd4Ndfm5vEmI5yeeM9DOxL3Ph7ylOCQ971qgQ5SRfLg36wg30CAWdpXjLpV-7yWpbj_1IHCGk_TPjNd8wZBnl-4BHUJL7L9i-3QCwqo1ypAF2bWCW1iifHe81tdQfgdWaK9qh5pJCdBqY1XGdW7FkRqTwk2CXRfo')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+<button class="w-full bg-surface-container-lowest text-primary py-2 rounded-lg font-label-lg flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-sm">visibility</span>
+                                        عرض كامل
+                                    </button>
+</div>
+</div>
+<div class="p-4 flex justify-between items-start">
+<div>
+<h4 class="font-body-lg text-body-lg text-on-surface mb-1">ISO 9001:2015</h4>
+<p class="text-xs text-on-surface-variant">تم الرفع في: 12 مايو 2023</p>
+</div>
+<span class="bg-green-100 text-green-800 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase">نشط</span>
+</div>
+</div>
+<!-- Certificate Item 2 -->
+<div class="group relative overflow-hidden bg-surface-container-low rounded-xl border border-outline-variant/20 hover:border-primary/40 transition-all">
+<div class="aspect-[4/3] w-full overflow-hidden relative">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A detailed digital rendering of an Oeko-Tex Standard 100 textile certification document. The layout is clean and professional, with a focus on sustainable textile labeling. The visual style is premium corporate with soft natural light, highlighting the green and white color palette associated with environmental sustainability and safety." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAKTMyr8GLNEX6KfVQhoJMRwJrhGz1JloeogAVgVRtavtnjebylrfPddtGgWu_2yl0iTvt9s67ondr--OtzJ15uyax2fRnRNADuMSX-8CZY-4Q09qbRO-0coOPImdMXpjviHY66CGB-P4OkYLEgNUAjrDgOPv3f7GAVttEjv2S2OYd3NP48sPqU0U8AoXe2gEdhHlQjFUCJwQrfbvB8f6chEVJu5uLeVpvNxkR2kxxwKRUys5T5ED02grw4-odf2zuAbIBd_YpR8CA')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+<button class="w-full bg-surface-container-lowest text-primary py-2 rounded-lg font-label-lg flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-sm">visibility</span>
+                                        عرض كامل
+                                    </button>
+</div>
+</div>
+<div class="p-4 flex justify-between items-start">
+<div>
+<h4 class="font-body-lg text-body-lg text-on-surface mb-1">Oeko-Tex Standard 100</h4>
+<p class="text-xs text-on-surface-variant">تم الرفع في: 05 يناير 2024</p>
+</div>
+<span class="bg-green-100 text-green-800 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase">نشط</span>
+</div>
+</div>
+<!-- Certificate Item 3 (GOTS) -->
+<div class="group relative overflow-hidden bg-surface-container-low rounded-xl border border-outline-variant/20 hover:border-primary/40 transition-all">
+<div class="aspect-[4/3] w-full overflow-hidden relative">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A high-quality certificate of Global Organic Textile Standard (GOTS) displayed in a modern frame. The background is a blurred high-end textile factory. The lighting is soft and bright, using a clean color palette of white, green, and deep indigo to reflect premium organic manufacturing credentials and environmental compliance." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAL_QHmNR1LZREqEAuqdEczXYTviXDu5nDj2PnDXgXG9RZmWbGApCI7K9UFXcoxKj_nfzib022pR8EYo2ykqq3CbbkPdpI-4G5k2iDMrCCGmKvDhmfqOITA-AGwHS02Zz8zsJkcDAEgKJEAHGFQNc46eLHQieicarJ3Y2u3qQVdsjXOPktVgtRvqFDkduXbbKSK-M2re6ECSE5MqpdBmchYmHPksPfQr4W2Zoglm4VlesCqqHMgKf6oEseWwZ7C9WfDYSviuVCH0KI')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+<button class="w-full bg-surface-container-lowest text-primary py-2 rounded-lg font-label-lg flex justify-center items-center gap-2">
+<span class="material-symbols-outlined text-sm">visibility</span>
+                                        عرض كامل
+                                    </button>
+</div>
+</div>
+<div class="p-4 flex justify-between items-start">
+<div>
+<h4 class="font-body-lg text-body-lg text-on-surface mb-1">GOTS Certification</h4>
+<p class="text-xs text-on-surface-variant">تم الرفع في: 22 فبراير 2024</p>
+</div>
+<span class="bg-amber-100 text-amber-800 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase">قيد المراجعة</span>
+</div>
+</div>
+<!-- Add New Placeholder -->
+<div class="border-2 border-dashed border-outline-variant rounded-xl flex flex-col items-center justify-center p-8 hover:bg-surface-container-low cursor-pointer transition-colors group">
+<div class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center text-primary mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">upload_file</span>
+</div>
+<p class="font-label-lg text-on-surface-variant">رفع شهادة إضافية</p>
+<p class="text-[10px] text-outline mt-1 text-center">PDF, PNG (الحد الأقصى 5 ميجابايت)</p>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- Floating Action for Mobile / Quick Save -->
+<div class="fixed bottom-24 left-6 z-40 md:hidden">
+<button class="w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center active:scale-90 transition-transform">
+<span class="material-symbols-outlined">save</span>
+</button>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center py-3 px-2 bg-surface-container rounded-t-xl shadow-sm">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-lg text-label-lg">الرئيسية</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-5 py-1 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="font-label-lg text-label-lg">المنتجات</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-lg text-label-lg">الطلبات</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">chat</span>
+<span class="font-label-lg text-label-lg">الرسائل</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-variant transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-lg text-label-lg">حسابي</span>
+</a>
+</nav>
+<!-- Sidebar Rail (Desktop) -->
+<aside class="hidden md:flex fixed right-0 top-16 h-[calc(100vh-64px)] w-20 flex-col items-center py-8 gap-8 bg-surface-bright border-l border-outline-variant/30 z-40">
+<div class="p-3 bg-secondary-container text-on-secondary-container rounded-xl cursor-pointer hover:shadow-md transition-all">
+<span class="material-symbols-outlined">warehouse</span>
+</div>
+<div class="p-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl cursor-pointer transition-all">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<div class="p-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl cursor-pointer transition-all">
+<span class="material-symbols-outlined">handshake</span>
+</div>
+<div class="mt-auto p-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl cursor-pointer transition-all">
+<span class="material-symbols-outlined">settings</span>
+</div>
+<div class="p-3 text-on-surface-variant hover:bg-surface-container-high rounded-xl cursor-pointer transition-all">
+<span class="material-symbols-outlined">help</span>
+</div>
+</aside>
+<script>
+        // Micro-interactions and Search Filter Logic
+        document.querySelectorAll('select').forEach(select => {
+            select.addEventListener('change', (e) => {
+                const ripples = document.createElement('div');
+                ripples.className = 'absolute inset-0 bg-primary/5 rounded-xl pointer-events-none transition-opacity duration-300 opacity-0';
+                e.target.parentElement.appendChild(ripples);
+                setTimeout(() => ripples.classList.add('opacity-100'), 10);
+                setTimeout(() => ripples.classList.remove('opacity-100'), 500);
+            });
+        });
+
+        // Simple animation on hover for cards
+        const cards = document.querySelectorAll('.group');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body></html>

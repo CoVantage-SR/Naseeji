@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>مدير الوسائط | TextileHub Pro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            background-color: #fbf8ff;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #c4c5d9;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-surface": "#191b24",
+                      "tertiary-fixed-dim": "#ffb59b",
+                      "surface-dim": "#d9d9e6",
+                      "on-secondary-fixed": "#00201c",
+                      "on-primary-fixed-variant": "#0035be",
+                      "surface-container-high": "#e7e7f4",
+                      "inverse-on-surface": "#f0effd",
+                      "tertiary-container": "#c24100",
+                      "on-primary-container": "#efefff",
+                      "on-error": "#ffffff",
+                      "primary-fixed-dim": "#b8c3ff",
+                      "error-container": "#ffdad6",
+                      "on-secondary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "secondary-fixed-dim": "#51dbc8",
+                      "secondary-fixed": "#72f8e4",
+                      "on-primary-fixed": "#001356",
+                      "secondary": "#006b5f",
+                      "secondary-container": "#72f8e4",
+                      "tertiary-fixed": "#ffdbcf",
+                      "background": "#fbf8ff",
+                      "on-tertiary": "#ffffff",
+                      "on-primary": "#ffffff",
+                      "primary": "#0040e0",
+                      "on-error-container": "#93000a",
+                      "inverse-primary": "#b8c3ff",
+                      "surface": "#fbf8ff",
+                      "on-surface-variant": "#434656",
+                      "surface-bright": "#fbf8ff",
+                      "on-tertiary-fixed": "#380d00",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-highest": "#e2e1ef",
+                      "outline-variant": "#c4c5d9",
+                      "surface-container": "#ededfa",
+                      "surface-tint": "#124af0",
+                      "on-secondary-container": "#007165",
+                      "primary-container": "#2e5bff",
+                      "on-tertiary-container": "#ffece6",
+                      "outline": "#747688",
+                      "tertiary": "#993100",
+                      "on-tertiary-fixed-variant": "#812800",
+                      "inverse-surface": "#2e303a",
+                      "surface-container-low": "#f3f2ff",
+                      "surface-variant": "#e2e1ef",
+                      "on-secondary-fixed-variant": "#005047",
+                      "primary-fixed": "#dde1ff",
+                      "on-background": "#191b24"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "max-width": "1440px",
+                      "unit": "4px",
+                      "margin-mobile": "16px",
+                      "margin-desktop": "32px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "title-lg": ["IBM Plex Sans Arabic"],
+                      "body-md": ["IBM Plex Sans Arabic"],
+                      "headline-lg": ["IBM Plex Sans Arabic"],
+                      "headline-md": ["IBM Plex Sans Arabic"],
+                      "label-sm": ["IBM Plex Sans Arabic"],
+                      "body-lg": ["IBM Plex Sans Arabic"],
+                      "label-lg": ["IBM Plex Sans Arabic"]
+              },
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface custom-scrollbar">
+<!-- Top AppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface shadow-sm flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 w-full">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary p-2 hover:bg-surface-container-high rounded-full transition-colors active:scale-95 duration-150">menu</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">TextileHub Pro</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-container-high rounded-full transition-colors active:scale-95 duration-150">search</button>
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed font-bold">EA</div>
+</div>
+</header>
+<main class="pt-24 pb-32 px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto">
+<!-- Header Section with Optimization Status -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-1">مدير الوسائط</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">إدارة ومعالجة صور المنتجات ومقاطع الفيديو المصنعية.</p>
+</div>
+<!-- Optimization Status Card -->
+<div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant flex items-center gap-4 min-w-[280px] shadow-sm">
+<div class="relative w-16 h-16 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-highest" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-width="6"></circle>
+<circle class="text-secondary" cx="32" cy="32" fill="transparent" r="28" stroke="currentColor" stroke-dasharray="175" stroke-dashoffset="26" stroke-width="6"></circle>
+</svg>
+<span class="absolute font-label-lg text-label-lg text-secondary">85%</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">مُحسن بنسبة 85%</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">جاهز للعرض بدقة 4K</p>
+</div>
+<button class="material-symbols-outlined text-primary ms-auto">bolt</button>
+</div>
+</div>
+<!-- Media Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Main Grid Area -->
+<div class="md:col-span-8">
+<div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+<!-- Cover Image Card (Featured) -->
+<div class="col-span-2 row-span-2 relative group rounded-2xl overflow-hidden border-2 border-primary shadow-lg aspect-square">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="A professional high-end studio photograph of a premium deep indigo textile roll showcasing intricate weaving patterns. The lighting is soft and directional, highlighting the texture and quality of the fabric. The overall aesthetic is clean, corporate, and luxurious, consistent with the TextileHub Pro brand identity." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAjyFobhad7fDkL8iOdqulwzhqtKC5q0kKV8nJO_zLMlRnycHnQwJ3k8dg02_AVDYlARbbNwIuHWv5ho1ot9PyB6c9tFx9rf4KqA5mHCFG5uZ_CZjXSB86cAK58z7HR_B-1QnlEPUBbRduvVhG5ezY4U10pGmqIVCqsXh8cixCTic0wEsfrEWloXsREtrN9OIlQ4hlsj2_pMka0UkQwV3KA3f7KmeIZnrxliM3MnbZqXIx9k_LCX0D9AbclB-lBEnKpzhBtKaBCQOk')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute top-4 right-4 bg-primary text-white px-3 py-1 rounded-full flex items-center gap-1 font-label-lg shadow-md">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                            صورة الغلاف
+                        </div>
+<div class="absolute bottom-4 right-4 left-4 flex justify-between items-end">
+<div class="text-white">
+<p class="font-label-sm opacity-80">الملف: main_textile_v1.jpg</p>
+<p class="font-title-md">نسيج بريميوم إنديجو</p>
+</div>
+<div class="flex gap-2">
+<button class="w-10 h-10 rounded-full glass-panel flex items-center justify-center text-white hover:bg-primary transition-colors"><span class="material-symbols-outlined">edit</span></button>
+<button class="w-10 h-10 rounded-full glass-panel flex items-center justify-center text-white hover:bg-error transition-colors"><span class="material-symbols-outlined">delete</span></button>
+</div>
+</div>
+</div>
+<!-- Add Image Card -->
+<button class="aspect-square rounded-2xl border-2 border-dashed border-outline-variant bg-surface-container-lowest flex flex-col items-center justify-center gap-3 text-on-surface-variant hover:border-primary hover:text-primary transition-all active:scale-95">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">add</span>
+</div>
+<span class="font-title-md">إضافة صورة</span>
+</button>
+<!-- Pending Upload Card -->
+<div class="aspect-square rounded-2xl bg-surface-container relative overflow-hidden group">
+<div class="w-full h-full bg-cover bg-center opacity-40" data-alt="Close-up macro shot of a teal synthetic fabric being processed on a modern industrial loom. The image is slightly desaturated with a professional motion blur effect. Soft studio lighting emphasizes the factory's high-tech environment." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAL4sZWEjJvVAPhlTvjAWX8WbZQ8FEm9k4CklGnDBnPaO6AVqZVVy6Ht3A9C6hl6HTxRCNZEqlUfC-p9LP5DzzmVk-jBA023-HbpBQBUv2QxwHj1OZOLjkV3L0kvWYqb5I_xK8lqVZSFuAj_GYkIidVGkzDPNh8v-_T7wcdycFU4RAplJSRAwokQTn-R15MY72vPHxN9AqerCwCUKX3uds648yhL-HCsMvK0bXaMBmHGTaBCuEU1389YVsQ-wp-bbM2iRDzzjllXHY')"></div>
+<div class="absolute inset-0 flex flex-col items-center justify-center p-6 bg-black/20">
+<span class="material-symbols-outlined text-white mb-2 animate-spin">sync</span>
+<span class="text-white font-label-lg mb-3">جاري الرفع... 65%</span>
+<div class="w-full h-1.5 bg-white/30 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[65%] rounded-full shadow-[0_0_8px_rgba(46,91,255,0.8)]"></div>
+</div>
+</div>
+</div>
+<!-- Regular Image Card -->
+<div class="aspect-square rounded-2xl overflow-hidden relative group">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105" data-alt="An organized display of various colorful textile swatches arranged neatly on a white minimalist background. The lighting is bright and even, capturing the vivid colors from warm oranges to cool blues. High-quality corporate photography style." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAEqwuSM1eQUGSYV4WaP2mg-ytiioubhh_TxGJ7VNqrS7DJHFAZLigcJv86th1oregP1U9v_-dW0mLjFWmiIfitb0hOCsU2rU9eJwh15h39HiMkQ3SxRq8wAnoE5bijq-KAxpNFoAmPhmWNcEf8skp0QUaV2TWzvr3gJBrL2oelEdNQZBhvIVZwHvYIM0tArlCM_C7jZRDw3t4sVBYz0vo59kSKLKgRQ37qBHvvf_OCZ0Kly5uGenI1UqoAwc2j-TOCXN5MTqOn1X0')"></div>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100 gap-2">
+<button class="w-8 h-8 rounded-full bg-white text-on-surface hover:bg-primary hover:text-white transition-all"><span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span></button>
+<button class="w-8 h-8 rounded-full bg-white text-on-surface hover:bg-error hover:text-white transition-all"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+<!-- Regular Image Card 2 -->
+<div class="aspect-square rounded-2xl overflow-hidden relative group">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-300 group-hover:scale-105" data-alt="A focused high-angle shot of a digital control panel on a smart textile machine. Glowing blue and green status indicators are visible on a sleek black interface. Professional B2B technology aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCjtMGcc6y5uNCYCUYVbDANqUJZf3f_CphR-1W5FPWiXMifA8BvEWLvykgt8PtMKSXXgTCOMgxrQJXPGFuzKBYY8Zgt5I5Oowkh0-5g2kqe_WeXrdvGBSqF_96PS9wY4NLYnAJx-ZGyOp6-BRW6VJgVoENmEw6XhTL_1OE1Ti2wDgOdVYBu3-frZFrFdBqKpXfeK4vrMGYDvcAQ86TunIHRWcIt2nDLZKY1wKvfniLOuaQn8DM3DyBXewQahOtRhNF_HO-YYDFLblU')"></div>
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100 gap-2">
+<button class="w-8 h-8 rounded-full bg-white text-on-surface hover:bg-primary hover:text-white transition-all"><span class="material-symbols-outlined text-[18px]">star</span></button>
+<button class="w-8 h-8 rounded-full bg-white text-on-surface hover:bg-error hover:text-white transition-all"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Video & Specs Sidebar -->
+<div class="md:col-span-4 space-y-6">
+<!-- Video Section -->
+<div class="bg-surface p-5 rounded-2xl border border-outline-variant shadow-sm">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-title-lg text-title-lg text-on-surface">فيديو العرض</h3>
+<span class="text-primary font-label-lg cursor-pointer hover:underline">تغيير</span>
+</div>
+<div class="relative aspect-video rounded-xl overflow-hidden bg-on-surface group">
+<div class="w-full h-full bg-cover bg-center opacity-70 group-hover:scale-105 transition-transform duration-700" data-alt="A cinematic wide shot of a high-tech smart factory floor with automated robotic arms handling fabric rolls. The environment is clean, illuminated by cool-toned industrial LED lighting with subtle lens flares. The mood is efficient and futuristic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAn_0X3Xlr1OzyueBAVN0VuS5lCqykff9QtBfKIoaS1Pdr8Bw8hCzwCyUbL17mKwG7NQXBxP7KhAkAiXQdT7naJp8VDYIF0hadeWs3lZTvxMpRm13Rym2GVx4jXpxOsc9EJpGWz9PPMKHG56AsNX-BykchPm3fR11dokoNqnEaNpVr9oFKWs6_5pN92Gnxeg-3I3swzwtmWiv8uM2fz9qYN56sfFHA37DxVKUCsf54_7g3j8VFR2Xo9FBiJ8osFLZ8rODBVKHoJ_GQ')"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<button class="w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center shadow-lg active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<div class="absolute bottom-3 right-3 bg-black/60 backdrop-blur-md text-white px-2 py-0.5 rounded text-label-sm font-mono">
+                            02:45
+                        </div>
+</div>
+<div class="mt-4">
+<p class="font-body-md text-on-surface">نظرة عامة على خط الإنتاج الذكي</p>
+<p class="font-label-sm text-on-surface-variant mt-1">HD • 45 MB • MP4</p>
+</div>
+</div>
+<!-- Asset Properties -->
+<div class="bg-surface p-5 rounded-2xl border border-outline-variant shadow-sm">
+<h3 class="font-title-lg text-title-lg text-on-surface mb-4">خصائص الوسائط</h3>
+<div class="space-y-4">
+<div class="flex justify-between py-2 border-b border-outline-variant">
+<span class="text-on-surface-variant font-body-md">إجمالي الملفات</span>
+<span class="text-on-surface font-title-md">12 ملف</span>
+</div>
+<div class="flex justify-between py-2 border-b border-outline-variant">
+<span class="text-on-surface-variant font-body-md">حجم التخزين</span>
+<span class="text-on-surface font-title-md">128.4 MB</span>
+</div>
+<div class="flex justify-between py-2 border-b border-outline-variant">
+<span class="text-on-surface-variant font-body-md">الأبعاد الموصى بها</span>
+<span class="text-on-surface font-title-md">2048 × 2048</span>
+</div>
+<div class="mt-4 p-4 bg-tertiary-fixed-dim/20 rounded-xl flex gap-3">
+<span class="material-symbols-outlined text-tertiary">info</span>
+<p class="text-label-sm text-tertiary-fixed-variant leading-relaxed">توصية: يفضل رفع الصور بصيغة WebP لتقليل وقت التحميل بنسبة تصل إلى 40%.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Navigation Drawer (Right Side) -->
+<aside class="fixed top-0 right-0 h-full w-80 bg-surface shadow-xl z-[60] transform translate-x-full transition-transform duration-300 ease-in-out" id="drawer">
+<div class="flex flex-col h-full p-4">
+<div class="flex items-center justify-between mb-8">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container">account_circle</span>
+</div>
+<div>
+<h4 class="font-title-md text-title-md">Enterprise Admin</h4>
+<p class="font-label-sm text-on-surface-variant">Textile Corp Global</p>
+</div>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant" onclick="toggleDrawer()">close</button>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">list_alt</span>
+<span class="font-body-lg">Catalog Management</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 bg-secondary-container text-on-secondary-container font-bold rounded-lg" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-body-lg">Media Manager</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">architecture</span>
+<span class="font-body-lg">Technical Specs</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">factory</span>
+<span class="font-body-lg">Suppliers</span>
+</a>
+<div class="pt-4 mt-4 border-t border-outline-variant">
+<a class="flex items-center gap-4 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-lg">Settings</span>
+</a>
+</div>
+</nav>
+<div class="mt-auto bg-primary-container/10 p-4 rounded-xl">
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-lg text-primary">Premium Account</span>
+<span class="material-symbols-outlined text-primary">workspace_premium</span>
+</div>
+<p class="text-label-sm text-on-surface-variant">You are currently using the Professional Enterprise Tier.</p>
+</div>
+</div>
+</aside>
+<!-- Mobile Bottom Navigation -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface flex justify-around items-center py-2 px-4 pb-safe z-50 border-t border-outline-variant shadow-[0_-4px_20px_rgba(0,0,0,0.04)]">
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low px-4 py-1 transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-sm text-label-sm mt-1">Products</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add_box</span>
+<span class="font-label-sm text-label-sm mt-1">Add</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low px-4 py-1 transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-label-sm text-label-sm mt-1">Insights</span>
+</button>
+</nav>
+<script>
+        function toggleDrawer() {
+            const drawer = document.getElementById('drawer');
+            const isClosed = drawer.classList.contains('translate-x-full');
+            if (isClosed) {
+                drawer.classList.remove('translate-x-full');
+                drawer.classList.add('translate-x-0');
+            } else {
+                drawer.classList.add('translate-x-full');
+                drawer.classList.remove('translate-x-0');
+            }
+        }
+
+        // Connect menu button to drawer
+        document.querySelector('header button').onclick = toggleDrawer;
+
+        // Micro-interactions for buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                btn.style.transition = 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)';
+            });
+        });
+    </script>
+</body></html>

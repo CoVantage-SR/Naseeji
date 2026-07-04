@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Naseeji - Duplicate Product</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-background": "#191b24",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-container": "#2e5bff",
+                    "primary": "#0040e0",
+                    "inverse-on-surface": "#f0effd",
+                    "surface-bright": "#fbf8ff",
+                    "on-primary": "#ffffff",
+                    "surface": "#fbf8ff",
+                    "surface-container-low": "#f3f2ff",
+                    "on-secondary-fixed-variant": "#005047",
+                    "error-container": "#ffdad6",
+                    "surface-variant": "#e2e1ef",
+                    "error": "#ba1a1a",
+                    "secondary-fixed-dim": "#51dbc8",
+                    "on-error": "#ffffff",
+                    "background": "#fbf8ff",
+                    "on-primary-fixed-variant": "#0035be",
+                    "on-primary-fixed": "#001356",
+                    "inverse-primary": "#b8c3ff",
+                    "surface-dim": "#d9d9e6",
+                    "on-tertiary-container": "#ffece6",
+                    "on-secondary-container": "#007165",
+                    "outline-variant": "#c4c5d9",
+                    "on-tertiary": "#ffffff",
+                    "secondary-container": "#72f8e4",
+                    "surface-container": "#ededfa",
+                    "on-secondary-fixed": "#00201c",
+                    "on-secondary": "#ffffff",
+                    "on-surface": "#191b24",
+                    "on-tertiary-fixed": "#380d00",
+                    "primary-fixed": "#dde1ff",
+                    "on-tertiary-fixed-variant": "#812800",
+                    "tertiary-fixed": "#ffdbcf",
+                    "outline": "#747688",
+                    "surface-container-high": "#e7e7f4",
+                    "secondary-fixed": "#72f8e4",
+                    "tertiary-fixed-dim": "#ffb59b",
+                    "on-primary-container": "#efefff",
+                    "inverse-surface": "#2e303a",
+                    "tertiary-container": "#c24100",
+                    "surface-tint": "#124af0",
+                    "primary-fixed-dim": "#b8c3ff",
+                    "on-surface-variant": "#434656",
+                    "tertiary": "#993100",
+                    "surface-container-highest": "#e2e1ef",
+                    "on-error-container": "#93000a",
+                    "secondary": "#006b5f"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "4px",
+                    "margin-desktop": "32px",
+                    "gutter": "24px",
+                    "max-width": "1440px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "title-md": ["IBM Plex Sans"],
+                    "display-lg": ["IBM Plex Sans"],
+                    "body-md": ["IBM Plex Sans"],
+                    "headline-lg-mobile": ["IBM Plex Sans"],
+                    "body-lg": ["IBM Plex Sans"],
+                    "title-lg": ["IBM Plex Sans"],
+                    "label-sm": ["IBM Plex Sans"],
+                    "label-lg": ["IBM Plex Sans"],
+                    "headline-lg": ["IBM Plex Sans"],
+                    "headline-md": ["IBM Plex Sans"]
+            },
+            "fontSize": {
+                    "title-md": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "display-lg": ["57px", {"lineHeight": "64px", "letterSpacing": "-0.25px", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "500"}],
+                    "title-lg": ["22px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-sm": ["11px", {"lineHeight": "16px", "fontWeight": "600"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-md": ["28px", {"lineHeight": "36px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background-color: #fbf8ff;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.5);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface overflow-x-hidden">
+<!-- Top Navigation Anchor (Suppressed standard shell for task focus) -->
+<header class="bg-surface sticky top-0 z-50 flex items-center justify-between px-margin-mobile md:px-margin-desktop h-16 w-full shadow-sm">
+<div class="flex items-center gap-4">
+<button class="active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-on-surface">close</span>
+</button>
+<h1 class="font-title-lg text-title-lg text-primary font-bold">Duplicate Product</h1>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">help</span>
+</div>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop py-8 md:py-12">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Settings & Config (Col 1-8) -->
+<div class="lg:col-span-7 flex flex-col gap-8">
+<!-- Section 1: Identity -->
+<section class="bg-surface-container-lowest p-6 md:p-8 rounded-xl shadow-sm border-t-4 border-primary">
+<h2 class="font-title-md text-title-md mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">content_copy</span>
+                        تفاصيل النسخة الجديدة
+                    </h2>
+<div class="space-y-6">
+<div>
+<label class="block font-label-lg text-label-lg text-on-surface-variant mb-2" for="copy-name">اسم المنتج الجديد (Copy Name)</label>
+<input class="w-full px-4 py-3 rounded-xl border border-outline-variant bg-surface-bright focus:border-primary focus:ring-2 focus:ring-primary-container transition-all text-body-lg font-body-lg" id="copy-name" placeholder="أدخل اسم المنتج الجديد..." type="text" value="نسخة من - نسيج قطني فاخر 500TC"/>
+</div>
+</div>
+</section>
+<!-- Section 2: What to Copy (Checkboxes) -->
+<section class="bg-surface-container-lowest p-6 md:p-8 rounded-xl shadow-sm">
+<h2 class="font-title-md text-title-md mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">checklist</span>
+                        تحديد البيانات المراد نسخها
+                    </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Checkbox Item 1 -->
+<label class="flex items-center p-4 rounded-xl border border-outline-variant hover:bg-surface-container-low transition-colors cursor-pointer group">
+<input checked="" class="w-5 h-5 rounded border-outline text-primary focus:ring-primary-container" type="checkbox"/>
+<div class="mr-4">
+<p class="font-title-md text-title-md">الصور والوسائط</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">نسخ جميع صور المنتج ومعارض الفيديو</p>
+</div>
+<span class="material-symbols-outlined mr-auto text-outline group-hover:text-primary transition-colors">image</span>
+</label>
+<!-- Checkbox Item 2 -->
+<label class="flex items-center p-4 rounded-xl border border-outline-variant hover:bg-surface-container-low transition-colors cursor-pointer group">
+<input checked="" class="w-5 h-5 rounded border-outline text-primary focus:ring-primary-container" type="checkbox"/>
+<div class="mr-4">
+<p class="font-title-md text-title-md">التسعير والضرائب</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">نسخ السعر الأساسي والخصومات المطبقة</p>
+</div>
+<span class="material-symbols-outlined mr-auto text-outline group-hover:text-primary transition-colors">sell</span>
+</label>
+<!-- Checkbox Item 3 -->
+<label class="flex items-center p-4 rounded-xl border border-outline-variant hover:bg-surface-container-low transition-colors cursor-pointer group">
+<input checked="" class="w-5 h-5 rounded border-outline text-primary focus:ring-primary-container" type="checkbox"/>
+<div class="mr-4">
+<p class="font-title-md text-title-md">المواصفات الفنية</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">نوع القماش، الكثافة، الوزن، والقياسات</p>
+</div>
+<span class="material-symbols-outlined mr-auto text-outline group-hover:text-primary transition-colors">settings_input_component</span>
+</label>
+<!-- Checkbox Item 4 -->
+<label class="flex items-center p-4 rounded-xl border border-outline-variant hover:bg-surface-container-low transition-colors cursor-pointer group">
+<input class="w-5 h-5 rounded border-outline text-primary focus:ring-primary-container" type="checkbox"/>
+<div class="mr-4">
+<p class="font-title-md text-title-md">إعدادات المخزون</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">نسخ مستويات التنبيه وأماكن التخزين</p>
+</div>
+<span class="material-symbols-outlined mr-auto text-outline group-hover:text-primary transition-colors">inventory_2</span>
+</label>
+</div>
+</section>
+</div>
+<!-- Right Column: Original Preview (Col 9-12) -->
+<div class="lg:col-span-5">
+<div class="sticky top-24 space-y-6">
+<div class="bg-surface-container p-1 rounded-2xl">
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-md">
+<div class="relative h-64 overflow-hidden">
+<img class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700" data-alt="Close-up macro photography of a high-end luxury cotton textile with a thread count of 500. The fabric has a subtle pearlescent white sheen and fine diagonal weave patterns. Soft atmospheric studio lighting creates elegant shadows and highlights, showcasing the premium texture. The overall aesthetic is professional, minimalist, and corporate for a textile B2B platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbcy49eSWOitZowQ30-tYrdi7F5CtHPNt-o46QiH6vuCQ5bzhR1wRQhyKXwlsCD6SoSfzQxzFwQeBCKqL5rKwQahUo7V6WEO3B5BaD7wDYi-kObsgwrRDRgD3QXdo3lMMP32M7Gf9nrHJSeqshnEcLkunqTTMgoSGC-zZ8rNwCkRq5GlUWwd2arec__zH52Gl9Sar9SnCKoFVI5Toj-yyTLxoqu5UWh5CxFq5Jp0xcsbKAmN8sKQ6-XpyuLy4MUSfAcgI5EaQEyKA"/>
+<div class="absolute top-4 right-4 bg-primary text-white px-3 py-1 rounded-full text-label-sm font-label-sm">
+                                    المنتج الأصلي
+                                </div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">نسيج قطني فاخر 500TC</h3>
+<p class="font-label-lg text-label-lg text-on-surface-variant">SKU: NAS-TEX-001</p>
+</div>
+<div class="text-left">
+<p class="font-headline-md text-headline-md text-primary">145.00 ر.س</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant line-through">180.00 ر.س</p>
+</div>
+</div>
+<div class="space-y-3 pt-4 border-t border-outline-variant">
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">الفئة</span>
+<span class="font-body-md text-body-md">أقمشة منزلية</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">المورد</span>
+<span class="font-body-md text-body-md">مصنع نسيجي الأول</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">المخزون الحالي</span>
+<span class="font-body-md text-body-md text-secondary font-bold">1,240 متر</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- CTA Section -->
+<div class="flex flex-col gap-3">
+<button class="w-full bg-primary hover:bg-on-primary-fixed-variant text-on-primary py-4 rounded-xl font-title-lg text-title-lg shadow-lg active:scale-95 transition-all flex items-center justify-center gap-3">
+<span class="material-symbols-outlined">content_copy</span>
+                            إنشاء نسخة مكررة
+                        </button>
+<button class="w-full bg-transparent border border-outline text-on-surface-variant py-4 rounded-xl font-title-lg text-title-lg hover:bg-surface-container-high transition-colors active:scale-95">
+                            إلغاء العملية
+                        </button>
+<p class="text-center font-label-sm text-label-sm text-on-surface-variant mt-2">
+                            بمجرد النقر، سيتم إنشاء مسودة جديدة للمنتج يمكنك تعديلها لاحقاً.
+                        </p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Shell (Only for mobile, mapping to 'Products' based on context) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center py-3 px-2 bg-surface-container shadow-sm rounded-t-xl">
+<div class="flex flex-col items-center justify-center text-on-surface-variant active:scale-90 duration-200 cursor-pointer">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-lg text-label-lg">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-5 py-1 active:scale-90 duration-200 cursor-pointer">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="font-label-lg text-label-lg">Products</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant active:scale-90 duration-200 cursor-pointer">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-lg text-label-lg">Orders</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant active:scale-90 duration-200 cursor-pointer">
+<span class="material-symbols-outlined">chat</span>
+<span class="font-label-lg text-label-lg">Messages</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant active:scale-90 duration-200 cursor-pointer">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-lg text-label-lg">Account</span>
+</div>
+</nav>
+<script>
+        // Micro-interaction for the duplication button
+        document.querySelector('button.bg-primary').addEventListener('click', function() {
+            this.innerHTML = `
+                <svg class="animate-spin -mr-1 ml-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                جاري التكرار...
+            `;
+            setTimeout(() => {
+                alert('تم تكرار المنتج بنجاح كمسودة جديدة.');
+                window.location.reload();
+            }, 1500);
+        });
+
+        // Toggle hover effects on preview card when settings change
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', function() {
+                const previewCard = document.querySelector('.bg-surface-container-lowest.rounded-xl');
+                previewCard.style.transition = 'all 0.3s ease';
+                previewCard.classList.add('ring-2', 'ring-primary-container');
+                setTimeout(() => previewCard.classList.remove('ring-2', 'ring-primary-container'), 500);
+            });
+        });
+    </script>
+</body></html>
