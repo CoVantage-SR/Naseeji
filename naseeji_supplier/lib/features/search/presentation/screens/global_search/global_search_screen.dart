@@ -1,72 +1,162 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
-import '../../controllers/search_controller.dart';
-import 'widgets/search_item_card.dart';
+import 'widgets/recent_searches_section.dart';
+import 'widgets/search_factory_card.dart';
+import 'widgets/search_filter_chips.dart';
+import 'widgets/search_product_card.dart';
+import 'widgets/search_text_field.dart';
 
 class GlobalSearchScreen extends ConsumerWidget {
   const GlobalSearchScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final searchAsync = ref.watch(searchControllerProvider);
-
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('البحث العالمي'),
-        backgroundColor: Colors.white,
-        foregroundColor: AppColors.onSurface,
-        elevation: 0.5,
-      ),
-      body: Column(
-        children: [
-          // Search Input Container
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'ابحث عن خيوط، أقمشة، أو فئات...',
-                prefixIcon: const Icon(Icons.search, color: AppColors.outline),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: AppColors.outlineVariant),
-                ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              ),
-              onChanged: (val) {
-                ref.read(searchControllerProvider.notifier).search(val);
-              },
-            ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        title: const Text(
+          'Naseeji',
+          style: TextStyle(
+            color: AppColors.primary,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
           ),
-
-          // Search Results
-          Expanded(
-            child: searchAsync.when(
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error: (err, stack) => Center(child: Text('خطأ: $err')),
-              data: (items) {
-                if (items.isEmpty) {
-                  return const Center(
-                    child: Text(
-                      'لا توجد نتائج بحث مطابقة',
-                      style: TextStyle(color: AppColors.outline),
-                    ),
-                  );
-                }
-
-                return ListView.separated(
-                  itemCount: items.length,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  separatorBuilder: (context, index) => const SizedBox(height: 12),
-                  itemBuilder: (context, index) {
-                    final item = items[index];
-                    return SearchItemCard(item: item);
-                  },
-                );
-              },
-            ),
-          )
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_forward, color: AppColors.onSurfaceVariant),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.more_vert, color: AppColors.onSurfaceVariant),
+            onPressed: () {},
+          ),
+          const SizedBox(width: 8),
         ],
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Custom Search Input Box
+            const SearchTextField(),
+            const SizedBox(height: 16),
+
+            // Horizontal Filter Chips
+            const SearchFilterChips(),
+            const SizedBox(height: 24),
+
+            // Recent Searches History
+            const RecentSearchesSection(),
+            const SizedBox(height: 28),
+
+            // Products Section Header
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF0040E0),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Text(
+                    '12 نتيجة',
+                    style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                const Text(
+                  'المنتجات',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.onSurface,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Container(
+                  width: 4,
+                  height: 16,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF0040E0),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+
+            // Product Cards List
+            const SearchProductCard(
+              title: 'حرير طبيعي 100%',
+              imageUrl: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=600',
+              productCode: 'كود المنتج: SILK-990-TX',
+              statusText: 'متوفر',
+              statusColor: Color(0xFF009688),
+              statusBgColor: Color(0xFFE0F2F1),
+            ),
+            const SearchProductCard(
+              title: 'دنيم صناعي ثقيل',
+              imageUrl: 'https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&q=80&w=600',
+              productCode: 'كود المنتج: DNM-442-HD',
+              statusText: 'مخزون منخفض',
+              statusColor: Color(0xFFBA1A1A),
+              statusBgColor: Color(0xFFFFECEC),
+            ),
+            const SizedBox(height: 12),
+
+            // Factories Section Header
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF009688),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: const Text(
+                    '4 نتائج',
+                    style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                const Text(
+                  'المصانع',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.onSurface,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Container(
+                  width: 4,
+                  height: 16,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF009688),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+
+            // Factory Cards
+            const SearchFactoryCard(
+              title: 'مجموعة الغزل الحديثة',
+              subtitle: 'مورد معتمد • جدة، المملكة العربية السعودية',
+              logoText: 'AURA\nTEXTILES',
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }
