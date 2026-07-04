@@ -55,23 +55,26 @@ class _ProductTechnicalSpecsFormState extends ConsumerState<ProductTechnicalSpec
                     icon: const Icon(Icons.add, size: 16),
                     label: const Text('إضافة مواصفة جديدة', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
                   ),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        'المواصفات التقنية',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.onSurface,
+                  Expanded(
+                    child: const Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          'المواصفات التقنية',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.onSurface,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 2),
-                      Text(
-                        'قم بتعريف الخصائص الفنية الدقيقة لمنتج النسيج لضمان الدقة',
-                        style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
-                      ),
-                    ],
+                        SizedBox(height: 2),
+                        Text(
+                          'قم بتعريف الخصائص الفنية الدقيقة لمنتج النسيج لضمان الدقة',
+                          textAlign: TextAlign.right,
+                          style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -106,15 +109,27 @@ class _ProductTechnicalSpecsFormState extends ConsumerState<ProductTechnicalSpec
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              const Text('القيمة', style: TextStyle(fontSize: 11, color: AppColors.outline)),
-                              const SizedBox(height: 6),
+                              const Text('القيمة', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant)),
+                              const SizedBox(height: 8),
                               TextFormField(
                                 initialValue: _specs[index]['value'],
                                 textAlign: TextAlign.right,
-                                decoration: const InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                                   fillColor: Colors.white,
                                   filled: true,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: const BorderSide(color: AppColors.outlineVariant),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.5)),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+                                  ),
                                 ),
                                 onChanged: (val) {
                                   _specs[index]['value'] = val;
@@ -128,15 +143,27 @@ class _ProductTechnicalSpecsFormState extends ConsumerState<ProductTechnicalSpec
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              const Text('اسم المواصفة', style: TextStyle(fontSize: 11, color: AppColors.outline)),
-                              const SizedBox(height: 6),
+                              const Text('اسم المواصفة', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant)),
+                              const SizedBox(height: 8),
                               TextFormField(
                                 initialValue: _specs[index]['name'],
                                 textAlign: TextAlign.right,
-                                decoration: const InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                                   fillColor: Colors.white,
                                   filled: true,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: const BorderSide(color: AppColors.outlineVariant),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.5)),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+                                  ),
                                 ),
                                 onChanged: (val) {
                                   _specs[index]['name'] = val;

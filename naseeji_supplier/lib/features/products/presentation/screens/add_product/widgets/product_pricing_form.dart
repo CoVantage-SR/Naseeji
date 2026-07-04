@@ -29,213 +29,219 @@ class _ProductPricingFormState extends ConsumerState<ProductPricingForm> {
   @override
   Widget build(BuildContext context) {
     final controller = ref.read(addProductControllerProvider.notifier);
+    final isDesktop = MediaQuery.of(context).size.width > 900;
+
+    final moqCard = Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: const Color(0xFFE8F6F3),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0xFFB2DFDB)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              const Text(
+                'الكميات والمخزون',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF004D40)),
+              ),
+              const SizedBox(width: 8),
+              Icon(Icons.inventory_2_outlined, color: Colors.teal.shade700, size: 20),
+            ],
+          ),
+          const SizedBox(height: 20),
+
+          // MOQ Field
+          const Text('الحد الأدنى للطلب (MOQ)', style: TextStyle(fontSize: 12, color: Color(0xFF00796B), fontWeight: FontWeight.bold)),
+          const SizedBox(height: 6),
+          TextFormField(
+            initialValue: '100',
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.right,
+            decoration: const InputDecoration(
+              fillColor: Colors.white,
+              filled: true,
+              contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // Unit Selector
+          const Text('وحدة القياس', style: TextStyle(fontSize: 12, color: Color(0xFF00796B), fontWeight: FontWeight.bold)),
+          const SizedBox(height: 6),
+          DropdownButtonFormField<String>(
+            initialValue: _selectedUnit,
+            alignment: AlignmentDirectional.centerEnd,
+            decoration: const InputDecoration(
+              fillColor: Colors.white,
+              filled: true,
+              contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            ),
+            items: _units.map((u) {
+              return DropdownMenuItem(value: u, child: Text(u, textDirection: TextDirection.rtl));
+            }).toList(),
+            onChanged: (val) {
+              if (val != null) {
+                setState(() {
+                  _selectedUnit = val;
+                });
+              }
+            },
+          ),
+          const SizedBox(height: 20),
+
+          // Reorder Level
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('${_reorderLevel.round()} وحدة', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF004D40))),
+              const Text('مستوى إعادة الطلب', style: TextStyle(fontSize: 12, color: Color(0xFF00796B))),
+            ],
+          ),
+          Slider(
+            value: _reorderLevel,
+            min: 10,
+            max: 200,
+            activeColor: Colors.teal,
+            inactiveColor: const Color(0xFFB2DFDB),
+            onChanged: (val) {
+              setState(() {
+                _reorderLevel = val;
+              });
+            },
+          ),
+        ],
+      ),
+    );
+
+    final basicPricingCard = Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              const Text(
+                'إعدادات السعر الأساسي',
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+              ),
+              const SizedBox(width: 8),
+              Icon(Icons.payments_outlined, color: AppColors.primary, size: 20),
+            ],
+          ),
+          const SizedBox(height: 24),
+
+          // Grid fields
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    const Text('سعر الجملة (للموردين)', style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant)),
+                    const SizedBox(height: 8),
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.right,
+                      decoration: const InputDecoration(
+                        suffixText: 'SAR',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    const Text('سعر التجزئة (للقطعة)', style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant)),
+                    const SizedBox(height: 8),
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.right,
+                      decoration: const InputDecoration(
+                        suffixText: 'SAR',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    const Text('هامش الربح المستهدف (%)', style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant)),
+                    const SizedBox(height: 8),
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.right,
+                      decoration: const InputDecoration(
+                        hintText: '25%',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    const Text('تكلفة الإنتاج التقديرية', style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant)),
+                    const SizedBox(height: 8),
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.right,
+                      decoration: const InputDecoration(
+                        suffixText: 'SAR',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // MOQ & Inventory Card (Left/Side on Desktop)
-            Expanded(
-              flex: 1,
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFE8F6F3),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: const Color(0xFFB2DFDB)),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        const Text(
-                          'الكميات والمخزون',
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF004D40)),
-                        ),
-                        const SizedBox(width: 8),
-                        Icon(Icons.inventory_2_outlined, color: Colors.teal.shade700, size: 20),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-
-                    // MOQ Field
-                    const Text('الحد الأدنى للطلب (MOQ)', style: TextStyle(fontSize: 12, color: Color(0xFF00796B), fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 6),
-                    TextFormField(
-                      initialValue: '100',
-                      keyboardType: TextInputType.number,
-                      textAlign: TextAlign.right,
-                      decoration: const InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-
-                    // Unit Selector
-                    const Text('وحدة القياس', style: TextStyle(fontSize: 12, color: Color(0xFF00796B), fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 6),
-                    DropdownButtonFormField<String>(
-                      value: _selectedUnit,
-                      alignment: AlignmentDirectional.centerEnd,
-                      decoration: const InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                      ),
-                      items: _units.map((u) {
-                        return DropdownMenuItem(value: u, child: Text(u, textDirection: TextDirection.rtl));
-                      }).toList(),
-                      onChanged: (val) {
-                        if (val != null) {
-                          setState(() {
-                            _selectedUnit = val;
-                          });
-                        }
-                      },
-                    ),
-                    const SizedBox(height: 20),
-
-                    // Reorder Level
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('${_reorderLevel.round()} وحدة', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF004D40))),
-                        const Text('مستوى إعادة الطلب', style: TextStyle(fontSize: 12, color: Color(0xFF00796B))),
-                      ],
-                    ),
-                    Slider(
-                      value: _reorderLevel,
-                      min: 10,
-                      max: 200,
-                      activeColor: Colors.teal,
-                      inactiveColor: const Color(0xFFB2DFDB),
-                      onChanged: (val) {
-                        setState(() {
-                          _reorderLevel = val;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(width: 16),
-
-            // Basic Pricing Card (Right/Main on Desktop)
-            Expanded(
-              flex: 2,
-              child: Container(
-                padding: const EdgeInsets.all(24),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        const Text(
-                          'إعدادات السعر الأساسي',
-                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.onSurface),
-                        ),
-                        const SizedBox(width: 8),
-                        Icon(Icons.payments_outlined, color: AppColors.primary, size: 20),
-                      ],
-                    ),
-                    const SizedBox(height: 24),
-
-                    // Grid fields
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              const Text('سعر الجملة (للموردين)', style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant)),
-                              const SizedBox(height: 8),
-                              TextFormField(
-                                keyboardType: TextInputType.number,
-                                textAlign: TextAlign.right,
-                                decoration: const InputDecoration(
-                                  suffixText: 'SAR',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              const Text('سعر التجزئة (للقطعة)', style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant)),
-                              const SizedBox(height: 8),
-                              TextFormField(
-                                keyboardType: TextInputType.number,
-                                textAlign: TextAlign.right,
-                                decoration: const InputDecoration(
-                                  suffixText: 'SAR',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              const Text('هامش الربح المستهدف (%)', style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant)),
-                              const SizedBox(height: 8),
-                              TextFormField(
-                                keyboardType: TextInputType.number,
-                                textAlign: TextAlign.right,
-                                decoration: const InputDecoration(
-                                  hintText: '25%',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              const Text('تكلفة الإنتاج التقديرية', style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant)),
-                              const SizedBox(height: 8),
-                              TextFormField(
-                                keyboardType: TextInputType.number,
-                                textAlign: TextAlign.right,
-                                decoration: const InputDecoration(
-                                  suffixText: 'SAR',
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+        if (isDesktop)
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(flex: 1, child: moqCard),
+              const SizedBox(width: 16),
+              Expanded(flex: 2, child: basicPricingCard),
+            ],
+          )
+        else
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              basicPricingCard,
+              const SizedBox(height: 16),
+              moqCard,
+            ],
+          ),
         const SizedBox(height: 24),
 
         // Bulk Discount Tiers Card
