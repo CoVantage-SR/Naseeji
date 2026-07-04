@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import '../../controllers/profile_controller.dart';
 import 'widgets/achievements_card.dart';
 import 'widgets/business_info_card.dart';
@@ -65,39 +64,6 @@ class SupplierProfileScreen extends ConsumerWidget {
             ),
           );
         },
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: 4, // Profile Account tab is index 4
-        backgroundColor: Colors.white,
-        elevation: 8,
-        indicatorColor: const Color(0xFF72F8E4).withValues(alpha: 0.6),
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.home, color: AppColors.secondary),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.chat_bubble_outline, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.chat_bubble, color: AppColors.secondary),
-            label: 'Notifications',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.shopping_cart_outlined, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.shopping_cart, color: AppColors.secondary),
-            label: 'Orders',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.chat_bubble_outline, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.chat_bubble, color: AppColors.secondary),
-            label: 'Messages',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person_outline, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.person, color: AppColors.secondary),
-            label: 'Account',
-          ),
-        ],
       ),
     );
   }
