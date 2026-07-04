@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import 'package:naseeji_supplier/features/dashboard/presentation/controllers/dashboard_controller.dart';
 import '../drawer/navigation_drawer_view.dart';
@@ -112,6 +113,11 @@ class HomeScreen extends ConsumerWidget {
         backgroundColor: Colors.white,
         elevation: 8,
         indicatorColor: const Color(0xFF72F8E4).withValues(alpha: 0.6),
+        onDestinationSelected: (index) {
+          if (index == 4) {
+            context.go('/profile');
+          }
+        },
         destinations: const [
           NavigationDestination(
             icon: Icon(Icons.home_outlined, color: AppColors.onSurfaceVariant),
