@@ -7,6 +7,9 @@ import 'widgets/product_horizontal_stepper.dart';
 import 'widgets/product_identity_form.dart';
 import 'widgets/product_progress_stepper.dart';
 import 'widgets/supplier_tip_card.dart';
+import 'widgets/product_technical_specs_form.dart';
+import 'widgets/product_pricing_form.dart';
+import 'widgets/product_success_summary.dart';
 
 class AddNewProductScreen extends ConsumerWidget {
   const AddNewProductScreen({super.key});
@@ -18,6 +21,27 @@ class AddNewProductScreen extends ConsumerWidget {
     
     // Watch current form state (e.g. currentStep)
     final formData = ref.watch(addProductControllerProvider);
+
+    Widget buildStepContent(int step) {
+      switch (step) {
+        case 1:
+          return const Column(
+            children: [
+              ProductIdentityForm(),
+              SizedBox(height: 24),
+              SupplierTipCard(),
+            ],
+          );
+        case 2:
+          return const ProductTechnicalSpecsForm();
+        case 3:
+          return const ProductPricingForm();
+        case 4:
+          return const ProductSuccessSummary();
+        default:
+          return const ProductIdentityForm();
+      }
+    }
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FF),
@@ -37,7 +61,6 @@ class AddNewProductScreen extends ConsumerWidget {
           icon: const Icon(Icons.arrow_back, color: AppColors.onSurfaceVariant),
           onPressed: () => context.pop(),
         ),
-
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -77,31 +100,26 @@ class AddNewProductScreen extends ConsumerWidget {
                     // Form Content & Tips
                     Expanded(
                       flex: 3,
-                      child: Column(
-                        children: [
-                          const ProductIdentityForm(),
-                          const SizedBox(height: 24),
-                          const SupplierTipCard(),
-                        ],
-                      ),
+                      child: buildStepContent(formData.currentStep),
                     ),
                     const SizedBox(width: 32),
                     // Progress Stepper (Right side for RTL)
-                    SizedBox(
-                      width: 250,
-                      child: ProductProgressStepper(currentStep: formData.currentStep),
-                    ),
+                    if (formData.currentStep < 4)
+                      SizedBox(
+                        width: 250,
+                        child: ProductProgressStepper(currentStep: formData.currentStep),
+                      ),
                   ],
                 )
               else
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    ProductHorizontalStepper(currentStep: formData.currentStep),
-                    const SizedBox(height: 24),
-                    const ProductIdentityForm(),
-                    const SizedBox(height: 24),
-                    const SupplierTipCard(),
+                    if (formData.currentStep < 4) ...[
+                      ProductHorizontalStepper(currentStep: formData.currentStep),
+                      const SizedBox(height: 24),
+                    ],
+                    buildStepContent(formData.currentStep),
                   ],
                 ),
             ],
