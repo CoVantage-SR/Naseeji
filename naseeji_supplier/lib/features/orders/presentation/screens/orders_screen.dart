@@ -302,7 +302,16 @@ class RfqItemsList extends StatelessWidget {
           hasIconButton: item.hasIconButton,
           iconButtonIcon: _getIconData(item.iconButtonIconType),
           onActionButtonPressed: () {
-            context.push('/rfq-details?rfqId=${item.rfqNumber.replaceAll("RFQ-", "")}');
+            final id = item.rfqNumber.replaceAll("RFQ-", "");
+            if (item.actionButtonText == 'تقديم عرض') {
+              context.push('/rfq-details?rfqId=$id');
+            } else if (item.actionButtonText == 'متابعة العرض') {
+              context.push('/orders/chat?rfqId=$id');
+            } else if (item.actionButtonText == 'تم إرسال العرض') {
+              context.push('/orders/offer-details?rfqId=$id');
+            } else {
+              context.push('/rfq-details?rfqId=$id');
+            }
           },
         );
       },

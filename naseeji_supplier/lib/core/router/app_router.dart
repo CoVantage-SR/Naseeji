@@ -17,6 +17,9 @@ import '../../features/products/presentation/screens/add_product/add_product_scr
 import '../../features/orders/presentation/screens/orders_screen.dart';
 import '../../features/orders/presentation/screens/rfq_details_screen.dart';
 import '../../features/orders/presentation/screens/create_offer_screen.dart';
+import '../../features/orders/presentation/screens/rfq_chat_screen.dart';
+import '../../features/orders/presentation/screens/offer_preview_screen.dart';
+import '../../features/orders/presentation/screens/offer_details_screen.dart';
 
 part 'app_router.g.dart';
 
@@ -107,6 +110,27 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/create-offer',
         name: 'create-offer',
         builder: (context, state) => CreateOfferScreen(
+          rfqId: state.uri.queryParameters['rfqId'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/orders/chat',
+        name: 'orders-chat',
+        builder: (context, state) => RfqChatScreen(
+          rfqId: state.uri.queryParameters['rfqId'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/orders/offer-preview',
+        name: 'orders-offer-preview',
+        builder: (context, state) => OfferPreviewScreen(
+          rfqId: state.uri.queryParameters['rfqId'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/orders/offer-details',
+        name: 'orders-offer-details',
+        builder: (context, state) => OfferDetailsScreen(
           rfqId: state.uri.queryParameters['rfqId'] ?? '',
         ),
       ),

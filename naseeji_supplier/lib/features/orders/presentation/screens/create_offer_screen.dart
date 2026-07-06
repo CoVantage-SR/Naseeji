@@ -331,7 +331,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                 children: [
                   // Preview Button
                   TextButton.icon(
-                    onPressed: () {},
+                    onPressed: () => context.push('/orders/offer-preview?rfqId=${widget.rfqId}'),
                     icon: const Icon(Icons.visibility_outlined, size: 16, color: AppColors.outline),
                     label: const Text(
                       'معاينة',
