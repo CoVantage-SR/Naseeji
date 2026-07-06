@@ -5,10 +5,7 @@ import 'package:naseeji_supplier/core/theme/app_colors.dart';
 class AppBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
 
-  const AppBottomNavigationBar({
-    super.key,
-    required this.currentIndex,
-  });
+  const AppBottomNavigationBar({super.key, required this.currentIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +22,6 @@ class AppBottomNavigationBar extends StatelessWidget {
             context.go('/home');
             break;
           case 1:
-            // TODO: Route to Products when implemented
             break;
           case 2:
             context.go('/orders');
@@ -45,17 +41,26 @@ class AppBottomNavigationBar extends StatelessWidget {
           label: 'الرئيسية',
         ),
         NavigationDestination(
-          icon: Icon(Icons.category_outlined, color: AppColors.onSurfaceVariant),
+          icon: Icon(
+            Icons.category_outlined,
+            color: AppColors.onSurfaceVariant,
+          ),
           selectedIcon: Icon(Icons.category, color: AppColors.secondary),
           label: 'المنتجات',
         ),
         NavigationDestination(
-          icon: Icon(Icons.shopping_cart_outlined, color: AppColors.onSurfaceVariant),
+          icon: Icon(
+            Icons.shopping_cart_outlined,
+            color: AppColors.onSurfaceVariant,
+          ),
           selectedIcon: Icon(Icons.shopping_cart, color: AppColors.secondary),
           label: 'الطلبات',
         ),
         NavigationDestination(
-          icon: Icon(Icons.chat_bubble_outline, color: AppColors.onSurfaceVariant),
+          icon: Icon(
+            Icons.chat_bubble_outline,
+            color: AppColors.onSurfaceVariant,
+          ),
           selectedIcon: Icon(Icons.chat_bubble, color: AppColors.secondary),
           label: 'الرسائل',
         ),

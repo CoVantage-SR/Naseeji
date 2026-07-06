@@ -25,8 +25,19 @@ class OrderStatusBanner extends StatelessWidget {
     final activeIdx = currentIdx < 0 ? 0 : currentIdx;
 
     return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.only(left: 12, right: 12, bottom: 8, top: 8),
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -75,14 +86,17 @@ class OrderStatusBanner extends StatelessWidget {
                           width: 36,
                           height: 36,
                           decoration: BoxDecoration(
-                            color: isActive ? AppColors.primary : isDone ? AppColors.secondary : Colors.transparent,
+                            color: isActive ? AppColors.primary : isDone ? AppColors.secondary.withValues(alpha: 0.15) : Colors.transparent,
                             shape: BoxShape.circle,
                             border: Border.all(color: color, width: isActive ? 0 : 1.5),
+                            boxShadow: isActive
+                                ? [BoxShadow(color: AppColors.primary.withValues(alpha: 0.3), blurRadius: 6, offset: const Offset(0, 2))]
+                                : null,
                           ),
                           child: Icon(
                             isDone ? Icons.check : stage.icon,
                             size: 16,
-                            color: isActive || isDone ? Colors.white : AppColors.outline,
+                            color: isActive ? Colors.white : isDone ? AppColors.secondary : AppColors.outline,
                           ),
                         ),
                         const SizedBox(height: 4),

@@ -15,13 +15,17 @@ class ConversationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool hasUnread = conversation.unreadCount > 0;
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        color: hasUnread ? AppColors.primary.withValues(alpha: 0.03) : Colors.white,
-        child: Row(
-          children: [
+    return Material(
+      color: hasUnread ? AppColors.primary.withValues(alpha: 0.04) : Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        splashColor: AppColors.primary.withValues(alpha: 0.1),
+        highlightColor: AppColors.primary.withValues(alpha: 0.05),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
             // Avatar + online badge
             Stack(
               children: [
@@ -31,6 +35,13 @@ class ConversationCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Color(conversation.companyLogoBgColorValue),
                     shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(conversation.companyLogoBgColorValue).withValues(alpha: 0.3),
+                        blurRadius: 8,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
                   ),
                   child: Center(
                     child: Text(
@@ -51,9 +62,9 @@ class ConversationCard extends StatelessWidget {
                       width: 12,
                       height: 12,
                       decoration: BoxDecoration(
-                        color: Colors.green,
+                        color: const Color(0xFF10C600),
                         shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white, width: 2),
+                        border: Border.all(color: Colors.white, width: 2.5),
                       ),
                     ),
                   ),
@@ -64,6 +75,7 @@ class ConversationCard extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(
                     children: [
@@ -74,9 +86,10 @@ class ConversationCard extends StatelessWidget {
                               child: Text(
                                 conversation.companyName,
                                 style: TextStyle(
-                                  fontWeight: hasUnread ? FontWeight.bold : FontWeight.w600,
-                                  fontSize: 14,
+                                  fontWeight: hasUnread ? FontWeight.w800 : FontWeight.w600,
+                                  fontSize: 15,
                                   color: AppColors.onSurface,
+                                  letterSpacing: 0.2,
                                 ),
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -99,7 +112,7 @@ class ConversationCard extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 11,
                           color: hasUnread ? AppColors.primary : AppColors.outline,
-                          fontWeight: hasUnread ? FontWeight.w600 : FontWeight.normal,
+                          fontWeight: hasUnread ? FontWeight.w600 : FontWeight.w500,
                         ),
                       ),
                     ],
@@ -148,7 +161,7 @@ class ConversationCard extends StatelessWidget {
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: hasUnread ? AppColors.onSurface : AppColors.outline,
-                                  fontWeight: hasUnread ? FontWeight.w500 : FontWeight.normal,
+                                  fontWeight: hasUnread ? FontWeight.w600 : FontWeight.w400,
                                 ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -166,16 +179,23 @@ class ConversationCard extends StatelessWidget {
                           if (hasUnread)
                             Container(
                               margin: const EdgeInsets.only(right: 4),
-                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
                               decoration: BoxDecoration(
                                 color: AppColors.primary,
                                 borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColors.primary.withValues(alpha: 0.3),
+                                    blurRadius: 4,
+                                    offset: const Offset(0, 2),
+                                  )
+                                ],
                               ),
                               child: Text(
                                 conversation.unreadCount > 99 ? '99+' : '${conversation.unreadCount}',
                                 style: const TextStyle(
                                   color: Colors.white,
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -187,7 +207,7 @@ class ConversationCard extends StatelessWidget {
                 ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );

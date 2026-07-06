@@ -16,9 +16,15 @@ class QuotationCard extends StatelessWidget {
       width: 280,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: isAccepted ? AppColors.secondary : AppColors.primary, width: 1.5),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 8, offset: const Offset(0, 3))],
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: isAccepted ? AppColors.secondary.withValues(alpha: 0.3) : AppColors.primary.withValues(alpha: 0.3), width: 1.5),
+        boxShadow: [
+          BoxShadow(
+            color: (isAccepted ? AppColors.secondary : AppColors.primary).withValues(alpha: 0.08),
+            blurRadius: 15,
+            offset: const Offset(0, 5),
+          )
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -27,8 +33,14 @@ class QuotationCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
-              color: isAccepted ? AppColors.secondary : AppColors.primary,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
+              gradient: LinearGradient(
+                colors: isAccepted
+                    ? [AppColors.secondary, AppColors.secondary.withValues(alpha: 0.8)]
+                    : [AppColors.primary, AppColors.primary.withValues(alpha: 0.8)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(16.5)),
             ),
             child: Row(
               children: [

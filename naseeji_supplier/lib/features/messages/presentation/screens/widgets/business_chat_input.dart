@@ -64,25 +64,36 @@ class _BusinessChatInputState extends State<BusinessChatInput> {
           ),
         // Input row
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-          decoration: const BoxDecoration(
+          margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16, top: 4),
+          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+          decoration: BoxDecoration(
             color: Colors.white,
-            border: Border(top: BorderSide(color: AppColors.outlineVariant)),
+            borderRadius: BorderRadius.circular(32),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.08),
+                blurRadius: 15,
+                offset: const Offset(0, 5),
+              ),
+            ],
           ),
           child: Row(
             children: [
               // Send button
-              Material(
-                color: AppColors.primary,
-                shape: const CircleBorder(),
-                child: InkWell(
-                  onTap: () {
-                    if (widget.controller.text.trim().isNotEmpty) widget.onSend();
-                  },
-                  customBorder: const CircleBorder(),
-                  child: const Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Icon(Icons.send, color: Colors.white, size: 20),
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                child: Material(
+                  color: AppColors.primary,
+                  shape: const CircleBorder(),
+                  child: InkWell(
+                    onTap: () {
+                      if (widget.controller.text.trim().isNotEmpty) widget.onSend();
+                    },
+                    customBorder: const CircleBorder(),
+                    child: const Padding(
+                      padding: EdgeInsets.all(12),
+                      child: Icon(Icons.send_rounded, color: Colors.white, size: 20),
+                    ),
                   ),
                 ),
               ),
@@ -90,43 +101,38 @@ class _BusinessChatInputState extends State<BusinessChatInput> {
               // Text field
               Expanded(
                 child: Container(
-                  constraints: const BoxConstraints(maxHeight: 100),
-                  decoration: BoxDecoration(
-                    color: AppColors.surfaceContainerLow,
-                    borderRadius: BorderRadius.circular(24),
-                  ),
+                  constraints: const BoxConstraints(maxHeight: 120),
                   child: TextField(
                     controller: widget.controller,
                     maxLines: null,
                     textAlign: TextAlign.right,
                     style: const TextStyle(fontSize: 14),
                     decoration: const InputDecoration(
-                      hintText: 'اكتب رسالة...',
+                      hintText: 'اكتب رسالتك هنا...',
                       hintStyle: TextStyle(fontSize: 13, color: AppColors.outline),
                       border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 4, vertical: 10),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(width: 6),
-              // Emoji
-              IconButton(
-                icon: const Icon(Icons.emoji_emotions_outlined, color: AppColors.outline, size: 22),
-                onPressed: () {},
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
-              ),
               // Attach
               IconButton(
                 icon: Icon(
-                  _showAttachMenu ? Icons.close : Icons.attach_file,
+                  _showAttachMenu ? Icons.close_rounded : Icons.add_circle_outline_rounded,
                   color: _showAttachMenu ? Colors.red : AppColors.outline,
-                  size: 22,
+                  size: 26,
                 ),
                 onPressed: () => setState(() => _showAttachMenu = !_showAttachMenu),
                 padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
+                constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
+              ),
+              // Emoji
+              IconButton(
+                icon: const Icon(Icons.emoji_emotions_outlined, color: AppColors.outline, size: 24),
+                onPressed: () {},
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
               ),
             ],
           ),

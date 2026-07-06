@@ -131,20 +131,30 @@ class _TextBubble extends StatelessWidget {
                 ),
               ),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: isOut ? AppColors.primary : Colors.white,
+                color: isOut ? null : Colors.white,
+                gradient: isOut
+                    ? LinearGradient(
+                        colors: [
+                          AppColors.primary,
+                          AppColors.primary.withValues(alpha: 0.85),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      )
+                    : null,
                 borderRadius: BorderRadius.only(
-                  topLeft: const Radius.circular(18),
-                  topRight: const Radius.circular(18),
-                  bottomLeft: Radius.circular(isOut ? 18 : 4),
-                  bottomRight: Radius.circular(isOut ? 4 : 18),
+                  topLeft: const Radius.circular(20),
+                  topRight: const Radius.circular(20),
+                  bottomLeft: Radius.circular(isOut ? 20 : 4),
+                  bottomRight: Radius.circular(isOut ? 4 : 20),
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.05),
-                    blurRadius: 4,
-                    offset: const Offset(0, 2),
+                    color: (isOut ? AppColors.primary : Colors.black).withValues(alpha: 0.1),
+                    blurRadius: 8,
+                    offset: const Offset(0, 3),
                   ),
                 ],
               ),
@@ -187,7 +197,11 @@ class _TextBubble extends StatelessWidget {
               children: [
                 Text(
                   message.time,
-                  style: const TextStyle(fontSize: 10, color: AppColors.outline),
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: AppColors.outline.withValues(alpha: 0.8),
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 if (isOut) ...[
                   const SizedBox(width: 4),
@@ -199,8 +213,8 @@ class _TextBubble extends StatelessWidget {
                             : Icons.done,
                     size: 13,
                     color: message.readStatus == ReadStatus.read
-                        ? AppColors.secondary
-                        : AppColors.outline,
+                        ? Colors.blue
+                        : AppColors.outline.withValues(alpha: 0.6),
                   ),
                 ],
               ],

@@ -39,27 +39,27 @@ class TimelineEventTile extends StatelessWidget {
           Column(
             children: [
               Container(
-                width: 40,
-                height: 40,
+                width: 44,
+                height: 44,
                 decoration: BoxDecoration(
-                  color: isActive || isCompleted ? dotColor : Colors.white,
+                  color: isActive ? AppColors.primary : isCompleted ? AppColors.secondary.withValues(alpha: 0.15) : Colors.white,
                   shape: BoxShape.circle,
-                  border: Border.all(color: dotColor, width: 2),
+                  border: Border.all(color: dotColor, width: isActive ? 0 : 2),
                   boxShadow: isActive
-                      ? [BoxShadow(color: AppColors.primary.withValues(alpha: 0.3), blurRadius: 8)]
+                      ? [BoxShadow(color: AppColors.primary.withValues(alpha: 0.4), blurRadius: 10, offset: const Offset(0, 3))]
                       : null,
                 ),
                 child: Icon(
-                  isCompleted ? Icons.check : icon,
-                  size: 18,
-                  color: isActive || isCompleted ? Colors.white : AppColors.outline,
+                  isCompleted ? Icons.check_rounded : icon,
+                  size: 20,
+                  color: isActive ? Colors.white : isCompleted ? AppColors.secondary : AppColors.outline,
                 ),
               ),
               if (!isLast)
                 Expanded(
                   child: Container(
-                    width: 2,
-                    color: isCompleted ? AppColors.secondary.withValues(alpha: 0.4) : AppColors.outlineVariant,
+                    width: 2.5,
+                    color: isCompleted ? AppColors.secondary.withValues(alpha: 0.5) : AppColors.outlineVariant.withValues(alpha: 0.5),
                   ),
                 ),
             ],
