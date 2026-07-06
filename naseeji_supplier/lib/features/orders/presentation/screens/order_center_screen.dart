@@ -3,31 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 
-// Import all controllers & domain models
-import '../controllers/orders_controller.dart';
-import '../controllers/rfq_details_controller.dart';
-import '../controllers/rfq_chat_controller.dart';
-import '../controllers/quotation_history_controller.dart';
-import '../controllers/final_agreement_controller.dart';
-import '../controllers/production_preparation_controller.dart';
-import '../controllers/shipping_manifest_controller.dart';
-import '../controllers/payment_release_controller.dart';
-import '../controllers/activity_log_controller.dart';
-
 // Import all widgets
 import 'widgets/complete_timeline_widget.dart';
 import 'widgets/order_media_center.dart';
-import 'widgets/negotiation_summary_sheet.dart';
-import 'widgets/orders_screen_widgets.dart';
 
 // Import screens we are embedding
-import 'rfq_details_screen.dart';
-import 'create_offer_screen.dart';
 import 'rfq_chat_screen.dart';
-import 'offer_preview_screen.dart';
-import 'offer_details_screen.dart';
-import 'offer_rejected_screen.dart';
-import 'offer_approved_screen.dart';
 import 'final_agreement_screen.dart';
 import 'quotation_revision_history_screen.dart';
 import 'production_preparation_screen.dart';
@@ -189,15 +170,15 @@ class _OrderCenterScreenState extends ConsumerState<OrderCenterScreen> with Sing
               borderRadius: BorderRadius.circular(16),
               border: Border.all(color: const Color(0xFFE2E1EF)),
             ),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 _buildOverviewRow('نوع القماش المطلوب', 'قطن 100% طبيعي'),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 _buildOverviewRow('الكمية الإجمالية', '5,000 متر'),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 _buildOverviewRow('اللون والمواصفات الفنية', 'أزرق داكن Indigo | وزن 180 GSM'),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 _buildOverviewRow('وجهة الشحن والتسليم', 'مستودعات الرياض الصناعية'),
               ],
             ),

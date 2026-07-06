@@ -110,7 +110,7 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
           const SizedBox(height: 8),
           _buildRowItem('تاريخ فتح القضية', '06 يوليو 2026'),
           const SizedBox(height: 8),
-          const _buildRowItem('المتضرر الرافع', 'مصنع الأقمشة المتطور (المشتري)'),
+          _buildRowItem('المتضرر الرافع', 'مصنع الأقمشة المتطور (المشتري)'),
           const SizedBox(height: 12),
           const Text('شرح المشكلة المرفق', style: TextStyle(fontSize: 11, color: AppColors.outline)),
           const SizedBox(height: 4),

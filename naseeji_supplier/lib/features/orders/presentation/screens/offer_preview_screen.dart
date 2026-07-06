@@ -61,7 +61,7 @@ class OfferPreviewScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.check_circle_outline, color: Color(0xFF16A34A), size: 48),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Text(
               'تم إرسال عرض السعر بنجاح',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),

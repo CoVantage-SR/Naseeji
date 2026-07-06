@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
-import '../controllers/orders_controller.dart';
 
 class DeliveryConfirmationScreen extends ConsumerWidget {
   final String rfqId;
@@ -187,17 +186,17 @@ class DeliveryConfirmationScreen extends ConsumerWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6)],
       ),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text('فحص البنود المطابقة المعتمدة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          const Text('فحص البنود المطابقة المعتمدة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
           const SizedBox(height: 12),
-          Divider(height: 1, color: Color(0xFFF1F1F5)),
+          const Divider(height: 1, color: Color(0xFFF1F1F5)),
           const SizedBox(height: 12),
           _buildCheckboxItem('تم التحقق من مطابقة الكمية الموردة بالكامل للاتفاقية', true),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           _buildCheckboxItem('تم فحص عينات عشوائية واختبار قوة الشد وثبات اللون', true),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           _buildCheckboxItem('اللفات مغلفة بشكل صناعي متين وخالية من الرطوبة والعيوب', true),
         ],
       ),

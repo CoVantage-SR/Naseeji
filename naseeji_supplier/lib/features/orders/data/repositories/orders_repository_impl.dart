@@ -335,7 +335,7 @@ class OrdersRepositoryImpl implements OrdersRepository {
   @override
   Future<ProductionPreparation> getProductionPreparation(String rfqId) async {
     await Future.delayed(const Duration(milliseconds: 500));
-    return const ProductionPreparation(
+    return ProductionPreparation(
       rfqId: rfqId,
       progressPercent: 50.0,
       currentPhase: 'Manufacturing',
@@ -356,7 +356,7 @@ class OrdersRepositoryImpl implements OrdersRepository {
   @override
   Future<ShippingManifest> getShippingManifest(String rfqId) async {
     await Future.delayed(const Duration(milliseconds: 500));
-    return const ShippingManifest(
+    return ShippingManifest(
       rfqId: rfqId,
       shippingCompany: 'أرامكس Aramex',
       trackingNumber: 'ARMX-99882211',
@@ -380,7 +380,7 @@ class OrdersRepositoryImpl implements OrdersRepository {
   @override
   Future<DeliveryConfirmation> getDeliveryConfirmation(String rfqId) async {
     await Future.delayed(const Duration(milliseconds: 500));
-    return const DeliveryConfirmation(
+    return DeliveryConfirmation(
       rfqId: rfqId,
       receivedDate: '15 يوليو 2026',
       shipmentCondition: 'ممتازة - خالية من التلفيات',
@@ -396,7 +396,7 @@ class OrdersRepositoryImpl implements OrdersRepository {
   @override
   Future<PaymentRelease> getPaymentRelease(String rfqId) async {
     await Future.delayed(const Duration(milliseconds: 500));
-    return const PaymentRelease(
+    return PaymentRelease(
       rfqId: rfqId,
       orderTotal: 60000.00,
       commission: 1500.00,
