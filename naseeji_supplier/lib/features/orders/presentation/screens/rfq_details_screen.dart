@@ -66,6 +66,7 @@ class RfqDetailsScreen extends ConsumerWidget {
         error: (err, stack) => Center(child: Text('خطأ: $err')),
         data: (details) {
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
                 child: SingleChildScrollView(

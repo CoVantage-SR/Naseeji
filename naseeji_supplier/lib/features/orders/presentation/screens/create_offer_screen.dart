@@ -73,6 +73,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
         ],
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: SingleChildScrollView(
@@ -385,6 +386,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                      minimumSize: const Size(0, 48),
                     ),
                   ),
                 ],
