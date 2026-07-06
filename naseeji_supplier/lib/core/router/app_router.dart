@@ -33,6 +33,7 @@ import '../../features/orders/presentation/screens/activity_log_screen.dart';
 import '../../features/orders/presentation/screens/order_center_screen.dart';
 import '../../features/orders/presentation/screens/dispute_center_screen.dart';
 import '../../features/orders/presentation/screens/create_quotation_screen.dart';
+import '../../features/profile/presentation/screens/supplier_profile/public_supplier_profile_screen.dart';
 
 part 'app_router.g.dart';
 
@@ -237,6 +238,11 @@ GoRouter goRouter(GoRouterRef ref) {
         builder: (context, state) => CreateQuotationScreen(
           rfqId: state.uri.queryParameters['rfqId'] ?? '',
         ),
+      ),
+      GoRoute(
+        path: '/profile/public-preview',
+        name: 'profile-public-preview',
+        builder: (context, state) => const PublicSupplierProfileScreen(),
       ),
     ],
   );
