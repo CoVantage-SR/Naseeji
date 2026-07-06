@@ -50,8 +50,8 @@ class WeeklySalesChartCard extends StatelessWidget {
                   color: AppColors.surfaceContainerLow,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Row(
-                  children: const [
+                child: const Row(
+                  children: [
                     Text(
                       'آخر 7 أيام',
                       style: TextStyle(
@@ -79,9 +79,9 @@ class WeeklySalesChartCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               Text(
                 'السبت',
                 style: TextStyle(

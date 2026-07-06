@@ -127,14 +127,14 @@ class _ProductPricingFormState extends ConsumerState<ProductPricingForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const Text(
+              Text(
                 'إعدادات السعر الأساسي',
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.onSurface),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Icon(Icons.payments_outlined, color: AppColors.primary, size: 20),
             ],
           ),

@@ -26,10 +26,10 @@ class DrawerBottomView extends ConsumerWidget {
               ),
             ),
             // Language selector
-            ListTile(
-              leading: const Icon(Icons.language, color: AppColors.onSurfaceVariant),
-              title: const Text('اللغة', style: TextStyle(fontSize: 13)),
-              trailing: const Text(
+            const ListTile(
+              leading: Icon(Icons.language, color: AppColors.onSurfaceVariant),
+              title: Text('اللغة', style: TextStyle(fontSize: 13)),
+              trailing: Text(
                 'العربية (SAR)',
                 style: TextStyle(
                   fontSize: 12,

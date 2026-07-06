@@ -14,9 +14,9 @@ class StatsMetricsSection extends StatelessWidget {
           percentageValue: 0.98,
           percentageString: '98%',
           accentColor: Colors.blue,
-          trailingWidget: Row(
+          trailingWidget: const Row(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               Icon(Icons.arrow_upward, size: 12, color: Colors.green),
               SizedBox(width: 2),
               Text(
@@ -34,9 +34,9 @@ class StatsMetricsSection extends StatelessWidget {
           percentageValue: 0.95,
           percentageString: '95%',
           accentColor: Colors.green,
-          trailingWidget: Row(
+          trailingWidget: const Row(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               Icon(Icons.check, size: 12, color: Colors.green),
               SizedBox(width: 2),
               Text(
@@ -57,20 +57,20 @@ class StatsMetricsSection extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
           ),
-          child: Column(
+          child: const Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const Text(
+              Text(
                 'رضا العملاء',
                 style: TextStyle(fontSize: 13, color: AppColors.onSurfaceVariant),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Row(
                         children: [
                           Icon(Icons.star, color: Colors.amber, size: 16),
@@ -87,7 +87,7 @@ class StatsMetricsSection extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const Text(
+                  Text(
                     '4.8',
                     style: TextStyle(
                       fontSize: 28,

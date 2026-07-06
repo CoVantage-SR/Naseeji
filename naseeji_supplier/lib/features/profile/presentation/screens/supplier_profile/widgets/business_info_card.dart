@@ -59,10 +59,10 @@ class BusinessInfoCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Expanded(
+              const Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
-                  children: const [
+                  children: [
                     Text(
                       'الخبرة',
                       style: TextStyle(fontSize: 11, color: AppColors.outline),

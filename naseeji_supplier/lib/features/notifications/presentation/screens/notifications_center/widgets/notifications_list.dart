@@ -77,7 +77,7 @@ class NotificationsList extends ConsumerWidget {
       case NotificationType.message:
         // Redirect to Message Chat
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('الانتقال إلى صندوق المحادثات للرد على العميل...'),
             behavior: SnackBarBehavior.floating,
             backgroundColor: AppColors.secondary,

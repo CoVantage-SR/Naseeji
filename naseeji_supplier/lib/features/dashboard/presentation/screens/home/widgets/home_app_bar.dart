@@ -60,11 +60,11 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         ],
       ),
       centerTitle: true,
-      title: Row(
+      title: const Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
+          Text(
             'نسيجي',
             style: TextStyle(
               color: AppColors.primary,
@@ -72,8 +72,8 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               fontSize: 20,
             ),
           ),
-          const SizedBox(width: 4),
-          const Icon(Icons.verified, color: AppColors.primary, size: 16),
+          SizedBox(width: 4),
+          Icon(Icons.verified, color: AppColors.primary, size: 16),
         ],
       ),
       actions: [

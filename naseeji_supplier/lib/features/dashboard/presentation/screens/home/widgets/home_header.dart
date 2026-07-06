@@ -6,9 +6,9 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.end,
-      children: const [
+      children: [
         Text(
           'مرحبًا، أحمد 👋',
           style: TextStyle(

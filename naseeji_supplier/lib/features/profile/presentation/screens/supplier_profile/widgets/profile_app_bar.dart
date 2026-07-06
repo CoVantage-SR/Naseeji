@@ -13,9 +13,9 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
         icon: const Icon(Icons.notifications_none, color: AppColors.onSurfaceVariant),
         onPressed: () {},
       ),
-      title: Row(
+      title: const Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
+        children: [
           Text(
             'Naseeji',
             style: TextStyle(

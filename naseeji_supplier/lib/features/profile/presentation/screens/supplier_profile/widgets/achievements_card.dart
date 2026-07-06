@@ -35,8 +35,8 @@ class AchievementsCard extends StatelessWidget {
                     color: const Color(0xFFE4FBF7),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Column(
-                    children: const [
+                  child: const Column(
+                    children: [
                       Icon(Icons.trending_up, color: Color(0xFF00BFA5), size: 24),
                       SizedBox(height: 8),
                       Text(
@@ -59,8 +59,8 @@ class AchievementsCard extends StatelessWidget {
                     color: const Color(0xFFFCE8E6),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Column(
-                    children: const [
+                  child: const Column(
+                    children: [
                       Icon(Icons.verified_user_outlined, color: Color(0xFFEA4335), size: 24),
                       SizedBox(height: 8),
                       Text(

@@ -75,7 +75,7 @@ class NotificationTile extends StatelessWidget {
                         children: [
                           Text(
                             item.title,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: AppColors.onSurface,

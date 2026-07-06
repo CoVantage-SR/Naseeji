@@ -55,10 +55,10 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             // Section Title: Identity
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                const Text(
+                Text(
                   'هوية المنتج',
                   style: TextStyle(
                     fontSize: 15,
@@ -66,7 +66,7 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
                     color: AppColors.onSurface,
                   ),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 Icon(Icons.info_outline, color: AppColors.primary, size: 20),
               ],
             ),
@@ -161,10 +161,10 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
             const SizedBox(height: 24),
 
             // Section Title: Classification
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                const Text(
+                Text(
                   'نوع المنتج والاستخدام',
                   style: TextStyle(
                     fontSize: 15,
@@ -172,7 +172,7 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
                     color: AppColors.onSurface,
                   ),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 Icon(Icons.category_outlined, color: AppColors.primary, size: 20),
               ],
             ),
