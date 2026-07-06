@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
-import '../../domain/entities/offer_approved.dart';
+import '../../../domain/entities/offer_approved.dart';
 
 class ApprovalHeader extends StatelessWidget {
   final OfferApproved details;

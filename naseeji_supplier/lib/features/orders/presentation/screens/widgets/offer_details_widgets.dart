@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
-import '../../domain/entities/offer_details.dart';
+import '../../../domain/entities/offer_details.dart';
 
 class OfferDetailsHeader extends StatelessWidget {
   final OfferDetails details;
