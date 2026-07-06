@@ -28,10 +28,10 @@ class OfferRejectedScreen extends ConsumerWidget {
             fontSize: 14,
           ),
         ),
-        leading: Row(
-          children: [
-            const SizedBox(width: 16),
-            const Text(
+        leading: const Row(
+          children: const [
+            SizedBox(width: 16),
+            Text(
               'Naseeji',
               style: TextStyle(
                 color: Color(0xFF0040E0),

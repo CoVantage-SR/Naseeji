@@ -279,8 +279,8 @@ class OfferPreviewDocument extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Expanded(flex: 2, child: Text('—', textAlign: TextAlign.left, style: TextStyle(fontSize: 10))),
-          Expanded(child: Text(unitPrice, textAlign: TextAlign.center, style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant))),
-          Expanded(child: Text(qty, textAlign: TextAlign.center, style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant))),
+          Expanded(child: Text(unitPrice, textAlign: TextAlign.center, style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant))),
+          Expanded(child: Text(qty, textAlign: TextAlign.center, style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant))),
           Expanded(
             flex: 3,
             child: Text(
