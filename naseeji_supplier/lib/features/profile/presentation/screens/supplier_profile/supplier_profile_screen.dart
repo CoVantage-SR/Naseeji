@@ -106,6 +106,8 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
             context.go('/home');
           } else if (index == 2) {
             context.go('/orders');
+          } else if (index == 3) {
+            context.go('/messages');
           }
         },
         destinations: const [
