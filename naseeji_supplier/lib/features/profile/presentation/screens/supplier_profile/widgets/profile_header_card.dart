@@ -144,7 +144,7 @@ class ProfileHeaderCard extends StatelessWidget {
               Expanded(
                 child: ElevatedButton.icon(
                   onPressed: () {
-                    _showEditProfileDialog(context, profile);
+                    context.push('/profile/edit');
                   },
                   icon: const Icon(Icons.edit_outlined, size: 14, color: Colors.white),
                   label: const Text(

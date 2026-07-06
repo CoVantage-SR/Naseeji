@@ -34,6 +34,7 @@ import '../../features/orders/presentation/screens/order_center_screen.dart';
 import '../../features/orders/presentation/screens/dispute_center_screen.dart';
 import '../../features/orders/presentation/screens/create_quotation_screen.dart';
 import '../../features/profile/presentation/screens/supplier_profile/public_supplier_profile_screen.dart';
+import '../../features/profile/presentation/screens/supplier_profile/edit_supplier_profile_screen.dart';
 
 part 'app_router.g.dart';
 
@@ -102,6 +103,11 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/profile',
         name: 'profile',
         builder: (context, state) => const SupplierProfileScreen(),
+      ),
+      GoRoute(
+        path: '/profile/edit',
+        name: 'profile-edit',
+        builder: (context, state) => const EditSupplierProfileScreen(),
       ),
       GoRoute(
         path: '/add-product',
