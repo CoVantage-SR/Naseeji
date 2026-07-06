@@ -6,6 +6,13 @@ import '../../domain/entities/chat_message.dart';
 import '../../domain/entities/offer_details.dart';
 import '../../domain/entities/offer_approved.dart';
 import '../../domain/entities/offer_rejected.dart';
+import '../../domain/entities/final_agreement.dart';
+import '../../domain/entities/quotation_revision.dart';
+import '../../domain/entities/production_preparation.dart';
+import '../../domain/entities/shipping_manifest.dart';
+import '../../domain/entities/delivery_confirmation.dart';
+import '../../domain/entities/payment_release.dart';
+import '../../domain/entities/activity_log.dart';
 import '../../domain/repositories/orders_repository.dart';
 
 part 'orders_repository_impl.g.dart';
@@ -266,6 +273,188 @@ class OrdersRepositoryImpl implements OrdersRepository {
         ),
       ],
     );
+  }
+
+  @override
+  Future<FinalAgreement> getFinalAgreement(String rfqId) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return FinalAgreement(
+      rfqId: rfqId,
+      factoryLabel: 'مصنع الأقمشة المتطور',
+      supplierLabel: 'شركة نسيجي للمنسوجات',
+      productName: 'قطن طبيعي 100%',
+      quantity: '5,000 متر',
+      originalPrice: 15.00,
+      counterPrice: 13.50,
+      finalPrice: 12.00,
+      shippingCost: 250.00,
+      taxes: 900.00,
+      totalAmount: 61150.00,
+      paymentTerms: '50% مقدم، 50% عند الاستلام',
+      deliveryTime: '7 أيام عمل',
+      shippingMethod: 'شحن بري سريع',
+      date: '06 يوليو 2026',
+      version: 'v3.0',
+    );
+  }
+
+  @override
+  Future<List<QuotationRevision>> getQuotationHistory(String rfqId) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return const [
+      QuotationRevision(
+        versionNumber: 3,
+        createdBy: 'مورد نسيجي',
+        date: '2026-07-06',
+        time: '11:00 ص',
+        price: 12.00,
+        notes: 'تمت الموافقة على السعر النهائي مع الخصم الإضافي.',
+        status: 'مقبول',
+      ),
+      QuotationRevision(
+        versionNumber: 2,
+        createdBy: 'مصنع الأقمشة المتطور',
+        date: '2026-07-05',
+        time: '04:30 م',
+        price: 13.50,
+        notes: 'طلب خصم إضافي نظراً لحجم الطلب الكبير.',
+        status: 'مرفوض',
+      ),
+      QuotationRevision(
+        versionNumber: 1,
+        createdBy: 'مورد نسيجي',
+        date: '2026-07-05',
+        time: '10:00 ص',
+        price: 15.00,
+        notes: 'العرض المبدئي بناء على مواصفات طلب السعر.',
+        status: 'مستبدل',
+      ),
+    ];
+  }
+
+  @override
+  Future<ProductionPreparation> getProductionPreparation(String rfqId) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return const ProductionPreparation(
+      rfqId: rfqId,
+      progressPercent: 50.0,
+      currentPhase: 'Manufacturing',
+      estimatedFinishDate: '12 يوليو 2026',
+      preparationImages: [
+        'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=150&q=80',
+        'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=150&q=80',
+      ],
+      productVideoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-spinning-thread-at-weaving-loom-41804-large.mp4',
+      qualityInspectionImages: [
+        'https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=150&q=80',
+      ],
+      packagingImages: [],
+      preparationNotes: 'تم تجهيز 50% من خامات القطن والبدء في نسيج اللفات الأولى. الفحص الأولي أكد مطابقة الألوان.',
+    );
+  }
+
+  @override
+  Future<ShippingManifest> getShippingManifest(String rfqId) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return const ShippingManifest(
+      rfqId: rfqId,
+      shippingCompany: 'أرامكس Aramex',
+      trackingNumber: 'ARMX-99882211',
+      shipmentNumber: 'SH-882200',
+      truckNumber: 'أ ب ج 1234',
+      driverName: 'محمد العتيبي',
+      expectedArrival: '15 يوليو 2026',
+      beforeLoadingImages: [
+        'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=150&q=80'
+      ],
+      afterLoadingImages: [
+        'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=150&q=80'
+      ],
+      shippingLabelUrl: 'https://pdfobject.com/pdf/sample.pdf',
+      invoiceUrl: 'https://pdfobject.com/pdf/sample.pdf',
+      deliveryDocsUrl: 'https://pdfobject.com/pdf/sample.pdf',
+      shipmentVideoUrl: null,
+    );
+  }
+
+  @override
+  Future<DeliveryConfirmation> getDeliveryConfirmation(String rfqId) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return const DeliveryConfirmation(
+      rfqId: rfqId,
+      receivedDate: '15 يوليو 2026',
+      shipmentCondition: 'ممتازة - خالية من التلفيات',
+      deliveredQuantity: '5,000 متر (كامل الكمية)',
+      qualityMatch: true,
+      comments: 'تم فحص الخامات ومطابقتها تماماً للعينات المتفق عليها. نشكركم على الالتزام بالوقت والمواصفات.',
+      deliveryImages: [
+        'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=150&q=80'
+      ],
+    );
+  }
+
+  @override
+  Future<PaymentRelease> getPaymentRelease(String rfqId) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return const PaymentRelease(
+      rfqId: rfqId,
+      orderTotal: 60000.00,
+      commission: 1500.00,
+      supplierReceivable: 58500.00,
+      paymentStatus: 'تحت التحويل',
+      expectedReleaseDate: '17 يوليو 2026',
+      transferReference: 'TXN-998877665544',
+      releaseTimeline: [
+        'تم تأكيد الاستلام من المشتري - 15 يوليو 2026',
+        'تصفية العمولة والرسوم الإدارية - 16 يوليو 2026',
+        'جدولة الحوالة البنكية التلقائية - 17 يوليو 2026',
+      ],
+    );
+  }
+
+  @override
+  Future<List<ActivityLogItem>> getActivityLog(String rfqId) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return const [
+      ActivityLogItem(
+        iconTag: 'payment',
+        user: 'النظام المالي نسيجي',
+        action: 'تجهيز الدفعة المالية للإفراج البنكي',
+        date: '2026-07-06',
+        time: '12:00 م',
+        device: 'سيرفر الإيداعات',
+        status: 'مكتمل',
+      ),
+      ActivityLogItem(
+        iconTag: 'delivery',
+        user: 'الشركة المتحدة للنسيج الذكي',
+        action: 'تأكيد استلام الشحنة وتوقيع إيصال الجودة',
+        date: '2026-07-06',
+        time: '11:15 ص',
+        device: 'iOS Device - سارة أحمد',
+        attachments: ['إيصال_الاستلام.pdf'],
+        status: 'مكتمل',
+      ),
+      ActivityLogItem(
+        iconTag: 'shipping',
+        user: 'مورد نسيجي',
+        action: 'شحن الطلب وتحديث بوليصة النقل أرامكس',
+        date: '2026-07-05',
+        time: '03:40 م',
+        device: 'Web App Portal',
+        attachments: ['بوليصة_أرامكس.pdf', 'صورة_التحميل.jpg'],
+        status: 'مكتمل',
+      ),
+      ActivityLogItem(
+        iconTag: 'verified',
+        user: 'مصنع الأقمشة المتطور',
+        action: 'الموافقة على جينات الخامات والإنتاج المرفوعة',
+        date: '2026-07-04',
+        time: '09:00 ص',
+        device: 'Android App',
+        status: 'مكتمل',
+      ),
+    ];
   }
 }
 
