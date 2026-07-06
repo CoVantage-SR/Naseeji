@@ -127,7 +127,7 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
                                   const SizedBox(width: 4),
                                   const Icon(Icons.location_on_outlined, color: AppColors.outline, size: 12),
                                   const SizedBox(width: 12),
-                                  const Text('10 سنوات خبرة', style: const TextStyle(fontSize: 10, color: AppColors.outline)),
+                                  const Text('10 سنوات خبرة', style: TextStyle(fontSize: 10, color: AppColors.outline)),
                                   const SizedBox(width: 4),
                                   const Icon(Icons.workspace_premium_outlined, color: AppColors.outline, size: 12),
                                 ],
@@ -293,13 +293,13 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
           // Credentials achievements badges
           const Text('أوسمة الجودة والاعتمادات', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
           const SizedBox(height: 12),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               _buildAchievementBadge('Top Supplier', Colors.orange),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               _buildAchievementBadge('Verified Business', Colors.blue),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               _buildAchievementBadge('ISO Certified', Colors.green),
             ],
           ),

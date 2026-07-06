@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
@@ -298,7 +300,9 @@ class _CreateQuotationScreenState extends State<CreateQuotationScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              // ignore: prefer_const_constructors
               Expanded(
+                // ignore: prefer_const_constructors
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -491,7 +495,7 @@ class _CreateQuotationScreenState extends State<CreateQuotationScreen> {
                     rushOrderSupport = val;
                   });
                 },
-                activeColor: const Color(0xFF0040E0),
+                activeThumbColor: const Color(0xFF0040E0),
               ),
               const Text('دعم الشحن المستعجل والمضغوط', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
             ],

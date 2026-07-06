@@ -222,11 +222,11 @@ class _PublicSupplierProfileScreenState extends ConsumerState<PublicSupplierProf
           const SizedBox(height: 20),
           const Text('الأوسمة الحاصل عليها المورد', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
           const SizedBox(height: 12),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               _buildAchievementBadge('Top Supplier', Colors.orange),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               _buildAchievementBadge('Verified Business', Colors.blue),
             ],
           ),
