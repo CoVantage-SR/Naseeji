@@ -231,6 +231,13 @@ GoRouter goRouter(GoRouterRef ref) {
           rfqId: state.uri.queryParameters['rfqId'] ?? '',
         ),
       ),
+      GoRoute(
+        path: '/orders/create-quotation',
+        name: 'orders-create-quotation',
+        builder: (context, state) => CreateQuotationScreen(
+          rfqId: state.uri.queryParameters['rfqId'] ?? '',
+        ),
+      ),
     ],
   );
 }
