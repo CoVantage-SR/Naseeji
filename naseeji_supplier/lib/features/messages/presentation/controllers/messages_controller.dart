@@ -84,14 +84,30 @@ class MessagesController extends _$MessagesController {
   }
 
   Future<void> archiveConversation(String conversationId) async {
+    // Optimistic update to remove it from the list (or set status)
+    final current = state.valueOrNull;
+    if (current != null) {
+      state = AsyncData(MessagesViewState(
+        conversations: current.conversations.where((c) => c.id != conversationId).toList(),
+        activeFilter: current.activeFilter,
+      ));
+    }
     final repo = ref.read(messagesRepositoryProvider);
     await repo.archiveConversation(conversationId);
     ref.invalidateSelf();
   }
 
   Future<void> deleteConversation(String conversationId) async {
+    // Optimistic update to immediately remove from UI
+    final current = state.valueOrNull;
+    if (current != null) {
+      state = AsyncData(MessagesViewState(
+        conversations: current.conversations.where((c) => c.id != conversationId).toList(),
+        activeFilter: current.activeFilter,
+      ));
+    }
     final repo = ref.read(messagesRepositoryProvider);
     await repo.deleteConversation(conversationId);
-    ref.invalidateSelf();
+    // Do not invalidate immediately, to let the UI settle
   }
 }
