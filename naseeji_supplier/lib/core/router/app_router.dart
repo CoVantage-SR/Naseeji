@@ -32,6 +32,7 @@ import '../../features/orders/presentation/screens/payment_release_screen.dart';
 import '../../features/orders/presentation/screens/activity_log_screen.dart';
 import '../../features/orders/presentation/screens/order_center_screen.dart';
 import '../../features/orders/presentation/screens/dispute_center_screen.dart';
+import '../../features/orders/presentation/screens/create_quotation_screen.dart';
 
 part 'app_router.g.dart';
 
