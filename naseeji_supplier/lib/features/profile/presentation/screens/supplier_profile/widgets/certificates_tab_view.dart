@@ -37,18 +37,34 @@ class _CertificatesTabViewState extends ConsumerState<CertificatesTabView> {
           if (!showAddCertForm)
             Align(
               alignment: Alignment.centerLeft,
-              child: OutlinedButton.icon(
-                onPressed: () {
-                  setState(() {
-                    showAddCertForm = true;
-                  });
-                },
-                icon: const Icon(Icons.add_card_outlined, color: Color(0xFF0040E0), size: 16),
-                label: const Text('إضافة شهادة جديدة', style: TextStyle(color: Color(0xFF0040E0), fontSize: 12, fontWeight: FontWeight.bold)),
-                style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: Color(0xFF0040E0)),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      showAddCertForm = true;
+                    });
+                  },
+                  borderRadius: BorderRadius.circular(10),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF1F4FE),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: const Color(0xFF0040E0), width: 1),
+                    ),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.add_card_outlined, color: Color(0xFF0040E0), size: 16),
+                        SizedBox(width: 8),
+                        Text(
+                          'إضافة شهادة جديدة',
+                          style: TextStyle(color: Color(0xFF0040E0), fontSize: 11, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             )
@@ -182,19 +198,91 @@ class _CertificatesTabViewState extends ConsumerState<CertificatesTabView> {
           const Text('الشهادات الحالية المعتمدة والموثقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
           const SizedBox(height: 12),
           ...widget.profile.certificates.map((cert) {
-            return Card(
-              elevation: 0,
-              margin: const EdgeInsets.only(bottom: 10),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: const BorderSide(color: Color(0xFFE2E1EF))),
-              color: Colors.white,
-              child: ListTile(
-                title: Text(cert.name, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold), textAlign: TextAlign.end),
-                subtitle: Text(cert.date, style: const TextStyle(fontSize: 9, color: AppColors.outline), textAlign: TextAlign.end),
-                trailing: Icon(cert.verified ? Icons.check_circle_outline : Icons.pending_outlined, color: cert.verified ? const Color(0xFF16A34A) : Colors.orange, size: 20),
-                leading: IconButton(
-                  icon: const Icon(Icons.download_rounded, color: Color(0xFF0040E0), size: 18),
-                  onPressed: () {},
-                ),
+            return Container(
+              margin: const EdgeInsets.only(bottom: 12),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: const Color(0xFFE2E1EF)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.02),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  )
+                ],
+              ),
+              child: Row(
+                children: [
+                  // Action Download button in a circular container
+                  Container(
+                    width: 36,
+                    height: 36,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFF1F4FE),
+                      shape: BoxShape.circle,
+                    ),
+                    child: IconButton(
+                      icon: const Icon(Icons.download_rounded, color: Color(0xFF0040E0), size: 18),
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('جاري تحميل ملف الاعتماد الرسمي...')),
+                        );
+                      },
+                    ),
+                  ),
+                  const Spacer(),
+                  // Certificate details
+                  Expanded(
+                    flex: 4,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          cert.name,
+                          style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                          textAlign: TextAlign.end,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          cert.date,
+                          style: const TextStyle(fontSize: 9, color: AppColors.outline),
+                          textAlign: TextAlign.end,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  // Premium verification badge (Pill shape)
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: cert.verified ? const Color(0xFFE2F9F5) : const Color(0xFFFFF4EB),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          cert.verified ? 'مُوثقة' : 'تحت التدقيق',
+                          style: TextStyle(
+                            color: cert.verified ? const Color(0xFF006B5F) : Colors.orange,
+                            fontSize: 8,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Icon(
+                          cert.verified ? Icons.check_circle_outline : Icons.pending_outlined,
+                          color: cert.verified ? const Color(0xFF006B5F) : Colors.orange,
+                          size: 12,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             );
           }),

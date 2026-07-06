@@ -54,7 +54,7 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
             headerSliverBuilder: (context, innerBoxIsScrolled) {
               return [
                 SliverAppBar(
-                  expandedHeight: 290,
+                  expandedHeight: 265,
                   floating: false,
                   pinned: true,
                   backgroundColor: Colors.white,

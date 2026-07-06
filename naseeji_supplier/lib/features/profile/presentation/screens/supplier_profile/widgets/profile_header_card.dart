@@ -30,8 +30,8 @@ class ProfileHeaderCard extends StatelessWidget {
               bottom: -36,
               right: 20,
               child: Container(
-                width: 72,
-                height: 72,
+                width: 102,
+                height: 102,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   shape: BoxShape.circle,
@@ -51,11 +51,11 @@ class ProfileHeaderCard extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 40),
+        const SizedBox(height: 45),
 
         // Header Metadata details
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 13.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -63,7 +63,7 @@ class ProfileHeaderCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 1),
                     decoration: BoxDecoration(
                       color: const Color(0xFFE2F9F5),
                       borderRadius: BorderRadius.circular(4),
@@ -86,7 +86,7 @@ class ProfileHeaderCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Text(
                     profile.companyName,
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                 ],
               ),
@@ -100,23 +100,23 @@ class ProfileHeaderCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 4),
                   const Icon(Icons.location_on_outlined, color: AppColors.outline, size: 12),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 10),
                   const Text(
                     '10 سنوات خبرة',
                     style: TextStyle(fontSize: 10, color: AppColors.outline),
                   ),
-                  const SizedBox(width: 4),
+                  const SizedBox(width: 1),
                   const Icon(Icons.workspace_premium_outlined, color: AppColors.outline, size: 12),
                 ],
               ),
             ],
           ),
         ),
-        const Spacer(),
+        const SizedBox(height: 1),
 
         // Profile Actions Row
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
           child: Row(
             children: [
               Expanded(
@@ -139,7 +139,7 @@ class ProfileHeaderCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 1),
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
