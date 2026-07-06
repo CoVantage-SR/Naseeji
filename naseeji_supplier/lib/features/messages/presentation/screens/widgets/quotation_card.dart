@@ -10,7 +10,6 @@ class QuotationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final status = data['status'] as String? ?? 'pending';
     final isAccepted = status == 'accepted';
-    final statusColor = isAccepted ? AppColors.secondary : AppColors.primary;
     final statusLabel = isAccepted ? 'مقبول ✓' : 'قيد المراجعة';
 
     return Container(

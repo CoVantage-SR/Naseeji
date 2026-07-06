@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
@@ -5,9 +7,7 @@ import 'package:naseeji_supplier/features/profile/domain/entities/supplier_profi
 
 class ProfileHeaderCard extends StatelessWidget {
   final SupplierProfile profile;
-
   const ProfileHeaderCard({super.key, required this.profile});
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -113,7 +113,6 @@ class ProfileHeaderCard extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 1),
-
         // Profile Actions Row
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
