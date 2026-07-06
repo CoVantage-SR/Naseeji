@@ -114,7 +114,7 @@ class _TextBubble extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: 4),
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: isOut ? Colors.white.withOpacity(0.3) : AppColors.surfaceContainerLow,
+                  color: isOut ? Colors.white.withValues(alpha: 0.3) : AppColors.surfaceContainerLow,
                   borderRadius: BorderRadius.circular(8),
                   border: Border(
                     right: BorderSide(
@@ -142,7 +142,7 @@ class _TextBubble extends StatelessWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withValues(alpha: 0.05),
                     blurRadius: 4,
                     offset: const Offset(0, 2),
                   ),

@@ -19,7 +19,7 @@ class ConversationCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        color: hasUnread ? AppColors.primary.withOpacity(0.03) : Colors.white,
+        color: hasUnread ? AppColors.primary.withValues(alpha: 0.03) : Colors.white,
         child: Row(
           children: [
             // Avatar + online badge
@@ -205,7 +205,7 @@ class _TagChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(

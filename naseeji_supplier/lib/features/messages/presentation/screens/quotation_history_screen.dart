@@ -172,7 +172,7 @@ class _QuotationVersionCard extends StatelessWidget {
             color: isSelected ? AppColors.primary : isAccepted ? AppColors.secondary : AppColors.outlineVariant,
             width: isSelected ? 2 : 1,
           ),
-          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 6)],
+          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 6)],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -193,7 +193,7 @@ class _QuotationVersionCard extends StatelessWidget {
                     ),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                    decoration: BoxDecoration(color: Colors.white.withOpacity(0.2), borderRadius: BorderRadius.circular(8)),
+                    decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(8)),
                     child: Text(isAccepted ? 'مقبول' : 'في الانتظار', style: const TextStyle(color: Colors.white, fontSize: 10)),
                   ),
                   const Spacer(),
@@ -273,7 +273,7 @@ class _CompareButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.primary.withOpacity(0.05),
+      color: AppColors.primary.withValues(alpha: 0.05),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

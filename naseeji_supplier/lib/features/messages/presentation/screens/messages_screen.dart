@@ -228,7 +228,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
       secondaryBackground: Container(
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 20),
-        color: AppColors.primary.withOpacity(0.8),
+        color: AppColors.primary.withValues(alpha: 0.8),
         child: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
