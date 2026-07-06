@@ -17,15 +17,20 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
   final List<String> tabTitles = const [
     'ملخص الأعمال',
     'بيانات الشركة',
-    'المنتجات',
-    'معرض الصور',
-    'الشهادات',
-    'التحليلات والأداء',
-    'العملاء',
-    'الشحن اللوجستي',
+    'الشهادات والاعتمادات',
     'طرق السداد',
     'الإعدادات',
   ];
+
+  final List<Map<String, dynamic>> certificatesList = [
+    {'name': 'شهادة مطابقة مواصفات الجودة ISO 9001', 'date': 'صالحة لغاية 2027-12', 'verified': true},
+    {'name': 'شهادة منشأ للمنسوجات والقطنيات الرسمية', 'date': 'صالحة لغاية 2026-10', 'verified': true},
+    {'name': 'رخصة التصدير الصناعية المعتمدة للمؤسسة', 'date': 'صالحة لغاية 2027-04', 'verified': true},
+  ];
+
+  final _certNameController = TextEditingController();
+  final _certExpiryController = TextEditingController();
+  String uploadedFileName = '';
 
   @override
   void initState() {
@@ -36,6 +41,8 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
   @override
   void dispose() {
     _tabController.dispose();
+    _certNameController.dispose();
+    _certExpiryController.dispose();
     super.dispose();
   }
 
@@ -199,12 +206,7 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
               children: [
                 _buildOverviewTab(profile),
                 _buildCompanyInfoTab(profile),
-                _buildProductsTab(),
-                _buildGalleryTab(),
                 _buildCertificatesTab(),
-                _buildPerformanceTab(),
-                _buildCustomersTab(),
-                _buildShippingTab(),
                 _buildPaymentsTab(),
                 _buildSettingsTab(),
               ],
@@ -262,7 +264,6 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          // Statistics grid row
           Row(
             children: [
               Expanded(child: _buildMetricCard('نسبة الرد السريع', '98%', Icons.bolt_outlined, Colors.orange)),
@@ -280,7 +281,6 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
           ),
           const SizedBox(height: 20),
 
-          // Business Summary
           const Text('نبذة عن أعمال الشركة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
           const SizedBox(height: 8),
           const Text(
@@ -290,7 +290,6 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
           ),
           const SizedBox(height: 20),
 
-          // Credentials achievements badges
           const Text('أوسمة الجودة والاعتمادات', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
           const SizedBox(height: 12),
           Row(
@@ -305,7 +304,6 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
           ),
           const SizedBox(height: 20),
 
-          // Activity Timeline
           const Text('أحدث نشاطات الشركة الموثقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
           const SizedBox(height: 12),
           const RecentActivityTimeline(),
@@ -343,138 +341,124 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
     );
   }
 
-  // TAB 3 — Products
-  Widget _buildProductsTab() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              OutlinedButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.add, size: 14, color: Color(0xFF0040E0)),
-                label: const Text('إضافة منتج جديد', style: TextStyle(color: Color(0xFF0040E0), fontSize: 11)),
-                style: OutlinedButton.styleFrom(side: const BorderSide(color: Color(0xFF0040E0))),
-              ),
-              const Text('إدارة الكتالوج والمنتجات المفعلة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-            ],
-          ),
-          const SizedBox(height: 16),
-          _buildProductListItem('خيوط غزل القطن الطبيعي 100%', 'مخزون: 15,000م • MOQ: 100م', 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=100&q=80'),
-          _buildProductListItem('قماش الكتان المقاوم للرطوبة والحرارة', 'مخزون: 8,200م • MOQ: 50م', 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=100&q=80'),
-          _buildProductListItem('منسوجات البوليستر المقوى الصناعي', 'مخزون: 30,000م • MOQ: 500م', 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=100&q=80'),
-        ],
-      ),
-    );
-  }
-
-  // TAB 4 — Gallery
-  Widget _buildGalleryTab() {
-    final mockGallery = [
-      'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=150&q=80',
-      'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=150&q=80',
-      'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=150&q=80',
-      'https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=150&q=80',
-    ];
-
-    return GridView.builder(
-      padding: const EdgeInsets.all(16),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        childAspectRatio: 1.2,
-      ),
-      itemCount: mockGallery.length,
-      itemBuilder: (context, index) {
-        return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            image: DecorationImage(image: NetworkImage(mockGallery[index]), fit: BoxFit.cover),
-          ),
-        );
-      },
-    );
-  }
-
-  // TAB 5 — Certificates
+  // TAB 3 — Certificates (with Add Certificate inline section)
   Widget _buildCertificatesTab() {
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        _buildCertificateItem('شهادة مطابقة مواصفات الجودة ISO 9001', 'صالحة لغاية 2027-12', true),
-        _buildCertificateItem('شهادة منشأ للمنسوجات والقطنيات', 'صالحة لغاية 2026-10', true),
-        _buildCertificateItem('رخصة التصدير الصناعية المعتمدة للمؤسسة', 'صالحة لغاية 2027-04', true),
-      ],
-    );
-  }
-
-  // TAB 6 — Performance
-  Widget _buildPerformanceTab() {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('لوحة قياس مؤشرات الأداء والنمو B2B', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 12),
+          // ADD CERTIFICATE CONTAINER
           Container(
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: const Color(0xFFE2E1EF))),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: const Color(0xFF0040E0), width: 1.5),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                _buildRowItem('إجمالي مبيعات وإيرادات العروض المعتمدة', '340,000 ر.س'),
-                _buildRowItem('معدل نمو الأرباح الربع سنوي', '18.4% +'),
-                _buildRowItem('نسبة قبول عروض الأسعار (Conversion)', '88%'),
-                _buildRowItem('نسبة إخفاق أو إلغاء الشحنات', '1.2% (ممتاز)'),
-                _buildRowItem('العملاء المتكررين والأوفياء لنسيجي', '32 مصنع دائم'),
+                const Text('إضافة شهادة أو اعتماد جديد', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFF0040E0))),
+                const SizedBox(height: 12),
+                _buildDialogTextField('اسم الشهادة / الاعتماد', _certNameController),
+                const SizedBox(height: 10),
+                _buildDialogTextField('تاريخ انتهاء الصلاحية المتوقع', _certExpiryController),
+                const SizedBox(height: 12),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      uploadedFileName = 'وثيقة_اعتماد_جديدة.pdf';
+                    });
+                    _showSuccessToast('تم اختيار وثيقة الشهادة بنجاح');
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF8F9FF),
+                      border: Border.all(color: const Color(0xFFE2E1EF), style: BorderStyle.solid),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          uploadedFileName.isEmpty ? 'اضغط لرفع ملف الشهادة (PDF أو صورة)' : uploadedFileName,
+                          style: TextStyle(
+                            color: uploadedFileName.isEmpty ? AppColors.outline : const Color(0xFF16A34A),
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Icon(
+                          uploadedFileName.isEmpty ? Icons.cloud_upload_outlined : Icons.check_circle_outline,
+                          color: uploadedFileName.isEmpty ? AppColors.outline : const Color(0xFF16A34A),
+                          size: 18,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 14),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    if (_certNameController.text.isEmpty) {
+                      _showSuccessToast('يرجى كتابة اسم الشهادة أولاً');
+                      return;
+                    }
+                    setState(() {
+                      certificatesList.insert(0, {
+                        'name': _certNameController.text,
+                        'date': 'صالحة لغاية ${_certExpiryController.text}',
+                        'verified': false,
+                      });
+                      _certNameController.clear();
+                      _certExpiryController.clear();
+                      uploadedFileName = '';
+                    });
+                    _showSuccessToast('تم إرسال الشهادة للمراجعة والتدقيق بنجاح.');
+                  },
+                  icon: const Icon(Icons.check, size: 14, color: Colors.white),
+                  label: const Text('حفظ وإرسال للتدقيق'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF0040E0),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  ),
+                ),
               ],
             ),
           ),
+          const SizedBox(height: 20),
+
+          // LIST OF CERTIFICATES
+          const Text('الشهادات الحالية المعتمدة والموثقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          const SizedBox(height: 12),
+          ...certificatesList.map((cert) {
+            return Card(
+              elevation: 0,
+              margin: const EdgeInsets.only(bottom: 10),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: const BorderSide(color: Color(0xFFE2E1EF))),
+              color: Colors.white,
+              child: ListTile(
+                title: Text(cert['name'], style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold), textAlign: TextAlign.end),
+                subtitle: Text(cert['date'], style: const TextStyle(fontSize: 9, color: AppColors.outline), textAlign: TextAlign.end),
+                trailing: Icon(cert['verified'] ? Icons.check_circle_outline : Icons.pending_outlined, color: cert['verified'] ? const Color(0xFF16A34A) : Colors.orange, size: 20),
+                leading: IconButton(
+                  icon: const Icon(Icons.download_rounded, color: Color(0xFF0040E0), size: 18),
+                  onPressed: () {},
+                ),
+              ),
+            );
+          }),
         ],
       ),
     );
   }
 
-  // TAB 7 — Customers
-  Widget _buildCustomersTab() {
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        _buildCustomerTile('مصنع الرياض للملابس الجاهزة', 'المنطقة الصناعية الأولى • 5 صفقات مكتملة', 'RC'),
-        _buildCustomerTile('حلول جدة للنسيج والملابس', 'المدينة الصناعية الثانية • 3 صفقات مكتملة', 'JT'),
-        _buildCustomerTile('شركة الأزياء الموحدة للاستيراد والتصدير', 'المنطقة الحرة بميناء الملك عبد الله • صفقة واحدة نشطة', 'UF'),
-      ],
-    );
-  }
-
-  // TAB 8 — Shipping
-  Widget _buildShippingTab() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: const Color(0xFFE2E1EF))),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            const Text('الشركاء واللوجستيات والتغطية الجغرافية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF0040E0))),
-            const SizedBox(height: 12),
-            _buildRowItem('شركات النقل واللوجستيات المفضلة', 'أرامكس Aramex • دي إتش إل DHL'),
-            _buildRowItem('تغطية النطاق الجغرافي للشحن', 'كافة مدن المملكة العربية السعودية • دول مجلس التعاون'),
-            _buildRowItem('متوسط مدة شحن الطلب الداخلي', '2-3 أيام عمل'),
-            _buildRowItem('معدل نجاح تتبع وتوصيل الشحنات', '99.4%'),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // TAB 9 — Payments
+  // TAB 4 — Payments
   Widget _buildPaymentsTab() {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -496,7 +480,7 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
     );
   }
 
-  // TAB 10 — Settings
+  // TAB 5 — Settings
   Widget _buildSettingsTab() {
     return ListView(
       padding: const EdgeInsets.all(16),
@@ -529,7 +513,6 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
     );
   }
 
-  // Common UI builders
   Widget _buildMetricCard(String label, String val, IconData icon, Color color) {
     return Container(
       padding: const EdgeInsets.all(12),
@@ -559,71 +542,6 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
         border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Text(label, style: TextStyle(color: color, fontSize: 9, fontWeight: FontWeight.bold)),
-    );
-  }
-
-  Widget _buildProductListItem(String name, String specs, String imgUrl) {
-    return Card(
-      elevation: 0,
-      margin: const EdgeInsets.only(bottom: 12),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: const BorderSide(color: Color(0xFFE2E1EF))),
-      color: Colors.white,
-      child: ListTile(
-        title: Text(name, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold), textAlign: TextAlign.end),
-        subtitle: Text(specs, style: const TextStyle(fontSize: 9, color: AppColors.outline), textAlign: TextAlign.end),
-        leading: const Icon(Icons.arrow_back_ios, size: 12),
-        trailing: Container(
-          width: 44,
-          height: 44,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            image: DecorationImage(image: NetworkImage(imgUrl), fit: BoxFit.cover),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCertificateItem(String name, String date, bool verified) {
-    return Card(
-      elevation: 0,
-      margin: const EdgeInsets.only(bottom: 10),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: const BorderSide(color: Color(0xFFE2E1EF))),
-      color: Colors.white,
-      child: ListTile(
-        title: Text(name, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold), textAlign: TextAlign.end),
-        subtitle: Text(date, style: const TextStyle(fontSize: 9, color: AppColors.outline), textAlign: TextAlign.end),
-        trailing: Icon(verified ? Icons.check_circle_outline : Icons.pending_outlined, color: verified ? const Color(0xFF16A34A) : Colors.orange, size: 20),
-        leading: IconButton(
-          icon: const Icon(Icons.download_rounded, color: Color(0xFF0040E0), size: 18),
-          onPressed: () {},
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCustomerTile(String name, String subtitle, String initials) {
-    return Card(
-      elevation: 0,
-      margin: const EdgeInsets.only(bottom: 10),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: const BorderSide(color: Color(0xFFE2E1EF))),
-      color: Colors.white,
-      child: ListTile(
-        title: Text(name, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold), textAlign: TextAlign.end),
-        subtitle: Text(subtitle, style: const TextStyle(fontSize: 9, color: AppColors.outline), textAlign: TextAlign.end),
-        leading: const Icon(Icons.arrow_back_ios, size: 12),
-        trailing: Container(
-          width: 36,
-          height: 36,
-          decoration: const BoxDecoration(color: Color(0xFFE8F0FE), shape: BoxShape.circle),
-          child: Center(
-            child: Text(
-              initials,
-              style: const TextStyle(color: Color(0xFF0040E0), fontSize: 11, fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
-      ),
     );
   }
 

@@ -15,8 +15,6 @@ class _PublicSupplierProfileScreenState extends ConsumerState<PublicSupplierProf
   late TabController _tabController;
   final List<String> tabTitles = const [
     'ملخص الشركة',
-    'المنتجات المتاحة',
-    'معرض الصور',
     'الشهادات المعتمدة',
     'التقييمات والآراء',
   ];
@@ -185,8 +183,6 @@ class _PublicSupplierProfileScreenState extends ConsumerState<PublicSupplierProf
               controller: _tabController,
               children: [
                 _buildPublicOverviewTab(profile),
-                _buildPublicProductsTab(),
-                _buildPublicGalleryTab(),
                 _buildPublicCertificatesTab(),
                 _buildPublicReviewsTab(),
               ],
@@ -235,47 +231,6 @@ class _PublicSupplierProfileScreenState extends ConsumerState<PublicSupplierProf
     );
   }
 
-  Widget _buildPublicProductsTab() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          const Text('أبرز المنتجات المعروضة للطلب', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 16),
-          _buildProductListItem('خيوط غزل القطن الطبيعي 100%', 'مخزون: 15,000م • MOQ: 100م', 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=100&q=80'),
-          _buildProductListItem('قماش الكتان المقاوم للرطوبة والحرارة', 'مخزون: 8,200م • MOQ: 50م', 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=100&q=80'),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPublicGalleryTab() {
-    final mockGallery = [
-      'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=150&q=80',
-      'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=150&q=80',
-    ];
-
-    return GridView.builder(
-      padding: const EdgeInsets.all(16),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        childAspectRatio: 1.2,
-      ),
-      itemCount: mockGallery.length,
-      itemBuilder: (context, index) {
-        return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            image: DecorationImage(image: NetworkImage(mockGallery[index]), fit: BoxFit.cover),
-          ),
-        );
-      },
-    );
-  }
-
   Widget _buildPublicCertificatesTab() {
     return ListView(
       padding: const EdgeInsets.all(16),
@@ -319,27 +274,6 @@ class _PublicSupplierProfileScreenState extends ConsumerState<PublicSupplierProf
         border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Text(label, style: TextStyle(color: color, fontSize: 9, fontWeight: FontWeight.bold)),
-    );
-  }
-
-  Widget _buildProductListItem(String name, String specs, String imgUrl) {
-    return Card(
-      elevation: 0,
-      margin: const EdgeInsets.only(bottom: 12),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: const BorderSide(color: Color(0xFFE2E1EF))),
-      color: Colors.white,
-      child: ListTile(
-        title: Text(name, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold), textAlign: TextAlign.end),
-        subtitle: Text(specs, style: const TextStyle(fontSize: 9, color: AppColors.outline), textAlign: TextAlign.end),
-        trailing: Container(
-          width: 44,
-          height: 44,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            image: DecorationImage(image: NetworkImage(imgUrl), fit: BoxFit.cover),
-          ),
-        ),
-      ),
     );
   }
 
