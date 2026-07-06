@@ -22,6 +22,14 @@ import '../../features/orders/presentation/screens/offer_preview_screen.dart';
 import '../../features/orders/presentation/screens/offer_details_screen.dart';
 import '../../features/orders/presentation/screens/offer_rejected_screen.dart';
 import '../../features/orders/presentation/screens/offer_approved_screen.dart';
+import '../../features/orders/presentation/screens/final_agreement_screen.dart';
+import '../../features/orders/presentation/screens/quotation_revision_history_screen.dart';
+import '../../features/orders/presentation/screens/production_preparation_screen.dart';
+import '../../features/orders/presentation/screens/factory_preparation_review_screen.dart';
+import '../../features/orders/presentation/screens/shipping_manifest_screen.dart';
+import '../../features/orders/presentation/screens/delivery_confirmation_screen.dart';
+import '../../features/orders/presentation/screens/payment_release_screen.dart';
+import '../../features/orders/presentation/screens/activity_log_screen.dart';
 
 part 'app_router.g.dart';
 
@@ -147,6 +155,62 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/orders/offer-approved',
         name: 'orders-offer-approved',
         builder: (context, state) => OfferApprovedScreen(
+          rfqId: state.uri.queryParameters['rfqId'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/orders/final-agreement',
+        name: 'orders-final-agreement',
+        builder: (context, state) => FinalAgreementScreen(
+          rfqId: state.uri.queryParameters['rfqId'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/orders/quotation-history',
+        name: 'orders-quotation-history',
+        builder: (context, state) => QuotationRevisionHistoryScreen(
+          rfqId: state.uri.queryParameters['rfqId'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/orders/production-preparation',
+        name: 'orders-production-preparation',
+        builder: (context, state) => ProductionPreparationScreen(
+          rfqId: state.uri.queryParameters['rfqId'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/orders/factory-preparation-review',
+        name: 'orders-factory-preparation-review',
+        builder: (context, state) => FactoryPreparationReviewScreen(
+          rfqId: state.uri.queryParameters['rfqId'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/orders/shipping-manifest',
+        name: 'orders-shipping-manifest',
+        builder: (context, state) => ShippingManifestScreen(
+          rfqId: state.uri.queryParameters['rfqId'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/orders/delivery-confirmation',
+        name: 'orders-delivery-confirmation',
+        builder: (context, state) => DeliveryConfirmationScreen(
+          rfqId: state.uri.queryParameters['rfqId'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/orders/payment-release',
+        name: 'orders-payment-release',
+        builder: (context, state) => PaymentReleaseScreen(
+          rfqId: state.uri.queryParameters['rfqId'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/orders/activity-log',
+        name: 'orders-activity-log',
+        builder: (context, state) => ActivityLogScreen(
           rfqId: state.uri.queryParameters['rfqId'] ?? '',
         ),
       ),
