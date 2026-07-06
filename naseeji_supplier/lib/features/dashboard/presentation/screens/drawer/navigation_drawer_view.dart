@@ -78,7 +78,10 @@ class NavigationDrawerView extends ConsumerWidget {
                     title: 'الطلبات',
                     path: '/orders',
                     currentRoute: currentRoute,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context);
+                      context.go('/orders');
+                    },
                   ),
                   DrawerItem(
                     icon: Icons.description_outlined,

@@ -101,21 +101,37 @@ class OrdersScreen extends StatelessWidget {
                       color: AppColors.outline,
                       fontSize: 13,
                     ),
-                    prefixIcon: const Icon(Icons.search, color: AppColors.outline, size: 20),
+                    prefixIcon: const Icon(
+                      Icons.search,
+                      color: AppColors.outline,
+                      size: 20,
+                    ),
                     fillColor: Colors.white,
                     filled: true,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 12,
+                      horizontal: 16,
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: Color(0xFFE2E1EF), width: 1),
+                      borderSide: const BorderSide(
+                        color: Color(0xFFE2E1EF),
+                        width: 1,
+                      ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: Color(0xFFE2E1EF), width: 1),
+                      borderSide: const BorderSide(
+                        color: Color(0xFFE2E1EF),
+                        width: 1,
+                      ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: AppColors.primary, width: 1),
+                      borderSide: const BorderSide(
+                        color: AppColors.primary,
+                        width: 1,
+                      ),
                     ),
                   ),
                 ),
@@ -128,7 +144,11 @@ class OrdersScreen extends StatelessWidget {
                   Expanded(
                     child: OutlinedButton.icon(
                       onPressed: () {},
-                      icon: const Icon(Icons.tune, size: 16, color: AppColors.onSurfaceVariant),
+                      icon: const Icon(
+                        Icons.tune,
+                        size: 16,
+                        color: AppColors.onSurfaceVariant,
+                      ),
                       label: const Text(
                         'تصفية',
                         style: TextStyle(
@@ -138,7 +158,10 @@ class OrdersScreen extends StatelessWidget {
                         ),
                       ),
                       style: OutlinedButton.styleFrom(
-                        side: const BorderSide(color: Color(0xFFE2E1EF), width: 1),
+                        side: const BorderSide(
+                          color: Color(0xFFE2E1EF),
+                          width: 1,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -151,7 +174,11 @@ class OrdersScreen extends StatelessWidget {
                   Expanded(
                     child: OutlinedButton.icon(
                       onPressed: () {},
-                      icon: const Icon(Icons.sort, size: 16, color: AppColors.onSurfaceVariant),
+                      icon: const Icon(
+                        Icons.sort,
+                        size: 16,
+                        color: AppColors.onSurfaceVariant,
+                      ),
                       label: const Text(
                         'ترتيب',
                         style: TextStyle(
@@ -161,7 +188,10 @@ class OrdersScreen extends StatelessWidget {
                         ),
                       ),
                       style: OutlinedButton.styleFrom(
-                        side: const BorderSide(color: Color(0xFFE2E1EF), width: 1),
+                        side: const BorderSide(
+                          color: Color(0xFFE2E1EF),
+                          width: 1,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -272,46 +302,6 @@ class OrdersScreen extends StatelessWidget {
             fontSize: 13,
           ),
         ),
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: 2,
-        backgroundColor: Colors.white,
-        elevation: 8,
-        indicatorColor: const Color(0xFF72F8E4).withValues(alpha: 0.6),
-        onDestinationSelected: (index) {
-          if (index == 0) {
-            context.go('/home');
-          } else if (index == 4) {
-            context.go('/profile');
-          }
-        },
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.home, color: AppColors.secondary),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.category_outlined, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.category, color: AppColors.secondary),
-            label: 'Products',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.shopping_cart_outlined, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.shopping_cart, color: AppColors.secondary),
-            label: 'Orders',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.chat_bubble_outline, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.chat_bubble, color: AppColors.secondary),
-            label: 'Messages',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person_outline, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.person, color: AppColors.secondary),
-            label: 'Account',
-          ),
-        ],
       ),
     );
   }
