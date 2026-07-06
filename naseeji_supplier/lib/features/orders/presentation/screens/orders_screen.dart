@@ -309,6 +309,10 @@ class RfqItemsList extends StatelessWidget {
               context.push('/orders/chat?rfqId=$id');
             } else if (item.actionButtonText == 'تم إرسال العرض') {
               context.push('/orders/offer-details?rfqId=$id');
+            } else if (item.actionButtonText == 'بدء الإنتاج') {
+              context.push('/orders/offer-approved?rfqId=$id');
+            } else if (item.actionButtonText == 'عرض سبب الرفض') {
+              context.push('/orders/offer-rejected?rfqId=$id');
             } else {
               context.push('/rfq-details?rfqId=$id');
             }
