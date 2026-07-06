@@ -89,7 +89,7 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/home',
         name: 'home',
-        builder: (context, state) => const HomeScreen(),
+        pageBuilder: (context, state) => const NoTransitionPage(child: HomeScreen()),
       ),
       GoRoute(
         path: '/analytics',
@@ -109,7 +109,7 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/profile',
         name: 'profile',
-        builder: (context, state) => const SupplierProfileScreen(),
+        pageBuilder: (context, state) => const NoTransitionPage(child: SupplierProfileScreen()),
       ),
       GoRoute(
         path: '/profile/edit',
@@ -124,7 +124,7 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/orders',
         name: 'orders',
-        builder: (context, state) => const OrdersScreen(),
+        pageBuilder: (context, state) => const NoTransitionPage(child: OrdersScreen()),
       ),
       GoRoute(
         path: '/rfq-details',
@@ -261,7 +261,7 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/messages',
         name: 'messages',
-        builder: (context, state) => const MessagesScreen(),
+        pageBuilder: (context, state) => const NoTransitionPage(child: MessagesScreen()),
       ),
       GoRoute(
         path: '/messages/search',

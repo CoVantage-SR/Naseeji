@@ -9,11 +9,33 @@ class AppBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NavigationBar(
-      selectedIndex: currentIndex,
-      backgroundColor: Colors.white,
-      elevation: 8,
-      indicatorColor: const Color(0xFF72F8E4).withValues(alpha: 0.6),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 24,
+            offset: const Offset(0, -4),
+          ),
+        ],
+      ),
+      child: NavigationBarTheme(
+        data: NavigationBarThemeData(
+          indicatorColor: AppColors.secondary.withValues(alpha: 0.15),
+          indicatorShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          labelTextStyle: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.selected)) {
+              return const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.secondary);
+            }
+            return const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.outline);
+          }),
+        ),
+        child: NavigationBar(
+          height: 65,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          selectedIndex: currentIndex,
       onDestinationSelected: (index) {
         if (index == currentIndex) return;
 
@@ -36,14 +58,14 @@ class AppBottomNavigationBar extends StatelessWidget {
       },
       destinations: const [
         NavigationDestination(
-          icon: Icon(Icons.home_outlined, color: AppColors.onSurfaceVariant),
+          icon: Icon(Icons.home_outlined, color: AppColors.outline),
           selectedIcon: Icon(Icons.home, color: AppColors.secondary),
           label: 'الرئيسية',
         ),
         NavigationDestination(
           icon: Icon(
             Icons.category_outlined,
-            color: AppColors.onSurfaceVariant,
+            color: AppColors.outline,
           ),
           selectedIcon: Icon(Icons.category, color: AppColors.secondary),
           label: 'المنتجات',
@@ -51,7 +73,7 @@ class AppBottomNavigationBar extends StatelessWidget {
         NavigationDestination(
           icon: Icon(
             Icons.shopping_cart_outlined,
-            color: AppColors.onSurfaceVariant,
+            color: AppColors.outline,
           ),
           selectedIcon: Icon(Icons.shopping_cart, color: AppColors.secondary),
           label: 'الطلبات',
@@ -59,17 +81,19 @@ class AppBottomNavigationBar extends StatelessWidget {
         NavigationDestination(
           icon: Icon(
             Icons.chat_bubble_outline,
-            color: AppColors.onSurfaceVariant,
+            color: AppColors.outline,
           ),
           selectedIcon: Icon(Icons.chat_bubble, color: AppColors.secondary),
           label: 'الرسائل',
         ),
         NavigationDestination(
-          icon: Icon(Icons.person_outline, color: AppColors.onSurfaceVariant),
+          icon: Icon(Icons.person_outline, color: AppColors.outline),
           selectedIcon: Icon(Icons.person, color: AppColors.secondary),
           label: 'حسابي',
         ),
       ],
+    ),
+      ),
     );
   }
 }
