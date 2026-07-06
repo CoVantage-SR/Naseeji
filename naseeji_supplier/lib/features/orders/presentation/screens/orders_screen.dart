@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import 'package:naseeji_supplier/core/widgets/app_bottom_navigation_bar.dart';
 import 'package:naseeji_supplier/features/dashboard/presentation/screens/drawer/navigation_drawer_view.dart';
 import '../controllers/orders_controller.dart';
 import 'widgets/rfq_stats_grid.dart';
@@ -67,7 +68,7 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
           },
         ),
       ),
-      bottomNavigationBar: const RfqBottomNavigationBar(),
+      bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 2),
     );
   }
 }

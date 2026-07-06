@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import 'package:naseeji_supplier/core/widgets/app_bottom_navigation_bar.dart';
 import '../../domain/entities/conversation.dart';
 import '../controllers/messages_controller.dart';
 import 'widgets/conversation_card.dart';
@@ -164,48 +165,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
           ),
         ],
       ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: 3,
-        backgroundColor: Colors.white,
-        elevation: 8,
-        indicatorColor: const Color(0xFF72F8E4).withValues(alpha: 0.6),
-        onDestinationSelected: (index) {
-          if (index == 0) {
-            context.go('/home');
-          } else if (index == 2) {
-            context.go('/orders');
-          } else if (index == 4) {
-            context.go('/profile');
-          }
-        },
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.home, color: AppColors.secondary),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.category_outlined, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.category, color: AppColors.secondary),
-            label: 'Products',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.shopping_cart_outlined, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.shopping_cart, color: AppColors.secondary),
-            label: 'Orders',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.chat_bubble_outline, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.chat_bubble, color: AppColors.secondary),
-            label: 'Messages',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person_outline, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.person, color: AppColors.secondary),
-            label: 'Account',
-          ),
-        ],
-      ),
+      bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 3),
     );
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import 'package:naseeji_supplier/core/widgets/app_bottom_navigation_bar.dart';
 import 'widgets/sliver_app_bar_delegate.dart';
 import '../../controllers/profile_controller.dart';
 import 'widgets/overview_tab_view.dart';
@@ -96,48 +97,7 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
           );
         },
       ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: 4,
-        backgroundColor: Colors.white,
-        elevation: 8,
-        indicatorColor: const Color(0xFF72F8E4).withValues(alpha: 0.6),
-        onDestinationSelected: (index) {
-          if (index == 0) {
-            context.go('/home');
-          } else if (index == 2) {
-            context.go('/orders');
-          } else if (index == 3) {
-            context.go('/messages');
-          }
-        },
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.home, color: AppColors.secondary),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.category_outlined, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.category, color: AppColors.secondary),
-            label: 'Products',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.shopping_cart_outlined, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.shopping_cart, color: AppColors.secondary),
-            label: 'Orders',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.chat_bubble_outline, color: AppColors.onSurfaceVariant),
-            selectedIcon: Icon(Icons.chat_bubble, color: AppColors.secondary),
-            label: 'Messages',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person, color: Color(0xFF0040E0)),
-            selectedIcon: Icon(Icons.person, color: AppColors.secondary),
-            label: 'Account',
-          ),
-        ],
-      ),
+      bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 4),
     );
   }
 }
