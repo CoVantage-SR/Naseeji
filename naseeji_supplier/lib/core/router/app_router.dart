@@ -20,6 +20,8 @@ import '../../features/orders/presentation/screens/create_offer_screen.dart';
 import '../../features/orders/presentation/screens/rfq_chat_screen.dart';
 import '../../features/orders/presentation/screens/offer_preview_screen.dart';
 import '../../features/orders/presentation/screens/offer_details_screen.dart';
+import '../../features/orders/presentation/screens/offer_rejected_screen.dart';
+import '../../features/orders/presentation/screens/offer_approved_screen.dart';
 
 part 'app_router.g.dart';
 
@@ -131,6 +133,20 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/orders/offer-details',
         name: 'orders-offer-details',
         builder: (context, state) => OfferDetailsScreen(
+          rfqId: state.uri.queryParameters['rfqId'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/orders/offer-rejected',
+        name: 'orders-offer-rejected',
+        builder: (context, state) => OfferRejectedScreen(
+          rfqId: state.uri.queryParameters['rfqId'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/orders/offer-approved',
+        name: 'orders-offer-approved',
+        builder: (context, state) => OfferApprovedScreen(
           rfqId: state.uri.queryParameters['rfqId'] ?? '',
         ),
       ),
