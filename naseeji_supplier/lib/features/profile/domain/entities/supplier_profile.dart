@@ -1,3 +1,15 @@
+class CompanyCertificate {
+  final String name;
+  final String date;
+  final bool verified;
+
+  const CompanyCertificate({
+    required this.name,
+    required this.date,
+    required this.verified,
+  });
+}
+
 class SupplierProfile {
   final String companyName;
   final String managerName;
@@ -10,6 +22,7 @@ class SupplierProfile {
   final String bannerUrl;
   final int productsCount;
   final int ordersCount;
+  final List<CompanyCertificate> certificates;
 
   const SupplierProfile({
     required this.companyName,
@@ -23,5 +36,6 @@ class SupplierProfile {
     required this.bannerUrl,
     required this.productsCount,
     required this.ordersCount,
+    required this.certificates,
   });
 }

@@ -5,10 +5,16 @@ import '../../domain/repositories/profile_repository.dart';
 part 'profile_repository_impl.g.dart';
 
 class ProfileRepositoryImpl implements ProfileRepository {
+  final List<CompanyCertificate> _certs = [
+    const CompanyCertificate(name: 'شهادة مطابقة مواصفات الجودة ISO 9001', date: 'صالحة لغاية 2027-12', verified: true),
+    const CompanyCertificate(name: 'شهادة منشأ للمنسوجات والقطنيات الرسمية', date: 'صالحة لغاية 2026-10', verified: true),
+    const CompanyCertificate(name: 'رخصة التصدير الصناعية المعتمدة للمؤسسة', date: 'صالحة لغاية 2027-04', verified: true),
+  ];
+
   @override
   Future<SupplierProfile> getProfile() async {
-    await Future.delayed(const Duration(milliseconds: 600));
-    return const SupplierProfile(
+    await Future.delayed(const Duration(milliseconds: 200));
+    return SupplierProfile(
       companyName: 'مصنع نسيج الشرق للغزل والنسيج',
       managerName: 'أحمد محمد',
       email: 'ahmed@naseeji.com',
@@ -20,7 +26,14 @@ class ProfileRepositoryImpl implements ProfileRepository {
       bannerUrl: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80',
       productsCount: 154,
       ordersCount: 382,
+      certificates: List.unmodifiable(_certs),
     );
+  }
+
+  @override
+  Future<void> addCertificate(CompanyCertificate cert) async {
+    await Future.delayed(const Duration(milliseconds: 100));
+    _certs.insert(0, cert);
   }
 }
 

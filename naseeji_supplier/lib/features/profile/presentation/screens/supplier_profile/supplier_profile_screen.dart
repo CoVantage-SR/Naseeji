@@ -31,6 +31,7 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
   final _certNameController = TextEditingController();
   final _certExpiryController = TextEditingController();
   String uploadedFileName = '';
+  bool showAddCertForm = false;
 
   @override
   void initState() {
@@ -348,89 +349,129 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          // ADD CERTIFICATE CONTAINER
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: const Color(0xFF0040E0), width: 1.5),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                const Text('إضافة شهادة أو اعتماد جديد', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFF0040E0))),
-                const SizedBox(height: 12),
-                _buildDialogTextField('اسم الشهادة / الاعتماد', _certNameController),
-                const SizedBox(height: 10),
-                _buildDialogTextField('تاريخ انتهاء الصلاحية المتوقع', _certExpiryController),
-                const SizedBox(height: 12),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      uploadedFileName = 'وثيقة_اعتماد_جديدة.pdf';
-                    });
-                    _showSuccessToast('تم اختيار وثيقة الشهادة بنجاح');
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF8F9FF),
-                      border: Border.all(color: const Color(0xFFE2E1EF), style: BorderStyle.solid),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          uploadedFileName.isEmpty ? 'اضغط لرفع ملف الشهادة (PDF أو صورة)' : uploadedFileName,
-                          style: TextStyle(
-                            color: uploadedFileName.isEmpty ? AppColors.outline : const Color(0xFF16A34A),
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Icon(
-                          uploadedFileName.isEmpty ? Icons.cloud_upload_outlined : Icons.check_circle_outline,
-                          color: uploadedFileName.isEmpty ? AppColors.outline : const Color(0xFF16A34A),
-                          size: 18,
-                        ),
-                      ],
-                    ),
-                  ),
+          if (!showAddCertForm)
+            Align(
+              alignment: Alignment.centerLeft,
+              child: OutlinedButton.icon(
+                onPressed: () {
+                  setState(() {
+                    showAddCertForm = true;
+                  });
+                },
+                icon: const Icon(Icons.add_card_outlined, color: Color(0xFF0040E0), size: 16),
+                label: const Text('إضافة شهادة جديدة', style: TextStyle(color: Color(0xFF0040E0), fontSize: 12, fontWeight: FontWeight.bold)),
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(color: Color(0xFF0040E0)),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                 ),
-                const SizedBox(height: 14),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    if (_certNameController.text.isEmpty) {
-                      _showSuccessToast('يرجى كتابة اسم الشهادة أولاً');
-                      return;
-                    }
-                    setState(() {
-                      certificatesList.insert(0, {
-                        'name': _certNameController.text,
-                        'date': 'صالحة لغاية ${_certExpiryController.text}',
-                        'verified': false,
+              ),
+            )
+          else
+            // ADD CERTIFICATE CONTAINER
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: const Color(0xFF0040E0), width: 1.5),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  const Text('إضافة شهادة أو اعتماد جديد', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFF0040E0))),
+                  const SizedBox(height: 12),
+                  _buildDialogTextField('اسم الشهادة / الاعتماد', _certNameController),
+                  const SizedBox(height: 10),
+                  _buildDialogTextField('تاريخ انتهاء الصلاحية المتوقع', _certExpiryController),
+                  const SizedBox(height: 12),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        uploadedFileName = 'وثيقة_اعتماد_جديدة.pdf';
                       });
-                      _certNameController.clear();
-                      _certExpiryController.clear();
-                      uploadedFileName = '';
-                    });
-                    _showSuccessToast('تم إرسال الشهادة للمراجعة والتدقيق بنجاح.');
-                  },
-                  icon: const Icon(Icons.check, size: 14, color: Colors.white),
-                  label: const Text('حفظ وإرسال للتدقيق'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF0040E0),
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      _showSuccessToast('تم اختيار وثيقة الشهادة بنجاح');
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF8F9FF),
+                        border: Border.all(color: const Color(0xFFE2E1EF), style: BorderStyle.solid),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            uploadedFileName.isEmpty ? 'اضغط لرفع ملف الشهادة (PDF أو صورة)' : uploadedFileName,
+                            style: TextStyle(
+                              color: uploadedFileName.isEmpty ? AppColors.outline : const Color(0xFF16A34A),
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Icon(
+                            uploadedFileName.isEmpty ? Icons.cloud_upload_outlined : Icons.check_circle_outline,
+                            color: uploadedFileName.isEmpty ? AppColors.outline : const Color(0xFF16A34A),
+                            size: 18,
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 14),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      OutlinedButton(
+                        onPressed: () {
+                          setState(() {
+                            showAddCertForm = false;
+                            _certNameController.clear();
+                            _certExpiryController.clear();
+                            uploadedFileName = '';
+                          });
+                        },
+                        style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        ),
+                        child: const Text('تراجع'),
+                      ),
+                      const SizedBox(width: 12),
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          if (_certNameController.text.isEmpty) {
+                            _showSuccessToast('يرجى كتابة اسم الشهادة أولاً');
+                            return;
+                          }
+                          setState(() {
+                            certificatesList.insert(0, {
+                              'name': _certNameController.text,
+                              'date': 'صالحة لغاية ${_certExpiryController.text}',
+                              'verified': false,
+                            });
+                            _certNameController.clear();
+                            _certExpiryController.clear();
+                            uploadedFileName = '';
+                            showAddCertForm = false;
+                          });
+                          _showSuccessToast('تم إرسال الشهادة للمراجعة والتدقيق بنجاح.');
+                        },
+                        icon: const Icon(Icons.check, size: 14, color: Colors.white),
+                        label: const Text('حفظ وإرسال للتدقيق'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF0040E0),
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
           const SizedBox(height: 20),
 
           // LIST OF CERTIFICATES
