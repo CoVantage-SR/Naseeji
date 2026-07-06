@@ -1,0 +1,97 @@
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../../domain/entities/conversation.dart';
+import '../../data/repositories/messages_repository_impl.dart';
+
+part 'messages_controller.g.dart';
+
+enum MessagesFilter { all, business, support, unread }
+
+class MessagesViewState {
+  final List<Conversation> conversations;
+  final MessagesFilter activeFilter;
+
+  const MessagesViewState({
+    required this.conversations,
+    required this.activeFilter,
+  });
+
+  List<Conversation> get pinned => conversations.where((c) => c.isPinned).toList();
+
+  List<Conversation> get unpinned => conversations.where((c) => !c.isPinned).toList();
+
+  int get unreadCount => conversations.fold(0, (sum, c) => sum + c.unreadCount);
+}
+
+@riverpod
+class MessagesController extends _$MessagesController {
+  @override
+  FutureOr<MessagesViewState> build() async {
+    final repo = ref.watch(messagesRepositoryProvider);
+    final conversations = await repo.getConversations();
+    return MessagesViewState(
+      conversations: conversations,
+      activeFilter: MessagesFilter.all,
+    );
+  }
+
+  List<Conversation> filterConversations(
+    List<Conversation> conversations,
+    MessagesFilter filter,
+    String searchQuery,
+  ) {
+    var result = conversations.where((c) => c.status != ConversationStatus.archived).toList();
+    switch (filter) {
+      case MessagesFilter.business:
+        result = result.where((c) => c.type == ConversationType.business).toList();
+        break;
+      case MessagesFilter.support:
+        result = result.where((c) => c.type == ConversationType.support).toList();
+        break;
+      case MessagesFilter.unread:
+        result = result.where((c) => c.unreadCount > 0).toList();
+        break;
+      case MessagesFilter.all:
+        break;
+    }
+    if (searchQuery.isNotEmpty) {
+      final q = searchQuery.toLowerCase();
+      result = result.where((c) =>
+        c.companyName.contains(q) ||
+        (c.rfqNumber?.toLowerCase().contains(q) ?? false) ||
+        (c.orderNumber?.toLowerCase().contains(q) ?? false) ||
+        c.lastMessage.contains(q)
+      ).toList();
+    }
+    return result;
+  }
+
+  Future<void> markAsRead(String conversationId) async {
+    final repo = ref.read(messagesRepositoryProvider);
+    await repo.markAsRead(conversationId);
+    ref.invalidateSelf();
+  }
+
+  Future<void> pinConversation(String conversationId, bool pinned) async {
+    final repo = ref.read(messagesRepositoryProvider);
+    await repo.pinConversation(conversationId, pinned);
+    ref.invalidateSelf();
+  }
+
+  Future<void> muteConversation(String conversationId, bool muted) async {
+    final repo = ref.read(messagesRepositoryProvider);
+    await repo.muteConversation(conversationId, muted);
+    ref.invalidateSelf();
+  }
+
+  Future<void> archiveConversation(String conversationId) async {
+    final repo = ref.read(messagesRepositoryProvider);
+    await repo.archiveConversation(conversationId);
+    ref.invalidateSelf();
+  }
+
+  Future<void> deleteConversation(String conversationId) async {
+    final repo = ref.read(messagesRepositoryProvider);
+    await repo.deleteConversation(conversationId);
+    ref.invalidateSelf();
+  }
+}

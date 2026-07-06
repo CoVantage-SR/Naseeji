@@ -1,0 +1,276 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import '../../domain/entities/business_message.dart';
+import '../controllers/business_chat_controller.dart';
+
+class SearchMessagesScreen extends ConsumerStatefulWidget {
+  const SearchMessagesScreen({super.key});
+
+  @override
+  ConsumerState<SearchMessagesScreen> createState() => _SearchMessagesScreenState();
+}
+
+class _SearchMessagesScreenState extends ConsumerState<SearchMessagesScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
+  String _selectedFilter = 'الكل';
+  final List<String> _recentSearches = ['RFQ-8820', 'قطن', 'عرض سعر', 'مصنع الرياض'];
+
+  static const List<String> _filters = [
+    'الكل',
+    'نصوص',
+    'ملفات',
+    'عروض أسعار',
+    'طلبات',
+    'شركات',
+  ];
+
+  // Search across conv_001 messages for demo
+  static const String _demoConvId = 'conv_001';
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final messagesAsync = ref.watch(businessChatControllerProvider(_demoConvId));
+
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0.5,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: AppColors.onSurface),
+          onPressed: () => context.pop(),
+        ),
+        title: TextField(
+          controller: _searchController,
+          autofocus: true,
+          textAlign: TextAlign.right,
+          onChanged: (v) => setState(() => _searchQuery = v),
+          style: const TextStyle(fontSize: 15),
+          decoration: const InputDecoration(
+            hintText: 'بحث في الرسائل...',
+            hintStyle: TextStyle(fontSize: 14, color: AppColors.outline),
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.zero,
+          ),
+        ),
+        actions: [
+          if (_searchQuery.isNotEmpty)
+            IconButton(
+              icon: const Icon(Icons.clear, color: AppColors.outline),
+              onPressed: () {
+                _searchController.clear();
+                setState(() => _searchQuery = '');
+              },
+            ),
+        ],
+      ),
+      body: Column(
+        children: [
+          // Filter chips
+          Container(
+            color: Colors.white,
+            padding: const EdgeInsets.fromLTRB(12, 6, 12, 10),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: _filters.map((f) {
+                  final isSelected = _selectedFilter == f;
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 6),
+                    child: FilterChip(
+                      label: Text(f, style: TextStyle(fontSize: 12, color: isSelected ? Colors.white : AppColors.onSurface)),
+                      selected: isSelected,
+                      onSelected: (_) => setState(() => _selectedFilter = f),
+                      selectedColor: AppColors.primary,
+                      backgroundColor: AppColors.surfaceContainerLow,
+                      showCheckmark: false,
+                      side: BorderSide.none,
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+          const SizedBox(height: 1),
+          // Body
+          Expanded(
+            child: _searchQuery.isEmpty
+                ? _RecentSearches(
+                    searches: _recentSearches,
+                    onTap: (q) {
+                      _searchController.text = q;
+                      setState(() => _searchQuery = q);
+                    },
+                    onRemove: (q) => setState(() => _recentSearches.remove(q)),
+                  )
+                : messagesAsync.when(
+                    loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+                    error: (e, _) => Center(child: Text('خطأ: $e')),
+                    data: (messages) {
+                      final results = messages.where((m) =>
+                        m.content.contains(_searchQuery) ||
+                        (m.cardData?.toString().contains(_searchQuery) ?? false)
+                      ).toList();
+
+                      if (results.isEmpty) {
+                        return _EmptyResults(query: _searchQuery);
+                      }
+
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+                            child: Text(
+                              '${results.length} نتيجة لـ "$_searchQuery"',
+                              style: const TextStyle(fontSize: 12, color: AppColors.outline),
+                            ),
+                          ),
+                          Expanded(
+                            child: ListView.separated(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                              itemCount: results.length,
+                              separatorBuilder: (_, __) => const SizedBox(height: 8),
+                              itemBuilder: (_, i) => _SearchResultCard(
+                                message: results[i],
+                                query: _searchQuery,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SearchResultCard extends StatelessWidget {
+  final BusinessMessage message;
+  final String query;
+
+  const _SearchResultCard({required this.message, required this.query});
+
+  @override
+  Widget build(BuildContext context) {
+    final content = message.content;
+    final idx = content.toLowerCase().indexOf(query.toLowerCase());
+    final hasHighlight = idx >= 0;
+
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 4)],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Row(
+            children: [
+              Text(message.time, style: const TextStyle(fontSize: 10, color: AppColors.outline)),
+              const Spacer(),
+              Text(
+                message.isOutgoing ? 'مورد نسيجي' : message.senderName,
+                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.primary),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          hasHighlight
+              ? RichText(
+                  textDirection: TextDirection.rtl,
+                  text: TextSpan(
+                    style: const TextStyle(fontSize: 13, color: AppColors.onSurface),
+                    children: [
+                      TextSpan(text: content.substring(0, idx)),
+                      TextSpan(
+                        text: content.substring(idx, idx + query.length),
+                        style: const TextStyle(backgroundColor: Color(0xFFFFE58F), fontWeight: FontWeight.bold),
+                      ),
+                      TextSpan(text: content.substring(idx + query.length)),
+                    ],
+                  ),
+                )
+              : Text(content, style: const TextStyle(fontSize: 13, color: AppColors.onSurface)),
+        ],
+      ),
+    );
+  }
+}
+
+class _RecentSearches extends StatelessWidget {
+  final List<String> searches;
+  final Function(String) onTap;
+  final Function(String) onRemove;
+
+  const _RecentSearches({required this.searches, required this.onTap, required this.onRemove});
+
+  @override
+  Widget build(BuildContext context) {
+    if (searches.isEmpty) {
+      return const Center(child: Text('لا توجد عمليات بحث سابقة', style: TextStyle(color: AppColors.outline)));
+    }
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        const Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text('عمليات البحث الأخيرة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+            SizedBox(width: 6),
+            Icon(Icons.history, size: 16, color: AppColors.outline),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Wrap(
+          alignment: WrapAlignment.end,
+          spacing: 8,
+          runSpacing: 6,
+          children: searches.map((s) => InputChip(
+            label: Text(s, style: const TextStyle(fontSize: 12)),
+            onPressed: () => onTap(s),
+            deleteIcon: const Icon(Icons.close, size: 14),
+            onDeleted: () => onRemove(s),
+            backgroundColor: AppColors.surfaceContainerLow,
+            side: BorderSide.none,
+          )).toList(),
+        ),
+      ],
+    );
+  }
+}
+
+class _EmptyResults extends StatelessWidget {
+  final String query;
+  const _EmptyResults({required this.query});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.search_off, size: 64, color: AppColors.outlineVariant),
+          const SizedBox(height: 12),
+          Text('لا توجد نتائج لـ "$query"', style: const TextStyle(fontSize: 15, color: AppColors.outline)),
+          const SizedBox(height: 6),
+          const Text('جرب كلمات مختلفة', style: TextStyle(fontSize: 12, color: AppColors.outline)),
+        ],
+      ),
+    );
+  }
+}

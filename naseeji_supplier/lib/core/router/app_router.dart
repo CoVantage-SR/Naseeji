@@ -35,6 +35,13 @@ import '../../features/orders/presentation/screens/dispute_center_screen.dart';
 import '../../features/orders/presentation/screens/create_quotation_screen.dart';
 import '../../features/profile/presentation/screens/supplier_profile/public_supplier_profile_screen.dart';
 import '../../features/profile/presentation/screens/supplier_profile/edit_supplier_profile_screen.dart';
+import '../../features/messages/presentation/screens/messages_screen.dart';
+import '../../features/messages/presentation/screens/business_chat_screen.dart';
+import '../../features/messages/presentation/screens/support_chat_screen.dart';
+import '../../features/messages/presentation/screens/attachments_screen.dart';
+import '../../features/messages/presentation/screens/quotation_history_screen.dart';
+import '../../features/messages/presentation/screens/chat_timeline_screen.dart';
+import '../../features/messages/presentation/screens/search_messages_screen.dart';
 
 part 'app_router.g.dart';
 
@@ -249,6 +256,52 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/profile/public-preview',
         name: 'profile-public-preview',
         builder: (context, state) => const PublicSupplierProfileScreen(),
+      ),
+      // ─── Messages Feature ────────────────────────────────────────────
+      GoRoute(
+        path: '/messages',
+        name: 'messages',
+        builder: (context, state) => const MessagesScreen(),
+      ),
+      GoRoute(
+        path: '/messages/search',
+        name: 'messages-search',
+        builder: (context, state) => const SearchMessagesScreen(),
+      ),
+      GoRoute(
+        path: '/messages/chat/:id',
+        name: 'messages-business-chat',
+        builder: (context, state) => BusinessChatScreen(
+          conversationId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/messages/chat/:id/attachments',
+        name: 'messages-attachments',
+        builder: (context, state) => AttachmentsScreen(
+          conversationId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/messages/chat/:id/quotation-history',
+        name: 'messages-quotation-history',
+        builder: (context, state) => QuotationHistoryScreen(
+          conversationId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/messages/chat/:id/timeline',
+        name: 'messages-timeline',
+        builder: (context, state) => ChatTimelineScreen(
+          conversationId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/messages/support/:id',
+        name: 'messages-support-chat',
+        builder: (context, state) => SupportChatScreen(
+          ticketId: state.pathParameters['id'] ?? '',
+        ),
       ),
     ],
   );

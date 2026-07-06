@@ -84,6 +84,16 @@ class NavigationDrawerView extends ConsumerWidget {
                     },
                   ),
                   DrawerItem(
+                    icon: Icons.forum_outlined,
+                    title: 'مركز الرسائل',
+                    path: '/messages',
+                    currentRoute: currentRoute,
+                    onTap: () {
+                      Navigator.pop(context);
+                      context.go('/messages');
+                    },
+                  ),
+                  DrawerItem(
                     icon: Icons.description_outlined,
                     title: 'عروض الأسعار',
                     path: '/quotes',

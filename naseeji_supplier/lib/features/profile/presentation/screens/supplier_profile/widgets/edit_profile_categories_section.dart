@@ -82,33 +82,38 @@ class _EditProfileCategoriesSectionState extends State<EditProfileCategoriesSect
           ),
           const SizedBox(height: 10),
           // Grid/List of categories filtered
-          Container(
-            maxHeight: 120,
-            decoration: BoxDecoration(color: Colors.grey.shade50, borderRadius: BorderRadius.circular(8)),
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: filteredCategories.length,
-              itemBuilder: (context, index) {
-                final cat = filteredCategories[index];
-                final isSelected = widget.selectedCategories.contains(cat);
-                return CheckboxListTile(
-                  title: Text(cat, style: const TextStyle(fontSize: 11)),
-                  value: isSelected,
-                  controlAffinity: ListTileControlAffinity.trailing,
-                  dense: true,
-                  onChanged: (val) {
-                    final updatedList = List<String>.from(widget.selectedCategories);
-                    if (val == true) {
-                      if (!updatedList.contains(cat)) {
-                        updatedList.add(cat);
-                      }
-                    } else {
-                      updatedList.remove(cat);
-                    }
-                    widget.onCategoriesChanged(updatedList);
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Material(
+              color: Colors.grey.shade50,
+              child: SizedBox(
+                height: 120,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: filteredCategories.length,
+                  itemBuilder: (context, index) {
+                    final cat = filteredCategories[index];
+                    final isSelected = widget.selectedCategories.contains(cat);
+                    return CheckboxListTile(
+                      title: Text(cat, style: const TextStyle(fontSize: 11)),
+                      value: isSelected,
+                      controlAffinity: ListTileControlAffinity.trailing,
+                      dense: true,
+                      onChanged: (val) {
+                        final updatedList = List<String>.from(widget.selectedCategories);
+                        if (val == true) {
+                          if (!updatedList.contains(cat)) {
+                            updatedList.add(cat);
+                          }
+                        } else {
+                          updatedList.remove(cat);
+                        }
+                        widget.onCategoriesChanged(updatedList);
+                      },
+                    );
                   },
-                );
-              },
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 12),

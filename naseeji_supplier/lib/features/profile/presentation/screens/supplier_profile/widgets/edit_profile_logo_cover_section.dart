@@ -106,16 +106,22 @@ class EditProfileLogoCoverSection extends StatelessWidget {
                   Row(
                     children: [
                       if (currentLogoUrl.isNotEmpty)
-                        OutlinedButton(
-                          onPressed: onLogoRemove,
-                          style: OutlinedButton.styleFrom(side: const BorderSide(color: Colors.red)),
-                          child: const Text('حذف الشعار', style: TextStyle(color: Colors.red, fontSize: 10)),
+                        SizedBox(
+                          width: 90,
+                          child: OutlinedButton(
+                            onPressed: onLogoRemove,
+                            style: OutlinedButton.styleFrom(side: const BorderSide(color: Colors.red)),
+                            child: const Text('حذف الشعار', style: TextStyle(color: Colors.red, fontSize: 10)),
+                          ),
                         ),
                       const SizedBox(width: 8),
-                      ElevatedButton(
-                        onPressed: onLogoUpload,
-                        style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF0040E0), foregroundColor: Colors.white),
-                        child: const Text('رفع شعار', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
+                      SizedBox(
+                        width: 90,
+                        child: ElevatedButton(
+                          onPressed: onLogoUpload,
+                          style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF0040E0), foregroundColor: Colors.white),
+                          child: const Text('رفع شعار', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
+                        ),
                       ),
                     ],
                   ),

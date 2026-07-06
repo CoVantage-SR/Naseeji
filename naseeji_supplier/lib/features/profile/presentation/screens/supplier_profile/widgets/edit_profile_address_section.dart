@@ -75,15 +75,18 @@ class EditProfileAddressSection extends StatelessWidget {
                 Positioned(
                   right: 8,
                   bottom: 8,
-                  child: ElevatedButton.icon(
-                    onPressed: onCurrentLocationSelected,
-                    icon: const Icon(Icons.gps_fixed, size: 10, color: Color(0xFF0040E0)),
-                    label: const Text('تحديد الموقع الحالي', style: TextStyle(fontSize: 8, color: Color(0xFF0040E0), fontWeight: FontWeight.bold)),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      elevation: 1,
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                  child: SizedBox(
+                    width: 140,
+                    child: ElevatedButton.icon(
+                      onPressed: onCurrentLocationSelected,
+                      icon: const Icon(Icons.gps_fixed, size: 10, color: Color(0xFF0040E0)),
+                      label: const Text('تحديد الموقع الحالي', style: TextStyle(fontSize: 8, color: Color(0xFF0040E0), fontWeight: FontWeight.bold)),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        elevation: 1,
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+                      ),
                     ),
                   ),
                 ),
