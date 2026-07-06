@@ -111,54 +111,64 @@ class _CertificatesTabViewState extends ConsumerState<CertificatesTabView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      OutlinedButton(
-                        onPressed: () {
-                          setState(() {
-                            showAddCertForm = false;
-                            _certNameController.clear();
-                            _certExpiryController.clear();
-                            uploadedFileName = '';
-                          });
-                        },
-                        style: OutlinedButton.styleFrom(
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      SizedBox(
+                        width: 80,
+                        height: 40,
+                        child: OutlinedButton(
+                          onPressed: () {
+                            setState(() {
+                              showAddCertForm = false;
+                              _certNameController.clear();
+                              _certExpiryController.clear();
+                              uploadedFileName = '';
+                            });
+                          },
+                          style: OutlinedButton.styleFrom(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            padding: EdgeInsets.zero,
+                          ),
+                          child: const Text('تراجع', style: TextStyle(fontSize: 11)),
                         ),
-                        child: const Text('تراجع'),
                       ),
                       const SizedBox(width: 12),
-                      ElevatedButton.icon(
-                        onPressed: () async {
-                          if (_certNameController.text.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('يرجى كتابة اسم الشهادة أولاً')),
+                      SizedBox(
+                        width: 170,
+                        height: 40,
+                        child: ElevatedButton.icon(
+                          onPressed: () async {
+                            if (_certNameController.text.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('يرجى كتابة اسم الشهادة أولاً')),
+                              );
+                              return;
+                            }
+                            
+                            // CONNECTED TO DATA & DOMAIN via Controller!
+                            await ref.read(profileControllerProvider.notifier).addCertificate(
+                              _certNameController.text,
+                              _certExpiryController.text,
                             );
-                            return;
-                          }
-                          
-                          // CONNECTED TO DATA & DOMAIN via Controller!
-                          await ref.read(profileControllerProvider.notifier).addCertificate(
-                            _certNameController.text,
-                            _certExpiryController.text,
-                          );
 
-                          setState(() {
-                            _certNameController.clear();
-                            _certExpiryController.clear();
-                            uploadedFileName = '';
-                            showAddCertForm = false;
-                          });
-                          
-                          if (!context.mounted) return;
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('تم إرسال الشهادة للمراجعة والتدقيق بنجاح.')),
-                          );
-                        },
-                        icon: const Icon(Icons.check, size: 14, color: Colors.white),
-                        label: const Text('حفظ وإرسال للتدقيق'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF0040E0),
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            setState(() {
+                              _certNameController.clear();
+                              _certExpiryController.clear();
+                              uploadedFileName = '';
+                              showAddCertForm = false;
+                            });
+                            
+                            if (!context.mounted) return;
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('تم إرسال الشهادة للمراجعة والتدقيق بنجاح.')),
+                            );
+                          },
+                          icon: const Icon(Icons.check, size: 14, color: Colors.white),
+                          label: const Text('حفظ وإرسال للتدقيق', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF0040E0),
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            padding: EdgeInsets.zero,
+                          ),
                         ),
                       ),
                     ],

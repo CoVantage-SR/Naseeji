@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
-import 'package:naseeji_supplier/features/profile/presentation/screens/supplier_profile/widgets/Sliver_AppBar_Delegate.dart';
+import 'widgets/sliver_app_bar_delegate.dart';
 import '../../controllers/profile_controller.dart';
 import 'widgets/overview_tab_view.dart';
 import 'widgets/company_info_tab_view.dart';
