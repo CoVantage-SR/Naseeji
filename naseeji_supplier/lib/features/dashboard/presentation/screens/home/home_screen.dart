@@ -6,7 +6,6 @@ import 'package:naseeji_supplier/features/dashboard/presentation/controllers/das
 import '../drawer/navigation_drawer_view.dart';
 import 'widgets/home_app_bar.dart';
 import 'widgets/home_header.dart';
-import 'widgets/quick_actions_grid.dart';
 import 'widgets/recent_orders_table.dart';
 import 'widgets/stats_grid.dart';
 import 'widgets/weekly_sales_chart_card.dart';
@@ -27,84 +26,50 @@ class HomeScreen extends ConsumerWidget {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, stack) => Center(child: Text('خطأ: $err')),
         data: (stats) {
-          return Stack(
-            children: [
-              RefreshIndicator(
-                onRefresh: () => ref
-                    .read(dashboardControllerProvider.notifier)
-                    .refreshStats(),
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding: const EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 100.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+          return RefreshIndicator(
+            onRefresh: () => ref
+                .read(dashboardControllerProvider.notifier)
+                .refreshStats(),
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 100.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  const HomeHeader(),
+                  const SizedBox(height: 20),
+                  StatsGrid(stats: stats),
+                  const SizedBox(height: 24),
+                  WeeklySalesChartCard(weeklySales: stats.weeklySales),
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const HomeHeader(),
-                      const SizedBox(height: 20),
-                      StatsGrid(stats: stats),
-                      const SizedBox(height: 24),
-                      WeeklySalesChartCard(weeklySales: stats.weeklySales),
-                      const SizedBox(height: 24),
                       const Text(
-                        'الوصول السريع',
+                        'الطلبات الأخيرة',
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
                           color: AppColors.onSurface,
                         ),
                       ),
-                      const SizedBox(height: 16),
-                      const QuickActionsGrid(),
-                      const SizedBox(height: 28),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'الطلبات الأخيرة',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.onSurface,
-                            ),
+                      TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          'عرض الكل',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: AppColors.primary,
                           ),
-                          TextButton(
-                            onPressed: () {},
-                            child: const Text(
-                              'عرض الكل',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: AppColors.primary,
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                      const SizedBox(height: 12),
-                      const RecentOrdersTable(),
                     ],
                   ),
-                ),
+                  const SizedBox(height: 12),
+                  const RecentOrdersTable(),
+                ],
               ),
-
-              // Bottom Smaller FAB (Floats to bottom-left)
-              Positioned(
-                bottom: 24,
-                left: 16,
-                child: FloatingActionButton.extended(
-                  onPressed: () => context.push('/add-product'),
-                  backgroundColor: AppColors.primary,
-                  icon: const Icon(Icons.add, color: Colors.white),
-                  label: const Text(
-                    'إضافة منتج جديد',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+            ),
           );
         },
       ),
