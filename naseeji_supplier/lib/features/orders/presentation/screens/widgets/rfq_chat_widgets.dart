@@ -223,40 +223,60 @@ class ChatMessagesList extends StatelessWidget {
                   color: const Color(0xFFF8F9FF),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                child: Column(
                   children: [
-                    Column(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        const Text(
-                          'السعر الجديد',
-                          style: TextStyle(fontSize: 10, color: AppColors.outline),
+                        Column(
+                          children: [
+                            const Text(
+                              'السعر الجديد',
+                              style: TextStyle(fontSize: 10, color: AppColors.outline),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              '${msg.priceUpdateNew!.toStringAsFixed(2)} ريال/م',
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF0040E0),
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 4),
-                        Text(
-                          '${msg.priceUpdateNew!.toStringAsFixed(2)} ريال/م',
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF0040E0),
-                          ),
+                        Column(
+                          children: [
+                            const Text(
+                              'السعر القديم',
+                              style: TextStyle(fontSize: 10, color: AppColors.outline),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              '${msg.priceUpdateOld!.toStringAsFixed(2)} ريال/م',
+                              style: const TextStyle(
+                                fontSize: 13,
+                                decoration: TextDecoration.lineThrough,
+                                color: AppColors.outline,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                    Column(
+                    const SizedBox(height: 10),
+                    const Divider(height: 1, color: Color(0xFFE2E1EF)),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'السعر القديم',
-                          style: TextStyle(fontSize: 10, color: AppColors.outline),
-                        ),
-                        const SizedBox(height: 4),
                         Text(
-                          '${msg.priceUpdateOld!.toStringAsFixed(2)} ريال/م',
-                          style: const TextStyle(
-                            fontSize: 13,
-                            decoration: TextDecoration.lineThrough,
-                            color: AppColors.outline,
-                          ),
+                          '${(((msg.priceUpdateOld! - msg.priceUpdateNew!).abs() / msg.priceUpdateOld!) * 100).toStringAsFixed(1)}% توفير للمصنع',
+                          style: const TextStyle(fontSize: 10, color: Color(0xFF006B5F), fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'الفرق: ${(msg.priceUpdateOld! - msg.priceUpdateNew!).toStringAsFixed(2)} ر.س',
+                          style: const TextStyle(fontSize: 10, color: AppColors.outline),
                         ),
                       ],
                     ),
@@ -275,35 +295,54 @@ class ChatMessagesList extends StatelessWidget {
                 children: [
                   Expanded(
                     child: OutlinedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم رفض السعر والتصعيد للتعديل')));
+                      },
                       style: OutlinedButton.styleFrom(
-                        side: const BorderSide(color: Color(0xFFE2E1EF)),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                        side: const BorderSide(color: AppColors.error),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        padding: EdgeInsets.zero,
+                        minimumSize: const Size(0, 36),
                       ),
                       child: const Text(
-                        'تفاوض',
-                        style: TextStyle(color: AppColors.onSurfaceVariant, fontSize: 12),
+                        'رفض',
+                        style: TextStyle(color: AppColors.error, fontSize: 11, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () {
+                        context.push('/orders/quotation-history?rfqId=$rfqId');
+                      },
+                      style: OutlinedButton.styleFrom(
+                        side: const BorderSide(color: Color(0xFF006B5F)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        padding: EdgeInsets.zero,
+                        minimumSize: const Size(0, 36),
+                      ),
+                      child: const Text(
+                        'مراجعة السجل',
+                        style: TextStyle(color: Color(0xFF006B5F), fontSize: 11, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () => context.push('/orders/offer-details?rfqId=$rfqId'),
+                      onPressed: () => context.push('/orders/final-agreement?rfqId=$rfqId'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF0040E0),
                         foregroundColor: Colors.white,
                         minimumSize: const Size(0, 36),
                         elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        padding: EdgeInsets.zero,
                       ),
                       child: const Text(
-                        'موافقة',
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                        'قبول العقد',
+                        style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
