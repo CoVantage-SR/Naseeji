@@ -181,7 +181,7 @@ class PublicProfileHeaderCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 1),
+              const SizedBox(width: 12),
               Expanded(
                 child: OutlinedButton.icon(
                   onPressed: () {

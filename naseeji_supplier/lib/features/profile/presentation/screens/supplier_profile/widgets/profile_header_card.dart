@@ -120,16 +120,12 @@ class ProfileHeaderCard extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                child: OutlinedButton(
+                child: OutlinedButton.icon(
                   onPressed: () {
                     context.push('/profile/public-preview');
                   },
-                  style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: Color(0xFF0040E0)),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                  ),
-                  child: const Text(
+                  icon: const Icon(Icons.visibility_outlined, size: 14, color: Color(0xFF0040E0)),
+                  label: const Text(
                     'معاينة كزائر',
                     style: TextStyle(
                       color: Color(0xFF0040E0),
@@ -137,24 +133,30 @@ class ProfileHeaderCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(color: Color(0xFF0040E0)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                  ),
                 ),
               ),
-              const SizedBox(width: 1),
+              const SizedBox(width: 12),
               Expanded(
-                child: ElevatedButton(
+                child: ElevatedButton.icon(
                   onPressed: () {
                     _showEditProfileDialog(context, profile);
                   },
+                  icon: const Icon(Icons.edit_outlined, size: 14, color: Colors.white),
+                  label: const Text(
+                    'تعديل البيانات',
+                    style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF0040E0),
                     foregroundColor: Colors.white,
                     elevation: 0,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                  ),
-                  child: const Text(
-                    'تعديل البيانات',
-                    style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
                   ),
                 ),
               ),
