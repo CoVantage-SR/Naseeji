@@ -301,7 +301,9 @@ class RfqItemsList extends StatelessWidget {
           actionButtonIsOutlined: item.actionButtonIsOutlined,
           hasIconButton: item.hasIconButton,
           iconButtonIcon: _getIconData(item.iconButtonIconType),
-          onActionButtonPressed: () {},
+          onActionButtonPressed: () {
+            context.push('/rfq-details?rfqId=${item.rfqNumber.replaceAll("RFQ-", "")}');
+          },
         );
       },
     );

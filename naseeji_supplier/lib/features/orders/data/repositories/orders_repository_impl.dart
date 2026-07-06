@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../../domain/entities/rfq_details.dart';
 import '../../domain/entities/rfq_stats.dart';
 import '../../domain/entities/rfq_item.dart';
 import '../../domain/repositories/orders_repository.dart';
@@ -98,6 +99,25 @@ class OrdersRepositoryImpl implements OrdersRepository {
         hasIconButton: false,
       ),
     ];
+  }
+
+  @override
+  Future<RfqDetails> getRfqDetails(String rfqId) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return const RfqDetails(
+      rfqId: 'NAS-2024-0892',
+      companyName: 'الشركة المتحدة للنسيج الذكي',
+      contactPerson: 'سارة أحمد',
+      status: 'مورد معتمد',
+      fabricType: 'قطن 100% (Cotton)',
+      quantity: '5,000 متر',
+      color: 'Indigo',
+      weight: 'GSM 180',
+      quality: 'Premium',
+      packagingMethod: 'لفات (Rolls) مع غطاء حماية مزدوج',
+      deliveryDestination: 'مستودعات الشركة - مدينة الرياض',
+      notes: 'نحن بحاجة إلى متانة عالية وقدرة ممتازة على التنفس لضمان جودة استثنائية لمجموعة الصيف القادمة. يرجى التركيز على ثبات اللون تحت أشعة الشمس.',
+    );
   }
 }
 

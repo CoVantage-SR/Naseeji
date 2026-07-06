@@ -15,6 +15,8 @@ import '../../features/search/presentation/screens/global_search/global_search_s
 import '../../features/profile/presentation/screens/supplier_profile/supplier_profile_screen.dart';
 import '../../features/products/presentation/screens/add_product/add_product_screen.dart';
 import '../../features/orders/presentation/screens/orders_screen.dart';
+import '../../features/orders/presentation/screens/rfq_details_screen.dart';
+import '../../features/orders/presentation/screens/create_offer_screen.dart';
 
 part 'app_router.g.dart';
 
@@ -93,6 +95,20 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/orders',
         name: 'orders',
         builder: (context, state) => const OrdersScreen(),
+      ),
+      GoRoute(
+        path: '/rfq-details',
+        name: 'rfq-details',
+        builder: (context, state) => RfqDetailsScreen(
+          rfqId: state.uri.queryParameters['rfqId'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/create-offer',
+        name: 'create-offer',
+        builder: (context, state) => CreateOfferScreen(
+          rfqId: state.uri.queryParameters['rfqId'] ?? '',
+        ),
       ),
     ],
   );
