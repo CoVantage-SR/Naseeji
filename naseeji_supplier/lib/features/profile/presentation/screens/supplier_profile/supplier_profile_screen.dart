@@ -73,6 +73,8 @@ class SupplierProfileScreen extends ConsumerWidget {
         onDestinationSelected: (index) {
           if (index == 0) {
             context.go('/home');
+          } else if (index == 2) {
+            context.go('/orders');
           }
         },
         destinations: const [

@@ -79,7 +79,9 @@ class HomeScreen extends ConsumerWidget {
         elevation: 8,
         indicatorColor: const Color(0xFF72F8E4).withValues(alpha: 0.6),
         onDestinationSelected: (index) {
-          if (index == 4) {
+          if (index == 2) {
+            context.go('/orders');
+          } else if (index == 4) {
             context.go('/profile');
           }
         },
