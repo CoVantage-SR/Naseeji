@@ -455,7 +455,7 @@ class RfqDetailsBottomBar extends StatelessWidget {
             const SizedBox(width: 12),
             Expanded(
               child: ElevatedButton.icon(
-                onPressed: () => context.push('/create-offer?rfqId=$rfqId'),
+                onPressed: () => context.push('/orders/create-quotation?rfqId=$rfqId'),
                 icon: const Icon(Icons.send, size: 16, color: Colors.white),
                 label: const Text(
                   'إرسال عرض سعر',

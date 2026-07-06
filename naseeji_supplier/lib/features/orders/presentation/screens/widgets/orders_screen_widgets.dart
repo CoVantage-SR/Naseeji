@@ -248,9 +248,13 @@ class RfqItemsList extends StatelessWidget {
           actionButtonIsOutlined: item.actionButtonIsOutlined,
           hasIconButton: item.hasIconButton,
           iconButtonIcon: _getIconData(item.iconButtonIconType),
-          onActionButtonPressed: () {
+           onActionButtonPressed: () {
             final id = item.rfqNumber.replaceAll("RFQ-", "");
-            context.push('/orders/order-center?rfqId=$id');
+            if (item.actionButtonText == 'تقديم عرض') {
+              context.push('/rfq-details?rfqId=$id');
+            } else {
+              context.push('/orders/order-center?rfqId=$id');
+            }
           },
         );
       },
