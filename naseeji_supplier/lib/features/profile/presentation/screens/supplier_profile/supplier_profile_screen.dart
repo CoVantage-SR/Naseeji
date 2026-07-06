@@ -3,7 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import '../../controllers/profile_controller.dart';
-import 'widgets/recent_activity_timeline.dart';
+import 'widgets/overview_tab_view.dart';
+import 'widgets/company_info_tab_view.dart';
+import 'widgets/certificates_tab_view.dart';
+import 'widgets/payments_tab_view.dart';
+import 'widgets/settings_tab_view.dart';
 
 class SupplierProfileScreen extends ConsumerStatefulWidget {
   const SupplierProfileScreen({super.key});
@@ -22,17 +26,6 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
     'الإعدادات',
   ];
 
-  final List<Map<String, dynamic>> certificatesList = [
-    {'name': 'شهادة مطابقة مواصفات الجودة ISO 9001', 'date': 'صالحة لغاية 2027-12', 'verified': true},
-    {'name': 'شهادة منشأ للمنسوجات والقطنيات الرسمية', 'date': 'صالحة لغاية 2026-10', 'verified': true},
-    {'name': 'رخصة التصدير الصناعية المعتمدة للمؤسسة', 'date': 'صالحة لغاية 2027-04', 'verified': true},
-  ];
-
-  final _certNameController = TextEditingController();
-  final _certExpiryController = TextEditingController();
-  String uploadedFileName = '';
-  bool showAddCertForm = false;
-
   @override
   void initState() {
     super.initState();
@@ -42,8 +35,6 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
   @override
   void dispose() {
     _tabController.dispose();
-    _certNameController.dispose();
-    _certExpiryController.dispose();
     super.dispose();
   }
 
@@ -205,11 +196,11 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
             body: TabBarView(
               controller: _tabController,
               children: [
-                _buildOverviewTab(profile),
-                _buildCompanyInfoTab(profile),
-                _buildCertificatesTab(),
-                _buildPaymentsTab(),
-                _buildSettingsTab(),
+                OverviewTabView(profile: profile),
+                CompanyInfoTabView(profile: profile),
+                CertificatesTabView(profile: profile),
+                PaymentsTabView(profile: profile),
+                SettingsTabView(profile: profile),
               ],
             ),
           );
@@ -253,348 +244,6 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
             selectedIcon: Icon(Icons.person, color: AppColors.secondary),
             label: 'Account',
           ),
-        ],
-      ),
-    );
-  }
-
-  // TAB 1 — Overview
-  Widget _buildOverviewTab(dynamic profile) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Row(
-            children: [
-              Expanded(child: _buildMetricCard('نسبة الرد السريع', '98%', Icons.bolt_outlined, Colors.orange)),
-              const SizedBox(width: 10),
-              Expanded(child: _buildMetricCard('التوصيل في الموعد', '95%', Icons.local_shipping_outlined, Colors.green)),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(child: _buildMetricCard('المنتجات المفعلة', '${profile.productsCount}', Icons.inventory_2_outlined, const Color(0xFF0040E0))),
-              const SizedBox(width: 10),
-              Expanded(child: _buildMetricCard('الطلبات المكتملة', '${profile.ordersCount}', Icons.done_all_outlined, const Color(0xFF006B5F))),
-            ],
-          ),
-          const SizedBox(height: 20),
-
-          const Text('نبذة عن أعمال الشركة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 8),
-          const Text(
-            'نحن مصنع متخصص في تصنيع خامات الأقمشة والقطن الممتاز عالي الجودة لتلبية احتياجات مصانع الملابس الجاهزة وشركات النسيج B2B في الشرق الأوسط.',
-            style: TextStyle(fontSize: 11, height: 1.4, color: AppColors.onSurfaceVariant),
-            textAlign: TextAlign.end,
-          ),
-          const SizedBox(height: 20),
-
-          const Text('أوسمة الجودة والاعتمادات', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              _buildAchievementBadge('Top Supplier', Colors.orange),
-              const SizedBox(width: 8),
-              _buildAchievementBadge('Verified Business', Colors.blue),
-              const SizedBox(width: 8),
-              _buildAchievementBadge('ISO Certified', Colors.green),
-            ],
-          ),
-          const SizedBox(height: 20),
-
-          const Text('أحدث نشاطات الشركة الموثقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 12),
-          const RecentActivityTimeline(),
-        ],
-      ),
-    );
-  }
-
-  // TAB 2 — Company Information
-  Widget _buildCompanyInfoTab(dynamic profile) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: const Color(0xFFE2E1EF))),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            const Text('المعلومات القانونية والتجارية للمنشأة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF0040E0))),
-            const SizedBox(height: 12),
-            _buildRowItem('الاسم التجاري المعتمد', profile.companyName),
-            _buildRowItem('رقم السجل التجاري (CR)', '1010998822 (نشط)'),
-            _buildRowItem('رقم التسجيل الضريبي (VAT)', '300998877110003'),
-            _buildRowItem('نوع النشاط التجاري', 'جهة تصنيع وتوريد جملة'),
-            _buildRowItem('المساحة الإجمالية للمصنع', '12,500 متر مربع'),
-            _buildRowItem('عدد العمال والموظفين الفنيين', '250+ فني خياطة ونسيج'),
-            _buildRowItem('الطاقة الإنتاجية الشهرية', '150,000 متر طولي'),
-            _buildRowItem('موقع المنشأة وعنوان الإدارة', 'شارع الصناعية، الرياض، SA'),
-            _buildRowItem('الموقع الإلكتروني', 'www.naseejitex.com'),
-            _buildRowItem('رقم الهاتف للتواصل', profile.phone),
-            _buildRowItem('البريد الإلكتروني للطلبات', profile.email),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // TAB 3 — Certificates (with Add Certificate inline section)
-  Widget _buildCertificatesTab() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          if (!showAddCertForm)
-            Align(
-              alignment: Alignment.centerLeft,
-              child: OutlinedButton.icon(
-                onPressed: () {
-                  setState(() {
-                    showAddCertForm = true;
-                  });
-                },
-                icon: const Icon(Icons.add_card_outlined, color: Color(0xFF0040E0), size: 16),
-                label: const Text('إضافة شهادة جديدة', style: TextStyle(color: Color(0xFF0040E0), fontSize: 12, fontWeight: FontWeight.bold)),
-                style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: Color(0xFF0040E0)),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                ),
-              ),
-            )
-          else
-            // ADD CERTIFICATE CONTAINER
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: const Color(0xFF0040E0), width: 1.5),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  const Text('إضافة شهادة أو اعتماد جديد', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFF0040E0))),
-                  const SizedBox(height: 12),
-                  _buildDialogTextField('اسم الشهادة / الاعتماد', _certNameController),
-                  const SizedBox(height: 10),
-                  _buildDialogTextField('تاريخ انتهاء الصلاحية المتوقع', _certExpiryController),
-                  const SizedBox(height: 12),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        uploadedFileName = 'وثيقة_اعتماد_جديدة.pdf';
-                      });
-                      _showSuccessToast('تم اختيار وثيقة الشهادة بنجاح');
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF8F9FF),
-                        border: Border.all(color: const Color(0xFFE2E1EF), style: BorderStyle.solid),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            uploadedFileName.isEmpty ? 'اضغط لرفع ملف الشهادة (PDF أو صورة)' : uploadedFileName,
-                            style: TextStyle(
-                              color: uploadedFileName.isEmpty ? AppColors.outline : const Color(0xFF16A34A),
-                              fontSize: 11,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Icon(
-                            uploadedFileName.isEmpty ? Icons.cloud_upload_outlined : Icons.check_circle_outline,
-                            color: uploadedFileName.isEmpty ? AppColors.outline : const Color(0xFF16A34A),
-                            size: 18,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 14),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      OutlinedButton(
-                        onPressed: () {
-                          setState(() {
-                            showAddCertForm = false;
-                            _certNameController.clear();
-                            _certExpiryController.clear();
-                            uploadedFileName = '';
-                          });
-                        },
-                        style: OutlinedButton.styleFrom(
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                        ),
-                        child: const Text('تراجع'),
-                      ),
-                      const SizedBox(width: 12),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          if (_certNameController.text.isEmpty) {
-                            _showSuccessToast('يرجى كتابة اسم الشهادة أولاً');
-                            return;
-                          }
-                          setState(() {
-                            certificatesList.insert(0, {
-                              'name': _certNameController.text,
-                              'date': 'صالحة لغاية ${_certExpiryController.text}',
-                              'verified': false,
-                            });
-                            _certNameController.clear();
-                            _certExpiryController.clear();
-                            uploadedFileName = '';
-                            showAddCertForm = false;
-                          });
-                          _showSuccessToast('تم إرسال الشهادة للمراجعة والتدقيق بنجاح.');
-                        },
-                        icon: const Icon(Icons.check, size: 14, color: Colors.white),
-                        label: const Text('حفظ وإرسال للتدقيق'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF0040E0),
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          const SizedBox(height: 20),
-
-          // LIST OF CERTIFICATES
-          const Text('الشهادات الحالية المعتمدة والموثقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 12),
-          ...certificatesList.map((cert) {
-            return Card(
-              elevation: 0,
-              margin: const EdgeInsets.only(bottom: 10),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: const BorderSide(color: Color(0xFFE2E1EF))),
-              color: Colors.white,
-              child: ListTile(
-                title: Text(cert['name'], style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold), textAlign: TextAlign.end),
-                subtitle: Text(cert['date'], style: const TextStyle(fontSize: 9, color: AppColors.outline), textAlign: TextAlign.end),
-                trailing: Icon(cert['verified'] ? Icons.check_circle_outline : Icons.pending_outlined, color: cert['verified'] ? const Color(0xFF16A34A) : Colors.orange, size: 20),
-                leading: IconButton(
-                  icon: const Icon(Icons.download_rounded, color: Color(0xFF0040E0), size: 18),
-                  onPressed: () {},
-                ),
-              ),
-            );
-          }),
-        ],
-      ),
-    );
-  }
-
-  // TAB 4 — Payments
-  Widget _buildPaymentsTab() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: const Color(0xFFE2E1EF))),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            const Text('طرق الدفع والتسهيلات الائتمانية والعملات المقبولة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF006B5F))),
-            const SizedBox(height: 12),
-            _buildRowItem('العملات المقبولة لسداد المستندات', 'ريال سعودي (SAR) • دولار أمريكي (USD)'),
-            _buildRowItem('طرق السداد المعتمدة', 'تحويل بنكي مباشر • دفع ضامن (Escrow) • شيكات معتمدة'),
-            _buildRowItem('أجل السداد المعتمد (Credit terms)', 'Net 30 أيام • دفعة مقدمة 30% مع تأمين الشحنة'),
-            _buildRowItem('الحساب البنكي الرئيسي للمورد', 'البنك الأهلي السعودي SNB - آيبان SA90000001234567890'),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // TAB 5 — Settings
-  Widget _buildSettingsTab() {
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        ListTile(
-          trailing: const Icon(Icons.arrow_forward_ios, size: 14),
-          title: const Text('تغيير كلمة المرور الشخصية للمفتاح', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.end),
-          leading: const Icon(Icons.lock_outline, color: AppColors.outline),
-          onTap: () {},
-        ),
-        ListTile(
-          trailing: const Icon(Icons.arrow_forward_ios, size: 14),
-          title: const Text('لغة واجهة التطبيق واللوكاليزيشن', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.end),
-          leading: const Icon(Icons.language, color: AppColors.outline),
-          onTap: () {},
-        ),
-        ListTile(
-          trailing: const Icon(Icons.arrow_forward_ios, size: 14),
-          title: const Text('الأجهزة المتصلة والصلاحيات الأمنية والرموز', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.end),
-          leading: const Icon(Icons.devices_outlined, color: AppColors.outline),
-          onTap: () {},
-        ),
-        ListTile(
-          trailing: const Icon(Icons.arrow_forward_ios, size: 14),
-          title: const Text('تسجيل الخروج الآمن للمورد', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.error), textAlign: TextAlign.end),
-          leading: const Icon(Icons.logout, color: AppColors.error),
-          onTap: () {},
-        ),
-      ],
-    );
-  }
-
-  Widget _buildMetricCard(String label, String val, IconData icon, Color color) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12), border: Border.all(color: const Color(0xFFE2E1EF))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Icon(icon, color: color, size: 20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(val, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-              Text(label, style: const TextStyle(fontSize: 9, color: AppColors.outline)),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  static Widget _buildAchievementBadge(String label, Color color) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withValues(alpha: 0.3)),
-      ),
-      child: Text(label, style: TextStyle(color: color, fontSize: 9, fontWeight: FontWeight.bold)),
-    );
-  }
-
-  Widget _buildRowItem(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Expanded(child: Text(value, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold), textAlign: TextAlign.left)),
-          const SizedBox(width: 10),
-          Text('$label:', style: const TextStyle(fontSize: 10, color: AppColors.outline)),
         ],
       ),
     );

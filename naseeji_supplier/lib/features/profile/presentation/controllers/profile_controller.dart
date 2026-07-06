@@ -19,4 +19,13 @@ class ProfileController extends _$ProfileController {
       return repo.getProfile();
     });
   }
+
+  Future<void> addCertificate(String name, String date) async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      final repo = ref.read(profileRepositoryProvider);
+      await repo.addCertificate(CompanyCertificate(name: name, date: date, verified: false));
+      return repo.getProfile();
+    });
+  }
 }
