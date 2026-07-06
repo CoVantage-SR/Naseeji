@@ -148,6 +148,7 @@ class _CertificatesTabViewState extends ConsumerState<CertificatesTabView> {
                             showAddCertForm = false;
                           });
                           
+                          if (!context.mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('تم إرسال الشهادة للمراجعة والتدقيق بنجاح.')),
                           );
