@@ -6,11 +6,18 @@ import '../controllers/orders_controller.dart';
 import 'widgets/rfq_stats_grid.dart';
 import 'widgets/orders_screen_widgets.dart';
 
-class OrdersScreen extends ConsumerWidget {
+class OrdersScreen extends ConsumerStatefulWidget {
   const OrdersScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<OrdersScreen> createState() => _OrdersScreenState();
+}
+
+class _OrdersScreenState extends ConsumerState<OrdersScreen> {
+  String? selectedFilterStatus;
+
+  @override
+  Widget build(BuildContext context) {
     final scaffoldKey = GlobalKey<ScaffoldState>();
     final stateAsync = ref.watch(ordersControllerProvider);
 
@@ -26,6 +33,10 @@ class OrdersScreen extends ConsumerWidget {
           ),
           error: (err, stack) => Center(child: Text('خطأ: $err')),
           data: (stateData) {
+            final filteredItems = selectedFilterStatus == null
+                ? stateData.items
+                : stateData.items.where((element) => element.status == selectedFilterStatus).toList();
+
             return RefreshIndicator(
               color: AppColors.primary,
               onRefresh: () =>
@@ -36,13 +47,19 @@ class OrdersScreen extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    RfqStatsGrid(stats: stateData.stats),
-                    const SizedBox(height: 20),
-                    const RfqSearchBar(),
-                    const SizedBox(height: 16),
+                    RfqStatsGrid(
+                      stats: stateData.stats,
+                      selectedStatus: selectedFilterStatus,
+                      onStatusSelected: (status) {
+                        setState(() {
+                          selectedFilterStatus = status;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 12),
                     const RfqFilterSortRow(),
                     const SizedBox(height: 20),
-                    RfqItemsList(items: stateData.items),
+                    RfqItemsList(items: filteredItems),
                   ],
                 ),
               ),

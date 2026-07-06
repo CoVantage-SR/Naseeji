@@ -29,7 +29,7 @@ class OfferRejectedScreen extends ConsumerWidget {
           ),
         ),
         leading: const Row(
-          children: const [
+          children:  [
             SizedBox(width: 16),
             Text(
               'Naseeji',
