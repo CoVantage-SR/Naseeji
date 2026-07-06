@@ -28,4 +28,13 @@ class ProfileController extends _$ProfileController {
       return repo.getProfile();
     });
   }
+
+  Future<void> updateProfile(SupplierProfile updated) async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      final repo = ref.read(profileRepositoryProvider);
+      await repo.updateProfile(updated);
+      return repo.getProfile();
+    });
+  }
 }
