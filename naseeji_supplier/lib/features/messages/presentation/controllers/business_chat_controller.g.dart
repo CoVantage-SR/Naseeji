@@ -7,7 +7,7 @@ part of 'business_chat_controller.dart';
 // **************************************************************************
 
 String _$businessChatControllerHash() =>
-    r'aadd728f911809d8cddb8dc0a43350fedd0a513c';
+    r'd7d6e6c2b90208f7ec337bd14893df852f74c50e';
 
 /// Copied from Dart SDK
 class _SystemHash {

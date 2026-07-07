@@ -140,6 +140,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
                   onRefresh: () => ref.refresh(messagesControllerProvider.future),
                   child: ListView(
                     children: [
+                      _buildArchivedChatsShortcut(context, state.conversations),
                       // Pinned section
                       if (pinned.isNotEmpty) ...[
                         _SectionHeader(
@@ -166,6 +167,52 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
         ],
       ),
       bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 3),
+    );
+  }
+
+  Widget _buildArchivedChatsShortcut(BuildContext context, List<Conversation> conversations) {
+    final archivedCount = conversations.where((c) => c.status == ConversationStatus.archived).length;
+    if (archivedCount == 0) return const SizedBox.shrink();
+
+    return InkWell(
+      onTap: () => context.push('/messages/archived'),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          border: Border(bottom: BorderSide(color: AppColors.surfaceContainerLow, width: 1)),
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              decoration: BoxDecoration(
+                color: AppColors.primaryContainer,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Text(
+                '$archivedCount',
+                style: const TextStyle(
+                  color: AppColors.primary,
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const Spacer(),
+            const Text(
+              'المحادثات المؤرشفة',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 13,
+                color: AppColors.onSurface,
+              ),
+            ),
+            const SizedBox(width: 12),
+            const Icon(Icons.archive_outlined, color: AppColors.primary, size: 20),
+          ],
+        ),
+      ),
     );
   }
 

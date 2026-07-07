@@ -1,21 +1,24 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import '../../domain/services/quotation_pricing_calculator.dart';
 import '../../domain/services/quotation_validator.dart';
+import 'package:naseeji_supplier/features/messages/presentation/controllers/business_chat_controller.dart';
 
-class CreateQuotationScreen extends StatefulWidget {
+class CreateQuotationScreen extends ConsumerStatefulWidget {
   final String rfqId;
+  final String? conversationId;
 
-  const CreateQuotationScreen({super.key, required this.rfqId});
+  const CreateQuotationScreen({super.key, required this.rfqId, this.conversationId});
 
   @override
-  State<CreateQuotationScreen> createState() => _CreateQuotationScreenState();
+  ConsumerState<CreateQuotationScreen> createState() => _CreateQuotationScreenState();
 }
 
-class _CreateQuotationScreenState extends State<CreateQuotationScreen> {
+class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
   // Section 3: Pricing Controllers
   final _unitPriceController = TextEditingController(text: '12.50');
   final _quotedQtyController = TextEditingController(text: '5000');
@@ -839,6 +842,19 @@ class _CreateQuotationScreenState extends State<CreateQuotationScreen> {
       return;
     }
 
+    final convId = widget.conversationId;
+    if (convId != null) {
+      ref.read(businessChatControllerProvider(convId).notifier).sendQuotationCard(
+        productName: 'خيوط غزل القطن الفاخر',
+        quantity: '${qty.toInt()} متر',
+        unitPrice: '${unitPrice.toStringAsFixed(2)}',
+        totalPrice: '${grandTotal.toStringAsFixed(2)}',
+        deliveryTime: '${_productionTimeController.text} + ${_deliveryTimeController.text}',
+        paymentMethod: selectedPaymentMethod,
+        expiration: '${customValidityDate.year}-${customValidityDate.month.toString().padLeft(2, '0')}-${customValidityDate.day.toString().padLeft(2, '0')}',
+      );
+    }
+
     // Success dialog
     showDialog(
       context: context,
@@ -860,7 +876,11 @@ class _CreateQuotationScreenState extends State<CreateQuotationScreen> {
           TextButton(
             onPressed: () {
               Navigator.pop(context); // Pop dialog
-              context.go('/orders'); // Go back to orders
+              if (convId != null) {
+                context.pop(); // Go back to chat screen
+              } else {
+                context.go('/orders'); // Go back to orders
+              }
             },
             child: const Text('موافق'),
           ),

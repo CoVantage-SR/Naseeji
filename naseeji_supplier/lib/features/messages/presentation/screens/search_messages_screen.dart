@@ -149,20 +149,26 @@ class _SearchMessagesScreenState extends ConsumerState<SearchMessagesScreen> {
                     data: (messages) {
                       final results = messages.where((m) {
                         // 1. Apply category filters
-                        if (_selectedFilter == 'نصوص' && m.type != MessageType.text) return false;
-                        if (_selectedFilter == 'صور' && m.type != MessageType.image) return false;
-                        if (_selectedFilter == 'فيديو' && m.type != MessageType.video) return false;
+                        if (_selectedFilter == 'نصوص' && m.type != MessageType.text) {
+                          return false;
+                        }
+                        if (_selectedFilter == 'صور' && m.type != MessageType.image) {
+                          return false;
+                        }
+                        if (_selectedFilter == 'فيديو' && m.type != MessageType.video) {
+                          return false;
+                        }
                         if (_selectedFilter == 'ملفات' &&
                             m.type != MessageType.pdf &&
-                            m.type != MessageType.document &&
-                            m.type != MessageType.invoice &&
-                            m.type != MessageType.certificate &&
-                            m.type != MessageType.qualityReport &&
-                            m.type != MessageType.shippingDoc) return false;
+                            m.type != MessageType.document) {
+                          return false;
+                        }
                         if (_selectedFilter == 'عروض أسعار' &&
                             m.type != MessageType.quotationCard &&
                             m.type != MessageType.counterOfferCard &&
-                            m.type != MessageType.agreementCard) return false;
+                            m.type != MessageType.agreementCard) {
+                          return false;
+                        }
 
                         // 2. Apply query filter (case insensitive matching on content, cardData or time)
                         final q = _searchQuery.toLowerCase();

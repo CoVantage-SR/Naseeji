@@ -417,9 +417,10 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
 
   void _togglePin(BuildContext context, Conversation conv) async {
     final success = await ref.read(messagesControllerProvider.notifier).pinConversation(conv.id, !conv.isPinned);
-    if (!success && mounted) {
+    if (!context.mounted) return;
+    if (!success) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم الوصول للحد الأقصى للمحادثات المثبتة (٣ محادثات)')));
-    } else if (mounted) {
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(conv.isPinned ? 'تم إلغاء التثبيت' : 'تم تثبيت المحادثة بنجاح')));
     }
   }

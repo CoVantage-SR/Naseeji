@@ -42,6 +42,8 @@ import '../../features/messages/presentation/screens/attachments_screen.dart';
 import '../../features/messages/presentation/screens/quotation_history_screen.dart';
 import '../../features/messages/presentation/screens/chat_timeline_screen.dart';
 import '../../features/messages/presentation/screens/search_messages_screen.dart';
+import '../../features/messages/presentation/screens/chat_settings_screen.dart';
+import '../../features/messages/presentation/screens/archived_chats_screen.dart';
 
 part 'app_router.g.dart';
 
@@ -250,6 +252,7 @@ GoRouter goRouter(GoRouterRef ref) {
         name: 'orders-create-quotation',
         builder: (context, state) => CreateQuotationScreen(
           rfqId: state.uri.queryParameters['rfqId'] ?? '',
+          conversationId: state.uri.queryParameters['conversationId'],
         ),
       ),
       GoRoute(
@@ -264,14 +267,28 @@ GoRouter goRouter(GoRouterRef ref) {
         pageBuilder: (context, state) => const NoTransitionPage(child: MessagesScreen()),
       ),
       GoRoute(
+        path: '/messages/archived',
+        name: 'messages-archived',
+        builder: (context, state) => const ArchivedChatsScreen(),
+      ),
+      GoRoute(
         path: '/messages/search',
         name: 'messages-search',
-        builder: (context, state) => const SearchMessagesScreen(),
+        builder: (context, state) => SearchMessagesScreen(
+          conversationId: state.uri.queryParameters['conversationId'],
+        ),
       ),
       GoRoute(
         path: '/messages/chat/:id',
         name: 'messages-business-chat',
         builder: (context, state) => BusinessChatScreen(
+          conversationId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/messages/chat/:id/settings',
+        name: 'messages-chat-settings',
+        builder: (context, state) => ChatSettingsScreen(
           conversationId: state.pathParameters['id'] ?? '',
         ),
       ),

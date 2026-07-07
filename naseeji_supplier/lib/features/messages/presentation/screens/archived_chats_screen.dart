@@ -38,18 +38,18 @@ class ArchivedChatsScreen extends ConsumerWidget {
               .toList();
 
           if (archived.isEmpty) {
-            return Center(
+            return const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.archive_outlined, size: 64, color: AppColors.outlineVariant),
-                  const SizedBox(height: 16),
-                  const Text(
+                  Icon(Icons.archive_outlined, size: 64, color: AppColors.outlineVariant),
+                  SizedBox(height: 16),
+                  Text(
                     'لا توجد محادثات مؤرشفة',
                     style: TextStyle(fontSize: 14, color: AppColors.outline, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 6),
-                  const Text(
+                  SizedBox(height: 6),
+                  Text(
                     'المحادثات التي تقوم بأرشفتها ستظهر هنا.',
                     style: TextStyle(fontSize: 12, color: AppColors.outline),
                   ),

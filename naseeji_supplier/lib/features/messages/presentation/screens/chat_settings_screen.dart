@@ -99,10 +99,11 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
                 label: 'تثبيت المحادثة',
                 trailing: Switch(
                   value: conv.isPinned,
-                  activeColor: AppColors.primary,
+                  activeTrackColor: AppColors.primary,
                   onChanged: (val) async {
                     final success = await ref.read(messagesControllerProvider.notifier).pinConversation(conv.id, val);
-                    if (!success && mounted) {
+                    if (!context.mounted) return;
+                    if (!success) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('تم الوصول للحد الأقصى للمحادثات المثبتة (٣ محادثات)')),
                       );
@@ -192,7 +193,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
                 label: 'تفعيل إشعارات الرسائل',
                 trailing: Switch(
                   value: _enableNotifications,
-                  activeColor: AppColors.primary,
+                  activeTrackColor: AppColors.primary,
                   onChanged: (val) => setState(() => _enableNotifications = val),
                 ),
               ),
@@ -201,7 +202,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
                 label: 'الصوت ونغمة التنبيه',
                 trailing: Switch(
                   value: _soundEnabled,
-                  activeColor: AppColors.primary,
+                  activeTrackColor: AppColors.primary,
                   onChanged: _enableNotifications ? (val) => setState(() => _soundEnabled = val) : null,
                 ),
               ),
@@ -210,7 +211,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
                 label: 'الاهتزاز',
                 trailing: Switch(
                   value: _vibrationEnabled,
-                  activeColor: AppColors.primary,
+                  activeTrackColor: AppColors.primary,
                   onChanged: _enableNotifications ? (val) => setState(() => _vibrationEnabled = val) : null,
                 ),
               ),
@@ -225,7 +226,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
                 label: 'مؤشرات قراءة الرسائل (Read Receipts)',
                 trailing: Switch(
                   value: _readReceipts,
-                  activeColor: AppColors.primary,
+                  activeTrackColor: AppColors.primary,
                   onChanged: (val) => setState(() => _readReceipts = val),
                 ),
               ),
@@ -234,7 +235,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
                 label: 'حالة النشاط (متصل الآن)',
                 trailing: Switch(
                   value: _onlineStatus,
-                  activeColor: AppColors.primary,
+                  activeTrackColor: AppColors.primary,
                   onChanged: (val) => setState(() => _onlineStatus = val),
                 ),
               ),
@@ -243,7 +244,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
                 label: 'مؤشر جاري الكتابة...',
                 trailing: Switch(
                   value: _typingIndicator,
-                  activeColor: AppColors.primary,
+                  activeTrackColor: AppColors.primary,
                   onChanged: (val) => setState(() => _typingIndicator = val),
                 ),
               ),
