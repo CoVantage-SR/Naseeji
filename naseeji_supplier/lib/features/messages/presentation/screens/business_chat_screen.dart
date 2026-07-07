@@ -357,6 +357,7 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
   void _showMoreMenu(BuildContext context, Conversation? conv) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
       builder: (_) => Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
@@ -367,15 +368,24 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
             children: [
               Container(width: 40, height: 4, decoration: BoxDecoration(color: AppColors.outlineVariant, borderRadius: BorderRadius.circular(2))),
               const SizedBox(height: 8),
-              _MenuItem(icon: Icons.business_outlined, label: 'عرض الملف الشخصي للشركة', color: AppColors.primary, onTap: () { Navigator.pop(context); context.push('/profile/public-preview'); }),
-              _MenuItem(icon: Icons.inventory_2_outlined, label: 'عرض تفاصيل الطلب', color: AppColors.secondary, onTap: () { Navigator.pop(context); context.push('/orders/order-center?rfqId=${conv?.rfqNumber ?? "8820"}'); }),
-              _MenuItem(icon: Icons.search, label: 'البحث في المحادثة', color: AppColors.onSurfaceVariant, onTap: () { Navigator.pop(context); context.push('/messages/search?conversationId=${widget.conversationId}'); }),
-              _MenuItem(icon: Icons.volume_off_outlined, label: 'كتم الإشعارات', color: AppColors.outline, onTap: () { Navigator.pop(context); if (conv != null) _showMuteDialog(context, conv); }),
-              _MenuItem(icon: Icons.push_pin_outlined, label: conv?.isPinned == true ? 'إلغاء التثبيت' : 'تثبيت المحادثة', color: AppColors.outline, onTap: () { Navigator.pop(context); if (conv != null) _togglePin(context, conv); }),
-              _MenuItem(icon: Icons.archive_outlined, label: 'أرشفة المحادثة', color: AppColors.outline, onTap: () { Navigator.pop(context); if (conv != null) _confirmArchive(context, conv); }),
-              _MenuItem(icon: Icons.block, label: conv?.isBlocked == true ? 'إلغاء حظر المستخدم' : 'حظر المستخدم', color: Colors.red, onTap: () { Navigator.pop(context); if (conv != null) _confirmBlock(context, conv); }),
-              _MenuItem(icon: Icons.delete_outline, label: 'حذف المحادثة', color: Colors.red, onTap: () { Navigator.pop(context); if (conv != null) _confirmDelete(context, conv); }),
-              _MenuItem(icon: Icons.flag_outlined, label: 'إبلاغ عن إساءة', color: Colors.red, onTap: () { Navigator.pop(context); if (conv != null) _showReportDialog(context, conv); }),
+              Flexible(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _MenuItem(icon: Icons.business_outlined, label: 'عرض الملف الشخصي للشركة', color: AppColors.primary, onTap: () { Navigator.pop(context); context.push('/profile/public-preview'); }),
+                      _MenuItem(icon: Icons.inventory_2_outlined, label: 'عرض تفاصيل الطلب', color: AppColors.secondary, onTap: () { Navigator.pop(context); context.push('/orders/order-center?rfqId=${conv?.rfqNumber ?? "8820"}'); }),
+                      _MenuItem(icon: Icons.search, label: 'البحث في المحادثة', color: AppColors.onSurfaceVariant, onTap: () { Navigator.pop(context); context.push('/messages/search?conversationId=${widget.conversationId}'); }),
+                      _MenuItem(icon: Icons.volume_off_outlined, label: 'كتم الإشعارات', color: AppColors.outline, onTap: () { Navigator.pop(context); if (conv != null) _showMuteDialog(context, conv); }),
+                      _MenuItem(icon: Icons.push_pin_outlined, label: conv?.isPinned == true ? 'إلغاء التثبيت' : 'تثبيت المحادثة', color: AppColors.outline, onTap: () { Navigator.pop(context); if (conv != null) _togglePin(context, conv); }),
+                      _MenuItem(icon: Icons.archive_outlined, label: 'أرشفة المحادثة', color: AppColors.outline, onTap: () { Navigator.pop(context); if (conv != null) _confirmArchive(context, conv); }),
+                      _MenuItem(icon: Icons.block, label: conv?.isBlocked == true ? 'إلغاء حظر المستخدم' : 'حظر المستخدم', color: Colors.red, onTap: () { Navigator.pop(context); if (conv != null) _confirmBlock(context, conv); }),
+                      _MenuItem(icon: Icons.delete_outline, label: 'حذف المحادثة', color: Colors.red, onTap: () { Navigator.pop(context); if (conv != null) _confirmDelete(context, conv); }),
+                      _MenuItem(icon: Icons.flag_outlined, label: 'إبلاغ عن إساءة', color: Colors.red, onTap: () { Navigator.pop(context); if (conv != null) _showReportDialog(context, conv); }),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),

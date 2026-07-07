@@ -5,11 +5,13 @@ import 'package:naseeji_supplier/core/theme/app_colors.dart';
 class ConversationCard extends StatelessWidget {
   final Conversation conversation;
   final VoidCallback onTap;
+  final VoidCallback? onLongPress;
 
   const ConversationCard({
     super.key,
     required this.conversation,
     required this.onTap,
+    this.onLongPress,
   });
 
   @override
@@ -21,6 +23,7 @@ class ConversationCard extends StatelessWidget {
           : Colors.transparent,
       child: InkWell(
         onTap: onTap,
+        onLongPress: onLongPress,
         splashColor: AppColors.primary.withValues(alpha: 0.1),
         highlightColor: AppColors.primary.withValues(alpha: 0.05),
         child: Padding(

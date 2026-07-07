@@ -256,6 +256,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
                 context.push('/messages/chat/${conv.id}');
               }
             },
+            onLongPress: () => _showConversationOptions(context, conv),
           ),
           const Divider(height: 1, indent: 80),
         ],
