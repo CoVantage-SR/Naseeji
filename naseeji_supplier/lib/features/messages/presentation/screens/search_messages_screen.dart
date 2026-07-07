@@ -6,7 +6,8 @@ import '../../domain/entities/business_message.dart';
 import '../controllers/business_chat_controller.dart';
 
 class SearchMessagesScreen extends ConsumerStatefulWidget {
-  const SearchMessagesScreen({super.key});
+  final String? conversationId;
+  const SearchMessagesScreen({super.key, this.conversationId});
 
   @override
   ConsumerState<SearchMessagesScreen> createState() => _SearchMessagesScreenState();
@@ -16,19 +17,17 @@ class _SearchMessagesScreenState extends ConsumerState<SearchMessagesScreen> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
   String _selectedFilter = 'الكل';
-  final List<String> _recentSearches = ['RFQ-8820', 'قطن', 'عرض سعر', 'مصنع الرياض'];
+  final List<String> _recentSearches = ['RFQ-8820', 'قطن', 'عرض سعر', '2026-07-06'];
 
   static const List<String> _filters = [
     'الكل',
     'نصوص',
+    'تاريخ',
     'ملفات',
+    'صور',
+    'فيديو',
     'عروض أسعار',
-    'طلبات',
-    'شركات',
   ];
-
-  // Search across conv_001 messages for demo
-  static const String _demoConvId = 'conv_001';
 
   @override
   void dispose() {
@@ -38,7 +37,8 @@ class _SearchMessagesScreenState extends ConsumerState<SearchMessagesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final messagesAsync = ref.watch(businessChatControllerProvider(_demoConvId));
+    final targetConvId = widget.conversationId ?? 'conv_001';
+    final messagesAsync = ref.watch(businessChatControllerProvider(targetConvId));
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -56,7 +56,7 @@ class _SearchMessagesScreenState extends ConsumerState<SearchMessagesScreen> {
           onChanged: (v) => setState(() => _searchQuery = v),
           style: const TextStyle(fontSize: 15),
           decoration: const InputDecoration(
-            hintText: 'بحث في الرسائل...',
+            hintText: 'بحث في المحادثة...',
             hintStyle: TextStyle(fontSize: 14, color: AppColors.outline),
             border: InputBorder.none,
             contentPadding: EdgeInsets.zero,
@@ -89,7 +89,38 @@ class _SearchMessagesScreenState extends ConsumerState<SearchMessagesScreen> {
                     child: FilterChip(
                       label: Text(f, style: TextStyle(fontSize: 12, color: isSelected ? Colors.white : AppColors.onSurface)),
                       selected: isSelected,
-                      onSelected: (_) => setState(() => _selectedFilter = f),
+                      onSelected: (_) async {
+                        setState(() => _selectedFilter = f);
+                        if (f == 'تاريخ') {
+                          final DateTime? picked = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2020),
+                            lastDate: DateTime(2030),
+                            builder: (context, child) {
+                              return Theme(
+                                data: Theme.of(context).copyWith(
+                                  colorScheme: const ColorScheme.light(
+                                    primary: AppColors.primary,
+                                    onPrimary: Colors.white,
+                                    onSurface: AppColors.onSurface,
+                                  ),
+                                ),
+                                child: child!,
+                              );
+                            },
+                          );
+                          if (picked != null && mounted) {
+                            // Format as YYYY-MM-DD or match Arabic dates (mock search matching)
+                            // We can search for this date string
+                            final dateStr = '${picked.year}-${picked.month.toString().padLeft(2, '0')}-${picked.day.toString().padLeft(2, '0')}';
+                            setState(() {
+                              _searchQuery = dateStr;
+                              _searchController.text = dateStr;
+                            });
+                          }
+                        }
+                      },
                       selectedColor: AppColors.primary,
                       backgroundColor: AppColors.surfaceContainerLow,
                       showCheckmark: false,
@@ -116,10 +147,29 @@ class _SearchMessagesScreenState extends ConsumerState<SearchMessagesScreen> {
                     loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
                     error: (e, _) => Center(child: Text('خطأ: $e')),
                     data: (messages) {
-                      final results = messages.where((m) =>
-                        m.content.contains(_searchQuery) ||
-                        (m.cardData?.toString().contains(_searchQuery) ?? false)
-                      ).toList();
+                      final results = messages.where((m) {
+                        // 1. Apply category filters
+                        if (_selectedFilter == 'نصوص' && m.type != MessageType.text) return false;
+                        if (_selectedFilter == 'صور' && m.type != MessageType.image) return false;
+                        if (_selectedFilter == 'فيديو' && m.type != MessageType.video) return false;
+                        if (_selectedFilter == 'ملفات' &&
+                            m.type != MessageType.pdf &&
+                            m.type != MessageType.document &&
+                            m.type != MessageType.invoice &&
+                            m.type != MessageType.certificate &&
+                            m.type != MessageType.qualityReport &&
+                            m.type != MessageType.shippingDoc) return false;
+                        if (_selectedFilter == 'عروض أسعار' &&
+                            m.type != MessageType.quotationCard &&
+                            m.type != MessageType.counterOfferCard &&
+                            m.type != MessageType.agreementCard) return false;
+
+                        // 2. Apply query filter (case insensitive matching on content, cardData or time)
+                        final q = _searchQuery.toLowerCase();
+                        return m.content.toLowerCase().contains(q) ||
+                            (m.cardData?.toString().toLowerCase().contains(q) ?? false) ||
+                            m.time.toLowerCase().contains(q);
+                      }).toList();
 
                       if (results.isEmpty) {
                         return _EmptyResults(query: _searchQuery);
