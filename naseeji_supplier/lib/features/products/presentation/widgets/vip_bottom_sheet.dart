@@ -207,7 +207,7 @@ class _VipBottomSheetState extends State<VipBottomSheet> {
                 ),
                 const SizedBox(height: 6),
                 Row(
-                  baseline: TextBaseline.alphabetic,
+                  textBaseline: TextBaseline.alphabetic,
                   crossAxisAlignment: CrossAxisAlignment.baseline,
                   children: [
                     Text(

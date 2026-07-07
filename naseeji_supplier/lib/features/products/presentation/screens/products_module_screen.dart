@@ -8,7 +8,6 @@ import 'categories_tab.dart';
 import 'inventory_tab.dart';
 import 'marketing_tab.dart';
 import 'analytics_tab.dart';
-import '../widgets/premium_badge.dart';
 
 class ProductsModuleScreen extends ConsumerStatefulWidget {
   const ProductsModuleScreen({super.key});
@@ -130,45 +129,45 @@ class _ProductsModuleScreenState extends ConsumerState<ProductsModuleScreen> {
               elevation: 0,
               selectedIndex: _currentTabIndex,
               onDestinationSelected: (index) => setState(() => _currentTabIndex = index),
-              destinations: [
-                const NavigationDestination(
+              destinations: const [
+                NavigationDestination(
                   icon: Icon(Icons.category_outlined, color: AppColors.outline),
                   selectedIcon: Icon(Icons.category, color: Color(0xFF0040E0)),
                   label: 'المنتجات',
                 ),
-                const NavigationDestination(
+                NavigationDestination(
                   icon: Icon(Icons.folder_open_outlined, color: AppColors.outline),
                   selectedIcon: Icon(Icons.folder, color: Color(0xFF0040E0)),
                   label: 'التصنيفات',
                 ),
-                const NavigationDestination(
+                NavigationDestination(
                   icon: Icon(Icons.inventory_2_outlined, color: AppColors.outline),
                   selectedIcon: Icon(Icons.inventory_2, color: Color(0xFF0040E0)),
                   label: 'المخزون',
                 ),
                 NavigationDestination(
                   icon: Badge(
-                    label: const Text('VIP', style: TextStyle(fontSize: 8, fontWeight: FontWeight.w900, color: Colors.white)),
-                    backgroundColor: const Color(0xFFFFA500),
-                    child: const Icon(Icons.campaign_outlined, color: AppColors.outline),
+                    label: Text('VIP', style: TextStyle(fontSize: 8, fontWeight: FontWeight.w900, color: Colors.white)),
+                    backgroundColor: Color(0xFFFFA500),
+                    child: Icon(Icons.campaign_outlined, color: AppColors.outline),
                   ),
                   selectedIcon: Badge(
-                    label: const Text('VIP', style: TextStyle(fontSize: 8, fontWeight: FontWeight.w900, color: Colors.white)),
-                    backgroundColor: const Color(0xFFFFA500),
-                    child: const Icon(Icons.campaign, color: Color(0xFF0040E0)),
+                    label: Text('VIP', style: TextStyle(fontSize: 8, fontWeight: FontWeight.w900, color: Colors.white)),
+                    backgroundColor: Color(0xFFFFA500),
+                    child: Icon(Icons.campaign, color: Color(0xFF0040E0)),
                   ),
                   label: 'التسويق',
                 ),
                 NavigationDestination(
                   icon: Badge(
-                    label: const Text('VIP', style: TextStyle(fontSize: 8, fontWeight: FontWeight.w900, color: Colors.white)),
-                    backgroundColor: const Color(0xFFFFA500),
-                    child: const Icon(Icons.analytics_outlined, color: AppColors.outline),
+                    label: Text('VIP', style: TextStyle(fontSize: 8, fontWeight: FontWeight.w900, color: Colors.white)),
+                    backgroundColor: Color(0xFFFFA500),
+                    child: Icon(Icons.analytics_outlined, color: AppColors.outline),
                   ),
                   selectedIcon: Badge(
-                    label: const Text('VIP', style: TextStyle(fontSize: 8, fontWeight: FontWeight.w900, color: Colors.white)),
-                    backgroundColor: const Color(0xFFFFA500),
-                    child: const Icon(Icons.analytics, color: Color(0xFF0040E0)),
+                    label: Text('VIP', style: TextStyle(fontSize: 8, fontWeight: FontWeight.w900, color: Colors.white)),
+                    backgroundColor: Color(0xFFFFA500),
+                    child: Icon(Icons.analytics, color: Color(0xFF0040E0)),
                   ),
                   label: 'التحليلات',
                 ),
