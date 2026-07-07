@@ -22,7 +22,7 @@ class StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(14),
@@ -46,7 +46,7 @@ class StatCard extends StatelessWidget {
               color: AppColors.onSurfaceVariant,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 2),
           Text(
             value,
             style: TextStyle(
@@ -55,7 +55,7 @@ class StatCard extends StatelessWidget {
               color: isWarning ? AppColors.tertiary : color,
             ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 2),
           Row(
             children: [
               Icon(

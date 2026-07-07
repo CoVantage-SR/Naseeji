@@ -16,7 +16,7 @@ class StatsGrid extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       crossAxisSpacing: 10,
       mainAxisSpacing: 10,
-      childAspectRatio: 1.8,
+      childAspectRatio: 2.1,
       children: [
         StatCard(
           title: 'مبيعات اليوم',
