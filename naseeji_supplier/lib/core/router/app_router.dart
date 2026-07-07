@@ -182,6 +182,40 @@ GoRouter goRouter(GoRouterRef ref) {
           shipmentId: state.pathParameters['id'] ?? '',
         ),
       ),
+      // ─── Agreements Feature ──────────────────────────────────────────
+      GoRoute(
+        path: '/agreements',
+        name: 'agreements',
+        pageBuilder: (context, state) => const NoTransitionPage(child: AgreementsDashboardScreen()),
+      ),
+      GoRoute(
+        path: '/agreements/details/:id',
+        name: 'agreements-details',
+        builder: (context, state) => AgreementDetailsScreen(
+          agreementId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/agreements/comparison/:id',
+        name: 'agreements-comparison',
+        builder: (context, state) => AgreementComparisonScreen(
+          agreementId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/agreements/documents/:id',
+        name: 'agreements-documents',
+        builder: (context, state) => AgreementDocumentsScreen(
+          agreementId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/agreements/history/:id',
+        name: 'agreements-history',
+        builder: (context, state) => AgreementHistoryScreen(
+          agreementId: state.pathParameters['id'] ?? '',
+        ),
+      ),
       GoRoute(
         path: '/orders',
         name: 'orders',
