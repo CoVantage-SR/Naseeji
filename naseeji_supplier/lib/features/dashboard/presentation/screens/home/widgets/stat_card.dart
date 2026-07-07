@@ -42,7 +42,7 @@ class StatCard extends StatelessWidget {
           Text(
             title,
             style: const TextStyle(
-              fontSize: 12,
+              fontSize: 11,
               color: AppColors.onSurfaceVariant,
             ),
           ),
@@ -50,7 +50,7 @@ class StatCard extends StatelessWidget {
           Text(
             value,
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
               color: isWarning ? AppColors.tertiary : color,
             ),
@@ -60,14 +60,14 @@ class StatCard extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                size: 12,
+                size: 10,
                 color: isWarning ? AppColors.error : AppColors.secondary,
               ),
               const SizedBox(width: 4),
               Text(
                 trend,
                 style: TextStyle(
-                  fontSize: 10,
+                  fontSize: 9,
                   color: isWarning ? AppColors.error : AppColors.secondary,
                   fontWeight: FontWeight.w600,
                 ),
