@@ -59,6 +59,18 @@ import '../../features/agreements/presentation/screens/agreement_comparison_scre
 import '../../features/agreements/presentation/screens/agreement_documents_screen.dart';
 import '../../features/agreements/presentation/screens/agreement_history_screen.dart';
 
+import '../../features/quotations/presentation/screens/quotations_dashboard_screen.dart';
+import '../../features/quotations/presentation/screens/quotation_details_screen.dart';
+import '../../features/quotations/presentation/screens/quotation_comparison_screen.dart';
+import '../../features/quotations/presentation/screens/quotation_versions_screen.dart';
+import '../../features/quotations/presentation/screens/quotation_history_screen.dart';
+
+import '../../features/customers/presentation/screens/customers_dashboard_screen.dart';
+import '../../features/customers/presentation/screens/customer_details_screen.dart';
+import '../../features/customers/presentation/screens/customer_orders_screen.dart';
+import '../../features/customers/presentation/screens/customer_notes_screen.dart';
+import '../../features/customers/presentation/screens/customer_analytics_screen.dart';
+
 part 'app_router.g.dart';
 
 @riverpod
@@ -411,6 +423,74 @@ GoRouter goRouter(GoRouterRef ref) {
         name: 'messages-support-chat',
         builder: (context, state) => SupportChatScreen(
           ticketId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+      // ─── Quotations Feature ───────────────────────────────────────────
+      GoRoute(
+        path: '/quotations',
+        name: 'quotations',
+        pageBuilder: (context, state) => const NoTransitionPage(child: QuotationsDashboardScreen()),
+      ),
+      GoRoute(
+        path: '/quotations/details/:id',
+        name: 'quotations-details',
+        builder: (context, state) => QuotationDetailsScreen(
+          quotationId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/quotations/comparison/:id',
+        name: 'quotations-comparison',
+        builder: (context, state) => QuotationComparisonScreen(
+          quotationId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/quotations/versions/:id',
+        name: 'quotations-versions',
+        builder: (context, state) => QuotationVersionsScreen(
+          quotationId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/quotations/history/:id',
+        name: 'quotations-history',
+        builder: (context, state) => QuotationHistoryScreen(
+          quotationId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+      // ─── Customers (CRM) Feature ──────────────────────────────────────
+      GoRoute(
+        path: '/customers',
+        name: 'customers',
+        pageBuilder: (context, state) => const NoTransitionPage(child: CustomersDashboardScreen()),
+      ),
+      GoRoute(
+        path: '/customers/details/:id',
+        name: 'customers-details',
+        builder: (context, state) => CustomerDetailsScreen(
+          customerId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/customers/orders/:id',
+        name: 'customers-orders',
+        builder: (context, state) => CustomerOrdersScreen(
+          customerId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/customers/notes/:id',
+        name: 'customers-notes',
+        builder: (context, state) => CustomerNotesScreen(
+          customerId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/customers/analytics/:id',
+        name: 'customers-analytics',
+        builder: (context, state) => CustomerAnalyticsScreen(
+          customerId: state.pathParameters['id'] ?? '',
         ),
       ),
     ],
