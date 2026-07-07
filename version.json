@@ -1,0 +1,6 @@
+{
+  "latest_version": "1.0.1",
+  "force_update": true,
+  "update_message": "تم إضافة ميزات جديدة وتحسين أداء التطبيق. يرجى التحديث الآن!",
+  "update_url": "build/app/outputs/bundle/release/app-release.aab"
+}
