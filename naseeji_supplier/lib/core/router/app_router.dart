@@ -53,6 +53,12 @@ import '../../features/shipping/presentation/screens/shipment_issue_screen.dart'
 import '../../features/shipping/presentation/screens/shipping_company_selector_screen.dart';
 import '../../features/shipping/presentation/screens/shipment_documents_screen.dart';
 
+import '../../features/agreements/presentation/screens/agreements_dashboard_screen.dart';
+import '../../features/agreements/presentation/screens/agreement_details_screen.dart';
+import '../../features/agreements/presentation/screens/agreement_comparison_screen.dart';
+import '../../features/agreements/presentation/screens/agreement_documents_screen.dart';
+import '../../features/agreements/presentation/screens/agreement_history_screen.dart';
+
 part 'app_router.g.dart';
 
 @riverpod
