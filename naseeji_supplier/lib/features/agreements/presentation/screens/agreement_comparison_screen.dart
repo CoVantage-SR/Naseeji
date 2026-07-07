@@ -43,38 +43,41 @@ class AgreementComparisonScreen extends ConsumerWidget {
 
             return SingleChildScrollView(
               padding: const EdgeInsets.all(16.0),
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
-                    boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                      boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(Icons.trending_up, color: AppColors.primary, size: 22),
+                            const SizedBox(width: 10),
+                            Text('تتبع مسار التفاوض للطلب ${a.orderNumber}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                          ],
+                        ),
+                        const SizedBox(height: 6),
+                        const Text(
+                          'يوضح الجدول التالي التطور الزمني لبنود التعاقد من بدء طلب الشراء الأول وحتى الاستقرار على شروط الصياغة المعتمدة للاتفاقية النهائية.',
+                          style: TextStyle(fontSize: 10, color: AppColors.outline, height: 1.4),
+                        ),
+                      ],
+                    ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          const Icon(Icons.trending_up, color: AppColors.primary, size: 22),
-                          const SizedBox(width: 10),
-                          Text('تتبع مسار التفاوض للطلب ${a.orderNumber}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                        ],
-                      ),
-                      const SizedBox(height: 6),
-                      const Text(
-                        'يوضح الجدول التالي التطور الزمني لبنود التعاقد من بدء طلب الشراء الأول وحتى الاستقرار على شروط الصياغة المعتمدة للاتفاقية النهائية.',
-                        style: TextStyle(fontSize: 10, color: AppColors.outline, height: 1.4),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 16),
+                  const SizedBox(height: 16),
 
-                // Comparison DataTable Widget
-                AgreementComparisonTable(agreement: a),
-                const SizedBox(height: 20),
-              ],
+                  // Comparison DataTable Widget
+                  AgreementComparisonTable(agreement: a),
+                  const SizedBox(height: 20),
+                ],
+              ),
             );
           },
         ),

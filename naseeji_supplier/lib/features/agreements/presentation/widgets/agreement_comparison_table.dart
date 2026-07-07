@@ -83,7 +83,7 @@ class AgreementComparisonTable extends StatelessWidget {
       children: [
         Text(title, style: const TextStyle(fontSize: 9, color: AppColors.outline, fontWeight: FontWeight.bold)),
         const SizedBox(height: 2),
-        Text(val, style: TextStyle(fontSize: 16, fontWeight: FontWeight.black, color: valColor)),
+        Text(val, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: valColor)),
       ],
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import '../../domain/entities/agreement_model.dart';
 import '../controllers/agreements_controller.dart';
 import '../widgets/agreement_status_card.dart';
 import '../widgets/agreement_progress_widget.dart';

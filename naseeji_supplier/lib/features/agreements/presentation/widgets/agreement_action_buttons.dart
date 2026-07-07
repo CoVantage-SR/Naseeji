@@ -48,8 +48,9 @@ class AgreementActionButtons extends ConsumerWidget {
             Expanded(
               child: ElevatedButton(
                 onPressed: () async {
+                  final messenger = ScaffoldMessenger.of(context);
                   await ref.read(agreementsControllerProvider.notifier).approve(a.id);
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم توقيع واعتماد الاتفاقية من جانبك كمورد بنجاح.')));
+                  messenger.showSnackBar(const SnackBar(content: Text('تم توقيع واعتماد الاتفاقية من جانبك كمورد بنجاح.')));
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF0040E0),
@@ -210,9 +211,11 @@ class AgreementActionButtons extends ConsumerWidget {
             ElevatedButton(
               onPressed: () async {
                 if (reasonController.text.isNotEmpty) {
+                  final messenger = ScaffoldMessenger.of(context);
+                  final nav = Navigator.of(ctx);
                   await ref.read(agreementsControllerProvider.notifier).reject(id, reasonController.text);
-                  Navigator.pop(ctx);
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم رفض وإلغاء مسودة الاتفاقية.')));
+                  nav.pop();
+                  messenger.showSnackBar(const SnackBar(content: Text('تم رفض وإلغاء مسودة الاتفاقية.')));
                 }
               },
               child: const Text('تأكيد الرفض'),
@@ -241,9 +244,11 @@ class AgreementActionButtons extends ConsumerWidget {
             ElevatedButton(
               onPressed: () async {
                 if (notesController.text.isNotEmpty) {
+                  final messenger = ScaffoldMessenger.of(context);
+                  final nav = Navigator.of(ctx);
                   await ref.read(agreementsControllerProvider.notifier).modify(id, notesController.text);
-                  Navigator.pop(ctx);
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم إرسال طلب التعديل للمشتري وتحديث نسخة المسودة.')));
+                  nav.pop();
+                  messenger.showSnackBar(const SnackBar(content: Text('تم إرسال طلب التعديل للمشتري وتحديث نسخة المسودة.')));
                 }
               },
               child: const Text('إرسال طلب التعديل'),
