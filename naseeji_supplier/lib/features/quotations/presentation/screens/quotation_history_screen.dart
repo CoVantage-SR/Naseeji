@@ -43,7 +43,7 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
           elevation: 0.5,
           centerTitle: true,
           title: Text(
-            'سجل التغييرات والتفاوض لعرض $quotationId',
+            'سجل التغييرات والتفاوض لعرض ${widget.quotationId}',
             style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
           ),
           leading: IconButton(
@@ -65,7 +65,7 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
           loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (e, _) => Center(child: Text('خطأ: $e')),
           data: (quotations) {
-            final index = quotations.indexWhere((q) => q.id == quotationId);
+            final index = quotations.indexWhere((q) => q.id == widget.quotationId);
             if (index == -1) {
               return const Center(child: Text('عرض السعر غير موجود'));
             }

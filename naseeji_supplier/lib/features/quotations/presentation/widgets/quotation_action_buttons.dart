@@ -143,7 +143,7 @@ class QuotationActionButtons extends StatelessWidget {
   Widget _buildPrimaryButton({required String label, required IconData icon, VoidCallback? onTap}) {
     return ElevatedButton.icon(
       onPressed: onTap,
-      icon: const Icon(icon, size: 14, color: Colors.white),
+      icon: Icon(icon, size: 14, color: Colors.white),
       label: Text(label, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white)),
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,

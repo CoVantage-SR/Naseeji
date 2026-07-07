@@ -5,7 +5,7 @@ import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import '../controllers/quotations_controller.dart';
 import '../../domain/entities/quotation_model.dart';
 import '../widgets/quotation_summary_card.dart';
-import '../drawer/navigation_drawer_view.dart';
+import '../../../dashboard/presentation/screens/drawer/navigation_drawer_view.dart';
 
 class QuotationsDashboardScreen extends ConsumerStatefulWidget {
   const QuotationsDashboardScreen({super.key});
