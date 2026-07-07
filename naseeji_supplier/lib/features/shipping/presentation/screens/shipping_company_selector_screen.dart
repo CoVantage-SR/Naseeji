@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import '../widgets/carrier_selector_card.dart';
 import '../controllers/shipping_controller.dart';
 
 class ShippingCompanySelectorScreen extends ConsumerStatefulWidget {
@@ -56,7 +57,7 @@ class _ShippingCompanySelectorScreenState extends ConsumerState<ShippingCompanyS
           elevation: 0.5,
           centerTitle: true,
           title: Text(
-            'اختيار شركة الشحن لشحنة $widget.shipmentId',
+            'اختيار شركة الشحن لشحنة ${widget.shipmentId}',
             style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
           ),
           leading: IconButton(
@@ -73,80 +74,23 @@ class _ShippingCompanySelectorScreenState extends ConsumerState<ShippingCompanyS
             ..._carriers.map((carrier) {
               final isSelected = _selectedCompany == carrier['name'];
 
-              return Container(
-                margin: const EdgeInsets.only(bottom: 12),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: isSelected ? const Color(0xFF0040E0) : AppColors.surfaceContainerLow, width: isSelected ? 2 : 1),
-                  boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 8)],
-                ),
-                child: InkWell(
-                  onTap: () {
+              return CarrierSelectorCard(
+                carrier: carrier,
+                isSelected: isSelected,
+                onTap: () {
+                  setState(() {
+                    _selectedCompany = carrier['name'] as String;
+                    _selectedMethod = carrier['method'] as String;
+                  });
+                },
+                onRadioChanged: (val) {
+                  if (val != null) {
                     setState(() {
-                      _selectedCompany = carrier['name'];
-                      _selectedMethod = carrier['method'];
+                      _selectedCompany = carrier['name'] as String;
+                      _selectedMethod = carrier['method'] as String;
                     });
-                  },
-                  borderRadius: BorderRadius.circular(16),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(carrier['icon'], color: isSelected ? const Color(0xFF0040E0) : AppColors.outline, size: 22),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(carrier['name'], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.onSurface)),
-                                  const SizedBox(height: 2),
-                                  Text(carrier['method'], style: const TextStyle(fontSize: 10, color: AppColors.outline)),
-                                ],
-                              ),
-                            ),
-                            Radio<String>(
-                              value: carrier['name'],
-                              groupValue: _selectedCompany,
-                              activeColor: const Color(0xFF0040E0),
-                              onChanged: (val) {
-                                if (val != null) {
-                                  setState(() {
-                                    _selectedCompany = val;
-                                    _selectedMethod = carrier['method'];
-                                  });
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                        const Divider(height: 16),
-                        Row(
-                          children: [
-                            const Text('التكلفة المقدرة: ', style: TextStyle(fontSize: 11, color: AppColors.outline)),
-                            Text(carrier['cost'], style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.green)),
-                            const Spacer(),
-                            const Text('مدة التوصيل: ', style: TextStyle(fontSize: 11, color: AppColors.outline)),
-                            Text(carrier['time'], style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Wrap(
-                          spacing: 6,
-                          runSpacing: 4,
-                          children: (carrier['services'] as List<String>).map((srv) => Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                            decoration: BoxDecoration(color: AppColors.surfaceContainerLow, borderRadius: BorderRadius.circular(6)),
-                            child: Text(srv, style: const TextStyle(fontSize: 8, color: AppColors.outline, fontWeight: FontWeight.bold)),
-                          )).toList(),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                  }
+                },
               );
             }),
 

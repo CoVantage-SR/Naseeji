@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import '../../domain/entities/shipment.dart';
 import '../controllers/shipping_controller.dart';
+import '../widgets/document_item_card.dart';
 
 class ShipmentDocumentsScreen extends ConsumerWidget {
   final String shipmentId;
@@ -48,7 +49,11 @@ class ShipmentDocumentsScreen extends ConsumerWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 10)]),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                    boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -101,86 +106,15 @@ class ShipmentDocumentsScreen extends ConsumerWidget {
                     ),
                   )
                 else
-                  ...allDocs.map((doc) => _buildDocCard(context, ref, s, doc)),
+                  ...allDocs.map((doc) => DocumentItemCard(
+                    s: s,
+                    doc: doc,
+                    onReplace: () => _showUploadDocDialog(context, ref, s, initialType: doc.type),
+                  )),
               ],
             );
           },
         ),
-      ),
-    );
-  }
-
-  Widget _buildDocCard(BuildContext context, WidgetRef ref, Shipment s, ShipmentDocument doc) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.surfaceContainerLow),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.01), blurRadius: 6)],
-      ),
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              const CircleAvatar(
-                backgroundColor: Color(0xFFFFF2EC),
-                radius: 18,
-                child: Icon(Icons.description_outlined, color: Colors.orange, size: 20),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(doc.type, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.onSurface)),
-                    const SizedBox(height: 2),
-                    Text(doc.name, style: const TextStyle(fontSize: 10, color: AppColors.outline)),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                decoration: BoxDecoration(color: const Color(0xFFF3F2FF), borderRadius: BorderRadius.circular(4)),
-                child: Text('إصدار v${doc.version}', style: const TextStyle(fontSize: 8, color: AppColors.primary, fontWeight: FontWeight.bold)),
-              ),
-            ],
-          ),
-          const Divider(height: 20, color: AppColors.surfaceContainerLow),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('تاريخ الرفع: ${doc.uploadedAt}', style: const TextStyle(fontSize: 9, color: AppColors.outline)),
-              Row(
-                children: [
-                  TextButton.icon(
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('تم تنزيل ${doc.name} بنجاح.')));
-                    },
-                    icon: const Icon(Icons.download_outlined, size: 14),
-                    label: const Text('تنزيل', style: TextStyle(fontSize: 10)),
-                  ),
-                  const SizedBox(width: 4),
-                  TextButton.icon(
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('تم إرسال رابط مشاركة المستند ${doc.type}')));
-                    },
-                    icon: const Icon(Icons.share_outlined, size: 14),
-                    label: const Text('مشاركة', style: TextStyle(fontSize: 10)),
-                    style: TextButton.styleFrom(foregroundColor: AppColors.secondary),
-                  ),
-                  const SizedBox(width: 4),
-                  IconButton(
-                    icon: const Icon(Icons.sync_outlined, size: 16, color: AppColors.primary),
-                    onPressed: () => _showUploadDocDialog(context, ref, s, initialType: doc.type),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }
