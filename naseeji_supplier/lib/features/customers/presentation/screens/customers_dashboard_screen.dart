@@ -251,17 +251,14 @@ class _CustomersDashboardScreenState extends ConsumerState<CustomersDashboardScr
   }
 
   Widget _sortOption(String label, String value) {
+    final isSelected = _sortBy == value;
     return ListTile(
-      leading: Radio<String>(
-        value: value,
-        groupValue: _sortBy,
-        onChanged: (v) {
-          setState(() => _sortBy = v!);
-          Navigator.pop(context);
-        },
-        activeColor: AppColors.primary,
+      leading: Icon(
+        isSelected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+        color: isSelected ? AppColors.primary : AppColors.outline,
+        size: 20,
       ),
-      title: Text(label, style: const TextStyle(fontSize: 13)),
+      title: Text(label, style: TextStyle(fontSize: 13, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, color: isSelected ? AppColors.primary : AppColors.onSurface)),
       onTap: () {
         setState(() => _sortBy = value);
         Navigator.pop(context);
