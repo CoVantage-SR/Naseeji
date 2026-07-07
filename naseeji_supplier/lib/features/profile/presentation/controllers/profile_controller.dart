@@ -37,4 +37,11 @@ class ProfileController extends _$ProfileController {
       return repo.getProfile();
     });
   }
+
+  Future<void> toggleVipStatus() async {
+    final current = state.valueOrNull;
+    if (current != null) {
+      await updateProfile(current.copyWith(isVip: !current.isVip));
+    }
+  }
 }

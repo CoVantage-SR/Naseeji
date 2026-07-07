@@ -24,6 +24,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
     productsCount: 154,
     ordersCount: 382,
     certificates: _certs,
+    isVip: false,
   );
 
   @override
