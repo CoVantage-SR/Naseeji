@@ -44,7 +44,7 @@ class _ShippingDashboardScreenState extends ConsumerState<ShippingDashboardScree
       textDirection: TextDirection.rtl,
       child: Scaffold(
         key: _scaffoldKey,
-        endDrawer: const NavigationDrawerView(),
+        drawer: const NavigationDrawerView(),
         backgroundColor: const Color(0xFFF8F9FF),
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -54,12 +54,10 @@ class _ShippingDashboardScreenState extends ConsumerState<ShippingDashboardScree
             'لوجستيات الشحن والتسليم',
             style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 15),
           ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.menu, color: AppColors.onSurfaceVariant),
-              onPressed: () => _scaffoldKey.currentState?.openEndDrawer(),
-            ),
-          ],
+          leading: IconButton(
+            icon: const Icon(Icons.menu, color: AppColors.onSurfaceVariant),
+            onPressed: () => _scaffoldKey.currentState?.openDrawer(),
+          ),
           bottom: TabBar(
             controller: _tabController,
             isScrollable: true,

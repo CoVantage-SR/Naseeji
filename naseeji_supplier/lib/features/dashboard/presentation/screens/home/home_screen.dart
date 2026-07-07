@@ -20,7 +20,7 @@ class HomeScreen extends ConsumerWidget {
 
     return Scaffold(
       key: scaffoldKey,
-      endDrawer: const NavigationDrawerView(),
+      drawer: const NavigationDrawerView(),
       appBar: HomeAppBar(scaffoldKey: scaffoldKey),
       body: statsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),

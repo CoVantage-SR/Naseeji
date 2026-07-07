@@ -14,52 +14,9 @@ class RfqAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0.5,
-      leadingWidth: 110,
-      leading: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SizedBox(width: 8),
-          IconButton(
-            icon: const Icon(Icons.search, color: AppColors.onSurfaceVariant),
-            onPressed: () => context.push('/search'),
-          ),
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              IconButton(
-                icon: const Icon(
-                  Icons.notifications_none,
-                  color: AppColors.onSurfaceVariant,
-                ),
-                onPressed: () => context.push('/notifications'),
-              ),
-              Positioned(
-                top: 8,
-                right: 8,
-                child: Container(
-                  padding: const EdgeInsets.all(2),
-                  decoration: const BoxDecoration(
-                    color: AppColors.error,
-                    shape: BoxShape.circle,
-                  ),
-                  constraints: const BoxConstraints(
-                    minWidth: 14,
-                    minHeight: 14,
-                  ),
-                  child: const Text(
-                    '3',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 8,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
+      leading: IconButton(
+        icon: const Icon(Icons.menu, color: AppColors.onSurfaceVariant),
+        onPressed: () => scaffoldKey.currentState?.openDrawer(),
       ),
       centerTitle: true,
       title: const Text(
@@ -72,8 +29,44 @@ class RfqAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.menu, color: AppColors.onSurfaceVariant),
-          onPressed: () => scaffoldKey.currentState?.openEndDrawer(),
+          icon: const Icon(Icons.search, color: AppColors.onSurfaceVariant),
+          onPressed: () => context.push('/search'),
+        ),
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            IconButton(
+              icon: const Icon(
+                Icons.notifications_none,
+                color: AppColors.onSurfaceVariant,
+              ),
+              onPressed: () => context.push('/notifications'),
+            ),
+            Positioned(
+              top: 8,
+              right: 8,
+              child: Container(
+                padding: const EdgeInsets.all(2),
+                decoration: const BoxDecoration(
+                  color: AppColors.error,
+                  shape: BoxShape.circle,
+                ),
+                constraints: const BoxConstraints(
+                  minWidth: 14,
+                  minHeight: 14,
+                ),
+                child: const Text(
+                  '3',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 8,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
         const SizedBox(width: 8),
       ],

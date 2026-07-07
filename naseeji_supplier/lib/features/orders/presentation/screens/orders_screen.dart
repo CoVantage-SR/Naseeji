@@ -24,7 +24,7 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
 
     return Scaffold(
       key: scaffoldKey,
-      endDrawer: const NavigationDrawerView(),
+      drawer: const NavigationDrawerView(),
       appBar: RfqAppBar(scaffoldKey: scaffoldKey),
       body: Container(
         color: const Color(0xFFF8F9FF),
