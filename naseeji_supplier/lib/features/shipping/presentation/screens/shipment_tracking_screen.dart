@@ -48,7 +48,11 @@ class ShipmentTrackingScreen extends ConsumerWidget {
                   // Tracking Header Card
                   Container(
                     padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 10)]),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                      boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
+                    ),
                     child: Column(
                       children: [
                         Row(
@@ -88,7 +92,7 @@ class ShipmentTrackingScreen extends ConsumerWidget {
                       color: Colors.blue.shade50,
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(color: Colors.grey.shade300),
-                      boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 10)],
+                      boxShadow: const [BoxShadow(color: Color(0x08000000), blurRadius: 10)],
                     ),
                     child: Stack(
                       children: [
@@ -128,7 +132,11 @@ class ShipmentTrackingScreen extends ConsumerWidget {
                   // Interactive Timeline progress
                   Container(
                     padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 10)]),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(16)),
+                      boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

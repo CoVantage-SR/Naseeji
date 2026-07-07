@@ -140,7 +140,7 @@ class _ShippingDashboardScreenState extends ConsumerState<ShippingDashboardScree
     final transit = shipments.where((s) => s.status == ShipmentStatus.pickedUp || s.status == ShipmentStatus.inTransit || s.status == ShipmentStatus.arrived).length;
     final delivered = shipments.where((s) => s.status == ShipmentStatus.delivered || s.status == ShipmentStatus.paymentPending || s.status == ShipmentStatus.completed).length;
     final delayed = shipments.where((s) => s.issueReported != null && s.status != ShipmentStatus.completed).length;
-    final cancelled = 0; // Mock count
+    const cancelled = 0; // Mock count
 
     return GridView.count(
       crossAxisCount: 3,
@@ -175,7 +175,7 @@ class _ShippingDashboardScreenState extends ConsumerState<ShippingDashboardScree
         children: [
           Text(label, style: const TextStyle(fontSize: 9, color: AppColors.outline, fontWeight: FontWeight.bold)),
           const SizedBox(height: 2),
-          Text(value, style: TextStyle(fontSize: 14, fontWeight: FontWeight.black, color: color)),
+          Text(value, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w900, color: color)),
         ],
       ),
     );

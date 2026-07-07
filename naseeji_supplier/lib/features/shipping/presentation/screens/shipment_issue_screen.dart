@@ -43,7 +43,7 @@ class _ShipmentIssueScreenState extends ConsumerState<ShipmentIssueScreen> {
           elevation: 0.5,
           centerTitle: true,
           title: Text(
-            'الإبلاغ عن مشكلة شحن $shipmentId',
+            'الإبلاغ عن مشكلة شحن ${widget.shipmentId}',
             style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
           ),
           leading: IconButton(

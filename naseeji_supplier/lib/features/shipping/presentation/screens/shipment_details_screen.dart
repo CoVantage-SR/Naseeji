@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import '../../domain/entities/shipment.dart';
 import '../controllers/shipping_controller.dart';
-import '../widgets/premium_badge.dart'; // We can use it or similar if needed
 
 class ShipmentDetailsScreen extends ConsumerStatefulWidget {
   final String shipmentId;
