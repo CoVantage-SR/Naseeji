@@ -117,6 +117,12 @@ class MessagesController extends _$MessagesController {
     ref.invalidateSelf();
   }
 
+  Future<void> restoreConversation(String conversationId) async {
+    final repo = ref.read(messagesRepositoryProvider);
+    await repo.restoreConversation(conversationId);
+    ref.invalidateSelf();
+  }
+
   Future<void> deleteConversation(String conversationId) async {
     // Optimistic update to immediately remove from UI
     final current = state.valueOrNull;

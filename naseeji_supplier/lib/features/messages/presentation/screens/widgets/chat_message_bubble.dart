@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../controllers/business_chat_controller.dart';
 import '../../../domain/entities/business_message.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import 'quotation_card.dart';
@@ -10,20 +12,22 @@ import 'shipment_card.dart';
 import 'delivery_card.dart';
 import 'payment_card.dart';
 
-class ChatMessageBubble extends StatelessWidget {
+class ChatMessageBubble extends ConsumerWidget {
   final BusinessMessage message;
+  final String? conversationId;
   final VoidCallback? onDelete;
   final Function(String emoji)? onReact;
 
   const ChatMessageBubble({
     super.key,
     required this.message,
+    this.conversationId,
     this.onDelete,
     this.onReact,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     if (message.isDeleted) {
       return _DeletedBubble(isOutgoing: message.isOutgoing);
     }
@@ -35,7 +39,12 @@ class ChatMessageBubble extends StatelessWidget {
           isOutgoing: message.isOutgoing,
           time: message.time,
           readStatus: message.readStatus,
-          child: QuotationCard(data: message.cardData ?? {}),
+          child: QuotationCard(
+            data: message.cardData ?? {},
+            onAccept: () => _handleAccept(context, ref, message),
+            onCounterOffer: () => _handleCounterOffer(context, ref, message),
+            onViewDetails: () => _handleViewDetails(context, message),
+          ),
         );
       case MessageType.counterOfferCard:
         return _BubbleWrapper(
@@ -84,6 +93,122 @@ class ChatMessageBubble extends StatelessWidget {
       default:
         return _TextBubble(message: message, onDelete: onDelete, onReact: onReact);
     }
+  }
+
+  void _handleAccept(BuildContext context, WidgetRef ref, BusinessMessage message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('قبول عرض السعر', textAlign: TextAlign.right),
+        content: const Text('هل أنت متأكد من قبول هذا العرض المالي وتوقيع الاتفاقية؟', textAlign: TextAlign.right),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              ref.read(businessChatControllerProvider(conversationId ?? 'conv_001').notifier).acceptQuotation(message.id);
+            },
+            child: const Text('موافق وقبول'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _handleCounterOffer(BuildContext context, WidgetRef ref, BusinessMessage message) {
+    final priceCtrl = TextEditingController();
+    final reasonCtrl = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('تقديم عرض مضاد', textAlign: TextAlign.right),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: priceCtrl,
+              keyboardType: TextInputType.number,
+              textAlign: TextAlign.right,
+              decoration: const InputDecoration(labelText: 'السعر المقترح للوحدة (ر.س)'),
+            ),
+            const SizedBox(height: 10),
+            TextField(
+              controller: reasonCtrl,
+              textAlign: TextAlign.right,
+              decoration: const InputDecoration(labelText: 'سبب تقديم العرض المضاد'),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+          ElevatedButton(
+            onPressed: () {
+              final price = priceCtrl.text.trim();
+              final reason = reasonCtrl.text.trim();
+              if (price.isNotEmpty && reason.isNotEmpty) {
+                Navigator.pop(ctx);
+                ref.read(businessChatControllerProvider(conversationId ?? 'conv_001').notifier).sendCounterOfferCard(
+                  counterPrice: price,
+                  currentPrice: message.cardData?['unitPrice'] ?? '12.00',
+                  reason: reason,
+                );
+              }
+            },
+            child: const Text('إرسال العرض'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _handleViewDetails(BuildContext context, BusinessMessage message) {
+    final data = message.cardData ?? {};
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+      builder: (context) => Directionality(
+        textDirection: TextDirection.rtl,
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text('تفاصيل وثيقة عرض السعر', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: AppColors.primary)),
+              const SizedBox(height: 12),
+              const Divider(),
+              const SizedBox(height: 10),
+              _buildDetailRow('اسم المنتج المقترن', data['productName'] ?? 'خيوط غزل القطن الفاخر'),
+              _buildDetailRow('الكمية الإجمالية', '${data['quantity'] ?? '--'}'),
+              _buildDetailRow('سعر الوحدة المعروض', '${data['unitPrice'] ?? '--'} ر.س'),
+              _buildDetailRow('القيمة الإجمالية التقديرية', '${data['totalPrice'] ?? '--'}'),
+              _buildDetailRow('طريقة السداد والشروط', data['paymentTerms'] ?? '--'),
+              _buildDetailRow('فترة صلاحية العرض', data['validUntil'] ?? '--'),
+              _buildDetailRow('مدة الإنتاج والشحن المقدرة', data['deliveryDays'] ?? '--'),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () => Navigator.pop(context),
+                style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+                child: const Text('إغلاق المعاينة'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDetailRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: const TextStyle(fontSize: 12, color: AppColors.outline)),
+          Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
+        ],
+      ),
+    );
   }
 }
 

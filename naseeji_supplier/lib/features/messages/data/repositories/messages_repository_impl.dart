@@ -78,6 +78,14 @@ class MessagesRepositoryImpl implements MessagesRepository {
   }
 
   @override
+  Future<void> restoreConversation(String conversationId) async {
+    final idx = _conversations.indexWhere((c) => c.id == conversationId);
+    if (idx != -1) {
+      _conversations[idx] = _conversations[idx].copyWith(status: ConversationStatus.active);
+    }
+  }
+
+  @override
   Future<void> deleteConversation(String conversationId) async {
     _conversations.removeWhere((c) => c.id == conversationId);
   }

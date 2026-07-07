@@ -6,6 +6,7 @@ class BusinessChatInput extends StatefulWidget {
   final VoidCallback onSend;
   final List<String> quickReplies;
   final Function(String)? onQuickReply;
+  final bool isBlocked;
 
   const BusinessChatInput({
     super.key,
@@ -13,6 +14,7 @@ class BusinessChatInput extends StatefulWidget {
     required this.onSend,
     this.quickReplies = const [],
     this.onQuickReply,
+    this.isBlocked = false,
   });
 
   @override
@@ -28,7 +30,7 @@ class _BusinessChatInputState extends State<BusinessChatInput> {
       mainAxisSize: MainAxisSize.min,
       children: [
         // Quick replies
-        if (widget.quickReplies.isNotEmpty)
+        if (widget.quickReplies.isNotEmpty && !widget.isBlocked)
           SizedBox(
             height: 36,
             child: ListView.separated(
@@ -44,9 +46,9 @@ class _BusinessChatInputState extends State<BusinessChatInput> {
               ),
             ),
           ),
-        if (widget.quickReplies.isNotEmpty) const SizedBox(height: 6),
+        if (widget.quickReplies.isNotEmpty && !widget.isBlocked) const SizedBox(height: 6),
         // Attach menu popup
-        if (_showAttachMenu)
+        if (_showAttachMenu && !widget.isBlocked)
           Container(
             color: Colors.white,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -83,12 +85,14 @@ class _BusinessChatInputState extends State<BusinessChatInput> {
               AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
                 child: Material(
-                  color: AppColors.primary,
+                  color: widget.isBlocked ? AppColors.outline : AppColors.primary,
                   shape: const CircleBorder(),
                   child: InkWell(
-                    onTap: () {
-                      if (widget.controller.text.trim().isNotEmpty) widget.onSend();
-                    },
+                    onTap: widget.isBlocked
+                        ? null
+                        : () {
+                            if (widget.controller.text.trim().isNotEmpty) widget.onSend();
+                          },
                     customBorder: const CircleBorder(),
                     child: const Padding(
                       padding: EdgeInsets.all(12),
@@ -104,14 +108,15 @@ class _BusinessChatInputState extends State<BusinessChatInput> {
                   constraints: const BoxConstraints(maxHeight: 120),
                   child: TextField(
                     controller: widget.controller,
+                    enabled: !widget.isBlocked,
                     maxLines: null,
                     textAlign: TextAlign.right,
                     style: const TextStyle(fontSize: 14),
-                    decoration: const InputDecoration(
-                      hintText: 'اكتب رسالتك هنا...',
-                      hintStyle: TextStyle(fontSize: 13, color: AppColors.outline),
+                    decoration: InputDecoration(
+                      hintText: widget.isBlocked ? 'المحادثة مغلقة بسبب الحظر' : 'اكتب رسالتك هنا...',
+                      hintStyle: const TextStyle(fontSize: 13, color: AppColors.outline),
                       border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 4, vertical: 10),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
                     ),
                   ),
                 ),
@@ -119,18 +124,20 @@ class _BusinessChatInputState extends State<BusinessChatInput> {
               // Attach
               IconButton(
                 icon: Icon(
-                  _showAttachMenu ? Icons.close_rounded : Icons.add_circle_outline_rounded,
-                  color: _showAttachMenu ? Colors.red : AppColors.outline,
+                  _showAttachMenu && !widget.isBlocked ? Icons.close_rounded : Icons.add_circle_outline_rounded,
+                  color: _showAttachMenu && !widget.isBlocked ? Colors.red : AppColors.outline,
                   size: 26,
                 ),
-                onPressed: () => setState(() => _showAttachMenu = !_showAttachMenu),
+                onPressed: widget.isBlocked
+                    ? null
+                    : () => setState(() => _showAttachMenu = !_showAttachMenu),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
               ),
               // Emoji
               IconButton(
                 icon: const Icon(Icons.emoji_emotions_outlined, color: AppColors.outline, size: 24),
-                onPressed: () {},
+                onPressed: widget.isBlocked ? null : () {},
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
               ),

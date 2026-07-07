@@ -12,6 +12,7 @@ abstract class MessagesRepository {
   Future<void> pinConversation(String conversationId, bool pinned);
   Future<void> muteConversation(String conversationId, bool muted);
   Future<void> archiveConversation(String conversationId);
+  Future<void> restoreConversation(String conversationId);
   Future<void> deleteConversation(String conversationId);
   Future<SupportTicket?> getSupportTicket(String ticketId);
   Future<void> closeTicket(String ticketId);
