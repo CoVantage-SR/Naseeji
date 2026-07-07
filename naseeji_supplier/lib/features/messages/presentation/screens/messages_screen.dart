@@ -60,16 +60,6 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.onSurface),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search, color: AppColors.onSurface),
-            onPressed: () => context.push('/messages/search'),
-          ),
-          IconButton(
-            icon: const Icon(Icons.edit_square, color: AppColors.onSurface),
-            onPressed: () {},
-          ),
-        ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(48),
           child: TabBar(
