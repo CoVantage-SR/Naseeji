@@ -62,6 +62,7 @@ class AppBottomNavigationBar extends StatelessWidget {
                   context.go('/home');
                   break;
                 case 1:
+                  context.go('/products');
                   break;
                 case 2:
                   context.go('/orders');
