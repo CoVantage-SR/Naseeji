@@ -10,13 +10,13 @@ class AppBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(2, 0, 2, 1),
+      margin: const EdgeInsets.fromLTRB(16, 0, 16, 20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(30),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.006),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 30,
             offset: const Offset(0, 5),
           ),
@@ -32,9 +32,7 @@ class AppBottomNavigationBar extends StatelessWidget {
               0,
               107,
             ).withValues(alpha: 0.15),
-            indicatorShape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
+            indicatorShape: const StadiumBorder(),
             labelTextStyle: WidgetStateProperty.resolveWith((states) {
               if (states.contains(WidgetState.selected)) {
                 return const TextStyle(
