@@ -98,7 +98,10 @@ class NavigationDrawerView extends ConsumerWidget {
                     title: 'عروض الأسعار',
                     path: '/quotes',
                     currentRoute: currentRoute,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context);
+                      context.push('/quotations');
+                    },
                   ),
                   DrawerItem(
                     icon: Icons.handshake_outlined,
@@ -131,7 +134,10 @@ class NavigationDrawerView extends ConsumerWidget {
                     title: 'العملاء',
                     path: '/customers',
                     currentRoute: currentRoute,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context);
+                      context.push('/customers');
+                    },
                   ),
                   DrawerItem(
                     icon: Icons.account_balance_wallet_outlined,
