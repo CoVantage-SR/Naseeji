@@ -655,7 +655,7 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
           ElevatedButton(
             onPressed: () {
               if (controller.text.isNotEmpty) {
-                final tag = CustomerTag(id: 'tag_${DateTime.now().millisecondsSinceEpoch}', label: controller.text, colorValue: AppColors.primary.value);
+                final tag = CustomerTag(id: 'tag_${DateTime.now().millisecondsSinceEpoch}', label: controller.text, colorValue: AppColors.primary.toARGB32());
                 ref.read(customersControllerProvider.notifier).addTag(c.id, tag);
                 Navigator.pop(context);
               }

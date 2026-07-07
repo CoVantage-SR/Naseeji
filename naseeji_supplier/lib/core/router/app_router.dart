@@ -40,7 +40,7 @@ import '../../features/messages/presentation/screens/messages_screen.dart';
 import '../../features/messages/presentation/screens/business_chat_screen.dart';
 import '../../features/messages/presentation/screens/support_chat_screen.dart';
 import '../../features/messages/presentation/screens/attachments_screen.dart';
-import '../../features/messages/presentation/screens/quotation_history_screen.dart';
+import '../../features/messages/presentation/screens/quotation_history_screen.dart' as msg_qh;
 import '../../features/messages/presentation/screens/chat_timeline_screen.dart';
 import '../../features/messages/presentation/screens/search_messages_screen.dart';
 import '../../features/messages/presentation/screens/chat_settings_screen.dart';
@@ -407,7 +407,7 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/messages/chat/:id/quotation-history',
         name: 'messages-quotation-history',
-        builder: (context, state) => QuotationHistoryScreen(
+        builder: (context, state) => msg_qh.QuotationHistoryScreen(
           conversationId: state.pathParameters['id'] ?? '',
         ),
       ),
