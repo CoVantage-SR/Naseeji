@@ -46,6 +46,13 @@ import '../../features/messages/presentation/screens/search_messages_screen.dart
 import '../../features/messages/presentation/screens/chat_settings_screen.dart';
 import '../../features/messages/presentation/screens/archived_chats_screen.dart';
 
+import '../../features/shipping/presentation/screens/shipping_dashboard_screen.dart';
+import '../../features/shipping/presentation/screens/shipment_details_screen.dart';
+import '../../features/shipping/presentation/screens/shipment_tracking_screen.dart';
+import '../../features/shipping/presentation/screens/shipment_issue_screen.dart';
+import '../../features/shipping/presentation/screens/shipping_company_selector_screen.dart';
+import '../../features/shipping/presentation/screens/shipment_documents_screen.dart';
+
 part 'app_router.g.dart';
 
 @riverpod
@@ -128,6 +135,46 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/add-product',
         name: 'add-product',
         builder: (context, state) => const AddNewProductScreen(),
+      ),
+      GoRoute(
+        path: '/shipping',
+        name: 'shipping',
+        pageBuilder: (context, state) => const NoTransitionPage(child: ShippingDashboardScreen()),
+      ),
+      GoRoute(
+        path: '/shipping/details/:id',
+        name: 'shipping-details',
+        builder: (context, state) => ShipmentDetailsScreen(
+          shipmentId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/shipping/tracking/:id',
+        name: 'shipping-tracking',
+        builder: (context, state) => ShipmentTrackingScreen(
+          shipmentId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/shipping/issue/:id',
+        name: 'shipping-issue',
+        builder: (context, state) => ShipmentIssueScreen(
+          shipmentId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/shipping/company-selector/:id',
+        name: 'shipping-company-selector',
+        builder: (context, state) => ShippingCompanySelectorScreen(
+          shipmentId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: '/shipping/documents/:id',
+        name: 'shipping-documents',
+        builder: (context, state) => ShipmentDocumentsScreen(
+          shipmentId: state.pathParameters['id'] ?? '',
+        ),
       ),
       GoRoute(
         path: '/orders',

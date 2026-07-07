@@ -112,7 +112,10 @@ class NavigationDrawerView extends ConsumerWidget {
                     title: 'الشحن',
                     path: '/shipping',
                     currentRoute: currentRoute,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context);
+                      context.push('/shipping');
+                    },
                   ),
 
                   const Padding(
