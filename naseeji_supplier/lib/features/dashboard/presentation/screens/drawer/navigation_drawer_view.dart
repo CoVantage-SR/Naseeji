@@ -105,7 +105,10 @@ class NavigationDrawerView extends ConsumerWidget {
                     title: 'الاتفاقيات',
                     path: '/agreements',
                     currentRoute: currentRoute,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context);
+                      context.push('/agreements');
+                    },
                   ),
                   DrawerItem(
                     icon: Icons.local_shipping_outlined,
