@@ -846,9 +846,9 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
     if (convId != null) {
       ref.read(businessChatControllerProvider(convId).notifier).sendQuotationCard(
         productName: 'خيوط غزل القطن الفاخر',
-        quantity: '${qty.toInt()} متر',
-        unitPrice: '${unitPrice.toStringAsFixed(2)}',
-        totalPrice: '${grandTotal.toStringAsFixed(2)}',
+        quantity: '${qty!.toInt()} متر',
+        unitPrice: unitPrice!.toStringAsFixed(2),
+        totalPrice: grandTotal.toStringAsFixed(2),
         deliveryTime: '${_productionTimeController.text} + ${_deliveryTimeController.text}',
         paymentMethod: selectedPaymentMethod,
         expiration: '${customValidityDate.year}-${customValidityDate.month.toString().padLeft(2, '0')}-${customValidityDate.day.toString().padLeft(2, '0')}',
