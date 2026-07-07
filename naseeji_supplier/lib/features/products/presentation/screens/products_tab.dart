@@ -355,7 +355,11 @@ class _ProductsTabState extends State<ProductsTab> {
                           const SnackBar(content: Text('تم حذف المنتجات المحددة بنجاح.')),
                         );
                       },
-                      style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        foregroundColor: Colors.white,
+                        minimumSize: const Size(0, 36),
+                      ),
                       icon: const Icon(Icons.delete_outline, size: 16),
                       label: const Text('حذف المحدد', style: TextStyle(fontSize: 12)),
                     ),

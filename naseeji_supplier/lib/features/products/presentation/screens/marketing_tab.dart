@@ -202,6 +202,7 @@ class MarketingTab extends StatelessWidget {
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                          minimumSize: const Size(0, 32),
                         ),
                         child: const Text('بدء البث', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
                       ),

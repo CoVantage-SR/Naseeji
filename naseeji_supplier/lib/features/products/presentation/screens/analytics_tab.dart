@@ -175,6 +175,7 @@ class AnalyticsTab extends StatelessWidget {
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                          minimumSize: const Size(0, 36),
                         ),
                         icon: const Icon(Icons.file_download_outlined, size: 16),
                         label: const Text('تصدير PDF', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
