@@ -85,24 +85,24 @@ class _ProductsModuleScreenState extends ConsumerState<ProductsModuleScreen> wit
           bottom: TabBar(
             controller: _tabController,
             isScrollable: true,
-            tabAlignment: TabAlignment.right,
+            tabAlignment: TabAlignment.start,
             indicatorColor: const Color(0xFF0040E0),
             labelColor: const Color(0xFF0040E0),
             unselectedLabelColor: AppColors.outline,
             labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
             unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
             indicatorWeight: 3,
-            tabs: [
-              const Tab(text: 'منتجاتنا'),
-              const Tab(text: 'التصنيفات'),
-              const Tab(text: 'المخزون'),
+            tabs: const [
+              Tab(text: 'منتجاتنا'),
+              Tab(text: 'التصنيفات'),
+              Tab(text: 'المخزون'),
               Tab(
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text('التسويق'),
-                    const SizedBox(width: 6),
-                    const PremiumBadge(fontSize: 8, padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2)),
+                    Text('التسويق'),
+                    SizedBox(width: 6),
+                    PremiumBadge(fontSize: 8, padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2)),
                   ],
                 ),
               ),
@@ -110,9 +110,9 @@ class _ProductsModuleScreenState extends ConsumerState<ProductsModuleScreen> wit
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text('التحليلات'),
-                    const SizedBox(width: 6),
-                    const PremiumBadge(fontSize: 8, padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2)),
+                    Text('التحليلات'),
+                    SizedBox(width: 6),
+                    PremiumBadge(fontSize: 8, padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2)),
                   ],
                 ),
               ),
