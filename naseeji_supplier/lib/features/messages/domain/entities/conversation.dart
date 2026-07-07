@@ -23,6 +23,9 @@ class Conversation {
   final bool isTyping;
   final bool hasAttachment;
 
+  final bool isBlocked;
+  final DateTime? muteUntil;
+
   const Conversation({
     required this.id,
     required this.companyName,
@@ -43,6 +46,8 @@ class Conversation {
     this.currentStatus,
     this.isTyping = false,
     this.hasAttachment = false,
+    this.isBlocked = false,
+    this.muteUntil,
   });
 
   Conversation copyWith({
@@ -53,6 +58,8 @@ class Conversation {
     bool? isTyping,
     String? lastMessage,
     String? lastTime,
+    bool? isBlocked,
+    DateTime? muteUntil,
   }) {
     return Conversation(
       id: id,
@@ -74,6 +81,8 @@ class Conversation {
       currentStatus: currentStatus,
       isTyping: isTyping ?? this.isTyping,
       hasAttachment: hasAttachment,
+      isBlocked: isBlocked ?? this.isBlocked,
+      muteUntil: muteUntil ?? this.muteUntil,
     );
   }
 }

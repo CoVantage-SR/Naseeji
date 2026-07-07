@@ -28,4 +28,5 @@ abstract class OrdersRepository {
   Future<DeliveryConfirmation> getDeliveryConfirmation(String rfqId);
   Future<PaymentRelease> getPaymentRelease(String rfqId);
   Future<List<ActivityLogItem>> getActivityLog(String rfqId);
+  Future<void> addActivityLogItem(String rfqId, ActivityLogItem item);
 }

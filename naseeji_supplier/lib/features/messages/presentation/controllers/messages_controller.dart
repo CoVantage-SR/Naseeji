@@ -71,15 +71,35 @@ class MessagesController extends _$MessagesController {
     ref.invalidateSelf();
   }
 
-  Future<void> pinConversation(String conversationId, bool pinned) async {
+  Future<bool> pinConversation(String conversationId, bool pinned) async {
+    if (pinned) {
+      final current = state.valueOrNull?.conversations ?? [];
+      final pinnedCount = current.where((c) => c.isPinned).length;
+      if (pinnedCount >= 3) {
+        return false; // Limit of 3 pinned chats reached
+      }
+    }
     final repo = ref.read(messagesRepositoryProvider);
     await repo.pinConversation(conversationId, pinned);
     ref.invalidateSelf();
+    return true;
   }
 
   Future<void> muteConversation(String conversationId, bool muted) async {
     final repo = ref.read(messagesRepositoryProvider);
     await repo.muteConversation(conversationId, muted);
+    ref.invalidateSelf();
+  }
+
+  Future<void> muteConversationForDuration(String conversationId, Duration? duration) async {
+    final repo = ref.read(messagesRepositoryProvider);
+    await repo.muteConversationForDuration(conversationId, duration);
+    ref.invalidateSelf();
+  }
+
+  Future<void> blockUser(String conversationId, bool blocked) async {
+    final repo = ref.read(messagesRepositoryProvider);
+    await repo.blockUser(conversationId, blocked);
     ref.invalidateSelf();
   }
 

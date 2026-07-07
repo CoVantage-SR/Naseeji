@@ -412,11 +412,11 @@ class OrdersRepositoryImpl implements OrdersRepository {
     );
   }
 
-  @override
-  Future<List<ActivityLogItem>> getActivityLog(String rfqId) async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    return const [
-      ActivityLogItem(
+  final Map<String, List<ActivityLogItem>> _activityLogs = {};
+
+  List<ActivityLogItem> _getActivityLogFor(String rfqId) {
+    return _activityLogs.putIfAbsent(rfqId, () => [
+      const ActivityLogItem(
         iconTag: 'payment',
         user: 'النظام المالي نسيجي',
         action: 'تجهيز الدفعة المالية للإفراج البنكي',
@@ -425,7 +425,7 @@ class OrdersRepositoryImpl implements OrdersRepository {
         device: 'سيرفر الإيداعات',
         status: 'مكتمل',
       ),
-      ActivityLogItem(
+      const ActivityLogItem(
         iconTag: 'delivery',
         user: 'الشركة المتحدة للنسيج الذكي',
         action: 'تأكيد استلام الشحنة وتوقيع إيصال الجودة',
@@ -435,7 +435,7 @@ class OrdersRepositoryImpl implements OrdersRepository {
         attachments: ['إيصال_الاستلام.pdf'],
         status: 'مكتمل',
       ),
-      ActivityLogItem(
+      const ActivityLogItem(
         iconTag: 'shipping',
         user: 'مورد نسيجي',
         action: 'شحن الطلب وتحديث بوليصة النقل أرامكس',
@@ -445,7 +445,7 @@ class OrdersRepositoryImpl implements OrdersRepository {
         attachments: ['بوليصة_أرامكس.pdf', 'صورة_التحميل.jpg'],
         status: 'مكتمل',
       ),
-      ActivityLogItem(
+      const ActivityLogItem(
         iconTag: 'verified',
         user: 'مصنع الأقمشة المتطور',
         action: 'الموافقة على جينات الخامات والإنتاج المرفوعة',
@@ -454,7 +454,19 @@ class OrdersRepositoryImpl implements OrdersRepository {
         device: 'Android App',
         status: 'مكتمل',
       ),
-    ];
+    ]);
+  }
+
+  @override
+  Future<List<ActivityLogItem>> getActivityLog(String rfqId) async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    return _getActivityLogFor(rfqId);
+  }
+
+  @override
+  Future<void> addActivityLogItem(String rfqId, ActivityLogItem item) async {
+    final list = _getActivityLogFor(rfqId);
+    list.insert(0, item);
   }
 }
 

@@ -10,89 +10,117 @@ class AppBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.fromLTRB(2, 0, 2, 1),
       decoration: BoxDecoration(
         color: Colors.white,
+        borderRadius: BorderRadius.circular(30),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 24,
-            offset: const Offset(0, -4),
+            color: Colors.black.withValues(alpha: 0.006),
+            blurRadius: 30,
+            offset: const Offset(0, 5),
           ),
         ],
       ),
-      child: NavigationBarTheme(
-        data: NavigationBarThemeData(
-          indicatorColor: AppColors.secondary.withValues(alpha: 0.15),
-          indicatorShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          labelTextStyle: WidgetStateProperty.resolveWith((states) {
-            if (states.contains(WidgetState.selected)) {
-              return const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.secondary);
-            }
-            return const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.outline);
-          }),
-        ),
-        child: NavigationBar(
-          height: 65,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          selectedIndex: currentIndex,
-      onDestinationSelected: (index) {
-        if (index == currentIndex) return;
-
-        switch (index) {
-          case 0:
-            context.go('/home');
-            break;
-          case 1:
-            break;
-          case 2:
-            context.go('/orders');
-            break;
-          case 3:
-            context.go('/messages');
-            break;
-          case 4:
-            context.go('/profile');
-            break;
-        }
-      },
-      destinations: const [
-        NavigationDestination(
-          icon: Icon(Icons.home_outlined, color: AppColors.outline),
-          selectedIcon: Icon(Icons.home, color: AppColors.secondary),
-          label: 'الرئيسية',
-        ),
-        NavigationDestination(
-          icon: Icon(
-            Icons.category_outlined,
-            color: AppColors.outline,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(30),
+        child: NavigationBarTheme(
+          data: NavigationBarThemeData(
+            indicatorColor: const Color.fromARGB(
+              255,
+              5,
+              0,
+              107,
+            ).withValues(alpha: 0.15),
+            indicatorShape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            labelTextStyle: WidgetStateProperty.resolveWith((states) {
+              if (states.contains(WidgetState.selected)) {
+                return const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 2, 0, 107),
+                );
+              }
+              return const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: AppColors.outline,
+              );
+            }),
           ),
-          selectedIcon: Icon(Icons.category, color: AppColors.secondary),
-          label: 'المنتجات',
-        ),
-        NavigationDestination(
-          icon: Icon(
-            Icons.shopping_cart_outlined,
-            color: AppColors.outline,
+          child: NavigationBar(
+            height: 65,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            selectedIndex: currentIndex,
+            onDestinationSelected: (index) {
+              if (index == currentIndex) return;
+              switch (index) {
+                case 0:
+                  context.go('/home');
+                  break;
+                case 1:
+                  break;
+                case 2:
+                  context.go('/orders');
+                  break;
+                case 3:
+                  context.go('/messages');
+                  break;
+                case 4:
+                  context.go('/profile');
+                  break;
+              }
+            },
+            destinations: const [
+              NavigationDestination(
+                icon: Icon(Icons.home_outlined, color: AppColors.outline),
+                selectedIcon: Icon(
+                  Icons.home,
+                  color: Color.fromARGB(255, 11, 0, 107),
+                ),
+                label: 'الرئيسية',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.category_outlined, color: AppColors.outline),
+                selectedIcon: Icon(
+                  Icons.category,
+                  color: Color.fromARGB(255, 0, 0, 107),
+                ),
+                label: 'المنتجات',
+              ),
+              NavigationDestination(
+                icon: Icon(
+                  Icons.shopping_cart_outlined,
+                  color: AppColors.outline,
+                ),
+                selectedIcon: Icon(
+                  Icons.shopping_cart,
+                  color: Color.fromARGB(255, 21, 0, 107),
+                ),
+                label: 'الطلبات',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.chat_bubble_outline, color: AppColors.outline),
+                selectedIcon: Icon(
+                  Icons.chat_bubble,
+                  color: Color.fromARGB(255, 0, 11, 107),
+                ),
+                label: 'الرسائل',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.person_outline, color: AppColors.outline),
+                selectedIcon: Icon(
+                  Icons.person,
+                  color: Color.fromARGB(255, 23, 0, 107),
+                ),
+                label: 'حسابي',
+              ),
+            ],
           ),
-          selectedIcon: Icon(Icons.shopping_cart, color: AppColors.secondary),
-          label: 'الطلبات',
         ),
-        NavigationDestination(
-          icon: Icon(
-            Icons.chat_bubble_outline,
-            color: AppColors.outline,
-          ),
-          selectedIcon: Icon(Icons.chat_bubble, color: AppColors.secondary),
-          label: 'الرسائل',
-        ),
-        NavigationDestination(
-          icon: Icon(Icons.person_outline, color: AppColors.outline),
-          selectedIcon: Icon(Icons.person, color: AppColors.secondary),
-          label: 'حسابي',
-        ),
-      ],
-    ),
       ),
     );
   }

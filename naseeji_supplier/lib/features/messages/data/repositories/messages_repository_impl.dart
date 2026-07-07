@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../domain/entities/conversation.dart';
 import '../../domain/entities/business_message.dart';
 import '../../domain/entities/support_ticket.dart';
 import '../../domain/entities/message_attachment.dart';
+import '../../domain/entities/timeline_stage.dart';
 import '../../domain/repositories/messages_repository.dart';
 
 part 'messages_repository_impl.g.dart';
@@ -17,6 +19,7 @@ class MessagesRepositoryImpl implements MessagesRepository {
   final List<Conversation> _conversations = _buildConversations();
   final Map<String, List<BusinessMessage>> _messages = _buildMessages();
   final Map<String, SupportTicket> _tickets = _buildTickets();
+  final Map<String, List<TimelineStage>> _timelines = {};
 
   @override
   Future<List<Conversation>> getConversations() async {
@@ -119,6 +122,134 @@ class MessagesRepositoryImpl implements MessagesRepository {
       m.type == MessageType.quotationCard ||
       m.type == MessageType.counterOfferCard
     ).toList();
+  }
+
+  @override
+  Future<void> blockUser(String conversationId, bool blocked) async {
+    final idx = _conversations.indexWhere((c) => c.id == conversationId);
+    if (idx != -1) {
+      _conversations[idx] = _conversations[idx].copyWith(isBlocked: blocked);
+    }
+  }
+
+  @override
+  Future<void> muteConversationForDuration(String conversationId, Duration? duration) async {
+    final idx = _conversations.indexWhere((c) => c.id == conversationId);
+    if (idx != -1) {
+      if (duration == null) {
+        _conversations[idx] = _conversations[idx].copyWith(isMuted: false, muteUntil: null);
+      } else {
+        _conversations[idx] = _conversations[idx].copyWith(
+          isMuted: true,
+          muteUntil: DateTime.now().add(duration),
+        );
+      }
+    }
+  }
+
+  @override
+  Future<List<TimelineStage>> getTimelineStages(String conversationId) async {
+    return _defaultTimeline(conversationId);
+  }
+
+  @override
+  Future<void> updateTimelineStage(
+    String conversationId,
+    String stageLabel, {
+    required String timestamp,
+    required String user,
+    String? notes,
+    bool? isActive,
+    bool? isCompleted,
+  }) async {
+    final list = _defaultTimeline(conversationId);
+    final idx = list.indexWhere((s) => s.label == stageLabel);
+    if (idx != -1) {
+      list[idx] = list[idx].copyWith(
+        timestamp: timestamp,
+        user: user,
+        notes: notes,
+        isActive: isActive,
+        isCompleted: isCompleted,
+      );
+    }
+  }
+
+  List<TimelineStage> _defaultTimeline(String convId) {
+    return _timelines.putIfAbsent(convId, () => [
+      const TimelineStage(
+        label: 'طلب عرض (RFQ)',
+        icon: Icons.request_quote_outlined,
+        timestamp: '2026-07-01 09:00',
+        user: 'مصنع الرياض للملابس',
+        notes: 'طلب 5,000 متر قطن 100% — RFQ-8820',
+        isCompleted: true,
+      ),
+      const TimelineStage(
+        label: 'تقديم عرض أسعار',
+        icon: Icons.price_check_outlined,
+        timestamp: '2026-07-01 09:30',
+        user: 'مورد نسيجي',
+        notes: 'تقديم العرض الأول بسعر 12.50 ر.س/م',
+        isCompleted: true,
+      ),
+      const TimelineStage(
+        label: 'عرض مضاد',
+        icon: Icons.swap_horiz,
+        timestamp: '2026-07-01 10:00',
+        user: 'مصنع الرياض للملابس',
+        notes: 'طلب تخفيض إلى 11.80 ر.س/م',
+        isCompleted: true,
+      ),
+      const TimelineStage(
+        label: 'تعديل العرض',
+        icon: Icons.edit_outlined,
+        timestamp: '2026-07-01 11:00',
+        user: 'مورد نسيجي',
+        notes: 'تعديل العرض إلى 12.00 ر.س/م — مقبول',
+        isCompleted: true,
+      ),
+      const TimelineStage(
+        label: 'الاتفاق النهائي',
+        icon: Icons.handshake_outlined,
+        timestamp: '2026-07-01 11:30',
+        user: 'كلا الطرفين',
+        notes: 'توقيع الاتفاقية — ORD-2241 تم إنشاؤه',
+        isCompleted: true,
+      ),
+      const TimelineStage(
+        label: 'التصنيع',
+        icon: Icons.factory_outlined,
+        timestamp: '2026-07-03 08:00',
+        user: 'مورد نسيجي',
+        notes: 'بدء الإنتاج — 65% مكتمل',
+        isActive: true,
+      ),
+      const TimelineStage(
+        label: 'الشحن',
+        icon: Icons.local_shipping_outlined,
+        timestamp: '--',
+        user: '--',
+      ),
+      const TimelineStage(
+        label: 'الاستلام',
+        icon: Icons.inventory_2_outlined,
+        timestamp: '--',
+        user: '--',
+      ),
+      const TimelineStage(
+        label: 'الدفع',
+        icon: Icons.payments_outlined,
+        timestamp: '--',
+        user: '--',
+      ),
+      const TimelineStage(
+        label: 'مكتمل',
+        icon: Icons.check_circle_outline,
+        timestamp: '--',
+        user: '--',
+      ),
+    ]);
   }
 }
 
