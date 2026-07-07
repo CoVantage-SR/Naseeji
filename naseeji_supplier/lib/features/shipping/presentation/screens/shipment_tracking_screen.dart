@@ -60,7 +60,7 @@ class ShipmentTrackingScreen extends ConsumerWidget {
                             const Icon(Icons.pin_drop, color: AppColors.primary, size: 24),
                             const SizedBox(width: 12),
                             Expanded(
-                              child: Column(
+                              child: const Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Text('آخر موقع مرصود للشحنة', style: TextStyle(fontSize: 10, color: AppColors.outline)),

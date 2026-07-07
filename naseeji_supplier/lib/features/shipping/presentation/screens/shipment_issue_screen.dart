@@ -85,7 +85,7 @@ class _ShipmentIssueScreenState extends ConsumerState<ShipmentIssueScreen> {
                     const Text('نوع مشكلة الشحن اللوجستية *', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
                     const SizedBox(height: 8),
                     DropdownButtonFormField<String>(
-                      value: _selectedCategory,
+                      initialValue: _selectedCategory,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),

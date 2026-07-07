@@ -6,9 +6,7 @@ import 'core/theme/app_theme.dart';
 void main() {
   runApp(
     // ProviderScope is required for all Riverpod applications
-    const ProviderScope(
-      child: MyApp(),
-    ),
+    const ProviderScope(child: MyApp()),
   );
 }
 

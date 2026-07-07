@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
-import 'package:naseeji_supplier/core/widgets/app_bottom_navigation_bar.dart';
 import 'package:naseeji_supplier/features/dashboard/presentation/screens/drawer/navigation_drawer_view.dart';
 import '../../domain/entities/shipment.dart';
 import '../controllers/shipping_controller.dart';
@@ -105,15 +104,11 @@ class _ShippingDashboardScreenState extends ConsumerState<ShippingDashboardScree
                     _buildEmptyState()
                   else
                     ...filtered.map((s) => _buildShipmentCard(context, s)),
-                  const SizedBox(height: 80),
+                  const SizedBox(height: 20),
                 ],
               ),
             );
           },
-        ),
-        bottomNavigationBar: const Directionality(
-          textDirection: TextDirection.ltr,
-          child: AppBottomNavigationBar(currentIndex: 2), // Maps to Orders tab index
         ),
       ),
     );
@@ -148,7 +143,7 @@ class _ShippingDashboardScreenState extends ConsumerState<ShippingDashboardScree
       physics: const NeverScrollableScrollPhysics(),
       crossAxisSpacing: 8,
       mainAxisSpacing: 8,
-      childAspectRatio: 1.3,
+      childAspectRatio: 1.55,
       children: [
         _buildSummaryCard('معلقة شحن', '$pending', Colors.blue),
         _buildSummaryCard('جاهزة للتحميل', '$ready', Colors.indigo),
@@ -163,19 +158,26 @@ class _ShippingDashboardScreenState extends ConsumerState<ShippingDashboardScree
   Widget _buildSummaryCard(String label, String value, Color color) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        border: Border(right: BorderSide(color: color, width: 3)),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 4, offset: const Offset(0, 1))],
+        color: color.withValues(alpha: 0.06),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: color.withValues(alpha: 0.15), width: 1),
       ),
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(label, style: const TextStyle(fontSize: 9, color: AppColors.outline, fontWeight: FontWeight.bold)),
+          Text(
+            value,
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: color),
+          ),
           const SizedBox(height: 2),
-          Text(value, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w900, color: color)),
+          Text(
+            label,
+            style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant, fontWeight: FontWeight.w600),
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ],
       ),
     );
