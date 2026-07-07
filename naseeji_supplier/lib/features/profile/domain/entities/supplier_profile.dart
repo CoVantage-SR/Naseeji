@@ -23,6 +23,7 @@ class SupplierProfile {
   final int productsCount;
   final int ordersCount;
   final List<CompanyCertificate> certificates;
+  final bool isVip;
 
   // New B2B corporate profile fields
   final String tradeName;
@@ -65,6 +66,7 @@ class SupplierProfile {
     required this.productsCount,
     required this.ordersCount,
     required this.certificates,
+    this.isVip = false,
     this.tradeName = 'شركة نسيج الشرق التجارية',
     this.businessType = 'مصنع / منتج',
     this.description = 'نعمل بأحدث التقنيات الألمانية في غزل ونسيج القطنيات الفاخرة والمخلوطة، ونوفر لشركائنا خامات معتمدة ومطابقة لأعلى مقاييس الجودة العالمية.',
@@ -106,6 +108,7 @@ class SupplierProfile {
     int? productsCount,
     int? ordersCount,
     List<CompanyCertificate>? certificates,
+    bool? isVip,
     String? tradeName,
     String? businessType,
     String? description,
@@ -146,6 +149,7 @@ class SupplierProfile {
       productsCount: productsCount ?? this.productsCount,
       ordersCount: ordersCount ?? this.ordersCount,
       certificates: certificates ?? this.certificates,
+      isVip: isVip ?? this.isVip,
       tradeName: tradeName ?? this.tradeName,
       businessType: businessType ?? this.businessType,
       description: description ?? this.description,
