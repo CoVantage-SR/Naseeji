@@ -91,24 +91,6 @@ import '../../features/financial/presentation/screens/escrow_tracking_screen.dar
 import '../../features/financial/presentation/screens/financial_analytics_screen.dart';
 import '../../features/financial/domain/entities/financial_models.dart';
 
-import '../../features/marketing/presentation/screens/marketing_dashboard_screen.dart';
-import '../../features/marketing/presentation/screens/advertisements_screen.dart';
-import '../../features/marketing/presentation/screens/advertisement_details_screen.dart';
-import '../../features/marketing/presentation/screens/create_advertisement_screen.dart';
-import '../../features/marketing/presentation/screens/campaigns_screen.dart';
-import '../../features/marketing/presentation/screens/campaign_details_screen.dart';
-import '../../features/marketing/presentation/screens/featured_products_screen.dart';
-import '../../features/marketing/presentation/screens/promotional_offers_screen.dart';
-import '../../features/marketing/presentation/screens/audience_targeting_screen.dart';
-import '../../features/marketing/presentation/screens/budget_management_screen.dart';
-import '../../features/marketing/presentation/screens/marketing_analytics_screen.dart';
-import '../../features/marketing/presentation/screens/sponsored_products_screen.dart';
-import '../../features/marketing/presentation/screens/coupons_screen.dart';
-import '../../features/marketing/presentation/screens/seasonal_campaigns_screen.dart';
-import '../../features/marketing/presentation/screens/marketing_notifications_screen.dart';
-import '../../features/marketing/presentation/screens/marketing_insights_screen.dart';
-import '../../features/marketing/domain/entities/marketing_models.dart';
-
 part 'app_router.g.dart';
 
 @riverpod
@@ -641,98 +623,7 @@ GoRouter goRouter(GoRouterRef ref) {
         builder: (context, state) => const FinancialAnalyticsScreen(),
       ),
       // ─── Marketing Feature ───────────────────────────────────────────
-      GoRoute(
-        path: '/marketing',
-        name: 'marketing-dashboard',
-        pageBuilder: (context, state) => const NoTransitionPage(child: MarketingDashboardScreen()),
-      ),
-      GoRoute(
-        path: '/marketing/ads',
-        name: 'marketing-ads',
-        builder: (context, state) => const AdvertisementsScreen(),
-      ),
-      GoRoute(
-        path: '/marketing/ads/:id',
-        name: 'marketing-ad-details',
-        builder: (context, state) {
-          final extraAd = state.extra as B2BAdvertisement?;
-          return AdvertisementDetailsScreen(
-            adId: state.pathParameters['id'] ?? '',
-            advertisement: extraAd,
-          );
-        },
-      ),
-      GoRoute(
-        path: '/marketing/create-ad',
-        name: 'marketing-create-ad',
-        builder: (context, state) => const CreateAdvertisementScreen(),
-      ),
-      GoRoute(
-        path: '/marketing/campaigns',
-        name: 'marketing-campaigns',
-        builder: (context, state) => const CampaignsScreen(),
-      ),
-      GoRoute(
-        path: '/marketing/campaigns/:id',
-        name: 'marketing-campaign-details',
-        builder: (context, state) {
-          final extraCamp = state.extra as MarketingCampaign?;
-          return CampaignDetailsScreen(
-            campaignId: state.pathParameters['id'] ?? '',
-            campaign: extraCamp,
-          );
-        },
-      ),
-      GoRoute(
-        path: '/marketing/featured',
-        name: 'marketing-featured',
-        builder: (context, state) => const FeaturedProductsScreen(),
-      ),
-      GoRoute(
-        path: '/marketing/offers',
-        name: 'marketing-offers',
-        builder: (context, state) => const PromotionalOffersScreen(),
-      ),
-      GoRoute(
-        path: '/marketing/targeting',
-        name: 'marketing-targeting',
-        builder: (context, state) => const AudienceTargetingScreen(),
-      ),
-      GoRoute(
-        path: '/marketing/budget',
-        name: 'marketing-budget',
-        builder: (context, state) => const BudgetManagementScreen(),
-      ),
-      GoRoute(
-        path: '/marketing/analytics',
-        name: 'marketing-analytics',
-        builder: (context, state) => const MarketingAnalyticsScreen(),
-      ),
-      GoRoute(
-        path: '/marketing/sponsored',
-        name: 'marketing-sponsored',
-        builder: (context, state) => const SponsoredProductsScreen(),
-      ),
-      GoRoute(
-        path: '/marketing/coupons',
-        name: 'marketing-coupons',
-        builder: (context, state) => const CouponsScreen(),
-      ),
-      GoRoute(
-        path: '/marketing/seasonal',
-        name: 'marketing-seasonal',
-        builder: (context, state) => const SeasonalCampaignsScreen(),
-      ),
-      GoRoute(
-        path: '/marketing/notifications',
-        name: 'marketing-notifications',
-        builder: (context, state) => const MarketingNotificationsScreen(),
-      ),
-      GoRoute(
-        path: '/marketing/insights',
-        name: 'marketing-insights',
-        builder: (context, state) => const MarketingInsightsScreen(),
-      ),
+     
     ],
   );
 }
