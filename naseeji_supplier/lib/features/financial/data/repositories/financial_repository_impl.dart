@@ -6,17 +6,17 @@ part 'financial_repository_impl.g.dart';
 
 class FinancialRepositoryImpl implements FinancialRepository {
   // Static state to persist changes across provider rebuilds
-  static double _currentBalance = 62680.0;
-  static double _pendingBalance = 12450.0;
+  static final double _currentBalance = 62680.0;
+  static final double _pendingBalance = 12450.0;
   static double _availableBalance = 45230.0;
-  static double _frozenBalance = 5000.0;
-  static double _totalRevenue = 154800.0;
-  static double _monthlyRevenue = 32400.0;
-  static double _pendingPaymentsCount = 3.0;
-  static double _completedPaymentsCount = 45.0;
-  static double _outstandingInvoicesSum = 8200.0;
-  static double _platformFeesSum = 11400.0;
-  static double _netProfitSum = 128400.0;
+  static final double _frozenBalance = 5000.0;
+  static final double _totalRevenue = 154800.0;
+  static final double _monthlyRevenue = 32400.0;
+  static final double _pendingPaymentsCount = 3.0;
+  static final double _completedPaymentsCount = 45.0;
+  static final double _outstandingInvoicesSum = 8200.0;
+  static final double _platformFeesSum = 11400.0;
+  static final double _netProfitSum = 128400.0;
 
   static final List<FinancialTransaction> _transactions = [
     FinancialTransaction(

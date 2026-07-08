@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import 'package:naseeji_supplier/core/widgets/general_widgets.dart';
 import '../controllers/financial_controllers.dart';
-import '../domain/entities/financial_models.dart';
+import '../../domain/entities/financial_models.dart';
 
 class PaymentMethodsScreen extends ConsumerStatefulWidget {
   const PaymentMethodsScreen({super.key});

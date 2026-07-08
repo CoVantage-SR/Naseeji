@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import '../controllers/financial_controllers.dart';
-import '../domain/entities/financial_models.dart';
+import '../../domain/entities/financial_models.dart';
 import '../widgets/invoice_card.dart';
 
 class InvoicesScreen extends ConsumerWidget {

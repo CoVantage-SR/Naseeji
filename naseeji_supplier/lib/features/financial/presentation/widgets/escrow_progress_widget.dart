@@ -26,7 +26,6 @@ class EscrowProgressWidget extends StatelessWidget {
         final step = stages[index];
         final isCompleted = index < currentIndex;
         final isActive = index == currentIndex;
-        final isPending = index > currentIndex;
 
         return Row(
           crossAxisAlignment: CrossAxisAlignment.start,

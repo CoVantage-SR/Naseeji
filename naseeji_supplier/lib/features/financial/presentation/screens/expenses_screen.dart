@@ -8,8 +8,6 @@ class ExpensesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const totalExpenses = 27120.0;
-
     final expenseData = [
       {'label': 'عمولات منصة نسيجي', 'value': 11400.0, 'percent': 42.0, 'color': 0xFF0040E0},
       {'label': 'تكاليف الشحن والتوريد', 'value': 5400.0, 'percent': 20.0, 'color': 0xFF009688},

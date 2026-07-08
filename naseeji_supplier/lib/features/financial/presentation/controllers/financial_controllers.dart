@@ -283,7 +283,6 @@ class EscrowTrackingController extends _$EscrowTrackingController {
   }
 
   Future<void> refresh() async {
-    final orderNumber = arg;
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
       final repo = ref.read(financialRepositoryProvider);
