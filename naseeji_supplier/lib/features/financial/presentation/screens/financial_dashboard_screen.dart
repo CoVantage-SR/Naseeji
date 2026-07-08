@@ -199,40 +199,52 @@ class FinancialDashboardScreen extends ConsumerWidget {
                     const SizedBox(height: 24),
 
                     // Navigation to Sub-modules
-                    ListTile(
-                      tileColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        side: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
+                    Material(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      clipBehavior: Clip.antiAlias,
+                      child: ListTile(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          side: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
+                        ),
+                        title: const Text('سجل المعاملات والعمليات', textAlign: TextAlign.right),
+                        trailing: const Icon(Icons.arrow_back_ios, size: 14),
+                        leading: const Icon(Icons.history, color: AppColors.primary),
+                        onTap: () => context.push('/finance/transactions'),
                       ),
-                      title: const Text('سجل المعاملات والعمليات', textAlign: TextAlign.right),
-                      trailing: const Icon(Icons.arrow_back_ios, size: 14),
-                      leading: const Icon(Icons.history, color: AppColors.primary),
-                      onTap: () => context.push('/finance/transactions'),
                     ),
                     const SizedBox(height: 10),
-                    ListTile(
-                      tileColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        side: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
+                    Material(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      clipBehavior: Clip.antiAlias,
+                      child: ListTile(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          side: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
+                        ),
+                        title: const Text('ضمان وحماية الدفعات (Escrow)', textAlign: TextAlign.right),
+                        trailing: const Icon(Icons.arrow_back_ios, size: 14),
+                        leading: const Icon(Icons.security, color: Color(0xFF006B5F)),
+                        onTap: () => context.push('/finance/escrow'),
                       ),
-                      title: const Text('ضمان وحماية الدفعات (Escrow)', textAlign: TextAlign.right),
-                      trailing: const Icon(Icons.arrow_back_ios, size: 14),
-                      leading: const Icon(Icons.security, color: Color(0xFF006B5F)),
-                      onTap: () => context.push('/finance/escrow'),
                     ),
                     const SizedBox(height: 10),
-                    ListTile(
-                      tileColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        side: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
+                    Material(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      clipBehavior: Clip.antiAlias,
+                      child: ListTile(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          side: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
+                        ),
+                        title: const Text('إدارة المرتجعات والتعويضات', textAlign: TextAlign.right),
+                        trailing: const Icon(Icons.arrow_back_ios, size: 14),
+                        leading: const Icon(Icons.assignment_return_outlined, color: Color(0xFFBA1A1A)),
+                        onTap: () => context.push('/finance/refunds'),
                       ),
-                      title: const Text('إدارة المرتجعات والتعويضات', textAlign: TextAlign.right),
-                      trailing: const Icon(Icons.arrow_back_ios, size: 14),
-                      leading: const Icon(Icons.assignment_return_outlined, color: Color(0xFFBA1A1A)),
-                      onTap: () => context.push('/finance/refunds'),
                     ),
                   ],
                 ),

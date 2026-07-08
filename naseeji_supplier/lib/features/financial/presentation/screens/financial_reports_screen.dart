@@ -253,7 +253,6 @@ class _FinancialReportsScreenState extends ConsumerState<FinancialReportsScreen>
           ),
       firstDate: DateTime(2020),
       lastDate: DateTime.now().add(const Duration(days: 1)),
-      locale: const Locale('ar'),
     );
 
     if (picked != null) {
