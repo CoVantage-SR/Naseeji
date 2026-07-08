@@ -1,0 +1,156 @@
+import 'package:flutter/material.dart';
+import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import '../../domain/entities/subscription_models.dart';
+
+class SubscriptionStatusCard extends StatelessWidget {
+  final SupplierSubscription subscription;
+  final ValueChanged<bool> onAutoRenewChanged;
+  final VoidCallback onUpgrade;
+  final VoidCallback onRenew;
+
+  const SubscriptionStatusCard({
+    super.key,
+    required this.subscription,
+    required this.onAutoRenewChanged,
+    required this.onUpgrade,
+    required this.onRenew,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final startStr = '${subscription.startDate.year}/${subscription.startDate.month.toString().padLeft(2, '0')}/${subscription.startDate.day.toString().padLeft(2, '0')}';
+    final expiryStr = '${subscription.expiryDate.year}/${subscription.expiryDate.month.toString().padLeft(2, '0')}/${subscription.expiryDate.day.toString().padLeft(2, '0')}';
+
+    final Color statusColor = subscription.status == SubscriptionStatus.active
+        ? const Color(0xFF006B5F)
+        : (subscription.status == SubscriptionStatus.expiring
+            ? const Color(0xFFFF9800)
+            : const Color(0xFFBA1A1A));
+
+    return Card(
+      elevation: 0.5,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: statusColor.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    subscription.status == SubscriptionStatus.active ? 'نشط' : (subscription.status == SubscriptionStatus.expiring ? 'ينتهي قريباً' : 'منتهي'),
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      color: statusColor,
+                    ),
+                  ),
+                ),
+                Text(
+                  subscription.planName,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.onSurface,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            const Divider(color: AppColors.outlineVariant),
+            const SizedBox(height: 12),
+
+            _buildDetailRow('تاريخ البدء', startStr),
+            _buildDetailRow('تاريخ الانتهاء', expiryStr),
+            _buildDetailRow('التجديد القادم', expiryStr),
+            _buildDetailRow('قيمة التجديد', '${subscription.price.toStringAsFixed(0)} ر.س / ${subscription.billingCycle == BillingCycle.yearly ? "سنوي" : "شهري"}'),
+            _buildDetailRow('طريقة الدفع للمحاسبة', subscription.paymentMethod),
+            
+            const SizedBox(height: 8),
+            const Divider(color: AppColors.outlineVariant),
+            const SizedBox(height: 8),
+
+            // Auto renew switch
+            SwitchListTile(
+              value: subscription.autoRenew,
+              onChanged: onAutoRenewChanged,
+              title: const Text(
+                'التجديد التلقائي للاشتراك',
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                textAlign: TextAlign.right,
+              ),
+              subtitle: const Text(
+                'سداد الرسوم آلياً عبر البطاقة المحددة',
+                style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant),
+                textAlign: TextAlign.right,
+              ),
+              activeThumbColor: const Color(0xFF0040E0),
+              contentPadding: EdgeInsets.zero,
+              dense: true,
+            ),
+            
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: onRenew,
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: const Color(0xFF006B5F),
+                      side: const BorderSide(color: Color(0xFF006B5F)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    ),
+                    child: const Text('تجديد مبكر', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: onUpgrade,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF0040E0),
+                      foregroundColor: Colors.white,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    ),
+                    child: const Text('ترقية الباقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDetailRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            value,
+            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+          ),
+          Text(
+            label,
+            style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant),
+          ),
+        ],
+      ),
+    );
+  }
+}
