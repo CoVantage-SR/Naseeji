@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import '../../../controllers/add_product_controller.dart';
+import '../../../widgets/upgrade_dialog.dart';
+import '../../../../../subscription/presentation/controllers/subscription_controllers.dart';
 
 class ProductIdentityForm extends ConsumerStatefulWidget {
   const ProductIdentityForm({super.key});
@@ -35,6 +38,59 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
     _nameController.dispose();
     _descController.dispose();
     super.dispose();
+  }
+
+  void _validateAndUploadAsset(BuildContext context, String type) {
+    final sub = ref.read(activeSubscriptionControllerProvider).value;
+    final usage = ref.read(subscriptionUsageControllerProvider).value;
+    if (sub == null || usage == null) return;
+
+    final double maxVideos = sub.planId == 'free' ? 0.0 : 20.0;
+    final double maxPDFs = sub.planId == 'free' ? 1.0 : 2.0;
+    final double maxStorage = sub.planId == 'free' ? 1.0 : 5.0;
+
+    if (type == 'video' && usage.aiReportsUsed >= maxVideos) {
+      _showUploadLimitReachedDialog(
+        context,
+        'نفدت مساحة رفع مقاطع الفيديو المميزة',
+        'لقد استهلكت جميع مساحات رفع الفيديو المسموحة في باقتك (${maxVideos.toStringAsFixed(0)} فيديو). يرجى الترقية أو شراء حزمة مقاطع فيديو إضافية.',
+      );
+      return;
+    }
+
+    if (type == 'pdf' && usage.branchesUsed >= maxPDFs) {
+      _showUploadLimitReachedDialog(
+        context,
+        'نفدت مساحة رفع الكتالوجات الفنية',
+        'لقد استهلكت الحد الأقصى لملفات الكتالوج المتاحة (${maxPDFs.toStringAsFixed(0)} ملفات). يرجى الترقية أو شراء حزمة كتالوجات إضافية.',
+      );
+      return;
+    }
+
+    if (type == 'storage' && usage.storageUsedGb >= maxStorage) {
+      _showUploadLimitReachedDialog(
+        context,
+        'نفذت مساحة التخزين السحابية للمؤسسة',
+        'لقد استهلكت الحد الأقصى لمساحة التخزين السحابية المخصصة (${maxStorage.toStringAsFixed(0)} جيجابايت). يرجى الترقية لزيادة السعة.',
+      );
+      return;
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('تم رفع ملف الـ $type بنجاح وحفظه في مساحة السحابة.')),
+    );
+  }
+
+  void _showUploadLimitReachedDialog(BuildContext context, String title, String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => UpgradeDialog(
+        title: title,
+        content: message,
+        onUpgrade: () => context.push('/subscription/plans'),
+        onBuyPack: () => context.push('/subscription/addons'),
+      ),
+    );
   }
 
   @override
@@ -328,6 +384,83 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
                           color: AppColors.onSurfaceVariant,
                         ),
                       ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 24),
+
+            // Media Assets Box
+            const Text(
+              'ملفات الوسائط والكتالوجات التقنية B2B',
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
+                color: AppColors.onSurfaceVariant,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: const Color(0xFFF8F9FF),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.5)),
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton.icon(
+                        onPressed: () => _validateAndUploadAsset(context, 'image'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: const Color(0xFF0040E0),
+                          minimumSize: const Size(120, 36),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        ),
+                        icon: const Icon(Icons.image, size: 16),
+                        label: const Text('رفع صور المنتج', style: TextStyle(fontSize: 11)),
+                      ),
+                      const Text('الصور التوضيحية للأقمشة (حد 5 صور)', style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant)),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton.icon(
+                        onPressed: () => _validateAndUploadAsset(context, 'video'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: const Color(0xFF0040E0),
+                          minimumSize: const Size(120, 36),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        ),
+                        icon: const Icon(Icons.videocam, size: 16),
+                        label: const Text('رفع فيديو توضيحي', style: TextStyle(fontSize: 11)),
+                      ),
+                      const Text('مقاطع الفيديو وعينات النسيج المتحركة', style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant)),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton.icon(
+                        onPressed: () => _validateAndUploadAsset(context, 'pdf'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: const Color(0xFF0040E0),
+                          minimumSize: const Size(120, 36),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        ),
+                        icon: const Icon(Icons.picture_as_pdf, size: 16),
+                        label: const Text('رفع كتالوج PDF', style: TextStyle(fontSize: 11)),
+                      ),
+                      const Text('ملفات التحليل الفني وشهادات الجودة', style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant)),
                     ],
                   ),
                 ],

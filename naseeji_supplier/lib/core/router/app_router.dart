@@ -15,6 +15,7 @@ import '../../features/search/presentation/screens/global_search/global_search_s
 import '../../features/profile/presentation/screens/supplier_profile/supplier_profile_screen.dart';
 import '../../features/products/presentation/screens/add_product/add_product_screen.dart';
 import '../../features/products/presentation/screens/products_module_screen.dart';
+import '../../features/products/presentation/screens/product_usage_screen.dart';
 import '../../features/orders/presentation/screens/orders_screen.dart';
 import '../../features/orders/presentation/screens/rfq_details_screen.dart';
 import '../../features/orders/presentation/screens/create_offer_screen.dart';
@@ -189,6 +190,11 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/add-product',
         name: 'add-product',
         builder: (context, state) => const AddNewProductScreen(),
+      ),
+      GoRoute(
+        path: '/products/usage',
+        name: 'products-usage',
+        builder: (context, state) => const ProductUsageScreen(),
       ),
       GoRoute(
         path: '/shipping',

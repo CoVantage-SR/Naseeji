@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import '../widgets/subscription_summary_card.dart';
+import '../widgets/usage_statistics_card.dart';
+import '../widgets/subscription_warning_banner.dart';
+import '../widgets/upgrade_dialog.dart';
+import '../../../subscription/presentation/controllers/subscription_controllers.dart';
 
-class ProductsTab extends StatefulWidget {
+class ProductsTab extends ConsumerStatefulWidget {
   const ProductsTab({super.key});
 
   @override
-  State<ProductsTab> createState() => _ProductsTabState();
+  ConsumerState<ProductsTab> createState() => _ProductsTabState();
 }
 
-class _ProductsTabState extends State<ProductsTab> {
+class _ProductsTabState extends ConsumerState<ProductsTab> {
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
   String _selectedCategory = 'الكل';
@@ -65,6 +71,175 @@ class _ProductsTabState extends State<ProductsTab> {
     super.dispose();
   }
 
+  Widget _buildSubscriptionDashboardHeader(BuildContext context, WidgetRef ref) {
+    final subAsync = ref.watch(activeSubscriptionControllerProvider);
+    final usageAsync = ref.watch(subscriptionUsageControllerProvider);
+
+    return subAsync.when(
+      loading: () => const SizedBox.shrink(),
+      error: (_, __) => const SizedBox.shrink(),
+      data: (sub) {
+        return usageAsync.when(
+          loading: () => const SizedBox.shrink(),
+          error: (_, __) => const SizedBox.shrink(),
+          data: (usage) {
+            final double maxProducts = sub.planId == 'free' ? 10.0 : 50.0;
+            final double maxAds = sub.planId == 'free' ? 1.0 : 5.0;
+            final double maxFeatured = sub.planId == 'free' ? 0.0 : 3.0;
+            final double maxStorage = sub.planId == 'free' ? 1.0 : 5.0;
+
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // exp warnings
+                  SubscriptionWarningBanner(
+                    status: sub.status.name,
+                    daysRemaining: sub.remainingDays,
+                    onActionTap: () => context.push('/subscription'),
+                  ),
+
+                  // Summary Card
+                  SubscriptionSummaryCard(
+                    subscription: sub,
+                    onDetailsTap: () => context.push('/products/usage'),
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Grid of usage progress
+                  GridView(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 8,
+                      mainAxisSpacing: 8,
+                      childAspectRatio: 2.3,
+                    ),
+                    children: [
+                      UsageStatisticsCard(
+                        title: 'المنتجات المضافة',
+                        used: usage.productsUsed.toDouble(),
+                        max: maxProducts,
+                        unit: 'منتج',
+                      ),
+                      UsageStatisticsCard(
+                        title: 'الإعلانات الممولة',
+                        used: usage.advertisementsUsed.toDouble(),
+                        max: maxAds,
+                        unit: 'إعلان',
+                      ),
+                      UsageStatisticsCard(
+                        title: 'المنتجات المميزة',
+                        used: usage.featuredProductsUsed.toDouble(),
+                        max: maxFeatured,
+                        unit: 'مميز',
+                      ),
+                      UsageStatisticsCard(
+                        title: 'مساحة التخزين',
+                        used: usage.storageUsedGb,
+                        max: maxStorage,
+                        unit: 'جيجابايت',
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Quick Actions Row
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        _buildActionButton(context, 'تفاصيل الاستهلاك', Icons.info_outline, () => context.push('/products/usage')),
+                        const SizedBox(width: 8),
+                        _buildActionButton(context, 'شراء ملحقات', Icons.add_shopping_cart, () => context.push('/subscription/addons')),
+                        const SizedBox(width: 8),
+                        _buildActionButton(context, 'تجديد الاشتراك', Icons.autorenew, () async {
+                          await ref.read(activeSubscriptionControllerProvider.notifier).renew();
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('تم تجديد الباقة وتمديد الصلاحية.')),
+                            );
+                          }
+                        }),
+                        const SizedBox(width: 8),
+                        _buildActionButton(context, 'ترقية الباقة', Icons.upgrade, () => context.push('/subscription/plans')),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildActionButton(BuildContext context, String label, IconData icon, VoidCallback onTap) {
+    return ElevatedButton.icon(
+      onPressed: onTap,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.white,
+        foregroundColor: const Color(0xFF0040E0),
+        elevation: 0.5,
+        minimumSize: const Size(110, 36),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+          side: const BorderSide(color: Color(0xFF0040E0), width: 0.5),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      ),
+      icon: Icon(icon, size: 14),
+      label: Text(label, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
+    );
+  }
+
+  Widget _buildFab(WidgetRef ref) {
+    final subAsync = ref.watch(activeSubscriptionControllerProvider);
+    final usageAsync = ref.watch(subscriptionUsageControllerProvider);
+
+    return subAsync.when(
+      loading: () => const SizedBox.shrink(),
+      error: (_, __) => const SizedBox.shrink(),
+      data: (sub) => usageAsync.when(
+        loading: () => const SizedBox.shrink(),
+        error: (_, __) => const SizedBox.shrink(),
+        data: (usage) {
+          final maxProducts = sub.planId == 'free' ? 10.0 : 50.0;
+          final isLimitReached = usage.productsUsed >= maxProducts;
+
+          return FloatingActionButton.extended(
+            onPressed: () {
+              if (isLimitReached) {
+                showDialog(
+                  context: context,
+                  builder: (ctx) => UpgradeDialog(
+                    title: 'تم بلوغ الحد الأقصى للمنتجات',
+                    content: 'لقد استهلكت جميع مساحات المنتجات المتاحة في باقة اشتراكك الحالية (${maxProducts.toStringAsFixed(0)} منتجات). قم بالترقية أو شراء باقة ملحقة لإضافة منتج خام جديد.',
+                    onUpgrade: () => context.push('/subscription/plans'),
+                    onBuyPack: () => context.push('/subscription/addons'),
+                  ),
+                );
+              } else {
+                context.push('/add-product');
+              }
+            },
+            backgroundColor: isLimitReached ? const Color(0xFFBA1A1A) : const Color(0xFF0040E0),
+            foregroundColor: Colors.white,
+            icon: Icon(isLimitReached ? Icons.upgrade : Icons.add),
+            label: Text(
+              isLimitReached ? 'ترقية الباقة (تم بلوغ الحد)' : 'إضافة منتج جديد',
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final filtered = _allProducts.where((p) {
@@ -78,115 +253,118 @@ class _ProductsTabState extends State<ProductsTab> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         backgroundColor: AppColors.background,
-        body: Column(
-          children: [
-            // Search and Category filter row
-            Container(
-              color: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Subscription Dashboard Header
+              _buildSubscriptionDashboardHeader(context, ref),
+
+              // Search and Category filter row
+              Container(
+                color: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.surfaceContainerLow,
+                          borderRadius: BorderRadius.circular(28),
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.search, color: AppColors.outline),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: TextField(
+                                controller: _searchController,
+                                style: const TextStyle(fontSize: 13),
+                                decoration: const InputDecoration(
+                                  hintText: 'البحث باسم المنتج أو الرمز...',
+                                  border: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  contentPadding: EdgeInsets.symmetric(vertical: 12),
+                                ),
+                                onChanged: (value) {
+                                  setState(() => _searchQuery = value);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    // Category Dropdown
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
                       decoration: BoxDecoration(
                         color: AppColors.surfaceContainerLow,
                         borderRadius: BorderRadius.circular(28),
                       ),
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.search, color: AppColors.outline),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: TextField(
-                              controller: _searchController,
-                              onChanged: (v) => setState(() => _searchQuery = v),
-                              style: const TextStyle(fontSize: 13),
-                              decoration: const InputDecoration(
-                                hintText: 'بحث باسم المنتج أو الرمز...',
-                                hintStyle: TextStyle(fontSize: 12, color: AppColors.outline),
-                                border: InputBorder.none,
-                                isDense: true,
-                              ),
-                            ),
-                          ),
-                          if (_searchQuery.isNotEmpty)
-                            IconButton(
-                              icon: const Icon(Icons.clear, size: 16),
-                              onPressed: () {
-                                _searchController.clear();
-                                setState(() => _searchQuery = '');
-                              },
-                            ),
-                        ],
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: _selectedCategory,
+                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                          icon: const Icon(Icons.keyboard_arrow_down, size: 18),
+                          items: ['الكل', 'أقمشة', 'خيوط']
+                              .map((c) => DropdownMenuItem(value: c, child: Text(c)))
+                              .toList(),
+                          onChanged: (v) {
+                            if (v != null) setState(() => _selectedCategory = v);
+                          },
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  // Category Dropdown
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: AppColors.surfaceContainerLow,
-                      borderRadius: BorderRadius.circular(28),
+                  ],
+                ),
+              ),
+              // Header stats & controls
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                child: Row(
+                  children: [
+                    Text(
+                      'إجمالي المنتجات: ${filtered.length}',
+                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.outline),
                     ),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        value: _selectedCategory,
-                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
-                        icon: const Icon(Icons.keyboard_arrow_down, size: 18),
-                        items: ['الكل', 'أقمشة', 'خيوط']
-                            .map((c) => DropdownMenuItem(value: c, child: Text(c)))
-                            .toList(),
-                        onChanged: (v) {
-                          if (v != null) setState(() => _selectedCategory = v);
-                        },
+                    const Spacer(),
+                    TextButton.icon(
+                      onPressed: () {
+                        setState(() {
+                          _isBulkActionActive = !_isBulkActionActive;
+                          _selectedProductIds.clear();
+                        });
+                      },
+                      icon: Icon(_isBulkActionActive ? Icons.close : Icons.playlist_add_check, size: 18),
+                      label: Text(
+                        _isBulkActionActive ? 'إلغاء التحديد' : 'تحديد متعدد',
+                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            // Header stats & controls
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              child: Row(
-                children: [
-                  Text(
-                    'إجمالي المنتجات: ${filtered.length}',
-                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.outline),
-                  ),
-                  const Spacer(),
-                  TextButton.icon(
-                    onPressed: () {
-                      setState(() {
-                        _isBulkActionActive = !_isBulkActionActive;
-                        _selectedProductIds.clear();
-                      });
-                    },
-                    icon: Icon(_isBulkActionActive ? Icons.close : Icons.playlist_add_check, size: 18),
-                    label: Text(
-                      _isBulkActionActive ? 'إلغاء التحديد' : 'تحديد متعدد',
-                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            // Product List
-            Expanded(
-              child: filtered.isEmpty
+              // Product List
+              filtered.isEmpty
                   ? const Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.widgets_outlined, size: 48, color: AppColors.outlineVariant),
-                          SizedBox(height: 12),
-                          Text('لا توجد منتجات مطابقة', style: TextStyle(color: AppColors.outline)),
-                        ],
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 40.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.widgets_outlined, size: 48, color: AppColors.outlineVariant),
+                            SizedBox(height: 12),
+                            Text('لا توجد منتجات مطابقة', style: TextStyle(color: AppColors.outline)),
+                          ],
+                        ),
                       ),
                     )
                   : ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       itemCount: filtered.length,
                       separatorBuilder: (_, __) => const SizedBox(height: 10),
@@ -331,51 +509,45 @@ class _ProductsTabState extends State<ProductsTab> {
                         );
                       },
                     ),
-            ),
-            // Floating Bulk Actions Bar
-            if (_isBulkActionActive && _selectedProductIds.isNotEmpty)
-              Container(
-                color: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                child: Row(
-                  children: [
-                    Text(
-                      'تم تحديد ${_selectedProductIds.length} منتجات',
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.primary),
-                    ),
-                    const Spacer(),
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        setState(() {
-                          _allProducts.removeWhere((p) => _selectedProductIds.contains(p['id']));
-                          _selectedProductIds.clear();
-                          _isBulkActionActive = false;
-                        });
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('تم حذف المنتجات المحددة بنجاح.')),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                        foregroundColor: Colors.white,
-                        minimumSize: const Size(0, 36),
+              // Floating Bulk Actions Bar
+              if (_isBulkActionActive && _selectedProductIds.isNotEmpty)
+                Container(
+                  color: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  child: Row(
+                    children: [
+                      Text(
+                        'تم تحديد ${_selectedProductIds.length} منتجات',
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.primary),
                       ),
-                      icon: const Icon(Icons.delete_outline, size: 16),
-                      label: const Text('حذف المحدد', style: TextStyle(fontSize: 12)),
-                    ),
-                  ],
+                      const Spacer(),
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          setState(() {
+                            _allProducts.removeWhere((p) => _selectedProductIds.contains(p['id']));
+                            _selectedProductIds.clear();
+                            _isBulkActionActive = false;
+                          });
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('تم حذف المنتجات المحددة بنجاح.')),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                          minimumSize: const Size(0, 36),
+                        ),
+                        icon: const Icon(Icons.delete_outline, size: 16),
+                        label: const Text('حذف المحدد', style: TextStyle(fontSize: 12)),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
         floatingActionButton: !_isBulkActionActive
-            ? FloatingActionButton.extended(
-                onPressed: () => context.push('/add-product'),
-                backgroundColor: const Color(0xFF0040E0),
-                foregroundColor: Colors.white,
-                icon: const Icon(Icons.add),
-                label: const Text('إضافة منتج جديد', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-              )
+            ? _buildFab(ref)
             : null,
       ),
     );
