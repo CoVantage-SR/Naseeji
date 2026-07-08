@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_declarations
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../domain/entities/financial_models.dart';
 import '../../domain/repositories/financial_repository.dart';
@@ -6,7 +8,7 @@ part 'financial_repository_impl.g.dart';
 
 class FinancialRepositoryImpl implements FinancialRepository {
   // Static state to persist changes across provider rebuilds
-  static final double _currentBalance = 62680.0;
+  static const double _currentBalance = 62680.0;
   static final double _pendingBalance = 12450.0;
   static double _availableBalance = 45230.0;
   static final double _frozenBalance = 5000.0;
