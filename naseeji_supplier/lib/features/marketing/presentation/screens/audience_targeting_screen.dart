@@ -4,7 +4,6 @@ import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import 'package:naseeji_supplier/core/widgets/general_widgets.dart';
 import '../controllers/marketing_controllers.dart';
 import '../widgets/audience_filter_widget.dart';
-import '../widgets/recommendation_card.dart';
 import '../../domain/entities/marketing_models.dart';
 
 class AudienceTargetingScreen extends ConsumerStatefulWidget {
@@ -159,7 +158,7 @@ class _AudienceTargetingScreenState extends ConsumerState<AudienceTargetingScree
                             ),
                           );
                         },
-                        child: const Text('تطبيق الشريحة وحساب الوصول المتوقع', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.white)),
+                        text: 'تطبيق الشريحة وحساب الوصول المتوقع',
                       ),
                     ],
                   ),

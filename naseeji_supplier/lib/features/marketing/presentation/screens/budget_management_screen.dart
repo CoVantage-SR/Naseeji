@@ -125,7 +125,7 @@ class _BudgetManagementScreenState extends ConsumerState<BudgetManagementScreen>
                               final m = double.tryParse(_monthlyController.text) ?? budget.monthlyBudget;
                               _updateCap(d, m);
                             },
-                            child: const Text('تطبيق الحدود الجديدة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.white)),
+                            text: 'تطبيق الحدود الجديدة',
                           ),
                         ],
                       ),

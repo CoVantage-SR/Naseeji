@@ -163,7 +163,7 @@ class _CouponsScreenState extends ConsumerState<CouponsScreen> {
                           const SizedBox(height: 20),
                           PrimaryButton(
                             onPressed: _submitCoupon,
-                            child: const Text('إنشاء الكوبون ونشره بالمنصة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.white)),
+                            text: 'إنشاء الكوبون ونشره بالمنصة',
                           ),
                         ],
                       ),

@@ -51,7 +51,7 @@ class _FeaturedProductsScreenState extends ConsumerState<FeaturedProductsScreen>
     ref.read(featuredProductsControllerProvider.notifier).promoteProduct(promo);
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('تم ترويج ${_selectedProduct} بنجاح بتكلفة $cost ر.س!')),
+      SnackBar(content: Text('تم ترويج $_selectedProduct بنجاح بتكلفة $cost ر.س!')),
     );
   }
 

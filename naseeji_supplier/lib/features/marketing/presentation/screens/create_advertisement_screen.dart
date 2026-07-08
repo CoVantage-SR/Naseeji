@@ -272,7 +272,7 @@ class _CreateAdvertisementScreenState extends ConsumerState<CreateAdvertisementS
                   // Create button
                   PrimaryButton(
                     onPressed: _submitAd,
-                    child: const Text('إنشاء الإعلان وإرساله للمراجعة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.white)),
+                    text: 'إنشاء الإعلان وإرساله للمراجعة',
                   ),
                   const SizedBox(height: 24),
                 ],
