@@ -64,7 +64,7 @@ class SubscriptionChart extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                '${val.toStringAsFixed(0)}',
+                val.toStringAsFixed(0),
                 style: const TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant),
               ),
               const SizedBox(height: 4),
@@ -105,7 +105,7 @@ class SubscriptionChart extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                '${val.toStringAsFixed(1)}',
+                val.toStringAsFixed(1),
                 style: const TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant),
               ),
               const SizedBox(height: 4),

@@ -106,7 +106,7 @@ class SubscriptionPlanCard extends StatelessWidget {
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      hasPrice ? '${plan.price.toStringAsFixed(0)}' : 'مجاناً',
+                      hasPrice ? plan.price.toStringAsFixed(0) : 'مجاناً',
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,

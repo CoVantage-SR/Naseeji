@@ -17,7 +17,7 @@ class SubscriptionRepositoryImpl implements SubscriptionRepository {
     paymentMethod: 'مدى بطاقة **** 4820',
   );
 
-  SubscriptionUsage _usage = const SubscriptionUsage(
+  final SubscriptionUsage _usage = const SubscriptionUsage(
     productsUsed: 18,
     advertisementsUsed: 2,
     featuredProductsUsed: 1,
