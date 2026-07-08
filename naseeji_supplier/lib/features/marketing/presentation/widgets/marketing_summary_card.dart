@@ -53,7 +53,7 @@ class MarketingSummaryCard extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: AppColors.onSurface,
             ),
-            textAlign: AlignmentDirectional.centerEnd.value == 1 ? TextAlign.left : TextAlign.right,
+            textAlign: TextAlign.right,
           ),
           if (trendText != null) ...[
             const SizedBox(height: 8),

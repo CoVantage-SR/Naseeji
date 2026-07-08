@@ -163,7 +163,7 @@ class _PromotionalOffersScreenState extends ConsumerState<PromotionalOffersScree
                           const SizedBox(height: 20),
                           PrimaryButton(
                             onPressed: _submitOffer,
-                            child: const Text('حفظ ونشر العرض الترويجي', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.white)),
+                            text: 'حفظ ونشر العرض الترويجي',
                           ),
                         ],
                       ),

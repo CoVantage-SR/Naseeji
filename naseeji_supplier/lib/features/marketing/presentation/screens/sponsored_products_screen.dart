@@ -49,7 +49,7 @@ class _SponsoredProductsScreenState extends ConsumerState<SponsoredProductsScree
     ref.read(sponsoredProductsControllerProvider.notifier).createSponsored(spp);
     
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('تم تفعيل إعلان الدفع بالنقر لـ ${_selectedProduct} بميزانية $b ر.س!')),
+      SnackBar(content: Text('تم تفعيل إعلان الدفع بالنقر لـ $_selectedProduct بميزانية $b ر.س!')),
     );
   }
 
@@ -125,7 +125,7 @@ class _SponsoredProductsScreenState extends ConsumerState<SponsoredProductsScree
                           const SizedBox(height: 20),
                           PrimaryButton(
                             onPressed: _addSponsored,
-                            child: const Text('بدء حملة الدفع بالنقر CPC', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.white)),
+                            text: 'بدء حملة الدفع بالنقر CPC',
                           ),
                         ],
                       ),
@@ -159,7 +159,7 @@ class _SponsoredProductsScreenState extends ConsumerState<SponsoredProductsScree
                                   onChanged: (val) {
                                     ref.read(sponsoredProductsControllerProvider.notifier).updateSponsoredStatus(p.id, val);
                                   },
-                                  activeColor: const Color(0xFF0040E0),
+                                  activeThumbColor: const Color(0xFF0040E0),
                                 ),
                                 Text(
                                   p.productName,

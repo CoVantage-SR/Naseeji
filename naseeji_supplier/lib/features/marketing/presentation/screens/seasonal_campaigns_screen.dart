@@ -205,7 +205,7 @@ class _SeasonalCampaignsScreenState extends ConsumerState<SeasonalCampaignsScree
                               const SizedBox(height: 16),
                               PrimaryButton(
                                 onPressed: () => _optIn(event),
-                                child: const Text('انضم للحملة الموسمية الآن', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.white)),
+                                text: 'انضم للحملة الموسمية الآن',
                               ),
                             ],
                           ),

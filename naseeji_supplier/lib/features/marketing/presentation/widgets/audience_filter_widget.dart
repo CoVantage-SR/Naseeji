@@ -162,7 +162,7 @@ class AudienceFilterWidget extends StatelessWidget {
         style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.onSurface),
         textAlign: TextAlign.right,
       ),
-      activeColor: const Color(0xFF0040E0),
+      activeThumbColor: const Color(0xFF0040E0),
       contentPadding: EdgeInsets.zero,
       dense: true,
     );

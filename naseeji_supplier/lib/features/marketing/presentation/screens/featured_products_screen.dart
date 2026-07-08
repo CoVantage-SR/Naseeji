@@ -154,7 +154,7 @@ class _FeaturedProductsScreenState extends ConsumerState<FeaturedProductsScreen>
                           const SizedBox(height: 20),
                           PrimaryButton(
                             onPressed: _promoteProduct,
-                            child: const Text('تفعيل الترويج المتميز', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.white)),
+                            text: 'تفعيل الترويج المتميز',
                           ),
                         ],
                       ),

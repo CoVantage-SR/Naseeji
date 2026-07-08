@@ -124,25 +124,30 @@ class MarketingChartWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Row(
-                  crossAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Expanded(
-                      child: Container(
-                        height: hPercent1 * 90 + 4,
-                        margin: const EdgeInsets.only(left: 2),
-                        decoration: const BoxDecoration(
-                          color: Color(0xFF0040E0),
-                          borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          height: hPercent1 * 90 + 4,
+                          margin: const EdgeInsets.only(left: 2),
+                          decoration: const BoxDecoration(
+                            color: Color(0xFF0040E0),
+                            borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
+                          ),
                         ),
                       ),
                     ),
                     Expanded(
-                      child: Container(
-                        height: hPercent2 * 90 + 4,
-                        margin: const EdgeInsets.only(right: 2),
-                        decoration: const BoxDecoration(
-                          color: Color(0xFF006B5F),
-                          borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          height: hPercent2 * 90 + 4,
+                          margin: const EdgeInsets.only(right: 2),
+                          decoration: const BoxDecoration(
+                            color: Color(0xFF006B5F),
+                            borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
+                          ),
                         ),
                       ),
                     ),

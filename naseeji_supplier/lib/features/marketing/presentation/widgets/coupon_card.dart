@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart' as intl;
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import '../../domain/entities/marketing_models.dart';
 
@@ -15,7 +14,7 @@ class CouponCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final expiryStr = intl.DateFormat('yyyy/MM/dd').format(coupon.expirationDate);
+    final expiryStr = '${coupon.expirationDate.year}/${coupon.expirationDate.month.toString().padLeft(2, '0')}/${coupon.expirationDate.day.toString().padLeft(2, '0')}';
     final bool isExpired = coupon.expirationDate.isBefore(DateTime.now());
 
     return Container(
@@ -36,7 +35,7 @@ class CouponCard extends StatelessWidget {
                 Switch(
                   value: coupon.active && !isExpired,
                   onChanged: isExpired ? null : onToggleStatus,
-                  activeColor: const Color(0xFF0040E0),
+                  activeThumbColor: const Color(0xFF0040E0),
                 ),
                 Expanded(
                   child: Column(

@@ -5,6 +5,7 @@ import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import 'package:naseeji_supplier/core/widgets/app_bottom_navigation_bar.dart';
 import '../controllers/marketing_controllers.dart';
 import '../widgets/marketing_summary_card.dart';
+import '../../domain/entities/marketing_models.dart';
 
 class MarketingDashboardScreen extends ConsumerWidget {
   const MarketingDashboardScreen({super.key});
@@ -13,7 +14,6 @@ class MarketingDashboardScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final dashboardAsync = ref.watch(marketingDashboardControllerProvider);
     final adsAsync = ref.watch(marketingAdvertisementsControllerProvider);
-    final campaignsAsync = ref.watch(marketingCampaignsControllerProvider);
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -340,7 +340,7 @@ class MarketingDashboardScreen extends ConsumerWidget {
       color: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
+        side: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
       ),
       child: InkWell(
         onTap: () => context.push(route),

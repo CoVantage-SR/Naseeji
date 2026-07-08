@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart' as intl;
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import 'package:naseeji_supplier/core/widgets/general_widgets.dart';
 import '../controllers/marketing_controllers.dart';
@@ -170,7 +169,7 @@ class _MarketingNotificationsScreenState extends ConsumerState<MarketingNotifica
                           const SizedBox(height: 20),
                           PrimaryButton(
                             onPressed: _sendNotification,
-                            child: const Text('إرسال وتوجيه الإشعار', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Colors.white)),
+                            text: 'إرسال وتوجيه الإشعار',
                           ),
                         ],
                       ),
@@ -185,7 +184,7 @@ class _MarketingNotificationsScreenState extends ConsumerState<MarketingNotifica
                     ),
                     const SizedBox(height: 12),
                     ...notifs.map((notif) {
-                      final dateStr = intl.DateFormat('yyyy/MM/dd HH:mm').format(notif.sentTime);
+                      final dateStr = '${notif.sentTime.year}/${notif.sentTime.month.toString().padLeft(2, '0')}/${notif.sentTime.day.toString().padLeft(2, '0')} ${notif.sentTime.hour.toString().padLeft(2, '0')}:${notif.sentTime.minute.toString().padLeft(2, '0')}';
                       return Container(
                         margin: const EdgeInsets.only(bottom: 12),
                         padding: const EdgeInsets.all(16),
