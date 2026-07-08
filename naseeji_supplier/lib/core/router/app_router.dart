@@ -41,7 +41,8 @@ import '../../features/messages/presentation/screens/messages_screen.dart';
 import '../../features/messages/presentation/screens/business_chat_screen.dart';
 import '../../features/messages/presentation/screens/support_chat_screen.dart';
 import '../../features/messages/presentation/screens/attachments_screen.dart';
-import '../../features/messages/presentation/screens/quotation_history_screen.dart' as msg_qh;
+import '../../features/messages/presentation/screens/quotation_history_screen.dart'
+    as msg_qh;
 import '../../features/messages/presentation/screens/chat_timeline_screen.dart';
 import '../../features/messages/presentation/screens/search_messages_screen.dart';
 import '../../features/messages/presentation/screens/chat_settings_screen.dart';
@@ -113,7 +114,7 @@ part 'app_router.g.dart';
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
   return GoRouter(
-    initialLocation: '/home',
+    initialLocation: '/',
     observers: [SessionRouterObserver(ref)],
     routes: [
       GoRoute(
@@ -154,7 +155,8 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/home',
         name: 'home',
-        pageBuilder: (context, state) => const NoTransitionPage(child: HomeScreen()),
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: HomeScreen()),
       ),
       GoRoute(
         path: '/analytics',
@@ -174,7 +176,8 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/profile',
         name: 'profile',
-        pageBuilder: (context, state) => const NoTransitionPage(child: SupplierProfileScreen()),
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: SupplierProfileScreen()),
       ),
       GoRoute(
         path: '/profile/edit',
@@ -184,7 +187,8 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/products',
         name: 'products',
-        pageBuilder: (context, state) => const NoTransitionPage(child: ProductsModuleScreen()),
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: ProductsModuleScreen()),
       ),
       GoRoute(
         path: '/add-product',
@@ -199,14 +203,14 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/shipping',
         name: 'shipping',
-        pageBuilder: (context, state) => const NoTransitionPage(child: ShippingDashboardScreen()),
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: ShippingDashboardScreen()),
       ),
       GoRoute(
         path: '/shipping/details/:id',
         name: 'shipping-details',
-        builder: (context, state) => ShipmentDetailsScreen(
-          shipmentId: state.pathParameters['id'] ?? '',
-        ),
+        builder: (context, state) =>
+            ShipmentDetailsScreen(shipmentId: state.pathParameters['id'] ?? ''),
       ),
       GoRoute(
         path: '/shipping/tracking/:id',
@@ -218,9 +222,8 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/shipping/issue/:id',
         name: 'shipping-issue',
-        builder: (context, state) => ShipmentIssueScreen(
-          shipmentId: state.pathParameters['id'] ?? '',
-        ),
+        builder: (context, state) =>
+            ShipmentIssueScreen(shipmentId: state.pathParameters['id'] ?? ''),
       ),
       GoRoute(
         path: '/shipping/company-selector/:id',
@@ -240,7 +243,8 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/agreements',
         name: 'agreements',
-        pageBuilder: (context, state) => const NoTransitionPage(child: AgreementsDashboardScreen()),
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: AgreementsDashboardScreen()),
       ),
       GoRoute(
         path: '/agreements/details/:id',
@@ -273,42 +277,38 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/orders',
         name: 'orders',
-        pageBuilder: (context, state) => const NoTransitionPage(child: OrdersScreen()),
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: OrdersScreen()),
       ),
       GoRoute(
         path: '/rfq-details',
         name: 'rfq-details',
-        builder: (context, state) => RfqDetailsScreen(
-          rfqId: state.uri.queryParameters['rfqId'] ?? '',
-        ),
+        builder: (context, state) =>
+            RfqDetailsScreen(rfqId: state.uri.queryParameters['rfqId'] ?? ''),
       ),
       GoRoute(
         path: '/create-offer',
         name: 'create-offer',
-        builder: (context, state) => CreateOfferScreen(
-          rfqId: state.uri.queryParameters['rfqId'] ?? '',
-        ),
+        builder: (context, state) =>
+            CreateOfferScreen(rfqId: state.uri.queryParameters['rfqId'] ?? ''),
       ),
       GoRoute(
         path: '/orders/chat',
         name: 'orders-chat',
-        builder: (context, state) => RfqChatScreen(
-          rfqId: state.uri.queryParameters['rfqId'] ?? '',
-        ),
+        builder: (context, state) =>
+            RfqChatScreen(rfqId: state.uri.queryParameters['rfqId'] ?? ''),
       ),
       GoRoute(
         path: '/orders/offer-preview',
         name: 'orders-offer-preview',
-        builder: (context, state) => OfferPreviewScreen(
-          rfqId: state.uri.queryParameters['rfqId'] ?? '',
-        ),
+        builder: (context, state) =>
+            OfferPreviewScreen(rfqId: state.uri.queryParameters['rfqId'] ?? ''),
       ),
       GoRoute(
         path: '/orders/offer-details',
         name: 'orders-offer-details',
-        builder: (context, state) => OfferDetailsScreen(
-          rfqId: state.uri.queryParameters['rfqId'] ?? '',
-        ),
+        builder: (context, state) =>
+            OfferDetailsScreen(rfqId: state.uri.queryParameters['rfqId'] ?? ''),
       ),
       GoRoute(
         path: '/orders/offer-rejected',
@@ -376,16 +376,14 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/orders/activity-log',
         name: 'orders-activity-log',
-        builder: (context, state) => ActivityLogScreen(
-          rfqId: state.uri.queryParameters['rfqId'] ?? '',
-        ),
+        builder: (context, state) =>
+            ActivityLogScreen(rfqId: state.uri.queryParameters['rfqId'] ?? ''),
       ),
       GoRoute(
         path: '/orders/order-center',
         name: 'orders-order-center',
-        builder: (context, state) => OrderCenterScreen(
-          rfqId: state.uri.queryParameters['rfqId'] ?? '',
-        ),
+        builder: (context, state) =>
+            OrderCenterScreen(rfqId: state.uri.queryParameters['rfqId'] ?? ''),
       ),
       GoRoute(
         path: '/orders/dispute-center',
@@ -411,7 +409,8 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/messages',
         name: 'messages',
-        pageBuilder: (context, state) => const NoTransitionPage(child: MessagesScreen()),
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: MessagesScreen()),
       ),
       GoRoute(
         path: '/messages/archived',
@@ -442,9 +441,8 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/messages/chat/:id/attachments',
         name: 'messages-attachments',
-        builder: (context, state) => AttachmentsScreen(
-          conversationId: state.pathParameters['id'] ?? '',
-        ),
+        builder: (context, state) =>
+            AttachmentsScreen(conversationId: state.pathParameters['id'] ?? ''),
       ),
       GoRoute(
         path: '/messages/chat/:id/quotation-history',
@@ -463,15 +461,15 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/messages/support/:id',
         name: 'messages-support-chat',
-        builder: (context, state) => SupportChatScreen(
-          ticketId: state.pathParameters['id'] ?? '',
-        ),
+        builder: (context, state) =>
+            SupportChatScreen(ticketId: state.pathParameters['id'] ?? ''),
       ),
       // ─── Quotations Feature ───────────────────────────────────────────
       GoRoute(
         path: '/quotations',
         name: 'quotations',
-        pageBuilder: (context, state) => const NoTransitionPage(child: QuotationsDashboardScreen()),
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: QuotationsDashboardScreen()),
       ),
       GoRoute(
         path: '/quotations/details/:id',
@@ -505,28 +503,26 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/customers',
         name: 'customers',
-        pageBuilder: (context, state) => const NoTransitionPage(child: CustomersDashboardScreen()),
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: CustomersDashboardScreen()),
       ),
       GoRoute(
         path: '/customers/details/:id',
         name: 'customers-details',
-        builder: (context, state) => CustomerDetailsScreen(
-          customerId: state.pathParameters['id'] ?? '',
-        ),
+        builder: (context, state) =>
+            CustomerDetailsScreen(customerId: state.pathParameters['id'] ?? ''),
       ),
       GoRoute(
         path: '/customers/orders/:id',
         name: 'customers-orders',
-        builder: (context, state) => CustomerOrdersScreen(
-          customerId: state.pathParameters['id'] ?? '',
-        ),
+        builder: (context, state) =>
+            CustomerOrdersScreen(customerId: state.pathParameters['id'] ?? ''),
       ),
       GoRoute(
         path: '/customers/notes/:id',
         name: 'customers-notes',
-        builder: (context, state) => CustomerNotesScreen(
-          customerId: state.pathParameters['id'] ?? '',
-        ),
+        builder: (context, state) =>
+            CustomerNotesScreen(customerId: state.pathParameters['id'] ?? ''),
       ),
       GoRoute(
         path: '/customers/analytics/:id',
@@ -539,7 +535,8 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/finance',
         name: 'finance-dashboard',
-        pageBuilder: (context, state) => const NoTransitionPage(child: FinancialDashboardScreen()),
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: FinancialDashboardScreen()),
       ),
       GoRoute(
         path: '/finance/transactions',
@@ -648,7 +645,8 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/subscription',
         name: 'subscription-dashboard',
-        pageBuilder: (context, state) => const NoTransitionPage(child: SubscriptionDashboardScreen()),
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: SubscriptionDashboardScreen()),
       ),
       GoRoute(
         path: '/subscription/plans',
