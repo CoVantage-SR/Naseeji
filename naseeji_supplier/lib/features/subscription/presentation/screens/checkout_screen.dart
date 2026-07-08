@@ -140,6 +140,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF0040E0),
                               foregroundColor: Colors.white,
+                              minimumSize: const Size(80, 48),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                             ),

@@ -143,6 +143,7 @@ class AddonsStoreScreen extends ConsumerWidget {
                                 backgroundColor: const Color(0xFF0040E0),
                                 foregroundColor: Colors.white,
                                 elevation: 0,
+                                minimumSize: const Size(120, 36),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
                                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                               ),
