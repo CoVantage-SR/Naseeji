@@ -1,0 +1,201 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import '../controllers/financial_controllers.dart';
+import '../widgets/withdrawal_card.dart';
+
+class WithdrawalsScreen extends ConsumerWidget {
+  const WithdrawalsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final withdrawalsAsync = ref.watch(financialWithdrawalsControllerProvider);
+    final walletAsync = ref.watch(financialWalletControllerProvider);
+    final methodsAsync = ref.watch(financialPaymentMethodsControllerProvider);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'تسويات سحب الرصيد البنكي',
+          style: TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          onPressed: () => context.pop(),
+        ),
+      ),
+      body: Container(
+        color: const Color(0xFFF8F9FF),
+        child: walletAsync.when(
+          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          error: (err, stack) => Center(child: Text('خطأ: $err')),
+          data: (wallet) {
+            return RefreshIndicator(
+              color: AppColors.primary,
+              onRefresh: () async {
+                ref.read(financialWithdrawalsControllerProvider.notifier).refresh();
+                ref.read(financialWalletControllerProvider.notifier).refresh();
+              },
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Available Balance card
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
+                      ),
+                      child: Column(
+                        children: [
+                          const Text(
+                            'الرصيد المتاح للسحب البنكي حالياً',
+                            style: TextStyle(fontSize: 12, color: AppColors.outline, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            '${wallet.availableBalance.toStringAsFixed(2)} ر.س',
+                            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.primary),
+                          ),
+                          const SizedBox(height: 12),
+                          const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '1,000.00 ر.س',
+                                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                              ),
+                              Text(
+                                'الحد الأدنى لعملية السحب',
+                                style: TextStyle(fontSize: 12, color: AppColors.outline),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Default linked bank account
+                    methodsAsync.when(
+                      loading: () => const SizedBox.shrink(),
+                      error: (err, s) => const SizedBox.shrink(),
+                      data: (methods) {
+                        final defaultMethod = methods.firstWhere(
+                          (m) => m.isDefault,
+                          orElse: () => methods.isNotEmpty ? methods.first : const PaymentMethod(id: '', type: 'bank_account', title: 'لا يوجد حساب افتراضي', subtitle: 'الرجاء إضافة حساب بنكي', accountHolder: '', identifier: '', isDefault: false, isVerified: false),
+                        );
+
+                        return Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF3F2FF),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.account_balance, color: AppColors.primary, size: 20),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      defaultMethod.title,
+                                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    Text(
+                                      defaultMethod.identifier.isNotEmpty ? 'الآيبان: ${defaultMethod.identifier}' : defaultMethod.subtitle,
+                                      textDirection: TextDirection.ltr,
+                                      style: const TextStyle(fontSize: 10, color: AppColors.outline),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              const Text(
+                                'حساب الاستلام:',
+                                style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.primary),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Actions Button
+                    ElevatedButton.icon(
+                      onPressed: () => context.push('/finance/withdrawals/request'),
+                      icon: const Icon(Icons.add_card, size: 18),
+                      label: const Text('طلب تسوية سحب جديد'),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size.fromHeight(52),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Withdrawal requests history
+                    const Text(
+                      'سجل عمليات وتصفيات الحساب',
+                      textAlign: TextAlign.right,
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                    ),
+                    const SizedBox(height: 10),
+
+                    withdrawalsAsync.when(
+                      loading: () => const Center(child: CircularProgressIndicator()),
+                      error: (err, stack) => Center(child: Text('خطأ: $err')),
+                      data: (list) {
+                        if (list.isEmpty) {
+                          return const Center(child: Text('لا توجد عمليات سحب سابقة'));
+                        }
+
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: list.length,
+                          itemBuilder: (context, index) {
+                            return WithdrawalCard(
+                              request: list[index],
+                              onCancel: (id) async {
+                                final confirm = await showDialog<bool>(
+                                  context: context,
+                                  builder: (ctx) => AlertDialog(
+                                    title: const Text('تأكيد الإلغاء', textAlign: TextAlign.right),
+                                    content: const Text('هل أنت متأكد من رغبتك في إلغاء طلب السحب هذا؟ سيعاد الرصيد لمحفظتك فوراً.', textAlign: TextAlign.right),
+                                    actions: [
+                                      TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('تراجع')),
+                                      TextButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('تأكيد الإلغاء', style: TextStyle(color: Colors.red))),
+                                    ],
+                                  ),
+                                );
+
+                                if (confirm == true) {
+                                  await ref.read(financialWithdrawalsControllerProvider.notifier).cancelWithdrawal(id);
+                                }
+                              },
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}

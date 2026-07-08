@@ -71,6 +71,26 @@ import '../../features/customers/presentation/screens/customer_orders_screen.dar
 import '../../features/customers/presentation/screens/customer_notes_screen.dart';
 import '../../features/customers/presentation/screens/customer_analytics_screen.dart';
 
+import '../../features/financial/presentation/screens/financial_dashboard_screen.dart';
+import '../../features/financial/presentation/screens/transactions_screen.dart';
+import '../../features/financial/presentation/screens/transaction_details_screen.dart';
+import '../../features/financial/presentation/screens/payments_screen.dart';
+import '../../features/financial/presentation/screens/payment_details_screen.dart';
+import '../../features/financial/presentation/screens/wallet_screen.dart';
+import '../../features/financial/presentation/screens/withdrawals_screen.dart';
+import '../../features/financial/presentation/screens/request_withdrawal_screen.dart';
+import '../../features/financial/presentation/screens/earnings_screen.dart';
+import '../../features/financial/presentation/screens/expenses_screen.dart';
+import '../../features/financial/presentation/screens/invoices_screen.dart';
+import '../../features/financial/presentation/screens/invoice_details_screen.dart';
+import '../../features/financial/presentation/screens/financial_reports_screen.dart';
+import '../../features/financial/presentation/screens/tax_center_screen.dart';
+import '../../features/financial/presentation/screens/payment_methods_screen.dart';
+import '../../features/financial/presentation/screens/refunds_screen.dart';
+import '../../features/financial/presentation/screens/escrow_tracking_screen.dart';
+import '../../features/financial/presentation/screens/financial_analytics_screen.dart';
+import '../../features/financial/domain/entities/financial_models.dart';
+
 part 'app_router.g.dart';
 
 @riverpod
@@ -492,6 +512,115 @@ GoRouter goRouter(GoRouterRef ref) {
         builder: (context, state) => CustomerAnalyticsScreen(
           customerId: state.pathParameters['id'] ?? '',
         ),
+      ),
+      // ─── Financial Feature ───────────────────────────────────────────
+      GoRoute(
+        path: '/finance',
+        name: 'finance-dashboard',
+        pageBuilder: (context, state) => const NoTransitionPage(child: FinancialDashboardScreen()),
+      ),
+      GoRoute(
+        path: '/finance/transactions',
+        name: 'finance-transactions',
+        builder: (context, state) => const TransactionsScreen(),
+      ),
+      GoRoute(
+        path: '/finance/transactions/:id',
+        name: 'finance-transaction-details',
+        builder: (context, state) {
+          final extraTxn = state.extra as FinancialTransaction?;
+          return TransactionDetailsScreen(
+            transactionId: state.pathParameters['id'] ?? '',
+            transaction: extraTxn,
+          );
+        },
+      ),
+      GoRoute(
+        path: '/finance/payments',
+        name: 'finance-payments',
+        builder: (context, state) => const PaymentsScreen(),
+      ),
+      GoRoute(
+        path: '/finance/payments/:id',
+        name: 'finance-payment-details',
+        builder: (context, state) {
+          final extraPay = state.extra as SupplierPayment?;
+          return PaymentDetailsScreen(
+            paymentNumber: state.pathParameters['id'] ?? '',
+            payment: extraPay,
+          );
+        },
+      ),
+      GoRoute(
+        path: '/finance/wallet',
+        name: 'finance-wallet',
+        builder: (context, state) => const WalletScreen(),
+      ),
+      GoRoute(
+        path: '/finance/withdrawals',
+        name: 'finance-withdrawals',
+        builder: (context, state) => const WithdrawalsScreen(),
+      ),
+      GoRoute(
+        path: '/finance/withdrawals/request',
+        name: 'finance-withdrawals-request',
+        builder: (context, state) => const RequestWithdrawalScreen(),
+      ),
+      GoRoute(
+        path: '/finance/earnings',
+        name: 'finance-earnings',
+        builder: (context, state) => const EarningsScreen(),
+      ),
+      GoRoute(
+        path: '/finance/expenses',
+        name: 'finance-expenses',
+        builder: (context, state) => const ExpensesScreen(),
+      ),
+      GoRoute(
+        path: '/finance/invoices',
+        name: 'finance-invoices',
+        builder: (context, state) => const InvoicesScreen(),
+      ),
+      GoRoute(
+        path: '/finance/invoices/:id',
+        name: 'finance-invoice-details',
+        builder: (context, state) {
+          final extraInv = state.extra as SupplierInvoice?;
+          return InvoiceDetailsScreen(
+            invoiceNumber: state.pathParameters['id'] ?? '',
+            invoice: extraInv,
+          );
+        },
+      ),
+      GoRoute(
+        path: '/finance/reports',
+        name: 'finance-reports',
+        builder: (context, state) => const FinancialReportsScreen(),
+      ),
+      GoRoute(
+        path: '/finance/tax',
+        name: 'finance-tax',
+        builder: (context, state) => const TaxCenterScreen(),
+      ),
+      GoRoute(
+        path: '/finance/methods',
+        name: 'finance-methods',
+        builder: (context, state) => const PaymentMethodsScreen(),
+      ),
+      GoRoute(
+        path: '/finance/refunds',
+        name: 'finance-refunds',
+        builder: (context, state) => const RefundsScreen(),
+      ),
+      GoRoute(
+        path: '/finance/escrow',
+        name: 'finance-escrow',
+        builder: (context, state) => const EscrowTrackingScreen(),
+      ),
+      GoRoute(
+        path: '/finance/analytics',
+        name: 'finance-analytics',
+        builder: (context, state) => const FinancialAnalyticsScreen(),
       ),
     ],
   );

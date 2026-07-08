@@ -144,7 +144,10 @@ class NavigationDrawerView extends ConsumerWidget {
                     title: 'الإدارة المالية',
                     path: '/finance',
                     currentRoute: currentRoute,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context);
+                      context.push('/finance');
+                    },
                   ),
                   DrawerItem(
                     icon: Icons.campaign_outlined,
