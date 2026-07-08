@@ -151,10 +151,13 @@ class NavigationDrawerView extends ConsumerWidget {
                   ),
                   DrawerItem(
                     icon: Icons.campaign_outlined,
-                    title: 'الإعلانات',
-                    path: '/ads',
+                    title: 'التسويق والإعلانات B2B',
+                    path: '/marketing',
                     currentRoute: currentRoute,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context);
+                      context.push('/marketing');
+                    },
                   ),
                 ],
               ),
