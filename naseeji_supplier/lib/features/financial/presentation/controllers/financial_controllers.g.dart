@@ -237,7 +237,7 @@ final financialReportsControllerProvider =
 typedef _$FinancialReportsController =
     AutoDisposeAsyncNotifier<List<FinancialReport>>;
 String _$escrowTrackingControllerHash() =>
-    r'9762185bc00ce67d66aaf162439ac4b065595878';
+    r'87ad3d7f6deb910ffd31c29ec63c75b6a31920d3';
 
 /// Copied from Dart SDK
 class _SystemHash {
