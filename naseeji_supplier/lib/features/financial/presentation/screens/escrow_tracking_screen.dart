@@ -58,7 +58,7 @@ class _EscrowTrackingScreenState extends ConsumerState<EscrowTrackingScreen> {
                     ),
                     const SizedBox(height: 8),
                     DropdownButtonFormField<String>(
-                      value: _selectedOrderNumber,
+                      initialValue: _selectedOrderNumber,
                       decoration: InputDecoration(
                         fillColor: const Color(0xFFF8F9FF),
                         filled: true,
