@@ -149,6 +149,16 @@ class NavigationDrawerView extends ConsumerWidget {
                       context.push('/finance');
                     },
                   ),
+                  DrawerItem(
+                    icon: Icons.card_membership_outlined,
+                    title: 'الاشتراكات والفوترة',
+                    path: '/subscription',
+                    currentRoute: currentRoute,
+                    onTap: () {
+                      Navigator.pop(context);
+                      context.push('/subscription');
+                    },
+                  ),
                 
                 ],
               ),

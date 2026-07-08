@@ -91,6 +91,22 @@ import '../../features/financial/presentation/screens/escrow_tracking_screen.dar
 import '../../features/financial/presentation/screens/financial_analytics_screen.dart';
 import '../../features/financial/domain/entities/financial_models.dart';
 
+import '../../features/subscription/presentation/screens/subscription_dashboard_screen.dart';
+import '../../features/subscription/presentation/screens/subscription_plans_screen.dart';
+import '../../features/subscription/presentation/screens/plan_comparison_screen.dart';
+import '../../features/subscription/presentation/screens/subscription_details_screen.dart';
+import '../../features/subscription/presentation/screens/billing_screen.dart';
+import '../../features/subscription/presentation/screens/payment_methods_screen.dart';
+import '../../features/subscription/presentation/screens/subscription_history_screen.dart';
+import '../../features/subscription/presentation/screens/usage_limits_screen.dart';
+import '../../features/subscription/presentation/screens/addons_store_screen.dart';
+import '../../features/subscription/presentation/screens/addon_details_screen.dart';
+import '../../features/subscription/presentation/screens/checkout_screen.dart';
+import '../../features/subscription/presentation/screens/billing_invoices_screen.dart';
+import '../../features/subscription/presentation/screens/subscription_notifications_screen.dart';
+import '../../features/subscription/presentation/screens/subscription_analytics_screen.dart';
+import '../../features/subscription/domain/entities/subscription_models.dart';
+
 part 'app_router.g.dart';
 
 @riverpod
@@ -622,8 +638,90 @@ GoRouter goRouter(GoRouterRef ref) {
         name: 'finance-analytics',
         builder: (context, state) => const FinancialAnalyticsScreen(),
       ),
-      // ─── Marketing Feature ───────────────────────────────────────────
-     
+      // ─── Subscription & Billing Feature ────────────────────────────────
+      GoRoute(
+        path: '/subscription',
+        name: 'subscription-dashboard',
+        pageBuilder: (context, state) => const NoTransitionPage(child: SubscriptionDashboardScreen()),
+      ),
+      GoRoute(
+        path: '/subscription/plans',
+        name: 'subscription-plans',
+        builder: (context, state) => const SubscriptionPlansScreen(),
+      ),
+      GoRoute(
+        path: '/subscription/comparison',
+        name: 'plan-comparison',
+        builder: (context, state) => const PlanComparisonScreen(),
+      ),
+      GoRoute(
+        path: '/subscription/details',
+        name: 'subscription-details',
+        builder: (context, state) => const SubscriptionDetailsScreen(),
+      ),
+      GoRoute(
+        path: '/subscription/billing',
+        name: 'subscription-billing',
+        builder: (context, state) => const BillingScreen(),
+      ),
+      GoRoute(
+        path: '/subscription/methods',
+        name: 'subscription-methods',
+        builder: (context, state) => const PaymentMethodsScreen(),
+      ),
+      GoRoute(
+        path: '/subscription/history',
+        name: 'subscription-history',
+        builder: (context, state) => const SubscriptionHistoryScreen(),
+      ),
+      GoRoute(
+        path: '/subscription/usage',
+        name: 'subscription-usage',
+        builder: (context, state) => const UsageLimitsScreen(),
+      ),
+      GoRoute(
+        path: '/subscription/addons',
+        name: 'subscription-addons',
+        builder: (context, state) => const AddonsStoreScreen(),
+      ),
+      GoRoute(
+        path: '/subscription/addons/:id',
+        name: 'addon-details',
+        builder: (context, state) {
+          final addonItem = state.extra as AddonItem?;
+          return AddonDetailsScreen(
+            addonId: state.pathParameters['id'] ?? '',
+            addon: addonItem,
+          );
+        },
+      ),
+      GoRoute(
+        path: '/subscription/checkout',
+        name: 'subscription-checkout',
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>? ?? {};
+          return CheckoutScreen(
+            plan: extra['plan'] as SubscriptionPlan?,
+            cycle: extra['cycle'] as BillingCycle?,
+            addon: extra['addon'] as AddonItem?,
+          );
+        },
+      ),
+      GoRoute(
+        path: '/subscription/invoices',
+        name: 'subscription-invoices',
+        builder: (context, state) => const BillingInvoicesScreen(),
+      ),
+      GoRoute(
+        path: '/subscription/notifications',
+        name: 'subscription-notifications',
+        builder: (context, state) => const SubscriptionNotificationsScreen(),
+      ),
+      GoRoute(
+        path: '/subscription/analytics',
+        name: 'subscription-analytics',
+        builder: (context, state) => const SubscriptionAnalyticsScreen(),
+      ),
     ],
   );
 }
