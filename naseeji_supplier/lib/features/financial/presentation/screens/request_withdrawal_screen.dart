@@ -1,0 +1,270 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import 'package:naseeji_supplier/core/widgets/general_widgets.dart';
+import '../controllers/financial_controllers.dart';
+
+class RequestWithdrawalScreen extends ConsumerStatefulWidget {
+  const RequestWithdrawalScreen({super.key});
+
+  @override
+  ConsumerState<RequestWithdrawalScreen> createState() => _RequestWithdrawalScreenState();
+}
+
+class _RequestWithdrawalScreenState extends ConsumerState<RequestWithdrawalScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _amountController = TextEditingController();
+  final _bankController = TextEditingController(text: 'مصرف الراجحي');
+  final _ibanController = TextEditingController(text: 'SA8080000000012345678902');
+  final _holderController = TextEditingController(text: 'مؤسسة نسيج الوطن للتجارة');
+  final _notesController = TextEditingController();
+
+  String _selectedMethod = 'تحويل بنكي';
+  final List<String> _methods = ['تحويل بنكي', 'InstaPay', 'محفظة رقمية (STC Pay)', 'تحويل يدوي'];
+
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    _amountController.dispose();
+    _bankController.dispose();
+    _ibanController.dispose();
+    _holderController.dispose();
+    _notesController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final walletAsync = ref.watch(financialWalletControllerProvider);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'طلب سحب رصيد',
+          style: TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          onPressed: () => context.pop(),
+        ),
+      ),
+      body: Container(
+        color: const Color(0xFFF8F9FF),
+        child: walletAsync.when(
+          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          error: (err, stack) => Center(child: Text('خطأ: $err')),
+          data: (wallet) {
+            final available = wallet.availableBalance;
+            const minWithdrawal = 1000.0;
+
+            return Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Available balance summary
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary.withValues(alpha: 0.05),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: AppColors.primary.withValues(alpha: 0.1)),
+                      ),
+                      child: Column(
+                        children: [
+                          const Text(
+                            'الرصيد المتاح للسحب حالياً',
+                            style: TextStyle(fontSize: 12, color: AppColors.outline),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            '${available.toStringAsFixed(2)} ر.س',
+                            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.primary),
+                          ),
+                          const SizedBox(height: 4),
+                          const Text(
+                            'الحد الأدنى للسحب: 1,000.00 ر.س',
+                            style: TextStyle(fontSize: 10, color: AppColors.outline),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+
+                    // Method selector
+                    const Text(
+                      'اختر طريقة السحب',
+                      textAlign: TextAlign.right,
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                    ),
+                    const SizedBox(height: 8),
+                    DropdownButtonFormField<String>(
+                      value: _selectedMethod,
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: AppColors.outlineVariant),
+                        ),
+                      ),
+                      items: _methods.map((method) {
+                        return DropdownMenuItem(
+                          value: method,
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(method),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (val) {
+                        if (val != null) {
+                          setState(() {
+                            _selectedMethod = val;
+                            if (val == 'InstaPay') {
+                              _bankController.text = 'InstaPay Wallet';
+                              _ibanController.text = 'naseeji@instapay';
+                            } else if (val == 'محفظة رقمية (STC Pay)') {
+                              _bankController.text = 'STC Pay';
+                              _ibanController.text = '0555555555';
+                            } else {
+                              _bankController.text = 'مصرف الراجحي';
+                              _ibanController.text = 'SA8080000000012345678902';
+                            }
+                          });
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Amount input
+                    const Text(
+                      'المبلغ المطلوب سحبه (ر.س)',
+                      textAlign: TextAlign.right,
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                    ),
+                    const SizedBox(height: 8),
+                    CustomTextField(
+                      controller: _amountController,
+                      labelText: 'المبلغ',
+                      hintText: 'أدخل قيمة بين 1000 و ${available.toStringAsFixed(0)}',
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      validator: (val) {
+                        if (val == null || val.isEmpty) return 'يرجى إدخال المبلغ';
+                        final double? amt = double.tryParse(val);
+                        if (amt == null) return 'يرجى إدخال رقم صحيح';
+                        if (amt < minWithdrawal) return 'المبلغ أقل من الحد الأدنى المسموح به ($minWithdrawal ر.س)';
+                        if (amt > available) return 'المبلغ المطلوب أكبر من الرصيد المتاح حالياً ($available ر.س)';
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Account holder input
+                    const Text(
+                      'اسم صاحب الحساب المستفيد',
+                      textAlign: TextAlign.right,
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                    ),
+                    const SizedBox(height: 8),
+                    CustomTextField(
+                      controller: _holderController,
+                      labelText: 'صاحب الحساب',
+                      validator: (val) => val == null || val.isEmpty ? 'يرجى إدخال اسم المستفيد' : null,
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Bank name / wallet identifier
+                    Text(
+                      _selectedMethod.contains('بنكي') ? 'اسم البنك' : 'جهة المحفظة',
+                      textAlign: TextAlign.right,
+                      style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                    ),
+                    const SizedBox(height: 8),
+                    CustomTextField(
+                      controller: _bankController,
+                      labelText: _selectedMethod.contains('بنكي') ? 'البنك' : 'الجهة',
+                      validator: (val) => val == null || val.isEmpty ? 'يرجى ملء الحقل' : null,
+                    ),
+                    const SizedBox(height: 16),
+
+                    // IBAN / wallet details
+                    Text(
+                      _selectedMethod.contains('بنكي') ? 'رقم الآيبان (IBAN)' : 'معرف المحفظة / الرقم',
+                      textAlign: TextAlign.right,
+                      style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                    ),
+                    const SizedBox(height: 8),
+                    CustomTextField(
+                      controller: _ibanController,
+                      labelText: _selectedMethod.contains('بنكي') ? 'الآيبان' : 'المعرف',
+                      validator: (val) => val == null || val.isEmpty ? 'يرجى كتابة رقم الحساب أو المحفظة' : null,
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Notes
+                    const Text(
+                      'ملاحظات إضافية (اختياري)',
+                      textAlign: TextAlign.right,
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                    ),
+                    const SizedBox(height: 8),
+                    CustomTextField(
+                      controller: _notesController,
+                      labelText: 'ملاحظات',
+                      maxLines: 2,
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Submit button
+                    PrimaryButton(
+                      text: 'إرسال طلب السحب',
+                      isLoading: _isLoading,
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          setState(() => _isLoading = true);
+                          try {
+                            final amt = double.parse(_amountController.text);
+                            await ref.read(financialWithdrawalsControllerProvider.notifier).requestWithdrawal(
+                                  method: _selectedMethod,
+                                  amount: amt,
+                                  bankName: _bankController.text,
+                                  iban: _ibanController.text,
+                                  accountHolder: _holderController.text,
+                                  notes: _notesController.text,
+                                );
+                            
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('تم تسجيل طلب السحب بنجاح وقيد المعالجة الماليّة.')),
+                              );
+                              context.pop();
+                            }
+                          } catch (e) {
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('فشل طلب السحب: $e')),
+                              );
+                            }
+                          } finally {
+                            if (mounted) setState(() => _isLoading = false);
+                          }
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
