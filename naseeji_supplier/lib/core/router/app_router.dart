@@ -667,7 +667,7 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/subscription/methods',
         name: 'subscription-methods',
-        builder: (context, state) => const PaymentMethodsScreen(),
+        builder: (context, state) => const SubscriptionPaymentMethodsScreen(),
       ),
       GoRoute(
         path: '/subscription/history',

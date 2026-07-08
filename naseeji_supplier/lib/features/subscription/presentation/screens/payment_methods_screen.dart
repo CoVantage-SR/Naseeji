@@ -5,14 +5,14 @@ import 'package:naseeji_supplier/core/widgets/general_widgets.dart';
 import '../controllers/subscription_controllers.dart';
 import '../../domain/entities/subscription_models.dart';
 
-class PaymentMethodsScreen extends ConsumerStatefulWidget {
-  const PaymentMethodsScreen({super.key});
+class SubscriptionPaymentMethodsScreen extends ConsumerStatefulWidget {
+  const SubscriptionPaymentMethodsScreen({super.key});
 
   @override
-  ConsumerState<PaymentMethodsScreen> createState() => _PaymentMethodsScreenState();
+  ConsumerState<SubscriptionPaymentMethodsScreen> createState() => _SubscriptionPaymentMethodsScreenState();
 }
 
-class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen> {
+class _SubscriptionPaymentMethodsScreenState extends ConsumerState<SubscriptionPaymentMethodsScreen> {
   final _nameController = TextEditingController();
   final _detailsController = TextEditingController();
   PaymentMethodType _selectedType = PaymentMethodType.creditCard;
