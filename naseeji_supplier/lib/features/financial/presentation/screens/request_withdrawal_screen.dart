@@ -83,12 +83,12 @@ class _RequestWithdrawalScreenState extends ConsumerState<RequestWithdrawalScree
                           ),
                           SizedBox(height: 4),
                           Text(
-                            '${available.toStringAsFixed(2)} ر.س',
+                            '${available.toStringAsFixed(2)} جنيه',
                             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.primary),
                           ),
                           SizedBox(height: 4),
                           Text(
-                            'الحد الأدنى للسحب: 1,000.00 ر.س',
+                            'الحد الأدنى للسحب: 1,000.00 جنيه',
                             style: TextStyle(fontSize: 10, color: AppColors.outline),
                           ),
                         ],
@@ -145,7 +145,7 @@ class _RequestWithdrawalScreenState extends ConsumerState<RequestWithdrawalScree
 
                     // Amount input
                     Text(
-                      'المبلغ المطلوب سحبه (ر.س)',
+                      'المبلغ المطلوب سحبه (جنيه)',
                       textAlign: TextAlign.right,
                       style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     ),
@@ -159,8 +159,8 @@ class _RequestWithdrawalScreenState extends ConsumerState<RequestWithdrawalScree
                         if (val == null || val.isEmpty) return 'يرجى إدخال المبلغ';
                         final double? amt = double.tryParse(val);
                         if (amt == null) return 'يرجى إدخال رقم صحيح';
-                        if (amt < minWithdrawal) return 'المبلغ أقل من الحد الأدنى المسموح به ($minWithdrawal ر.س)';
-                        if (amt > available) return 'المبلغ المطلوب أكبر من الرصيد المتاح حالياً ($available ر.س)';
+                        if (amt < minWithdrawal) return 'المبلغ أقل من الحد الأدنى المسموح به ($minWithdrawal جنيه)';
+                        if (amt > available) return 'المبلغ المطلوب أكبر من الرصيد المتاح حالياً ($available جنيه)';
                         return null;
                       },
                     ),

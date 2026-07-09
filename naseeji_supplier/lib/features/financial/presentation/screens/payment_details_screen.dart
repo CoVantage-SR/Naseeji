@@ -77,7 +77,7 @@ class PaymentDetailsScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 8),
                     Text(
-                      '${p.amount.toStringAsFixed(2)} ر.س',
+                      '${p.amount.toStringAsFixed(2)} جنيه',
                       style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.primary),
                     ),
                     SizedBox(height: 8),

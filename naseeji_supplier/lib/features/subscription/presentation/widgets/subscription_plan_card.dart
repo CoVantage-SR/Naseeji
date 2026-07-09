@@ -116,7 +116,7 @@ class SubscriptionPlanCard extends StatelessWidget {
                     if (hasPrice) ...[
                       SizedBox(width: 4),
                       Text(
-                        'ر.س',
+                        'جنيه',
                         style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                       ),
                     ],

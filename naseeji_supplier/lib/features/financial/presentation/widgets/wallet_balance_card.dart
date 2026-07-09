@@ -60,7 +60,7 @@ class WalletBalanceCard extends StatelessWidget {
             textBaseline: TextBaseline.alphabetic,
             children: [
               Text(
-                'ر.س',
+                'جنيه',
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.surface,
                   fontSize: 16,
@@ -137,7 +137,7 @@ class WalletBalanceCard extends StatelessWidget {
           ),
           SizedBox(height: 4),
           Text(
-            '$value ر.س',
+            '$value جنيه',
             style: TextStyle(
               color: Colors.white,
               fontSize: 14,

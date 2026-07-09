@@ -70,13 +70,13 @@ class CustomerAnalyticsScreen extends ConsumerWidget {
       children: [
         CustomerStatisticsCard(
           label: 'إجمالي الإيرادات',
-          value: '${(c.totalRevenue / 1000).toStringAsFixed(1)}ك ر.س',
+          value: '${(c.totalRevenue / 1000).toStringAsFixed(1)}ك جنيه',
           icon: Icons.monetization_on_outlined,
           color: AppColors.primary,
         ),
         CustomerStatisticsCard(
           label: 'متوسط الطلب',
-          value: '${(c.averageOrderValue / 1000).toStringAsFixed(1)}ك ر.س',
+          value: '${(c.averageOrderValue / 1000).toStringAsFixed(1)}ك جنيه',
           icon: Icons.analytics_outlined,
           color: AppColors.secondary,
         ),
@@ -134,7 +134,7 @@ class CustomerAnalyticsScreen extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('الإيرادات الشهرية (ر.س)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
+          Text('الإيرادات الشهرية (جنيه)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
           SizedBox(height: 16),
           SizedBox(
             height: 140,

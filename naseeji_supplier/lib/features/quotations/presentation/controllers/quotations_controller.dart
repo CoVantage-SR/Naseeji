@@ -159,7 +159,7 @@ class QuotationsController extends _$QuotationsController {
         );
 
         final newTimelineStep = QuotationTimelineStep(
-          title: 'إرسال عرض مقابل بقيمة $newPrice ر.س',
+          title: 'إرسال عرض مقابل بقيمة $newPrice جنيه',
           date: DateTime.now().toString().split(' ')[0],
           time: '00:00 ص',
           responsibleUser: 'مورد نسيجي',

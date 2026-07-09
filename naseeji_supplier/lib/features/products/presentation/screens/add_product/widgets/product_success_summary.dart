@@ -77,7 +77,7 @@ class ProductSuccessSummary extends StatelessWidget {
                           children: [
                             Text('/ للمتر', style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant)),
                             SizedBox(width: 4),
-                            Text('12.50 SAR', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.primary)),
+                            Text('12.50 جنيه', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.primary)),
                           ],
                         ),
                       ],

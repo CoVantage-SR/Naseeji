@@ -211,7 +211,7 @@ class FinalAgreementScreen extends ConsumerWidget {
         Text(label, style: TextStyle(fontSize: 10, color: AppColors.outline)),
         SizedBox(height: 4),
         Text(
-          '${val.toStringAsFixed(2)} ر.س',
+          '${val.toStringAsFixed(2)} جنيه',
           style: TextStyle(
             fontSize: 12,
             fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
@@ -240,9 +240,9 @@ class FinalAgreementScreen extends ConsumerWidget {
           SizedBox(height: 12),
           _buildRowItem('الكمية الإجمالية', agreement.quantity),
           SizedBox(height: 10),
-          _buildRowItem('تكلفة الشحن', '${agreement.shippingCost.toStringAsFixed(2)} ر.س'),
+          _buildRowItem('تكلفة الشحن', '${agreement.shippingCost.toStringAsFixed(2)} جنيه'),
           SizedBox(height: 10),
-          _buildRowItem('ضريبة القيمة المضافة (15%)', '${agreement.taxes.toStringAsFixed(2)} ر.س'),
+          _buildRowItem('ضريبة القيمة المضافة (15%)', '${agreement.taxes.toStringAsFixed(2)} جنيه'),
           SizedBox(height: 10),
           _buildRowItem('شروط وطرق الدفع', agreement.paymentTerms),
           SizedBox(height: 10),
@@ -256,7 +256,7 @@ class FinalAgreementScreen extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${agreement.totalAmount.toStringAsFixed(2)} ر.س',
+                '${agreement.totalAmount.toStringAsFixed(2)} جنيه',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF0040E0)),
               ),
               Text('إجمالي مبلغ الاتفاقية', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),

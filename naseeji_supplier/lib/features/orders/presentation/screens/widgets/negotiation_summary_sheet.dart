@@ -56,11 +56,11 @@ class NegotiationSummarySheet extends StatelessWidget {
           SizedBox(height: 24),
 
           // Compare prices
-          _buildItemRow('العرض المبدئي للمورد', '${originalPrice.toStringAsFixed(2)} ر.س / متر'),
+          _buildItemRow('العرض المبدئي للمورد', '${originalPrice.toStringAsFixed(2)} جنيه / متر'),
           SizedBox(height: 12),
-          _buildItemRow('عرض التفاوض الأول للمصنع', '13.50 ر.س / متر'),
+          _buildItemRow('عرض التفاوض الأول للمصنع', '13.50 جنيه / متر'),
           SizedBox(height: 12),
-          _buildItemRow('السعر النهائي المتفق عليه', '${finalPrice.toStringAsFixed(2)} ر.س / متر', isHighlight: true),
+          _buildItemRow('السعر النهائي المتفق عليه', '${finalPrice.toStringAsFixed(2)} جنيه / متر', isHighlight: true),
           SizedBox(height: 16),
           const Divider(height: 1, color: Color(0xFFF1F1F5)),
           SizedBox(height: 16),
@@ -77,7 +77,7 @@ class NegotiationSummarySheet extends StatelessWidget {
               children: [
                 _buildAnalysisRow('نسبة الخصم النهائي', '${diffPercent.toStringAsFixed(1)}%', isDiscount: true),
                 SizedBox(height: 10),
-                _buildAnalysisRow('إجمالي التوفير للمصنع', '${savingsAmount.toStringAsFixed(2)} ر.س', isDiscount: true),
+                _buildAnalysisRow('إجمالي التوفير للمصنع', '${savingsAmount.toStringAsFixed(2)} جنيه', isDiscount: true),
                 SizedBox(height: 10),
                 _buildAnalysisRow('حالة الاعتماد للاتفاقية', status, statusColor: const Color(0xFF16A34A)),
               ],

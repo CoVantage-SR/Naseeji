@@ -80,7 +80,7 @@ class SubscriptionHistoryScreen extends ConsumerWidget {
                         SizedBox(height: 8),
 
                         _buildInfoRow('مدة الباقة', '${item.billingCycle} | $startStr - $endStr'),
-                        _buildInfoRow('تكلفة الاشتراك المدفوعة', '${item.price.toStringAsFixed(0)} ر.س'),
+                        _buildInfoRow('تكلفة الاشتراك المدفوعة', '${item.price.toStringAsFixed(0)} جنيه'),
                         _buildInfoRow('حالة سداد الدفعة', item.paymentStatus),
                         _buildInfoRow('رقم الفاتورة المرجعي', item.invoiceNumber),
                       ],

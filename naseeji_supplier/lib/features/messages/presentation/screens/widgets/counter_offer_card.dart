@@ -41,11 +41,11 @@ class CounterOfferCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('${data['counterPrice'] ?? '--'} ر.س',
+                    Text('${data['counterPrice'] ?? '--'} جنيه',
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.secondary)),
                     Row(
                       children: [
-                        Text('${data['currentPrice'] ?? '--'} ر.س',
+                        Text('${data['currentPrice'] ?? '--'} جنيه',
                             style: TextStyle(
                                 fontSize: 13,
                                 decoration: TextDecoration.lineThrough,

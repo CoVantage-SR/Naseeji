@@ -74,7 +74,7 @@ class SubscriptionStatusCard extends StatelessWidget {
             _buildDetailRow('تاريخ البدء', startStr),
             _buildDetailRow('تاريخ الانتهاء', expiryStr),
             _buildDetailRow('التجديد القادم', expiryStr),
-            _buildDetailRow('قيمة التجديد', '${subscription.price.toStringAsFixed(0)} ر.س / ${subscription.billingCycle == BillingCycle.yearly ? "سنوي" : "شهري"}'),
+            _buildDetailRow('قيمة التجديد', '${subscription.price.toStringAsFixed(0)} جنيه / ${subscription.billingCycle == BillingCycle.yearly ? "سنوي" : "شهري"}'),
             _buildDetailRow('طريقة الدفع للمحاسبة', subscription.paymentMethod),
             
             SizedBox(height: 8),

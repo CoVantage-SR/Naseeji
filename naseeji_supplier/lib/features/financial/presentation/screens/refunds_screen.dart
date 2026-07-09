@@ -109,7 +109,7 @@ class RefundsScreen extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${refund.amount.toStringAsFixed(2)} ر.س',
+                      '${refund.amount.toStringAsFixed(2)} جنيه',
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFFBA1A1A)),
                     ),
                     Text(

@@ -297,7 +297,7 @@ class FinancialDashboardScreen extends ConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          '${val.toStringAsFixed(2)} ر.س',
+          '${val.toStringAsFixed(2)} جنيه',
           style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
         ),
         Text(

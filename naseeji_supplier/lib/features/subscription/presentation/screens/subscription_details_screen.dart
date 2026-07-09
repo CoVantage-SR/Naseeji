@@ -54,7 +54,7 @@ class SubscriptionDetailsScreen extends ConsumerWidget {
                           ),
                           SizedBox(height: 6),
                           Text(
-                            'تكلفة الباقة الحالية: ${sub.price.toStringAsFixed(0)} ر.س / شهرياً',
+                            'تكلفة الباقة الحالية: ${sub.price.toStringAsFixed(0)} جنيه / شهرياً',
                             style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
                           ),
                           const Divider(height: 24, color: AppColors.outlineVariant),

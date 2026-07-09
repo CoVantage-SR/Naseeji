@@ -78,12 +78,12 @@ class _BillingScreenState extends ConsumerState<BillingScreen> {
                             style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                           ),
                           const Divider(height: 20, color: AppColors.outlineVariant),
-                          _buildPriceRow('قيمة اشتراك الباقة', '${billing.currentBill.toStringAsFixed(0)} ر.س'),
+                          _buildPriceRow('قيمة اشتراك الباقة', '${billing.currentBill.toStringAsFixed(0)} جنيه'),
                           if (billing.discount > 0)
-                            _buildPriceRow('كود الخصم المطبق (${billing.couponCode})', '-${billing.discount.toStringAsFixed(0)} ر.س'),
-                          _buildPriceRow('الضريبة المضافة (15%)', '${billing.tax.toStringAsFixed(2)} ر.س'),
+                            _buildPriceRow('كود الخصم المطبق (${billing.couponCode})', '-${billing.discount.toStringAsFixed(0)} جنيه'),
+                          _buildPriceRow('الضريبة المضافة (15%)', '${billing.tax.toStringAsFixed(2)} جنيه'),
                           const Divider(color: AppColors.outlineVariant),
-                          _buildPriceRow('إجمالي الفاتورة القادمة', '${total.toStringAsFixed(2)} ر.س', isBold: true),
+                          _buildPriceRow('إجمالي الفاتورة القادمة', '${total.toStringAsFixed(2)} جنيه', isBold: true),
                           SizedBox(height: 16),
 
                           // Coupon Field

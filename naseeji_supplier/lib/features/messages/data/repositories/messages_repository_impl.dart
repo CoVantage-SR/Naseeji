@@ -198,7 +198,7 @@ class MessagesRepositoryImpl implements MessagesRepository {
         icon: Icons.price_check_outlined,
         timestamp: '2026-07-01 09:30',
         user: 'مورد نسيجي',
-        notes: 'تقديم العرض الأول بسعر 12.50 ر.س/م',
+        notes: 'تقديم العرض الأول بسعر 12.50 جنيه/م',
         isCompleted: true,
       ),
       const TimelineStage(
@@ -206,7 +206,7 @@ class MessagesRepositoryImpl implements MessagesRepository {
         icon: Icons.swap_horiz,
         timestamp: '2026-07-01 10:00',
         user: 'مصنع الرياض للملابس',
-        notes: 'طلب تخفيض إلى 11.80 ر.س/م',
+        notes: 'طلب تخفيض إلى 11.80 جنيه/م',
         isCompleted: true,
       ),
       const TimelineStage(
@@ -214,7 +214,7 @@ class MessagesRepositoryImpl implements MessagesRepository {
         icon: Icons.edit_outlined,
         timestamp: '2026-07-01 11:00',
         user: 'مورد نسيجي',
-        notes: 'تعديل العرض إلى 12.00 ر.س/م — مقبول',
+        notes: 'تعديل العرض إلى 12.00 جنيه/م — مقبول',
         isCompleted: true,
       ),
       const TimelineStage(

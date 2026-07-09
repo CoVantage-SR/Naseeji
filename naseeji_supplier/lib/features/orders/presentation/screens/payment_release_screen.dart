@@ -151,9 +151,9 @@ class PaymentReleaseScreen extends ConsumerWidget {
           SizedBox(height: 12),
           const Divider(height: 1, color: Color(0xFFF1F1F5)),
           SizedBox(height: 12),
-          _buildRowItem('إجمالي قيمة الطلب للعميل', '${release.orderTotal.toStringAsFixed(2)} ر.س'),
+          _buildRowItem('إجمالي قيمة الطلب للعميل', '${release.orderTotal.toStringAsFixed(2)} جنيه'),
           SizedBox(height: 10),
-          _buildRowItem('عمولة منصة نسيجي (2.5%)', '${release.commission.toStringAsFixed(2)} ر.س'),
+          _buildRowItem('عمولة منصة نسيجي (2.5%)', '${release.commission.toStringAsFixed(2)} جنيه'),
           SizedBox(height: 10),
           _buildRowItem('تاريخ التحويل المتوقع للحساب البنكي', release.expectedReleaseDate),
           SizedBox(height: 10),
@@ -165,7 +165,7 @@ class PaymentReleaseScreen extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${release.supplierReceivable.toStringAsFixed(2)} ر.س',
+                '${release.supplierReceivable.toStringAsFixed(2)} جنيه',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF006B5F)),
               ),
               Text('صافي مستحقات المورد', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),

@@ -66,7 +66,7 @@ class AddonDetailsScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 6),
                       Text(
-                        'تكلفة الملحق: ${item.price.toStringAsFixed(0)} ر.س / تدفع مرة واحدة',
+                        'تكلفة الملحق: ${item.price.toStringAsFixed(0)} جنيه / تدفع مرة واحدة',
                         style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
                       ),
                       const Divider(height: 24, color: AppColors.outlineVariant),

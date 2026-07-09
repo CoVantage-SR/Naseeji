@@ -54,10 +54,10 @@ class EarningsScreen extends ConsumerWidget {
                       mainAxisSpacing: 10,
                       childAspectRatio: 1.5,
                       children: [
-                        _buildEarningMetricCard('أرباح اليوم', '2,500.00 ر.س', const Color(0xFF00875A)),
-                        _buildEarningMetricCard('أرباح هذا الأسبوع', '12,400.00 ر.س', const Color(0xFF0052CC)),
-                        _buildEarningMetricCard('أرباح هذا الشهر', '${data.monthlyComparison[0]['revenue']?.toStringAsFixed(2)} ر.س', AppColors.primary),
-                        _buildEarningMetricCard('أرباح العام الحالي', '${(data.totalRevenue * 0.85).toStringAsFixed(2)} ر.س', const Color(0xFF993100)),
+                        _buildEarningMetricCard('أرباح اليوم', '2,500.00 جنيه', const Color(0xFF00875A)),
+                        _buildEarningMetricCard('أرباح هذا الأسبوع', '12,400.00 جنيه', const Color(0xFF0052CC)),
+                        _buildEarningMetricCard('أرباح هذا الشهر', '${data.monthlyComparison[0]['revenue']?.toStringAsFixed(2)} جنيه', AppColors.primary),
+                        _buildEarningMetricCard('أرباح العام الحالي', '${(data.totalRevenue * 0.85).toStringAsFixed(2)} جنيه', const Color(0xFF993100)),
                       ],
                     ),
                     SizedBox(height: 20),
@@ -74,7 +74,7 @@ class EarningsScreen extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            '${data.totalRevenue.toStringAsFixed(2)} ر.س',
+                            '${data.totalRevenue.toStringAsFixed(2)} جنيه',
                             style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primary),
                           ),
                           Text(
@@ -118,7 +118,7 @@ class EarningsScreen extends ConsumerWidget {
                       ),
                       child: Column(
                         children: data.revenueByCustomer.map((cust) {
-                          final valStr = '${(cust['value'] as double).toStringAsFixed(0)} ر.س';
+                          final valStr = '${(cust['value'] as double).toStringAsFixed(0)} جنيه';
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: Row(

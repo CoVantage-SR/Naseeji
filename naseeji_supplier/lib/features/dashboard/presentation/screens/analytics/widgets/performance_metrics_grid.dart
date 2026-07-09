@@ -40,7 +40,7 @@ class PerformanceMetricsGrid extends StatelessWidget {
       children: [
         _buildMetricCard(
           title: 'إجمالي المبيعات',
-          value: '${totalSales.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} ر.س',
+          value: '${totalSales.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} جنيه',
           trend: salesTrend,
           isPositive: isSalesPositive,
           icon: Icons.show_chart,
@@ -50,7 +50,7 @@ class PerformanceMetricsGrid extends StatelessWidget {
         ),
         _buildMetricCard(
           title: 'صافي الأرباح',
-          value: '${netProfits.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} ر.س',
+          value: '${netProfits.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')} جنيه',
           trend: profitsTrend,
           isPositive: isProfitsPositive,
           icon: Icons.account_balance_wallet_outlined,

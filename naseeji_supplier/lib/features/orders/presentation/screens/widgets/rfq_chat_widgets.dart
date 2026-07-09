@@ -275,7 +275,7 @@ class ChatMessagesList extends StatelessWidget {
                           style: TextStyle(fontSize: 10, color: Color(0xFF006B5F), fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          'الفرق: ${(msg.priceUpdateOld! - msg.priceUpdateNew!).toStringAsFixed(2)} ر.س',
+                          'الفرق: ${(msg.priceUpdateOld! - msg.priceUpdateNew!).toStringAsFixed(2)} جنيه',
                           style: TextStyle(fontSize: 10, color: AppColors.outline),
                         ),
                       ],

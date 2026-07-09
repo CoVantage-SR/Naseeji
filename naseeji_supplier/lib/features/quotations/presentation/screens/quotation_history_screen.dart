@@ -161,9 +161,9 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
 
           Row(
             children: [
-              _buildMetricColumn('سعر المورد المقترح', '${rev.supplierPrice.toStringAsFixed(2)} ر.س'),
-              _buildMetricColumn('عرض المصنع المقابل', '${rev.factoryCounterOffer.toStringAsFixed(2)} ر.س'),
-              _buildMetricColumn('الفارق المالي الفعلي', '${rev.priceDifference.toStringAsFixed(2)} ر.س', isWarning: rev.priceDifference > 0),
+              _buildMetricColumn('سعر المورد المقترح', '${rev.supplierPrice.toStringAsFixed(2)} جنيه'),
+              _buildMetricColumn('عرض المصنع المقابل', '${rev.factoryCounterOffer.toStringAsFixed(2)} جنيه'),
+              _buildMetricColumn('الفارق المالي الفعلي', '${rev.priceDifference.toStringAsFixed(2)} جنيه', isWarning: rev.priceDifference > 0),
             ],
           ),
           SizedBox(height: 12),
@@ -261,9 +261,9 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildDialogRow('سعر المورد المقترح', '${rev.supplierPrice} ر.س'),
-            _buildDialogRow('السعر المطلوب للمصنع', '${rev.factoryCounterOffer} ر.س'),
-            _buildDialogRow('الفارق المالي المتبقي', '${rev.priceDifference} ر.س'),
+            _buildDialogRow('سعر المورد المقترح', '${rev.supplierPrice} جنيه'),
+            _buildDialogRow('السعر المطلوب للمصنع', '${rev.factoryCounterOffer} جنيه'),
+            _buildDialogRow('الفارق المالي المتبقي', '${rev.priceDifference} جنيه'),
             _buildDialogRow('تاريخ المراجعة الفعلي', rev.createdDate),
             _buildDialogRow('المسؤول عن التعديل', rev.negotiatedBy),
             _buildDialogRow('الحالة التفاوضية', rev.status),

@@ -55,7 +55,7 @@ class AddonCard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        '${addon.price.toStringAsFixed(0)} ر.س',
+                        '${addon.price.toStringAsFixed(0)} جنيه',
                         style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                       ),
                     ],

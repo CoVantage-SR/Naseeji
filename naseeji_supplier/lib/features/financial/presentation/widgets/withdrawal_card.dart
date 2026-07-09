@@ -16,7 +16,7 @@ class WithdrawalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dateStr = '${request.createdDate.year}-${request.createdDate.month.toString().padLeft(2, '0')}-${request.createdDate.day.toString().padLeft(2, '0')}';
-    final amountStr = '${request.amount.toStringAsFixed(2)} ر.س';
+    final amountStr = '${request.amount.toStringAsFixed(2)} جنيه';
 
     return Card(
       color: Theme.of(context).colorScheme.surface,

@@ -110,7 +110,7 @@ class MarketingTab extends StatelessWidget {
                 SizedBox(height: 10),
                 _buildCampaignCard(
                   title: 'ترويج خيوط القطن الفاخر الممتاز',
-                  budget: '٥٠ ر.س / يومياً',
+                  budget: '٥٠ جنيه / يومياً',
                   clicks: '١,٢٥٠ نقرة',
                   status: 'نشط',
                   color: Colors.green,
@@ -118,7 +118,7 @@ class MarketingTab extends StatelessWidget {
                 SizedBox(height: 10),
                 _buildCampaignCard(
                   title: 'إعلان نسيج الصوف المخلوط الموسمي',
-                  budget: '٣٠ ر.س / يومياً',
+                  budget: '٣٠ جنيه / يومياً',
                   clicks: '٤٢٠ نقرة',
                   status: 'موقت',
                   color: Colors.orange,
@@ -157,7 +157,7 @@ class MarketingTab extends StatelessWidget {
                           children: [
                             Text('خصم ٢٠٪ على قماش القطن الطبيعي', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
                             SizedBox(height: 2),
-                            Text('تاريخ الانتهاء: 2026-08-30 · الحد الأدنى: 5000 ر.س', style: TextStyle(fontSize: 10, color: AppColors.outline)),
+                            Text('تاريخ الانتهاء: 2026-08-30 · الحد الأدنى: 5000 جنيه', style: TextStyle(fontSize: 10, color: AppColors.outline)),
                           ],
                         ),
                       ),

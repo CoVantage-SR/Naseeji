@@ -48,7 +48,7 @@ class BusinessChatController extends _$BusinessChatController {
       senderId: 'supplier',
       senderName: 'مورد نسيجي',
       senderAvatar: '',
-      content: 'تم تقديم عرض سعر رسمي للمصنع بقيمة $totalPrice ر.س',
+      content: 'تم تقديم عرض سعر رسمي للمصنع بقيمة $totalPrice جنيه',
       time: _formatTime(),
       isOutgoing: true,
       type: MessageType.quotationCard,
@@ -76,7 +76,7 @@ class BusinessChatController extends _$BusinessChatController {
       'تقديم عرض أسعار',
       timestamp: _formatFullTime(),
       user: 'مورد نسيجي',
-      notes: 'تقديم عرض أسعار رسمي بقيمة $totalPrice ر.س لـ $productName',
+      notes: 'تقديم عرض أسعار رسمي بقيمة $totalPrice جنيه لـ $productName',
       isCompleted: true,
       isActive: false,
     );
@@ -96,7 +96,7 @@ class BusinessChatController extends _$BusinessChatController {
       ActivityLogItem(
         iconTag: 'verified',
         user: 'مورد نسيجي',
-        action: 'تقديم عرض أسعار رسمي بقيمة $totalPrice ر.س لـ $productName',
+        action: 'تقديم عرض أسعار رسمي بقيمة $totalPrice جنيه لـ $productName',
         date: _formatDate(),
         time: _formatTimeLabel(),
         device: 'تطبيق الجوال',
@@ -116,7 +116,7 @@ class BusinessChatController extends _$BusinessChatController {
       senderId: 'factory_001',
       senderName: 'مصنع المشتري',
       senderAvatar: '',
-      content: 'تقديم عرض مضاد بقيمة $counterPrice ر.س',
+      content: 'تقديم عرض مضاد بقيمة $counterPrice جنيه',
       time: _formatTime(),
       isOutgoing: false,
       type: MessageType.counterOfferCard,
@@ -139,7 +139,7 @@ class BusinessChatController extends _$BusinessChatController {
       'عرض مضاد',
       timestamp: _formatFullTime(),
       user: 'مصنع المشتري',
-      notes: 'طلب تخفيض السعر إلى $counterPrice ر.س بسبب: $reason',
+      notes: 'طلب تخفيض السعر إلى $counterPrice جنيه بسبب: $reason',
       isCompleted: true,
       isActive: false,
     );
@@ -159,7 +159,7 @@ class BusinessChatController extends _$BusinessChatController {
       ActivityLogItem(
         iconTag: 'verified',
         user: 'مصنع المشتري',
-        action: 'تقديم عرض مضاد بقيمة $counterPrice ر.س',
+        action: 'تقديم عرض مضاد بقيمة $counterPrice جنيه',
         date: _formatDate(),
         time: _formatTimeLabel(),
         device: 'تطبيق المشتري',

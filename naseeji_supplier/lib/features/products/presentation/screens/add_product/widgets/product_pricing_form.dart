@@ -153,7 +153,7 @@ class _ProductPricingFormState extends ConsumerState<ProductPricingForm> {
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.right,
                       decoration: const InputDecoration(
-                        suffixText: 'SAR',
+                        suffixText: 'جنيه',
                       ),
                     ),
                   ],
@@ -170,7 +170,7 @@ class _ProductPricingFormState extends ConsumerState<ProductPricingForm> {
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.right,
                       decoration: const InputDecoration(
-                        suffixText: 'SAR',
+                        suffixText: 'جنيه',
                       ),
                     ),
                   ],
@@ -209,7 +209,7 @@ class _ProductPricingFormState extends ConsumerState<ProductPricingForm> {
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.right,
                       decoration: const InputDecoration(
-                        suffixText: 'SAR',
+                        suffixText: 'جنيه',
                       ),
                     ),
                   ],
@@ -311,7 +311,7 @@ class _ProductPricingFormState extends ConsumerState<ProductPricingForm> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: Text('${tier['price']} SAR', textAlign: TextAlign.right, style: TextStyle(fontSize: 13)),
+                          child: Text('${tier['price']} جنيه', textAlign: TextAlign.right, style: TextStyle(fontSize: 13)),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),

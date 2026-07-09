@@ -52,7 +52,7 @@ class PaymentCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${data['amount'] ?? '--'} ر.س',
+                      '${data['amount'] ?? '--'} جنيه',
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.amber.shade800),
                     ),
                     Text('المبلغ الإجمالي', style: TextStyle(fontSize: 11, color: AppColors.outline)),

@@ -107,7 +107,7 @@ class AddonsStoreScreen extends ConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              '${(service['price'] as double).toStringAsFixed(0)} ر.س',
+                              '${(service['price'] as double).toStringAsFixed(0)} جنيه',
                               style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF006B5F)),
                             ),
                             Text(

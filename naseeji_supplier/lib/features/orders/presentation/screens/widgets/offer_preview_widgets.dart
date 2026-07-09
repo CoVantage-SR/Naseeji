@@ -143,9 +143,9 @@ class OfferPreviewDocument extends StatelessWidget {
 
             // Table layout
             _buildTableHeader(),
-            _buildTableRow('بوليستر صناعي فاخر - أبيض\nكود: PE-992 | لفة ٥٠ متر', '٦٠', '٤٥٠.٠٠ ر.س'),
-            _buildTableRow('قطن عضوي ١٠٠٪ نسيج ناعم\nكود: CT-442 | لفة ٥٠ متر', '١٠٠', '٦٨٠.٠٠ ر.س'),
-            _buildTableRow('خيوط حريرية معالجة\nكود: SI-102 | عبوة صناعية', '٥', '١,٢٠٠.٠٠ ر.س'),
+            _buildTableRow('بوليستر صناعي فاخر - أبيض\nكود: PE-992 | لفة ٥٠ متر', '٦٠', '٤٥٠.٠٠ جنيه'),
+            _buildTableRow('قطن عضوي ١٠٠٪ نسيج ناعم\nكود: CT-442 | لفة ٥٠ متر', '١٠٠', '٦٨٠.٠٠ جنيه'),
+            _buildTableRow('خيوط حريرية معالجة\nكود: SI-102 | عبوة صناعية', '٥', '١,٢٠٠.٠٠ جنيه'),
 
             SizedBox(height: 20),
             const Divider(height: 1, color: Color(0xFFE2E1EF)),
@@ -171,11 +171,11 @@ class OfferPreviewDocument extends StatelessWidget {
             SizedBox(height: 16),
 
             // Subtotal and Totals Section
-            _buildSummaryRow('المجموع الفرعي', '٢١,٨٠٠.٠٠ ر.س'),
+            _buildSummaryRow('المجموع الفرعي', '٢١,٨٠٠.٠٠ جنيه'),
             SizedBox(height: 8),
-            _buildSummaryRow('ضريبة القيمة المضافة (١٥٪)', '٣,٢٧٠.٠٠ ر.س'),
+            _buildSummaryRow('ضريبة القيمة المضافة (١٥٪)', '٣,٢٧٠.٠٠ جنيه'),
             SizedBox(height: 8),
-            _buildSummaryRow('رسوم الشحن', '٢٥٠.٠٠ ر.س'),
+            _buildSummaryRow('رسوم الشحن', '٢٥٠.٠٠ جنيه'),
             SizedBox(height: 14),
 
             // Grand total badge
@@ -192,7 +192,7 @@ class OfferPreviewDocument extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        '٢٥,٣٢٠.٠٠ ر.س',
+                        '٢٥,٣٢٠.٠٠ جنيه',
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,

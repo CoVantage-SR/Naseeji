@@ -63,11 +63,11 @@ class WalletScreen extends ConsumerWidget {
                       ),
                       child: Column(
                         children: [
-                          _buildStatRow('صافي الأرباح المحققة', '${wallet.totalEarnings.toStringAsFixed(2)} ر.س'),
+                          _buildStatRow('صافي الأرباح المحققة', '${wallet.totalEarnings.toStringAsFixed(2)} جنيه'),
                           const Divider(height: 20),
-                          _buildStatRow('إجمالي الإيرادات مدى الحياة', '${wallet.lifetimeRevenue.toStringAsFixed(2)} ر.س'),
+                          _buildStatRow('إجمالي الإيرادات مدى الحياة', '${wallet.lifetimeRevenue.toStringAsFixed(2)} جنيه'),
                           const Divider(height: 20),
-                          _buildStatRow('رصيد الدعاية والإعلان بالمنصة', '${wallet.platformCredit.toStringAsFixed(2)} ر.س'),
+                          _buildStatRow('رصيد الدعاية والإعلان بالمنصة', '${wallet.platformCredit.toStringAsFixed(2)} جنيه'),
                         ],
                       ),
                     ),

@@ -70,7 +70,7 @@ class _VipBottomSheetState extends State<VipBottomSheet> {
                     child: _buildPlanCard(
                       id: 'monthly',
                       title: 'شهري',
-                      price: '١٥٠ ر.س',
+                      price: '١٥٠ جنيه',
                       period: '/ شهرياً',
                       desc: 'خيار مرن للاختبار والتجربة',
                     ),
@@ -80,9 +80,9 @@ class _VipBottomSheetState extends State<VipBottomSheet> {
                     child: _buildPlanCard(
                       id: 'yearly',
                       title: 'سنوي (الأكثر توفيراً)',
-                      price: '١٠٠ ر.س',
+                      price: '١٠٠ جنيه',
                       period: '/ شهرياً',
-                      desc: 'توفير ٣٣٪ (١٢٠٠ ر.س سنوياً)',
+                      desc: 'توفير ٣٣٪ (١٢٠٠ جنيه سنوياً)',
                       badge: 'وفر ٣٣٪',
                     ),
                   ),

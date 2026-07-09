@@ -23,7 +23,7 @@ class _ShippingCompanySelectorScreenState extends ConsumerState<ShippingCompanyS
     {
       'name': 'أرامكس Aramex',
       'method': 'شحن بري سريع (Aramex Ground)',
-      'cost': '250.00 ر.س',
+      'cost': '250.00 جنيه',
       'time': '٢ - ٣ أيام عمل',
       'icon': Icons.local_shipping_outlined,
       'services': ['تتبع حي GPS', 'تنبيهات SMS تلقائية', 'تأمين جمركي متكامل'],
@@ -31,7 +31,7 @@ class _ShippingCompanySelectorScreenState extends ConsumerState<ShippingCompanyS
     {
       'name': 'دي إتش إل DHL',
       'method': 'شحن سريع دولي (DHL Express)',
-      'cost': '450.00 ر.س',
+      'cost': '450.00 جنيه',
       'time': '١ - ٢ أيام عمل',
       'icon': Icons.flight_takeoff_outlined,
       'services': ['شحن جوي سريع', 'تغطية تأمينية كاملة', 'توقيع إلكتروني عند التسليم'],
@@ -39,7 +39,7 @@ class _ShippingCompanySelectorScreenState extends ConsumerState<ShippingCompanyS
     {
       'name': 'سمسا SMSA Express',
       'method': 'شحن محلي سريع (SMSA Express)',
-      'cost': '180.00 ر.س',
+      'cost': '180.00 جنيه',
       'time': '٣ - ٤ أيام عمل',
       'icon': Icons.speed_outlined,
       'services': ['تتبع محلي عبر النظام', 'استلام من الباب للباب'],

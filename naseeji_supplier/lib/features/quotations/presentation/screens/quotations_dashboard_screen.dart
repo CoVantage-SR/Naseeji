@@ -188,7 +188,7 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
                         _buildSummaryMiniCard('عروض مقبولة', '$acceptedCount', Colors.green),
                         _buildSummaryMiniCard('عروض مرفوضة', '$rejectedCount', Colors.red),
                         _buildSummaryMiniCard('عروض منتهية', '$expiredCount', Colors.purple),
-                        _buildSummaryMiniCard('القيمة المتداولة الكلية', '${totalValue.toStringAsFixed(0)} ر.س', Colors.teal),
+                        _buildSummaryMiniCard('القيمة المتداولة الكلية', '${totalValue.toStringAsFixed(0)} جنيه', Colors.teal),
                         _buildSummaryMiniCard('معدل قبول العروض', '${acceptanceRate.toStringAsFixed(1)}%', Colors.green.shade800),
                         _buildSummaryMiniCard('نجاح المفاوضات', '${negotiationSuccess.toStringAsFixed(1)}%', Colors.cyan),
                       ],

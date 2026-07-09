@@ -82,7 +82,7 @@ class InvoiceDetailsScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 12),
                     Text(
-                      '${inv.grandTotal.toStringAsFixed(2)} ر.س',
+                      '${inv.grandTotal.toStringAsFixed(2)} جنيه',
                       style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.primary),
                     ),
                     SizedBox(height: 6),
@@ -141,7 +141,7 @@ class InvoiceDetailsScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              '${total.toStringAsFixed(2)} ر.س',
+                              '${total.toStringAsFixed(2)} جنيه',
                               style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                             ),
                             Text(
@@ -155,7 +155,7 @@ class InvoiceDetailsScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'سعر الوحدة: ${item.unitPrice.toStringAsFixed(2)} ر.س',
+                              'سعر الوحدة: ${item.unitPrice.toStringAsFixed(2)} جنيه',
                               style: TextStyle(fontSize: 11, color: AppColors.outline),
                             ),
                             Text(
@@ -185,15 +185,15 @@ class InvoiceDetailsScreen extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    _buildRow('المجموع الفرعي', '${inv.subtotal.toStringAsFixed(2)} ر.س'),
+                    _buildRow('المجموع الفرعي', '${inv.subtotal.toStringAsFixed(2)} جنيه'),
                     const Divider(height: 20),
-                    _buildRow('قيمة الخصم التجاري', '-${inv.discount.toStringAsFixed(2)} ر.س'),
+                    _buildRow('قيمة الخصم التجاري', '-${inv.discount.toStringAsFixed(2)} جنيه'),
                     const Divider(height: 20),
-                    _buildRow('تكلفة الشحن والتعبئة', '${inv.shipping.toStringAsFixed(2)} ر.س'),
+                    _buildRow('تكلفة الشحن والتعبئة', '${inv.shipping.toStringAsFixed(2)} جنيه'),
                     const Divider(height: 20),
-                    _buildRow('ضريبة القيمة المضافة (15%)', '${inv.tax.toStringAsFixed(2)} ر.س'),
+                    _buildRow('ضريبة القيمة المضافة (15%)', '${inv.tax.toStringAsFixed(2)} جنيه'),
                     const Divider(height: 20),
-                    _buildRow('المجموع الكلي النهائي', '${inv.grandTotal.toStringAsFixed(2)} ر.س', isHighlight: true),
+                    _buildRow('المجموع الكلي النهائي', '${inv.grandTotal.toStringAsFixed(2)} جنيه', isHighlight: true),
                   ],
                 ),
               ),

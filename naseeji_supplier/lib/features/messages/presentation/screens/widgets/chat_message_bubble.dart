@@ -129,7 +129,7 @@ class ChatMessageBubble extends ConsumerWidget {
               controller: priceCtrl,
               keyboardType: TextInputType.number,
               textAlign: TextAlign.right,
-              decoration: const InputDecoration(labelText: 'السعر المقترح للوحدة (ر.س)'),
+              decoration: const InputDecoration(labelText: 'السعر المقترح للوحدة (جنيه)'),
             ),
             SizedBox(height: 10),
             TextField(
@@ -180,7 +180,7 @@ class ChatMessageBubble extends ConsumerWidget {
               SizedBox(height: 10),
               _buildDetailRow('اسم المنتج المقترن', data['productName'] ?? 'خيوط غزل القطن الفاخر'),
               _buildDetailRow('الكمية الإجمالية', '${data['quantity'] ?? '--'}'),
-              _buildDetailRow('سعر الوحدة المعروض', '${data['unitPrice'] ?? '--'} ر.س'),
+              _buildDetailRow('سعر الوحدة المعروض', '${data['unitPrice'] ?? '--'} جنيه'),
               _buildDetailRow('القيمة الإجمالية التقديرية', '${data['totalPrice'] ?? '--'}'),
               _buildDetailRow('طريقة السداد والشروط', data['paymentTerms'] ?? '--'),
               _buildDetailRow('فترة صلاحية العرض', data['validUntil'] ?? '--'),

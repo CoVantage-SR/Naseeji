@@ -227,7 +227,7 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
               CustomerStatisticsCard(label: 'إجمالي العروض', value: c.totalQuotations.toString(), icon: Icons.description_outlined, color: AppColors.secondary),
               CustomerStatisticsCard(label: 'مقبولة', value: c.acceptedQuotations.toString(), icon: Icons.thumb_up_outlined, color: Colors.green),
               CustomerStatisticsCard(label: 'مرفوضة', value: c.rejectedQuotations.toString(), icon: Icons.thumb_down_outlined, color: AppColors.error),
-              CustomerStatisticsCard(label: 'الإيرادات الكلية', value: '${(c.totalRevenue / 1000).toStringAsFixed(0)}ك ر.س', icon: Icons.payments_outlined, color: AppColors.primary),
+              CustomerStatisticsCard(label: 'الإيرادات الكلية', value: '${(c.totalRevenue / 1000).toStringAsFixed(0)}ك جنيه', icon: Icons.payments_outlined, color: AppColors.primary),
               CustomerStatisticsCard(label: 'متوسط الطلب', value: '${(c.averageOrderValue / 1000).toStringAsFixed(1)}ك', icon: Icons.analytics_outlined, color: AppColors.tertiary),
               CustomerStatisticsCard(label: 'نجاح التفاوض', value: '${c.negotiationSuccessRate.toStringAsFixed(0)}٪', icon: Icons.gavel, color: AppColors.secondary),
             ],

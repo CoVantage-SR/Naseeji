@@ -240,8 +240,8 @@ class OrdersRepositoryImpl implements OrdersRepository {
     await Future.delayed(const Duration(milliseconds: 500));
     return const OfferApproved(
       rfqId: '8842',
-      meterPrice: '120 ر.س / م',
-      totalPrice: '600,000 ر.س',
+      meterPrice: '120 جنيه / م',
+      totalPrice: '600,000 جنيه',
       deliveryDate: '20 يوليو',
       paymentMethodTitle: 'طريقة الدفع',
       paymentMethodDesc: 'تحويل بنكي مباشر - المصرف الراجحي - شركة نسيجي',

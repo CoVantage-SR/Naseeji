@@ -61,7 +61,7 @@ class WithdrawalsScreen extends ConsumerWidget {
                           ),
                           SizedBox(height: 8),
                           Text(
-                            '${wallet.availableBalance.toStringAsFixed(2)} ر.س',
+                            '${wallet.availableBalance.toStringAsFixed(2)} جنيه',
                             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.primary),
                           ),
                           SizedBox(height: 12),
@@ -69,7 +69,7 @@ class WithdrawalsScreen extends ConsumerWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                '1,000.00 ر.س',
+                                '1,000.00 جنيه',
                                 style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                               ),
                               Text(

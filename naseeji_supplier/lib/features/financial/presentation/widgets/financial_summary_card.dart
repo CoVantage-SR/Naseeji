@@ -15,7 +15,7 @@ class FinancialSummaryCard extends StatelessWidget {
     super.key,
     required this.title,
     required this.value,
-    this.currency = 'ر.س',
+    this.currency = 'جنيه',
     this.trend,
     this.isPositive,
     this.icon,

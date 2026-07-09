@@ -227,7 +227,7 @@ class _QuotationVersionCard extends StatelessWidget {
                       else
                         const SizedBox.shrink(),
                       Text(
-                        '${data['unitPrice'] ?? '--'} ر.س/م',
+                        '${data['unitPrice'] ?? '--'} جنيه/م',
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.primary),
                       ),
                     ],

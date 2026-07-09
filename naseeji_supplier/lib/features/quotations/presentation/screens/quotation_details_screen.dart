@@ -491,7 +491,7 @@ class QuotationDetailsScreen extends ConsumerWidget {
               controller: priceController,
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
               decoration: const InputDecoration(
-                labelText: 'سعر الوحدة الجديد المقترح (ر.س)',
+                labelText: 'سعر الوحدة الجديد المقترح (جنيه)',
                 labelStyle: TextStyle(fontSize: 11),
                 border: OutlineInputBorder(),
               ),

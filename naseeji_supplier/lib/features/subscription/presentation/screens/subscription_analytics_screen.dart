@@ -50,10 +50,10 @@ class SubscriptionAnalyticsScreen extends ConsumerWidget {
                             style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                           ),
                           const Divider(height: 20, color: AppColors.outlineVariant),
-                          _buildKpiRow('تكلفة الاشتراك الشهري', '${data.subscriptionCost.toStringAsFixed(0)} ر.س'),
-                          _buildKpiRow('إجمالي الإنفاق على الملحقات', '${data.addonSpending.toStringAsFixed(0)} ر.س'),
+                          _buildKpiRow('تكلفة الاشتراك الشهري', '${data.subscriptionCost.toStringAsFixed(0)} جنيه'),
+                          _buildKpiRow('إجمالي الإنفاق على الملحقات', '${data.addonSpending.toStringAsFixed(0)} جنيه'),
                           _buildKpiRow('العائد المالي المقدر للاستثمار (ROI)', '${data.roi}x'),
-                          _buildKpiRow('إجمالي الوفورات المالية المقدرة بالباقة', '${data.subscriptionSavings.toStringAsFixed(0)} ر.س'),
+                          _buildKpiRow('إجمالي الوفورات المالية المقدرة بالباقة', '${data.subscriptionSavings.toStringAsFixed(0)} جنيه'),
                         ],
                       ),
                     ),
@@ -61,7 +61,7 @@ class SubscriptionAnalyticsScreen extends ConsumerWidget {
 
                     // Spending Chart
                     SubscriptionChart(
-                      title: 'الإنفاق الشهري للاشتراكات والخدمات (ر.س)',
+                      title: 'الإنفاق الشهري للاشتراكات والخدمات (جنيه)',
                       values: data.monthlySpending,
                       labels: const ['مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو'],
                       chartType: 'bar',

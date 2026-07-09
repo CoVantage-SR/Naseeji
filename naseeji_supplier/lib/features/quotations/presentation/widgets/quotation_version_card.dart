@@ -83,14 +83,14 @@ class QuotationVersionCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    _buildInfoColumn('سعر الوحدة المقترح', '${revision.supplierPrice.toStringAsFixed(2)} ر.س'),
-                    _buildInfoColumn('العرض المقابل للمصنع', '${revision.factoryCounterOffer.toStringAsFixed(2)} ر.س'),
+                    _buildInfoColumn('سعر الوحدة المقترح', '${revision.supplierPrice.toStringAsFixed(2)} جنيه'),
+                    _buildInfoColumn('العرض المقابل للمصنع', '${revision.factoryCounterOffer.toStringAsFixed(2)} جنيه'),
                   ],
                 ),
                 SizedBox(height: 8),
                 Row(
                   children: [
-                    _buildInfoColumn('فرق السعر التفاوضي', '${revision.priceDifference.toStringAsFixed(2)} ر.س'),
+                    _buildInfoColumn('فرق السعر التفاوضي', '${revision.priceDifference.toStringAsFixed(2)} جنيه'),
                     _buildInfoColumn('تاريخ الإنشاء والتعديل', revision.createdDate),
                   ],
                 ),

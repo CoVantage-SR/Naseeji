@@ -61,7 +61,7 @@ class AgreementCard extends StatelessWidget {
             padding: const EdgeInsets.all(14),
             child: Column(
               children: [
-                _Row(label: 'السعر النهائي', value: '${data['finalPrice'] ?? '--'} ر.س/م'),
+                _Row(label: 'السعر النهائي', value: '${data['finalPrice'] ?? '--'} جنيه/م'),
                 _Row(label: 'الكمية', value: '${data['quantity'] ?? '--'}'),
                 _Row(label: 'تاريخ التسليم', value: '${data['deliveryDate'] ?? '--'}'),
                 _Row(label: 'طريقة الدفع', value: '${data['paymentMethod'] ?? '--'}'),

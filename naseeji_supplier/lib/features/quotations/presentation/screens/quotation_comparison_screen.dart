@@ -107,7 +107,7 @@ class QuotationComparisonScreen extends ConsumerWidget {
                         ),
                         SizedBox(height: 8),
                         Text(
-                          'تظهر تحليلاتنا أن متوسط السعر المعتمد لنوع ${q.productCategory} في السوق هو ${(q.supplierUnitPrice * 0.98).toStringAsFixed(1)} ر.س. يعتبر عرض السعر الحالي مناسباً ومنافساً وممتازاً لتأمين الصفقة بنسبة قبول متوقعة تفوق ٨٥٪.',
+                          'تظهر تحليلاتنا أن متوسط السعر المعتمد لنوع ${q.productCategory} في السوق هو ${(q.supplierUnitPrice * 0.98).toStringAsFixed(1)} جنيه. يعتبر عرض السعر الحالي مناسباً ومنافساً وممتازاً لتأمين الصفقة بنسبة قبول متوقعة تفوق ٨٥٪.',
                           style: TextStyle(fontSize: 9, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.4),
                         ),
                       ],

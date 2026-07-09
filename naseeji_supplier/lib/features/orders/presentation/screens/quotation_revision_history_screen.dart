@@ -100,7 +100,7 @@ class _QuotationRevisionHistoryScreenState extends ConsumerState<QuotationRevisi
                                       .where((e) => e.versionNumber != selectedVer1)
                                       .map((e) => DropdownMenuItem(
                                             value: e.versionNumber,
-                                            child: Text('نسخة ${e.versionNumber} (${e.price.toStringAsFixed(2)} ر.س)'),
+                                            child: Text('نسخة ${e.versionNumber} (${e.price.toStringAsFixed(2)} جنيه)'),
                                           ))
                                       .toList(),
                                   onChanged: (val) {
@@ -128,7 +128,7 @@ class _QuotationRevisionHistoryScreenState extends ConsumerState<QuotationRevisi
                                       .where((e) => e.versionNumber != selectedVer2)
                                       .map((e) => DropdownMenuItem(
                                             value: e.versionNumber,
-                                            child: Text('نسخة ${e.versionNumber} (${e.price.toStringAsFixed(2)} ر.س)'),
+                                            child: Text('نسخة ${e.versionNumber} (${e.price.toStringAsFixed(2)} جنيه)'),
                                           ))
                                       .toList(),
                                   onChanged: (val) {
@@ -213,7 +213,7 @@ class _QuotationRevisionHistoryScreenState extends ConsumerState<QuotationRevisi
             SizedBox(height: 6),
             _buildRowItem('التوقيت والاصدار', '${revision.date} في ${revision.time}'),
             SizedBox(height: 6),
-            _buildRowItem('السعر المقترح', '${revision.price.toStringAsFixed(2)} ر.س / م'),
+            _buildRowItem('السعر المقترح', '${revision.price.toStringAsFixed(2)} جنيه / م'),
             SizedBox(height: 10),
             const Divider(height: 1, color: Color(0xFFF1F1F5)),
             SizedBox(height: 8),
@@ -271,7 +271,7 @@ class _QuotationRevisionHistoryScreenState extends ConsumerState<QuotationRevisi
                   children: [
                     Text('نسخة ${rev2.versionNumber}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
                     SizedBox(height: 8),
-                    Text('${rev2.price.toStringAsFixed(2)} ر.س', style: TextStyle(fontSize: 14, color: AppColors.error, fontWeight: FontWeight.bold)),
+                    Text('${rev2.price.toStringAsFixed(2)} جنيه', style: TextStyle(fontSize: 14, color: AppColors.error, fontWeight: FontWeight.bold)),
                     SizedBox(height: 4),
                     Text(rev2.createdBy, style: TextStyle(fontSize: 10, color: AppColors.outline)),
                   ],
@@ -281,7 +281,7 @@ class _QuotationRevisionHistoryScreenState extends ConsumerState<QuotationRevisi
                   children: [
                     Text('نسخة ${rev1.versionNumber}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
                     SizedBox(height: 8),
-                    Text('${rev1.price.toStringAsFixed(2)} ر.س', style: TextStyle(fontSize: 14, color: Color(0xFF16A34A), fontWeight: FontWeight.bold)),
+                    Text('${rev1.price.toStringAsFixed(2)} جنيه', style: TextStyle(fontSize: 14, color: Color(0xFF16A34A), fontWeight: FontWeight.bold)),
                     SizedBox(height: 4),
                     Text(rev1.createdBy, style: TextStyle(fontSize: 10, color: AppColors.outline)),
                   ],

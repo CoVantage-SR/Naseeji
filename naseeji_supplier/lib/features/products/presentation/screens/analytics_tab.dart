@@ -47,7 +47,7 @@ class AnalyticsTab extends StatelessWidget {
                       ),
                       SizedBox(height: 12),
                       Text(
-                        '١٤٥,٠٠٠ ر.س',
+                        '١٤٥,٠٠٠ جنيه',
                         style: TextStyle(fontWeight: FontWeight.w900, fontSize: 24, color: AppColors.primary),
                       ),
                       SizedBox(height: 16),

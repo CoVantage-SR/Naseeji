@@ -475,7 +475,7 @@ class SubscriptionRepositoryImpl implements SubscriptionRepository {
       SubscriptionNotification(
         id: 'NOT-${DateTime.now().millisecondsSinceEpoch}',
         title: 'تفعيل خدمة فردية',
-        body: 'تم شراء وتفعيل خدمة $serviceName بنجاح بمبلغ $cost ر.س.',
+        body: 'تم شراء وتفعيل خدمة $serviceName بنجاح بمبلغ $cost جنيه.',
         timestamp: DateTime.now(),
         type: 'success',
       ),

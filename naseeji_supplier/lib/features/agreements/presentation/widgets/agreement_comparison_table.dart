@@ -31,7 +31,7 @@ class AgreementComparisonTable extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildMetricColumn('الوفر المالي للمشروع', '${agreement.savingsAmount.toStringAsFixed(0)} ر.س', Colors.green.shade800),
+                _buildMetricColumn('الوفر المالي للمشروع', '${agreement.savingsAmount.toStringAsFixed(0)} جنيه', Colors.green.shade800),
                 _buildMetricColumn('نسبة نجاح التفاوض', '${agreement.negotiationSuccessPercent}%', Colors.blue.shade800),
               ],
             ),

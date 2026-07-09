@@ -26,7 +26,7 @@ class TransactionDetailsScreen extends ConsumerWidget {
           factoryName: 'مصنع نسيج الرياض',
           type: TransactionType.paymentReceived,
           amount: 14500.0,
-          currency: 'ر.س',
+          currency: 'جنيه',
           status: TransactionStatus.completed,
           paymentMethod: 'مدى',
           referenceNumber: 'REF-7729831',
@@ -183,11 +183,11 @@ class TransactionDetailsScreen extends ConsumerWidget {
                 ),
                 child: Column(
                   children: [
-                    _buildDetailRow('القيمة الإجمالية قبل الضريبة', '${(txn.amount.abs() / 1.15).toStringAsFixed(2)} ر.س'),
+                    _buildDetailRow('القيمة الإجمالية قبل الضريبة', '${(txn.amount.abs() / 1.15).toStringAsFixed(2)} جنيه'),
                     const Divider(height: 20),
-                    _buildDetailRow('ضريبة القيمة المضافة (15%)', '${(txn.amount.abs() - (txn.amount.abs() / 1.15)).toStringAsFixed(2)} ر.س'),
+                    _buildDetailRow('ضريبة القيمة المضافة (15%)', '${(txn.amount.abs() - (txn.amount.abs() / 1.15)).toStringAsFixed(2)} جنيه'),
                     const Divider(height: 20),
-                    _buildDetailRow('رسوم تسوية الخدمة (المنصة)', '0.00 ر.س'),
+                    _buildDetailRow('رسوم تسوية الخدمة (المنصة)', '0.00 جنيه'),
                   ],
                 ),
               ),

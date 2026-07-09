@@ -67,7 +67,7 @@ class FinancialChartWidget extends StatelessWidget {
                   width: 32,
                   alignment: Alignment.bottomCenter,
                   child: Tooltip(
-                    message: '${val.toStringAsFixed(0)} ر.س',
+                    message: '${val.toStringAsFixed(0)} جنيه',
                     child: Container(
                       height: 130 * normalizedHeight,
                       decoration: BoxDecoration(
@@ -208,7 +208,7 @@ class FinancialChartWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Tooltip(
-                      message: 'صادر: ${outflow.toStringAsFixed(0)} ر.س',
+                      message: 'صادر: ${outflow.toStringAsFixed(0)} جنيه',
                       child: Container(
                         width: 12,
                         height: 130 * hOutflow,
@@ -220,7 +220,7 @@ class FinancialChartWidget extends StatelessWidget {
                     ),
                     SizedBox(width: 4),
                     Tooltip(
-                      message: 'وارد: ${inflow.toStringAsFixed(0)} ر.س',
+                      message: 'وارد: ${inflow.toStringAsFixed(0)} جنيه',
                       child: Container(
                         width: 12,
                         height: 130 * hInflow,

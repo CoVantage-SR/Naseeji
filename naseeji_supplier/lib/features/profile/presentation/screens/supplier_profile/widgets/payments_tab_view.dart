@@ -23,7 +23,7 @@ class PaymentsTabView extends StatelessWidget {
           children: [
             Text('طرق الدفع والتسهيلات الائتمانية والعملات المقبولة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF006B5F))),
             SizedBox(height: 12),
-            _buildRowItem('العملات المقبولة لسداد المستندات', 'ريال سعودي (SAR) • دولار أمريكي (USD)'),
+            _buildRowItem('العملات المقبولة لسداد المستندات', 'ريال سعودي (جنيه) • دولار أمريكي (USD)'),
             _buildRowItem('طرق السداد المعتمدة', 'تحويل بنكي مباشر • دفع ضامن (Escrow) • شيكات معتمدة'),
             _buildRowItem('أجل السداد المعتمد (Credit terms)', 'Net 30 أيام • دفعة مقدمة 30% مع تأمين الشحنة'),
             _buildRowItem('الحساب البنكي الرئيسي للمورد', 'البنك الأهلي السعودي SNB - آيبان SA90000001234567890'),

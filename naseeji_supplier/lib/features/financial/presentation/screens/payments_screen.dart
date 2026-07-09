@@ -110,7 +110,7 @@ class PaymentsScreen extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${payment.amount.toStringAsFixed(2)} ر.س',
+                      '${payment.amount.toStringAsFixed(2)} جنيه',
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primary),
                     ),
                     Text(

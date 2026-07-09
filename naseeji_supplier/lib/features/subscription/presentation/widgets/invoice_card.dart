@@ -63,10 +63,10 @@ class InvoiceCard extends StatelessWidget {
 
             _buildDetailRow('الباقة / الخدمة المشحونة', invoice.planName),
             _buildDetailRow('تاريخ الفاتورة', dateStr),
-            _buildDetailRow('الضريبة (15%)', '${invoice.vat.toStringAsFixed(2)} ر.س'),
+            _buildDetailRow('الضريبة (15%)', '${invoice.vat.toStringAsFixed(2)} جنيه'),
             if (invoice.discount > 0)
-              _buildDetailRow('الخصم المطبق', '-${invoice.discount.toStringAsFixed(0)} ر.س'),
-            _buildDetailRow('المبلغ الإجمالي', '${invoice.amount.toStringAsFixed(0)} ر.س'),
+              _buildDetailRow('الخصم المطبق', '-${invoice.discount.toStringAsFixed(0)} جنيه'),
+            _buildDetailRow('المبلغ الإجمالي', '${invoice.amount.toStringAsFixed(0)} جنيه'),
 
             SizedBox(height: 8),
             const Divider(color: AppColors.outlineVariant),

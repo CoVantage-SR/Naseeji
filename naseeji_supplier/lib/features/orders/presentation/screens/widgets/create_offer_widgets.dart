@@ -214,7 +214,7 @@ class PricingQuantitiesCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           CreateOfferInputField(
-            label: 'سعر الوحدة (ر.س)',
+            label: 'سعر الوحدة (جنيه)',
             controller: unitPriceController,
             keyboardType: TextInputType.number,
             textAlign: TextAlign.left,
@@ -278,7 +278,7 @@ class LogisticsServicesCard extends StatelessWidget {
             children: [
               Expanded(
                 child: CreateOfferInputField(
-                  label: 'تكلفة الشحن (ر.س)',
+                  label: 'تكلفة الشحن (جنيه)',
                   controller: shippingCostController,
                 ),
               ),

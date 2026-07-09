@@ -63,7 +63,7 @@ class ExpensesScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 8),
                     Text(
-                      '27,120.00 ر.س',
+                      '27,120.00 جنيه',
                       style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 6),
@@ -102,7 +102,7 @@ class ExpensesScreen extends StatelessWidget {
                   children: List.generate(expenseData.length, (index) {
                     final item = expenseData[index];
                     final colorVal = item['color'] as int;
-                    final valStr = '${(item['value'] as double).toStringAsFixed(2)} ر.س';
+                    final valStr = '${(item['value'] as double).toStringAsFixed(2)} جنيه';
 
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),

@@ -121,7 +121,7 @@ class _EscrowTrackingScreenState extends ConsumerState<EscrowTrackingScreen> {
                             ),
                             SizedBox(height: 8),
                             Text(
-                              '${data.escrowAmount.toStringAsFixed(2)} ر.س',
+                              '${data.escrowAmount.toStringAsFixed(2)} جنيه',
                               style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 24, fontWeight: FontWeight.bold),
                             ),
                             SizedBox(height: 8),

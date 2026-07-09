@@ -194,9 +194,9 @@ class _QuotationVersionsScreenState extends ConsumerState<QuotationVersionsScree
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildDialogRow('سعر وحدة المورد المقترح', '${rev.supplierPrice.toStringAsFixed(2)} ر.س'),
-            _buildDialogRow('السعر المستهدف للمشتري', '${rev.factoryCounterOffer.toStringAsFixed(2)} ر.س'),
-            _buildDialogRow('فارق التكلفة المالي الكلي', '${rev.priceDifference.toStringAsFixed(2)} ر.س'),
+            _buildDialogRow('سعر وحدة المورد المقترح', '${rev.supplierPrice.toStringAsFixed(2)} جنيه'),
+            _buildDialogRow('السعر المستهدف للمشتري', '${rev.factoryCounterOffer.toStringAsFixed(2)} جنيه'),
+            _buildDialogRow('فارق التكلفة المالي الكلي', '${rev.priceDifference.toStringAsFixed(2)} جنيه'),
             _buildDialogRow('تاريخ المراجعة الفعلي', rev.createdDate),
             _buildDialogRow('المفاوض القائم بالقرار', rev.negotiatedBy),
             _buildDialogRow('حالة الإصدار المعتمدة', rev.status),
@@ -237,21 +237,21 @@ class _QuotationVersionsScreenState extends ConsumerState<QuotationVersionsScree
                   TableRow(
                     children: [
                       _buildCell('سعر المورد'),
-                      _buildCell('${rev1.supplierPrice} ر.س'),
-                      _buildCell('${rev2.supplierPrice} ر.س'),
+                      _buildCell('${rev1.supplierPrice} جنيه'),
+                      _buildCell('${rev2.supplierPrice} جنيه'),
                     ],
                   ),
                   TableRow(
                     children: [
                       _buildCell('سعر المصنع'),
-                      _buildCell('${rev1.factoryCounterOffer} ر.س'),
-                      _buildCell('${rev2.factoryCounterOffer} ر.س'),
+                      _buildCell('${rev1.factoryCounterOffer} جنيه'),
+                      _buildCell('${rev2.factoryCounterOffer} جنيه'),
                     ],
                   ),
                   TableRow(
                     children: [
                       _buildCell('الفرق المالي'),
-                      _buildCell('${rev1.priceDifference} ر.س'),
+                      _buildCell('${rev1.priceDifference} جنيه'),
                       _buildCell('${rev2.priceDifference} ر.s'),
                     ],
                   ),

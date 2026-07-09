@@ -85,9 +85,9 @@ class QuotationCard extends StatelessWidget {
             child: Column(
               children: [
                 _Row(label: 'اسم المنتج', value: data['productName'] ?? 'خيوط غزل القطن الفاخر'),
-                _Row(label: 'سعر الوحدة', value: '${data['unitPrice'] ?? '--'} ر.س'),
+                _Row(label: 'سعر الوحدة', value: '${data['unitPrice'] ?? '--'} جنيه'),
                 _Row(label: 'الكمية', value: '${data['quantity'] ?? '--'}'),
-                _Row(label: 'السعر الإجمالي', value: data['totalPrice'] != null ? '${data['totalPrice']}' : '${(double.tryParse(data['unitPrice']?.toString() ?? '0') ?? 0.0) * (double.tryParse(data['quantity']?.toString().replaceAll(RegExp(r'[^0-9.]'), '') ?? '0') ?? 0.0)} ر.س'),
+                _Row(label: 'السعر الإجمالي', value: data['totalPrice'] != null ? '${data['totalPrice']}' : '${(double.tryParse(data['unitPrice']?.toString() ?? '0') ?? 0.0) * (double.tryParse(data['quantity']?.toString().replaceAll(RegExp(r'[^0-9.]'), '') ?? '0') ?? 0.0)} جنيه'),
                 _Row(label: 'مدة التسليم', value: '${data['deliveryDays'] ?? '--'}'),
                 _Row(label: 'شروط الدفع', value: '${data['paymentTerms'] ?? '--'}'),
                 _Row(label: 'صالح حتى', value: '${data['validUntil'] ?? '--'}'),

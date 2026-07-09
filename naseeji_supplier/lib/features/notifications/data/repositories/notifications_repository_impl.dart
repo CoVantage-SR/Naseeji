@@ -25,7 +25,7 @@ class NotificationsRepositoryImpl implements NotificationsRepository {
     AppNotification(
       id: '3',
       title: 'تأكيد استلام الدفعة',
-      body: 'تم استلام مبلغ 12,450 ر.س بنجاح مقابل فاتورة التوريد الشهرية.',
+      body: 'تم استلام مبلغ 12,450 جنيه بنجاح مقابل فاتورة التوريد الشهرية.',
       timestamp: DateTime.now().subtract(const Duration(hours: 4)),
       isRead: false,
       type: NotificationType.update,

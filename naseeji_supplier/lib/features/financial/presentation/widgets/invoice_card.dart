@@ -20,7 +20,7 @@ class InvoiceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final issueDateStr = '${invoice.invoiceDate.year}-${invoice.invoiceDate.month.toString().padLeft(2, '0')}-${invoice.invoiceDate.day.toString().padLeft(2, '0')}';
     final dueDateStr = '${invoice.dueDate.year}-${invoice.dueDate.month.toString().padLeft(2, '0')}-${invoice.dueDate.day.toString().padLeft(2, '0')}';
-    final totalStr = '${invoice.grandTotal.toStringAsFixed(2)} ر.س';
+    final totalStr = '${invoice.grandTotal.toStringAsFixed(2)} جنيه';
 
     return Card(
       color: Theme.of(context).colorScheme.surface,

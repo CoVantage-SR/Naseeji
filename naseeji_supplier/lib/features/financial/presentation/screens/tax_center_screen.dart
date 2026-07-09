@@ -170,7 +170,7 @@ class TaxCenterScreen extends ConsumerWidget {
                                 Row(
                                   children: [
                                     Text(
-                                      '${(rep['vat'] as double).toStringAsFixed(2)} ر.س',
+                                      '${(rep['vat'] as double).toStringAsFixed(2)} جنيه',
                                       style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
                                     ),
                                     SizedBox(width: 8),
@@ -201,7 +201,7 @@ class TaxCenterScreen extends ConsumerWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          '${value.toStringAsFixed(2)} ر.س',
+          '${value.toStringAsFixed(2)} جنيه',
           style: TextStyle(
             fontSize: isBold ? 15 : 13,
             fontWeight: FontWeight.bold,
