@@ -49,7 +49,7 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen> {
         ),
       ),
       body: Container(
-        color: const Color(0xFFF8F9FF),
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: Column(
           children: [
             Expanded(

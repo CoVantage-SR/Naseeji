@@ -14,7 +14,7 @@ class PaymentReleaseScreen extends ConsumerWidget {
     final releaseAsync = ref.watch(paymentReleaseControllerProvider(rfqId));
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FF),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.5,
@@ -120,7 +120,7 @@ class PaymentReleaseScreen extends ConsumerWidget {
         children: [
           Container(
             padding: const EdgeInsets.all(12),
-            decoration: const BoxDecoration(color: Color(0xFFE2F9F5), shape: BoxShape.circle),
+            decoration: BoxDecoration(color: Color(0xFFE2F9F5), shape: BoxShape.circle),
             child: const Icon(Icons.account_balance_wallet_outlined, color: Color(0xFF006B5F), size: 36),
           ),
           const SizedBox(height: 12),

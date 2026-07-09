@@ -46,7 +46,7 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
         ],
       ),
       body: Container(
-        color: const Color(0xFFF8F9FF),
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: transactionsAsync.when(
           loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (err, stack) => Center(child: Text('خطأ: $err')),
@@ -87,7 +87,7 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
                         decoration: InputDecoration(
                           hintText: 'البحث برقم المعاملة، المصنع، المرجع...',
                           prefixIcon: const Icon(Icons.search),
-                          fillColor: const Color(0xFFF8F9FF),
+                          fillColor: Theme.of(context).scaffoldBackgroundColor,
                           contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),

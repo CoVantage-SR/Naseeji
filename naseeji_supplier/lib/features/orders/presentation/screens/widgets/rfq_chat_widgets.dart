@@ -45,7 +45,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                   Container(
                     width: 6,
                     height: 6,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: Color(0xFF16A34A),
                       shape: BoxShape.circle,
                     ),
@@ -58,7 +58,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
           Container(
             width: 38,
             height: 38,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(
                 image: NetworkImage('https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80'),
@@ -162,7 +162,7 @@ class ChatMessagesList extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(horizontal: 2),
                 width: 6,
                 height: 6,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: AppColors.outline,
                   shape: BoxShape.circle,
                 ),
@@ -220,7 +220,7 @@ class ChatMessagesList extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF8F9FF),
+                  color: Theme.of(context).scaffoldBackgroundColor,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Column(
@@ -558,7 +558,7 @@ class ChatInputField extends StatelessWidget {
           Container(
             width: 44,
             height: 44,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: Color(0xFF0040E0),
               shape: BoxShape.circle,
             ),

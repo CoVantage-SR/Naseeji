@@ -56,7 +56,7 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: const Color(0xFFF8F9FF),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0.5,

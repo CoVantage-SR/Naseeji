@@ -42,7 +42,7 @@ class InvoicesScreen extends ConsumerWidget {
           ),
         ),
         body: Container(
-          color: const Color(0xFFF8F9FF),
+          color: Theme.of(context).scaffoldBackgroundColor,
           child: invoicesAsync.when(
             loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
             error: (err, stack) => Center(child: Text('خطأ: $err')),

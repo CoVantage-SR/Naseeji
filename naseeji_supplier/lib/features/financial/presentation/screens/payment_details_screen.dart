@@ -45,7 +45,7 @@ class PaymentDetailsScreen extends StatelessWidget {
         ),
       ),
       body: Container(
-        color: const Color(0xFFF8F9FF),
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -64,7 +64,7 @@ class PaymentDetailsScreen extends StatelessWidget {
                     Container(
                       width: 45,
                       height: 45,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: Color(0xFFDEEBFF),
                         shape: BoxShape.circle,
                       ),

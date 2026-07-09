@@ -32,7 +32,7 @@ class FinancialDashboardScreen extends ConsumerWidget {
         ),
       ),
       body: Container(
-        color: const Color(0xFFF8F9FF),
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: dashboardAsync.when(
           loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (err, stack) => Center(child: Text('خطأ في تحميل البيانات: $err')),

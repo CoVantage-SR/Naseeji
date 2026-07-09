@@ -41,7 +41,7 @@ class RefundsScreen extends ConsumerWidget {
           ),
         ),
         body: Container(
-          color: const Color(0xFFF8F9FF),
+          color: Theme.of(context).scaffoldBackgroundColor,
           child: refundsAsync.when(
             loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
             error: (err, stack) => Center(child: Text('خطأ: $err')),
@@ -122,7 +122,7 @@ class RefundsScreen extends ConsumerWidget {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF8F9FF),
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Column(

@@ -366,7 +366,7 @@ class _EditSupplierProfileScreenState extends ConsumerState<EditSupplierProfileS
             }
           },
           child: Scaffold(
-            backgroundColor: const Color(0xFFF8F9FF),
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             appBar: AppBar(
               title: const Text('تعديل ملف الشركة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
               centerTitle: true,

@@ -56,7 +56,7 @@ class _QuotationVersionsScreenState extends ConsumerState<QuotationVersionsScree
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: const Color(0xFFF8F9FF),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0.5,
@@ -227,7 +227,7 @@ class _QuotationVersionsScreenState extends ConsumerState<QuotationVersionsScree
                 border: TableBorder.all(color: const Color(0xFFE2E1EF), width: 0.5),
                 children: [
                   TableRow(
-                    decoration: const BoxDecoration(color: AppColors.surfaceContainerLow),
+                    decoration: BoxDecoration(color: AppColors.surfaceContainerLow),
                     children: [
                       _buildCell('الخاصية'),
                       _buildCell(rev1.version),

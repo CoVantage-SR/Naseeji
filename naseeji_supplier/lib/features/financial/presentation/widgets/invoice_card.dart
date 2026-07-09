@@ -116,7 +116,7 @@ class InvoiceCard extends StatelessWidget {
                     onPressed: onDownload,
                     icon: const Icon(Icons.download, size: 20, color: AppColors.outline),
                     style: IconButton.styleFrom(
-                      backgroundColor: const Color(0xFFF8F9FF),
+                      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -129,7 +129,7 @@ class InvoiceCard extends StatelessWidget {
                     onPressed: onShare,
                     icon: const Icon(Icons.share, size: 20, color: AppColors.outline),
                     style: IconButton.styleFrom(
-                      backgroundColor: const Color(0xFFF8F9FF),
+                      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),

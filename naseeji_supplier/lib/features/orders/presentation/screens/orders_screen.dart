@@ -27,7 +27,7 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
       drawer: const NavigationDrawerView(),
       appBar: RfqAppBar(scaffoldKey: scaffoldKey),
       body: Container(
-        color: const Color(0xFFF8F9FF),
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: stateAsync.when(
           loading: () => const Center(
             child: CircularProgressIndicator(color: AppColors.primary),

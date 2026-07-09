@@ -34,7 +34,7 @@ class _EscrowTrackingScreenState extends ConsumerState<EscrowTrackingScreen> {
         ),
       ),
       body: Container(
-        color: const Color(0xFFF8F9FF),
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -60,7 +60,7 @@ class _EscrowTrackingScreenState extends ConsumerState<EscrowTrackingScreen> {
                     DropdownButtonFormField<String>(
                       initialValue: _selectedOrderNumber,
                       decoration: InputDecoration(
-                        fillColor: const Color(0xFFF8F9FF),
+                        fillColor: Theme.of(context).scaffoldBackgroundColor,
                         filled: true,
                         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                         enabledBorder: OutlineInputBorder(

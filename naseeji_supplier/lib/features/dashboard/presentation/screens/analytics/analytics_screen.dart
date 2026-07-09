@@ -49,7 +49,7 @@ class AnalyticsScreen extends ConsumerWidget {
       ),
 
       body: Container(
-        color: const Color(0xFFF8F9FF),
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: analyticsAsync.when(
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (err, stack) => Center(child: Text('خطأ: $err')),

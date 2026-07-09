@@ -41,7 +41,7 @@ class _PublicSupplierProfileScreenState extends ConsumerState<PublicSupplierProf
     final profileAsync = ref.watch(profileControllerProvider);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FF),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: profileAsync.when(
         loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
         error: (err, stack) => Center(child: Text('خطأ: $err')),

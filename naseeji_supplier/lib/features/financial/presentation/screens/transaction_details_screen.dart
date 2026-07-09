@@ -52,7 +52,7 @@ class TransactionDetailsScreen extends ConsumerWidget {
         ),
       ),
       body: Container(
-        color: const Color(0xFFF8F9FF),
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -71,7 +71,7 @@ class TransactionDetailsScreen extends ConsumerWidget {
                     Container(
                       width: 45,
                       height: 45,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: Color(0xFFE3FCEF),
                         shape: BoxShape.circle,
                       ),

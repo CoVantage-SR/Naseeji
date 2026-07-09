@@ -23,7 +23,7 @@ class SubscriptionHistoryScreen extends ConsumerWidget {
           centerTitle: true,
         ),
         body: Material(
-          color: const Color(0xFFF8F9FF),
+          color: Theme.of(context).scaffoldBackgroundColor,
           child: historyAsync.when(
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (e, _) => Center(child: Text('خطأ: $e')),

@@ -79,7 +79,7 @@ class _CustomersDashboardScreenState extends ConsumerState<CustomersDashboardScr
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: const Color(0xFFF8F9FF),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         drawer: const NavigationDrawerView(),
         appBar: AppBar(
           backgroundColor: Colors.white,

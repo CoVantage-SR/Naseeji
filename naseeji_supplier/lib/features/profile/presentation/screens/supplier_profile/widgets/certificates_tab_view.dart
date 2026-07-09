@@ -98,7 +98,7 @@ class _CertificatesTabViewState extends ConsumerState<CertificatesTabView> {
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFF8F9FF),
+                        color: Theme.of(context).scaffoldBackgroundColor,
                         border: Border.all(color: const Color(0xFFE2E1EF), style: BorderStyle.solid),
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -219,7 +219,7 @@ class _CertificatesTabViewState extends ConsumerState<CertificatesTabView> {
                   Container(
                     width: 36,
                     height: 36,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: Color(0xFFF1F4FE),
                       shape: BoxShape.circle,
                     ),

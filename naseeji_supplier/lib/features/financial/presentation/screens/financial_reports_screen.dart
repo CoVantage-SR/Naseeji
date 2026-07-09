@@ -49,7 +49,7 @@ class _FinancialReportsScreenState extends ConsumerState<FinancialReportsScreen>
       body: LoadingOverlay(
         isLoading: _isGenerating,
         child: Container(
-          color: const Color(0xFFF8F9FF),
+          color: Theme.of(context).scaffoldBackgroundColor,
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -83,7 +83,7 @@ class _FinancialReportsScreenState extends ConsumerState<FinancialReportsScreen>
                       DropdownButtonFormField<String>(
                         value: _selectedReportType,
                         decoration: InputDecoration(
-                          fillColor: const Color(0xFFF8F9FF),
+                          fillColor: Theme.of(context).scaffoldBackgroundColor,
                           filled: true,
                           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                           enabledBorder: OutlineInputBorder(
@@ -141,7 +141,7 @@ class _FinancialReportsScreenState extends ConsumerState<FinancialReportsScreen>
                       DropdownButtonFormField<String>(
                         value: _selectedFormat,
                         decoration: InputDecoration(
-                          fillColor: const Color(0xFFF8F9FF),
+                          fillColor: Theme.of(context).scaffoldBackgroundColor,
                           filled: true,
                           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                           enabledBorder: OutlineInputBorder(

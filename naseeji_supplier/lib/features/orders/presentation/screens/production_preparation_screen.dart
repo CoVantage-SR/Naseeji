@@ -27,7 +27,7 @@ class _ProductionPreparationScreenState extends ConsumerState<ProductionPreparat
     final prepAsync = ref.watch(productionPreparationControllerProvider(widget.rfqId));
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FF),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.5,
@@ -204,7 +204,7 @@ class _ProductionPreparationScreenState extends ConsumerState<ProductionPreparat
               margin: const EdgeInsets.only(bottom: 10),
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: isCurrent ? const Color(0xFFE8F0FE) : const Color(0xFFF8F9FF),
+                color: isCurrent ? const Color(0xFFE8F0FE) : Theme.of(context).scaffoldBackgroundColor,
                 border: Border.all(color: isCurrent ? const Color(0xFF0040E0) : const Color(0xFFE2E1EF)),
                 borderRadius: BorderRadius.circular(12),
               ),
@@ -272,7 +272,7 @@ class _ProductionPreparationScreenState extends ConsumerState<ProductionPreparat
   Widget _buildUploadItem(String label, IconData icon) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFFF8F9FF),
+        color: Theme.of(context).scaffoldBackgroundColor,
         border: Border.all(color: const Color(0xFFE2E1EF)),
         borderRadius: BorderRadius.circular(12),
       ),

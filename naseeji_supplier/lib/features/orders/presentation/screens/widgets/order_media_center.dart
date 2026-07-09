@@ -256,7 +256,7 @@ class _OrderMediaCenterState extends State<OrderMediaCenter> {
                           ),
                         )
                       : Container(
-                          color: const Color(0xFFF8F9FF),
+                          color: Theme.of(context).scaffoldBackgroundColor,
                           child: Icon(_getCategoryIcon(item.category), color: const Color(0xFF0040E0), size: 36),
                         ),
                 ),

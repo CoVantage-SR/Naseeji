@@ -37,7 +37,7 @@ class _ShippingManifestScreenState extends ConsumerState<ShippingManifestScreen>
     final manifestAsync = ref.watch(shippingManifestControllerProvider(widget.rfqId));
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FF),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.5,
@@ -289,7 +289,7 @@ class _ShippingManifestScreenState extends ConsumerState<ShippingManifestScreen>
   Widget _buildUploadItem(String label, IconData icon) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFFF8F9FF),
+        color: Theme.of(context).scaffoldBackgroundColor,
         border: Border.all(color: const Color(0xFFE2E1EF)),
         borderRadius: BorderRadius.circular(12),
       ),

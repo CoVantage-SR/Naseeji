@@ -352,7 +352,7 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: const Color(0xFFF8F9FF),
+                color: Theme.of(context).scaffoldBackgroundColor,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.5)),
               ),
@@ -404,7 +404,7 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: const Color(0xFFF8F9FF),
+                color: Theme.of(context).scaffoldBackgroundColor,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.5)),
               ),

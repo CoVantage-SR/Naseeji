@@ -26,7 +26,7 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FF),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.5,
@@ -204,7 +204,7 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
               const SizedBox(width: 8),
               Container(
                 padding: const EdgeInsets.all(4),
-                decoration: const BoxDecoration(color: Color(0xFFE2F9F5), shape: BoxShape.circle),
+                decoration: BoxDecoration(color: Color(0xFFE2F9F5), shape: BoxShape.circle),
                 child: const Icon(Icons.shield_outlined, color: Color(0xFF006B5F), size: 14),
               ),
             ],

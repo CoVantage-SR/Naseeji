@@ -22,7 +22,7 @@ class OfferPreviewDocument extends StatelessWidget {
             Container(
               width: double.infinity,
               height: 4,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: Color(0xFF0040E0),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(4),
@@ -119,7 +119,7 @@ class OfferPreviewDocument extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: const Color(0xFFF8F9FF),
+                color: Theme.of(context).scaffoldBackgroundColor,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
@@ -272,7 +272,7 @@ class OfferPreviewDocument extends StatelessWidget {
   Widget _buildTableRow(String desc, String qty, String unitPrice) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         border: Border(bottom: BorderSide(color: Color(0xFFF1F1F5), width: 1)),
       ),
       child: Row(

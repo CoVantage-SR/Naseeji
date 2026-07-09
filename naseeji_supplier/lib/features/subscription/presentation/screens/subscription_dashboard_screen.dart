@@ -31,7 +31,7 @@ class SubscriptionDashboardScreen extends ConsumerWidget {
           ),
         ),
         body: Material(
-          color: const Color(0xFFF8F9FF),
+          color: Theme.of(context).scaffoldBackgroundColor,
           child: subAsync.when(
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (e, _) => Center(child: Text('خطأ: $e')),

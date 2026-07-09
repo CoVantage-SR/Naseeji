@@ -34,7 +34,7 @@ class _SubscriptionPlansScreenState extends ConsumerState<SubscriptionPlansScree
           centerTitle: true,
         ),
         body: Material(
-          color: const Color(0xFFF8F9FF),
+          color: Theme.of(context).scaffoldBackgroundColor,
           child: Column(
             children: [
               // Cycle Toggle

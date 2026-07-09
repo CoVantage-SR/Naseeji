@@ -106,7 +106,7 @@ class PlanComparisonScreen extends StatelessWidget {
           centerTitle: true,
         ),
         body: Material(
-          color: const Color(0xFFF8F9FF),
+          color: Theme.of(context).scaffoldBackgroundColor,
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             child: Column(

@@ -14,7 +14,7 @@ class FactoryPreparationReviewScreen extends ConsumerWidget {
     final prepAsync = ref.watch(productionPreparationControllerProvider(rfqId));
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FF),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.5,
@@ -111,7 +111,7 @@ class FactoryPreparationReviewScreen extends ConsumerWidget {
                         child: Center(
                           child: Container(
                             padding: const EdgeInsets.all(12),
-                            decoration: const BoxDecoration(color: Colors.black45, shape: BoxShape.circle),
+                            decoration: BoxDecoration(color: Colors.black45, shape: BoxShape.circle),
                             child: const Icon(Icons.play_arrow, color: Colors.white, size: 36),
                           ),
                         ),

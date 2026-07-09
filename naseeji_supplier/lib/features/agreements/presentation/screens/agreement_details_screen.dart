@@ -30,7 +30,7 @@ class AgreementDetailsScreen extends ConsumerWidget {
           final a = agreements[agreementIndex];
 
           return Scaffold(
-            backgroundColor: const Color(0xFFF8F9FF),
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             appBar: AppBar(
               backgroundColor: Colors.white,
               elevation: 0.5,
@@ -319,7 +319,7 @@ class AgreementDetailsScreen extends ConsumerWidget {
 
   Widget _buildSectionCard({required String title, required IconData icon, required List<Widget> children}) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(16)),
         boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],

@@ -147,7 +147,7 @@ class CompleteTimelineWidget extends StatelessWidget {
                           margin: const EdgeInsets.only(left: 6),
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFF8F9FF),
+                            color: Theme.of(context).scaffoldBackgroundColor,
                             border: Border.all(color: const Color(0xFFE2E1EF)),
                             borderRadius: BorderRadius.circular(6),
                           ),
