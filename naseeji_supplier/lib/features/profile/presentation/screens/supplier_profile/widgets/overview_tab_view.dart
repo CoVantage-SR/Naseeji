@@ -20,56 +20,60 @@ class OverviewTabView extends StatelessWidget {
           const SizedBox(height: 16),
           Row(
             children: [
-              Expanded(child: _buildMetricCard('نسبة الرد السريع', '98%', Icons.bolt_outlined, Colors.orange)),
+              Expanded(child: _buildMetricCard(context, 'نسبة الرد السريع', '98%', Icons.bolt_outlined, Colors.orange)),
               const SizedBox(width: 10),
-              Expanded(child: _buildMetricCard('التوصيل في الموعد', '95%', Icons.local_shipping_outlined, Colors.green)),
+              Expanded(child: _buildMetricCard(context, 'التوصيل في الموعد', '95%', Icons.local_shipping_outlined, Colors.green)),
             ],
           ),
           const SizedBox(height: 10),
           Row(
             children: [
-              Expanded(child: _buildMetricCard('المنتجات المفعلة', '${profile.productsCount}', Icons.inventory_2_outlined, const Color(0xFF0040E0))),
-              SizedBox(width: 10),
-              Expanded(child: _buildMetricCard('الطلبات المكتملة', '${profile.ordersCount}', Icons.done_all_outlined, const Color(0xFF006B5F))),
+              Expanded(child: _buildMetricCard(context, 'المنتجات المفعلة', '${profile.productsCount}', Icons.inventory_2_outlined, const Color(0xFF0040E0))),
+              const SizedBox(width: 10),
+              Expanded(child: _buildMetricCard(context, 'الطلبات المكتملة', '${profile.ordersCount}', Icons.done_all_outlined, const Color(0xFF006B5F))),
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
-          Text('نبذة عن أعمال الشركة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          SizedBox(height: 8),
+          const Text('نبذة عن أعمال الشركة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          const SizedBox(height: 8),
           Text(
             'نحن مصنع متخصص في تصنيع خامات الأقمشة والقطن الممتاز عالي الجودة لتلبية احتياجات مصانع الملابس الجاهزة وشركات النسيج B2B في الشرق الأوسط.',
             style: TextStyle(fontSize: 11, height: 1.4, color: Theme.of(context).colorScheme.onSurfaceVariant),
             textAlign: TextAlign.end,
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
-          Text('أوسمة الجودة والاعتمادات', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          SizedBox(height: 12),
+          const Text('أوسمة الجودة والاعتمادات', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               _buildAchievementBadge('Top Supplier', Colors.orange),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               _buildAchievementBadge('Verified Business', Colors.blue),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               _buildAchievementBadge('ISO Certified', Colors.green),
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
-          Text('أحدث نشاطات الشركة الموثقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          SizedBox(height: 12),
+          const Text('أحدث نشاطات الشركة الموثقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          const SizedBox(height: 12),
           const RecentActivityTimeline(),
         ],
       ),
     );
   }
 
-  Widget _buildMetricCard(String label, String val, IconData icon, Color color) {
+  Widget _buildMetricCard(BuildContext context, String label, String val, IconData icon, Color color) {
     return Container(
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(12), border: Border.all(color: const Color(0xFFE2E1EF))),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Theme.of(context).colorScheme.outlineVariant.withValues(alpha: 0.3)),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -77,8 +81,8 @@ class OverviewTabView extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(val, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-              Text(label, style: TextStyle(fontSize: 9, color: AppColors.outline)),
+              Text(val, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Theme.of(context).colorScheme.onSurface)),
+              Text(label, style: TextStyle(fontSize: 9, color: Theme.of(context).colorScheme.onSurfaceVariant)),
             ],
           ),
         ],

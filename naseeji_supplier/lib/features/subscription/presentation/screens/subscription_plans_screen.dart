@@ -29,9 +29,19 @@ class _SubscriptionPlansScreenState extends ConsumerState<SubscriptionPlansScree
           elevation: 0.5,
           title: Text(
             'باقات وعروض الاشتراك B2B',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Theme.of(context).colorScheme.onSurface),
           ),
           centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
+            onPressed: () {
+              if (context.canPop()) {
+                context.pop();
+              } else {
+                context.go('/profile');
+              }
+            },
+          ),
         ),
         body: Material(
           color: Theme.of(context).scaffoldBackgroundColor,

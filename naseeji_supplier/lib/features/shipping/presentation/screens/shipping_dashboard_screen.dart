@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import 'package:naseeji_supplier/features/dashboard/presentation/screens/drawer/navigation_drawer_view.dart';
 import '../../domain/entities/shipment.dart';
@@ -55,8 +56,14 @@ class _ShippingDashboardScreenState extends ConsumerState<ShippingDashboardScree
             style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 15),
           ),
           leading: IconButton(
-            icon: Icon(Icons.menu, color: AppColors.onSurfaceVariant),
-            onPressed: () => _scaffoldKey.currentState?.openDrawer(),
+            icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
+            onPressed: () {
+              if (context.canPop()) {
+                context.pop();
+              } else {
+                context.go('/home');
+              }
+            },
           ),
           bottom: TabBar(
             controller: _tabController,

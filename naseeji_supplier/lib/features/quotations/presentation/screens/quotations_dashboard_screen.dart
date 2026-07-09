@@ -132,8 +132,14 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
             style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 14),
           ),
           leading: IconButton(
-            icon: Icon(Icons.menu, color: AppColors.onSurfaceVariant),
-            onPressed: () => _scaffoldKey.currentState?.openDrawer(),
+            icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
+            onPressed: () {
+              if (context.canPop()) {
+                context.pop();
+              } else {
+                context.go('/home');
+              }
+            },
           ),
           bottom: TabBar(
             controller: _tabController,
