@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
 
 class DocumentUploader extends StatelessWidget {
   final String? uploadedFileName;

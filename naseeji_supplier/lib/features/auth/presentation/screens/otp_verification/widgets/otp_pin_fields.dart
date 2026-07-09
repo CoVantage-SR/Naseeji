@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
 
 class OtpPinFields extends StatelessWidget {
   final List<TextEditingController> controllers;
