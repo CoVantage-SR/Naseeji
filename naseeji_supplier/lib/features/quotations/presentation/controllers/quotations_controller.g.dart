@@ -7,7 +7,7 @@ part of 'quotations_controller.dart';
 // **************************************************************************
 
 String _$quotationsControllerHash() =>
-    r'845ed33979e7afa433c1383669b15c87777055cd';
+    r'7e8e1c57a8435239af8773604e9fb1fdd66ba2be';
 
 /// See also [QuotationsController].
 @ProviderFor(QuotationsController)

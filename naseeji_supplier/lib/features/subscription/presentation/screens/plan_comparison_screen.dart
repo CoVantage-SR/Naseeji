@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
 
 class PlanComparisonScreen extends StatelessWidget {
   const PlanComparisonScreen({super.key});
@@ -124,20 +123,69 @@ class PlanComparisonScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
+                    border: Border.all(color: Theme.of(context).colorScheme.outlineVariant.withValues(alpha: 0.3)),
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: DataTable(
-                        headingRowColor: WidgetStateProperty.all(const Color(0xFFF1F3FF)),
-                        columns: const [
-                          DataColumn(label: Text('الميزة / الحد التقني', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11))),
-                          DataColumn(label: Text('المجانية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11))),
-                          DataColumn(label: Text('المبتدئ', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11))),
-                          DataColumn(label: Text('الاحترافية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11))),
-                          DataColumn(label: Text('الأعمال', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11))),
+                        headingRowColor: WidgetStateProperty.all(
+                          Theme.of(context).brightness == Brightness.dark
+                              ? const Color(0xFF252538)
+                              : const Color(0xFFF1F3FF),
+                        ),
+                        columns: [
+                          DataColumn(
+                            label: Text(
+                              'الميزة / الحد التقني',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 11,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'المجانية',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 11,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'المبتدئ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 11,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'الاحترافية',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 11,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                            ),
+                          ),
+                          DataColumn(
+                            label: Text(
+                              'الأعمال',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 11,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                            ),
+                          ),
                         ],
                         rows: comparisonData.map((row) {
                           return DataRow(
