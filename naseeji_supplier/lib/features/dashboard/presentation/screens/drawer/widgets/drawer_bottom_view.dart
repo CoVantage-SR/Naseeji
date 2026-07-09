@@ -3,39 +3,36 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/session/session_tracker.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import 'package:naseeji_supplier/core/theme/theme_controller.dart';
 
 class DrawerBottomView extends ConsumerWidget {
   const DrawerBottomView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeControllerProvider);
+    final isDark = themeMode == ThemeMode.dark ||
+        (themeMode == ThemeMode.system &&
+            MediaQuery.platformBrightnessOf(context) == Brightness.dark);
+
     return Material(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: Column(
           children: [
-            // Night mode toggle
+            // Night mode toggle (Egyptian Arabic label)
             ListTile(
               leading: const Icon(Icons.dark_mode_outlined, color: AppColors.onSurfaceVariant),
-              title: const Text('الوضع الليلي', style: TextStyle(fontSize: 13)),
+              title: const Text('الوضع الداكن', style: TextStyle(fontSize: 13)),
               trailing: Switch(
-                value: false,
-                onChanged: (val) {},
+                value: isDark,
+                onChanged: (val) {
+                  ref.read(themeControllerProvider.notifier).setThemeMode(
+                        val ? ThemeMode.dark : ThemeMode.light,
+                      );
+                },
                 activeThumbColor: AppColors.primary,
-              ),
-            ),
-            // Language selector
-            const ListTile(
-              leading: Icon(Icons.language, color: AppColors.onSurfaceVariant),
-              title: Text('اللغة', style: TextStyle(fontSize: 13)),
-              trailing: Text(
-                'العربية (SAR)',
-                style: TextStyle(
-                  fontSize: 12,
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.bold,
-                ),
               ),
             ),
             // Logout Button

@@ -22,18 +22,18 @@ class NavigationDrawerView extends ConsumerWidget {
 
     return Drawer(
       child: Container(
-        color: const Color(0xFFF8F9FF),
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Drawer Header
             profileAsync.when(
-              loading: () => const DrawerHeader(
-                decoration: BoxDecoration(color: Colors.white),
-                child: Center(child: CircularProgressIndicator(color: AppColors.primary)),
+              loading: () => DrawerHeader(
+                decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
+                child: const Center(child: CircularProgressIndicator(color: AppColors.primary)),
               ),
               error: (err, stack) => DrawerHeader(
-                decoration: const BoxDecoration(color: Colors.white),
+                decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
                 child: Center(child: Text('خطأ: $err')),
               ),
               data: (profile) => DrawerHeaderView(profile: profile),
