@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import 'package:naseeji_supplier/core/widgets/app_bottom_navigation_bar.dart';
 import 'package:naseeji_supplier/features/dashboard/presentation/controllers/dashboard_controller.dart';
@@ -54,8 +55,8 @@ class HomeScreen extends ConsumerWidget {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
-                        child: Text(
+                        onPressed: () => context.push('/operations-log'),
+                        child: const Text(
                           'عرض الكل',
                           style: TextStyle(
                             fontSize: 12,

@@ -48,8 +48,8 @@ class SubscriptionPlanCard extends StatelessWidget {
               alignment: Alignment.center,
               child: Text(
                 'الباقة الموصى بها',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.surface,
+                style: const TextStyle(
+                  color: Colors.white,
                   fontSize: 10,
                   fontWeight: FontWeight.bold,
                 ),
@@ -68,7 +68,7 @@ class SubscriptionPlanCard extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF006B5F).withValues(alpha: 0.1),
+                          color: const Color(0xFF006B5F).withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Text(
@@ -76,7 +76,7 @@ class SubscriptionPlanCard extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF006B5F),
+                            color: Theme.of(context).brightness == Brightness.dark ? Colors.tealAccent : const Color(0xFF006B5F),
                           ),
                         ),
                       )
@@ -151,10 +151,10 @@ class SubscriptionPlanCard extends StatelessWidget {
                           ),
                         ),
                         SizedBox(width: 8),
-                        const Icon(
+                        Icon(
                           Icons.check_circle_outline,
                           size: 14,
-                          color: Color(0xFF006B5F),
+                          color: Theme.of(context).brightness == Brightness.dark ? Colors.tealAccent : const Color(0xFF006B5F),
                         ),
                       ],
                     ),
@@ -183,7 +183,7 @@ class SubscriptionPlanCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF0040E0),
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                   ),

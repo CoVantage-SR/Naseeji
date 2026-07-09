@@ -159,7 +159,16 @@ class NavigationDrawerView extends ConsumerWidget {
                       context.push('/subscription');
                     },
                   ),
-                
+                  DrawerItem(
+                    icon: Icons.history_toggle_off_rounded,
+                    title: 'سجل العمليات والنشاط',
+                    path: '/operations-log',
+                    currentRoute: currentRoute,
+                    onTap: () {
+                      Navigator.pop(context);
+                      context.push('/operations-log');
+                    },
+                  ),
                 ],
               ),
             ),

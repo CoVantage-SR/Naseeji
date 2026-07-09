@@ -14,6 +14,7 @@ import '../../features/auth/presentation/screens/otp_verification/otp_verificati
 import '../../features/auth/presentation/screens/supplier_registration/supplier_registration_screen.dart';
 import '../../features/dashboard/presentation/screens/home/home_screen.dart';
 import '../../features/dashboard/presentation/screens/analytics/analytics_screen.dart';
+import '../../features/dashboard/presentation/screens/operations_log/operations_log_screen.dart';
 import '../../features/notifications/presentation/screens/notifications_center/notifications_center_screen.dart';
 import '../../features/search/presentation/screens/global_search/global_search_screen.dart';
 import '../../features/profile/presentation/screens/supplier_profile/supplier_profile_screen.dart';
@@ -204,6 +205,11 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/analytics',
         name: 'analytics',
         builder: (context, state) => const AnalyticsScreen(),
+      ),
+      GoRoute(
+        path: '/operations-log',
+        name: 'operations-log',
+        builder: (context, state) => const OperationsLogScreen(),
       ),
       GoRoute(
         path: '/notifications',
