@@ -36,7 +36,7 @@ class OtpPinFields extends StatelessWidget {
                 contentPadding: EdgeInsets.zero,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: AppColors.outlineVariant, width: 1.5),
+                  borderSide: BorderSide(color: Theme.of(context).colorScheme.outlineVariant, width: 1.5),
                 ),
               ),
               onChanged: (value) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import 'package:naseeji_supplier/core/theme/app_theme.dart';
 import 'package:naseeji_supplier/core/widgets/general_widgets.dart';
 import 'package:naseeji_supplier/features/auth/presentation/controllers/registration_controller.dart';
 import 'widgets/otp_pin_fields.dart';
@@ -73,55 +74,62 @@ class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
     final state = ref.watch(registrationControllerProvider);
     final phone = state.data.phone;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'تأكيد رقم الجوال',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-        ),
-      ),
-      body: SafeArea(
-        child: LoadingOverlay(
-          isLoading: state.isLoading,
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  'أدخل رمز التحقق',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  'لقد أرسلنا رمز التحقق المكون من 4 أرقام إلى جوالك $phone',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
-                ),
-                SizedBox(height: 48),
-                OtpPinFields(
-                  controllers: _pinControllers,
-                  focusNodes: _focusNodes,
-                ),
-                SizedBox(height: 32),
-                OtpTimer(onResend: _resendCode),
-                const Spacer(),
-                PrimaryButton(
-                  text: 'التحقق والمتابعة',
-                  onPressed: _verify,
-                ),
-              ],
+    return Theme(
+      data: AppTheme.darkTheme,
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(
+                'تأكيد رقم الجوال',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
             ),
-          ),
-        ),
+            body: SafeArea(
+              child: LoadingOverlay(
+                isLoading: state.isLoading,
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'أدخل رمز التحقق',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'لقد أرسلنا رمز التحقق المكون من 4 أرقام إلى جوالك $phone',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                      SizedBox(height: 48),
+                      OtpPinFields(
+                        controllers: _pinControllers,
+                        focusNodes: _focusNodes,
+                      ),
+                      SizedBox(height: 32),
+                      OtpTimer(onResend: _resendCode),
+                      const Spacer(),
+                      PrimaryButton(
+                        text: 'التحقق والمتابعة',
+                        onPressed: _verify,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
       ),
     );
   }
