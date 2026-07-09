@@ -47,7 +47,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
             ? null
             : [
                 BoxShadow(
-                  color: AppColors.primary.withOpacity(0.2),
+                  color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
                   blurRadius: 20,
                   offset: const Offset(0, 10),
                 ),
@@ -168,7 +168,7 @@ class LoadingOverlay extends StatelessWidget {
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
                 child: Container(
-                  color: Colors.white.withValues(alpha: 0.6),
+                  color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.6),
                   child: Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -180,7 +180,7 @@ class LoadingOverlay extends StatelessWidget {
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
-                                color: AppColors.primary.withValues(
+                                color: Theme.of(context).colorScheme.primary.withValues(
                                   alpha: 0.15,
                                 ),
                                 blurRadius: 30,
@@ -194,7 +194,7 @@ class LoadingOverlay extends StatelessWidget {
                             child: CircularProgressIndicator(
                               strokeWidth: 3.5,
                               valueColor: AlwaysStoppedAnimation<Color>(
-                                AppColors.primary,
+                                Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ),
@@ -205,7 +205,7 @@ class LoadingOverlay extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.primary,
+                            color: Theme.of(context).colorScheme.primary,
                             letterSpacing: 0.5,
                           ),
                         ),

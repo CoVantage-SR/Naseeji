@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:naseeji_supplier/core/theme/app_theme.dart';
 import 'package:naseeji_supplier/core/widgets/general_widgets.dart';
 import 'package:naseeji_supplier/features/auth/domain/entities/supplier_registration_data.dart';
 import 'package:naseeji_supplier/features/auth/presentation/controllers/registration_controller.dart';
@@ -14,88 +15,95 @@ class ChooseSupplierTypeScreen extends ConsumerWidget {
     final registrationState = ref.watch(registrationControllerProvider);
     final selectedType = registrationState.data.supplierType;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'نوع الحساب',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-        ),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'اختر نوع حسابك كمورد',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.onBackground,
-                ),
+    return Theme(
+      data: AppTheme.darkTheme,
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(
+                'نوع الحساب',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
-              SizedBox(height: 8),
-              Text(
-                'حدد طبيعة عملك لنتمكن من توفير الأدوات المناسبة لك',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-              ),
-              SizedBox(height: 32),
-              Expanded(
-                child: ListView(
+            ),
+            body: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    SupplierTypeCard(
-                      type: SupplierType.factoryUnit,
-                      title: 'مصنع أو وحدة إنتاج',
-                      description: 'إنتاج وتصنيع الملابس والمنتجات النسيجية الجاهزة.',
-                      icon: Icons.factory_outlined,
-                      isSelected: selectedType == SupplierType.factoryUnit,
-                      onTap: () {
-                        ref.read(registrationControllerProvider.notifier).updateSupplierType(SupplierType.factoryUnit);
-                      },
+                    Text(
+                      'اختر نوع حسابك كمورد',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
                     ),
-                    SizedBox(height: 16),
-                    SupplierTypeCard(
-                      type: SupplierType.supplier,
-                      title: 'مورد خامات ومستلزمات',
-                      description: 'توريد الأقمشة، الخيوط، الإكسسوارات ومستلزمات الإنتاج.',
-                      icon: Icons.widgets_outlined,
-                      isSelected: selectedType == SupplierType.supplier,
-                      onTap: () {
-                        ref.read(registrationControllerProvider.notifier).updateSupplierType(SupplierType.supplier);
-                      },
+                    SizedBox(height: 8),
+                    Text(
+                      'حدد طبيعة عملك لنتمكن من توفير الأدوات المناسبة لك',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
                     ),
-                    SizedBox(height: 16),
-                    SupplierTypeCard(
-                      type: SupplierType.customizer,
-                      title: 'مقدم خدمات تخصيص',
-                      description: 'خدمات الطباعة والتطريز وتصميم النماذج وغيرها.',
-                      icon: Icons.palette_outlined,
-                      isSelected: selectedType == SupplierType.customizer,
-                      onTap: () {
-                        ref.read(registrationControllerProvider.notifier).updateSupplierType(SupplierType.customizer);
-                      },
+                    SizedBox(height: 32),
+                    Expanded(
+                      child: ListView(
+                        children: [
+                          SupplierTypeCard(
+                            type: SupplierType.factoryUnit,
+                            title: 'مصنع أو وحدة إنتاج',
+                            description: 'إنتاج وتصنيع الملابس والمنتجات النسيجية الجاهزة.',
+                            icon: Icons.factory_outlined,
+                            isSelected: selectedType == SupplierType.factoryUnit,
+                            onTap: () {
+                              ref.read(registrationControllerProvider.notifier).updateSupplierType(SupplierType.factoryUnit);
+                            },
+                          ),
+                          SizedBox(height: 16),
+                          SupplierTypeCard(
+                            type: SupplierType.supplier,
+                            title: 'مورد خامات ومستلزمات',
+                            description: 'توريد الأقمشة، الخيوط، الإكسسوارات ومستلزمات الإنتاج.',
+                            icon: Icons.widgets_outlined,
+                            isSelected: selectedType == SupplierType.supplier,
+                            onTap: () {
+                              ref.read(registrationControllerProvider.notifier).updateSupplierType(SupplierType.supplier);
+                            },
+                          ),
+                          SizedBox(height: 16),
+                          SupplierTypeCard(
+                            type: SupplierType.customizer,
+                            title: 'مقدم خدمات تخصيص',
+                            description: 'خدمات الطباعة والتطريز وتصميم النماذج وغيرها.',
+                            icon: Icons.palette_outlined,
+                            isSelected: selectedType == SupplierType.customizer,
+                            onTap: () {
+                              ref.read(registrationControllerProvider.notifier).updateSupplierType(SupplierType.customizer);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    PrimaryButton(
+                      text: 'متابعة التسجيل',
+                      onPressed: selectedType != null
+                          ? () {
+                              context.push('/register');
+                            }
+                          : null,
+                      suffixIcon: Icons.arrow_forward_rounded,
                     ),
                   ],
                 ),
               ),
-              PrimaryButton(
-                text: 'متابعة التسجيل',
-                onPressed: selectedType != null
-                    ? () {
-                        context.push('/register');
-                      }
-                    : null,
-                suffixIcon: Icons.arrow_forward_rounded,
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        }
       ),
     );
   }

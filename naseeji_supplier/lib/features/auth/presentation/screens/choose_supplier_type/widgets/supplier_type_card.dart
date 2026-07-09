@@ -31,13 +31,13 @@ class SupplierTypeCard extends StatelessWidget {
           color: isSelected ? Theme.of(context).colorScheme.surfaceContainerLow : Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: isSelected ? AppColors.primary : AppColors.outlineVariant,
+            color: isSelected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.outlineVariant,
             width: isSelected ? 2 : 1,
           ),
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.06),
+                    color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.06),
                     blurRadius: 15,
                     offset: const Offset(0, 8),
                   )
@@ -49,12 +49,12 @@ class SupplierTypeCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: isSelected ? AppColors.primary : AppColors.background,
+                color: isSelected ? Theme.of(context).colorScheme.primary : Theme.of(context).scaffoldBackgroundColor,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
                 icon,
-                color: isSelected ? Colors.white : AppColors.outline,
+                color: isSelected ? Colors.white : Theme.of(context).colorScheme.outline,
                 size: 28,
               ),
             ),
@@ -68,7 +68,7 @@ class SupplierTypeCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: isSelected ? AppColors.primary : Theme.of(context).colorScheme.onBackground,
+                      color: isSelected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   SizedBox(height: 4),
@@ -89,7 +89,7 @@ class SupplierTypeCard extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: isSelected ? AppColors.primary : AppColors.outlineVariant,
+                  color: isSelected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.outlineVariant,
                   width: 2,
                 ),
               ),
@@ -97,7 +97,7 @@ class SupplierTypeCard extends StatelessWidget {
                   ? Center(
                       child: CircleAvatar(
                         radius: 5,
-                        backgroundColor: AppColors.primary,
+                        backgroundColor: Theme.of(context).colorScheme.primary,
                       ),
                     )
                   : null,

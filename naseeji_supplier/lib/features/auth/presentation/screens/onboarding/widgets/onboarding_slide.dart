@@ -44,7 +44,7 @@ class OnboardingSlide extends StatelessWidget {
                       child: Icon(
                         Icons.storefront_outlined,
                         size: 96,
-                        color: AppColors.primary.withValues(alpha: 0.5),
+                        color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
                       ),
                     );
                   },
@@ -59,7 +59,7 @@ class OnboardingSlide extends StatelessWidget {
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.onBackground,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
           SizedBox(height: 16),

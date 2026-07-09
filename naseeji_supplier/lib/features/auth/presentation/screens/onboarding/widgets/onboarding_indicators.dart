@@ -23,7 +23,7 @@ class OnboardingIndicators extends StatelessWidget {
           height: 8.0,
           width: isActive ? 24.0 : 8.0,
           decoration: BoxDecoration(
-            color: isActive ? AppColors.primary : AppColors.outlineVariant,
+            color: isActive ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.outlineVariant,
             borderRadius: BorderRadius.circular(4.0),
           ),
         );

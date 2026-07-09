@@ -155,7 +155,7 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
       suffixIcon: IconButton(
         icon: Icon(
           _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-          color: AppColors.outline,
+          color: Theme.of(context).colorScheme.outline,
         ),
         onPressed: () {
           setState(() {
@@ -181,7 +181,7 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
       suffixIcon: IconButton(
         icon: Icon(
           _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-          color: AppColors.outline,
+          color: Theme.of(context).colorScheme.outline,
         ),
         onPressed: () {
           setState(() {
@@ -259,7 +259,7 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
             children: [
               Checkbox(
                 value: _acceptTerms,
-                activeColor: AppColors.primary,
+                activeColor: Theme.of(context).colorScheme.primary,
                 onChanged: (val) {
                   setState(() {
                     _acceptTerms = val ?? false;
@@ -287,15 +287,15 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
           // Divider
           Row(
             children: [
-              Expanded(child: Divider(color: AppColors.outlineVariant)),
+              Expanded(child: Divider(color: Theme.of(context).colorScheme.outlineVariant)),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
                 child: Text(
                   'أو',
-                  style: TextStyle(color: AppColors.outline, fontSize: 14),
+                  style: TextStyle(color: Theme.of(context).colorScheme.outline, fontSize: 14),
                 ),
               ),
-              Expanded(child: Divider(color: AppColors.outlineVariant)),
+              Expanded(child: Divider(color: Theme.of(context).colorScheme.outlineVariant)),
             ],
           ),
           SizedBox(height: 16),
@@ -311,9 +311,9 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    side: const BorderSide(color: AppColors.outlineVariant),
+                    side: BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
                   ),
-                  icon: Icon(Icons.apple, color: AppColors.onSurface, size: 20),
+                  icon: Icon(Icons.apple, color: Theme.of(context).colorScheme.onSurface, size: 20),
                   label: Text(
                     'Apple',
                     style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
@@ -329,7 +329,7 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    side: const BorderSide(color: AppColors.outlineVariant),
+                    side: BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
                   ),
                   icon: const Icon(Icons.g_mobiledata_rounded, color: Colors.red, size: 24),
                   label: Text(
