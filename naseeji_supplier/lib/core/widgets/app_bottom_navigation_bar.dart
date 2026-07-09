@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
 
 class AppBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
@@ -9,44 +8,41 @@ class AppBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).colorScheme.primary;
+    final onSurfaceVar = Theme.of(context).colorScheme.onSurfaceVariant;
+
     return Container(
-      margin: const EdgeInsets.fromLTRB(1, 0, 1, 2),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(30),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 30,
-            offset: const Offset(0, 5),
+            color: Colors.black.withValues(alpha: 0.08),
+            blurRadius: 16,
+            offset: const Offset(0, -2),
           ),
         ],
       ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(30),
+      child: SafeArea(
         child: NavigationBarTheme(
           data: NavigationBarThemeData(
-            indicatorColor: const Color.fromARGB(
-              255,
-              5,
-              0,
-              107,
-            ).withValues(alpha: 0.15),
+            indicatorColor: primaryColor.withValues(alpha: 0.12),
             indicatorShape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(16),
             ),
             labelTextStyle: WidgetStateProperty.resolveWith((states) {
               if (states.contains(WidgetState.selected)) {
                 return TextStyle(
-                  fontSize: 12,
+                  fontSize: 11,
                   fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 2, 0, 107),
+                  color: primaryColor,
+                  fontFamily: 'IBM Plex Sans Arabic',
                 );
               }
               return TextStyle(
-                fontSize: 12,
+                fontSize: 11,
                 fontWeight: FontWeight.w600,
-                color: AppColors.outline,
+                color: onSurfaceVar.withValues(alpha: 0.7),
+                fontFamily: 'IBM Plex Sans Arabic',
               );
             }),
           ),
@@ -75,48 +71,30 @@ class AppBottomNavigationBar extends StatelessWidget {
                   break;
               }
             },
-            destinations: const [
+            destinations: [
               NavigationDestination(
-                icon: Icon(Icons.home_outlined, color: AppColors.outline),
-                selectedIcon: Icon(
-                  Icons.home,
-                  color: Color.fromARGB(255, 11, 0, 107),
-                ),
+                icon: Icon(Icons.home_outlined, color: onSurfaceVar),
+                selectedIcon: Icon(Icons.home_rounded, color: primaryColor),
                 label: 'الرئيسية',
               ),
               NavigationDestination(
-                icon: Icon(Icons.category_outlined, color: AppColors.outline),
-                selectedIcon: Icon(
-                  Icons.category,
-                  color: Color.fromARGB(255, 0, 0, 107),
-                ),
+                icon: Icon(Icons.category_outlined, color: onSurfaceVar),
+                selectedIcon: Icon(Icons.category_rounded, color: primaryColor),
                 label: 'المنتجات',
               ),
               NavigationDestination(
-                icon: Icon(
-                  Icons.shopping_cart_outlined,
-                  color: AppColors.outline,
-                ),
-                selectedIcon: Icon(
-                  Icons.shopping_cart,
-                  color: Color.fromARGB(255, 21, 0, 107),
-                ),
+                icon: Icon(Icons.shopping_cart_outlined, color: onSurfaceVar),
+                selectedIcon: Icon(Icons.shopping_cart_rounded, color: primaryColor),
                 label: 'الطلبات',
               ),
               NavigationDestination(
-                icon: Icon(Icons.chat_bubble_outline, color: AppColors.outline),
-                selectedIcon: Icon(
-                  Icons.chat_bubble,
-                  color: Color.fromARGB(255, 0, 11, 107),
-                ),
-                label: 'الرسائل',
+                icon: Icon(Icons.chat_bubble_outline_rounded, color: onSurfaceVar),
+                selectedIcon: Icon(Icons.chat_bubble_rounded, color: primaryColor),
+                label: 'الدردشة',
               ),
               NavigationDestination(
-                icon: Icon(Icons.person_outline, color: AppColors.outline),
-                selectedIcon: Icon(
-                  Icons.person,
-                  color: Color.fromARGB(255, 23, 0, 107),
-                ),
+                icon: Icon(Icons.person_outline_rounded, color: onSurfaceVar),
+                selectedIcon: Icon(Icons.person_rounded, color: primaryColor),
                 label: 'حسابي',
               ),
             ],

@@ -25,7 +25,7 @@ class SettingsTabView extends ConsumerWidget {
               Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Text(
-                  'المظهر',
+                  'المظهر وشكل التطبيق',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -33,7 +33,7 @@ class SettingsTabView extends ConsumerWidget {
               RadioListTile<ThemeMode>(
                 value: ThemeMode.light,
                 groupValue: currentMode,
-                title: Text('فاتح', textAlign: TextAlign.right),
+                title: const Text('فاتح', textAlign: TextAlign.right),
                 onChanged: (mode) {
                   if (mode != null) {
                     ref.read(themeControllerProvider.notifier).setThemeMode(mode);
@@ -44,7 +44,7 @@ class SettingsTabView extends ConsumerWidget {
               RadioListTile<ThemeMode>(
                 value: ThemeMode.dark,
                 groupValue: currentMode,
-                title: Text('داكن', textAlign: TextAlign.right),
+                title: const Text('داكن', textAlign: TextAlign.right),
                 onChanged: (mode) {
                   if (mode != null) {
                     ref.read(themeControllerProvider.notifier).setThemeMode(mode);
@@ -55,7 +55,7 @@ class SettingsTabView extends ConsumerWidget {
               RadioListTile<ThemeMode>(
                 value: ThemeMode.system,
                 groupValue: currentMode,
-                title: Text('حسب إعدادات الجهاز', textAlign: TextAlign.right),
+                title: const Text('زي إعدادات الموبايل', textAlign: TextAlign.right),
                 onChanged: (mode) {
                   if (mode != null) {
                     ref.read(themeControllerProvider.notifier).setThemeMode(mode);
@@ -79,25 +79,25 @@ class SettingsTabView extends ConsumerWidget {
       children: [
         ListTile(
           trailing: const Icon(Icons.arrow_forward_ios, size: 14),
-          title: Text('تغيير كلمة المرور الشخصية للمفتاح', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.end),
+          title: const Text('تغيير كلمة المرور (الباسورد)', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.end),
           leading: const Icon(Icons.lock_outline, color: AppColors.outline),
           onTap: () {},
         ),
         ListTile(
           trailing: const Icon(Icons.arrow_forward_ios, size: 14),
-          title: Text('المظهر', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.end),
+          title: const Text('المظهر وشكل التطبيق', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.end),
           leading: const Icon(Icons.brightness_medium_outlined, color: AppColors.outline),
           onTap: () => _showAppearanceBottomSheet(context, ref),
         ),
         ListTile(
           trailing: const Icon(Icons.arrow_forward_ios, size: 14),
-          title: Text('الأجهزة المتصلة والصلاحيات الأمنية والرموز', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.end),
+          title: const Text('الأجهزة المتصلة والأمان', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.end),
           leading: const Icon(Icons.devices_outlined, color: AppColors.outline),
           onTap: () {},
         ),
         ListTile(
           trailing: const Icon(Icons.arrow_forward_ios, size: 14),
-          title: Text('تسجيل الخروج الآمن للمورد', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.error), textAlign: TextAlign.end),
+          title: const Text('تسجيل الخروج من الحساب', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.error), textAlign: TextAlign.end),
           leading: const Icon(Icons.logout, color: AppColors.error),
           onTap: () {},
         ),

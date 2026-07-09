@@ -24,7 +24,7 @@ class AnalyticsScreen extends ConsumerWidget {
         backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         title: Text(
-          'التقارير والإحصائيات',
+          'تقارير الشغل وإحصائياتك',
           style: TextStyle(
             color: Theme.of(context).colorScheme.onSurface,
             fontWeight: FontWeight.bold,
@@ -69,7 +69,7 @@ class AnalyticsScreen extends ConsumerWidget {
                   children: [
                     // Header title and subtitle
                     Text(
-                      'إحصائيات الأداء',
+                      'إحصائيات أداء شغلك',
                       textAlign: TextAlign.right,
                       style: TextStyle(
                         fontSize: 18,
@@ -79,7 +79,7 @@ class AnalyticsScreen extends ConsumerWidget {
                     ),
                     SizedBox(height: 4),
                     Text(
-                      'نظرة شاملة على نمو أعمال نسيجي',
+                      'نظرة شاملة على نمو وتطور شغلك في نسيجي',
                       textAlign: TextAlign.right,
                       style: TextStyle(fontSize: 12, color: AppColors.outline),
                     ),

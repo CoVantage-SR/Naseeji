@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import 'package:naseeji_supplier/features/profile/domain/entities/supplier_profile.dart';
 import 'recent_activity_timeline.dart';
+import 'edit_profile_completion_card.dart';
 
 class OverviewTabView extends StatelessWidget {
   final SupplierProfile profile;
@@ -15,14 +16,16 @@ class OverviewTabView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
+          const EditProfileCompletionCard(completionRate: 85),
+          const SizedBox(height: 16),
           Row(
             children: [
               Expanded(child: _buildMetricCard('نسبة الرد السريع', '98%', Icons.bolt_outlined, Colors.orange)),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Expanded(child: _buildMetricCard('التوصيل في الموعد', '95%', Icons.local_shipping_outlined, Colors.green)),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Row(
             children: [
               Expanded(child: _buildMetricCard('المنتجات المفعلة', '${profile.productsCount}', Icons.inventory_2_outlined, const Color(0xFF0040E0))),

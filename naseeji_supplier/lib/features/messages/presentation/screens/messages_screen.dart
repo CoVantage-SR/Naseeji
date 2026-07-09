@@ -23,9 +23,9 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
 
   static const List<_TabItem> _tabs = [
     _TabItem(label: 'الكل', filter: MessagesFilter.all),
-    _TabItem(label: 'أعمال', filter: MessagesFilter.business),
+    _TabItem(label: 'شغل', filter: MessagesFilter.business),
     _TabItem(label: 'دعم', filter: MessagesFilter.support),
-    _TabItem(label: 'غير مقروء', filter: MessagesFilter.unread),
+    _TabItem(label: 'مش مقروء', filter: MessagesFilter.unread),
   ];
 
   @override
@@ -84,7 +84,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
               textAlign: TextAlign.right,
               onChanged: (v) => setState(() => _searchQuery = v),
               decoration: InputDecoration(
-                hintText: 'بحث في المحادثات...',
+                hintText: 'دور في الشاتات...',
                 hintStyle: TextStyle(fontSize: 13, color: AppColors.outline),
                 prefixIcon: const Icon(Icons.search, color: AppColors.outline, size: 20),
                 suffixIcon: _searchQuery.isNotEmpty
@@ -135,16 +135,16 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
                       if (pinned.isNotEmpty) ...[
                         _SectionHeader(
                           icon: Icons.push_pin,
-                          label: 'محادثات مثبتة (${pinned.length})',
+                          label: 'شاتات متثبتة (${pinned.length})',
                           color: AppColors.primary,
                         ),
                         ...pinned.map((conv) => _buildDismissible(conv, context)),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                       ],
                       // Recent section
                       if (unpinned.isNotEmpty) ...[
                         if (pinned.isNotEmpty)
-                          const _SectionHeader(icon: Icons.forum_outlined, label: 'المحادثات الأخيرة', color: AppColors.outline),
+                          const _SectionHeader(icon: Icons.forum_outlined, label: 'أحدث الشاتات', color: AppColors.outline),
                         ...unpinned.map((conv) => _buildDismissible(conv, context)),
                       ],
                       SizedBox(height: 80),
@@ -191,7 +191,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
             ),
             const Spacer(),
             Text(
-              'المحادثات المؤرشفة',
+              'الشاتات المتأرشفة',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 13,
@@ -268,14 +268,14 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
     return await showDialog<bool>(
           context: context,
           builder: (ctx) => AlertDialog(
-            title: Text('حذف المحادثة', textAlign: TextAlign.right),
-            content: Text('هل تريد حذف محادثة $name؟', textAlign: TextAlign.right),
+            title: Text('مسح الشات', textAlign: TextAlign.right),
+            content: Text('عايز تمسح الشات مع $name؟', textAlign: TextAlign.right),
             actions: [
-              TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text('إلغاء')),
+              TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('إلغاء')),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 onPressed: () => Navigator.pop(ctx, true),
-                child: Text('حذف', style: TextStyle(color: Colors.white)),
+                child: const Text('مسح', style: TextStyle(color: Colors.white)),
               ),
             ],
           ),
@@ -296,7 +296,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
           children: [
             ListTile(
               leading: Icon(conv.isPinned ? Icons.push_pin_outlined : Icons.push_pin, color: AppColors.primary),
-              title: Text(conv.isPinned ? 'إلغاء التثبيت' : 'تثبيت', textAlign: TextAlign.right),
+              title: Text(conv.isPinned ? 'فك التثبيت' : 'تثبيت الشات', textAlign: TextAlign.right),
               onTap: () {
                 ref.read(messagesControllerProvider.notifier).pinConversation(conv.id, !conv.isPinned);
                 Navigator.pop(context);
@@ -304,7 +304,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
             ),
             ListTile(
               leading: Icon(conv.isMuted ? Icons.volume_up_outlined : Icons.volume_off_outlined, color: AppColors.primary),
-              title: Text(conv.isMuted ? 'تفعيل الإشعارات' : 'كتم الإشعارات', textAlign: TextAlign.right),
+              title: Text(conv.isMuted ? 'شغل الإشعارات' : 'كتم الإشعارات', textAlign: TextAlign.right),
               onTap: () {
                 ref.read(messagesControllerProvider.notifier).muteConversation(conv.id, !conv.isMuted);
                 Navigator.pop(context);
@@ -312,7 +312,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
             ),
             ListTile(
               leading: const Icon(Icons.mark_chat_read_outlined, color: AppColors.primary),
-              title: Text('تحديد كمقروء', textAlign: TextAlign.right),
+              title: const Text('خليه مقروء', textAlign: TextAlign.right),
               onTap: () {
                 ref.read(messagesControllerProvider.notifier).markAsRead(conv.id);
                 Navigator.pop(context);
@@ -375,8 +375,8 @@ class _EmptyState extends StatelessWidget {
           Icon(isSearch ? Icons.search_off : Icons.forum_outlined, size: 64, color: AppColors.outlineVariant),
           SizedBox(height: 16),
           Text(
-            isSearch ? 'لا توجد نتائج لـ "$searchQuery"' : 'لا توجد محادثات',
-            style: TextStyle(fontSize: 15, color: AppColors.outline),
+            isSearch ? 'ملقناش أي شات لـ "$searchQuery"' : 'مفيش أي شاتات هنا',
+            style: const TextStyle(fontSize: 15, color: AppColors.outline),
           ),
         ],
       ),
