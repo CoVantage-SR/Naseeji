@@ -5,12 +5,13 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
 /// A premium, highly customizable primary button following the app design language.
-class PrimaryButton extends StatelessWidget {
+class PrimaryButton extends StatefulWidget {
   final String text;
   final VoidCallback? onPressed;
   final bool isLoading;
   final IconData? suffixIcon;
   final IconData? prefixIcon;
+  final Duration throttleDuration;
 
   const PrimaryButton({
     super.key,
@@ -19,13 +20,30 @@ class PrimaryButton extends StatelessWidget {
     this.isLoading = false,
     this.suffixIcon,
     this.prefixIcon,
+    this.throttleDuration = const Duration(seconds: 1),
   });
+
+  @override
+  State<PrimaryButton> createState() => _PrimaryButtonState();
+}
+
+class _PrimaryButtonState extends State<PrimaryButton> {
+  int _lastClickTime = 0;
+
+  void _throttledPressed() {
+    if (widget.onPressed == null) return;
+    final now = DateTime.now().millisecondsSinceEpoch;
+    if (now - _lastClickTime > widget.throttleDuration.inMilliseconds) {
+      _lastClickTime = now;
+      widget.onPressed!();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        boxShadow: onPressed == null || isLoading
+        boxShadow: widget.onPressed == null || widget.isLoading
             ? null
             : [
                 BoxShadow(
@@ -36,14 +54,14 @@ class PrimaryButton extends StatelessWidget {
               ],
       ),
       child: ElevatedButton(
-        onPressed: isLoading ? null : onPressed,
+        onPressed: widget.isLoading ? null : _throttledPressed,
         style: ElevatedButton.styleFrom(
           minimumSize: const Size.fromHeight(56),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
         ),
-        child: isLoading
+        child: widget.isLoading
             ? const SizedBox(
                 height: 24,
                 width: 24,
@@ -55,20 +73,20 @@ class PrimaryButton extends StatelessWidget {
             : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (prefixIcon != null) ...[
-                    Icon(prefixIcon, size: 20),
+                  if (widget.prefixIcon != null) ...[
+                    Icon(widget.prefixIcon, size: 20),
                     const SizedBox(width: 8),
                   ],
                   Text(
-                    text,
+                    widget.text,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  if (suffixIcon != null) ...[
+                  if (widget.suffixIcon != null) ...[
                     const SizedBox(width: 8),
-                    Icon(suffixIcon, size: 20),
+                    Icon(widget.suffixIcon, size: 20),
                   ],
                 ],
               ),
