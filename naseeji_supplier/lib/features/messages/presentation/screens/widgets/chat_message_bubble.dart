@@ -258,7 +258,7 @@ class _TextBubble extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: isOut ? null : Colors.white,
+                color: isOut ? null : Theme.of(context).colorScheme.surface,
                 gradient: isOut
                     ? LinearGradient(
                         colors: [

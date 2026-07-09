@@ -74,7 +74,7 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
     final isBlocked = conv?.isBlocked ?? false;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F6FA),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
