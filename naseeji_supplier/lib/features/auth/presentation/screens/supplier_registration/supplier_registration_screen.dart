@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import 'package:naseeji_supplier/core/theme/app_theme.dart';
 import 'package:naseeji_supplier/core/widgets/general_widgets.dart';
 import 'package:naseeji_supplier/features/auth/presentation/controllers/registration_controller.dart';
 import 'widgets/category_selector.dart';
@@ -52,7 +53,7 @@ class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistratio
     );
   }
 
-  Future<void> _submit() async {
+  Future<void> _submit(BuildContext context) async {
     if (!_formKey.currentState!.validate()) return;
     if (_selectedCategories.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -76,7 +77,7 @@ class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistratio
 
     final success = await ref.read(registrationControllerProvider.notifier).submitSupplierRegistration();
     if (mounted && success) {
-      _showSuccessDialog();
+      _showSuccessDialog(context);
     } else if (mounted) {
       final errorMsg = ref.read(registrationControllerProvider).errorMessage ?? 'حدث خطأ أثناء حفظ البيانات';
       ScaffoldMessenger.of(context).showSnackBar(
@@ -85,7 +86,7 @@ class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistratio
     }
   }
 
-  void _showSuccessDialog() {
+  void _showSuccessDialog(BuildContext context) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -96,10 +97,10 @@ class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistratio
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(height: 16),
-              const CircleAvatar(
+              CircleAvatar(
                 radius: 36,
-                backgroundColor: AppColors.secondaryContainer,
-                child: Icon(Icons.check_circle, color: AppColors.secondary, size: 48),
+                backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+                child: Icon(Icons.check_circle, color: Theme.of(context).colorScheme.secondary, size: 48),
               ),
               SizedBox(height: 24),
               Text(
@@ -132,110 +133,117 @@ class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistratio
   Widget build(BuildContext context) {
     final state = ref.watch(registrationControllerProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'بيانات التوثيق والمؤسسة',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-        ),
-      ),
-      body: SafeArea(
-        child: LoadingOverlay(
-          isLoading: state.isLoading,
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Form(
-              key: _formKey,
-              child: ListView(
-                children: [
-                  Text(
-                    'توثيق حساب المورد',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'يرجى تزويدنا بالبيانات التجارية الرسمية لتوثيق شركتك أو مصنعك على المنصة',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                  SizedBox(height: 32),
-                  CustomTextField(
-                    controller: _companyController,
-                    labelText: 'الاسم التجاري للمؤسسة / المصنع',
-                    prefixIcon: Icons.business_outlined,
-                    validator: (val) {
-                      if (val == null || val.trim().isEmpty) {
-                        return 'يرجى إدخال اسم المؤسسة';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 16),
-                  CustomTextField(
-                    controller: _crController,
-                    labelText: 'رقم السجل التجاري',
-                    prefixIcon: Icons.analytics_outlined,
-                    keyboardType: TextInputType.number,
-                    validator: (val) {
-                      if (val == null || val.trim().isEmpty) {
-                        return 'يرجى إدخال رقم السجل التجاري';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 16),
-                  CustomTextField(
-                    controller: _taxController,
-                    labelText: 'الرقم الضريبي للمؤسسة',
-                    prefixIcon: Icons.receipt_long_outlined,
-                    keyboardType: TextInputType.number,
-                    validator: (val) {
-                      if (val == null || val.trim().isEmpty) {
-                        return 'يرجى إدخال الرقم الضريبي';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 24),
-                  Text(
-                    'التصنيفات والمنتجات التي توردها',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 8),
-                  CategorySelector(
-                    availableCategories: _availableCategories,
-                    selectedCategories: _selectedCategories,
-                    onToggle: _toggleCategory,
-                  ),
-                  SizedBox(height: 24),
-                  Text(
-                    'إرفاق السجل التجاري (PDF)',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 8),
-                  DocumentUploader(
-                    uploadedFileName: _uploadedFileName,
-                    onTap: _simulateFileUpload,
-                  ),
-                  SizedBox(height: 40),
-                  PrimaryButton(
-                    text: 'إرسال طلب التوثيق',
-                    onPressed: _submit,
-                  ),
-                  SizedBox(height: 24),
-                ],
+    return Theme(
+      data: AppTheme.darkTheme,
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(
+                'بيانات التوثيق والمؤسسة',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
             ),
-          ),
-        ),
+            body: SafeArea(
+              child: LoadingOverlay(
+                isLoading: state.isLoading,
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Form(
+                    key: _formKey,
+                    child: ListView(
+                      children: [
+                        Text(
+                          'توثيق حساب المورد',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          'يرجى تزويدنا بالبيانات التجارية الرسمية لتوثيق شركتك أو مصنعك على المنصة',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                        SizedBox(height: 32),
+                        CustomTextField(
+                          controller: _companyController,
+                          labelText: 'الاسم التجاري للمؤسسة / المصنع',
+                          prefixIcon: Icons.business_outlined,
+                          validator: (val) {
+                            if (val == null || val.trim().isEmpty) {
+                              return 'يرجى إدخال اسم المؤسسة';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 16),
+                        CustomTextField(
+                          controller: _crController,
+                          labelText: 'رقم السجل التجاري',
+                          prefixIcon: Icons.analytics_outlined,
+                          keyboardType: TextInputType.number,
+                          validator: (val) {
+                            if (val == null || val.trim().isEmpty) {
+                              return 'يرجى إدخال رقم السجل التجاري';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 16),
+                        CustomTextField(
+                          controller: _taxController,
+                          labelText: 'الرقم الضريبي للمؤسسة',
+                          prefixIcon: Icons.receipt_long_outlined,
+                          keyboardType: TextInputType.number,
+                          validator: (val) {
+                            if (val == null || val.trim().isEmpty) {
+                              return 'يرجى إدخال الرقم الضريبي';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 24),
+                        Text(
+                          'التصنيفات والمنتجات التي توردها',
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 8),
+                        CategorySelector(
+                          availableCategories: _availableCategories,
+                          selectedCategories: _selectedCategories,
+                          onToggle: _toggleCategory,
+                        ),
+                        SizedBox(height: 24),
+                        Text(
+                          'إرفاق السجل التجاري (PDF)',
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 8),
+                        DocumentUploader(
+                          uploadedFileName: _uploadedFileName,
+                          onTap: _simulateFileUpload,
+                        ),
+                        SizedBox(height: 40),
+                        PrimaryButton(
+                          text: 'إرسال طلب التوثيق',
+                          onPressed: () => _submit(context),
+                        ),
+                        SizedBox(height: 24),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
       ),
     );
   }

@@ -18,17 +18,17 @@ class DocumentUploader extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: AppColors.background,
+          color: Theme.of(context).scaffoldBackgroundColor,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: AppColors.outlineVariant,
+            color: Theme.of(context).colorScheme.outlineVariant,
             style: BorderStyle.solid,
             width: 1.5,
           ),
         ),
         child: Column(
           children: [
-            const Icon(Icons.cloud_upload_outlined, size: 40, color: AppColors.primary),
+            Icon(Icons.cloud_upload_outlined, size: 40, color: Theme.of(context).colorScheme.primary),
             SizedBox(height: 12),
             Text(
               uploadedFileName ?? 'اضغط هنا لرفع نسخة من السجل التجاري',
@@ -36,13 +36,13 @@ class DocumentUploader extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: uploadedFileName != null ? FontWeight.bold : FontWeight.normal,
-                color: uploadedFileName != null ? AppColors.primary : Theme.of(context).colorScheme.onSurfaceVariant,
+                color: uploadedFileName != null ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
             SizedBox(height: 4),
             Text(
               'الحد الأقصى للملف 10 ميجا بايت (صيغة PDF)',
-              style: TextStyle(fontSize: 12, color: AppColors.outline),
+              style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.outline),
             ),
           ],
         ),
