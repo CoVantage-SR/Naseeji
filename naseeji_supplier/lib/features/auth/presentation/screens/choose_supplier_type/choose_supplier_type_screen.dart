@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import 'package:naseeji_supplier/core/widgets/general_widgets.dart';
 import 'package:naseeji_supplier/features/auth/domain/entities/supplier_registration_data.dart';
 import 'package:naseeji_supplier/features/auth/presentation/controllers/registration_controller.dart';

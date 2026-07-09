@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 
@@ -16,6 +18,8 @@ class StatsMetricsSection extends StatelessWidget {
           accentColor: Colors.blue,
           trailingWidget: Row(
             mainAxisSize: MainAxisSize.min,
+            // ignore: duplicate_ignore
+            // ignore: prefer_const_literals_to_create_immutables
             children: [
               Icon(Icons.arrow_upward, size: 12, color: Colors.green),
               SizedBox(width: 2),
