@@ -34,12 +34,12 @@ class CompleteTimelineWidget extends StatelessWidget {
       children: List.generate(steps.length, (index) {
         final step = steps[index];
         final isLast = index == steps.length - 1;
-        return _buildStepItem(step, isLast);
+        return _buildStepItem(context, step, isLast);
       }),
     );
   }
 
-  Widget _buildStepItem(TimelineStepData step, bool isLast) {
+  Widget _buildStepItem(BuildContext context, TimelineStepData step, bool isLast) {
     Color nodeColor = const Color(0xFFF1F1F5);
     Widget icon = const Icon(Icons.circle, color: AppColors.outline, size: 8);
 

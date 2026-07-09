@@ -216,13 +216,13 @@ class ProductSuccessSummary extends StatelessWidget {
                         const SizedBox(height: 16),
                         Row(
                           children: [
-                            Expanded(child: _buildSpecLabel('الغسيل', 'جاف فقط')),
+                            Expanded(child: _buildSpecLabel(context, 'الغسيل', 'جاف فقط')),
                             const SizedBox(width: 8),
-                            Expanded(child: _buildSpecLabel('التركيبة', '100% حرير')),
+                            Expanded(child: _buildSpecLabel(context, 'التركيبة', '100% حرير')),
                             const SizedBox(width: 8),
-                            Expanded(child: _buildSpecLabel('العرض', '150 سم')),
+                            Expanded(child: _buildSpecLabel(context, 'العرض', '150 سم')),
                             const SizedBox(width: 8),
-                            Expanded(child: _buildSpecLabel('الوزن', '120 gsm')),
+                            Expanded(child: _buildSpecLabel(context, 'الوزن', '120 gsm')),
                           ],
                         ),
                       ],
@@ -257,7 +257,7 @@ class ProductSuccessSummary extends StatelessWidget {
     );
   }
 
-  Widget _buildSpecLabel(String title, String val) {
+  Widget _buildSpecLabel(BuildContext context, String title, String val) {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(

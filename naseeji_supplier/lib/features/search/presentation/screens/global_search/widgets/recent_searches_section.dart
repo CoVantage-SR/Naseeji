@@ -36,12 +36,12 @@ class RecentSearchesSection extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 8),
-        ...recentSearches.map((search) => _buildRecentSearchItem(search)),
+        ...recentSearches.map((search) => _buildRecentSearchItem(context, search)),
       ],
     );
   }
 
-  Widget _buildRecentSearchItem(String text) {
+  Widget _buildRecentSearchItem(BuildContext context, String text) {
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
