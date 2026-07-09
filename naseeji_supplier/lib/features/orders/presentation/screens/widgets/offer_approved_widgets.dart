@@ -36,7 +36,7 @@ class ApprovalHeader extends StatelessWidget {
                 ),
                 child: const Icon(
                   Icons.check,
-                  color: AppColors.surface,
+                  color: Colors.white,
                   size: 48,
                 ),
               ),

@@ -32,7 +32,7 @@ class OfferDetailsHeader extends StatelessWidget {
                     ),
                     child: const Icon(
                       Icons.storefront,
-                      color: AppColors.surface,
+                      color: Colors.white,
                       size: 40,
                     ),
                   ),
