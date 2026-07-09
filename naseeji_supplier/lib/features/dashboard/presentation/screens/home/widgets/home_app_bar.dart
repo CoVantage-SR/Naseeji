@@ -24,13 +24,13 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           Text(
             'نسيجي',
             style: TextStyle(
-              color: AppColors.primary,
+              color: Theme.of(context).colorScheme.primary,
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
           ),
-          SizedBox(width: 4),
-          Icon(Icons.verified, color: AppColors.primary, size: 16),
+          const SizedBox(width: 4),
+          Icon(Icons.verified, color: Theme.of(context).colorScheme.primary, size: 16),
         ],
       ),
       actions: [
