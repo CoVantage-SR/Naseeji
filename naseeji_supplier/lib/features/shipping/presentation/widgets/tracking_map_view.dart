@@ -29,33 +29,33 @@ class TrackingMapView extends StatelessWidget {
           Positioned(
             bottom: 40,
             right: 60,
-            child: _buildMapMarker('نقطة البدء (الرياض)', Colors.blue),
+            child: _buildMapMarker(context, 'نقطة البدء (الرياض)', Colors.blue),
           ),
           // Current location indicator
           Positioned(
             top: 100,
             left: 120,
-            child: _buildMapMarker('الشحنة حالياً', Colors.orange, isCurrent: true),
+            child: _buildMapMarker(context, 'الشحنة حالياً', Colors.orange, isCurrent: true),
           ),
           // Destination indicator
           Positioned(
             top: 30,
             right: 180,
-            child: _buildMapMarker('الوجهة (الدمام)', Colors.green),
+            child: _buildMapMarker(context, 'الوجهة (الدمام)', Colors.green),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildMapMarker(String label, Color color, {bool isCurrent = false}) {
+  Widget _buildMapMarker(BuildContext context, String label, Color color, {bool isCurrent = false}) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
           decoration: BoxDecoration(
-            color: AppColors.surface,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(6),
             boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4)],
           ),

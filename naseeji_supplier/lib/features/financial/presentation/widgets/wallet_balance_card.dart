@@ -139,7 +139,7 @@ class WalletBalanceCard extends StatelessWidget {
           Text(
             '$value ر.س',
             style: TextStyle(
-              color: AppColors.surface,
+              color: Colors.white,
               fontSize: 14,
               fontWeight: FontWeight.bold,
             ),
