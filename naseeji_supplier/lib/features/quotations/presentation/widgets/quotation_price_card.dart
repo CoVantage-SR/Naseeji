@@ -12,8 +12,8 @@ class QuotationPriceCard extends StatelessWidget {
     final subtotal = quotation.supplierUnitPrice * quotation.quantity;
 
     return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.all(Radius.circular(16)),
         boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
       ),
@@ -21,19 +21,19 @@ class QuotationPriceCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
               Icon(Icons.monetization_on_outlined, color: AppColors.primary, size: 18),
               SizedBox(width: 8),
               Text(
                 'تفاصيل التكاليف والمالية اللوجستية',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.onSurface),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Theme.of(context).colorScheme.onSurface),
               ),
             ],
           ),
-          const SizedBox(height: 10),
-          const Divider(height: 1, color: AppColors.surfaceContainerLow),
-          const SizedBox(height: 8),
+          SizedBox(height: 10),
+          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          SizedBox(height: 8),
           
           _buildDetailRow('السعر المطلوب للمصنع', '${quotation.originalRequestedPrice.toStringAsFixed(2)} ${quotation.currency}'),
           _buildDetailRow('سعر وحدة المورد المقترح', '${quotation.supplierUnitPrice.toStringAsFixed(2)} ${quotation.currency}', isPrimary: true),
@@ -53,7 +53,7 @@ class QuotationPriceCard extends StatelessWidget {
             isBold: true,
             isPrimary: true,
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
@@ -64,7 +64,7 @@ class QuotationPriceCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Row(
+                Row(
                   children: [
                     Icon(Icons.trending_up, color: Colors.green, size: 14),
                     SizedBox(width: 4),
@@ -73,7 +73,7 @@ class QuotationPriceCard extends StatelessWidget {
                 ),
                 Text(
                   '${quotation.expectedProfitMargin.toStringAsFixed(1)}%',
-                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.green),
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.green),
                 ),
               ],
             ),
@@ -84,7 +84,7 @@ class QuotationPriceCard extends StatelessWidget {
   }
 
   Widget _buildDetailRow(String label, String value, {bool isBold = false, bool isPrimary = false, bool isWarning = false}) {
-    Color valueColor = AppColors.onSurface;
+    Color valueColor = Theme.of(context).colorScheme.onSurface;
     if (isPrimary) valueColor = AppColors.primary;
     if (isWarning) valueColor = AppColors.error;
 
@@ -97,7 +97,7 @@ class QuotationPriceCard extends StatelessWidget {
             flex: 2,
             child: Text(
               label,
-              style: const TextStyle(fontSize: 10, color: AppColors.outline),
+              style: TextStyle(fontSize: 10, color: AppColors.outline),
             ),
           ),
           Expanded(

@@ -55,13 +55,13 @@ class TrackingMapView extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(6),
             boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4)],
           ),
-          child: Text(label, style: const TextStyle(fontSize: 8, fontWeight: FontWeight.bold)),
+          child: Text(label, style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold)),
         ),
-        const SizedBox(height: 2),
+        SizedBox(height: 2),
         Icon(
           isCurrent ? Icons.local_shipping : Icons.location_on,
           color: color,

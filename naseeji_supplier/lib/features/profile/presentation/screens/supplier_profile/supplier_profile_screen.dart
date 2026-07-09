@@ -47,7 +47,7 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: profileAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+        loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
         error: (err, stack) => Center(child: Text('خطأ: $err')),
         data: (profile) {
           return NestedScrollView(
@@ -57,10 +57,10 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
                   expandedHeight: 265,
                   floating: false,
                   pinned: true,
-                  backgroundColor: Colors.white,
+                  backgroundColor: Theme.of(context).colorScheme.surface,
                   elevation: 0.5,
                   title: innerBoxIsScrolled
-                      ? Text(profile.companyName, style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 14))
+                      ? Text(profile.companyName, style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 14))
                       : null,
                   centerTitle: true,
                   flexibleSpace: FlexibleSpaceBar(
@@ -74,9 +74,9 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
                       controller: _tabController,
                       isScrollable: true,
                       labelColor: const Color(0xFF0040E0),
-                      unselectedLabelColor: AppColors.onSurfaceVariant,
+                      unselectedLabelColor: Theme.of(context).colorScheme.onSurfaceVariant,
                       indicatorColor: const Color(0xFF0040E0),
-                      labelStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+                      labelStyle: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
                       tabs: tabTitles.map((title) => Tab(text: title)).toList(),
                     ),
                   ),

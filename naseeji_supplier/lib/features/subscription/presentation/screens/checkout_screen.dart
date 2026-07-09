@@ -77,11 +77,11 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
-          title: const Text(
+          title: Text(
             'مراجعة وتأكيد الشراء',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.onSurface),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
           ),
           centerTitle: true,
         ),
@@ -96,16 +96,16 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const Text(
+                      Text(
                         'ملخص تفاصيل الفاتورة',
-                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                       ),
                       const Divider(height: 20, color: AppColors.outlineVariant),
                       _buildSummaryRow('الباقة / الخدمة المطلوبة', name),
@@ -118,21 +118,21 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // Coupon field
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const Text('هل لديك كوبون تخفيض للمنشأة؟', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant)),
-                      const SizedBox(height: 8),
+                      Text('هل لديك كوبون تخفيض للمنشأة؟', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurfaceVariant)),
+                      SizedBox(height: 8),
                       Row(
                         children: [
                           ElevatedButton(
@@ -144,9 +144,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                             ),
-                            child: const Text('تطبيق', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+                            child: Text('تطبيق', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
                           ),
-                          const SizedBox(width: 8),
+                          SizedBox(width: 8),
                           Expanded(
                             child: CustomTextField(
                               controller: _couponController,
@@ -159,11 +159,11 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // Payment Method Card
                 methodsAsync.when(
-                  loading: () => const Center(child: CircularProgressIndicator()),
+                  loading: () => Center(child: CircularProgressIndicator()),
                   error: (e, _) => Text('خطأ: $e'),
                   data: (methods) {
                     final defaultMethod = methods.firstWhere((m) => m.isDefault, orElse: () => methods.first);
@@ -171,7 +171,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     return Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                       ),
@@ -183,11 +183,11 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                             children: [
                               TextButton(
                                 onPressed: () => context.push('/subscription/methods'),
-                                child: const Text('تغيير', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF0040E0))),
+                                child: Text('تغيير', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF0040E0))),
                               ),
-                              const Text(
+                              Text(
                                 'وسيلة الدفع المختارة',
-                                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                               ),
                             ],
                           ),
@@ -200,15 +200,15 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                                 children: [
                                   Text(
                                     defaultMethod.name,
-                                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                                   ),
                                   Text(
                                     defaultMethod.details,
-                                    style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant),
+                                    style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant),
                                   ),
                                 ],
                               ),
-                              const SizedBox(width: 12),
+                              SizedBox(width: 12),
                               const Icon(Icons.credit_card, color: Color(0xFF0040E0), size: 20),
                             ],
                           ),
@@ -217,22 +217,22 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     );
                   },
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // Billing Address Card
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const Text(
+                      Text(
                         'عنوان الفاتورة للمحاسبة الضريبية',
-                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                       ),
                       const Divider(height: 20, color: AppColors.outlineVariant),
                       CustomTextField(
@@ -242,7 +242,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
 
                 PrimaryButton(
                   text: 'شراء وتأكيد عملية الفوترة',
@@ -257,22 +257,22 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     showDialog(
                       context: context,
                       builder: (ctx) => AlertDialog(
-                        title: const Text('نجاح العملية', textAlign: TextAlign.right),
-                        content: const Text('تمت عملية الشراء وتفعيل الباقة بنجاح وصدرت الفاتورة المالية.', textAlign: TextAlign.right),
+                        title: Text('نجاح العملية', textAlign: TextAlign.right),
+                        content: Text('تمت عملية الشراء وتفعيل الباقة بنجاح وصدرت الفاتورة المالية.', textAlign: TextAlign.right),
                         actions: [
                           TextButton(
                             onPressed: () {
                               Navigator.pop(ctx);
                               context.go('/subscription');
                             },
-                            child: const Text('حسناً'),
+                            child: Text('حسناً'),
                           ),
                         ],
                       ),
                     );
                   },
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
               ],
             ),
           ),
@@ -292,7 +292,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
             style: TextStyle(
               fontSize: isBold ? 14 : 12,
               fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-              color: isBold ? const Color(0xFF0040E0) : AppColors.onSurface,
+              color: isBold ? const Color(0xFF0040E0) : Theme.of(context).colorScheme.onSurface,
             ),
           ),
           Text(
@@ -300,7 +300,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
             style: TextStyle(
               fontSize: 12,
               fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-              color: AppColors.onSurfaceVariant,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
         ],

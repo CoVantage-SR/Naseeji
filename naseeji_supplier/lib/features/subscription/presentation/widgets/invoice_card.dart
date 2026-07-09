@@ -22,7 +22,7 @@ class InvoiceCard extends StatelessWidget {
 
     return Card(
       elevation: 0.5,
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
@@ -53,13 +53,13 @@ class InvoiceCard extends StatelessWidget {
                 ),
                 Text(
                   invoice.invoiceNumber,
-                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             const Divider(color: AppColors.outlineVariant),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
 
             _buildDetailRow('الباقة / الخدمة المشحونة', invoice.planName),
             _buildDetailRow('تاريخ الفاتورة', dateStr),
@@ -68,18 +68,18 @@ class InvoiceCard extends StatelessWidget {
               _buildDetailRow('الخصم المطبق', '-${invoice.discount.toStringAsFixed(0)} ر.س'),
             _buildDetailRow('المبلغ الإجمالي', '${invoice.amount.toStringAsFixed(0)} ر.س'),
 
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             const Divider(color: AppColors.outlineVariant),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                  icon: const Icon(Icons.share_outlined, color: AppColors.onSurfaceVariant, size: 20),
+                  icon: const Icon(Icons.share_outlined, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
                   onPressed: onShare,
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 IconButton(
                   icon: const Icon(Icons.download_for_offline_outlined, color: Color(0xFF0040E0), size: 20),
                   onPressed: onDownload,
@@ -100,11 +100,11 @@ class InvoiceCard extends StatelessWidget {
         children: [
           Text(
             value,
-            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
           ),
           Text(
             label,
-            style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+            style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant),
           ),
         ],
       ),

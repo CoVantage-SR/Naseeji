@@ -22,18 +22,18 @@ class ProductProgressStepper extends StatelessWidget {
             bottom: 20,
             child: Container(
               width: 2,
-              color: AppColors.surfaceContainerHighest,
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
             ),
           ),
           // Steps Column
           Column(
             children: [
               _buildStepRow(1, 'المعلومات الأساسية', 'الاسم، الوصف، الفئة', currentStep == 1),
-              const SizedBox(height: 28),
+              SizedBox(height: 28),
               _buildStepRow(2, 'المواصفات الفنية', 'الوزن، الكثافة، الغرز', currentStep == 2),
-              const SizedBox(height: 28),
+              SizedBox(height: 28),
               _buildStepRow(3, 'التسعير والمخزون', 'الأسعار، الكميات المتاحة', currentStep == 3),
-              const SizedBox(height: 28),
+              SizedBox(height: 28),
               _buildStepRow(4, 'الصور والملفات', 'رفع الوسائط والشهادات', currentStep == 4),
             ],
           ),
@@ -58,27 +58,27 @@ class ProductProgressStepper extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
-                  color: isActive ? AppColors.primary : AppColors.onSurfaceVariant,
+                  color: isActive ? AppColors.primary : Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
-              const SizedBox(height: 2),
+              SizedBox(height: 2),
               Text(
                 subtitle,
                 textAlign: TextAlign.right,
                 style: TextStyle(
                   fontSize: 11,
-                  color: isActive ? AppColors.onSurfaceVariant : AppColors.outline,
+                  color: isActive ? Theme.of(context).colorScheme.onSurfaceVariant : AppColors.outline,
                 ),
               ),
             ],
           ),
         ),
-        const SizedBox(width: 16),
+        SizedBox(width: 16),
         Container(
           width: 38,
           height: 38,
           decoration: BoxDecoration(
-            color: isActive ? AppColors.primary : AppColors.surfaceContainerHighest,
+            color: isActive ? AppColors.primary : Theme.of(context).colorScheme.surfaceContainerHighest,
             shape: BoxShape.circle,
             boxShadow: isActive
                 ? [
@@ -94,7 +94,7 @@ class ProductProgressStepper extends StatelessWidget {
           child: Text(
             '$number',
             style: TextStyle(
-              color: isActive ? Colors.white : AppColors.onSurfaceVariant,
+              color: isActive ? Colors.white : Theme.of(context).colorScheme.onSurfaceVariant,
               fontWeight: FontWeight.bold,
               fontSize: 14,
             ),

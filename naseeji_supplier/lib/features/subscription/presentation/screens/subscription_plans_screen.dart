@@ -25,11 +25,11 @@ class _SubscriptionPlansScreenState extends ConsumerState<SubscriptionPlansScree
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
-          title: const Text(
+          title: Text(
             'باقات وعروض الاشتراك B2B',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.onSurface),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
           ),
           centerTitle: true,
         ),
@@ -39,21 +39,21 @@ class _SubscriptionPlansScreenState extends ConsumerState<SubscriptionPlansScree
             children: [
               // Cycle Toggle
               Container(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ChoiceChip(
-                      label: const Text('اشتراك سنوي (توفير 20%)', style: TextStyle(fontSize: 11)),
+                      label: Text('اشتراك سنوي (توفير 20%)', style: TextStyle(fontSize: 11)),
                       selected: _selectedCycle == BillingCycle.yearly,
                       onSelected: (val) {
                         if (val) setState(() => _selectedCycle = BillingCycle.yearly);
                       },
                     ),
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12),
                     ChoiceChip(
-                      label: const Text('اشتراك شهري', style: TextStyle(fontSize: 11)),
+                      label: Text('اشتراك شهري', style: TextStyle(fontSize: 11)),
                       selected: _selectedCycle == BillingCycle.monthly,
                       onSelected: (val) {
                         if (val) setState(() => _selectedCycle = BillingCycle.monthly);
@@ -66,10 +66,10 @@ class _SubscriptionPlansScreenState extends ConsumerState<SubscriptionPlansScree
               // Plans list
               Expanded(
                 child: activeSubAsync.when(
-                  loading: () => const Center(child: CircularProgressIndicator()),
+                  loading: () => Center(child: CircularProgressIndicator()),
                   error: (e, _) => Center(child: Text('خطأ: $e')),
                   data: (activeSub) => plansAsync.when(
-                    loading: () => const Center(child: CircularProgressIndicator()),
+                    loading: () => Center(child: CircularProgressIndicator()),
                     error: (e, _) => Center(child: Text('خطأ: $e')),
                     data: (plans) {
                       return ListView.builder(

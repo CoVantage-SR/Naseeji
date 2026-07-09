@@ -10,22 +10,22 @@ class AchievementsCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text(
+          Text(
             'الإنجازات والتوثيق',
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.bold,
-              color: AppColors.onSurface,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           Row(
             children: [
               Expanded(
@@ -35,7 +35,7 @@ class AchievementsCard extends StatelessWidget {
                     color: const Color(0xFFE4FBF7),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Column(
+                  child: Column(
                     children: [
                       Icon(Icons.trending_up, color: Color(0xFF00BFA5), size: 24),
                       SizedBox(height: 8),
@@ -51,7 +51,7 @@ class AchievementsCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.all(16),
@@ -59,7 +59,7 @@ class AchievementsCard extends StatelessWidget {
                     color: const Color(0xFFFCE8E6),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Column(
+                  child: Column(
                     children: [
                       Icon(Icons.verified_user_outlined, color: Color(0xFFEA4335), size: 24),
                       SizedBox(height: 8),

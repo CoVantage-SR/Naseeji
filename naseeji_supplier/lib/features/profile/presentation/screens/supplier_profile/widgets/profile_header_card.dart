@@ -33,9 +33,9 @@ class ProfileHeaderCard extends StatelessWidget {
                 width: 102,
                 height: 102,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 3),
+                  border: Border.all(color: Theme.of(context).colorScheme.surface, width: 3),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withValues(alpha: 0.05),
@@ -51,7 +51,7 @@ class ProfileHeaderCard extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 45),
+        SizedBox(height: 45),
 
         // Header Metadata details
         Padding(
@@ -68,7 +68,7 @@ class ProfileHeaderCard extends StatelessWidget {
                       color: const Color(0xFFE2F9F5),
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    child: const Row(
+                    child: Row(
                       children: [
                         Icon(Icons.verified, color: Color(0xFF006B5F), size: 10),
                         SizedBox(width: 4),
@@ -83,36 +83,36 @@ class ProfileHeaderCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   Text(
                     profile.companyName,
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                 ],
               ),
-              const SizedBox(height: 4),
+              SizedBox(height: 4),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
                     '${profile.city}،SA',
-                    style: const TextStyle(fontSize: 10, color: AppColors.outline),
+                    style: TextStyle(fontSize: 10, color: AppColors.outline),
                   ),
-                  const SizedBox(width: 4),
+                  SizedBox(width: 4),
                   const Icon(Icons.location_on_outlined, color: AppColors.outline, size: 12),
-                  const SizedBox(width: 10),
-                  const Text(
+                  SizedBox(width: 10),
+                  Text(
                     '10 سنوات خبرة',
                     style: TextStyle(fontSize: 10, color: AppColors.outline),
                   ),
-                  const SizedBox(width: 1),
+                  SizedBox(width: 1),
                   const Icon(Icons.workspace_premium_outlined, color: AppColors.outline, size: 12),
                 ],
               ),
             ],
           ),
         ),
-        const SizedBox(height: 1),
+        SizedBox(height: 1),
         // Profile Actions Row
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
@@ -124,7 +124,7 @@ class ProfileHeaderCard extends StatelessWidget {
                     context.push('/profile/public-preview');
                   },
                   icon: const Icon(Icons.visibility_outlined, size: 14, color: Color(0xFF0040E0)),
-                  label: const Text(
+                  label: Text(
                     'معاينة كزائر',
                     style: TextStyle(
                       color: Color(0xFF0040E0),
@@ -139,14 +139,14 @@ class ProfileHeaderCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Expanded(
                 child: ElevatedButton.icon(
                   onPressed: () {
                     context.push('/profile/edit');
                   },
                   icon: const Icon(Icons.edit_outlined, size: 14, color: Colors.white),
-                  label: const Text(
+                  label: Text(
                     'تعديل البيانات',
                     style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
                   ),
@@ -175,7 +175,7 @@ class ProfileHeaderCard extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text(
+        title: Text(
           'تعديل الملف التعريفي للشركة',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
@@ -184,16 +184,16 @@ class ProfileHeaderCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             _buildDialogTextField('اسم الشركة المعتمد', nameCtrl),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             _buildDialogTextField('البريد الإلكتروني للإدارة', emailCtrl),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             _buildDialogTextField('رقم هاتف المنشأة للتواصل', phoneCtrl),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('تراجع'),
+            child: Text('تراجع'),
           ),
           ElevatedButton(
             onPressed: () {
@@ -206,7 +206,7 @@ class ProfileHeaderCard extends StatelessWidget {
               backgroundColor: const Color(0xFF0040E0),
               foregroundColor: Colors.white,
             ),
-            child: const Text('حفظ التعديلات'),
+            child: Text('حفظ التعديلات'),
           ),
         ],
       ),
@@ -220,7 +220,7 @@ class ProfileHeaderCard extends StatelessWidget {
         controller: ctrl,
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: const TextStyle(fontSize: 11),
+          labelStyle: TextStyle(fontSize: 11),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
         ),
       ),

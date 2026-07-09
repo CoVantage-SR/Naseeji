@@ -14,7 +14,7 @@ class ProductHorizontalStepper extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
       ),

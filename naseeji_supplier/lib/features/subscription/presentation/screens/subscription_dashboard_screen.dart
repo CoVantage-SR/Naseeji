@@ -18,22 +18,22 @@ class SubscriptionDashboardScreen extends ConsumerWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
-          title: const Text(
+          title: Text(
             'لوحة الاشتراكات والفوترة B2B',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.onSurface),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
           ),
           centerTitle: true,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: AppColors.onSurface),
+            icon: const Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
             onPressed: () => context.go('/home'),
           ),
         ),
         body: Material(
           color: Theme.of(context).scaffoldBackgroundColor,
           child: subAsync.when(
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => Center(child: CircularProgressIndicator()),
             error: (e, _) => Center(child: Text('خطأ: $e')),
             data: (sub) {
               return SingleChildScrollView(
@@ -52,18 +52,18 @@ class SubscriptionDashboardScreen extends ConsumerWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
+                          Text(
                             'حالة الاشتراك: ممتازة',
                             style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF006B5F)),
                           ),
                           Text(
                             'متبقي ${sub.remainingDays} يوم على تجديد الخدمة القادم',
-                            style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant),
+                            style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     // Active Subscription Card
                     SubscriptionStatusCard(
@@ -79,17 +79,17 @@ class SubscriptionDashboardScreen extends ConsumerWidget {
                         );
                       },
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24),
 
                     // Quick Actions
-                    const Text(
+                    Text(
                       'إجراءات سريعة للاشتراك والفوترة',
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                       textAlign: TextAlign.right,
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12),
                     _buildQuickActions(context),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24),
 
                     // Usages section
                     Row(
@@ -97,17 +97,17 @@ class SubscriptionDashboardScreen extends ConsumerWidget {
                       children: [
                         TextButton(
                           onPressed: () => context.push('/subscription/usage'),
-                          child: const Text('عرض التفاصيل كاملة', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0040E0))),
+                          child: Text('عرض التفاصيل كاملة', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0040E0))),
                         ),
-                        const Text(
+                        Text(
                           'استهلاك موارد الباقة الحالية',
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12),
                     usageAsync.when(
-                      loading: () => const Center(child: CircularProgressIndicator()),
+                      loading: () => Center(child: CircularProgressIndicator()),
                       error: (err, _) => Text('خطأ: $err'),
                       data: (usage) {
                         // starter limits hardcoded for quick dashboard bars
@@ -183,7 +183,7 @@ class SubscriptionDashboardScreen extends ConsumerWidget {
         final act = actions[index];
         return Card(
           elevation: 0.5,
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
             side: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
@@ -195,10 +195,10 @@ class SubscriptionDashboardScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(act['icon'] as IconData, color: const Color(0xFF0040E0), size: 24),
-                const SizedBox(height: 6),
+                SizedBox(height: 6),
                 Text(
                   act['label'] as String,
-                  style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                   textAlign: TextAlign.center,
                 ),
               ],

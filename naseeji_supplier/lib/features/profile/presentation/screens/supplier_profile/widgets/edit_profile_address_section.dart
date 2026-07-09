@@ -21,23 +21,23 @@ class EditProfileAddressSection extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('موقع المنشأة وعناوين الفروع', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 12),
+          Text('موقع المنشأة وعناوين الفروع', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 12),
           _buildTextField('الدولة *', countryController, isRequired: true),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildTextField('المدينة *', cityController, isRequired: true),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildTextField('العنوان التفصيلي للمقر الرئيسي', addressController),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildTextField('الرمز البريدي للمراسلات الورقية', postalCodeController, keyboardType: TextInputType.number),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           // B2B Visual Map Preview component
           Container(
             height: 120,
@@ -61,7 +61,7 @@ class EditProfileAddressSection extends StatelessWidget {
                 Center(
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                    decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20), border: Border.all(color: const Color(0xFF0040E0))),
+                    decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface, borderRadius: BorderRadius.circular(20), border: Border.all(color: const Color(0xFF0040E0))),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: const [
@@ -80,9 +80,9 @@ class EditProfileAddressSection extends StatelessWidget {
                     child: ElevatedButton.icon(
                       onPressed: onCurrentLocationSelected,
                       icon: const Icon(Icons.gps_fixed, size: 10, color: Color(0xFF0040E0)),
-                      label: const Text('تحديد الموقع الحالي', style: TextStyle(fontSize: 8, color: Color(0xFF0040E0), fontWeight: FontWeight.bold)),
+                      label: Text('تحديد الموقع الحالي', style: TextStyle(fontSize: 8, color: Color(0xFF0040E0), fontWeight: FontWeight.bold)),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
+                        backgroundColor: Theme.of(context).colorScheme.surface,
                         elevation: 1,
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
@@ -121,7 +121,7 @@ class EditProfileAddressSection extends StatelessWidget {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
           contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         ),
-        style: const TextStyle(fontSize: 12),
+        style: TextStyle(fontSize: 12),
       ),
     );
   }

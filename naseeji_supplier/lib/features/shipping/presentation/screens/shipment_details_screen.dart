@@ -40,44 +40,44 @@ class _ShipmentDetailsScreenState extends ConsumerState<ShipmentDetailsScreen> w
     return Directionality(
       textDirection: TextDirection.rtl,
       child: stateAsync.when(
-        loading: () => const Scaffold(body: Center(child: CircularProgressIndicator(color: AppColors.primary))),
+        loading: () => Scaffold(body: Center(child: CircularProgressIndicator(color: AppColors.primary))),
         error: (e, _) => Scaffold(body: Center(child: Text('خطأ: $e'))),
         data: (shipments) {
           final shipmentIndex = shipments.indexWhere((s) => s.id == widget.shipmentId);
           if (shipmentIndex == -1) {
-            return const Scaffold(body: Center(child: Text('الشحنة غير موجودة')));
+            return Scaffold(body: Center(child: Text('الشحنة غير موجودة')));
           }
           final s = shipments[shipmentIndex];
 
           return Scaffold(
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             appBar: AppBar(
-              backgroundColor: Colors.white,
+              backgroundColor: Theme.of(context).colorScheme.surface,
               elevation: 0.5,
               centerTitle: true,
               title: Column(
                 children: [
                   Text(
                     'تفاصيل الشحنة ${s.id}',
-                    style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 14),
+                    style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 14),
                   ),
-                  const SizedBox(height: 2),
+                  SizedBox(height: 2),
                   Text(
                     'طلب: ${s.orderNumber} • مصنع: ${s.factoryName}',
-                    style: const TextStyle(color: AppColors.outline, fontSize: 10),
+                    style: TextStyle(color: AppColors.outline, fontSize: 10),
                   ),
                 ],
               ),
               leading: IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+                icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
                 onPressed: () => context.pop(),
               ),
               bottom: TabBar(
                 controller: _tabController,
                 labelColor: const Color(0xFF0040E0),
-                unselectedLabelColor: AppColors.onSurfaceVariant,
+                unselectedLabelColor: Theme.of(context).colorScheme.onSurfaceVariant,
                 indicatorColor: const Color(0xFF0040E0),
-                labelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                labelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                 tabs: _tabs.map((title) => Tab(text: title)).toList(),
               ),
             ),

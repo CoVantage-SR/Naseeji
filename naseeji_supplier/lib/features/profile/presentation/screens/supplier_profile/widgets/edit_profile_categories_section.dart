@@ -55,17 +55,17 @@ class _EditProfileCategoriesSectionState extends State<EditProfileCategoriesSect
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('تصنيفات التوريد ومجموعات المنتجات *', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 8),
+          Text('تصنيفات التوريد ومجموعات المنتجات *', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 8),
           Text('يرجى اختيار مجموعة تصنيفات تصف مجالات التوريد الخاصة بك.', style: TextStyle(fontSize: 10, color: Colors.grey.shade500)),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           // Category Search Field
           Directionality(
             textDirection: TextDirection.rtl,
@@ -73,14 +73,14 @@ class _EditProfileCategoriesSectionState extends State<EditProfileCategoriesSect
               controller: _categorySearchController,
               decoration: InputDecoration(
                 hintText: 'البحث عن تصنيف تخصصي...',
-                hintStyle: const TextStyle(fontSize: 11),
+                hintStyle: TextStyle(fontSize: 11),
                 prefixIcon: const Icon(Icons.search, size: 16),
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                 contentPadding: const EdgeInsets.symmetric(vertical: 8),
               ),
             ),
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           // Grid/List of categories filtered
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
@@ -95,7 +95,7 @@ class _EditProfileCategoriesSectionState extends State<EditProfileCategoriesSect
                     final cat = filteredCategories[index];
                     final isSelected = widget.selectedCategories.contains(cat);
                     return CheckboxListTile(
-                      title: Text(cat, style: const TextStyle(fontSize: 11)),
+                      title: Text(cat, style: TextStyle(fontSize: 11)),
                       value: isSelected,
                       controlAffinity: ListTileControlAffinity.trailing,
                       dense: true,
@@ -116,7 +116,7 @@ class _EditProfileCategoriesSectionState extends State<EditProfileCategoriesSect
               ),
             ),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           // Renders selected categories as Chips
           if (widget.selectedCategories.isNotEmpty)
             Wrap(
@@ -124,7 +124,7 @@ class _EditProfileCategoriesSectionState extends State<EditProfileCategoriesSect
               runSpacing: 6,
               alignment: WrapAlignment.end,
               children: widget.selectedCategories.map((cat) => Chip(
-                label: Text(cat, style: const TextStyle(fontSize: 9, color: Color(0xFF0040E0))),
+                label: Text(cat, style: TextStyle(fontSize: 9, color: Color(0xFF0040E0))),
                 backgroundColor: const Color(0xFFF1F4FE),
                 deleteIcon: const Icon(Icons.close, size: 10, color: Color(0xFF0040E0)),
                 onDeleted: () {

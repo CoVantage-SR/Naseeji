@@ -62,8 +62,8 @@ class QuotationStatusCard extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.all(Radius.circular(16)),
         boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
       ),
@@ -83,32 +83,32 @@ class QuotationStatusCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
             child: LinearProgressIndicator(
               value: progress,
               color: statusColor,
-              backgroundColor: AppColors.surfaceContainerLow,
+              backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
               minHeight: 6,
             ),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('المرحلة الحالية:', style: TextStyle(fontSize: 10, color: AppColors.outline)),
+              Text('المرحلة الحالية:', style: TextStyle(fontSize: 10, color: AppColors.outline)),
               Text(
                 stageText,
-                style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant),
+                style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
             ],
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('حالة الاعتماد:', style: TextStyle(fontSize: 10, color: AppColors.outline)),
+              Text('حالة الاعتماد:', style: TextStyle(fontSize: 10, color: AppColors.outline)),
               Text(
                 completionText,
                 style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: statusColor),
@@ -116,7 +116,7 @@ class QuotationStatusCard extends StatelessWidget {
             ],
           ),
           if (quotation.status == QuotationStatus.rejected && quotation.rejectionReason != null) ...[
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(10),
@@ -124,11 +124,11 @@ class QuotationStatusCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('سبب الرفض المعتمد:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10, color: AppColors.error)),
-                  const SizedBox(height: 4),
+                  Text('سبب الرفض المعتمد:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10, color: AppColors.error)),
+                  SizedBox(height: 4),
                   Text(
                     quotation.rejectionReason!,
-                    style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant, height: 1.4),
+                    style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.4),
                   ),
                 ],
               ),

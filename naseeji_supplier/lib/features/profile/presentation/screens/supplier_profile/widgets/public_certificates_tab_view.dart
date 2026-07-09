@@ -18,7 +18,7 @@ class PublicCertificatesTabView extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 12),
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
               color: cert.verified ? const Color(0xFF006B5F).withValues(alpha: 0.2) : const Color(0xFFE2E1EF),
@@ -52,19 +52,19 @@ class PublicCertificatesTabView extends StatelessWidget {
                   children: [
                     Text(
                       cert.name,
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: AppColors.onSurface),
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: Theme.of(context).colorScheme.onSurface),
                       textAlign: TextAlign.end,
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4),
                     Text(
                       cert.date,
-                      style: const TextStyle(fontSize: 9, color: AppColors.outline),
+                      style: TextStyle(fontSize: 9, color: AppColors.outline),
                       textAlign: TextAlign.end,
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               // Verified status badge
               Container(
                 padding: const EdgeInsets.all(8),

@@ -54,7 +54,7 @@ class QuotationSummaryCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: const [BoxShadow(color: Color(0x05000000), blurRadius: 10, offset: Offset(0, 4))],
         border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5),
@@ -73,24 +73,24 @@ class QuotationSummaryCard extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: AppColors.surfaceContainerLow,
+                        color: Theme.of(context).colorScheme.surfaceContainerLow,
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
                         quotation.id,
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 10, color: AppColors.primary),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10, color: AppColors.primary),
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     Text(
                       'RFQ: ${quotation.rfqNumber}',
-                      style: const TextStyle(fontSize: 9, color: AppColors.outline),
+                      style: TextStyle(fontSize: 9, color: AppColors.outline),
                     ),
                     if (quotation.orderNumber != null) ...[
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8),
                       Text(
                         'عقد: ${quotation.orderNumber}',
-                        style: const TextStyle(fontSize: 9, color: AppColors.outline),
+                        style: TextStyle(fontSize: 9, color: AppColors.outline),
                       ),
                     ],
                   ],
@@ -109,7 +109,7 @@ class QuotationSummaryCard extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: AppColors.surfaceContainerLow),
+          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
 
           // Factory Info
           Padding(
@@ -121,14 +121,14 @@ class QuotationSummaryCard extends StatelessWidget {
                   backgroundColor: Color(quotation.factoryInfo.logoBgColorValue),
                   child: Text(
                     quotation.factoryInfo.logoText,
-                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 8),
+                    style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.bold, fontSize: 8),
                   ),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     quotation.factoryInfo.factoryName,
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: AppColors.onSurface),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: Theme.of(context).colorScheme.onSurface),
                   ),
                 ),
                 if (quotation.hasNegotiationBadge)
@@ -139,7 +139,7 @@ class QuotationSummaryCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4),
                       border: Border.all(color: Colors.orange.shade200, width: 0.5),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(Icons.gavel, color: Colors.orange, size: 8),
@@ -169,37 +169,37 @@ class QuotationSummaryCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 10),
+                SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         quotation.productName,
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: AppColors.onSurface),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: Theme.of(context).colorScheme.onSurface),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(height: 4),
+                      SizedBox(height: 4),
                       Text(
                         'الكمية: ${quotation.quantity.toInt()} ${quotation.unit} • التوريد: ${quotation.preparationTime}',
-                        style: const TextStyle(fontSize: 9, color: AppColors.outline),
+                        style: TextStyle(fontSize: 9, color: AppColors.outline),
                       ),
-                      const SizedBox(height: 4),
+                      SizedBox(height: 4),
                       Row(
                         children: [
                           Text(
                             'سعر الوحدة: ${quotation.supplierUnitPrice.toStringAsFixed(2)} ${quotation.currency}',
-                            style: const TextStyle(fontSize: 9, color: AppColors.outline),
+                            style: TextStyle(fontSize: 9, color: AppColors.outline),
                           ),
                           const Spacer(),
                           Text(
                             'السعر الإجمالي: ',
-                            style: const TextStyle(fontSize: 9, color: AppColors.outline),
+                            style: TextStyle(fontSize: 9, color: AppColors.outline),
                           ),
                           Text(
                             '${quotation.grandTotal.toStringAsFixed(0)} ${quotation.currency}',
-                            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.primary),
+                            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.primary),
                           ),
                         ],
                       ),
@@ -218,7 +218,7 @@ class QuotationSummaryCard extends StatelessWidget {
               children: [
                 Text(
                   'تاريخ العرض: ${quotation.createdDate}',
-                  style: const TextStyle(fontSize: 8, color: AppColors.outline),
+                  style: TextStyle(fontSize: 8, color: AppColors.outline),
                 ),
                 Text(
                   'انتهاء الصلاحية: ${quotation.expirationDate}',
@@ -231,7 +231,7 @@ class QuotationSummaryCard extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: AppColors.surfaceContainerLow),
+          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
 
           // Actions
           Padding(
@@ -244,19 +244,19 @@ class QuotationSummaryCard extends StatelessWidget {
                   tooltip: 'تكرار كمسودة',
                   onTap: onDuplicate,
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 _buildActionButton(
                   icon: Icons.picture_as_pdf_outlined,
                   tooltip: 'مشاركة عرض PDF',
                   onTap: onSharePdf,
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 _buildActionButton(
                   icon: Icons.timeline_outlined,
                   tooltip: 'الخط الزمني للحالة',
                   onTap: onTimeline,
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 _buildActionButton(
                   icon: Icons.forum_outlined,
                   tooltip: 'محادثة المصنع',
@@ -274,7 +274,7 @@ class QuotationSummaryCard extends StatelessWidget {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     elevation: 0,
                   ),
-                  child: const Text(
+                  child: Text(
                     'تفاصيل العرض',
                     style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
                   ),
@@ -292,7 +292,7 @@ class QuotationSummaryCard extends StatelessWidget {
       width: 32,
       height: 32,
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLow,
+        color: Theme.of(context).colorScheme.surfaceContainerLow,
         borderRadius: BorderRadius.circular(8),
       ),
       child: IconButton(

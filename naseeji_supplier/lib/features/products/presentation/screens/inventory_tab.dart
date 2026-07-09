@@ -57,7 +57,7 @@ class _InventoryTabState extends State<InventoryTab> {
         body: ListView.separated(
           padding: const EdgeInsets.all(16),
           itemCount: _inventoryItems.length,
-          separatorBuilder: (_, __) => const SizedBox(height: 12),
+          separatorBuilder: (_, __) => SizedBox(height: 12),
           itemBuilder: (context, index) {
             final item = _inventoryItems[index];
             final int available = item['available'];
@@ -80,7 +80,7 @@ class _InventoryTabState extends State<InventoryTab> {
 
             return Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(18),
                 boxShadow: [
                   BoxShadow(
@@ -103,12 +103,12 @@ class _InventoryTabState extends State<InventoryTab> {
                           children: [
                             Text(
                               item['name'],
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.onSurface),
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Theme.of(context).colorScheme.onSurface),
                             ),
-                            const SizedBox(height: 4),
+                            SizedBox(height: 4),
                             Text(
                               'رمز المنتج: ${item['sku']}',
-                              style: const TextStyle(fontSize: 10, color: AppColors.outline),
+                              style: TextStyle(fontSize: 10, color: AppColors.outline),
                             ),
                           ],
                         ),
@@ -130,16 +130,16 @@ class _InventoryTabState extends State<InventoryTab> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12),
                   const Divider(),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10),
                   // Inventory Breakdown
                   _buildInventoryRow('إجمالي المخزون المادي', '$totalStock وحدة', isBold: true),
                   _buildInventoryRow('الكمية المتوفرة للبيع', '$available وحدة', valueColor: available < 500 ? Colors.orange.shade800 : null),
                   _buildInventoryRow('الكمية المحجوزة للطلبات المعلقة', '$reserved وحدة'),
                   _buildInventoryRow('الحد الأدنى للطلب (MOQ)', '${item['moq']} وحدة'),
                   _buildInventoryRow('وقت التجهيز والشحن', item['prepTime']),
-                  const SizedBox(height: 14),
+                  SizedBox(height: 14),
                   // Action Button
                   SizedBox(
                     width: double.infinity,
@@ -147,7 +147,7 @@ class _InventoryTabState extends State<InventoryTab> {
                     child: OutlinedButton.icon(
                       onPressed: () => _showUpdateStockDialog(context, item),
                       icon: const Icon(Icons.edit_calendar_outlined, size: 16),
-                      label: const Text('تعديل كميات المخزون والمواصفات', style: TextStyle(fontSize: 12)),
+                      label: Text('تعديل كميات المخزون والمواصفات', style: TextStyle(fontSize: 12)),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AppColors.primary,
                         side: const BorderSide(color: AppColors.primary),
@@ -174,7 +174,7 @@ class _InventoryTabState extends State<InventoryTab> {
             label,
             style: TextStyle(
               fontSize: 11,
-              color: isBold ? AppColors.onSurface : AppColors.outline,
+              color: isBold ? Theme.of(context).colorScheme.onSurface : AppColors.outline,
               fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
             ),
           ),
@@ -183,7 +183,7 @@ class _InventoryTabState extends State<InventoryTab> {
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.bold,
-              color: valueColor ?? AppColors.onSurface,
+              color: valueColor ?? Theme.of(context).colorScheme.onSurface,
             ),
           ),
         ],
@@ -200,7 +200,7 @@ class _InventoryTabState extends State<InventoryTab> {
       builder: (ctx) => Directionality(
         textDirection: TextDirection.rtl,
         child: AlertDialog(
-          title: Text('تحديث مخزون ${item['name']}', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold), textAlign: TextAlign.right),
+          title: Text('تحديث مخزون ${item['name']}', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold), textAlign: TextAlign.right),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -213,7 +213,7 @@ class _InventoryTabState extends State<InventoryTab> {
                   border: OutlineInputBorder(),
                 ),
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               TextField(
                 controller: reservedCtrl,
                 keyboardType: TextInputType.number,
@@ -226,7 +226,7 @@ class _InventoryTabState extends State<InventoryTab> {
             ],
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+            TextButton(onPressed: () => Navigator.pop(ctx), child: Text('إلغاء')),
             ElevatedButton(
               onPressed: () {
                 final availVal = int.tryParse(availableCtrl.text.trim());
@@ -246,7 +246,7 @@ class _InventoryTabState extends State<InventoryTab> {
                   );
                 }
               },
-              child: const Text('حفظ التعديلات'),
+              child: Text('حفظ التعديلات'),
             ),
           ],
         ),

@@ -24,7 +24,7 @@ class SearchProductCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
         boxShadow: [
@@ -47,7 +47,7 @@ class SearchProductCard extends StatelessWidget {
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) => Container(
                 height: 180,
-                color: AppColors.surfaceVariant,
+                color: Theme.of(context).colorScheme.surfaceVariant,
                 child: const Icon(Icons.image, color: AppColors.outline, size: 40),
               ),
             ),
@@ -79,25 +79,25 @@ class SearchProductCard extends StatelessWidget {
                     ),
                     Text(
                       title,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.onSurface,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 6),
+                SizedBox(height: 6),
                 
                 // Product code
                 Text(
                   productCode,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     color: AppColors.outline,
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 
                 // View details button
                 SizedBox(
@@ -112,7 +112,7 @@ class SearchProductCard extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       minimumSize: const Size(60, 40),
                     ),
-                    child: const Text(
+                    child: Text(
                       'عرض التفاصيل',
                       style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
                     ),

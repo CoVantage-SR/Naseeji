@@ -50,7 +50,7 @@ class _SearchFilterChipsState extends State<SearchFilterChips> {
                       size: 14,
                       color: isSelected ? Colors.white : AppColors.outline,
                     ),
-                    const SizedBox(width: 6),
+                    SizedBox(width: 6),
                   ],
                   Text(
                     filter['title'] as String,

@@ -17,21 +17,21 @@ class UsageLimitsScreen extends ConsumerWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
-          title: const Text(
+          title: Text(
             'تفاصيل استهلاك الموارد',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.onSurface),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
           ),
           centerTitle: true,
         ),
         body: Material(
           color: Theme.of(context).scaffoldBackgroundColor,
           child: subAsync.when(
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => Center(child: CircularProgressIndicator()),
             error: (e, _) => Center(child: Text('خطأ: $e')),
             data: (sub) => usageAsync.when(
-              loading: () => const Center(child: CircularProgressIndicator()),
+              loading: () => Center(child: CircularProgressIndicator()),
               error: (e, _) => Center(child: Text('خطأ: $e')),
               data: (usage) {
                 // Hardcode starter capacity limits as standard for Starter plan
@@ -51,12 +51,12 @@ class UsageLimitsScreen extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      const Text(
+                      Text(
                         'مؤشر الطاقة الاستيعابية والحدود الحالية للمنشأة',
-                        style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant),
+                        style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
                         textAlign: TextAlign.right,
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
 
                       UsageProgressCard(
                         title: 'كتالوج المنتجات وخامات النسيج المضافة',

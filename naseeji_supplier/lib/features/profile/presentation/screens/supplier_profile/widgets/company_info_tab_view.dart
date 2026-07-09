@@ -14,15 +14,15 @@ class CompanyInfoTabView extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: const Color(0xFFE2E1EF)),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            const Text('المعلومات القانونية والتجارية للمنشأة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF0040E0))),
-            const SizedBox(height: 12),
+            Text('المعلومات القانونية والتجارية للمنشأة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF0040E0))),
+            SizedBox(height: 12),
             _buildRowItem('الاسم التجاري المعتمد', profile.companyName),
             _buildRowItem('رقم السجل التجاري (CR)', '1010998822 (نشط)'),
             _buildRowItem('رقم التسجيل الضريبي (VAT)', '300998877110003'),
@@ -46,9 +46,9 @@ class CompanyInfoTabView extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Expanded(child: Text(value, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold), textAlign: TextAlign.left)),
-          const SizedBox(width: 10),
-          Text('$label:', style: const TextStyle(fontSize: 10, color: AppColors.outline)),
+          Expanded(child: Text(value, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold), textAlign: TextAlign.left)),
+          SizedBox(width: 10),
+          Text('$label:', style: TextStyle(fontSize: 10, color: AppColors.outline)),
         ],
       ),
     );

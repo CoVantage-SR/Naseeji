@@ -105,7 +105,7 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
                     subscription: sub,
                     onDetailsTap: () => context.push('/products/usage'),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12),
 
                   // Grid of usage progress
                   GridView(
@@ -144,7 +144,7 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12),
 
                   // Quick Actions Row
                   SingleChildScrollView(
@@ -153,9 +153,9 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         _buildActionButton(context, 'تفاصيل الاستهلاك', Icons.info_outline, () => context.push('/products/usage')),
-                        const SizedBox(width: 8),
+                        SizedBox(width: 8),
                         _buildActionButton(context, 'شراء ملحقات', Icons.add_shopping_cart, () => context.push('/subscription/addons')),
-                        const SizedBox(width: 8),
+                        SizedBox(width: 8),
                         _buildActionButton(context, 'تجديد الاشتراك', Icons.autorenew, () async {
                           await ref.read(activeSubscriptionControllerProvider.notifier).renew();
                           if (context.mounted) {
@@ -164,7 +164,7 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
                             );
                           }
                         }),
-                        const SizedBox(width: 8),
+                        SizedBox(width: 8),
                         _buildActionButton(context, 'ترقية الباقة', Icons.upgrade, () => context.push('/subscription/plans')),
                       ],
                     ),
@@ -182,7 +182,7 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
     return ElevatedButton.icon(
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         foregroundColor: const Color(0xFF0040E0),
         elevation: 0.5,
         minimumSize: const Size(110, 36),
@@ -193,7 +193,7 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       ),
       icon: Icon(icon, size: 14),
-      label: Text(label, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
+      label: Text(label, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
     );
   }
 
@@ -232,7 +232,7 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
             icon: Icon(isLimitReached ? Icons.upgrade : Icons.add),
             label: Text(
               isLimitReached ? 'ترقية الباقة (تم بلوغ الحد)' : 'إضافة منتج جديد',
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
             ),
           );
         },
@@ -261,25 +261,25 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
 
               // Search and Category filter row
               Container(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 child: Row(
                   children: [
                     Expanded(
                       child: Container(
                         decoration: BoxDecoration(
-                          color: AppColors.surfaceContainerLow,
+                          color: Theme.of(context).colorScheme.surfaceContainerLow,
                           borderRadius: BorderRadius.circular(28),
                         ),
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: Row(
                           children: [
                             const Icon(Icons.search, color: AppColors.outline),
-                            const SizedBox(width: 8),
+                            SizedBox(width: 8),
                             Expanded(
                               child: TextField(
                                 controller: _searchController,
-                                style: const TextStyle(fontSize: 13),
+                                style: TextStyle(fontSize: 13),
                                 decoration: const InputDecoration(
                                   hintText: 'البحث باسم المنتج أو الرمز...',
                                   border: InputBorder.none,
@@ -296,18 +296,18 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     // Category Dropdown
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
                       decoration: BoxDecoration(
-                        color: AppColors.surfaceContainerLow,
+                        color: Theme.of(context).colorScheme.surfaceContainerLow,
                         borderRadius: BorderRadius.circular(28),
                       ),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
                           value: _selectedCategory,
-                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                           icon: const Icon(Icons.keyboard_arrow_down, size: 18),
                           items: ['الكل', 'أقمشة', 'خيوط']
                               .map((c) => DropdownMenuItem(value: c, child: Text(c)))
@@ -328,7 +328,7 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
                   children: [
                     Text(
                       'إجمالي المنتجات: ${filtered.length}',
-                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.outline),
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.outline),
                     ),
                     const Spacer(),
                     TextButton.icon(
@@ -341,7 +341,7 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
                       icon: Icon(_isBulkActionActive ? Icons.close : Icons.playlist_add_check, size: 18),
                       label: Text(
                         _isBulkActionActive ? 'إلغاء التحديد' : 'تحديد متعدد',
-                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],
@@ -349,7 +349,7 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
               ),
               // Product List
               filtered.isEmpty
-                  ? const Center(
+                  ? Center(
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: 40.0),
                         child: Column(
@@ -367,7 +367,7 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
                       physics: const NeverScrollableScrollPhysics(),
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       itemCount: filtered.length,
-                      separatorBuilder: (_, __) => const SizedBox(height: 10),
+                      separatorBuilder: (_, __) => SizedBox(height: 10),
                       itemBuilder: (context, index) {
                         final p = filtered[index];
                         final isSelected = _selectedProductIds.contains(p['id']);
@@ -386,7 +386,7 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
                           },
                           child: Container(
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: Theme.of(context).colorScheme.surface,
                               borderRadius: BorderRadius.circular(16),
                               border: Border.all(
                                 color: isSelected ? AppColors.primary : Colors.transparent,
@@ -417,7 +417,7 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
                                     },
                                     activeColor: AppColors.primary,
                                   ),
-                                  const SizedBox(width: 8),
+                                  SizedBox(width: 8),
                                 ],
                                 // Product Image with error fallback
                                 ClipRRect(
@@ -428,14 +428,14 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
                                     height: 60,
                                     fit: BoxFit.cover,
                                     errorBuilder: (_, __, ___) => Container(
-                                      color: AppColors.surfaceContainerLow,
+                                      color: Theme.of(context).colorScheme.surfaceContainerLow,
                                       width: 60,
                                       height: 60,
                                       child: const Icon(Icons.image, color: AppColors.outline),
                                     ),
                                   ),
                                 ),
-                                const SizedBox(width: 12),
+                                SizedBox(width: 12),
                                 // Product Details
                                 Expanded(
                                   child: Column(
@@ -443,16 +443,16 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
                                     children: [
                                       Text(
                                         p['name'],
-                                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.onSurface),
+                                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Theme.of(context).colorScheme.onSurface),
                                       ),
-                                      const SizedBox(height: 4),
+                                      SizedBox(height: 4),
                                       Row(
                                         children: [
                                           Text(
                                             'الرمز: ${p['sku']}',
-                                            style: const TextStyle(fontSize: 10, color: AppColors.outline),
+                                            style: TextStyle(fontSize: 10, color: AppColors.outline),
                                           ),
-                                          const SizedBox(width: 8),
+                                          SizedBox(width: 8),
                                           Container(
                                             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
                                             decoration: BoxDecoration(
@@ -470,14 +470,14 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(height: 4),
+                                      SizedBox(height: 4),
                                       Row(
                                         children: [
                                           Text(
                                             p['price'],
-                                            style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 13, color: AppColors.primary),
+                                            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 13, color: AppColors.primary),
                                           ),
-                                          const SizedBox(width: 10),
+                                          SizedBox(width: 10),
                                           Text(
                                             'المخزون: ${p['stock']}',
                                             style: TextStyle(
@@ -512,13 +512,13 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
               // Floating Bulk Actions Bar
               if (_isBulkActionActive && _selectedProductIds.isNotEmpty)
                 Container(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   child: Row(
                     children: [
                       Text(
                         'تم تحديد ${_selectedProductIds.length} منتجات',
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.primary),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.primary),
                       ),
                       const Spacer(),
                       ElevatedButton.icon(
@@ -538,7 +538,7 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
                           minimumSize: const Size(0, 36),
                         ),
                         icon: const Icon(Icons.delete_outline, size: 16),
-                        label: const Text('حذف المحدد', style: TextStyle(fontSize: 12)),
+                        label: Text('حذف المحدد', style: TextStyle(fontSize: 12)),
                       ),
                     ],
                   ),
@@ -578,11 +578,11 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text('مشاركة المنتج', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-                const SizedBox(height: 16),
+                Text('مشاركة المنتج', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                SizedBox(height: 16),
                 ListTile(
                   leading: const Icon(Icons.link, color: AppColors.primary),
-                  title: const Text('نسخ رابط المنتج'),
+                  title: Text('نسخ رابط المنتج'),
                   onTap: () {
                     Navigator.pop(ctx);
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -592,7 +592,7 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
                 ),
                 ListTile(
                   leading: const Icon(Icons.share, color: Colors.green),
-                  title: const Text('إرسال عبر واتساب للمصانع'),
+                  title: Text('إرسال عبر واتساب للمصانع'),
                   onTap: () => Navigator.pop(ctx),
                 ),
               ],
@@ -604,10 +604,10 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
       showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-          title: const Text('حذف المنتج', textAlign: TextAlign.right),
+          title: Text('حذف المنتج', textAlign: TextAlign.right),
           content: Text('هل أنت متأكد من حذف المنتج "${p['name']}"؟ لا يمكن التراجع عن هذا الإجراء.', textAlign: TextAlign.right),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+            TextButton(onPressed: () => Navigator.pop(ctx), child: Text('إلغاء')),
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
               onPressed: () {
@@ -617,7 +617,7 @@ class _ProductsTabState extends ConsumerState<ProductsTab> {
                   const SnackBar(content: Text('تم حذف المنتج بنجاح.')),
                 );
               },
-              child: const Text('حذف', style: TextStyle(color: Colors.white)),
+              child: Text('حذف', style: TextStyle(color: Colors.white)),
             ),
           ],
         ),

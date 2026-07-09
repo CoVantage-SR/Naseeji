@@ -25,7 +25,7 @@ class SubscriptionSummaryCard extends StatelessWidget {
 
     return Card(
       elevation: 0.5,
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
@@ -62,34 +62,34 @@ class SubscriptionSummaryCard extends StatelessWidget {
                 ),
                 Text(
                   subscription.planName,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.onSurface,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             const Divider(color: AppColors.outlineVariant),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   'التجديد القادم: $expiryStr',
-                  style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+                  style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant),
                 ),
                 Text(
                   'المتبقي: ${subscription.remainingDays} يوم',
-                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                  style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             GestureDetector(
               onTap: onDetailsTap,
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(

@@ -16,7 +16,7 @@ class DetailsTabView extends StatelessWidget {
         children: [
           // Current Status Tracker Header
           _buildStatusProgressHeader(s),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Order details card
           _buildSectionCard(
@@ -31,7 +31,7 @@ class DetailsTabView extends StatelessWidget {
               _buildDetailRow('الرقم المرجعي RFQ', s.rfqNumber, isLink: true),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Carrier details card
           _buildSectionCard(
@@ -52,7 +52,7 @@ class DetailsTabView extends StatelessWidget {
               ],
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Shipping Cost breakdown card
           _buildSectionCard(
@@ -70,7 +70,7 @@ class DetailsTabView extends StatelessWidget {
               _buildDetailRow('حالة الدفعة المالية للشحن', s.status == ShipmentStatus.completed ? 'تم الإفراج والدفع' : 'قيد التعليق اللوجستي المربوط'),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Factory Confirmation Details
           if (s.factoryConfirmation != null)
@@ -85,9 +85,9 @@ class DetailsTabView extends StatelessWidget {
                 _buildDetailRow('ملاحظات الجودة للمستودع', s.factoryConfirmation!.notes),
                 _buildDetailRow('رأي المشتري النهائي', s.factoryConfirmation!.feedback),
                 if (s.factoryConfirmation!.images.isNotEmpty) ...[
-                  const SizedBox(height: 8),
-                  const Text('صور توثيق الاستلام في موقع الفحص:', style: TextStyle(fontSize: 10, color: AppColors.outline)),
-                  const SizedBox(height: 6),
+                  SizedBox(height: 8),
+                  Text('صور توثيق الاستلام في موقع الفحص:', style: TextStyle(fontSize: 10, color: AppColors.outline)),
+                  SizedBox(height: 6),
                   SizedBox(
                     height: 50,
                     child: ListView.builder(
@@ -107,7 +107,7 @@ class DetailsTabView extends StatelessWidget {
                 ],
               ],
             ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Active Reported Issue Card
           if (s.issueReported != null)
@@ -121,13 +121,13 @@ class DetailsTabView extends StatelessWidget {
               child: Row(
                 children: [
                   const Icon(Icons.warning_amber_rounded, color: AppColors.error),
-                  const SizedBox(width: 10),
+                  SizedBox(width: 10),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('تم فتح بلاغ/نزاع لوجستي نشط', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.error)),
-                        const SizedBox(height: 2),
+                        Text('تم فتح بلاغ/نزاع لوجستي نشط', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.error)),
+                        SizedBox(height: 2),
                         Text(s.issueReported!, style: TextStyle(fontSize: 10, color: Colors.red.shade900)),
                       ],
                     ),
@@ -180,8 +180,8 @@ class DetailsTabView extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.all(Radius.circular(16)),
         boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
       ),
@@ -201,20 +201,20 @@ class DetailsTabView extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
             child: LinearProgressIndicator(
               value: s.progress,
               color: statusColor,
-              backgroundColor: AppColors.surfaceContainerLow,
+              backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
               minHeight: 6,
             ),
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           Text(
             'التحديث الأخير: ${s.lastUpdate}',
-            style: const TextStyle(fontSize: 10, color: AppColors.outline, fontStyle: FontStyle.italic),
+            style: TextStyle(fontSize: 10, color: AppColors.outline, fontStyle: FontStyle.italic),
           ),
         ],
       ),
@@ -223,8 +223,8 @@ class DetailsTabView extends StatelessWidget {
 
   Widget _buildSectionCard({required String title, required IconData icon, required List<Widget> children}) {
     return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.all(Radius.circular(16)),
         boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
       ),
@@ -235,16 +235,16 @@ class DetailsTabView extends StatelessWidget {
           Row(
             children: [
               Icon(icon, color: AppColors.primary, size: 20),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Text(
                 title,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.onSurface),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Theme.of(context).colorScheme.onSurface),
               ),
             ],
           ),
-          const SizedBox(height: 12),
-          const Divider(height: 1, color: AppColors.surfaceContainerLow),
-          const SizedBox(height: 8),
+          SizedBox(height: 12),
+          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          SizedBox(height: 8),
           ...children,
         ],
       ),
@@ -252,7 +252,7 @@ class DetailsTabView extends StatelessWidget {
   }
 
   Widget _buildDetailRow(String label, String value, {bool isBold = false, bool isPrimary = false, bool isWarning = false, bool isLink = false}) {
-    Color valueColor = AppColors.onSurface;
+    Color valueColor = Theme.of(context).colorScheme.onSurface;
     if (isPrimary) valueColor = AppColors.primary;
     if (isWarning) valueColor = AppColors.error;
     if (isLink) valueColor = const Color(0xFF0040E0);
@@ -264,7 +264,7 @@ class DetailsTabView extends StatelessWidget {
         children: [
           Text(
             label,
-            style: const TextStyle(fontSize: 11, color: AppColors.outline),
+            style: TextStyle(fontSize: 11, color: AppColors.outline),
           ),
           const Spacer(),
           Text(

@@ -34,7 +34,7 @@ class QuotationVersionCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         boxShadow: const [BoxShadow(color: Color(0x03000000), blurRadius: 8, offset: Offset(0, 2))],
         border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5),
@@ -56,7 +56,7 @@ class QuotationVersionCard extends StatelessWidget {
                 ],
                 Text(
                   'نسخة العرض: ${revision.version}',
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.primary),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.primary),
                 ),
                 const Spacer(),
                 Container(
@@ -73,7 +73,7 @@ class QuotationVersionCard extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: AppColors.surfaceContainerLow),
+          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
 
           // Details grid
           Padding(
@@ -87,21 +87,21 @@ class QuotationVersionCard extends StatelessWidget {
                     _buildInfoColumn('العرض المقابل للمصنع', '${revision.factoryCounterOffer.toStringAsFixed(2)} ر.س'),
                   ],
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 Row(
                   children: [
                     _buildInfoColumn('فرق السعر التفاوضي', '${revision.priceDifference.toStringAsFixed(2)} ر.س'),
                     _buildInfoColumn('تاريخ الإنشاء والتعديل', revision.createdDate),
                   ],
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 Row(
                   children: [
                     _buildInfoColumn('بواسطة', revision.negotiatedBy),
                   ],
                 ),
                 if (revision.reason.isNotEmpty) ...[
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(8),
@@ -113,11 +113,11 @@ class QuotationVersionCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('ملاحظات المراجعة التفاوضية:', style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: AppColors.outline)),
-                        const SizedBox(height: 2),
+                        Text('ملاحظات المراجعة التفاوضية:', style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: AppColors.outline)),
+                        SizedBox(height: 2),
                         Text(
                           revision.reason,
-                          style: const TextStyle(fontSize: 9, color: AppColors.onSurfaceVariant, height: 1.3),
+                          style: TextStyle(fontSize: 9, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.3),
                         ),
                       ],
                     ),
@@ -127,7 +127,7 @@ class QuotationVersionCard extends StatelessWidget {
             ),
           ),
 
-          const Divider(height: 1, color: AppColors.surfaceContainerLow),
+          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
 
           // Actions
           Padding(
@@ -139,20 +139,20 @@ class QuotationVersionCard extends StatelessWidget {
                   TextButton.icon(
                     onPressed: onRestoreDraft,
                     icon: const Icon(Icons.restore_outlined, size: 12),
-                    label: const Text('استعادة كمسودة', style: TextStyle(fontSize: 9)),
+                    label: Text('استعادة كمسودة', style: TextStyle(fontSize: 9)),
                     style: TextButton.styleFrom(foregroundColor: AppColors.outline),
                   ),
                 if (onDuplicate != null)
                   TextButton.icon(
                     onPressed: onDuplicate,
                     icon: const Icon(Icons.copy_outlined, size: 12),
-                    label: const Text('تكرار النسخة', style: TextStyle(fontSize: 9)),
+                    label: Text('تكرار النسخة', style: TextStyle(fontSize: 9)),
                     style: TextButton.styleFrom(foregroundColor: AppColors.primary),
                   ),
                 TextButton.icon(
                   onPressed: onView,
                   icon: const Icon(Icons.visibility_outlined, size: 12),
-                  label: const Text('عرض التفاصيل', style: TextStyle(fontSize: 9)),
+                  label: Text('عرض التفاصيل', style: TextStyle(fontSize: 9)),
                   style: TextButton.styleFrom(foregroundColor: AppColors.primary),
                 ),
               ],
@@ -168,11 +168,11 @@ class QuotationVersionCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: const TextStyle(fontSize: 8, color: AppColors.outline)),
-          const SizedBox(height: 2),
+          Text(label, style: TextStyle(fontSize: 8, color: AppColors.outline)),
+          SizedBox(height: 2),
           Text(
             value,
-            style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+            style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
           ),
         ],
       ),

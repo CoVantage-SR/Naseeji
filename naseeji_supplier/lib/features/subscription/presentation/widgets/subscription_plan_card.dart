@@ -23,7 +23,7 @@ class SubscriptionPlanCard extends StatelessWidget {
 
     return Card(
       elevation: plan.isRecommended ? 4.0 : 0.5,
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: BorderSide(
@@ -40,16 +40,16 @@ class SubscriptionPlanCard extends StatelessWidget {
           // Banner for recommendation
           if (plan.isRecommended)
             Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: Color(0xFF0040E0),
                 borderRadius: BorderRadius.vertical(top: Radius.circular(14)),
               ),
               padding: const EdgeInsets.symmetric(vertical: 4),
               alignment: Alignment.center,
-              child: const Text(
+              child: Text(
                 'الباقة الموصى بها',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   fontSize: 10,
                   fontWeight: FontWeight.bold,
                 ),
@@ -71,7 +71,7 @@ class SubscriptionPlanCard extends StatelessWidget {
                           color: const Color(0xFF006B5F).withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(6),
                         ),
-                        child: const Text(
+                        child: Text(
                           'باقتك الحالية',
                           style: TextStyle(
                             fontSize: 10,
@@ -84,15 +84,15 @@ class SubscriptionPlanCard extends StatelessWidget {
                       const SizedBox.shrink(),
                     Text(
                       plan.name,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.onSurface,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
 
                 // Pricing
                 Row(
@@ -100,24 +100,24 @@ class SubscriptionPlanCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.baseline,
                   textBaseline: TextBaseline.alphabetic,
                   children: [
-                    const Text(
+                    Text(
                       ' / شهرياً',
-                      style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+                      style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
-                    const SizedBox(width: 4),
+                    SizedBox(width: 4),
                     Text(
                       hasPrice ? plan.price.toStringAsFixed(0) : 'مجاناً',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.onSurface,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     if (hasPrice) ...[
-                      const SizedBox(width: 4),
-                      const Text(
+                      SizedBox(width: 4),
+                      Text(
                         'ر.س',
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                       ),
                     ],
                   ],
@@ -125,15 +125,15 @@ class SubscriptionPlanCard extends StatelessWidget {
                 const Divider(height: 24, color: AppColors.outlineVariant),
 
                 // Features lists
-                const Text(
+                Text(
                   'المزايا والحدود المتاحة:',
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.onSurface,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 ...plan.features.map(
                   (feature) => Padding(
                     padding: const EdgeInsets.only(bottom: 6.0),
@@ -143,14 +143,14 @@ class SubscriptionPlanCard extends StatelessWidget {
                         Expanded(
                           child: Text(
                             feature,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 11,
-                              color: AppColors.onSurfaceVariant,
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
                             ),
                             textAlign: TextAlign.right,
                           ),
                         ),
-                        const SizedBox(width: 8),
+                        SizedBox(width: 8),
                         const Icon(
                           Icons.check_circle_outline,
                           size: 14,
@@ -160,7 +160,7 @@ class SubscriptionPlanCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // Buttons
                 if (isCurrentPlan)
@@ -173,12 +173,12 @@ class SubscriptionPlanCard extends StatelessWidget {
                     text: plan.price > 0 ? 'اشتراك / ترقية الباقة' : 'التحويل للباقة المجانية',
                     onPressed: onSelect,
                   ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 SizedBox(
                   width: double.infinity,
                   child: TextButton(
                     onPressed: onCompare,
-                    child: const Text(
+                    child: Text(
                       'مقارنة المزايا بالتفصيل',
                       style: TextStyle(
                         fontSize: 12,

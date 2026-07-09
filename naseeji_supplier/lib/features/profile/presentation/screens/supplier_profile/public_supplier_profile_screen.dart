@@ -43,7 +43,7 @@ class _PublicSupplierProfileScreenState extends ConsumerState<PublicSupplierProf
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: profileAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+        loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
         error: (err, stack) => Center(child: Text('خطأ: $err')),
         data: (profile) {
           return NestedScrollView(
@@ -53,12 +53,12 @@ class _PublicSupplierProfileScreenState extends ConsumerState<PublicSupplierProf
                   expandedHeight: 265,
                   floating: false,
                   pinned: true,
-                  backgroundColor: Colors.white,
+                  backgroundColor: Theme.of(context).colorScheme.surface,
                   elevation: 0.5,
                   title: innerBoxIsScrolled
                       ? Text(
                           profile.companyName,
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: AppColors.primary,
                             fontWeight: FontWeight.bold,
                             fontSize: 13,
@@ -69,7 +69,7 @@ class _PublicSupplierProfileScreenState extends ConsumerState<PublicSupplierProf
                   leading: IconButton(
                     icon: const Icon(
                       Icons.arrow_back_ios_new,
-                      color: AppColors.onSurfaceVariant,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                       size: 25,
                     ),
                     onPressed: () => context.pop(),
@@ -85,9 +85,9 @@ class _PublicSupplierProfileScreenState extends ConsumerState<PublicSupplierProf
                       controller: _tabController,
                       isScrollable: false,
                       labelColor: const Color(0xFF0040E0),
-                      unselectedLabelColor: AppColors.onSurfaceVariant,
+                      unselectedLabelColor: Theme.of(context).colorScheme.onSurfaceVariant,
                       indicatorColor: const Color(0xFF0040E0),
-                      labelStyle: const TextStyle(
+                      labelStyle: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),

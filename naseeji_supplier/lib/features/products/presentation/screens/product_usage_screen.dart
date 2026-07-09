@@ -16,21 +16,21 @@ class ProductUsageScreen extends ConsumerWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
-          title: const Text(
+          title: Text(
             'تفاصيل استهلاك الموارد والحدود B2B',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.onSurface),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
           ),
           centerTitle: true,
         ),
         body: Material(
           color: Theme.of(context).scaffoldBackgroundColor,
           child: subAsync.when(
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => Center(child: CircularProgressIndicator()),
             error: (e, _) => Center(child: Text('خطأ: $e')),
             data: (sub) => usageAsync.when(
-              loading: () => const Center(child: CircularProgressIndicator()),
+              loading: () => Center(child: CircularProgressIndicator()),
               error: (e, _) => Center(child: Text('خطأ: $e')),
               data: (usage) {
                 // Compute standard limits
@@ -52,10 +52,10 @@ class ProductUsageScreen extends ConsumerWidget {
                     children: [
                       Text(
                         'دورة الفوترة الحالية تنتهي بتاريخ: ${sub.expiryDate.year}/${sub.expiryDate.month.toString().padLeft(2, '0')}/${sub.expiryDate.day.toString().padLeft(2, '0')}',
-                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant),
+                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurfaceVariant),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
 
                       SubscriptionUsageCard(
                         title: 'المنتجات وخامات التوريد المضافة',

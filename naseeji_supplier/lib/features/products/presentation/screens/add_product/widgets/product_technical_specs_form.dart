@@ -28,7 +28,7 @@ class _ProductTechnicalSpecsFormState extends ConsumerState<ProductTechnicalSpec
         Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
           ),
@@ -53,9 +53,9 @@ class _ProductTechnicalSpecsFormState extends ConsumerState<ProductTechnicalSpec
                       minimumSize: const Size(60, 40),
                     ),
                     icon: const Icon(Icons.add, size: 16),
-                    label: const Text('إضافة مواصفة جديدة', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                    label: Text('إضافة مواصفة جديدة', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
                   ),
-                  const Expanded(
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -64,28 +64,28 @@ class _ProductTechnicalSpecsFormState extends ConsumerState<ProductTechnicalSpec
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.onSurface,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
                         SizedBox(height: 2),
                         Text(
                           'قم بتعريف الخصائص الفنية الدقيقة لمنتج النسيج لضمان الدقة',
                           textAlign: TextAlign.right,
-                          style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+                          style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant),
                         ),
                       ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
 
               // Specs Rows
               ListView.separated(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: _specs.length,
-                separatorBuilder: (context, index) => const SizedBox(height: 16),
+                separatorBuilder: (context, index) => SizedBox(height: 16),
                 itemBuilder: (context, index) {
                   return Container(
                     padding: const EdgeInsets.all(16),
@@ -104,13 +104,13 @@ class _ProductTechnicalSpecsFormState extends ConsumerState<ProductTechnicalSpec
                             });
                           },
                         ),
-                        const SizedBox(width: 8),
+                        SizedBox(width: 8),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              const Text('القيمة', style: TextStyle(fontSize: 11, color: AppColors.outline)),
-                              const SizedBox(height: 6),
+                              Text('القيمة', style: TextStyle(fontSize: 11, color: AppColors.outline)),
+                              SizedBox(height: 6),
                               TextFormField(
                                 initialValue: _specs[index]['value'],
                                 textAlign: TextAlign.right,
@@ -126,13 +126,13 @@ class _ProductTechnicalSpecsFormState extends ConsumerState<ProductTechnicalSpec
                             ],
                           ),
                         ),
-                        const SizedBox(width: 16),
+                        SizedBox(width: 16),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              const Text('اسم المواصفة', style: TextStyle(fontSize: 11, color: AppColors.outline)),
-                              const SizedBox(height: 6),
+                              Text('اسم المواصفة', style: TextStyle(fontSize: 11, color: AppColors.outline)),
+                              SizedBox(height: 6),
                               TextFormField(
                                 initialValue: _specs[index]['name'],
                                 textAlign: TextAlign.right,
@@ -153,7 +153,7 @@ class _ProductTechnicalSpecsFormState extends ConsumerState<ProductTechnicalSpec
                   );
                 },
               ),
-              const SizedBox(height: 32),
+              SizedBox(height: 32),
 
               // Buttons
               Row(
@@ -174,13 +174,13 @@ class _ProductTechnicalSpecsFormState extends ConsumerState<ProductTechnicalSpec
                         minimumSize: const Size(120, 48),
                       ),
                       icon: const Icon(Icons.arrow_back, size: 18),
-                      label: const Text(
+                      label: Text(
                         'حفظ ومتابعة للتسعير',
                         style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Expanded(
                     flex: 1,
                     child: OutlinedButton.icon(
@@ -188,7 +188,7 @@ class _ProductTechnicalSpecsFormState extends ConsumerState<ProductTechnicalSpec
                         controller.setStep(1);
                       },
                       style: OutlinedButton.styleFrom(
-                        foregroundColor: AppColors.onSurfaceVariant,
+                        foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
                         side: const BorderSide(color: AppColors.outlineVariant),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -197,7 +197,7 @@ class _ProductTechnicalSpecsFormState extends ConsumerState<ProductTechnicalSpec
                         minimumSize: const Size(120, 48),
                       ),
                       icon: const Icon(Icons.arrow_forward, size: 18),
-                      label: const Text(
+                      label: Text(
                         'العودة للسابق',
                         style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                       ),
@@ -208,7 +208,7 @@ class _ProductTechnicalSpecsFormState extends ConsumerState<ProductTechnicalSpec
             ],
           ),
         ),
-        const SizedBox(height: 24),
+        SizedBox(height: 24),
 
         // Info Bento Box
         Row(
@@ -217,24 +217,24 @@ class _ProductTechnicalSpecsFormState extends ConsumerState<ProductTechnicalSpec
               child: Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                 ),
                 child: Column(
                   children: [
                     const Icon(Icons.speed, color: AppColors.primary, size: 32),
-                    const SizedBox(height: 8),
-                    const Text(
+                    SizedBox(height: 8),
+                    Text(
                       'دقة البيانات',
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     ),
-                    const SizedBox(height: 4),
-                    const Text('98% مكتملة', style: TextStyle(fontSize: 11, color: AppColors.outline)),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 4),
+                    Text('98% مكتملة', style: TextStyle(fontSize: 11, color: AppColors.outline)),
+                    SizedBox(height: 8),
                     LinearProgressIndicator(
                       value: 0.98,
-                      backgroundColor: AppColors.surfaceContainerHighest,
+                      backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
                       color: AppColors.primary,
                       borderRadius: BorderRadius.circular(4),
                     ),
@@ -242,7 +242,7 @@ class _ProductTechnicalSpecsFormState extends ConsumerState<ProductTechnicalSpec
                 ),
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
             Expanded(
               flex: 2,
               child: Container(
@@ -252,7 +252,7 @@ class _ProductTechnicalSpecsFormState extends ConsumerState<ProductTechnicalSpec
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.2)),
                 ),
-                child: const Row(
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
@@ -267,7 +267,7 @@ class _ProductTechnicalSpecsFormState extends ConsumerState<ProductTechnicalSpec
                           Text(
                             'المواصفات التقنية الدقيقة تسمح لمحرك الذكاء الاصطناعي في المصانع بضبط آلات النسيج تلقائياً، مما يقلل الهدر بنسبة 15%.',
                             textAlign: TextAlign.right,
-                            style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant, height: 1.4),
+                            style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.4),
                           ),
                         ],
                       ),

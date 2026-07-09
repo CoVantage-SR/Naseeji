@@ -18,45 +18,45 @@ class OverviewTabView extends StatelessWidget {
           Row(
             children: [
               Expanded(child: _buildMetricCard('نسبة الرد السريع', '98%', Icons.bolt_outlined, Colors.orange)),
-              const SizedBox(width: 10),
+              SizedBox(width: 10),
               Expanded(child: _buildMetricCard('التوصيل في الموعد', '95%', Icons.local_shipping_outlined, Colors.green)),
             ],
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           Row(
             children: [
               Expanded(child: _buildMetricCard('المنتجات المفعلة', '${profile.productsCount}', Icons.inventory_2_outlined, const Color(0xFF0040E0))),
-              const SizedBox(width: 10),
+              SizedBox(width: 10),
               Expanded(child: _buildMetricCard('الطلبات المكتملة', '${profile.ordersCount}', Icons.done_all_outlined, const Color(0xFF006B5F))),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
 
-          const Text('نبذة عن أعمال الشركة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 8),
-          const Text(
+          Text('نبذة عن أعمال الشركة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 8),
+          Text(
             'نحن مصنع متخصص في تصنيع خامات الأقمشة والقطن الممتاز عالي الجودة لتلبية احتياجات مصانع الملابس الجاهزة وشركات النسيج B2B في الشرق الأوسط.',
-            style: TextStyle(fontSize: 11, height: 1.4, color: AppColors.onSurfaceVariant),
+            style: TextStyle(fontSize: 11, height: 1.4, color: Theme.of(context).colorScheme.onSurfaceVariant),
             textAlign: TextAlign.end,
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
 
-          const Text('أوسمة الجودة والاعتمادات', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 12),
+          Text('أوسمة الجودة والاعتمادات', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               _buildAchievementBadge('Top Supplier', Colors.orange),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               _buildAchievementBadge('Verified Business', Colors.blue),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               _buildAchievementBadge('ISO Certified', Colors.green),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
 
-          const Text('أحدث نشاطات الشركة الموثقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 12),
+          Text('أحدث نشاطات الشركة الموثقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 12),
           const RecentActivityTimeline(),
         ],
       ),
@@ -66,7 +66,7 @@ class OverviewTabView extends StatelessWidget {
   Widget _buildMetricCard(String label, String val, IconData icon, Color color) {
     return Container(
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12), border: Border.all(color: const Color(0xFFE2E1EF))),
+      decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface, borderRadius: BorderRadius.circular(12), border: Border.all(color: const Color(0xFFE2E1EF))),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -74,8 +74,8 @@ class OverviewTabView extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(val, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-              Text(label, style: const TextStyle(fontSize: 9, color: AppColors.outline)),
+              Text(val, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+              Text(label, style: TextStyle(fontSize: 9, color: AppColors.outline)),
             ],
           ),
         ],

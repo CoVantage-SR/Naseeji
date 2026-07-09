@@ -32,37 +32,37 @@ class ProfileInfoBlock extends StatelessWidget {
                   children: [
                     Text(
                       '$rating / 5.0',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF00796B),
                       ),
                     ),
-                    const SizedBox(width: 4),
+                    SizedBox(width: 4),
                     const Icon(Icons.star, color: Color(0xFF00796B), size: 14),
                   ],
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Text(
                 companyName,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.onSurface,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 4),
-          const Text(
+          SizedBox(height: 4),
+          Text(
             'مؤسسة نسيجي للمنسوجات الفاخرة',
             style: TextStyle(
               fontSize: 13,
-              color: AppColors.onSurfaceVariant,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
 
           // Action buttons row
           Row(
@@ -73,30 +73,30 @@ class ProfileInfoBlock extends StatelessWidget {
                   border: Border.all(color: AppColors.outlineVariant),
                 ),
                 child: IconButton(
-                  icon: const Icon(Icons.share_outlined, color: AppColors.onSurfaceVariant, size: 20),
+                  icon: const Icon(Icons.share_outlined, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
                   onPressed: () {},
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Expanded(
                 child: OutlinedButton.icon(
                   onPressed: () {},
                   icon: const Icon(Icons.settings_outlined, size: 18),
-                  label: const Text('الإعدادات'),
+                  label: Text('الإعدادات'),
                   style: OutlinedButton.styleFrom(
-                    foregroundColor: AppColors.onSurfaceVariant,
+                    foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
                     side: const BorderSide(color: AppColors.outlineVariant),
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
                   ),
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Expanded(
                 child: ElevatedButton.icon(
                   onPressed: () {},
                   icon: const Icon(Icons.edit, size: 18, color: Colors.white),
-                  label: const Text('تعديل الملف', style: TextStyle(color: Colors.white)),
+                  label: Text('تعديل الملف', style: TextStyle(color: Colors.white)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     padding: const EdgeInsets.symmetric(vertical: 12),

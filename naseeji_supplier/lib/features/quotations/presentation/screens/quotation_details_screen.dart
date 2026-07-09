@@ -22,36 +22,36 @@ class QuotationDetailsScreen extends ConsumerWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: stateAsync.when(
-        loading: () => const Scaffold(body: Center(child: CircularProgressIndicator(color: AppColors.primary))),
+        loading: () => Scaffold(body: Center(child: CircularProgressIndicator(color: AppColors.primary))),
         error: (e, _) => Scaffold(body: Center(child: Text('خطأ في التحميل: $e'))),
         data: (quotations) {
           final index = quotations.indexWhere((q) => q.id == quotationId);
           if (index == -1) {
-            return const Scaffold(body: Center(child: Text('عرض السعر غير موجود')));
+            return Scaffold(body: Center(child: Text('عرض السعر غير موجود')));
           }
           final q = quotations[index];
 
           return Scaffold(
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             appBar: AppBar(
-              backgroundColor: Colors.white,
+              backgroundColor: Theme.of(context).colorScheme.surface,
               elevation: 0.5,
               centerTitle: true,
               title: Column(
                 children: [
                   Text(
                     'تفاصيل عرض السعر ${q.id}',
-                    style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
+                    style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
                   ),
-                  const SizedBox(height: 2),
+                  SizedBox(height: 2),
                   Text(
                     'RFQ: ${q.rfqNumber} • النسخة: v${q.version}',
-                    style: const TextStyle(color: AppColors.outline, fontSize: 9),
+                    style: TextStyle(color: AppColors.outline, fontSize: 9),
                   ),
                 ],
               ),
               leading: IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+                icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
                 onPressed: () => context.pop(),
               ),
             ),
@@ -60,15 +60,15 @@ class QuotationDetailsScreen extends ConsumerWidget {
               children: [
                 // Status card
                 QuotationStatusCard(quotation: q),
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
                 
                 // Stepped progress widget
                 QuotationProgressWidget(quotation: q),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // Navigation Shortcuts to associated sub-modules
                 _buildNavigationRow(context, q),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // 2. Quotation Metadata
                 _buildSectionCard(
@@ -85,7 +85,7 @@ class QuotationDetailsScreen extends ConsumerWidget {
                     _buildDetailRow('نوع التسعير والعرض', q.incoterms != null ? 'عقد توريد دولي (شروط ${q.incoterms})' : 'عقد توريد محلي'),
                   ],
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // 3. Factory Details
                 _buildSectionCard(
@@ -97,21 +97,21 @@ class QuotationDetailsScreen extends ConsumerWidget {
                         CircleAvatar(
                           radius: 18,
                           backgroundColor: Color(q.factoryInfo.logoBgColorValue),
-                          child: Text(q.factoryInfo.logoText, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 11)),
+                          child: Text(q.factoryInfo.logoText, style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.bold, fontSize: 11)),
                         ),
-                        const SizedBox(width: 10),
+                        SizedBox(width: 10),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
-                                  Text(q.factoryInfo.factoryName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                                  const SizedBox(width: 4),
+                                  Text(q.factoryInfo.factoryName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                                  SizedBox(width: 4),
                                   const Icon(Icons.verified, color: Colors.blue, size: 14),
                                 ],
                               ),
-                              Text('الممثل المعتمد: ${q.factoryInfo.contactPerson} • تقييم المشتري: ${q.factoryInfo.rating} ★', style: const TextStyle(fontSize: 9, color: AppColors.outline)),
+                              Text('الممثل المعتمد: ${q.factoryInfo.contactPerson} • تقييم المشتري: ${q.factoryInfo.rating} ★', style: TextStyle(fontSize: 9, color: AppColors.outline)),
                             ],
                           ),
                         ),
@@ -123,7 +123,7 @@ class QuotationDetailsScreen extends ConsumerWidget {
                     _buildDetailRow('عنوان التسليم المستهدف', q.factoryInfo.address),
                   ],
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // 4. Product Details
                 _buildSectionCard(
@@ -141,16 +141,16 @@ class QuotationDetailsScreen extends ConsumerWidget {
                             image: DecorationImage(image: NetworkImage(q.productImageUrl), fit: BoxFit.cover),
                           ),
                         ),
-                        const SizedBox(width: 12),
+                        SizedBox(width: 12),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(q.productName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                              const SizedBox(height: 2),
-                              Text('SKU: ${q.productSku} • التصنيف: ${q.productCategory}', style: const TextStyle(fontSize: 9, color: AppColors.outline)),
-                              const SizedBox(height: 2),
-                              Text('بلد المنشأ: ${q.countryOfOrigin}', style: const TextStyle(fontSize: 9, color: AppColors.outline)),
+                              Text(q.productName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                              SizedBox(height: 2),
+                              Text('SKU: ${q.productSku} • التصنيف: ${q.productCategory}', style: TextStyle(fontSize: 9, color: AppColors.outline)),
+                              SizedBox(height: 2),
+                              Text('بلد المنشأ: ${q.countryOfOrigin}', style: TextStyle(fontSize: 9, color: AppColors.outline)),
                             ],
                           ),
                         ),
@@ -164,11 +164,11 @@ class QuotationDetailsScreen extends ConsumerWidget {
                     _buildDetailRow('الكمية المعروضة الكلية', '${q.quantity.toInt()} ${q.unit}', isBold: true),
                   ],
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // 5. Pricing Breakdown
                 QuotationPriceCard(quotation: q),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // 6. Payment Terms
                 _buildSectionCard(
@@ -183,7 +183,7 @@ class QuotationDetailsScreen extends ConsumerWidget {
                     _buildDetailRow('مدة التسوية والتسليم المالي', q.settlementTime),
                   ],
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // 7. Delivery Terms
                 _buildSectionCard(
@@ -198,7 +198,7 @@ class QuotationDetailsScreen extends ConsumerWidget {
                     if (q.incoterms != null) _buildDetailRow('مصطلحات الشحن الدولية (Incoterms)', q.incoterms!),
                   ],
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // 8. Attachments
                 _buildSectionCard(
@@ -247,7 +247,7 @@ class QuotationDetailsScreen extends ConsumerWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30),
               ],
             ),
             bottomNavigationBar: QuotationActionButtons(
@@ -293,10 +293,10 @@ class QuotationDetailsScreen extends ConsumerWidget {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: const Text('سبب الرفض المعتمد', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-                    content: Text(q.rejectionReason ?? 'لم يتم تحديد سبب الرفض.', style: const TextStyle(fontSize: 12)),
+                    title: Text('سبب الرفض المعتمد', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                    content: Text(q.rejectionReason ?? 'لم يتم تحديد سبب الرفض.', style: TextStyle(fontSize: 12)),
                     actions: [
-                      TextButton(onPressed: () => Navigator.pop(context), child: const Text('إغلاق')),
+                      TextButton(onPressed: () => Navigator.pop(context), child: Text('إغلاق')),
                     ],
                   ),
                 );
@@ -330,14 +330,14 @@ class QuotationDetailsScreen extends ConsumerWidget {
           icon: Icons.compare_arrows_outlined, 
           path: '/quotations/comparison/${q.id}',
         ),
-        const SizedBox(width: 8),
+        SizedBox(width: 8),
         _buildNavButton(
           context, 
           label: 'إصدارات ومراجعات العرض', 
           icon: Icons.history_edu_outlined, 
           path: '/quotations/versions/${q.id}',
         ),
-        const SizedBox(width: 8),
+        SizedBox(width: 8),
         _buildNavButton(
           context, 
           label: 'سجل الأحداث والخط الزمني', 
@@ -353,7 +353,7 @@ class QuotationDetailsScreen extends ConsumerWidget {
       child: Container(
         height: 54,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.01), blurRadius: 4)],
         ),
@@ -364,8 +364,8 @@ class QuotationDetailsScreen extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(icon, color: AppColors.primary, size: 18),
-              const SizedBox(height: 4),
-              Text(label, textAlign: TextAlign.center, style: const TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
+              SizedBox(height: 4),
+              Text(label, textAlign: TextAlign.center, style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
             ],
           ),
         ),
@@ -376,7 +376,7 @@ class QuotationDetailsScreen extends ConsumerWidget {
   Widget _buildSectionCard({required String title, required IconData icon, required List<Widget> children}) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.all(Radius.circular(16)),
         boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
       ),
@@ -387,16 +387,16 @@ class QuotationDetailsScreen extends ConsumerWidget {
           Row(
             children: [
               Icon(icon, color: AppColors.primary, size: 18),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Text(
                 title,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.onSurface),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Theme.of(context).colorScheme.onSurface),
               ),
             ],
           ),
-          const SizedBox(height: 10),
-          const Divider(height: 1, color: AppColors.surfaceContainerLow),
-          const SizedBox(height: 8),
+          SizedBox(height: 10),
+          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          SizedBox(height: 8),
           ...children,
         ],
       ),
@@ -404,7 +404,7 @@ class QuotationDetailsScreen extends ConsumerWidget {
   }
 
   Widget _buildDetailRow(String label, String value, {bool isBold = false, bool isPrimary = false, bool isWarning = false}) {
-    Color valueColor = AppColors.onSurface;
+    Color valueColor = Theme.of(context).colorScheme.onSurface;
     if (isPrimary) valueColor = AppColors.primary;
     if (isWarning) valueColor = AppColors.error;
 
@@ -417,7 +417,7 @@ class QuotationDetailsScreen extends ConsumerWidget {
             flex: 2,
             child: Text(
               label,
-              style: const TextStyle(fontSize: 10, color: AppColors.outline),
+              style: TextStyle(fontSize: 10, color: AppColors.outline),
             ),
           ),
           Expanded(
@@ -441,7 +441,7 @@ class QuotationDetailsScreen extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(filename, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+        title: Text(filename, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
         content: Container(
           width: 300,
           height: 250,
@@ -450,15 +450,15 @@ class QuotationDetailsScreen extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Icon(Icons.description, size: 48, color: AppColors.primary),
-              const SizedBox(height: 16),
-              const Text('معاينة مستندات نسيجي اللوجستية المعتمدة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-              const SizedBox(height: 8),
-              Text('اسم الملف: $filename', style: const TextStyle(fontSize: 10, color: AppColors.outline)),
+              SizedBox(height: 16),
+              Text('معاينة مستندات نسيجي اللوجستية المعتمدة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+              SizedBox(height: 8),
+              Text('اسم الملف: $filename', style: TextStyle(fontSize: 10, color: AppColors.outline)),
             ],
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('إغلاق')),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text('إغلاق')),
         ],
       ),
     );
@@ -483,7 +483,7 @@ class QuotationDetailsScreen extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('تقديم عرض مقابل جديد للمصنع', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+        title: Text('تقديم عرض مقابل جديد للمصنع', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -496,7 +496,7 @@ class QuotationDetailsScreen extends ConsumerWidget {
                 border: OutlineInputBorder(),
               ),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             TextField(
               controller: notesController,
               decoration: const InputDecoration(
@@ -509,7 +509,7 @@ class QuotationDetailsScreen extends ConsumerWidget {
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('إلغاء')),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text('إلغاء')),
           ElevatedButton(
             onPressed: () {
               final price = double.tryParse(priceController.text);
@@ -522,7 +522,7 @@ class QuotationDetailsScreen extends ConsumerWidget {
               }
             },
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
-            child: const Text('إرسال السعر', style: TextStyle(color: Colors.white)),
+            child: Text('إرسال السعر', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),

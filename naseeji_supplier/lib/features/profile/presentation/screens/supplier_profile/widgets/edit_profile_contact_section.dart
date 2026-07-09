@@ -23,25 +23,25 @@ class EditProfileContactSection extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('بيانات الاتصال والتواصل', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 12),
+          Text('بيانات الاتصال والتواصل', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 12),
           _buildTextField('مسؤول التواصل الرئيسي', contactPersonController),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildTextField('رقم الهاتف الرسمي للتواصل *', phoneController, isRequired: true, keyboardType: TextInputType.phone),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildTextField('رقم الواتساب للطلبات العاجلة', whatsappController, keyboardType: TextInputType.phone),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildTextField('البريد الإلكتروني المعتمد *', emailController, isRequired: true, keyboardType: TextInputType.emailAddress, isEmail: true),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildTextField('الموقع الإلكتروني للمنشأة', websiteController, isUrl: true),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildTextField('أوقات وساعات العمل الرسمية', businessHoursController),
         ],
       ),
@@ -87,7 +87,7 @@ class EditProfileContactSection extends StatelessWidget {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
           contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         ),
-        style: const TextStyle(fontSize: 12),
+        style: TextStyle(fontSize: 12),
       ),
     );
   }

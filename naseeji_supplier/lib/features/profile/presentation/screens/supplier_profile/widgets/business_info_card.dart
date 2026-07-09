@@ -12,22 +12,22 @@ class BusinessInfoCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text(
+          Text(
             'معلومات العمل',
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.bold,
-              color: AppColors.onSurface,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Location
           Row(
@@ -37,29 +37,29 @@ class BusinessInfoCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    const Text(
+                    Text(
                       'الموقع',
                       style: TextStyle(fontSize: 11, color: AppColors.outline),
                     ),
                     Text(
                       location,
                       textAlign: TextAlign.right,
-                      style: const TextStyle(fontSize: 13, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurface),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               _buildIconWrapper(Icons.location_on_outlined),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Experience
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const Expanded(
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -70,16 +70,16 @@ class BusinessInfoCard extends StatelessWidget {
                     Text(
                       '15 عاماً في قطاع النسيج',
                       textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 13, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurface),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               _buildIconWrapper(Icons.history),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Categories
           Row(
@@ -90,25 +90,25 @@ class BusinessInfoCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    const Text(
+                    Text(
                       'الفئات',
                       style: TextStyle(fontSize: 11, color: AppColors.outline),
                     ),
-                    const SizedBox(height: 6),
+                    SizedBox(height: 6),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         _buildTag('ألياف ذكية'),
-                        const SizedBox(width: 6),
+                        SizedBox(width: 6),
                         _buildTag('قطن طبيعي'),
-                        const SizedBox(width: 6),
+                        SizedBox(width: 6),
                         _buildTag('حرير'),
                       ],
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               _buildIconWrapper(Icons.category_outlined),
             ],
           ),
@@ -137,7 +137,7 @@ class BusinessInfoCard extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+        style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant),
       ),
     );
   }

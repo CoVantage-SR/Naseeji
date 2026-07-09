@@ -38,21 +38,21 @@ class TrackingTransitStep extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: 12),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 title,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: completed ? AppColors.onSurface : AppColors.outline),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: completed ? Theme.of(context).colorScheme.onSurface : AppColors.outline),
               ),
-              const SizedBox(height: 2),
-              Text(desc, style: const TextStyle(fontSize: 9, color: AppColors.outline)),
+              SizedBox(height: 2),
+              Text(desc, style: TextStyle(fontSize: 9, color: AppColors.outline)),
             ],
           ),
         ),
-        Text(time, style: const TextStyle(fontSize: 9, color: AppColors.outline)),
+        Text(time, style: TextStyle(fontSize: 9, color: AppColors.outline)),
       ],
     );
   }

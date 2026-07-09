@@ -16,7 +16,7 @@ class LatestTextilesSection extends StatelessWidget {
             children: [
               TextButton(
                 onPressed: () {},
-                child: const Text(
+                child: Text(
                   'عرض الكل',
                   style: TextStyle(
                     fontSize: 13,
@@ -25,18 +25,18 @@ class LatestTextilesSection extends StatelessWidget {
                   ),
                 ),
               ),
-              const Text(
+              Text(
                 'أحدث المنسوجات والابتكارات',
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.onSurface,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
             ],
           ),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 12),
         SizedBox(
           height: 220,
           child: ListView(
@@ -49,7 +49,7 @@ class LatestTextilesSection extends StatelessWidget {
                 title: 'ألياف كربونية مرنة',
                 subtitle: 'مثالي للملابس الرياضية الذكية',
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               _buildProductCard(
                 imageUrl: 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=250',
                 title: 'قطن مصري مميز',
@@ -70,7 +70,7 @@ class LatestTextilesSection extends StatelessWidget {
     return Container(
       width: 180,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
       ),
@@ -93,19 +93,19 @@ class LatestTextilesSection extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.onSurface,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Text(
                   subtitle,
                   textAlign: TextAlign.right,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 11,
-                    color: AppColors.onSurfaceVariant,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
               ],

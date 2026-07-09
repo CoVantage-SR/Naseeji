@@ -14,7 +14,7 @@ class StatsMetricsSection extends StatelessWidget {
           percentageValue: 0.98,
           percentageString: '98%',
           accentColor: Colors.blue,
-          trailingWidget: const Row(
+          trailingWidget: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(Icons.arrow_upward, size: 12, color: Colors.green),
@@ -26,7 +26,7 @@ class StatsMetricsSection extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 12),
 
         // On-time delivery
         _buildMetricCard(
@@ -34,7 +34,7 @@ class StatsMetricsSection extends StatelessWidget {
           percentageValue: 0.95,
           percentageString: '95%',
           accentColor: Colors.green,
-          trailingWidget: const Row(
+          trailingWidget: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(Icons.check, size: 12, color: Colors.green),
@@ -46,23 +46,23 @@ class StatsMetricsSection extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 12),
 
         // Customer Satisfaction rating
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 16),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
           ),
-          child: const Column(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
                 'رضا العملاء',
-                style: TextStyle(fontSize: 13, color: AppColors.onSurfaceVariant),
+                style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
               SizedBox(height: 8),
               Row(
@@ -92,7 +92,7 @@ class StatsMetricsSection extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.onSurface,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                 ],
@@ -115,7 +115,7 @@ class StatsMetricsSection extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
       ),
@@ -128,23 +128,23 @@ class StatsMetricsSection extends StatelessWidget {
               trailingWidget,
               Text(
                 title,
-                style: const TextStyle(fontSize: 13, color: AppColors.onSurfaceVariant),
+                style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 percentageString,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.onSurface,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: 16),
               Expanded(
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(4),

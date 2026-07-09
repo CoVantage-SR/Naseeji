@@ -39,21 +39,21 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
           centerTitle: true,
           title: Text(
             'سجل التغييرات والتفاوض لعرض ${widget.quotationId}',
-            style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
+            style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
           ),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+            icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
             onPressed: () => context.pop(),
           ),
           bottom: TabBar(
             controller: _tabController,
             labelColor: AppColors.primary,
-            unselectedLabelColor: AppColors.onSurfaceVariant,
+            unselectedLabelColor: Theme.of(context).colorScheme.onSurfaceVariant,
             indicatorColor: AppColors.primary,
             tabs: const [
               Tab(text: 'الخط الزمني للعمليات'),
@@ -62,12 +62,12 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
           ),
         ),
         body: stateAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (e, _) => Center(child: Text('خطأ: $e')),
           data: (quotations) {
             final index = quotations.indexWhere((q) => q.id == widget.quotationId);
             if (index == -1) {
-              return const Center(child: Text('عرض السعر غير موجود'));
+              return Center(child: Text('عرض السعر غير موجود'));
             }
             final q = quotations[index];
 
@@ -127,7 +127,7 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: const [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
         border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5),
@@ -140,7 +140,7 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
             children: [
               Text(
                 'نسخة العرض: ${rev.version}',
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.primary),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.primary),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -155,9 +155,9 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
               ),
             ],
           ),
-          const SizedBox(height: 12),
-          const Divider(height: 1, color: AppColors.surfaceContainerLow),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
+          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          SizedBox(height: 12),
 
           Row(
             children: [
@@ -166,12 +166,12 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
               _buildMetricColumn('الفارق المالي الفعلي', '${rev.priceDifference.toStringAsFixed(2)} ر.س', isWarning: rev.priceDifference > 0),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
 
           _buildRow('تاريخ المراجعة', rev.createdDate),
           _buildRow('تم التفاوض بواسطة', rev.negotiatedBy),
           if (rev.reason.isNotEmpty) ...[
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
@@ -180,14 +180,14 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
               ),
               child: Text(
                 rev.reason,
-                style: const TextStyle(fontSize: 9, color: AppColors.onSurfaceVariant, height: 1.4),
+                style: TextStyle(fontSize: 9, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.4),
               ),
             ),
           ],
           
-          const SizedBox(height: 12),
-          const Divider(height: 1, color: AppColors.surfaceContainerLow),
-          const SizedBox(height: 8),
+          SizedBox(height: 12),
+          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          SizedBox(height: 8),
           
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -199,9 +199,9 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 ),
-                child: const Text('قارن مع إصدار آخر', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: AppColors.primary)),
+                child: Text('قارن مع إصدار آخر', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: AppColors.primary)),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               ElevatedButton(
                 onPressed: () => _showRevisionDetailsDialog(context, rev),
                 style: ElevatedButton.styleFrom(
@@ -210,7 +210,7 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   elevation: 0,
                 ),
-                child: const Text('عرض التفاصيل', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.white)),
+                child: Text('عرض التفاصيل', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.white)),
               ),
             ],
           ),
@@ -224,14 +224,14 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: const TextStyle(fontSize: 8, color: AppColors.outline)),
-          const SizedBox(height: 4),
+          Text(label, style: TextStyle(fontSize: 8, color: AppColors.outline)),
+          SizedBox(height: 4),
           Text(
             value,
             style: TextStyle(
               fontSize: 10, 
               fontWeight: FontWeight.bold, 
-              color: isWarning ? AppColors.error : AppColors.onSurface,
+              color: isWarning ? AppColors.error : Theme.of(context).colorScheme.onSurface,
             ),
           ),
         ],
@@ -245,8 +245,8 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(fontSize: 9, color: AppColors.outline)),
-          Text(value, style: const TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
+          Text(label, style: TextStyle(fontSize: 9, color: AppColors.outline)),
+          Text(value, style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
         ],
       ),
     );
@@ -256,7 +256,7 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('تفاصيل مراجعة العرض ${rev.version}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+        title: Text('تفاصيل مراجعة العرض ${rev.version}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -267,14 +267,14 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
             _buildDialogRow('تاريخ المراجعة الفعلي', rev.createdDate),
             _buildDialogRow('المسؤول عن التعديل', rev.negotiatedBy),
             _buildDialogRow('الحالة التفاوضية', rev.status),
-            const SizedBox(height: 12),
-            const Text('ملاحظات وإيضاحات التفاوض:', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.outline)),
-            const SizedBox(height: 4),
-            Text(rev.reason, style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant, height: 1.3)),
+            SizedBox(height: 12),
+            Text('ملاحظات وإيضاحات التفاوض:', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.outline)),
+            SizedBox(height: 4),
+            Text(rev.reason, style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.3)),
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('إغلاق')),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text('إغلاق')),
         ],
       ),
     );
@@ -286,8 +286,8 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(fontSize: 10, color: AppColors.outline)),
-          Text(value, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
+          Text(label, style: TextStyle(fontSize: 10, color: AppColors.outline)),
+          Text(value, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
         ],
       ),
     );

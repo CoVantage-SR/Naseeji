@@ -40,11 +40,11 @@ class _BillingScreenState extends ConsumerState<BillingScreen> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
-          title: const Text(
+          title: Text(
             'المركز المالي والفوترة',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.onSurface),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
           ),
           centerTitle: true,
         ),
@@ -57,7 +57,7 @@ class _BillingScreenState extends ConsumerState<BillingScreen> {
               children: [
                 // Billing Card
                 billingAsync.when(
-                  loading: () => const Center(child: CircularProgressIndicator()),
+                  loading: () => Center(child: CircularProgressIndicator()),
                   error: (e, _) => Center(child: Text('خطأ: $e')),
                   data: (billing) {
                     final double subtotal = billing.currentBill - billing.discount;
@@ -66,16 +66,16 @@ class _BillingScreenState extends ConsumerState<BillingScreen> {
                     return Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          const Text(
+                          Text(
                             'ملخص الرسوم والمستحقات القادمة',
-                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                           ),
                           const Divider(height: 20, color: AppColors.outlineVariant),
                           _buildPriceRow('قيمة اشتراك الباقة', '${billing.currentBill.toStringAsFixed(0)} ر.س'),
@@ -84,7 +84,7 @@ class _BillingScreenState extends ConsumerState<BillingScreen> {
                           _buildPriceRow('الضريبة المضافة (15%)', '${billing.tax.toStringAsFixed(2)} ر.س'),
                           const Divider(color: AppColors.outlineVariant),
                           _buildPriceRow('إجمالي الفاتورة القادمة', '${total.toStringAsFixed(2)} ر.س', isBold: true),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 16),
 
                           // Coupon Field
                           Row(
@@ -98,9 +98,9 @@ class _BillingScreenState extends ConsumerState<BillingScreen> {
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                                 ),
-                                child: const Text('تطبيق', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+                                child: Text('تطبيق', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
                               ),
-                              const SizedBox(width: 8),
+                              SizedBox(width: 8),
                               Expanded(
                                 child: CustomTextField(
                                   controller: _couponController,
@@ -110,7 +110,7 @@ class _BillingScreenState extends ConsumerState<BillingScreen> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 16),
                           PrimaryButton(
                             text: 'سداد الفاتورة الحالية',
                             onPressed: () {
@@ -124,7 +124,7 @@ class _BillingScreenState extends ConsumerState<BillingScreen> {
                     );
                   },
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
 
                 // Invoices list
                 Row(
@@ -132,17 +132,17 @@ class _BillingScreenState extends ConsumerState<BillingScreen> {
                   children: [
                     TextButton(
                       onPressed: () => context.push('/subscription/invoices'),
-                      child: const Text('عرض الكل', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0040E0))),
+                      child: Text('عرض الكل', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0040E0))),
                     ),
-                    const Text(
+                    Text(
                       'الفواتير الأخيرة الصادرة',
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
                 invoicesAsync.when(
-                  loading: () => const Center(child: CircularProgressIndicator()),
+                  loading: () => Center(child: CircularProgressIndicator()),
                   error: (e, _) => Text('خطأ: $e'),
                   data: (invoices) {
                     return Column(
@@ -183,7 +183,7 @@ class _BillingScreenState extends ConsumerState<BillingScreen> {
             style: TextStyle(
               fontSize: isBold ? 14 : 12,
               fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-              color: isBold ? const Color(0xFF0040E0) : AppColors.onSurface,
+              color: isBold ? const Color(0xFF0040E0) : Theme.of(context).colorScheme.onSurface,
             ),
           ),
           Text(
@@ -191,7 +191,7 @@ class _BillingScreenState extends ConsumerState<BillingScreen> {
             style: TextStyle(
               fontSize: 12,
               fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-              color: AppColors.onSurfaceVariant,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
         ],

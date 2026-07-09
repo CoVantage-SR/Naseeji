@@ -14,18 +14,18 @@ class SubscriptionNotificationsScreen extends ConsumerWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
-          title: const Text(
+          title: Text(
             'تنبيهات وأمور الفوترة',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.onSurface),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
           ),
           centerTitle: true,
         ),
         body: Material(
           color: Theme.of(context).scaffoldBackgroundColor,
           child: notificationsAsync.when(
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => Center(child: CircularProgressIndicator()),
             error: (e, _) => Center(child: Text('خطأ: $e')),
             data: (notifications) {
               return ListView.builder(
@@ -53,7 +53,7 @@ class SubscriptionNotificationsScreen extends ConsumerWidget {
                     margin: const EdgeInsets.only(bottom: 12),
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                     ),
@@ -66,23 +66,23 @@ class SubscriptionNotificationsScreen extends ConsumerWidget {
                             children: [
                               Text(
                                 notif.title,
-                                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                               ),
-                              const SizedBox(height: 6),
+                              SizedBox(height: 6),
                               Text(
                                 notif.body,
-                                style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant, height: 1.4),
+                                style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.4),
                                 textAlign: TextAlign.right,
                               ),
-                              const SizedBox(height: 8),
+                              SizedBox(height: 8),
                               Text(
                                 timeStr,
-                                style: const TextStyle(fontSize: 9, color: AppColors.outline),
+                                style: TextStyle(fontSize: 9, color: AppColors.outline),
                               ),
                             ],
                           ),
                         ),
-                        const SizedBox(width: 16),
+                        SizedBox(width: 16),
                         Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(

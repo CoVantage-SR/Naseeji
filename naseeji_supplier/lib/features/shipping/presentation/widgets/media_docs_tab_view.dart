@@ -19,42 +19,42 @@ class MediaDocsTabView extends ConsumerWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('مستندات وأوراق الشحن الرسمية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.onSurface)),
+            Text('مستندات وأوراق الشحن الرسمية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Theme.of(context).colorScheme.onSurface)),
             IconButton(
               icon: const Icon(Icons.add_circle_outline, color: AppColors.primary, size: 20),
               onPressed: () => _showUploadDocDialog(context, ref, s),
             ),
           ],
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8),
 
         if (s.documents.isEmpty)
-          const Center(child: Text('لا توجد مستندات مرفوعة حالياً', style: TextStyle(fontSize: 11, color: AppColors.outline)))
+          Center(child: Text('لا توجد مستندات مرفوعة حالياً', style: TextStyle(fontSize: 11, color: AppColors.outline)))
         else
           ...s.documents.map((doc) => DocumentItemCard(
             s: s,
             doc: doc,
             onReplace: () => _showUploadDocDialog(context, ref, s, initialType: doc.type),
           )),
-        const SizedBox(height: 24),
+        SizedBox(height: 24),
 
         // Media Gallery before / after loading
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('صور وإثباتات الشحن والتحميل', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.onSurface)),
+            Text('صور وإثباتات الشحن والتحميل', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Theme.of(context).colorScheme.onSurface)),
             IconButton(
               icon: const Icon(Icons.add_a_photo_outlined, color: AppColors.primary, size: 20),
               onPressed: () => _showUploadMediaDialog(context, ref, s),
             ),
           ],
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8),
         
         _buildMediaCategorySection(context, s, 'قبل الشحن (المنتجات والتعبئة)', 'beforeShipment'),
-        const SizedBox(height: 12),
+        SizedBox(height: 12),
         _buildMediaCategorySection(context, s, 'أثناء التحميل (مندوب سمسا/أرامكس)', 'loading'),
-        const SizedBox(height: 12),
+        SizedBox(height: 12),
         _buildMediaCategorySection(context, s, 'بعد التسليم ومطابقة الجودة', 'afterShipment'),
       ],
     );
@@ -66,13 +66,13 @@ class MediaDocsTabView extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.outline)),
-        const SizedBox(height: 6),
+        Text(title, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.outline)),
+        SizedBox(height: 6),
         if (list.isEmpty)
           Container(
             height: 60,
             alignment: Alignment.center,
-            decoration: BoxDecoration(color: AppColors.surfaceContainerLow, borderRadius: BorderRadius.circular(8)),
+            decoration: BoxDecoration(color: Theme.of(context).colorScheme.surfaceContainerLow, borderRadius: BorderRadius.circular(8)),
             child: Text('لم يتم رفع صور/فيديوهات لهذه المرحلة', style: TextStyle(fontSize: 10, color: Colors.grey.shade500)),
           )
         else
@@ -101,7 +101,7 @@ class MediaDocsTabView extends ConsumerWidget {
                       },
                       child: Container(
                         padding: const EdgeInsets.all(2),
-                        decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                        decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface, shape: BoxShape.circle),
                         child: const Icon(Icons.close, size: 10, color: Colors.red),
                       ),
                     ),
@@ -123,7 +123,7 @@ class MediaDocsTabView extends ConsumerWidget {
       builder: (ctx) => Directionality(
         textDirection: TextDirection.rtl,
         child: AlertDialog(
-          title: const Text('رفع مستند رسمي جديد', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+          title: Text('رفع مستند رسمي جديد', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -131,7 +131,7 @@ class MediaDocsTabView extends ConsumerWidget {
                 controller: typeController,
                 decoration: const InputDecoration(labelText: 'نوع المستند (مثل: بوليصة شحن، فاتورة جمركية)'),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               TextField(
                 controller: nameController,
                 decoration: const InputDecoration(labelText: 'اسم الملف المرفوع'),
@@ -139,7 +139,7 @@ class MediaDocsTabView extends ConsumerWidget {
             ],
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+            TextButton(onPressed: () => Navigator.pop(ctx), child: Text('إلغاء')),
             ElevatedButton(
               onPressed: () {
                 ref.read(shippingControllerProvider.notifier).uploadCommercialDoc(
@@ -151,7 +151,7 @@ class MediaDocsTabView extends ConsumerWidget {
                 Navigator.pop(ctx);
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم رفع المستند وتحديث الإصدار v2 بنجاح.')));
               },
-              child: const Text('رفع المستند'),
+              child: Text('رفع المستند'),
             ),
           ],
         ),
@@ -167,12 +167,12 @@ class MediaDocsTabView extends ConsumerWidget {
         builder: (ctx, setDialogState) => Directionality(
           textDirection: TextDirection.rtl,
           child: AlertDialog(
-            title: const Text('رفع إثبات صور الشحنة', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+            title: Text('رفع إثبات صور الشحنة', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text('اختر تصنيف صور التحميل والإثبات:', style: TextStyle(fontSize: 11)),
-                const SizedBox(height: 8),
+                Text('اختر تصنيف صور التحميل والإثبات:', style: TextStyle(fontSize: 11)),
+                SizedBox(height: 8),
                 DropdownButton<String>(
                   value: category,
                   isExpanded: true,
@@ -192,7 +192,7 @@ class MediaDocsTabView extends ConsumerWidget {
               ],
             ),
             actions: [
-              TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+              TextButton(onPressed: () => Navigator.pop(ctx), child: Text('إلغاء')),
               ElevatedButton(
                 onPressed: () {
                   ref.read(shippingControllerProvider.notifier).uploadProofMedia(
@@ -203,7 +203,7 @@ class MediaDocsTabView extends ConsumerWidget {
                   Navigator.pop(ctx);
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم رفع صورة إثبات الشحن بنجاح.')));
                 },
-                child: const Text('رفع صورة'),
+                child: Text('رفع صورة'),
               ),
             ],
           ),

@@ -101,7 +101,7 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
       ),
@@ -111,7 +111,7 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             // Section Title: Identity
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
@@ -119,25 +119,25 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.onSurface,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
                 SizedBox(width: 8),
                 Icon(Icons.info_outline, color: AppColors.primary, size: 20),
               ],
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
 
             // Product Name Field
-            const Text(
+            Text(
               'اسم المنتج',
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
-                color: AppColors.onSurfaceVariant,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             TextFormField(
               controller: _nameController,
               textAlign: TextAlign.right,
@@ -147,32 +147,32 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
               ),
               onChanged: controller.updateName,
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
 
             // Category Selector Field
-            const Text(
+            Text(
               'الفئة',
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
-                color: AppColors.onSurfaceVariant,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             DropdownButtonFormField<String>(
               initialValue: formData.category,
               alignment: AlignmentDirectional.centerEnd,
               decoration: const InputDecoration(
                 contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
-              icon: const Icon(Icons.expand_more, color: AppColors.onSurfaceVariant),
+              icon: const Icon(Icons.expand_more, color: Theme.of(context).colorScheme.onSurfaceVariant),
               items: _categories.map((category) {
                 return DropdownMenuItem<String>(
                   value: category,
                   child: Text(
                     category,
                     textDirection: TextDirection.rtl,
-                    style: const TextStyle(fontSize: 14),
+                    style: TextStyle(fontSize: 14),
                   ),
                 );
               }).toList(),
@@ -182,18 +182,18 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
                 }
               },
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
 
             // Short Description Textarea Field
-            const Text(
+            Text(
               'وصف مختصر',
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
-                color: AppColors.onSurfaceVariant,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             TextFormField(
               controller: _descController,
               maxLines: 3,
@@ -206,18 +206,18 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
               ),
               onChanged: controller.updateDescription,
             ),
-            const SizedBox(height: 4),
+            SizedBox(height: 4),
             Text(
               '${formData.description.length} / 200 حرف',
               textAlign: TextAlign.left,
-              style: const TextStyle(fontSize: 11, color: AppColors.outline),
+              style: TextStyle(fontSize: 11, color: AppColors.outline),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
             const Divider(color: AppColors.outlineVariant, height: 1),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
 
             // Section Title: Classification
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
@@ -225,25 +225,25 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.onSurface,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
                 SizedBox(width: 8),
                 Icon(Icons.category_outlined, color: AppColors.primary, size: 20),
               ],
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
 
             // Product Nature Custom Radio
-            const Text(
+            Text(
               'طبيعة المنتج',
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
-                color: AppColors.onSurfaceVariant,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             Row(
               children: [
                 Expanded(
@@ -272,9 +272,9 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
                             Icons.factory_outlined,
                             color: formData.productNature == 'صناعي'
                                 ? AppColors.primary
-                                : AppColors.onSurfaceVariant,
+                                : Theme.of(context).colorScheme.onSurfaceVariant,
                           ),
-                          const SizedBox(height: 6),
+                          SizedBox(height: 6),
                           Text(
                             'صناعي',
                             style: TextStyle(
@@ -282,7 +282,7 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
                               fontWeight: FontWeight.bold,
                               color: formData.productNature == 'صناعي'
                                   ? AppColors.primary
-                                  : AppColors.onSurfaceVariant,
+                                  : Theme.of(context).colorScheme.onSurfaceVariant,
                             ),
                           ),
                         ],
@@ -290,7 +290,7 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 16),
+                SizedBox(width: 16),
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
@@ -317,9 +317,9 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
                             Icons.storefront_outlined,
                             color: formData.productNature == 'تجزئة'
                                 ? AppColors.primary
-                                : AppColors.onSurfaceVariant,
+                                : Theme.of(context).colorScheme.onSurfaceVariant,
                           ),
-                          const SizedBox(height: 6),
+                          SizedBox(height: 6),
                           Text(
                             'تجزئة',
                             style: TextStyle(
@@ -327,7 +327,7 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
                               fontWeight: FontWeight.bold,
                               color: formData.productNature == 'تجزئة'
                                   ? AppColors.primary
-                                  : AppColors.onSurfaceVariant,
+                                  : Theme.of(context).colorScheme.onSurfaceVariant,
                             ),
                           ),
                         ],
@@ -337,18 +337,18 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
                 ),
               ],
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
 
             // Visibility Toggle Box
-            const Text(
+            Text(
               'حالة العرض',
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
-                color: AppColors.onSurfaceVariant,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -365,7 +365,7 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
                     activeTrackColor: AppColors.primary.withValues(alpha: 0.5),
                     onChanged: controller.updateAvailableForDirectOrder,
                   ),
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
@@ -373,7 +373,7 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.onSurface,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                       SizedBox(height: 2),
@@ -381,7 +381,7 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
                         'سيتمكن العملاء من الشراء فوراً',
                         style: TextStyle(
                           fontSize: 11,
-                          color: AppColors.onSurfaceVariant,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
@@ -389,18 +389,18 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
                 ],
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
 
             // Media Assets Box
-            const Text(
+            Text(
               'ملفات الوسائط والكتالوجات التقنية B2B',
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
-                color: AppColors.onSurfaceVariant,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -416,57 +416,57 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
                       ElevatedButton.icon(
                         onPressed: () => _validateAndUploadAsset(context, 'image'),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
+                          backgroundColor: Theme.of(context).colorScheme.surface,
                           foregroundColor: const Color(0xFF0040E0),
                           minimumSize: const Size(120, 36),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         ),
                         icon: const Icon(Icons.image, size: 16),
-                        label: const Text('رفع صور المنتج', style: TextStyle(fontSize: 11)),
+                        label: Text('رفع صور المنتج', style: TextStyle(fontSize: 11)),
                       ),
-                      const Text('الصور التوضيحية للأقمشة (حد 5 صور)', style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant)),
+                      Text('الصور التوضيحية للأقمشة (حد 5 صور)', style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant)),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       ElevatedButton.icon(
                         onPressed: () => _validateAndUploadAsset(context, 'video'),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
+                          backgroundColor: Theme.of(context).colorScheme.surface,
                           foregroundColor: const Color(0xFF0040E0),
                           minimumSize: const Size(120, 36),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         ),
                         icon: const Icon(Icons.videocam, size: 16),
-                        label: const Text('رفع فيديو توضيحي', style: TextStyle(fontSize: 11)),
+                        label: Text('رفع فيديو توضيحي', style: TextStyle(fontSize: 11)),
                       ),
-                      const Text('مقاطع الفيديو وعينات النسيج المتحركة', style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant)),
+                      Text('مقاطع الفيديو وعينات النسيج المتحركة', style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant)),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       ElevatedButton.icon(
                         onPressed: () => _validateAndUploadAsset(context, 'pdf'),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
+                          backgroundColor: Theme.of(context).colorScheme.surface,
                           foregroundColor: const Color(0xFF0040E0),
                           minimumSize: const Size(120, 36),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         ),
                         icon: const Icon(Icons.picture_as_pdf, size: 16),
-                        label: const Text('رفع كتالوج PDF', style: TextStyle(fontSize: 11)),
+                        label: Text('رفع كتالوج PDF', style: TextStyle(fontSize: 11)),
                       ),
-                      const Text('ملفات التحليل الفني وشهادات الجودة', style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant)),
+                      Text('ملفات التحليل الفني وشهادات الجودة', style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant)),
                     ],
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: 32),
 
             // Actions row
             Row(
@@ -489,12 +489,12 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
                     minimumSize: const Size(120, 48),
                   ),
                   icon: const Icon(Icons.arrow_back, size: 18),
-                  label: const Text(
+                  label: Text(
                     'التالي',
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12),
                 OutlinedButton(
                   onPressed: () {},
                   style: OutlinedButton.styleFrom(
@@ -506,7 +506,7 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                     minimumSize: const Size(120, 48),
                   ),
-                  child: const Text(
+                  child: Text(
                     'حفظ كمسودة',
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),

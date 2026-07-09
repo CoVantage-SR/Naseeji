@@ -14,7 +14,7 @@ class ShipmentBottomActionBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     if (s.status == ShipmentStatus.ready) {
       return Container(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Row(
           children: [
@@ -22,15 +22,15 @@ class ShipmentBottomActionBar extends ConsumerWidget {
               child: OutlinedButton(
                 onPressed: () => context.push('/shipping/company-selector/${s.id}'),
                 style: OutlinedButton.styleFrom(side: const BorderSide(color: AppColors.outline), minimumSize: const Size(0, 48)),
-                child: const Text('اختيار شركة الشحن', style: TextStyle(fontWeight: FontWeight.bold)),
+                child: Text('اختيار شركة الشحن', style: TextStyle(fontWeight: FontWeight.bold)),
               ),
             ),
-            const SizedBox(width: 10),
+            SizedBox(width: 10),
             Expanded(
               child: ElevatedButton(
                 onPressed: () => _showSchedulePickupDialog(context, ref, s),
                 style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF0040E0), foregroundColor: Colors.white, minimumSize: const Size(0, 48)),
-                child: const Text('جدولة استلام السائق', style: TextStyle(fontWeight: FontWeight.bold)),
+                child: Text('جدولة استلام السائق', style: TextStyle(fontWeight: FontWeight.bold)),
               ),
             ),
           ],
@@ -40,7 +40,7 @@ class ShipmentBottomActionBar extends ConsumerWidget {
 
     if (s.status == ShipmentStatus.loaded) {
       return Container(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Row(
           children: [
@@ -48,7 +48,7 @@ class ShipmentBottomActionBar extends ConsumerWidget {
               child: ElevatedButton(
                 onPressed: () => ref.read(shippingControllerProvider.notifier).updateStatus(s.id, ShipmentStatus.pickedUp),
                 style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF0040E0), foregroundColor: Colors.white, minimumSize: const Size(0, 48)),
-                child: const Text('تأكيد استلام السائق الفعلي الشحنة', style: TextStyle(fontWeight: FontWeight.bold)),
+                child: Text('تأكيد استلام السائق الفعلي الشحنة', style: TextStyle(fontWeight: FontWeight.bold)),
               ),
             ),
           ],
@@ -58,7 +58,7 @@ class ShipmentBottomActionBar extends ConsumerWidget {
 
     if (s.status == ShipmentStatus.pickedUp || s.status == ShipmentStatus.inTransit || s.status == ShipmentStatus.arrived) {
       return Container(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Row(
           children: [
@@ -66,16 +66,16 @@ class ShipmentBottomActionBar extends ConsumerWidget {
               child: OutlinedButton.icon(
                 onPressed: () => context.push('/shipping/issue/${s.id}'),
                 icon: const Icon(Icons.warning_amber_rounded, size: 18),
-                label: const Text('إبلاغ عن تأخر/تلف', style: TextStyle(fontWeight: FontWeight.bold)),
+                label: Text('إبلاغ عن تأخر/تلف', style: TextStyle(fontWeight: FontWeight.bold)),
                 style: OutlinedButton.styleFrom(side: const BorderSide(color: Colors.red), foregroundColor: Colors.red, minimumSize: const Size(0, 48)),
               ),
             ),
-            const SizedBox(width: 10),
+            SizedBox(width: 10),
             Expanded(
               child: ElevatedButton.icon(
                 onPressed: () => context.push('/shipping/tracking/${s.id}'),
                 icon: const Icon(Icons.map_outlined, size: 18),
-                label: const Text('تتبع حي GPS', style: TextStyle(fontWeight: FontWeight.bold)),
+                label: Text('تتبع حي GPS', style: TextStyle(fontWeight: FontWeight.bold)),
                 style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF0040E0), foregroundColor: Colors.white, minimumSize: const Size(0, 48)),
               ),
             ),
@@ -86,7 +86,7 @@ class ShipmentBottomActionBar extends ConsumerWidget {
 
     if (s.status == ShipmentStatus.delivered) {
       return Container(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Row(
           children: [
@@ -96,10 +96,10 @@ class ShipmentBottomActionBar extends ConsumerWidget {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('راجع تقرير فحص المصنع المرفق بالأسفل.')));
                 },
                 style: OutlinedButton.styleFrom(side: const BorderSide(color: AppColors.outline), minimumSize: const Size(0, 48)),
-                child: const Text('معاينة الفحص والاستلام', style: TextStyle(fontWeight: FontWeight.bold)),
+                child: Text('معاينة الفحص والاستلام', style: TextStyle(fontWeight: FontWeight.bold)),
               ),
             ),
-            const SizedBox(width: 10),
+            SizedBox(width: 10),
             Expanded(
               child: ElevatedButton(
                 onPressed: () {
@@ -115,7 +115,7 @@ class ShipmentBottomActionBar extends ConsumerWidget {
                   foregroundColor: Colors.white,
                   minimumSize: const Size(0, 48),
                 ),
-                child: const Text('طلب تسوية الإفراج المالي', style: TextStyle(fontWeight: FontWeight.bold)),
+                child: Text('طلب تسوية الإفراج المالي', style: TextStyle(fontWeight: FontWeight.bold)),
               ),
             ),
           ],
@@ -125,7 +125,7 @@ class ShipmentBottomActionBar extends ConsumerWidget {
 
     if (s.status == ShipmentStatus.paymentPending) {
       return Container(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Row(
           children: [
@@ -133,7 +133,7 @@ class ShipmentBottomActionBar extends ConsumerWidget {
               child: ElevatedButton(
                 onPressed: () => ref.read(shippingControllerProvider.notifier).updateStatus(s.id, ShipmentStatus.completed),
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.green.shade700, foregroundColor: Colors.white, minimumSize: const Size(0, 48)),
-                child: const Text('إفراج الحوالة المالية بنجاح (مكتمل)', style: TextStyle(fontWeight: FontWeight.bold)),
+                child: Text('إفراج الحوالة المالية بنجاح (مكتمل)', style: TextStyle(fontWeight: FontWeight.bold)),
               ),
             ),
           ],
@@ -154,7 +154,7 @@ class ShipmentBottomActionBar extends ConsumerWidget {
       builder: (ctx) => Directionality(
         textDirection: TextDirection.rtl,
         child: AlertDialog(
-          title: const Text('جدولة استلام الشحنة وتعيين السائق', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+          title: Text('جدولة استلام الشحنة وتعيين السائق', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -164,7 +164,7 @@ class ShipmentBottomActionBar extends ConsumerWidget {
             ],
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+            TextButton(onPressed: () => Navigator.pop(ctx), child: Text('إلغاء')),
             ElevatedButton(
               onPressed: () {
                 ref.read(shippingControllerProvider.notifier).scheduleCarrierPickup(
@@ -176,7 +176,7 @@ class ShipmentBottomActionBar extends ConsumerWidget {
                 Navigator.pop(ctx);
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تمت جدولة السائق وتأكيد استلام سمسا/أرامكس للشحنة.')));
               },
-              child: const Text('تأكيد الجدول والتعيين'),
+              child: Text('تأكيد الجدول والتعيين'),
             ),
           ],
         ),

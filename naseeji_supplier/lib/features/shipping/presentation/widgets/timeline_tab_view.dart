@@ -24,12 +24,12 @@ class TimelineTabView extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(ev.time, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.onSurface)),
-                const SizedBox(height: 2),
-                Text(ev.date, style: const TextStyle(fontSize: 9, color: AppColors.outline)),
+                Text(ev.time, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Theme.of(context).colorScheme.onSurface)),
+                SizedBox(height: 2),
+                Text(ev.date, style: TextStyle(fontSize: 9, color: AppColors.outline)),
               ],
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
             
             // Timeline Line & Dot Indicator
             Column(
@@ -51,26 +51,26 @@ class TimelineTabView extends StatelessWidget {
                   ),
               ],
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
 
             // Event Details Card
             Expanded(
               child: Container(
                 margin: const EdgeInsets.only(bottom: 16),
                 padding: const EdgeInsets.all(12),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                   boxShadow: [BoxShadow(color: Color(0x03000000), blurRadius: 4)],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(ev.status, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF0040E0))),
-                    const SizedBox(height: 2),
-                    Text('بواسطة: ${ev.user}', style: const TextStyle(fontSize: 9, color: AppColors.outline)),
-                    const SizedBox(height: 6),
-                    Text(ev.notes, style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant)),
+                    Text(ev.status, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF0040E0))),
+                    SizedBox(height: 2),
+                    Text('بواسطة: ${ev.user}', style: TextStyle(fontSize: 9, color: AppColors.outline)),
+                    SizedBox(height: 6),
+                    Text(ev.notes, style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant)),
                   ],
                 ),
               ),

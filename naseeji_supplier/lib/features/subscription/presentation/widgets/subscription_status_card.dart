@@ -29,7 +29,7 @@ class SubscriptionStatusCard extends StatelessWidget {
 
     return Card(
       elevation: 0.5,
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
@@ -59,17 +59,17 @@ class SubscriptionStatusCard extends StatelessWidget {
                 ),
                 Text(
                   subscription.planName,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.onSurface,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             const Divider(color: AppColors.outlineVariant),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
 
             _buildDetailRow('تاريخ البدء', startStr),
             _buildDetailRow('تاريخ الانتهاء', expiryStr),
@@ -77,22 +77,22 @@ class SubscriptionStatusCard extends StatelessWidget {
             _buildDetailRow('قيمة التجديد', '${subscription.price.toStringAsFixed(0)} ر.س / ${subscription.billingCycle == BillingCycle.yearly ? "سنوي" : "شهري"}'),
             _buildDetailRow('طريقة الدفع للمحاسبة', subscription.paymentMethod),
             
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             const Divider(color: AppColors.outlineVariant),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
 
             // Auto renew switch
             SwitchListTile(
               value: subscription.autoRenew,
               onChanged: onAutoRenewChanged,
-              title: const Text(
+              title: Text(
                 'التجديد التلقائي للاشتراك',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                 textAlign: TextAlign.right,
               ),
-              subtitle: const Text(
+              subtitle: Text(
                 'سداد الرسوم آلياً عبر البطاقة المحددة',
-                style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant),
+                style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant),
                 textAlign: TextAlign.right,
               ),
               activeThumbColor: const Color(0xFF0040E0),
@@ -100,7 +100,7 @@ class SubscriptionStatusCard extends StatelessWidget {
               dense: true,
             ),
             
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Row(
               children: [
                 Expanded(
@@ -111,10 +111,10 @@ class SubscriptionStatusCard extends StatelessWidget {
                       side: const BorderSide(color: Color(0xFF006B5F)),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     ),
-                    child: const Text('تجديد مبكر', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                    child: Text('تجديد مبكر', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12),
                 Expanded(
                   child: ElevatedButton(
                     onPressed: onUpgrade,
@@ -124,7 +124,7 @@ class SubscriptionStatusCard extends StatelessWidget {
                       elevation: 0,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     ),
-                    child: const Text('ترقية الباقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                    child: Text('ترقية الباقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
                   ),
                 ),
               ],
@@ -143,11 +143,11 @@ class SubscriptionStatusCard extends StatelessWidget {
         children: [
           Text(
             value,
-            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
           ),
           Text(
             label,
-            style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant),
+            style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
           ),
         ],
       ),

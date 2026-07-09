@@ -19,7 +19,7 @@ class SubscriptionChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0.5,
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
@@ -31,10 +31,10 @@ class SubscriptionChart extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
               textAlign: TextAlign.right,
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             if (chartType == 'donut')
               _buildDonutChart()
             else if (chartType == 'line')
@@ -65,21 +65,21 @@ class SubscriptionChart extends StatelessWidget {
             children: [
               Text(
                 val.toStringAsFixed(0),
-                style: const TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant),
+                style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
-              const SizedBox(height: 4),
+              SizedBox(height: 4),
               Container(
                 height: hPercent * 80 + 4,
                 width: 24,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: Color(0xFF0040E0),
                   borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
                 ),
               ),
-              const SizedBox(height: 6),
+              SizedBox(height: 6),
               Text(
                 label,
-                style: const TextStyle(fontSize: 9, color: AppColors.onSurfaceVariant),
+                style: TextStyle(fontSize: 9, color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
             ],
           );
@@ -106,9 +106,9 @@ class SubscriptionChart extends StatelessWidget {
             children: [
               Text(
                 val.toStringAsFixed(1),
-                style: const TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant),
+                style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
-              const SizedBox(height: 4),
+              SizedBox(height: 4),
               Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
@@ -120,17 +120,17 @@ class SubscriptionChart extends StatelessWidget {
                   Container(
                     height: 8,
                     width: 8,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: Color(0xFF006B5F),
                       shape: BoxShape.circle,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 6),
+              SizedBox(height: 6),
               Text(
                 label,
-                style: const TextStyle(fontSize: 9, color: AppColors.onSurfaceVariant),
+                style: TextStyle(fontSize: 9, color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
             ],
           );
@@ -149,7 +149,7 @@ class SubscriptionChart extends StatelessWidget {
             painter: _DonutChartPainter(values: values),
           ),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 12),
         Wrap(
           spacing: 8,
           runSpacing: 4,
@@ -161,9 +161,9 @@ class SubscriptionChart extends StatelessWidget {
               children: [
                 Text(
                   '${labels[idx]} (${(values[idx] * 100).toStringAsFixed(0)}%)',
-                  style: const TextStyle(fontSize: 9, color: AppColors.onSurface),
+                  style: TextStyle(fontSize: 9, color: Theme.of(context).colorScheme.onSurface),
                 ),
-                const SizedBox(width: 4),
+                SizedBox(width: 4),
                 Container(
                   width: 8,
                   height: 8,

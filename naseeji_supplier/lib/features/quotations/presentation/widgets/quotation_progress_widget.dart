@@ -50,8 +50,8 @@ class QuotationProgressWidget extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.all(Radius.circular(16)),
         boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
       ),
@@ -61,9 +61,9 @@ class QuotationProgressWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'مراحل دورة حياة التسعير',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: AppColors.onSurface),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: Theme.of(context).colorScheme.onSurface),
               ),
               Text(
                 stages[activeIndex],
@@ -71,7 +71,7 @@ class QuotationProgressWidget extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           
           Row(
             children: List.generate(stages.length * 2 - 1, (index) {
@@ -109,10 +109,10 @@ class QuotationProgressWidget extends StatelessWidget {
                           ),
                         ),
                         child: isCompleted
-                            ? const Icon(Icons.check, color: Colors.white, size: 10)
+                            ? const Icon(Icons.check, color: Theme.of(context).colorScheme.surface, size: 10)
                             : null,
                       ),
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6),
                       Text(
                         stages[stepIndex],
                         style: TextStyle(

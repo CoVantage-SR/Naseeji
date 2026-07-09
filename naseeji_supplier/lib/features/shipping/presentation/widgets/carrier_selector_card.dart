@@ -22,12 +22,12 @@ class CarrierSelectorCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: isSelected
               ? const Color(0xFF0040E0)
-              : AppColors.surfaceContainerLow,
+              : Theme.of(context).colorScheme.surfaceContainerLow,
           width: isSelected ? 2 : 1,
         ),
         boxShadow: [
@@ -51,23 +51,23 @@ class CarrierSelectorCard extends StatelessWidget {
                         : AppColors.outline,
                     size: 22,
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           carrier['name'] as String,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 13,
-                            color: AppColors.onSurface,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
-                        const SizedBox(height: 2),
+                        SizedBox(height: 2),
                         Text(
                           carrier['method'] as String,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 10,
                             color: AppColors.outline,
                           ),
@@ -86,34 +86,34 @@ class CarrierSelectorCard extends StatelessWidget {
               const Divider(height: 16),
               Row(
                 children: [
-                  const Text(
+                  Text(
                     'التكلفة المقدرة: ',
                     style: TextStyle(fontSize: 11, color: AppColors.outline),
                   ),
                   Text(
                     carrier['cost'] as String,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
                       color: Colors.green,
                     ),
                   ),
                   const Spacer(),
-                  const Text(
+                  Text(
                     'مدة التوصيل: ',
                     style: TextStyle(fontSize: 11, color: AppColors.outline),
                   ),
                   Text(
                     carrier['time'] as String,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.onSurface,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10),
               Wrap(
                 spacing: 6,
                 runSpacing: 4,
@@ -125,12 +125,12 @@ class CarrierSelectorCard extends StatelessWidget {
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.surfaceContainerLow,
+                          color: Theme.of(context).colorScheme.surfaceContainerLow,
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Text(
                           srv,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 8,
                             color: AppColors.outline,
                             fontWeight: FontWeight.bold,

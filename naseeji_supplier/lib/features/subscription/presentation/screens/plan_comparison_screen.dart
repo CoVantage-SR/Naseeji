@@ -97,11 +97,11 @@ class PlanComparisonScreen extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
-          title: const Text(
+          title: Text(
             'جدول مقارنة الباقات B2B',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.onSurface),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
           ),
           centerTitle: true,
         ),
@@ -112,17 +112,17 @@ class PlanComparisonScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text(
+                Text(
                   'تفاصيل مقارنة الموارد والحدود التقنية للباقات',
-                  style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant),
+                  style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
                   textAlign: TextAlign.right,
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // Interactive Table
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                   ),
@@ -142,11 +142,11 @@ class PlanComparisonScreen extends StatelessWidget {
                         rows: comparisonData.map((row) {
                           return DataRow(
                             cells: [
-                              DataCell(Text(row['feature'] as String, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold))),
-                              DataCell(Text(row['free'] as String, style: const TextStyle(fontSize: 10))),
-                              DataCell(Text(row['starter'] as String, style: const TextStyle(fontSize: 10))),
-                              DataCell(Text(row['professional'] as String, style: const TextStyle(fontSize: 10))),
-                              DataCell(Text(row['business'] as String, style: const TextStyle(fontSize: 10))),
+                              DataCell(Text(row['feature'] as String, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold))),
+                              DataCell(Text(row['free'] as String, style: TextStyle(fontSize: 10))),
+                              DataCell(Text(row['starter'] as String, style: TextStyle(fontSize: 10))),
+                              DataCell(Text(row['professional'] as String, style: TextStyle(fontSize: 10))),
+                              DataCell(Text(row['business'] as String, style: TextStyle(fontSize: 10))),
                             ],
                           );
                         }).toList(),
@@ -154,7 +154,7 @@ class PlanComparisonScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
               ],
             ),
           ),

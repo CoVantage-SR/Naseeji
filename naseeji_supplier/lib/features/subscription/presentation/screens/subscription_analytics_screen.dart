@@ -15,18 +15,18 @@ class SubscriptionAnalyticsScreen extends ConsumerWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
-          title: const Text(
+          title: Text(
             'تحليلات وإحصائيات الاشتراك',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.onSurface),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
           ),
           centerTitle: true,
         ),
         body: Material(
           color: Theme.of(context).scaffoldBackgroundColor,
           child: analyticsAsync.when(
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => Center(child: CircularProgressIndicator()),
             error: (e, _) => Center(child: Text('خطأ: $e')),
             data: (data) {
               return SingleChildScrollView(
@@ -38,16 +38,16 @@ class SubscriptionAnalyticsScreen extends ConsumerWidget {
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          const Text(
+                          Text(
                             'الملخص المالي والوفورات B2B',
-                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                           ),
                           const Divider(height: 20, color: AppColors.outlineVariant),
                           _buildKpiRow('تكلفة الاشتراك الشهري', '${data.subscriptionCost.toStringAsFixed(0)} ر.س'),
@@ -57,7 +57,7 @@ class SubscriptionAnalyticsScreen extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     // Spending Chart
                     SubscriptionChart(
@@ -66,7 +66,7 @@ class SubscriptionAnalyticsScreen extends ConsumerWidget {
                       labels: const ['مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو'],
                       chartType: 'bar',
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     // Feature Distribution Chart
                     SubscriptionChart(
@@ -75,7 +75,7 @@ class SubscriptionAnalyticsScreen extends ConsumerWidget {
                       labels: data.featureUsagePercent.keys.toList(),
                       chartType: 'donut',
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     // Storage Growth Chart
                     SubscriptionChart(
@@ -84,7 +84,7 @@ class SubscriptionAnalyticsScreen extends ConsumerWidget {
                       labels: const ['مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو'],
                       chartType: 'line',
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24),
                   ],
                 ),
               );
@@ -103,11 +103,11 @@ class SubscriptionAnalyticsScreen extends ConsumerWidget {
         children: [
           Text(
             value,
-            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
           ),
           Text(
             label,
-            style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant),
+            style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
           ),
         ],
       ),

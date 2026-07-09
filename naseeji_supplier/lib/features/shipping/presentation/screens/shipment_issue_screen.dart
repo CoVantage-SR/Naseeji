@@ -39,15 +39,15 @@ class _ShipmentIssueScreenState extends ConsumerState<ShipmentIssueScreen> {
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
           centerTitle: true,
           title: Text(
             'الإبلاغ عن مشكلة شحن ${widget.shipmentId}',
-            style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
+            style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
           ),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+            icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
             onPressed: () => context.pop(),
           ),
         ),
@@ -60,7 +60,7 @@ class _ShipmentIssueScreenState extends ConsumerState<ShipmentIssueScreen> {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(color: Colors.orange.shade50, borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.orange.shade200)),
-                child: const Row(
+                child: Row(
                   children: [
                     Icon(Icons.warning_amber_rounded, color: Colors.orange),
                     SizedBox(width: 10),
@@ -73,24 +73,24 @@ class _ShipmentIssueScreenState extends ConsumerState<ShipmentIssueScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
 
               // Inputs form
               Container(
                 padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 10)]),
+                decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface, borderRadius: BorderRadius.circular(16), boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 10)]),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('نوع مشكلة الشحن اللوجستية *', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                    const SizedBox(height: 8),
+                    Text('نوع مشكلة الشحن اللوجستية *', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                    SizedBox(height: 8),
                     DropdownButtonFormField<String>(
                       initialValue: _selectedCategory,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                       ),
-                      items: _categories.map((c) => DropdownMenuItem(value: c, child: Text(c, style: const TextStyle(fontSize: 11)))).toList(),
+                      items: _categories.map((c) => DropdownMenuItem(value: c, child: Text(c, style: TextStyle(fontSize: 11)))).toList(),
                       onChanged: (val) {
                         if (val != null) {
                           setState(() {
@@ -99,36 +99,36 @@ class _ShipmentIssueScreenState extends ConsumerState<ShipmentIssueScreen> {
                         }
                       },
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
-                    const Text('أولوية البلاغ اللوجستي *', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                    const SizedBox(height: 8),
+                    Text('أولوية البلاغ اللوجستي *', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                    SizedBox(height: 8),
                     Row(
                       children: [
                         _buildPriorityRadio('منخفض'),
-                        const SizedBox(width: 8),
+                        SizedBox(width: 8),
                         _buildPriorityRadio('عادي'),
-                        const SizedBox(width: 8),
+                        SizedBox(width: 8),
                         _buildPriorityRadio('عالي جداً'),
                       ],
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
-                    const Text('وصف تفصيلي للإشكالية *', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                    const SizedBox(height: 8),
+                    Text('وصف تفصيلي للإشكالية *', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                    SizedBox(height: 8),
                     TextField(
                       controller: _descController,
                       maxLines: 4,
                       decoration: InputDecoration(
                         hintText: 'اكتب تفاصيل الإشكالية، الأضرار، التوقيت المتأخر وأثرها على التسليم...',
-                        hintStyle: const TextStyle(fontSize: 11),
+                        hintStyle: TextStyle(fontSize: 11),
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
-                    const Text('إثبات ومرفقات البلاغ (صور، مستندات PDF)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                    const SizedBox(height: 8),
+                    Text('إثبات ومرفقات البلاغ (صور، مستندات PDF)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                    SizedBox(height: 8),
                     InkWell(
                       onTap: () {
                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تمت محاكاة إرفاق ملف الإثبات بنجاح.')));
@@ -136,11 +136,11 @@ class _ShipmentIssueScreenState extends ConsumerState<ShipmentIssueScreen> {
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 20),
                         decoration: BoxDecoration(
-                          color: AppColors.surfaceContainerLow,
+                          color: Theme.of(context).colorScheme.surfaceContainerLow,
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(color: AppColors.outlineVariant, style: BorderStyle.solid),
                         ),
-                        child: const Column(
+                        child: Column(
                           children: [
                             Icon(Icons.cloud_upload_outlined, color: AppColors.primary, size: 28),
                             SizedBox(height: 8),
@@ -152,7 +152,7 @@ class _ShipmentIssueScreenState extends ConsumerState<ShipmentIssueScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
 
               // Submit button
               ElevatedButton(
@@ -176,7 +176,7 @@ class _ShipmentIssueScreenState extends ConsumerState<ShipmentIssueScreen> {
                   minimumSize: const Size.fromHeight(50),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
-                child: const Text('إرسال البلاغ والمتابعة', style: TextStyle(fontWeight: FontWeight.bold)),
+                child: Text('إرسال البلاغ والمتابعة', style: TextStyle(fontWeight: FontWeight.bold)),
               ),
             ],
           ),

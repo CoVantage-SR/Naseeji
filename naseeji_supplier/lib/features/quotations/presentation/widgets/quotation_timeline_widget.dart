@@ -10,7 +10,7 @@ class QuotationTimelineWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (steps.isEmpty) {
-      return const Center(
+      return Center(
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Text('لا يوجد سجل أحداث بعد لهذا العرض.', style: TextStyle(fontSize: 10, color: AppColors.outline)),
@@ -19,8 +19,8 @@ class QuotationTimelineWidget extends StatelessWidget {
     }
 
     return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.all(Radius.circular(16)),
         boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
       ),
@@ -28,17 +28,17 @@ class QuotationTimelineWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
               Icon(Icons.timeline_outlined, color: AppColors.primary, size: 18),
               SizedBox(width: 8),
               Text(
                 'الخط الزمني لمسار العرض والقرارات',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.onSurface),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Theme.of(context).colorScheme.onSurface),
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           
           ListView.builder(
             shrinkWrap: true,
@@ -84,7 +84,7 @@ class QuotationTimelineWidget extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           
           // Right side: Content card
           Expanded(
@@ -99,25 +99,25 @@ class QuotationTimelineWidget extends StatelessWidget {
                       Expanded(
                         child: Text(
                           step.title,
-                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: AppColors.onSurface),
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: Theme.of(context).colorScheme.onSurface),
                         ),
                       ),
                       Text(
                         '${step.date} • ${step.time}',
-                        style: const TextStyle(fontSize: 8, color: AppColors.outline),
+                        style: TextStyle(fontSize: 8, color: AppColors.outline),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   Row(
                     children: [
                       const Icon(Icons.person_outline, size: 10, color: AppColors.outline),
-                      const SizedBox(width: 4),
+                      SizedBox(width: 4),
                       Text(
                         'المسؤول: ${step.responsibleUser}',
-                        style: const TextStyle(fontSize: 8, color: AppColors.outline),
+                        style: TextStyle(fontSize: 8, color: AppColors.outline),
                       ),
-                      const SizedBox(width: 12),
+                      SizedBox(width: 12),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                         decoration: BoxDecoration(
@@ -132,14 +132,14 @@ class QuotationTimelineWidget extends StatelessWidget {
                     ],
                   ),
                   if (step.notes.isNotEmpty) ...[
-                    const SizedBox(height: 6),
+                    SizedBox(height: 6),
                     Text(
                       step.notes,
-                      style: const TextStyle(fontSize: 9, color: AppColors.onSurfaceVariant, height: 1.3),
+                      style: TextStyle(fontSize: 9, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.3),
                     ),
                   ],
                   if (step.attachments.isNotEmpty) ...[
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     Wrap(
                       spacing: 8,
                       runSpacing: 4,
@@ -155,8 +155,8 @@ class QuotationTimelineWidget extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               const Icon(Icons.attach_file, color: AppColors.primary, size: 10),
-                              const SizedBox(width: 4),
-                              Text(filename, style: const TextStyle(fontSize: 8, color: AppColors.primary, fontWeight: FontWeight.w600)),
+                              SizedBox(width: 4),
+                              Text(filename, style: TextStyle(fontSize: 8, color: AppColors.primary, fontWeight: FontWeight.w600)),
                             ],
                           ),
                         );

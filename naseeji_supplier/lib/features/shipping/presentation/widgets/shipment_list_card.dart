@@ -51,7 +51,7 @@ class ShipmentListCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 10, offset: const Offset(0, 2))],
       ),
@@ -67,20 +67,20 @@ class ShipmentListCard extends StatelessWidget {
                 CircleAvatar(
                   radius: 18,
                   backgroundColor: Color(s.factoryLogoBgColorValue),
-                  child: Text(s.factoryLogoText, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 11)),
+                  child: Text(s.factoryLogoText, style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.bold, fontSize: 11)),
                 ),
-                const SizedBox(width: 10),
+                SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(s.factoryName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.onSurface)),
-                      const SizedBox(height: 2),
+                      Text(s.factoryName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Theme.of(context).colorScheme.onSurface)),
+                      SizedBox(height: 2),
                       Row(
                         children: [
-                          Text('طلب: ${s.orderNumber}', style: const TextStyle(fontSize: 10, color: AppColors.outline)),
-                          const SizedBox(width: 8),
-                          Text('RFQ #${s.rfqNumber}', style: const TextStyle(fontSize: 10, color: AppColors.outline)),
+                          Text('طلب: ${s.orderNumber}', style: TextStyle(fontSize: 10, color: AppColors.outline)),
+                          SizedBox(width: 8),
+                          Text('RFQ #${s.rfqNumber}', style: TextStyle(fontSize: 10, color: AppColors.outline)),
                         ],
                       ),
                     ],
@@ -90,7 +90,7 @@ class ShipmentListCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: s.priority == 'عالي جداً' ? Colors.red.shade50 : AppColors.surfaceContainerLow,
+                    color: s.priority == 'عالي جداً' ? Colors.red.shade50 : Theme.of(context).colorScheme.surfaceContainerLow,
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
@@ -105,7 +105,7 @@ class ShipmentListCard extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: AppColors.surfaceContainerLow),
+          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
 
           // Content body
           Padding(
@@ -113,30 +113,30 @@ class ShipmentListCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(s.productName, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12, color: AppColors.onSurfaceVariant)),
-                const SizedBox(height: 4),
+                Text(s.productName, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant)),
+                SizedBox(height: 4),
                 Row(
                   children: [
-                    const Text('الكمية: ', style: TextStyle(fontSize: 11, color: AppColors.outline)),
-                    Text('${s.quantity} ${s.unit}', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
+                    Text('الكمية: ', style: TextStyle(fontSize: 11, color: AppColors.outline)),
+                    Text('${s.quantity} ${s.unit}', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
                     const Spacer(),
-                    const Text('الناقل: ', style: TextStyle(fontSize: 11, color: AppColors.outline)),
-                    Text(s.shippingCompany.isNotEmpty ? s.shippingCompany : 'بانتظار الاختيار', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
+                    Text('الناقل: ', style: TextStyle(fontSize: 11, color: AppColors.outline)),
+                    Text(s.shippingCompany.isNotEmpty ? s.shippingCompany : 'بانتظار الاختيار', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
                   ],
                 ),
                 if (s.trackingNumber.isNotEmpty) ...[
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   Row(
                     children: [
-                      const Text('رقم التتبع: ', style: TextStyle(fontSize: 11, color: AppColors.outline)),
-                      Text(s.trackingNumber, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.primary)),
+                      Text('رقم التتبع: ', style: TextStyle(fontSize: 11, color: AppColors.outline)),
+                      Text(s.trackingNumber, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.primary)),
                       const Spacer(),
-                      const Text('التوصيل المتوقع: ', style: TextStyle(fontSize: 11, color: AppColors.outline)),
-                      Text(s.estimatedDelivery, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
+                      Text('التوصيل المتوقع: ', style: TextStyle(fontSize: 11, color: AppColors.outline)),
+                      Text(s.estimatedDelivery, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
                     ],
                   ),
                 ],
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 
                 // Status tag & Progress bar
                 Row(
@@ -153,7 +153,7 @@ class ShipmentListCard extends StatelessWidget {
                       ),
                     ),
                     if (s.issueReported != null) ...[
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(color: Colors.red.shade50, borderRadius: BorderRadius.circular(6)),
@@ -164,25 +164,25 @@ class ShipmentListCard extends StatelessWidget {
                     Text('${(s.progress * 100).toInt()}%', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: statusColor)),
                   ],
                 ),
-                const SizedBox(height: 6),
+                SizedBox(height: 6),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(2),
                   child: LinearProgressIndicator(
                     value: s.progress,
                     color: statusColor,
-                    backgroundColor: AppColors.surfaceContainerLow,
+                    backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
                     minHeight: 4,
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 Text(
                   'آخر تحديث: ${s.lastUpdate}',
-                  style: const TextStyle(fontSize: 9, color: AppColors.outline, fontStyle: FontStyle.italic),
+                  style: TextStyle(fontSize: 9, color: AppColors.outline, fontStyle: FontStyle.italic),
                 ),
               ],
             ),
           ),
-          const Divider(height: 1, color: AppColors.surfaceContainerLow),
+          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
 
           // Actions
           Padding(
@@ -193,7 +193,7 @@ class ShipmentListCard extends StatelessWidget {
                   child: TextButton.icon(
                     onPressed: () => context.push('/shipping/tracking/${s.id}'),
                     icon: const Icon(Icons.map_outlined, size: 14),
-                    label: const Text('تتبع الشحنة', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                    label: Text('تتبع الشحنة', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
                     style: TextButton.styleFrom(foregroundColor: AppColors.primary, padding: EdgeInsets.zero),
                   ),
                 ),
@@ -201,7 +201,7 @@ class ShipmentListCard extends StatelessWidget {
                   child: TextButton.icon(
                     onPressed: () => context.push('/shipping/documents/${s.id}'),
                     icon: const Icon(Icons.description_outlined, size: 14),
-                    label: const Text('المستندات', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                    label: Text('المستندات', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
                     style: TextButton.styleFrom(foregroundColor: AppColors.secondary, padding: EdgeInsets.zero),
                   ),
                 ),
@@ -216,7 +216,7 @@ class ShipmentListCard extends StatelessWidget {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       padding: EdgeInsets.zero,
                     ),
-                    child: const Text('التفاصيل', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                    child: Text('التفاصيل', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
                   ),
                 ),
               ],

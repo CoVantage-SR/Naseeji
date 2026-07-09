@@ -26,21 +26,21 @@ class UpgradeDialog extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: AppColors.onSurface),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Theme.of(context).colorScheme.onSurface),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8),
             const Icon(Icons.info_outline, color: Color(0xFF0040E0), size: 24),
           ],
         ),
         content: Text(
           content,
-          style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant, height: 1.5),
+          style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.5),
           textAlign: TextAlign.right,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text(
+            child: Text(
               'إلغاء',
               style: TextStyle(color: AppColors.outline),
             ),
@@ -54,7 +54,7 @@ class UpgradeDialog extends StatelessWidget {
               foregroundColor: const Color(0xFF0040E0),
               side: const BorderSide(color: Color(0xFF0040E0)),
             ),
-            child: const Text('شراء باقة منتجات', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+            child: Text('شراء باقة منتجات', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
           ),
           ElevatedButton(
             onPressed: () {
@@ -66,7 +66,7 @@ class UpgradeDialog extends StatelessWidget {
               foregroundColor: Colors.white,
               elevation: 0,
             ),
-            child: const Text('ترقية الباقة العامة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+            child: Text('ترقية الباقة العامة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
           ),
         ],
       ),

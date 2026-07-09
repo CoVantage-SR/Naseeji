@@ -226,8 +226,8 @@ class _EditSupplierProfileScreenState extends ConsumerState<EditSupplierProfileS
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('تراجع عن التعديلات؟', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-        content: const Text(
+        title: Text('تراجع عن التعديلات؟', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+        content: Text(
           'لديك تعديلات غير محفوظة على ملف الشركة. هل أنت متأكد من رغبتك في المغادرة وإلغاء هذه التعديلات؟',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 12),
@@ -235,12 +235,12 @@ class _EditSupplierProfileScreenState extends ConsumerState<EditSupplierProfileS
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('إكمال التعديل'),
+            child: Text('إكمال التعديل'),
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(context, true),
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white),
-            child: const Text('إلغاء التعديلات'),
+            child: Text('إلغاء التعديلات'),
           ),
         ],
       ),
@@ -347,7 +347,7 @@ class _EditSupplierProfileScreenState extends ConsumerState<EditSupplierProfileS
     final profileAsync = ref.watch(profileControllerProvider);
 
     return profileAsync.when(
-      loading: () => const Scaffold(body: Center(child: CircularProgressIndicator(color: AppColors.primary))),
+      loading: () => Scaffold(body: Center(child: CircularProgressIndicator(color: AppColors.primary))),
       error: (err, stack) => Scaffold(body: Center(child: Text('خطأ: $err'))),
       data: (profile) {
         if (!_initialized) {
@@ -368,7 +368,7 @@ class _EditSupplierProfileScreenState extends ConsumerState<EditSupplierProfileS
           child: Scaffold(
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             appBar: AppBar(
-              title: const Text('تعديل ملف الشركة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+              title: Text('تعديل ملف الشركة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
               centerTitle: true,
               leading: TextButton(
                 onPressed: () async {
@@ -379,12 +379,12 @@ class _EditSupplierProfileScreenState extends ConsumerState<EditSupplierProfileS
                     context.pop();
                   }
                 },
-                child: const Text('تراجع', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 12)),
+                child: Text('تراجع', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 12)),
               ),
               actions: [
                 TextButton(
                   onPressed: _saveChanges,
-                  child: const Text('حفظ', style: TextStyle(color: Color(0xFF0040E0), fontWeight: FontWeight.bold, fontSize: 13)),
+                  child: Text('حفظ', style: TextStyle(color: Color(0xFF0040E0), fontWeight: FontWeight.bold, fontSize: 13)),
                 ),
               ],
             ),
@@ -397,7 +397,7 @@ class _EditSupplierProfileScreenState extends ConsumerState<EditSupplierProfileS
                   children: [
                     // Section 8: Profile Completion Rate
                     EditProfileCompletionCard(completionRate: _calculateCompletion()),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     // Section 9: B2B Live Preview Card
                     EditProfileLivePreviewCard(
@@ -407,7 +407,7 @@ class _EditSupplierProfileScreenState extends ConsumerState<EditSupplierProfileS
                       categories: _selectedCategories,
                       logoUrl: _currentLogoUrl,
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
 
                     // Section 1: Logo & Cover Section
                     EditProfileLogoCoverSection(
@@ -422,7 +422,7 @@ class _EditSupplierProfileScreenState extends ConsumerState<EditSupplierProfileS
                       onLogoRemove: () => setState(() => _currentLogoUrl = ''),
                       onCoverRemove: () => setState(() => _currentCoverUrl = ''),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     // Section 2: Basic Company Information
                     EditProfileBasicInfoSection(
@@ -435,7 +435,7 @@ class _EditSupplierProfileScreenState extends ConsumerState<EditSupplierProfileS
                       monthlyCapacityController: _monthlyCapacityController,
                       warehouseCapacityController: _warehouseCapacityController,
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     // Section 3: Supplier Categories
                     EditProfileCategoriesSection(
@@ -446,7 +446,7 @@ class _EditSupplierProfileScreenState extends ConsumerState<EditSupplierProfileS
                         });
                       },
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     // Section 4: Contact Information
                     EditProfileContactSection(
@@ -457,7 +457,7 @@ class _EditSupplierProfileScreenState extends ConsumerState<EditSupplierProfileS
                       websiteController: _websiteController,
                       businessHoursController: _businessHoursController,
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     // Section 5: Address & Map Preview
                     EditProfileAddressSection(
@@ -474,7 +474,7 @@ class _EditSupplierProfileScreenState extends ConsumerState<EditSupplierProfileS
                         );
                       },
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     // Section 6: Business Info
                     EditProfileBusinessInfoSection(
@@ -485,7 +485,7 @@ class _EditSupplierProfileScreenState extends ConsumerState<EditSupplierProfileS
                       moqController: _moqController,
                       prodTimeController: _prodTimeController,
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     // Section 7: Social Links
                     EditProfileSocialLinksSection(
@@ -495,11 +495,11 @@ class _EditSupplierProfileScreenState extends ConsumerState<EditSupplierProfileS
                       xController: _xController,
                       youtubeController: _youtubeController,
                     ),
-                    const SizedBox(height: 30),
+                    SizedBox(height: 30),
 
                     // Bottom Action Bar Buttons
                     _buildBottomActionBar(),
-                    const SizedBox(height: 40),
+                    SizedBox(height: 40),
                   ],
                 ),
               ),
@@ -523,10 +523,10 @@ class _EditSupplierProfileScreenState extends ConsumerState<EditSupplierProfileS
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               padding: const EdgeInsets.symmetric(vertical: 14),
             ),
-            child: const Text('حفظ كافة التعديلات', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+            child: Text('حفظ كافة التعديلات', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
           ),
         ),
-        const SizedBox(height: 10),
+        SizedBox(height: 10),
         Row(
           children: [
             Expanded(
@@ -544,10 +544,10 @@ class _EditSupplierProfileScreenState extends ConsumerState<EditSupplierProfileS
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   padding: const EdgeInsets.symmetric(vertical: 12),
                 ),
-                child: const Text('إلغاء التعديلات والمغادرة', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 11)),
+                child: Text('إلغاء التعديلات والمغادرة', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 11)),
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12),
             Expanded(
               child: OutlinedButton(
                 onPressed: _resetFields,
@@ -556,7 +556,7 @@ class _EditSupplierProfileScreenState extends ConsumerState<EditSupplierProfileS
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   padding: const EdgeInsets.symmetric(vertical: 12),
                 ),
-                child: const Text('إعادة ضبط الافتراضي', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 11)),
+                child: Text('إعادة ضبط الافتراضي', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 11)),
               ),
             ),
           ],

@@ -20,7 +20,7 @@ class UsageStatisticsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0.5,
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
         side: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
@@ -36,15 +36,15 @@ class UsageStatisticsCard extends StatelessWidget {
               children: [
                 Text(
                   '${used.toStringAsFixed(used % 1 == 0 ? 0 : 1)}/${max.toStringAsFixed(max % 1 == 0 ? 0 : 1)}',
-                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                  style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                 ),
                 Text(
                   title,
-                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant),
+                  style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurfaceVariant),
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             UsageProgressWidget(
               used: used,
               max: max,

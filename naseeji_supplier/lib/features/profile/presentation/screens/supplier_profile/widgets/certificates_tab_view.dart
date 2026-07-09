@@ -53,7 +53,7 @@ class _CertificatesTabViewState extends ConsumerState<CertificatesTabView> {
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: const Color(0xFF0040E0), width: 1),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(Icons.add_card_outlined, color: Color(0xFF0040E0), size: 16),
@@ -72,19 +72,19 @@ class _CertificatesTabViewState extends ConsumerState<CertificatesTabView> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: const Color(0xFF0040E0), width: 1.5),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const Text('إضافة شهادة أو اعتماد جديد', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFF0040E0))),
-                  const SizedBox(height: 12),
+                  Text('إضافة شهادة أو اعتماد جديد', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFF0040E0))),
+                  SizedBox(height: 12),
                   _buildDialogTextField('اسم الشهادة / الاعتماد', _certNameController),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10),
                   _buildDialogTextField('تاريخ انتهاء الصلاحية المتوقع', _certExpiryController),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12),
                   GestureDetector(
                     onTap: () {
                       setState(() {
@@ -113,7 +113,7 @@ class _CertificatesTabViewState extends ConsumerState<CertificatesTabView> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          SizedBox(width: 8),
                           Icon(
                             uploadedFileName.isEmpty ? Icons.cloud_upload_outlined : Icons.check_circle_outline,
                             color: uploadedFileName.isEmpty ? AppColors.outline : const Color(0xFF16A34A),
@@ -123,7 +123,7 @@ class _CertificatesTabViewState extends ConsumerState<CertificatesTabView> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 14),
+                  SizedBox(height: 14),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -143,10 +143,10 @@ class _CertificatesTabViewState extends ConsumerState<CertificatesTabView> {
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                             padding: EdgeInsets.zero,
                           ),
-                          child: const Text('تراجع', style: TextStyle(fontSize: 11)),
+                          child: Text('تراجع', style: TextStyle(fontSize: 11)),
                         ),
                       ),
-                      const SizedBox(width: 12),
+                      SizedBox(width: 12),
                       SizedBox(
                         width: 170,
                         height: 40,
@@ -178,7 +178,7 @@ class _CertificatesTabViewState extends ConsumerState<CertificatesTabView> {
                             );
                           },
                           icon: const Icon(Icons.check, size: 14, color: Colors.white),
-                          label: const Text('حفظ وإرسال للتدقيق', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                          label: Text('حفظ وإرسال للتدقيق', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF0040E0),
                             foregroundColor: Colors.white,
@@ -192,17 +192,17 @@ class _CertificatesTabViewState extends ConsumerState<CertificatesTabView> {
                 ],
               ),
             ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
 
           // LIST OF CERTIFICATES
-          const Text('الشهادات الحالية المعتمدة والموثقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 12),
+          Text('الشهادات الحالية المعتمدة والموثقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 12),
           ...widget.profile.certificates.map((cert) {
             return Container(
               margin: const EdgeInsets.only(bottom: 12),
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: const Color(0xFFE2E1EF)),
                 boxShadow: [
@@ -242,19 +242,19 @@ class _CertificatesTabViewState extends ConsumerState<CertificatesTabView> {
                       children: [
                         Text(
                           cert.name,
-                          style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                          style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                           textAlign: TextAlign.end,
                         ),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4),
                         Text(
                           cert.date,
-                          style: const TextStyle(fontSize: 9, color: AppColors.outline),
+                          style: TextStyle(fontSize: 9, color: AppColors.outline),
                           textAlign: TextAlign.end,
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   // Premium verification badge (Pill shape)
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -273,7 +273,7 @@ class _CertificatesTabViewState extends ConsumerState<CertificatesTabView> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(width: 4),
+                        SizedBox(width: 4),
                         Icon(
                           cert.verified ? Icons.check_circle_outline : Icons.pending_outlined,
                           color: cert.verified ? const Color(0xFF006B5F) : Colors.orange,
@@ -298,7 +298,7 @@ class _CertificatesTabViewState extends ConsumerState<CertificatesTabView> {
         controller: ctrl,
         decoration: InputDecoration(
           labelText: label,
-          labelStyle: const TextStyle(fontSize: 11),
+          labelStyle: TextStyle(fontSize: 11),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
         ),
       ),

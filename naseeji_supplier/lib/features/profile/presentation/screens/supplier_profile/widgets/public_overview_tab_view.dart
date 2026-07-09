@@ -51,13 +51,13 @@ class PublicOverviewTabView extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 1),
+          SizedBox(height: 1),
 
           // Business Description Section
           Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(color: const Color(0xFFE2E1EF)),
               boxShadow: [
@@ -74,14 +74,14 @@ class PublicOverviewTabView extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    const Text(
+                    Text(
                       'نبذة عن خطوط الإنتاج والقدرة',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 13,
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     Icon(
                       Icons.info_outline,
                       color: const Color(0xFF0040E0),
@@ -89,27 +89,27 @@ class PublicOverviewTabView extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
-                const Text(
+                SizedBox(height: 10),
+                Text(
                   'نعمل بأحدث التقنيات الألمانية في غزل ونسيج القطنيات الفاخرة والمخلوطة، ونوفر لشركائنا من مصانع الأزياء خامات معتمدة ومطابقة لأعلى مقاييس الجودة العالمية مع إمكانية التخصيص حسب الطلب.',
                   style: TextStyle(
                     fontSize: 11,
                     height: 1.5,
-                    color: AppColors.onSurfaceVariant,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                   textAlign: TextAlign.end,
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
 
           // Additional Public B2B Details list
-          const Text(
+          Text(
             'تفاصيل المعاملات والشحن',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildDetailRow(
             'متوسط سرعة الرد الموثق',
             'أقل من ساعتين',
@@ -139,7 +139,7 @@ class PublicOverviewTabView extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
@@ -166,16 +166,16 @@ class PublicOverviewTabView extends StatelessWidget {
             children: [
               Text(
                 value,
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 12,
-                  color: AppColors.onSurface,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
-              const SizedBox(height: 2),
+              SizedBox(height: 2),
               Text(
                 label,
-                style: const TextStyle(fontSize: 9, color: AppColors.outline),
+                style: TextStyle(fontSize: 9, color: AppColors.outline),
               ),
             ],
           ),
@@ -189,7 +189,7 @@ class PublicOverviewTabView extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
@@ -199,20 +199,20 @@ class PublicOverviewTabView extends StatelessWidget {
           Expanded(
             child: Text(
               val,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.bold,
-                color: AppColors.onSurface,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
               textAlign: TextAlign.left,
             ),
           ),
-          const SizedBox(width: 10),
+          SizedBox(width: 10),
           Text(
             title,
-            style: const TextStyle(fontSize: 10, color: AppColors.outline),
+            style: TextStyle(fontSize: 10, color: AppColors.outline),
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8),
           Icon(icon, color: const Color(0xFF0040E0), size: 16),
         ],
       ),

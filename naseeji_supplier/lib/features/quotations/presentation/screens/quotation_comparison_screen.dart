@@ -19,25 +19,25 @@ class QuotationComparisonScreen extends ConsumerWidget {
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
           centerTitle: true,
           title: Text(
             'مقارنة وتحليل الأسعار لعرض $quotationId',
-            style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
+            style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
           ),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+            icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
             onPressed: () => context.pop(),
           ),
         ),
         body: stateAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (e, _) => Center(child: Text('خطأ: $e')),
           data: (quotations) {
             final index = quotations.indexWhere((q) => q.id == quotationId);
             if (index == -1) {
-              return const Center(child: Text('عرض السعر غير موجود'));
+              return Center(child: Text('عرض السعر غير موجود'));
             }
             final q = quotations[index];
 
@@ -50,7 +50,7 @@ class QuotationComparisonScreen extends ConsumerWidget {
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5),
                     ),
@@ -64,25 +64,25 @@ class QuotationComparisonScreen extends ConsumerWidget {
                             image: DecorationImage(image: NetworkImage(q.productImageUrl), fit: BoxFit.cover),
                           ),
                         ),
-                        const SizedBox(width: 12),
+                        SizedBox(width: 12),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(q.productName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
-                              const SizedBox(height: 2),
-                              Text('الكمية المطلوبة: ${q.quantity.toInt()} ${q.unit} • فئة: ${q.productCategory}', style: const TextStyle(fontSize: 8, color: AppColors.outline)),
+                              Text(q.productName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+                              SizedBox(height: 2),
+                              Text('الكمية المطلوبة: ${q.quantity.toInt()} ${q.unit} • فئة: ${q.productCategory}', style: TextStyle(fontSize: 8, color: AppColors.outline)),
                             ],
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
 
                   // The main Comparison Table and Trends
                   QuotationComparisonTable(quotation: q),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
 
                   // Additional analytical card
                   Container(
@@ -95,7 +95,7 @@ class QuotationComparisonScreen extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Row(
+                        Row(
                           children: [
                             Icon(Icons.lightbulb_outline, color: AppColors.primary, size: 16),
                             SizedBox(width: 8),
@@ -105,10 +105,10 @@ class QuotationComparisonScreen extends ConsumerWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 8),
+                        SizedBox(height: 8),
                         Text(
                           'تظهر تحليلاتنا أن متوسط السعر المعتمد لنوع ${q.productCategory} في السوق هو ${(q.supplierUnitPrice * 0.98).toStringAsFixed(1)} ر.س. يعتبر عرض السعر الحالي مناسباً ومنافساً وممتازاً لتأمين الصفقة بنسبة قبول متوقعة تفوق ٨٥٪.',
-                          style: const TextStyle(fontSize: 9, color: AppColors.onSurfaceVariant, height: 1.4),
+                          style: TextStyle(fontSize: 9, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.4),
                         ),
                       ],
                     ),

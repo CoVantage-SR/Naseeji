@@ -54,18 +54,18 @@ class _SubscriptionPaymentMethodsScreenState extends ConsumerState<SubscriptionP
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
-          title: const Text(
+          title: Text(
             'طرق وبوابات الدفع',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.onSurface),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
           ),
           centerTitle: true,
         ),
         body: Material(
           color: Theme.of(context).scaffoldBackgroundColor,
           child: methodsAsync.when(
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => Center(child: CircularProgressIndicator()),
             error: (e, _) => Center(child: Text('خطأ: $e')),
             data: (methods) {
               return SingleChildScrollView(
@@ -74,12 +74,12 @@ class _SubscriptionPaymentMethodsScreenState extends ConsumerState<SubscriptionP
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Payment methods lists
-                    const Text(
+                    Text(
                       'وسائل الدفع المسجلة الحالية',
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                       textAlign: TextAlign.right,
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12),
                     ...methods.map((method) {
                       IconData icon = Icons.credit_card;
                       if (method.type == PaymentMethodType.bankTransfer) {
@@ -92,7 +92,7 @@ class _SubscriptionPaymentMethodsScreenState extends ConsumerState<SubscriptionP
                         margin: const EdgeInsets.only(bottom: 12),
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.surface,
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
                             color: method.isDefault
@@ -136,23 +136,23 @@ class _SubscriptionPaymentMethodsScreenState extends ConsumerState<SubscriptionP
                                                   color: const Color(0xFF006B5F).withValues(alpha: 0.1),
                                                   borderRadius: BorderRadius.circular(4),
                                                 ),
-                                                child: const Text('افتراضية', style: TextStyle(fontSize: 8, color: Color(0xFF006B5F), fontWeight: FontWeight.bold)),
+                                                child: Text('افتراضية', style: TextStyle(fontSize: 8, color: Color(0xFF006B5F), fontWeight: FontWeight.bold)),
                                               ),
                                             Text(
                                               method.name,
-                                              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                                              style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(height: 4),
+                                        SizedBox(height: 4),
                                         Text(
                                           method.details,
-                                          style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant),
+                                          style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  const SizedBox(width: 16),
+                                  SizedBox(width: 16),
                                   Container(
                                     padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(
@@ -168,27 +168,27 @@ class _SubscriptionPaymentMethodsScreenState extends ConsumerState<SubscriptionP
                         ),
                       );
                     }),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24),
 
                     // Add Payment method form
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          const Text(
+                          Text(
                             'إضافة طريقة دفع جديدة B2B',
-                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                           ),
                           const Divider(height: 20, color: AppColors.outlineVariant),
                           
-                          const Text('نوع طريقة الدفع', style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant)),
-                          const SizedBox(height: 6),
+                          Text('نوع طريقة الدفع', style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant)),
+                          SizedBox(height: 6),
                           DropdownButtonFormField<PaymentMethodType>(
                             value: _selectedType,
                             items: const [
@@ -205,19 +205,19 @@ class _SubscriptionPaymentMethodsScreenState extends ConsumerState<SubscriptionP
                               border: OutlineInputBorder(),
                             ),
                           ),
-                          const SizedBox(height: 12),
+                          SizedBox(height: 12),
                           CustomTextField(
                             controller: _nameController,
                             labelText: 'اسم طريقة الدفع',
                             hintText: 'مثال: مدى بنك الإنماء للشركة',
                           ),
-                          const SizedBox(height: 12),
+                          SizedBox(height: 12),
                           CustomTextField(
                             controller: _detailsController,
                             labelText: 'تفاصيل الحساب / أرقام البطاقة',
                             hintText: 'مثال: **** 4930 أو الآيبان SA...',
                           ),
-                          const SizedBox(height: 20),
+                          SizedBox(height: 20),
                           PrimaryButton(
                             text: 'حفظ طريقة الدفع الجديدة',
                             onPressed: _addMethod,

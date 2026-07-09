@@ -25,7 +25,7 @@ class AddNewProductScreen extends ConsumerWidget {
     Widget buildStepContent(int step) {
       switch (step) {
         case 1:
-          return const Column(
+          return Column(
             children: [
               ProductIdentityForm(),
               SizedBox(height: 24),
@@ -46,10 +46,10 @@ class AddNewProductScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'Naseeji',
           style: TextStyle(
             color: AppColors.primary,
@@ -58,7 +58,7 @@ class AddNewProductScreen extends ConsumerWidget {
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.onSurfaceVariant),
+          icon: const Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurfaceVariant),
           onPressed: () => context.pop(),
         ),
       ),
@@ -72,25 +72,25 @@ class AddNewProductScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               // Page Header
-              const Text(
+              Text(
                 'إضافة منتج جديد',
                 textAlign: TextAlign.right,
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.onSurface,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
-              const SizedBox(height: 6),
-              const Text(
+              SizedBox(height: 6),
+              Text(
                 'أدخل التفاصيل الأساسية للمنسوجات الخاصة بك للبدء',
                 textAlign: TextAlign.right,
                 style: TextStyle(
                   fontSize: 13,
-                  color: AppColors.onSurfaceVariant,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
-              const SizedBox(height: 32),
+              SizedBox(height: 32),
 
               // Layout Grid
               if (isDesktop)
@@ -102,7 +102,7 @@ class AddNewProductScreen extends ConsumerWidget {
                       flex: 3,
                       child: buildStepContent(formData.currentStep),
                     ),
-                    const SizedBox(width: 32),
+                    SizedBox(width: 32),
                     // Progress Stepper (Right side for RTL)
                     if (formData.currentStep < 4)
                       SizedBox(
@@ -117,7 +117,7 @@ class AddNewProductScreen extends ConsumerWidget {
                   children: [
                     if (formData.currentStep < 4) ...[
                       ProductHorizontalStepper(currentStep: formData.currentStep),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24),
                     ],
                     buildStepContent(formData.currentStep),
                   ],

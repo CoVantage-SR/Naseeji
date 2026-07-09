@@ -11,7 +11,7 @@ class ProductSuccessSummary extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         // Success animation/checkmark header
-        const Column(
+        Column(
           children: [
             Stack(
               alignment: Alignment.center,
@@ -30,17 +30,17 @@ class ProductSuccessSummary extends StatelessWidget {
             SizedBox(height: 16),
             Text(
               'تم إضافة المنتج بنجاح',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
             ),
             SizedBox(height: 6),
             Text(
               'المنتج الآن مدرج في الكتالوج الخاص بك وجاهز للطلبات.',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 13, color: AppColors.onSurfaceVariant),
+              style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurfaceVariant),
             ),
           ],
         ),
-        const SizedBox(height: 32),
+        SizedBox(height: 32),
 
         // Bento grid layout
         Row(
@@ -56,7 +56,7 @@ class ProductSuccessSummary extends StatelessWidget {
                     width: double.infinity,
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(16),
                       border: Border(
                         top: const BorderSide(color: AppColors.primary, width: 4),
@@ -65,17 +65,17 @@ class ProductSuccessSummary extends StatelessWidget {
                         bottom: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                       ),
                     ),
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text('السعر التقريبي', style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant)),
+                        Text('السعر التقريبي', style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant)),
                         SizedBox(height: 6),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.baseline,
                           textBaseline: TextBaseline.alphabetic,
                           children: [
-                            Text('/ للمتر', style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant)),
+                            Text('/ للمتر', style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant)),
                             SizedBox(width: 4),
                             Text('12.50 SAR', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.primary)),
                           ],
@@ -83,14 +83,14 @@ class ProductSuccessSummary extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
 
                   // Stock/MOQ card
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(16),
                       border: Border(
                         top: const BorderSide(color: Colors.teal, width: 4),
@@ -102,18 +102,18 @@ class ProductSuccessSummary extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        const Text('الحد الأدنى للطلب (MOQ)', style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant)),
-                        const SizedBox(height: 6),
-                        const Text('500 متر', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
-                        const SizedBox(height: 12),
-                        const Row(
+                        Text('الحد الأدنى للطلب (MOQ)', style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant)),
+                        SizedBox(height: 6),
+                        Text('500 متر', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
+                        SizedBox(height: 12),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text('متوفر بكثرة', style: TextStyle(fontSize: 11, color: Colors.teal, fontWeight: FontWeight.bold)),
-                            Text('التوفر:', style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant)),
+                            Text('التوفر:', style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant)),
                           ],
                         ),
-                        const SizedBox(height: 6),
+                        SizedBox(height: 6),
                         LinearProgressIndicator(
                           value: 0.8,
                           backgroundColor: Colors.teal.shade50,
@@ -126,7 +126,7 @@ class ProductSuccessSummary extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
 
             // Main info card (Right side)
             Expanded(
@@ -136,7 +136,7 @@ class ProductSuccessSummary extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                     ),
@@ -153,37 +153,37 @@ class ProductSuccessSummary extends StatelessWidget {
                                   color: AppColors.primary.withValues(alpha: 0.08),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
-                                child: const Text(
+                                child: Text(
                                   'نسيج فاخر',
                                   style: TextStyle(fontSize: 11, color: AppColors.primary, fontWeight: FontWeight.bold),
                                 ),
                               ),
-                              const SizedBox(height: 12),
-                              const Text(
+                              SizedBox(height: 12),
+                              Text(
                                 'حرير "إنديجو برو" الفاخر',
-                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                               ),
-                              const SizedBox(height: 8),
-                              const Text(
+                              SizedBox(height: 8),
+                              Text(
                                 'قماش حريري عالي الجودة مصمم للمصانع الذكية، يتميز بمتانة استثنائية ولمسة ناعمة فاخرة. متوافق مع معايير الإنتاج الصناعي.',
                                 textAlign: TextAlign.right,
-                                style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant, height: 1.4),
+                                style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.4),
                               ),
-                              const SizedBox(height: 16),
+                              SizedBox(height: 16),
                               const Divider(color: AppColors.outlineVariant, height: 1),
-                              const SizedBox(height: 16),
-                              const Row(
+                              SizedBox(height: 16),
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Text('التصنيف: منسوجات', style: TextStyle(fontSize: 12, color: AppColors.onSurface)),
+                                  Text('التصنيف: منسوجات', style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurface)),
                                   SizedBox(width: 16),
-                                  Text('SKU: TX-IND-902', style: TextStyle(fontSize: 12, color: AppColors.onSurface)),
+                                  Text('SKU: TX-IND-902', style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurface)),
                                 ],
                               ),
                             ],
                           ),
                         ),
-                        const SizedBox(width: 16),
+                        SizedBox(width: 16),
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8),
                           child: Image.network(
@@ -196,32 +196,32 @@ class ProductSuccessSummary extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
 
                   // Technical Specs summary
                   Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        const Text(
+                        Text(
                           'المواصفات الفنية للمنتج',
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                         ),
-                        const SizedBox(height: 16),
+                        SizedBox(height: 16),
                         Row(
                           children: [
                             Expanded(child: _buildSpecLabel(context, 'الغسيل', 'جاف فقط')),
-                            const SizedBox(width: 8),
+                            SizedBox(width: 8),
                             Expanded(child: _buildSpecLabel(context, 'التركيبة', '100% حرير')),
-                            const SizedBox(width: 8),
+                            SizedBox(width: 8),
                             Expanded(child: _buildSpecLabel(context, 'العرض', '150 سم')),
-                            const SizedBox(width: 8),
+                            SizedBox(width: 8),
                             Expanded(child: _buildSpecLabel(context, 'الوزن', '120 gsm')),
                           ],
                         ),
@@ -233,7 +233,7 @@ class ProductSuccessSummary extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 32),
+        SizedBox(height: 32),
 
         // Action Buttons
         Row(
@@ -249,7 +249,7 @@ class ProductSuccessSummary extends StatelessWidget {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                 padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
               ),
-              child: const Text('العودة للرئيسية', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+              child: Text('العودة للرئيسية', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
             ),
           ],
         ),
@@ -266,9 +266,9 @@ class ProductSuccessSummary extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(title, style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant)),
-          const SizedBox(height: 4),
-          Text(val, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
+          Text(title, style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant)),
+          SizedBox(height: 4),
+          Text(val, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
         ],
       ),
     );

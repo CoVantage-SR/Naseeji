@@ -34,11 +34,11 @@ class AddonDetailsScreen extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
-          title: const Text(
+          title: Text(
             'تفاصيل الباقة الإضافية B2B',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.onSurface),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
           ),
           centerTitle: true,
         ),
@@ -53,7 +53,7 @@ class AddonDetailsScreen extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                   ),
@@ -62,12 +62,12 @@ class AddonDetailsScreen extends StatelessWidget {
                     children: [
                       Text(
                         item.name,
-                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                        style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                       ),
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6),
                       Text(
                         'تكلفة الملحق: ${item.price.toStringAsFixed(0)} ر.س / تدفع مرة واحدة',
-                        style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant),
+                        style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
                       ),
                       const Divider(height: 24, color: AppColors.outlineVariant),
                       _buildInfoRow('حجم الزيادة المضافة للموارد', item.usage),
@@ -77,45 +77,45 @@ class AddonDetailsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // Description card
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const Text(
+                      Text(
                         'نبذة عن الباقة الإضافية للموارد',
-                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                       ),
                       const Divider(height: 20, color: AppColors.outlineVariant),
                       Text(
                         item.description,
-                        style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant, height: 1.4),
+                        style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.4),
                         textAlign: TextAlign.right,
                       ),
-                      const SizedBox(height: 12),
-                      const Text(
+                      SizedBox(height: 12),
+                      Text(
                         'الشروط والأحكام الخاصة بالملحقات B2B:',
-                        style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                        style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                         textAlign: TextAlign.right,
                       ),
-                      const SizedBox(height: 6),
-                      const Text(
+                      SizedBox(height: 6),
+                      Text(
                         '- يتم شحن الرسوم مباشرة بعد تأكيد الشراء.\n- الملحقات غير قابلة للاسترجاع بعد التفعيل.\n- ترتبط صلاحية بعض الملحقات بصلاحية الباقة الأساسية.',
-                        style: TextStyle(fontSize: 9, color: AppColors.onSurfaceVariant, height: 1.4),
+                        style: TextStyle(fontSize: 9, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.4),
                         textAlign: TextAlign.right,
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
 
                 Row(
                   children: [
@@ -123,15 +123,15 @@ class AddonDetailsScreen extends StatelessWidget {
                       child: OutlinedButton(
                         onPressed: () => context.pop(),
                         style: OutlinedButton.styleFrom(
-                          foregroundColor: AppColors.onSurface,
+                          foregroundColor: Theme.of(context).colorScheme.onSurface,
                           side: BorderSide(color: AppColors.outlineVariant),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                           padding: const EdgeInsets.symmetric(vertical: 12),
                         ),
-                        child: const Text('العودة للمتجر', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                        child: Text('العودة للمتجر', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
                       ),
                     ),
-                    const SizedBox(width: 16),
+                    SizedBox(width: 16),
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () {
@@ -146,7 +146,7 @@ class AddonDetailsScreen extends StatelessWidget {
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                           padding: const EdgeInsets.symmetric(vertical: 12),
                         ),
-                        child: const Text('المتابعة للشراء', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                        child: Text('المتابعة للشراء', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
                       ),
                     ),
                   ],
@@ -167,11 +167,11 @@ class AddonDetailsScreen extends StatelessWidget {
         children: [
           Text(
             value,
-            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
           ),
           Text(
             label,
-            style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant),
+            style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
           ),
         ],
       ),

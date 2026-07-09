@@ -26,16 +26,16 @@ class ProductSubscriptionStatus extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text(
+          Text(
             'حالة هذا المنتج في الباقة والمبيعات B2B',
-            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
           ),
           const Divider(height: 20, color: AppColors.outlineVariant),
           _buildInfoRow('باقة الاشتراك الحالية', planName),
@@ -57,11 +57,11 @@ class ProductSubscriptionStatus extends StatelessWidget {
         children: [
           Text(
             value,
-            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
           ),
           Text(
             label,
-            style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+            style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant),
           ),
         ],
       ),

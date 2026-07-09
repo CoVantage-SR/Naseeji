@@ -7,13 +7,13 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       elevation: 0.5,
       leading: IconButton(
-        icon: const Icon(Icons.notifications_none, color: AppColors.onSurfaceVariant),
+        icon: const Icon(Icons.notifications_none, color: Theme.of(context).colorScheme.onSurfaceVariant),
         onPressed: () {},
       ),
-      title: const Row(
+      title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
@@ -28,11 +28,11 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.search, color: AppColors.onSurfaceVariant),
+          icon: const Icon(Icons.search, color: Theme.of(context).colorScheme.onSurfaceVariant),
           onPressed: () {},
         ),
         IconButton(
-          icon: const Icon(Icons.menu, color: AppColors.onSurfaceVariant),
+          icon: const Icon(Icons.menu, color: Theme.of(context).colorScheme.onSurfaceVariant),
           onPressed: () {},
         ),
       ],

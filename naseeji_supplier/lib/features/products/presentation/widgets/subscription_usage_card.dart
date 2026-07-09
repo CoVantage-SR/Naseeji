@@ -24,7 +24,7 @@ class SubscriptionUsageCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0.5,
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
@@ -40,21 +40,21 @@ class SubscriptionUsageCard extends StatelessWidget {
               children: [
                 Text(
                   '${used.toStringAsFixed(used % 1 == 0 ? 0 : 1)} / ${max.toStringAsFixed(max % 1 == 0 ? 0 : 1)} $unit',
-                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                 ),
                 Text(
                   title,
-                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             UsageProgressWidget(
               used: used,
               max: max,
             ),
             if (used >= max && onActionTap != null) ...[
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               OutlinedButton(
                 onPressed: onActionTap,
                 style: OutlinedButton.styleFrom(
@@ -64,7 +64,7 @@ class SubscriptionUsageCard extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   minimumSize: const Size(100, 36),
                 ),
-                child: Text(actionLabel, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+                child: Text(actionLabel, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
               ),
             ],
           ],

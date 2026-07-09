@@ -17,8 +17,8 @@ class _VipBottomSheetState extends State<VipBottomSheet> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
         ),
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 24),
@@ -38,9 +38,9 @@ class _VipBottomSheetState extends State<VipBottomSheet> {
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
               // Header
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   PremiumBadge(fontSize: 12, padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4)),
@@ -50,18 +50,18 @@ class _VipBottomSheetState extends State<VipBottomSheet> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
-                      color: AppColors.onSurface,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 6),
-              const Text(
+              SizedBox(height: 6),
+              Text(
                 'احصل على وصول غير محدود لكافة ميزات التسويق والتحليلات الذكية لزيادة مبيعاتك ونمو نشاطك.',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 12, color: AppColors.outline),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
 
               // Pricing Plans Cards
               Row(
@@ -75,7 +75,7 @@ class _VipBottomSheetState extends State<VipBottomSheet> {
                       desc: 'خيار مرن للاختبار والتجربة',
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  SizedBox(width: 10),
                   Expanded(
                     child: _buildPlanCard(
                       id: 'yearly',
@@ -88,7 +88,7 @@ class _VipBottomSheetState extends State<VipBottomSheet> {
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10),
               _buildPlanCard(
                 id: 'enterprise',
                 title: 'المؤسسات الكبرى (Enterprise)',
@@ -98,16 +98,16 @@ class _VipBottomSheetState extends State<VipBottomSheet> {
                 isWide: true,
               ),
 
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
               // Comparison Table
-              const Text(
+              Text(
                 'مقارنة الميزات والخدمات',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.onSurface),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Theme.of(context).colorScheme.onSurface),
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10),
               Container(
                 decoration: BoxDecoration(
-                  color: AppColors.surfaceContainerLow,
+                  color: Theme.of(context).colorScheme.surfaceContainerLow,
                   borderRadius: BorderRadius.circular(16),
                 ),
                 padding: const EdgeInsets.all(12),
@@ -126,7 +126,7 @@ class _VipBottomSheetState extends State<VipBottomSheet> {
                 ),
               ),
 
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
               // Action Buttons
               ElevatedButton(
                 onPressed: () {
@@ -141,13 +141,13 @@ class _VipBottomSheetState extends State<VipBottomSheet> {
                 ),
                 child: Text(
                   _selectedPlan == 'enterprise' ? 'تواصل مع فريق المبيعات' : 'اشترك الآن وفعل الميزات',
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                 ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               TextButton(
                 onPressed: () => Navigator.pop(context, false),
-                child: const Text(
+                child: Text(
                   'ربما لاحقاً',
                   style: TextStyle(color: AppColors.outline, fontSize: 13, fontWeight: FontWeight.bold),
                 ),
@@ -175,7 +175,7 @@ class _VipBottomSheetState extends State<VipBottomSheet> {
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: isSelected ? const Color(0xFFFFA500) : AppColors.outlineVariant,
@@ -202,10 +202,10 @@ class _VipBottomSheetState extends State<VipBottomSheet> {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 12,
-                    color: isSelected ? const Color(0xFFE68A00) : AppColors.onSurface,
+                    color: isSelected ? const Color(0xFFE68A00) : Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
-                const SizedBox(height: 6),
+                SizedBox(height: 6),
                 Row(
                   textBaseline: TextBaseline.alphabetic,
                   crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -215,19 +215,19 @@ class _VipBottomSheetState extends State<VipBottomSheet> {
                       style: TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: isWide ? 15 : 18,
-                        color: isSelected ? const Color(0xFF0040E0) : AppColors.onSurface,
+                        color: isSelected ? const Color(0xFF0040E0) : Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     Text(
                       period,
-                      style: const TextStyle(fontSize: 10, color: AppColors.outline),
+                      style: TextStyle(fontSize: 10, color: AppColors.outline),
                     ),
                   ],
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Text(
                   desc,
-                  style: const TextStyle(fontSize: 9, color: AppColors.outline),
+                  style: TextStyle(fontSize: 9, color: AppColors.outline),
                 ),
               ],
             ),
@@ -243,7 +243,7 @@ class _VipBottomSheetState extends State<VipBottomSheet> {
                   ),
                   child: Text(
                     badge,
-                    style: const TextStyle(color: Colors.white, fontSize: 8, fontWeight: FontWeight.bold),
+                    style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 8, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -267,7 +267,7 @@ class _VipBottomSheetState extends State<VipBottomSheet> {
           flex: 4,
           child: Text(
             feature,
-            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
           ),
         ),
         Expanded(

@@ -28,8 +28,8 @@ class QuotationComparisonTable extends StatelessWidget {
     final factorySavings = (firstPrice - currentPrice) * quotation.quantity;
 
     return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.all(Radius.circular(16)),
         boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
       ),
@@ -37,19 +37,19 @@ class QuotationComparisonTable extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Row(
+          Row(
             children: [
               Icon(Icons.compare_arrows_outlined, color: AppColors.primary, size: 18),
               SizedBox(width: 8),
               Text(
                 'مقارنة وتحليل الأسعار التفاوضية',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.onSurface),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Theme.of(context).colorScheme.onSurface),
               ),
             ],
           ),
-          const SizedBox(height: 10),
-          const Divider(height: 1, color: AppColors.surfaceContainerLow),
-          const SizedBox(height: 12),
+          SizedBox(height: 10),
+          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          SizedBox(height: 12),
 
           // Comparison Rows Table
           Table(
@@ -60,8 +60,8 @@ class QuotationComparisonTable extends StatelessWidget {
             },
             children: [
               TableRow(
-                decoration: const BoxDecoration(
-                  color: AppColors.surfaceContainerLow,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surfaceContainerLow,
                 ),
                 children: [
                   _buildCell('المرحلة التفاوضية', isHeader: true),
@@ -100,14 +100,14 @@ class QuotationComparisonTable extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Key Analysis Metrics
-          const Text(
+          Text(
             'تحليل التوفير والهوامش',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: AppColors.onSurface),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: Theme.of(context).colorScheme.onSurface),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           
           Row(
             children: [
@@ -117,7 +117,7 @@ class QuotationComparisonTable extends StatelessWidget {
                 icon: Icons.difference_outlined,
                 color: Colors.blue,
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               _buildMetricTile(
                 label: 'وفورات المصنع المحققة',
                 value: factorySavings > 0 ? '${factorySavings.toStringAsFixed(0)} ${quotation.currency}' : 'لا يوجد تفاوض بعد',
@@ -126,7 +126,7 @@ class QuotationComparisonTable extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Row(
             children: [
               _buildMetricTile(
@@ -147,12 +147,12 @@ class QuotationComparisonTable extends StatelessWidget {
           ),
 
           // Simple Visual Price Trend Chart
-          const SizedBox(height: 16),
-          const Text(
+          SizedBox(height: 16),
+          Text(
             'رسم بياني لمسار السعر',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: AppColors.onSurface),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: Theme.of(context).colorScheme.onSurface),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           SizedBox(
             height: 80,
             child: Row(
@@ -173,16 +173,16 @@ class QuotationComparisonTable extends StatelessWidget {
   }
 
   Widget _buildCell(String text, {bool isHeader = false, bool isBold = false, bool isPrimary = false, bool isSuccess = false}) {
-    TextStyle style = const TextStyle(fontSize: 10, color: AppColors.onSurface);
+    TextStyle style = TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurface);
     if (isHeader) {
-      style = const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant);
+      style = TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurfaceVariant);
     } else if (isBold || isPrimary || isSuccess) {
       style = TextStyle(
         fontSize: 10,
         fontWeight: FontWeight.bold,
         color: isPrimary 
             ? AppColors.primary 
-            : (isSuccess ? Colors.green : AppColors.onSurface),
+            : (isSuccess ? Colors.green : Theme.of(context).colorScheme.onSurface),
       );
     }
     return TableCell(
@@ -206,13 +206,13 @@ class QuotationComparisonTable extends StatelessWidget {
         child: Row(
           children: [
             Icon(icon, color: color, size: 16),
-            const SizedBox(width: 8),
+            SizedBox(width: 8),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(label, style: const TextStyle(fontSize: 8, color: AppColors.outline)),
-                  const SizedBox(height: 2),
+                  Text(label, style: TextStyle(fontSize: 8, color: AppColors.outline)),
+                  SizedBox(height: 2),
                   Text(
                     value, 
                     style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: color),
@@ -237,7 +237,7 @@ class QuotationComparisonTable extends StatelessWidget {
           value.toStringAsFixed(0),
           style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: color),
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: 4),
         Container(
           width: 24,
           height: 40 * heightRatio,
@@ -246,8 +246,8 @@ class QuotationComparisonTable extends StatelessWidget {
             borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
           ),
         ),
-        const SizedBox(height: 4),
-        Text(label, style: const TextStyle(fontSize: 8, color: AppColors.outline)),
+        SizedBox(height: 4),
+        Text(label, style: TextStyle(fontSize: 8, color: AppColors.outline)),
       ],
     );
   }

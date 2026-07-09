@@ -44,19 +44,19 @@ class _ProductPricingFormState extends ConsumerState<ProductPricingForm> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const Text(
+              Text(
                 'الكميات والمخزون',
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF004D40)),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Icon(Icons.inventory_2_outlined, color: Colors.teal.shade700, size: 20),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
 
           // MOQ Field
-          const Text('الحد الأدنى للطلب (MOQ)', style: TextStyle(fontSize: 12, color: Color(0xFF00796B), fontWeight: FontWeight.bold)),
-          const SizedBox(height: 6),
+          Text('الحد الأدنى للطلب (MOQ)', style: TextStyle(fontSize: 12, color: Color(0xFF00796B), fontWeight: FontWeight.bold)),
+          SizedBox(height: 6),
           TextFormField(
             initialValue: '100',
             keyboardType: TextInputType.number,
@@ -67,11 +67,11 @@ class _ProductPricingFormState extends ConsumerState<ProductPricingForm> {
               contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Unit Selector
-          const Text('وحدة القياس', style: TextStyle(fontSize: 12, color: Color(0xFF00796B), fontWeight: FontWeight.bold)),
-          const SizedBox(height: 6),
+          Text('وحدة القياس', style: TextStyle(fontSize: 12, color: Color(0xFF00796B), fontWeight: FontWeight.bold)),
+          SizedBox(height: 6),
           DropdownButtonFormField<String>(
             initialValue: _selectedUnit,
             alignment: AlignmentDirectional.centerEnd,
@@ -91,14 +91,14 @@ class _ProductPricingFormState extends ConsumerState<ProductPricingForm> {
               }
             },
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
 
           // Reorder Level
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('${_reorderLevel.round()} وحدة', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF004D40))),
-              const Text('مستوى إعادة الطلب', style: TextStyle(fontSize: 12, color: Color(0xFF00796B))),
+              Text('${_reorderLevel.round()} وحدة', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF004D40))),
+              Text('مستوى إعادة الطلب', style: TextStyle(fontSize: 12, color: Color(0xFF00796B))),
             ],
           ),
           Slider(
@@ -120,25 +120,25 @@ class _ProductPricingFormState extends ConsumerState<ProductPricingForm> {
     final basicPricingCard = Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
                 'إعدادات السعر الأساسي',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
               ),
               SizedBox(width: 8),
               Icon(Icons.payments_outlined, color: AppColors.primary, size: 20),
             ],
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
 
           // Grid fields
           Row(
@@ -147,8 +147,8 @@ class _ProductPricingFormState extends ConsumerState<ProductPricingForm> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    const Text('سعر الجملة (للموردين)', style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant)),
-                    const SizedBox(height: 8),
+                    Text('سعر الجملة (للموردين)', style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant)),
+                    SizedBox(height: 8),
                     TextFormField(
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.right,
@@ -159,13 +159,13 @@ class _ProductPricingFormState extends ConsumerState<ProductPricingForm> {
                   ],
                 ),
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    const Text('سعر التجزئة (للقطعة)', style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant)),
-                    const SizedBox(height: 8),
+                    Text('سعر التجزئة (للقطعة)', style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant)),
+                    SizedBox(height: 8),
                     TextFormField(
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.right,
@@ -178,7 +178,7 @@ class _ProductPricingFormState extends ConsumerState<ProductPricingForm> {
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
 
           Row(
             children: [
@@ -186,8 +186,8 @@ class _ProductPricingFormState extends ConsumerState<ProductPricingForm> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    const Text('هامش الربح المستهدف (%)', style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant)),
-                    const SizedBox(height: 8),
+                    Text('هامش الربح المستهدف (%)', style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant)),
+                    SizedBox(height: 8),
                     TextFormField(
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.right,
@@ -198,13 +198,13 @@ class _ProductPricingFormState extends ConsumerState<ProductPricingForm> {
                   ],
                 ),
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    const Text('تكلفة الإنتاج التقديرية', style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant)),
-                    const SizedBox(height: 8),
+                    Text('تكلفة الإنتاج التقديرية', style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant)),
+                    SizedBox(height: 8),
                     TextFormField(
                       keyboardType: TextInputType.number,
                       textAlign: TextAlign.right,
@@ -229,7 +229,7 @@ class _ProductPricingFormState extends ConsumerState<ProductPricingForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(flex: 1, child: moqCard),
-              const SizedBox(width: 16),
+              SizedBox(width: 16),
               Expanded(flex: 2, child: basicPricingCard),
             ],
           )
@@ -238,17 +238,17 @@ class _ProductPricingFormState extends ConsumerState<ProductPricingForm> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               basicPricingCard,
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
               moqCard,
             ],
           ),
-        const SizedBox(height: 24),
+        SizedBox(height: 24),
 
         // Bulk Discount Tiers Card
         Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
           ),
@@ -270,21 +270,21 @@ class _ProductPricingFormState extends ConsumerState<ProductPricingForm> {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     ),
                     icon: const Icon(Icons.add, size: 14),
-                    label: const Text('إضافة شريحة جديدة', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                    label: Text('إضافة شريحة جديدة', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
                   ),
                   Row(
                     children: [
-                      const Text(
+                      Text(
                         'شرائح خصم الكميات الكبيرة',
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                       ),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8),
                       Icon(Icons.loyalty_outlined, color: Colors.orange.shade800, size: 20),
                     ],
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
 
               // Table
               Table(
@@ -311,7 +311,7 @@ class _ProductPricingFormState extends ConsumerState<ProductPricingForm> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: Text('${tier['price']} SAR', textAlign: TextAlign.right, style: const TextStyle(fontSize: 13)),
+                          child: Text('${tier['price']} SAR', textAlign: TextAlign.right, style: TextStyle(fontSize: 13)),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
@@ -354,7 +354,7 @@ class _ProductPricingFormState extends ConsumerState<ProductPricingForm> {
             ],
           ),
         ),
-        const SizedBox(height: 32),
+        SizedBox(height: 32),
 
         // Bottom Actions
         Row(
@@ -365,21 +365,21 @@ class _ProductPricingFormState extends ConsumerState<ProductPricingForm> {
                 controller.setStep(2);
               },
               style: OutlinedButton.styleFrom(
-                foregroundColor: AppColors.onSurfaceVariant,
+                foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
                 side: const BorderSide(color: AppColors.outlineVariant),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               ),
               icon: const Icon(Icons.arrow_forward, size: 16),
-              label: const Text('الرجوع للخطوة السابقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+              label: Text('الرجوع للخطوة السابقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
             ),
             Row(
               children: [
                 TextButton(
                   onPressed: () {},
-                  child: const Text('حفظ كمسودة', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
+                  child: Text('حفظ كمسودة', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12),
                 ElevatedButton.icon(
                   onPressed: () {
                     controller.setStep(4);
@@ -391,7 +391,7 @@ class _ProductPricingFormState extends ConsumerState<ProductPricingForm> {
                     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   ),
                   icon: const Icon(Icons.arrow_back, size: 16),
-                  label: const Text('الاستمرار للخطوة التالية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                  label: Text('الاستمرار للخطوة التالية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
                 ),
               ],
             ),

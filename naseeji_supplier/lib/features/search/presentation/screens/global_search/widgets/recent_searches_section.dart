@@ -20,22 +20,22 @@ class RecentSearchesSection extends StatelessWidget {
           children: [
             TextButton(
               onPressed: () {},
-              child: const Text(
+              child: Text(
                 'مسح الكل',
                 style: TextStyle(color: Color(0xFF0040E0), fontSize: 13, fontWeight: FontWeight.bold),
               ),
             ),
-            const Text(
+            Text(
               'عمليات البحث الأخيرة',
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
-                color: AppColors.onSurface,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8),
         ...recentSearches.map((search) => _buildRecentSearchItem(context, search)),
       ],
     );
@@ -55,7 +55,7 @@ class RecentSearchesSection extends StatelessWidget {
           const Icon(Icons.history, color: AppColors.outline, size: 18),
           Text(
             text,
-            style: const TextStyle(fontSize: 13, color: AppColors.onSurface),
+            style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurface),
           ),
         ],
       ),

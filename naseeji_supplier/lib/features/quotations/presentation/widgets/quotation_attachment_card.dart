@@ -37,24 +37,24 @@ class QuotationAttachmentCard extends StatelessWidget {
             width: 36,
             height: 36,
             decoration: BoxDecoration(
-              color: AppColors.surface,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(icon, color: AppColors.primary, size: 18),
           ),
-          const SizedBox(width: 10),
+          SizedBox(width: 10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 10, color: AppColors.onSurface),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10, color: Theme.of(context).colorScheme.onSurface),
                 ),
-                const SizedBox(height: 2),
+                SizedBox(height: 2),
                 Text(
                   filename,
-                  style: const TextStyle(fontSize: 8, color: AppColors.outline),
+                  style: TextStyle(fontSize: 8, color: AppColors.outline),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

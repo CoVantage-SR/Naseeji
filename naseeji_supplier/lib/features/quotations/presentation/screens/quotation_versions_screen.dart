@@ -58,25 +58,25 @@ class _QuotationVersionsScreenState extends ConsumerState<QuotationVersionsScree
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
           centerTitle: true,
           title: Text(
             'سجل إصدارات العرض ${widget.quotationId}',
-            style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
+            style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
           ),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+            icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
             onPressed: () => context.pop(),
           ),
         ),
         body: stateAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (e, _) => Center(child: Text('خطأ: $e')),
           data: (quotations) {
             final index = quotations.indexWhere((q) => q.id == widget.quotationId);
             if (index == -1) {
-              return const Center(child: Text('عرض السعر غير موجود'));
+              return Center(child: Text('عرض السعر غير موجود'));
             }
             final q = quotations[index];
 
@@ -147,7 +147,7 @@ class _QuotationVersionsScreenState extends ConsumerState<QuotationVersionsScree
                 // Comparison Bar at the bottom
                 if (_selectedVersionsForCompare.isNotEmpty)
                   Container(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     child: SafeArea(
                       child: Row(
@@ -155,7 +155,7 @@ class _QuotationVersionsScreenState extends ConsumerState<QuotationVersionsScree
                         children: [
                           Text(
                             'تم تحديد ${_selectedVersionsForCompare.length} من الإصدارات للمقارنة',
-                            style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.outline),
+                            style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.outline),
                           ),
                           ElevatedButton(
                             onPressed: _selectedVersionsForCompare.length == 2
@@ -168,7 +168,7 @@ class _QuotationVersionsScreenState extends ConsumerState<QuotationVersionsScree
                               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                               elevation: 0,
                             ),
-                            child: const Text(
+                            child: Text(
                               'قارن النسختين الآن',
                               style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.white),
                             ),
@@ -189,7 +189,7 @@ class _QuotationVersionsScreenState extends ConsumerState<QuotationVersionsScree
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('تفاصيل إصدار العرض ${rev.version}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+        title: Text('تفاصيل إصدار العرض ${rev.version}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -200,14 +200,14 @@ class _QuotationVersionsScreenState extends ConsumerState<QuotationVersionsScree
             _buildDialogRow('تاريخ المراجعة الفعلي', rev.createdDate),
             _buildDialogRow('المفاوض القائم بالقرار', rev.negotiatedBy),
             _buildDialogRow('حالة الإصدار المعتمدة', rev.status),
-            const SizedBox(height: 12),
-            const Text('ملاحظات المراجعة وتبرير الهامش:', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.outline)),
-            const SizedBox(height: 4),
-            Text(rev.reason, style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant, height: 1.3)),
+            SizedBox(height: 12),
+            Text('ملاحظات المراجعة وتبرير الهامش:', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.outline)),
+            SizedBox(height: 4),
+            Text(rev.reason, style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.3)),
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('إغلاق')),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text('إغلاق')),
         ],
       ),
     );
@@ -217,7 +217,7 @@ class _QuotationVersionsScreenState extends ConsumerState<QuotationVersionsScree
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('المقارنة المباشرة بين الإصدارين', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+        title: Text('المقارنة المباشرة بين الإصدارين', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
         content: SizedBox(
           width: 320,
           child: Column(
@@ -227,7 +227,7 @@ class _QuotationVersionsScreenState extends ConsumerState<QuotationVersionsScree
                 border: TableBorder.all(color: const Color(0xFFE2E1EF), width: 0.5),
                 children: [
                   TableRow(
-                    decoration: BoxDecoration(color: AppColors.surfaceContainerLow),
+                    decoration: BoxDecoration(color: Theme.of(context).colorScheme.surfaceContainerLow),
                     children: [
                       _buildCell('الخاصية'),
                       _buildCell(rev1.version),
@@ -268,7 +268,7 @@ class _QuotationVersionsScreenState extends ConsumerState<QuotationVersionsScree
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('إغلاق')),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text('إغلاق')),
         ],
       ),
     );
@@ -280,8 +280,8 @@ class _QuotationVersionsScreenState extends ConsumerState<QuotationVersionsScree
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(fontSize: 10, color: AppColors.outline)),
-          Text(value, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
+          Text(label, style: TextStyle(fontSize: 10, color: AppColors.outline)),
+          Text(value, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
         ],
       ),
     );
@@ -291,7 +291,7 @@ class _QuotationVersionsScreenState extends ConsumerState<QuotationVersionsScree
     return TableCell(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text(text, style: const TextStyle(fontSize: 9), textAlign: TextAlign.center),
+        child: Text(text, style: TextStyle(fontSize: 9), textAlign: TextAlign.center),
       ),
     );
   }

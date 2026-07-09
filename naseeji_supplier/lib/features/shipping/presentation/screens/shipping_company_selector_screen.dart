@@ -53,23 +53,23 @@ class _ShippingCompanySelectorScreenState extends ConsumerState<ShippingCompanyS
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
           centerTitle: true,
           title: Text(
             'اختيار شركة الشحن لشحنة ${widget.shipmentId}',
-            style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
+            style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
           ),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+            icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
             onPressed: () => context.pop(),
           ),
         ),
         body: ListView(
           padding: const EdgeInsets.all(16.0),
           children: [
-            const Text('شركات الشحن واللوجستيات المعتمدة لدى نسيجي:', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant)),
-            const SizedBox(height: 12),
+            Text('شركات الشحن واللوجستيات المعتمدة لدى نسيجي:', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurfaceVariant)),
+            SizedBox(height: 12),
 
             ..._carriers.map((carrier) {
               final isSelected = _selectedCompany == carrier['name'];
@@ -94,7 +94,7 @@ class _ShippingCompanySelectorScreenState extends ConsumerState<ShippingCompanyS
               );
             }),
 
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             
             // Checkbox options
             Row(
@@ -108,13 +108,13 @@ class _ShippingCompanySelectorScreenState extends ConsumerState<ShippingCompanyS
                     });
                   },
                 ),
-                const Text(
+                Text(
                   'تعيين كشركة شحن افتراضية لجميع الشحنات القادمة',
-                  style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.onSurfaceVariant),
+                  style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurfaceVariant),
                 ),
               ],
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
 
             // Submit Button
             ElevatedButton(
@@ -133,7 +133,7 @@ class _ShippingCompanySelectorScreenState extends ConsumerState<ShippingCompanyS
                 minimumSize: const Size.fromHeight(50),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               ),
-              child: const Text('حفظ واختيار شركة الشحن', style: TextStyle(fontWeight: FontWeight.bold)),
+              child: Text('حفظ واختيار شركة الشحن', style: TextStyle(fontWeight: FontWeight.bold)),
             ),
           ],
         ),

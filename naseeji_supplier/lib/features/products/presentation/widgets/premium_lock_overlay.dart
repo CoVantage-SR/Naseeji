@@ -36,7 +36,7 @@ class PremiumLockOverlay extends StatelessWidget {
               },
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(24),
                   boxShadow: [
                     BoxShadow(
@@ -54,39 +54,39 @@ class PremiumLockOverlay extends StatelessWidget {
                     Container(
                       width: 56,
                       height: 56,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [Color(0xFFFFD700), Color(0xFFFFA500)],
                         ),
                         shape: BoxShape.circle,
                       ),
-                      child: const Center(
-                        child: Icon(Icons.lock_outline, color: Colors.white, size: 28),
+                      child: Center(
+                        child: Icon(Icons.lock_outline, color: Theme.of(context).colorScheme.surface, size: 28),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                     // VIP Badge
                     const PremiumBadge(fontSize: 11, padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3)),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12),
                     // Title
-                    const Text(
+                    Text(
                       'ميزات كبار الموردين VIP',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
-                        color: AppColors.onSurface,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
-                    const SizedBox(height: 6),
-                    const Text(
+                    SizedBox(height: 6),
+                    Text(
                       'افتح الأدوات المتقدمة للتسويق والتحليلات والترويج الذكي لمنتجاتك على منصة نسيجي.',
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 12, color: AppColors.outline),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
                     const Divider(),
-                    const SizedBox(height: 14),
+                    SizedBox(height: 14),
                     // Benefits list
                     _buildBenefitRow('المنتجات المروجة والإعلانات الممولة'),
                     _buildBenefitRow('تحليلات وتقارير المبيعات والزيارات الذكية'),
@@ -94,7 +94,7 @@ class PremiumLockOverlay extends StatelessWidget {
                     _buildBenefitRow('تقارير أداء المنتجات الذكية ومعدلات التحويل'),
                     _buildBenefitRow('نسبة ظهور ووصول أعلى في نتائج البحث للمصانع'),
                     _buildBenefitRow('دعم فني ذو أولوية على مدار الساعة'),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24),
                     // Action Buttons
                     SizedBox(
                       width: double.infinity,
@@ -107,17 +107,17 @@ class PremiumLockOverlay extends StatelessWidget {
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                           elevation: 1,
                         ),
-                        child: const Text(
+                        child: Text(
                           'ترقية الحساب الآن',
                           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                         ),
                       ),
                     ),
                     if (onCancelTap != null) ...[
-                      const SizedBox(height: 8),
+                      SizedBox(height: 8),
                       TextButton(
                         onPressed: onCancelTap,
-                        child: const Text(
+                        child: Text(
                           'ربما لاحقاً',
                           style: TextStyle(color: AppColors.outline, fontSize: 13, fontWeight: FontWeight.bold),
                         ),
@@ -140,11 +140,11 @@ class PremiumLockOverlay extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Icon(Icons.check_circle, color: Color(0xFF16A34A), size: 16),
-          const SizedBox(width: 8),
+          SizedBox(width: 8),
           Expanded(
             child: Text(
               text,
-              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.onSurfaceVariant),
+              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurfaceVariant),
             ),
           ),
         ],

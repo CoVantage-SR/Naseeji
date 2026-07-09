@@ -39,11 +39,11 @@ class AddonsStoreScreen extends ConsumerWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
-          title: const Text(
+          title: Text(
             'متجر ملحقات وخدمات الحساب B2B',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.onSurface),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
           ),
           centerTitle: true,
         ),
@@ -55,15 +55,15 @@ class AddonsStoreScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 // Add-ons header
-                const Text(
+                Text(
                   'ملحقات التوسيع لموارد الباقة الحالية',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                   textAlign: TextAlign.right,
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
 
                 addonsAsync.when(
-                  loading: () => const Center(child: CircularProgressIndicator()),
+                  loading: () => Center(child: CircularProgressIndicator()),
                   error: (e, _) => Center(child: Text('خطأ: $e')),
                   data: (addons) {
                     return Column(
@@ -81,22 +81,22 @@ class AddonsStoreScreen extends ConsumerWidget {
                     );
                   },
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
 
                 // Pay As You Go Services
-                const Text(
+                Text(
                   'خدمات الدفع حسب الاستخدام (Pay As You Go)',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                   textAlign: TextAlign.right,
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
 
                 ...payAsYouGoList.map((service) {
                   return Container(
                     margin: const EdgeInsets.only(bottom: 12),
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                     ),
@@ -108,27 +108,27 @@ class AddonsStoreScreen extends ConsumerWidget {
                           children: [
                             Text(
                               '${(service['price'] as double).toStringAsFixed(0)} ر.س',
-                              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF006B5F)),
+                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF006B5F)),
                             ),
                             Text(
                               service['title'] as String,
-                              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                              style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 8),
+                        SizedBox(height: 8),
                         Text(
                           service['description'] as String,
-                          style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+                          style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant),
                           textAlign: TextAlign.right,
                         ),
-                        const SizedBox(height: 12),
+                        SizedBox(height: 12),
                         const Divider(color: AppColors.outlineVariant),
-                        const SizedBox(height: 8),
+                        SizedBox(height: 8),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text('صلاحية فورية ومستقلة', style: TextStyle(fontSize: 9, color: AppColors.onSurfaceVariant)),
+                            Text('صلاحية فورية ومستقلة', style: TextStyle(fontSize: 9, color: Theme.of(context).colorScheme.onSurfaceVariant)),
                             ElevatedButton(
                               onPressed: () {
                                 ref.read(addonsStoreControllerProvider.notifier).buyPayAsYouGo(
@@ -147,7 +147,7 @@ class AddonsStoreScreen extends ConsumerWidget {
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
                                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                               ),
-                              child: const Text('شراء الخدمة الآن', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+                              child: Text('شراء الخدمة الآن', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
                             ),
                           ],
                         ),

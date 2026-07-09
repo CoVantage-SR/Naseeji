@@ -50,31 +50,31 @@ class MarketingTab extends StatelessWidget {
                             child: CircularProgressIndicator(
                               value: 0.74,
                               strokeWidth: 6,
-                              backgroundColor: Colors.white.withValues(alpha: 0.2),
+                              backgroundColor: Theme.of(context).colorScheme.surface.withValues(alpha: 0.2),
                               valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFFFFD700)),
                             ),
                           ),
-                          const Text(
+                          Text(
                             '٧٤٪',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Theme.of(context).colorScheme.surface,
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(width: 16),
+                      SizedBox(width: 16),
                       // Text info
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               'معدل ظهور المنتجات للمصانع',
-                              style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold),
+                              style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 13, fontWeight: FontWeight.bold),
                             ),
-                            const SizedBox(height: 4),
+                            SizedBox(height: 4),
                             Text(
                               'درجة ظهور منتجاتك جيدة جداً! قم بإنشاء إعلان ممول لرفع النسبة إلى ٩٩٪.',
                               style: TextStyle(color: Colors.white.withValues(alpha: 0.85), fontSize: 11),
@@ -85,7 +85,7 @@ class MarketingTab extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
 
                 // Statistics Grid
                 Row(
@@ -93,21 +93,21 @@ class MarketingTab extends StatelessWidget {
                     Expanded(
                       child: _buildStatCard('الإعلانات النشطة', '٣ حملات', Icons.campaign_outlined, Colors.purple),
                     ),
-                    const SizedBox(width: 10),
+                    SizedBox(width: 10),
                     Expanded(
                       child: _buildStatCard('مشاهدات الترويج', '١٢.٤ ألف', Icons.visibility_outlined, Colors.blue),
                     ),
-                    const SizedBox(width: 10),
+                    SizedBox(width: 10),
                     Expanded(
                       child: _buildStatCard('كوبونات مستخدمة', '١٤٠ كوبون', Icons.local_offer_outlined, Colors.green),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
 
                 // Sponsored Products Section
                 _buildSectionHeader('الحملات الإعلانية النشطة (Sponsored)'),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 _buildCampaignCard(
                   title: 'ترويج خيوط القطن الفاخر الممتاز',
                   budget: '٥٠ ر.س / يومياً',
@@ -115,7 +115,7 @@ class MarketingTab extends StatelessWidget {
                   status: 'نشط',
                   color: Colors.green,
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 _buildCampaignCard(
                   title: 'إعلان نسيج الصوف المخلوط الموسمي',
                   budget: '٣٠ ر.س / يومياً',
@@ -124,15 +124,15 @@ class MarketingTab extends StatelessWidget {
                   color: Colors.orange,
                 ),
 
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
 
                 // Coupons Section
                 _buildSectionHeader('الكوبونات وعروض الخصم الحالية'),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 10)],
                   ),
@@ -145,13 +145,13 @@ class MarketingTab extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(color: const Color(0xFFC7D2FE), style: BorderStyle.solid),
                         ),
-                        child: const Text(
+                        child: Text(
                           'COTTON20',
                           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary, letterSpacing: 1),
                         ),
                       ),
-                      const SizedBox(width: 12),
-                      const Expanded(
+                      SizedBox(width: 12),
+                      Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -165,15 +165,15 @@ class MarketingTab extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
 
                 // Factory Broadcast Option
                 _buildSectionHeader('بث العروض للمصانع (Factory Broadcast)'),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 10)],
                   ),
@@ -184,8 +184,8 @@ class MarketingTab extends StatelessWidget {
                         decoration: BoxDecoration(color: Colors.green.shade50, shape: BoxShape.circle),
                         child: Icon(Icons.broadcast_on_personal, color: Colors.green.shade700, size: 24),
                       ),
-                      const SizedBox(width: 12),
-                      const Expanded(
+                      SizedBox(width: 12),
+                      Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -204,12 +204,12 @@ class MarketingTab extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                           minimumSize: const Size(0, 32),
                         ),
-                        child: const Text('بدء البث', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
+                        child: Text('بدء البث', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
               ],
             ),
           ),
@@ -221,7 +221,7 @@ class MarketingTab extends StatelessWidget {
   Widget _buildSectionHeader(String title) {
     return Text(
       title,
-      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.onSurface),
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Theme.of(context).colorScheme.onSurface),
     );
   }
 
@@ -229,7 +229,7 @@ class MarketingTab extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 10)],
       ),
@@ -237,15 +237,15 @@ class MarketingTab extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, color: color, size: 20),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Text(
             value,
-            style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: AppColors.onSurface),
+            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: Theme.of(context).colorScheme.onSurface),
           ),
-          const SizedBox(height: 2),
+          SizedBox(height: 2),
           Text(
             label,
-            style: const TextStyle(fontSize: 9, color: AppColors.outline),
+            style: TextStyle(fontSize: 9, color: AppColors.outline),
           ),
         ],
       ),
@@ -262,7 +262,7 @@ class MarketingTab extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 10)],
       ),
@@ -272,13 +272,13 @@ class MarketingTab extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                const SizedBox(height: 6),
+                Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                SizedBox(height: 6),
                 Row(
                   children: [
-                    Text('الميزانية: $budget', style: const TextStyle(fontSize: 10, color: AppColors.outline)),
-                    const SizedBox(width: 12),
-                    Text('النقرات: $clicks', style: const TextStyle(fontSize: 10, color: AppColors.outline)),
+                    Text('الميزانية: $budget', style: TextStyle(fontSize: 10, color: AppColors.outline)),
+                    SizedBox(width: 12),
+                    Text('النقرات: $clicks', style: TextStyle(fontSize: 10, color: AppColors.outline)),
                   ],
                 ),
               ],

@@ -48,9 +48,9 @@ class ProductLimitBanner extends StatelessWidget {
               children: [
                 Text(
                   isCritical ? 'ترقية الآن' : 'زيادة الحد',
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11),
                 ),
-                const SizedBox(width: 4),
+                SizedBox(width: 4),
                 const Icon(Icons.arrow_forward, size: 12),
               ],
             ),

@@ -24,12 +24,12 @@ class _CategoriesTabState extends State<CategoriesTab> {
         body: ListView.separated(
           padding: const EdgeInsets.all(16),
           itemCount: _categories.length,
-          separatorBuilder: (_, __) => const SizedBox(height: 10),
+          separatorBuilder: (_, __) => SizedBox(height: 10),
           itemBuilder: (context, index) {
             final cat = _categories[index];
             return Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
@@ -52,7 +52,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
                     ),
                     child: const Icon(Icons.folder_open_outlined, color: AppColors.primary, size: 22),
                   ),
-                  const SizedBox(width: 14),
+                  SizedBox(width: 14),
                   // Name and count
                   Expanded(
                     child: Column(
@@ -60,12 +60,12 @@ class _CategoriesTabState extends State<CategoriesTab> {
                       children: [
                         Text(
                           cat['name'],
-                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: AppColors.onSurface),
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Theme.of(context).colorScheme.onSurface),
                         ),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4),
                         Text(
                           'عدد المنتجات: ${cat['count']}',
-                          style: const TextStyle(fontSize: 11, color: AppColors.outline),
+                          style: TextStyle(fontSize: 11, color: AppColors.outline),
                         ),
                       ],
                     ),
@@ -89,7 +89,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
           backgroundColor: const Color(0xFF0040E0),
           foregroundColor: Colors.white,
           icon: const Icon(Icons.add),
-          label: const Text('إضافة تصنيف جديد', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          label: Text('إضافة تصنيف جديد', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
         ),
       ),
     );
@@ -113,7 +113,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
             ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+            TextButton(onPressed: () => Navigator.pop(ctx), child: Text('إلغاء')),
             ElevatedButton(
               onPressed: () {
                 final name = controller.text.trim();
@@ -135,7 +135,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
                   Navigator.pop(ctx);
                 }
               },
-              child: const Text('حفظ'),
+              child: Text('حفظ'),
             ),
           ],
         ),
@@ -149,13 +149,13 @@ class _CategoriesTabState extends State<CategoriesTab> {
       builder: (ctx) => Directionality(
         textDirection: TextDirection.rtl,
         child: AlertDialog(
-          title: const Text('حذف التصنيف', textAlign: TextAlign.right),
+          title: Text('حذف التصنيف', textAlign: TextAlign.right),
           content: Text(
             'هل أنت متأكد من حذف تصنيف "${cat['name']}"؟ سيتم إلغاء تصنيف المنتجات المرتبطة به.',
             textAlign: TextAlign.right,
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+            TextButton(onPressed: () => Navigator.pop(ctx), child: Text('إلغاء')),
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
               onPressed: () {
@@ -165,7 +165,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
                   const SnackBar(content: Text('تم حذف التصنيف بنجاح.')),
                 );
               },
-              child: const Text('حذف', style: TextStyle(color: Colors.white)),
+              child: Text('حذف', style: TextStyle(color: Colors.white)),
             ),
           ],
         ),

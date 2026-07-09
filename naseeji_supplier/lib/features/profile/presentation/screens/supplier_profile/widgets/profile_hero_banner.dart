@@ -37,7 +37,7 @@ class ProfileHeroBanner extends StatelessWidget {
               width: 90,
               height: 90,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
@@ -46,7 +46,7 @@ class ProfileHeroBanner extends StatelessWidget {
                     offset: const Offset(0, 4),
                   ),
                 ],
-                border: Border.all(color: Colors.white, width: 3),
+                border: Border.all(color: Theme.of(context).colorScheme.surface, width: 3),
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(17),

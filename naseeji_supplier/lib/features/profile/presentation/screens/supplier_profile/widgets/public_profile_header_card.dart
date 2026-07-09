@@ -32,10 +32,10 @@ class PublicProfileHeaderCard extends StatelessWidget {
                 width: 102,
                 height: 102,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     width: 3,
                   ),
                   boxShadow: [
@@ -55,7 +55,7 @@ class PublicProfileHeaderCard extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 45),
+        SizedBox(height: 45),
 
         // Header Info
         Padding(
@@ -75,7 +75,7 @@ class PublicProfileHeaderCard extends StatelessWidget {
                       color: const Color(0xFFE2F9F5),
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    child: const Row(
+                    child: Row(
                       children: [
                         Icon(
                           Icons.verified,
@@ -94,42 +94,42 @@ class PublicProfileHeaderCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   Text(
                     profile.companyName,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 4),
+              SizedBox(height: 4),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
                     '${profile.city}، SA',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 10,
                       color: AppColors.outline,
                     ),
                   ),
-                  const SizedBox(width: 4),
+                  SizedBox(width: 4),
                   const Icon(
                     Icons.location_on_outlined,
                     color: AppColors.outline,
                     size: 12,
                   ),
-                  const SizedBox(width: 10),
+                  SizedBox(width: 10),
                   Text(
                     '${profile.rating} / 5.0 (تقييمات نسيجي)',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 10,
                       color: AppColors.outline,
                     ),
                   ),
-                  const SizedBox(width: 1),
+                  SizedBox(width: 1),
                   const Icon(
                     Icons.star,
                     color: Colors.orange,
@@ -140,7 +140,7 @@ class PublicProfileHeaderCard extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 1),
+        SizedBox(height: 1),
 
         // Public interaction actions
         Padding(
@@ -160,9 +160,9 @@ class PublicProfileHeaderCard extends StatelessWidget {
                   icon: const Icon(
                     Icons.chat_bubble_outline,
                     size: 15,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                   ),
-                  label: const Text(
+                  label: Text(
                     'بدء دردشة ثنائية',
                     style: TextStyle(
                       fontSize: 15,
@@ -181,7 +181,7 @@ class PublicProfileHeaderCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Expanded(
                 child: OutlinedButton.icon(
                   onPressed: () {
@@ -194,7 +194,7 @@ class PublicProfileHeaderCard extends StatelessWidget {
                     size: 14,
                     color: Color(0xFF0040E0),
                   ),
-                  label: const Text(
+                  label: Text(
                     'متابعة المورد',
                     style: TextStyle(
                       fontSize: 11,

@@ -33,11 +33,11 @@ class PremiumBadge extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Icon(Icons.star, size: 9, color: Colors.white),
-          const SizedBox(width: 2),
+          SizedBox(width: 2),
           Text(
             'VIP',
             style: TextStyle(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.surface,
               fontSize: fontSize,
               fontWeight: FontWeight.w900,
               letterSpacing: 0.5,

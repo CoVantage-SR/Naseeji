@@ -124,29 +124,29 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
         drawer: const NavigationDrawerView(),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
           centerTitle: true,
-          title: const Text(
+          title: Text(
             'لوحة عروض الأسعار والمناقصات',
             style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 14),
           ),
           leading: IconButton(
-            icon: const Icon(Icons.menu, color: AppColors.onSurfaceVariant),
+            icon: const Icon(Icons.menu, color: Theme.of(context).colorScheme.onSurfaceVariant),
             onPressed: () => _scaffoldKey.currentState?.openDrawer(),
           ),
           bottom: TabBar(
             controller: _tabController,
             isScrollable: true,
             labelColor: const Color(0xFF0040E0),
-            unselectedLabelColor: AppColors.onSurfaceVariant,
+            unselectedLabelColor: Theme.of(context).colorScheme.onSurfaceVariant,
             indicatorColor: const Color(0xFF0040E0),
-            labelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+            labelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
             tabs: _tabs.map((title) => Tab(text: title)).toList(),
           ),
         ),
         body: stateAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (e, _) => Center(child: Text('خطأ: $e')),
           data: (quotations) {
             final filtered = _filterAndSort(quotations);
@@ -194,11 +194,11 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
                       ],
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
 
                   // Search, Sort & Filters Row
                   _buildSearchAndFiltersRow(context, quotations),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12),
 
                   // List Header
                   Row(
@@ -206,7 +206,7 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
                     children: [
                       Text(
                         'عروض الأسعار المتاحة (${filtered.length})',
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.onSurface),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Theme.of(context).colorScheme.onSurface),
                       ),
                       IconButton(
                         icon: const Icon(Icons.sync_outlined, size: 18, color: AppColors.outline),
@@ -214,10 +214,10 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
 
                   if (filtered.isEmpty)
-                    const Center(
+                    Center(
                       child: Padding(
                         padding: EdgeInsets.symmetric(vertical: 40.0),
                         child: Text(
@@ -259,7 +259,7 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
       margin: const EdgeInsets.only(left: 10),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         boxShadow: const [BoxShadow(color: Color(0x03000000), blurRadius: 6)],
         border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5),
@@ -268,8 +268,8 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(label, style: const TextStyle(fontSize: 8, color: AppColors.outline)),
-          const SizedBox(height: 4),
+          Text(label, style: TextStyle(fontSize: 8, color: AppColors.outline)),
+          SizedBox(height: 4),
           Text(
             value,
             style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: color),
@@ -288,7 +288,7 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
         boxShadow: const [BoxShadow(color: Color(0x02000000), blurRadius: 8)],
       ),
@@ -303,7 +303,7 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
             },
             decoration: InputDecoration(
               hintText: 'ابحث برقم العرض أو RFQ أو اسم المنتج...',
-              hintStyle: const TextStyle(color: AppColors.outline, fontSize: 11),
+              hintStyle: TextStyle(color: AppColors.outline, fontSize: 11),
               prefixIcon: const Icon(Icons.search, color: AppColors.outline, size: 18),
               contentPadding: const EdgeInsets.symmetric(vertical: 8),
               border: OutlineInputBorder(
@@ -322,7 +322,7 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
               filled: true,
             ),
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
 
           // Filters and Sorting Row
           SingleChildScrollView(
@@ -340,7 +340,7 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
                     });
                   },
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
 
                 // Category Filter
                 _buildDropdownFilter(
@@ -353,7 +353,7 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
                     });
                   },
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
 
                 // Sort Dropdown
                 _buildDropdownFilter(
@@ -400,14 +400,14 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
           final displayText = labels != null ? (labels[val] ?? val) : val;
           return DropdownMenuItem<String>(
             value: val,
-            child: Text(displayText, style: const TextStyle(fontSize: 10)),
+            child: Text(displayText, style: TextStyle(fontSize: 10)),
           );
         }).toList(),
         onChanged: onChanged,
-        hint: Text(label, style: const TextStyle(fontSize: 10)),
-        underline: const SizedBox(),
+        hint: Text(label, style: TextStyle(fontSize: 10)),
+        underline: SizedBox(),
         isDense: true,
-        style: const TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold),
+        style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold),
       ),
     );
   }

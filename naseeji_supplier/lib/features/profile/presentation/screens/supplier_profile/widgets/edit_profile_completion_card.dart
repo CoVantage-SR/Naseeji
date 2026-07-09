@@ -11,7 +11,7 @@ class EditProfileCompletionCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
@@ -21,11 +21,11 @@ class EditProfileCompletionCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                const Text(
+                Text(
                   'جاهزية الملف التعريفي',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.onSurface),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Theme.of(context).colorScheme.onSurface),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Text(
                   'ملء كافة البيانات يزيد فرص ظهورك في محركات البحث للمصانع بنسبة 80%.',
                   style: TextStyle(fontSize: 10, color: Colors.grey.shade600),
@@ -34,7 +34,7 @@ class EditProfileCompletionCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: 16),
           Stack(
             alignment: Alignment.center,
             children: [
@@ -48,7 +48,7 @@ class EditProfileCompletionCard extends StatelessWidget {
                   color: completionRate > 80 ? Colors.green : const Color(0xFF0040E0),
                 ),
               ),
-              Text('${completionRate.toInt()}%', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+              Text('${completionRate.toInt()}%', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
             ],
           ),
         ],

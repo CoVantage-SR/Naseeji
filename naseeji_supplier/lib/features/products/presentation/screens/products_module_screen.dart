@@ -44,22 +44,22 @@ class _ProductsModuleScreenState extends ConsumerState<ProductsModuleScreen> wit
       textDirection: TextDirection.rtl,
       child: Scaffold(
         body: subAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator()),
+          loading: () => Center(child: CircularProgressIndicator()),
           error: (e, _) => Center(child: Text('خطأ: $e')),
           data: (sub) {
             // Case 1: No subscription (or free plan if we require subscription)
             if (sub.planId == 'free' || sub.planId.isEmpty) {
               return Scaffold(
                 appBar: AppBar(
-                  backgroundColor: Colors.white,
+                  backgroundColor: Theme.of(context).colorScheme.surface,
                   elevation: 0.5,
-                  title: const Text(
+                  title: Text(
                     'إدارة المنتجات',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.onSurface),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
                   ),
                   centerTitle: true,
                   leading: IconButton(
-                    icon: const Icon(Icons.arrow_back, color: AppColors.onSurface),
+                    icon: const Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
                     onPressed: () => context.go('/home'),
                   ),
                 ),
@@ -73,15 +73,15 @@ class _ProductsModuleScreenState extends ConsumerState<ProductsModuleScreen> wit
             if (sub.status == SubscriptionStatus.expired) {
               return Scaffold(
                 appBar: AppBar(
-                  backgroundColor: Colors.white,
+                  backgroundColor: Theme.of(context).colorScheme.surface,
                   elevation: 0.5,
-                  title: const Text(
+                  title: Text(
                     'الاشتراك منتهي الصلاحية',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.onSurface),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
                   ),
                   centerTitle: true,
                   leading: IconButton(
-                    icon: const Icon(Icons.arrow_back, color: AppColors.onSurface),
+                    icon: const Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
                     onPressed: () => context.go('/home'),
                   ),
                 ),
@@ -97,26 +97,26 @@ class _ProductsModuleScreenState extends ConsumerState<ProductsModuleScreen> wit
                           color: const Color(0xFFBA1A1A).withValues(alpha: 0.1),
                           shape: BoxShape.circle,
                         ),
-                        child: const Center(
+                        child: Center(
                           child: Text(
                             '⚠️',
                             style: TextStyle(fontSize: 40),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 24),
-                      const Text(
+                      SizedBox(height: 24),
+                      Text(
                         'اشتراكك منتهي الصلاحية',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 12),
-                      const Text(
+                      SizedBox(height: 12),
+                      Text(
                         'منتجات خامات المنسوجات الخاصة بك مخفية مؤقتاً عن المشترين والمصانع حتى تقوم بتجديد باقة الاشتراك.',
-                        style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant, height: 1.5),
+                        style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.5),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 32),
+                      SizedBox(height: 32),
                       PrimaryButton(
                         text: 'تجديد الاشتراك الآن',
                         onPressed: () async {
@@ -128,7 +128,7 @@ class _ProductsModuleScreenState extends ConsumerState<ProductsModuleScreen> wit
                           }
                         },
                       ),
-                      const SizedBox(height: 12),
+                      SizedBox(height: 12),
                       OutlinedButton(
                         onPressed: () => context.push('/subscription/plans'),
                         style: OutlinedButton.styleFrom(
@@ -137,7 +137,7 @@ class _ProductsModuleScreenState extends ConsumerState<ProductsModuleScreen> wit
                           minimumSize: const Size.fromHeight(56),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         ),
-                        child: const Text('مقارنة الخطط والباقات B2B', style: TextStyle(fontWeight: FontWeight.bold)),
+                        child: Text('مقارنة الخطط والباقات B2B', style: TextStyle(fontWeight: FontWeight.bold)),
                       ),
                     ],
                   ),
@@ -149,15 +149,15 @@ class _ProductsModuleScreenState extends ConsumerState<ProductsModuleScreen> wit
             if (sub.status == SubscriptionStatus.cancelled || sub.status == SubscriptionStatus.pending) {
               return Scaffold(
                 appBar: AppBar(
-                  backgroundColor: Colors.white,
+                  backgroundColor: Theme.of(context).colorScheme.surface,
                   elevation: 0.5,
-                  title: const Text(
+                  title: Text(
                     'الاشتراك معلق',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.onSurface),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
                   ),
                   centerTitle: true,
                   leading: IconButton(
-                    icon: const Icon(Icons.arrow_back, color: AppColors.onSurface),
+                    icon: const Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
                     onPressed: () => context.go('/home'),
                   ),
                 ),
@@ -173,26 +173,26 @@ class _ProductsModuleScreenState extends ConsumerState<ProductsModuleScreen> wit
                           color: AppColors.outline.withValues(alpha: 0.1),
                           shape: BoxShape.circle,
                         ),
-                        child: const Center(
+                        child: Center(
                           child: Text(
                             '🚫',
                             style: TextStyle(fontSize: 40),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 24),
-                      const Text(
+                      SizedBox(height: 24),
+                      Text(
                         'تم تعليق الاشتراك',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 12),
-                      const Text(
+                      SizedBox(height: 12),
+                      Text(
                         'لقد تم تعطيل إدارة ونشر المنتجات للمؤسسة مؤقتاً لوجود مستحقات مالية معلقة أو بطلب الإدارة. يرجى مراجعة الدعم الفني.',
-                        style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant, height: 1.5),
+                        style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.5),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 32),
+                      SizedBox(height: 32),
                       PrimaryButton(
                         text: 'التواصل مع الدعم الفني لنسيجي',
                         onPressed: () {
@@ -210,11 +210,11 @@ class _ProductsModuleScreenState extends ConsumerState<ProductsModuleScreen> wit
             // Case 4: Subscription Active
             return Scaffold(
               appBar: AppBar(
-                backgroundColor: Colors.white,
+                backgroundColor: Theme.of(context).colorScheme.surface,
                 elevation: 0.5,
-                title: const Text(
+                title: Text(
                   'إدارة المنتجات',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.onSurface),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
                 ),
                 centerTitle: true,
                 actions: [
@@ -229,7 +229,7 @@ class _ProductsModuleScreenState extends ConsumerState<ProductsModuleScreen> wit
                       ),
                       child: Text(
                         sub.planName,
-                        style: const TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Color(0xFF0040E0)),
+                        style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Color(0xFF0040E0)),
                       ),
                     ),
                   ),
@@ -241,8 +241,8 @@ class _ProductsModuleScreenState extends ConsumerState<ProductsModuleScreen> wit
                   indicatorColor: const Color(0xFF0040E0),
                   labelColor: const Color(0xFF0040E0),
                   unselectedLabelColor: AppColors.outline,
-                  labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-                  unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+                  labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                  unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
                   indicatorWeight: 3,
                   tabs: const [
                     Tab(text: 'منتجاتنا'),

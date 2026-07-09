@@ -35,7 +35,7 @@ class AddonCard extends StatelessWidget {
 
     return Card(
       elevation: 0.5,
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
@@ -56,7 +56,7 @@ class AddonCard extends StatelessWidget {
                     children: [
                       Text(
                         '${addon.price.toStringAsFixed(0)} ر.س',
-                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                       ),
                     ],
                   ),
@@ -67,15 +67,15 @@ class AddonCard extends StatelessWidget {
                         children: [
                           Text(
                             addon.name,
-                            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                           ),
                           Text(
                             addon.usage,
-                            style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant),
+                            style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant),
                           ),
                         ],
                       ),
-                      const SizedBox(width: 12),
+                      SizedBox(width: 12),
                       Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
@@ -88,21 +88,21 @@ class AddonCard extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               Text(
                 addon.description,
-                style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant, height: 1.4),
+                style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.4),
                 textAlign: TextAlign.right,
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               const Divider(color: AppColors.outlineVariant),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     'السرية: ${addon.validity}',
-                    style: const TextStyle(fontSize: 9, color: AppColors.onSurfaceVariant),
+                    style: TextStyle(fontSize: 9, color: Theme.of(context).colorScheme.onSurfaceVariant),
                   ),
                   ElevatedButton(
                     onPressed: onBuy,
@@ -114,7 +114,7 @@ class AddonCard extends StatelessWidget {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                     ),
-                    child: const Text('شراء الآن', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+                    child: Text('شراء الآن', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
                   ),
                 ],
               ),

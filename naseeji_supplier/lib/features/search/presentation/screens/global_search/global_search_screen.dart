@@ -13,12 +13,12 @@ class GlobalSearchScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'Naseeji',
           style: TextStyle(
             color: AppColors.primary,
@@ -27,15 +27,15 @@ class GlobalSearchScreen extends ConsumerWidget {
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_forward, color: AppColors.onSurfaceVariant),
+          icon: const Icon(Icons.arrow_forward, color: Theme.of(context).colorScheme.onSurfaceVariant),
           onPressed: () => Navigator.of(context).pop(),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.more_vert, color: AppColors.onSurfaceVariant),
+            icon: const Icon(Icons.more_vert, color: Theme.of(context).colorScheme.onSurfaceVariant),
             onPressed: () {},
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8),
         ],
       ),
       body: SingleChildScrollView(
@@ -45,15 +45,15 @@ class GlobalSearchScreen extends ConsumerWidget {
           children: [
             // Custom Search Input Box
             const SearchTextField(),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
 
             // Horizontal Filter Chips
             const SearchFilterChips(),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
 
             // Recent Searches History
             const RecentSearchesSection(),
-            const SizedBox(height: 28),
+            SizedBox(height: 28),
 
             // Products Section Header
             Row(
@@ -65,21 +65,21 @@ class GlobalSearchScreen extends ConsumerWidget {
                     color: const Color(0xFF0040E0),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Text(
+                  child: Text(
                     '12 نتيجة',
-                    style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold),
+                    style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 11, fontWeight: FontWeight.bold),
                   ),
                 ),
-                const SizedBox(width: 8),
-                const Text(
+                SizedBox(width: 8),
+                Text(
                   'المنتجات',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.onSurface,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 Container(
                   width: 4,
                   height: 16,
@@ -90,7 +90,7 @@ class GlobalSearchScreen extends ConsumerWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
 
             // Product Cards List
             const SearchProductCard(
@@ -109,7 +109,7 @@ class GlobalSearchScreen extends ConsumerWidget {
               statusColor: Color(0xFFBA1A1A),
               statusBgColor: Color(0xFFFFECEC),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
 
             // Factories Section Header
             Row(
@@ -121,21 +121,21 @@ class GlobalSearchScreen extends ConsumerWidget {
                     color: const Color(0xFF009688),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Text(
+                  child: Text(
                     '4 نتائج',
-                    style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold),
+                    style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 11, fontWeight: FontWeight.bold),
                   ),
                 ),
-                const SizedBox(width: 8),
-                const Text(
+                SizedBox(width: 8),
+                Text(
                   'المصانع',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.onSurface,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 Container(
                   width: 4,
                   height: 16,
@@ -146,7 +146,7 @@ class GlobalSearchScreen extends ConsumerWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
 
             // Factory Cards
             const SearchFactoryCard(
@@ -154,7 +154,7 @@ class GlobalSearchScreen extends ConsumerWidget {
               subtitle: 'مورد معتمد • جدة، المملكة العربية السعودية',
               logoText: 'AURA\nTEXTILES',
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
           ],
         ),
       ),

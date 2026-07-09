@@ -19,7 +19,7 @@ class VipFeatureGuard extends ConsumerWidget {
     final profileAsync = ref.watch(profileControllerProvider);
 
     return profileAsync.when(
-      loading: () => const Center(child: CircularProgressIndicator()),
+      loading: () => Center(child: CircularProgressIndicator()),
       error: (err, _) => Center(child: Text('خطأ: $err')),
       data: (profile) {
         final isVip = profile.isVip;

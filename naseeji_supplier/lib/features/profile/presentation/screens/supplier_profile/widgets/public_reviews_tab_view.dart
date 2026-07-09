@@ -18,7 +18,7 @@ class PublicReviewsTabView extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(color: const Color(0xFFE2E1EF)),
             ),
@@ -35,15 +35,15 @@ class PublicReviewsTabView extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(width: 16),
+                SizedBox(width: 16),
                 // Left side: Rating score
                 Column(
                   children: [
                     Text(
                       '${profile.rating}',
-                      style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w900, color: Color(0xFF0040E0)),
+                      style: TextStyle(fontSize: 28, fontWeight: FontWeight.w900, color: Color(0xFF0040E0)),
                     ),
-                    const SizedBox(height: 2),
+                    SizedBox(height: 2),
                     Row(
                       children: List.generate(5, (index) {
                         return Icon(
@@ -53,22 +53,22 @@ class PublicReviewsTabView extends StatelessWidget {
                         );
                       }),
                     ),
-                    const SizedBox(height: 4),
-                    const Text('38 تقييم موثق', style: TextStyle(fontSize: 8, color: AppColors.outline)),
+                    SizedBox(height: 4),
+                    Text('38 تقييم موثق', style: TextStyle(fontSize: 8, color: AppColors.outline)),
                   ],
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
 
           // Title
-          const Text(
+          Text(
             'تقييمات المصانع والشركاء',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
             textAlign: TextAlign.end,
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
 
           // Reviews list
           _buildReviewCard('مصانع النور للملابس الجاهزة', 'تعاقدنا مع المورد لتوريد 50,000 متر قماش قطني وجاءت الشحنة مطابقة تماماً للعينات وبموعد التوصيل المحدد.', 5.0, '2026-05'),
@@ -99,8 +99,8 @@ class PublicReviewsTabView extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 8),
-          Text(label, style: const TextStyle(fontSize: 8, color: AppColors.outline), textAlign: TextAlign.end),
+          SizedBox(width: 8),
+          Text(label, style: TextStyle(fontSize: 8, color: AppColors.outline), textAlign: TextAlign.end),
         ],
       ),
     );
@@ -111,7 +111,7 @@ class PublicReviewsTabView extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
@@ -121,11 +121,11 @@ class PublicReviewsTabView extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(date, style: const TextStyle(fontSize: 8, color: AppColors.outline)),
+              Text(date, style: TextStyle(fontSize: 8, color: AppColors.outline)),
               Row(
                 children: [
-                  Text(author, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
-                  const SizedBox(width: 8),
+                  Text(author, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
+                  SizedBox(width: 8),
                   Container(
                     width: 32,
                     height: 32,
@@ -136,7 +136,7 @@ class PublicReviewsTabView extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: List.generate(5, (index) {
@@ -147,10 +147,10 @@ class PublicReviewsTabView extends StatelessWidget {
               );
             }),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Text(
             text,
-            style: const TextStyle(fontSize: 10.5, color: AppColors.onSurfaceVariant, height: 1.5),
+            style: TextStyle(fontSize: 10.5, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.5),
             textAlign: TextAlign.end,
           ),
         ],

@@ -15,18 +15,18 @@ class SubscriptionDetailsScreen extends ConsumerWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
-          title: const Text(
+          title: Text(
             'تفاصيل اشتراك الباقة',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.onSurface),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
           ),
           centerTitle: true,
         ),
         body: Material(
           color: Theme.of(context).scaffoldBackgroundColor,
           child: subAsync.when(
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => Center(child: CircularProgressIndicator()),
             error: (e, _) => Center(child: Text('خطأ: $e')),
             data: (sub) {
               final startStr = '${sub.startDate.year}/${sub.startDate.month.toString().padLeft(2, '0')}/${sub.startDate.day.toString().padLeft(2, '0')}';
@@ -41,7 +41,7 @@ class SubscriptionDetailsScreen extends ConsumerWidget {
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                       ),
@@ -50,12 +50,12 @@ class SubscriptionDetailsScreen extends ConsumerWidget {
                         children: [
                           Text(
                             sub.planName,
-                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                           ),
-                          const SizedBox(height: 6),
+                          SizedBox(height: 6),
                           Text(
                             'تكلفة الباقة الحالية: ${sub.price.toStringAsFixed(0)} ر.س / شهرياً',
-                            style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant),
+                            style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
                           ),
                           const Divider(height: 24, color: AppColors.outlineVariant),
                           _buildDetailRow('تاريخ بداية الاشتراك', startStr),
@@ -65,22 +65,22 @@ class SubscriptionDetailsScreen extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     // Current benefits B2B list
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          const Text(
+                          Text(
                             'المزايا والامتيازات الحالية للحساب',
-                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                           ),
                           const Divider(height: 20, color: AppColors.outlineVariant),
                           _buildBenefitRow('إضافة حتى 50 منتجاً في كتالوج التوريد للمصانع'),
@@ -92,7 +92,7 @@ class SubscriptionDetailsScreen extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24),
 
                     // Actions
                     Row(
@@ -101,15 +101,15 @@ class SubscriptionDetailsScreen extends ConsumerWidget {
                           child: OutlinedButton(
                             onPressed: () => context.push('/subscription/history'),
                             style: OutlinedButton.styleFrom(
-                              foregroundColor: AppColors.onSurface,
+                              foregroundColor: Theme.of(context).colorScheme.onSurface,
                               side: BorderSide(color: AppColors.outlineVariant),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                               padding: const EdgeInsets.symmetric(vertical: 12),
                             ),
-                            child: const Text('سجل العمليات السابقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                            child: Text('سجل العمليات السابقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
                           ),
                         ),
-                        const SizedBox(width: 16),
+                        SizedBox(width: 16),
                         Expanded(
                           child: ElevatedButton(
                             onPressed: () => context.push('/subscription/plans'),
@@ -120,7 +120,7 @@ class SubscriptionDetailsScreen extends ConsumerWidget {
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                               padding: const EdgeInsets.symmetric(vertical: 12),
                             ),
-                            child: const Text('تغيير أو ترقية الباقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                            child: Text('تغيير أو ترقية الباقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
                           ),
                         ),
                       ],
@@ -141,8 +141,8 @@ class SubscriptionDetailsScreen extends ConsumerWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
-          Text(label, style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant)),
+          Text(value, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
+          Text(label, style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant)),
         ],
       ),
     );
@@ -155,9 +155,9 @@ class SubscriptionDetailsScreen extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Expanded(
-            child: Text(text, style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant), textAlign: TextAlign.right),
+            child: Text(text, style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant), textAlign: TextAlign.right),
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8),
           const Icon(Icons.check, color: Color(0xFF006B5F), size: 16),
         ],
       ),

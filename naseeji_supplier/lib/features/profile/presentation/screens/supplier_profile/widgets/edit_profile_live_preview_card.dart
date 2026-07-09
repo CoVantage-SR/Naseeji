@@ -35,17 +35,17 @@ class EditProfileLivePreviewCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Icon(Icons.remove_red_eye_outlined, size: 14, color: Color(0xFF0040E0)),
-              const Text(
+              Text(
                 'معاينة حية (B2B Preview Card)',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: Color(0xFF0040E0)),
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 8, offset: const Offset(0, 2)),
@@ -59,27 +59,27 @@ class EditProfileLivePreviewCard extends StatelessWidget {
                     children: [
                       Text(
                         companyName.isEmpty ? 'مصنع توريد نسيج' : companyName,
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                         textAlign: TextAlign.end,
                       ),
-                      const SizedBox(height: 4),
+                      SizedBox(height: 4),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text(city.isEmpty ? 'الموقع' : city, style: const TextStyle(fontSize: 10, color: AppColors.outline)),
-                          const SizedBox(width: 4),
+                          Text(city.isEmpty ? 'الموقع' : city, style: TextStyle(fontSize: 10, color: AppColors.outline)),
+                          SizedBox(width: 4),
                           const Icon(Icons.location_on_outlined, size: 10, color: AppColors.outline),
                         ],
                       ),
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6),
                       Text(
                         description.isEmpty ? 'لم يتم إضافة نبذة مختصرة عن المصنع بعد.' : description,
-                        style: const TextStyle(fontSize: 9, color: AppColors.onSurfaceVariant, height: 1.3),
+                        style: TextStyle(fontSize: 9, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.3),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.end,
                       ),
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6),
                       Wrap(
                         spacing: 4,
                         runSpacing: 4,
@@ -87,13 +87,13 @@ class EditProfileLivePreviewCard extends StatelessWidget {
                         children: categories.map((cat) => Container(
                           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                           decoration: BoxDecoration(color: const Color(0xFFF1F4FE), borderRadius: BorderRadius.circular(4)),
-                          child: Text(cat, style: const TextStyle(color: Color(0xFF0040E0), fontSize: 8)),
+                          child: Text(cat, style: TextStyle(color: Color(0xFF0040E0), fontSize: 8)),
                         )).toList(),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12),
                 Container(
                   width: 50,
                   height: 50,

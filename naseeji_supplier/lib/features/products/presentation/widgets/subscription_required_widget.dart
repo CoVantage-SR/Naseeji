@@ -31,45 +31,45 @@ class SubscriptionRequiredWidget extends StatelessWidget {
                 color: const Color(0xFF0040E0).withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: const Center(
+              child: Center(
                 child: Text(
                   '📦',
                   style: TextStyle(fontSize: 48),
                 ),
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
 
             // Title
             Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: AppColors.onSurface,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
 
             // Subtitle
             Text(
               subtitle,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 12,
-                color: AppColors.onSurfaceVariant,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
                 height: 1.5,
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: 32),
 
             // Buttons
             PrimaryButton(
               text: 'اختيار الباقة المناسبة',
               onPressed: onChoosePlan ?? () => context.push('/subscription/plans'),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             OutlinedButton(
               onPressed: () => context.push('/subscription/comparison'),
               style: OutlinedButton.styleFrom(
@@ -80,7 +80,7 @@ class SubscriptionRequiredWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              child: const Text(
+              child: Text(
                 'معرفة المزيد عن المزايا',
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),

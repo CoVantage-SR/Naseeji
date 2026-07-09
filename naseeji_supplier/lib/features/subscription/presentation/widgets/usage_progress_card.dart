@@ -43,7 +43,7 @@ class UsageProgressCard extends StatelessWidget {
 
     return Card(
       elevation: 0.5,
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
@@ -63,15 +63,15 @@ class UsageProgressCard extends StatelessWidget {
               children: [
                 Text(
                   '${usedValue.toStringAsFixed(usedValue % 1 == 0 ? 0 : 1)} / ${maxValue.toStringAsFixed(maxValue % 1 == 0 ? 0 : 1)} $unit',
-                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                 ),
                 Text(
                   title,
-                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             ClipRRect(
               borderRadius: BorderRadius.circular(4),
               child: LinearProgressIndicator(
@@ -83,7 +83,7 @@ class UsageProgressCard extends StatelessWidget {
             ),
 
             if (warningMessage.isNotEmpty) ...[
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                 decoration: BoxDecoration(
@@ -103,7 +103,7 @@ class UsageProgressCard extends StatelessWidget {
             ],
 
             if (percent >= 0.80) ...[
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               Row(
                 children: [
                   Expanded(
@@ -115,10 +115,10 @@ class UsageProgressCard extends StatelessWidget {
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         padding: const EdgeInsets.symmetric(vertical: 8),
                       ),
-                      child: const Text('شراء ملحق التوسيع', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+                      child: Text('شراء ملحق التوسيع', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Expanded(
                     child: ElevatedButton(
                       onPressed: onUpgrade,
@@ -129,7 +129,7 @@ class UsageProgressCard extends StatelessWidget {
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         padding: const EdgeInsets.symmetric(vertical: 8),
                       ),
-                      child: const Text('ترقية الباقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+                      child: Text('ترقية الباقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
                     ),
                   ),
                 ],

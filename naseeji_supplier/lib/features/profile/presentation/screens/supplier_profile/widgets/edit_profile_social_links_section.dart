@@ -21,23 +21,23 @@ class EditProfileSocialLinksSection extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('الروابط الاجتماعية والمهنية للشركة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 12),
+          Text('الروابط الاجتماعية والمهنية للشركة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 12),
           _buildTextField('صفحة فيسبوك للنشاط', fbController, isUrl: true),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildTextField('رابط الإنستغرام لاستعراض الكتالوجات', instaController, isUrl: true),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildTextField('الحساب المهني لينكد إن (LinkedIn)', linkedinController, isUrl: true),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildTextField('حساب إكس (X / تويتر سابقاً)', xController, isUrl: true),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildTextField('قناة يوتيوب لعروض خطوط الإنتاج والآلات', youtubeController, isUrl: true),
         ],
       ),
@@ -68,7 +68,7 @@ class EditProfileSocialLinksSection extends StatelessWidget {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
           contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         ),
-        style: const TextStyle(fontSize: 12),
+        style: TextStyle(fontSize: 12),
       ),
     );
   }

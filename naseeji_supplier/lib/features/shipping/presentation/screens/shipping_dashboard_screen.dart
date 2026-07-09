@@ -47,29 +47,29 @@ class _ShippingDashboardScreenState extends ConsumerState<ShippingDashboardScree
         drawer: const NavigationDrawerView(),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
           centerTitle: true,
-          title: const Text(
+          title: Text(
             'لوجستيات الشحن والتسليم',
             style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 15),
           ),
           leading: IconButton(
-            icon: const Icon(Icons.menu, color: AppColors.onSurfaceVariant),
+            icon: const Icon(Icons.menu, color: Theme.of(context).colorScheme.onSurfaceVariant),
             onPressed: () => _scaffoldKey.currentState?.openDrawer(),
           ),
           bottom: TabBar(
             controller: _tabController,
             isScrollable: true,
             labelColor: const Color(0xFF0040E0),
-            unselectedLabelColor: AppColors.onSurfaceVariant,
+            unselectedLabelColor: Theme.of(context).colorScheme.onSurfaceVariant,
             indicatorColor: const Color(0xFF0040E0),
-            labelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+            labelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
             tabs: _tabs.map((title) => Tab(text: title)).toList(),
           ),
         ),
         body: stateAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (e, _) => Center(child: Text('خطأ في التحميل: $e')),
           data: (shipments) {
             final filtered = _filterShipments(shipments, _tabController.index);
@@ -81,7 +81,7 @@ class _ShippingDashboardScreenState extends ConsumerState<ShippingDashboardScree
                 children: [
                   // Top Summary Grid
                   ShippingSummaryGrid(shipments: shipments),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   
                   // Shipment List Title
                   Row(
@@ -89,7 +89,7 @@ class _ShippingDashboardScreenState extends ConsumerState<ShippingDashboardScree
                     children: [
                       Text(
                         'إجمالي الشحنات (${filtered.length})',
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.onSurface),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Theme.of(context).colorScheme.onSurface),
                       ),
                       IconButton(
                         icon: const Icon(Icons.sync_outlined, size: 18, color: AppColors.outline),
@@ -97,13 +97,13 @@ class _ShippingDashboardScreenState extends ConsumerState<ShippingDashboardScree
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
 
                   if (filtered.isEmpty)
                     _buildEmptyState()
                   else
                     ...filtered.map((s) => ShipmentListCard(s: s)),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20),
                 ],
               ),
             );
@@ -132,7 +132,7 @@ class _ShippingDashboardScreenState extends ConsumerState<ShippingDashboardScree
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 40),
       alignment: Alignment.center,
-      child: const Column(
+      child: Column(
         children: [
           Icon(Icons.local_shipping_outlined, size: 48, color: AppColors.outlineVariant),
           SizedBox(height: 12),

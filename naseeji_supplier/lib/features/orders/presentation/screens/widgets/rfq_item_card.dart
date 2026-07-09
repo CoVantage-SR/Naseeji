@@ -51,7 +51,7 @@ class RfqItemCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -94,17 +94,17 @@ class RfqItemCard extends StatelessWidget {
                   children: [
                     Text(
                       companyName,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.onSurface,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                       textAlign: TextAlign.end,
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4),
                     Text(
                       '$rfqNumber • $material',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 11,
                         color: AppColors.outline,
                       ),
@@ -114,7 +114,7 @@ class RfqItemCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               // Company Logo
               Container(
                 width: 44,
@@ -139,9 +139,9 @@ class RfqItemCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           const Divider(height: 1, color: Color(0xFFF1F1F5)),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Metadata Grid: Quantity, Location, Date
           Row(
@@ -151,14 +151,14 @@ class RfqItemCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'الموقع',
                     style: TextStyle(
                       fontSize: 10,
                       color: AppColors.outline,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -167,13 +167,13 @@ class RfqItemCard extends StatelessWidget {
                         size: 14,
                         color: AppColors.outline,
                       ),
-                      const SizedBox(width: 4),
+                      SizedBox(width: 4),
                       Text(
                         location,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.onSurface,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                     ],
@@ -184,27 +184,27 @@ class RfqItemCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const Text(
+                  Text(
                     'الكمية المطلوبة',
                     style: TextStyle(
                       fontSize: 10,
                       color: AppColors.outline,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   Text(
                     quantity,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.onSurface,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                 ],
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           
           // Date Row
           Row(
@@ -212,23 +212,23 @@ class RfqItemCard extends StatelessWidget {
             children: [
               Text(
                 dateValue,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.onSurface,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
-              const SizedBox(width: 4),
+              SizedBox(width: 4),
               Text(
                 '$dateLabel:',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 10,
                   color: AppColors.outline,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Action Buttons
           Row(
@@ -247,12 +247,12 @@ class RfqItemCard extends StatelessWidget {
                     icon: Icon(
                       iconButtonIcon,
                       size: 18,
-                      color: AppColors.onSurfaceVariant,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                     onPressed: () {},
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12),
               ],
               // Main Action Button (Expanded to fill remaining width)
               Expanded(
@@ -269,7 +269,7 @@ class RfqItemCard extends StatelessWidget {
                         ),
                         child: Text(
                           actionButtonText,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
@@ -288,7 +288,7 @@ class RfqItemCard extends StatelessWidget {
                         ),
                         child: Text(
                           actionButtonText,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
