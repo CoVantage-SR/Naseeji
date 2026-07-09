@@ -17,13 +17,13 @@ class PaymentsScreen extends ConsumerWidget {
       length: 6,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
+          title: Text(
             'الدفعات والتسويات الماليّة',
-            style: TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
           ),
           centerTitle: true,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+            icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
             onPressed: () => context.pop(),
           ),
           bottom: const TabBar(
@@ -45,7 +45,7 @@ class PaymentsScreen extends ConsumerWidget {
         body: Container(
           color: Theme.of(context).scaffoldBackgroundColor,
           child: paymentsAsync.when(
-            loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+            loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
             error: (err, stack) => Center(child: Text('خطأ: $err')),
             data: (payments) {
               return TabBarView(
@@ -67,7 +67,7 @@ class PaymentsScreen extends ConsumerWidget {
 
   Widget _buildPaymentList(BuildContext context, List<SupplierPayment> list) {
     if (list.isEmpty) {
-      return const Center(
+      return Center(
         child: Text(
           'لا توجد دفعات حالية في هذا القسم',
           style: TextStyle(color: AppColors.outline),
@@ -83,7 +83,7 @@ class PaymentsScreen extends ConsumerWidget {
         final releaseDateStr = '${payment.releaseDate.year}-${payment.releaseDate.month.toString().padLeft(2, '0')}-${payment.releaseDate.day.toString().padLeft(2, '0')}';
 
         return Card(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14),
@@ -101,41 +101,41 @@ class PaymentsScreen extends ConsumerWidget {
                     PaymentStatusBadge(status: payment.status),
                     Text(
                       payment.paymentNumber,
-                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.outline),
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.outline),
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       '${payment.amount.toStringAsFixed(2)} ر.س',
-                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primary),
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primary),
                     ),
                     Text(
                       payment.factoryName,
-                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       'تاريخ الاستحقاق/الإفراج: $releaseDateStr',
-                      style: const TextStyle(fontSize: 11, color: AppColors.outline),
+                      style: TextStyle(fontSize: 11, color: AppColors.outline),
                     ),
                     Text(
                       'رقم طلب الشراء: ${payment.orderNumber}',
-                      style: const TextStyle(fontSize: 11, color: AppColors.outline),
+                      style: TextStyle(fontSize: 11, color: AppColors.outline),
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
                 const Divider(height: 1, color: AppColors.outlineVariant),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 Row(
                   children: [
                     Expanded(
@@ -148,14 +148,14 @@ class PaymentsScreen extends ConsumerWidget {
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                           padding: const EdgeInsets.symmetric(vertical: 8),
                         ),
-                        child: const Text(
+                        child: Text(
                           'عرض تفاصيل الدفعة',
                           style: TextStyle(color: AppColors.primary, fontSize: 11, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
                     if (payment.receiptUrl != null) ...[
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8),
                       IconButton(
                         onPressed: () {
                           ScaffoldMessenger.of(context).showSnackBar(

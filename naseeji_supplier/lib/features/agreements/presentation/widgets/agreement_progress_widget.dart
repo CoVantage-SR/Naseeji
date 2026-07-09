@@ -29,16 +29,16 @@ class AgreementProgressWidget extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.all(Radius.circular(16)),
         boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('خطوات اعتماد وتفعيل العقد', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.onSurface)),
-          const SizedBox(height: 16),
+          Text('خطوات اعتماد وتفعيل العقد', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Theme.of(context).colorScheme.onSurface)),
+          SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: List.generate(steps.length, (index) {
@@ -50,14 +50,14 @@ class AgreementProgressWidget extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 10,
-                          backgroundColor: step.completed ? const Color(0xFF0040E0) : AppColors.surfaceContainerLow,
+                          backgroundColor: step.completed ? const Color(0xFF0040E0) : Theme.of(context).colorScheme.surfaceContainerLow,
                           child: Icon(
                             step.completed ? Icons.check : Icons.circle_outlined,
                             size: 10,
                             color: step.completed ? Colors.white : AppColors.outline,
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4),
                         Text(
                           step.title,
                           style: TextStyle(

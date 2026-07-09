@@ -42,15 +42,15 @@ class _LoginFormState extends ConsumerState<LoginForm> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Input: Email/Phone
-          const Text(
+          Text(
             'البريد الإلكتروني أو رقم الهاتف',
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: AppColors.onSurfaceVariant,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           CustomTextField(
             controller: _identifierController,
             labelText: 'example@naseeji.com',
@@ -68,17 +68,17 @@ class _LoginFormState extends ConsumerState<LoginForm> {
               return null;
             },
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           // Input: Password
-          const Text(
+          Text(
             'كلمة المرور',
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: AppColors.onSurfaceVariant,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           CustomTextField(
             controller: _passwordController,
             labelText: '••••••••',
@@ -105,7 +105,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
               return null;
             },
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           // Options: Remember Me & Forgot Password
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -121,11 +121,11 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                       });
                     },
                   ),
-                  const Text(
+                  Text(
                     'تذكرني',
                     style: TextStyle(
                       fontSize: 14,
-                      color: AppColors.onSurfaceVariant,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ),
                 ],
@@ -134,7 +134,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                 onPressed: () {
                   // Forgot password action
                 },
-                child: const Text(
+                child: Text(
                   'نسيت كلمة المرور؟',
                   style: TextStyle(
                     fontSize: 14,
@@ -145,15 +145,15 @@ class _LoginFormState extends ConsumerState<LoginForm> {
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
           // Submit Button
           PrimaryButton(
             text: 'تسجيل الدخول',
             onPressed: _submit,
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
           // Or Divider
-          const Row(
+          Row(
             children: [
               Expanded(child: Divider(color: AppColors.outlineVariant)),
               Padding(
@@ -166,7 +166,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
               Expanded(child: Divider(color: AppColors.outlineVariant)),
             ],
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
           // Social Buttons
           Row(
             children: [
@@ -180,14 +180,14 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                     ),
                     side: const BorderSide(color: AppColors.outlineVariant),
                   ),
-                  icon: const Icon(Icons.apple, color: AppColors.onSurface, size: 20),
-                  label: const Text(
+                  icon: const Icon(Icons.apple, color: Theme.of(context).colorScheme.onSurface, size: 20),
+                  label: Text(
                     'آبل',
-                    style: TextStyle(color: AppColors.onSurfaceVariant),
+                    style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                   ),
                 ),
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: 16),
               Expanded(
                 child: OutlinedButton.icon(
                   onPressed: () {},
@@ -199,9 +199,9 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                     side: const BorderSide(color: AppColors.outlineVariant),
                   ),
                   icon: const Icon(Icons.g_mobiledata_rounded, color: Colors.red, size: 24),
-                  label: const Text(
+                  label: Text(
                     'جوجل',
-                    style: TextStyle(color: AppColors.onSurfaceVariant),
+                    style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                   ),
                 ),
               ),

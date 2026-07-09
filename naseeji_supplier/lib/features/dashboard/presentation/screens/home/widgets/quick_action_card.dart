@@ -32,10 +32,10 @@ class QuickActionCard extends StatelessWidget {
             ),
             child: Icon(icon, color: iconColor, size: 24),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Text(
             label,
-            style: const TextStyle(fontSize: 11, color: AppColors.onSurface),
+            style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurface),
           ),
         ],
       ),

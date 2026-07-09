@@ -22,25 +22,25 @@ class RevenueGrowthBanner extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Text(
+          Text(
             'نمو الإيرادات',
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.bold,
-              color: AppColors.onSurface,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
-          const SizedBox(height: 12),
-          const Text(
+          SizedBox(height: 12),
+          Text(
             'وصلنا إلى نمو قياسي بنسبة 24% في الربع الأخير من العام الحالي مقارنة بالفترة ذاتها من العام السابق.',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 13,
-              color: AppColors.onSurfaceVariant,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
               height: 1.5,
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
@@ -52,7 +52,7 @@ class RevenueGrowthBanner extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 elevation: 0,
               ),
-              child: const Text(
+              child: Text(
                 'عرض التقرير المفصل',
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               ),

@@ -12,14 +12,14 @@ class RfqAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       elevation: 0.5,
       leading: IconButton(
-        icon: const Icon(Icons.menu, color: AppColors.onSurfaceVariant),
+        icon: const Icon(Icons.menu, color: Theme.of(context).colorScheme.onSurfaceVariant),
         onPressed: () => scaffoldKey.currentState?.openDrawer(),
       ),
       centerTitle: true,
-      title: const Text(
+      title: Text(
         'طلبات الأسعار (RFQ)',
         style: TextStyle(
           color: AppColors.primary,
@@ -29,7 +29,7 @@ class RfqAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.search, color: AppColors.onSurfaceVariant),
+          icon: const Icon(Icons.search, color: Theme.of(context).colorScheme.onSurfaceVariant),
           onPressed: () => context.push('/search'),
         ),
         Stack(
@@ -38,7 +38,7 @@ class RfqAppBar extends StatelessWidget implements PreferredSizeWidget {
             IconButton(
               icon: const Icon(
                 Icons.notifications_none,
-                color: AppColors.onSurfaceVariant,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
               onPressed: () => context.push('/notifications'),
             ),
@@ -47,7 +47,7 @@ class RfqAppBar extends StatelessWidget implements PreferredSizeWidget {
               right: 8,
               child: Container(
                 padding: const EdgeInsets.all(2),
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: AppColors.error,
                   shape: BoxShape.circle,
                 ),
@@ -55,11 +55,11 @@ class RfqAppBar extends StatelessWidget implements PreferredSizeWidget {
                   minWidth: 14,
                   minHeight: 14,
                 ),
-                child: const Text(
+                child: Text(
                   '3',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     fontSize: 8,
                     fontWeight: FontWeight.bold,
                   ),
@@ -68,7 +68,7 @@ class RfqAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ],
         ),
-        const SizedBox(width: 8),
+        SizedBox(width: 8),
       ],
     );
   }
@@ -87,7 +87,7 @@ class RfqSearchBar extends StatelessWidget {
       child: TextField(
         decoration: InputDecoration(
           hintText: 'ابحث في طلبات الأسعار...',
-          hintStyle: const TextStyle(
+          hintStyle: TextStyle(
             color: AppColors.outline,
             fontSize: 13,
           ),
@@ -142,13 +142,13 @@ class RfqFilterSortRow extends StatelessWidget {
             icon: const Icon(
               Icons.tune,
               size: 16,
-              color: AppColors.onSurfaceVariant,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
-            label: const Text(
+            label: Text(
               'تصفية',
               style: TextStyle(
                 fontSize: 12,
-                color: AppColors.onSurfaceVariant,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -161,24 +161,24 @@ class RfqFilterSortRow extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               padding: const EdgeInsets.symmetric(vertical: 10),
-              backgroundColor: Colors.white,
+              backgroundColor: Theme.of(context).colorScheme.surface,
             ),
           ),
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: 12),
         Expanded(
           child: OutlinedButton.icon(
             onPressed: () {},
             icon: const Icon(
               Icons.sort,
               size: 16,
-              color: AppColors.onSurfaceVariant,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
-            label: const Text(
+            label: Text(
               'ترتيب',
               style: TextStyle(
                 fontSize: 12,
-                color: AppColors.onSurfaceVariant,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -191,7 +191,7 @@ class RfqFilterSortRow extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               padding: const EdgeInsets.symmetric(vertical: 10),
-              backgroundColor: Colors.white,
+              backgroundColor: Theme.of(context).colorScheme.surface,
             ),
           ),
         ),

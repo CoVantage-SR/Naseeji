@@ -23,7 +23,7 @@ class InvoiceCard extends StatelessWidget {
     final totalStr = '${invoice.grandTotal.toStringAsFixed(2)} ر.س';
 
     return Card(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
@@ -43,21 +43,21 @@ class InvoiceCard extends StatelessWidget {
                 PaymentStatusBadge(status: invoice.status),
                 Text(
                   invoice.invoiceNumber,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.onSurface,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   totalStr,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: AppColors.primary,
@@ -65,31 +65,31 @@ class InvoiceCard extends StatelessWidget {
                 ),
                 Text(
                   invoice.factoryName,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.onSurface,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   'تاريخ الاستحقاق: $dueDateStr',
-                  style: const TextStyle(fontSize: 11, color: AppColors.outline),
+                  style: TextStyle(fontSize: 11, color: AppColors.outline),
                 ),
                 Text(
                   'تاريخ الفاتورة: $issueDateStr',
-                  style: const TextStyle(fontSize: 11, color: AppColors.outline),
+                  style: TextStyle(fontSize: 11, color: AppColors.outline),
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             const Divider(height: 1, color: AppColors.outlineVariant),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             Row(
               children: [
                 Expanded(
@@ -104,14 +104,14 @@ class InvoiceCard extends StatelessWidget {
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 10),
                     ),
-                    child: const Text(
+                    child: Text(
                       'التفاصيل والبنود',
                       style: TextStyle(color: AppColors.primary, fontSize: 12, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
                 if (onDownload != null) ...[
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   IconButton(
                     onPressed: onDownload,
                     icon: const Icon(Icons.download, size: 20, color: AppColors.outline),
@@ -124,7 +124,7 @@ class InvoiceCard extends StatelessWidget {
                   ),
                 ],
                 if (onShare != null) ...[
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   IconButton(
                     onPressed: onShare,
                     icon: const Icon(Icons.share, size: 20, color: AppColors.outline),

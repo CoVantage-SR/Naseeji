@@ -44,7 +44,7 @@ class WalletBalanceCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text(
+          Text(
             'الرصيد المتاح للسحب',
             textAlign: TextAlign.right,
             style: TextStyle(
@@ -53,25 +53,25 @@ class WalletBalanceCard extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.baseline,
             textBaseline: TextBaseline.alphabetic,
             children: [
-              const Text(
+              Text(
                 'ر.س',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(width: 6),
+              SizedBox(width: 6),
               Text(
                 availableStr,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.surface,
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 0.5,
@@ -79,9 +79,9 @@ class WalletBalanceCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
           const Divider(color: Colors.white24, height: 1),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -91,18 +91,18 @@ class WalletBalanceCard extends StatelessWidget {
             ],
           ),
           if (onWithdraw != null) ...[
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
             ElevatedButton(
               onPressed: onWithdraw,
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
+                backgroundColor: Theme.of(context).colorScheme.surface,
                 foregroundColor: const Color(0xFF0040E0),
                 minimumSize: const Size.fromHeight(48),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.account_balance_wallet_outlined, size: 18),
@@ -130,16 +130,16 @@ class WalletBalanceCard extends StatelessWidget {
         children: [
           Text(
             label,
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.white70,
               fontSize: 11,
             ),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4),
           Text(
             '$value ر.س',
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.surface,
               fontSize: 14,
               fontWeight: FontWeight.bold,
             ),

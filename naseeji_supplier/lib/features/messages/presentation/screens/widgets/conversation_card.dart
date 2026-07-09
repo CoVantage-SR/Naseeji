@@ -53,8 +53,8 @@ class ConversationCard extends StatelessWidget {
                     child: Center(
                       child: Text(
                         conversation.companyLogoText,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.surface,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -71,13 +71,13 @@ class ConversationCard extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: const Color(0xFF10C600),
                           shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white, width: 2.5),
+                          border: Border.all(color: Theme.of(context).colorScheme.surface, width: 2.5),
                         ),
                       ),
                     ),
                 ],
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               // Content
               Expanded(
                 child: Column(
@@ -97,14 +97,14 @@ class ConversationCard extends StatelessWidget {
                                         ? FontWeight.w800
                                         : FontWeight.w600,
                                     fontSize: 15,
-                                    color: AppColors.onSurface,
+                                    color: Theme.of(context).colorScheme.onSurface,
                                     letterSpacing: 0.2,
                                   ),
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                               if (conversation.isVerified)
-                                const Padding(
+                                Padding(
                                   padding: EdgeInsets.only(left: 4),
                                   child: Icon(
                                     Icons.verified,
@@ -113,7 +113,7 @@ class ConversationCard extends StatelessWidget {
                                   ),
                                 ),
                               if (conversation.isMuted)
-                                const Padding(
+                                Padding(
                                   padding: EdgeInsets.only(left: 4),
                                   child: Icon(
                                     Icons.volume_off,
@@ -138,7 +138,7 @@ class ConversationCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 3),
+                    SizedBox(height: 3),
                     // RFQ / Order tags
                     if (conversation.rfqNumber != null ||
                         conversation.orderNumber != null)
@@ -153,7 +153,7 @@ class ConversationCard extends StatelessWidget {
                               ),
                             if (conversation.rfqNumber != null &&
                                 conversation.orderNumber != null)
-                              const SizedBox(width: 4),
+                              SizedBox(width: 4),
                             if (conversation.orderNumber != null)
                               _TagChip(
                                 label: conversation.orderNumber!,
@@ -173,7 +173,7 @@ class ConversationCard extends StatelessWidget {
                       children: [
                         Expanded(
                           child: conversation.isTyping
-                              ? const Text(
+                              ? Text(
                                   'يكتب...',
                                   style: TextStyle(
                                     fontSize: 12,
@@ -186,7 +186,7 @@ class ConversationCard extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: hasUnread
-                                        ? AppColors.onSurface
+                                        ? Theme.of(context).colorScheme.onSurface
                                         : AppColors.outline,
                                     fontWeight: hasUnread
                                         ? FontWeight.w600
@@ -205,7 +205,7 @@ class ConversationCard extends StatelessWidget {
                                 color: AppColors.outline,
                               ),
                             if (conversation.priority == MessagePriority.urgent)
-                              const Padding(
+                              Padding(
                                 padding: EdgeInsets.only(right: 4),
                                 child: Icon(
                                   Icons.priority_high,
@@ -237,8 +237,8 @@ class ConversationCard extends StatelessWidget {
                                   conversation.unreadCount > 99
                                       ? '99+'
                                       : '${conversation.unreadCount}',
-                                  style: const TextStyle(
-                                    color: Colors.white,
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.surface,
                                     fontSize: 11,
                                     fontWeight: FontWeight.bold,
                                   ),

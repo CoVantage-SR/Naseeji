@@ -21,12 +21,12 @@ class AnalyticsScreen extends ConsumerWidget {
       key: scaffoldKey,
       // drawer: const NavigationDrawerView(),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
-        title: const Text(
+        title: Text(
           'التقارير والإحصائيات',
           style: TextStyle(
-            color: AppColors.onSurface,
+            color: Theme.of(context).colorScheme.onSurface,
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),
@@ -35,7 +35,7 @@ class AnalyticsScreen extends ConsumerWidget {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios_new,
-            color: AppColors.onSurfaceVariant,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
             size: 20,
           ),
           onPressed: () {
@@ -51,7 +51,7 @@ class AnalyticsScreen extends ConsumerWidget {
       body: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
         child: analyticsAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator()),
+          loading: () => Center(child: CircularProgressIndicator()),
           error: (err, stack) => Center(child: Text('خطأ: $err')),
           data: (data) {
             return RefreshIndicator(
@@ -68,26 +68,26 @@ class AnalyticsScreen extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Header title and subtitle
-                    const Text(
+                    Text(
                       'إحصائيات الأداء',
                       textAlign: TextAlign.right,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.onSurface,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    const Text(
+                    SizedBox(height: 4),
+                    Text(
                       'نظرة شاملة على نمو أعمال نسيجي',
                       textAlign: TextAlign.right,
                       style: TextStyle(fontSize: 12, color: AppColors.outline),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
 
                     // Filter & Export buttons row
                     const AnalyticsFilterRow(),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24),
 
                     // Metric Cards Grid
                     PerformanceMetricsGrid(
@@ -104,11 +104,11 @@ class AnalyticsScreen extends ConsumerWidget {
                       ordersTrend: data.ordersTrend,
                       isOrdersPositive: data.isOrdersTrendPositive,
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     // Sales Trend Bar Chart Card
                     SalesTrendChart(barData: data.barData),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24),
 
                     // Orders Distribution Donut Card
                     OrdersDistributionCard(
@@ -118,11 +118,11 @@ class AnalyticsScreen extends ConsumerWidget {
                       silkOrders: data.silkOrders,
                       syntheticOrders: data.syntheticOrders,
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24),
 
                     // Revenue Growth Callout Banner
                     const RevenueGrowthBanner(),
-                    const SizedBox(height: 30),
+                    SizedBox(height: 30),
                   ],
                 ),
               ),

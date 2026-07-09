@@ -20,36 +20,36 @@ class AgreementDetailsScreen extends ConsumerWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: stateAsync.when(
-        loading: () => const Scaffold(body: Center(child: CircularProgressIndicator(color: AppColors.primary))),
+        loading: () => Scaffold(body: Center(child: CircularProgressIndicator(color: AppColors.primary))),
         error: (e, _) => Scaffold(body: Center(child: Text('خطأ: $e'))),
         data: (agreements) {
           final agreementIndex = agreements.indexWhere((a) => a.id == agreementId);
           if (agreementIndex == -1) {
-            return const Scaffold(body: Center(child: Text('الاتفاقية غير موجودة')));
+            return Scaffold(body: Center(child: Text('الاتفاقية غير موجودة')));
           }
           final a = agreements[agreementIndex];
 
           return Scaffold(
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             appBar: AppBar(
-              backgroundColor: Colors.white,
+              backgroundColor: Theme.of(context).colorScheme.surface,
               elevation: 0.5,
               centerTitle: true,
               title: Column(
                 children: [
                   Text(
                     'تفاصيل الاتفاقية والعقد ${a.id}',
-                    style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
+                    style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
                   ),
-                  const SizedBox(height: 2),
+                  SizedBox(height: 2),
                   Text(
                     'طلب: ${a.orderNumber} • RFQ: ${a.rfqNumber}',
-                    style: const TextStyle(color: AppColors.outline, fontSize: 9),
+                    style: TextStyle(color: AppColors.outline, fontSize: 9),
                   ),
                 ],
               ),
               leading: IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+                icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
                 onPressed: () => context.pop(),
               ),
             ),
@@ -58,13 +58,13 @@ class AgreementDetailsScreen extends ConsumerWidget {
               children: [
                 // 1. Status and Progression Cards
                 AgreementStatusCard(agreement: a),
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
                 AgreementProgressWidget(agreement: a),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // Navigation Shortcuts to associated sub-modules
                 _buildNavigationRow(context, a),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // 2. Agreement Metadata
                 _buildSectionCard(
@@ -79,7 +79,7 @@ class AgreementDetailsScreen extends ConsumerWidget {
                     _buildDetailRow('تاريخ انتهاء صلاحية العقد', a.expirationDate),
                   ],
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // 3. Supplier Details
                 _buildSectionCard(
@@ -91,23 +91,23 @@ class AgreementDetailsScreen extends ConsumerWidget {
                         CircleAvatar(
                           radius: 18,
                           backgroundColor: Color(a.supplierInfo.logoBgColorValue),
-                          child: Text(a.supplierInfo.logoText, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 11)),
+                          child: Text(a.supplierInfo.logoText, style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.bold, fontSize: 11)),
                         ),
-                        const SizedBox(width: 10),
+                        SizedBox(width: 10),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
-                                  Text(a.supplierInfo.companyName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                                  Text(a.supplierInfo.companyName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
                                   if (a.supplierInfo.verified) ...[
-                                    const SizedBox(width: 4),
+                                    SizedBox(width: 4),
                                     const Icon(Icons.verified, color: Colors.blue, size: 14),
                                   ],
                                 ],
                               ),
-                              Text('الممثل: ${a.supplierInfo.supplierName} • تقييم المورد: ${a.supplierInfo.rating} ★', style: const TextStyle(fontSize: 9, color: AppColors.outline)),
+                              Text('الممثل: ${a.supplierInfo.supplierName} • تقييم المورد: ${a.supplierInfo.rating} ★', style: TextStyle(fontSize: 9, color: AppColors.outline)),
                             ],
                           ),
                         ),
@@ -119,7 +119,7 @@ class AgreementDetailsScreen extends ConsumerWidget {
                     _buildDetailRow('عنوان المستودع والإنتاج', a.supplierInfo.address),
                   ],
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // 4. Factory Details
                 _buildSectionCard(
@@ -131,15 +131,15 @@ class AgreementDetailsScreen extends ConsumerWidget {
                         CircleAvatar(
                           radius: 18,
                           backgroundColor: Color(a.factoryInfo.logoBgColorValue),
-                          child: Text(a.factoryInfo.logoText, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 11)),
+                          child: Text(a.factoryInfo.logoText, style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.bold, fontSize: 11)),
                         ),
-                        const SizedBox(width: 10),
+                        SizedBox(width: 10),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(a.factoryInfo.factoryName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                              Text('الممثل المعتمد: ${a.factoryInfo.contactPerson} • تقييم المشتري: ${a.factoryInfo.rating} ★', style: const TextStyle(fontSize: 9, color: AppColors.outline)),
+                              Text(a.factoryInfo.factoryName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                              Text('الممثل المعتمد: ${a.factoryInfo.contactPerson} • تقييم المشتري: ${a.factoryInfo.rating} ★', style: TextStyle(fontSize: 9, color: AppColors.outline)),
                             ],
                           ),
                         ),
@@ -151,7 +151,7 @@ class AgreementDetailsScreen extends ConsumerWidget {
                     _buildDetailRow('عنوان تسليم المستودع للمشتري', a.factoryInfo.address),
                   ],
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // 5. Products Specifications
                 _buildSectionCard(
@@ -169,16 +169,16 @@ class AgreementDetailsScreen extends ConsumerWidget {
                             image: DecorationImage(image: NetworkImage(a.product.imageUrl), fit: BoxFit.cover),
                           ),
                         ),
-                        const SizedBox(width: 12),
+                        SizedBox(width: 12),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(a.product.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                              const SizedBox(height: 2),
-                              Text('SKU: ${a.product.sku} • التصنيف: ${a.product.category}', style: const TextStyle(fontSize: 9, color: AppColors.outline)),
-                              const SizedBox(height: 2),
-                              Text('بلد المنشأ: ${a.product.countryOfOrigin}', style: const TextStyle(fontSize: 9, color: AppColors.outline)),
+                              Text(a.product.name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                              SizedBox(height: 2),
+                              Text('SKU: ${a.product.sku} • التصنيف: ${a.product.category}', style: TextStyle(fontSize: 9, color: AppColors.outline)),
+                              SizedBox(height: 2),
+                              Text('بلد المنشأ: ${a.product.countryOfOrigin}', style: TextStyle(fontSize: 9, color: AppColors.outline)),
                             ],
                           ),
                         ),
@@ -190,7 +190,7 @@ class AgreementDetailsScreen extends ConsumerWidget {
                     _buildDetailRow('الكمية الإجمالية للمشروع', '${a.product.quantity} ${a.product.unit}', isBold: true),
                   ],
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // 6. Pricing Breakdown
                 _buildSectionCard(
@@ -208,7 +208,7 @@ class AgreementDetailsScreen extends ConsumerWidget {
                     _buildDetailRow('المجموع المالي الكلي للمشروع', '${a.pricing.grandTotal.toStringAsFixed(2)} ${a.pricing.currency}', isBold: true),
                   ],
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // 7. Payment Terms
                 _buildSectionCard(
@@ -224,7 +224,7 @@ class AgreementDetailsScreen extends ConsumerWidget {
                     _buildDetailRow('مدة تسوية البنك التلقائية', a.paymentTerms.settlementTime),
                   ],
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // 8. Delivery Terms
                 _buildSectionCard(
@@ -240,7 +240,7 @@ class AgreementDetailsScreen extends ConsumerWidget {
                     _buildDetailRow('المستودع الرئيسي للمستلم', a.deliveryTerms.warehouse),
                   ],
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // 9. Special Conditions
                 _buildSectionCard(
@@ -255,7 +255,7 @@ class AgreementDetailsScreen extends ConsumerWidget {
                     _buildDetailRow('ملاحظات وإيضاحات إضافية', a.conditions.additionalNotes),
                   ],
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: 30),
               ],
             ),
             bottomNavigationBar: AgreementActionButtons(a: a),
@@ -274,14 +274,14 @@ class AgreementDetailsScreen extends ConsumerWidget {
           icon: Icons.compare_arrows_outlined, 
           path: '/agreements/comparison/${a.id}',
         ),
-        const SizedBox(width: 8),
+        SizedBox(width: 8),
         _buildNavButton(
           context, 
           label: 'المستندات', 
           icon: Icons.description_outlined, 
           path: '/agreements/documents/${a.id}',
         ),
-        const SizedBox(width: 8),
+        SizedBox(width: 8),
         _buildNavButton(
           context, 
           label: 'الخط الزمني والسجل', 
@@ -297,7 +297,7 @@ class AgreementDetailsScreen extends ConsumerWidget {
       child: Container(
         height: 54,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.01), blurRadius: 4)],
         ),
@@ -308,8 +308,8 @@ class AgreementDetailsScreen extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(icon, color: AppColors.primary, size: 18),
-              const SizedBox(height: 4),
-              Text(label, style: const TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
+              SizedBox(height: 4),
+              Text(label, style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
             ],
           ),
         ),
@@ -320,7 +320,7 @@ class AgreementDetailsScreen extends ConsumerWidget {
   Widget _buildSectionCard({required String title, required IconData icon, required List<Widget> children}) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.all(Radius.circular(16)),
         boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
       ),
@@ -331,16 +331,16 @@ class AgreementDetailsScreen extends ConsumerWidget {
           Row(
             children: [
               Icon(icon, color: AppColors.primary, size: 18),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Text(
                 title,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.onSurface),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Theme.of(context).colorScheme.onSurface),
               ),
             ],
           ),
-          const SizedBox(height: 10),
-          const Divider(height: 1, color: AppColors.surfaceContainerLow),
-          const SizedBox(height: 8),
+          SizedBox(height: 10),
+          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          SizedBox(height: 8),
           ...children,
         ],
       ),
@@ -348,7 +348,7 @@ class AgreementDetailsScreen extends ConsumerWidget {
   }
 
   Widget _buildDetailRow(String label, String value, {bool isBold = false, bool isPrimary = false, bool isWarning = false}) {
-    Color valueColor = AppColors.onSurface;
+    Color valueColor = Theme.of(context).colorScheme.onSurface;
     if (isPrimary) valueColor = AppColors.primary;
     if (isWarning) valueColor = AppColors.error;
 
@@ -361,7 +361,7 @@ class AgreementDetailsScreen extends ConsumerWidget {
             flex: 2,
             child: Text(
               label,
-              style: const TextStyle(fontSize: 10, color: AppColors.outline),
+              style: TextStyle(fontSize: 10, color: AppColors.outline),
             ),
           ),
           Expanded(

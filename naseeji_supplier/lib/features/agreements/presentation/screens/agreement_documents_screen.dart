@@ -19,25 +19,25 @@ class AgreementDocumentsScreen extends ConsumerWidget {
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
           centerTitle: true,
           title: Text(
             'مستندات اتفاقية الشراكة $agreementId',
-            style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
+            style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
           ),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+            icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
             onPressed: () => context.pop(),
           ),
         ),
         body: stateAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (e, _) => Center(child: Text('خطأ: $e')),
           data: (agreements) {
             final agreementIndex = agreements.indexWhere((a) => a.id == agreementId);
             if (agreementIndex == -1) {
-              return const Center(child: Text('الاتفاقية غير موجودة'));
+              return Center(child: Text('الاتفاقية غير موجودة'));
             }
             final a = agreements[agreementIndex];
 
@@ -48,7 +48,7 @@ class AgreementDocumentsScreen extends ConsumerWidget {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.all(Radius.circular(16)),
                     boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
                   ),
@@ -58,25 +58,25 @@ class AgreementDocumentsScreen extends ConsumerWidget {
                       Row(
                         children: [
                           const Icon(Icons.folder_open, color: AppColors.primary, size: 22),
-                          const SizedBox(width: 8),
-                          Text('مركز أرشفة وثائق العقد للطلب ${a.orderNumber}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+                          SizedBox(width: 8),
+                          Text('مركز أرشفة وثائق العقد للطلب ${a.orderNumber}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
                         ],
                       ),
-                      const SizedBox(height: 6),
-                      const Text(
+                      SizedBox(height: 6),
+                      Text(
                         'يتضمن هذا القسم كافة الوثائق الرسمية، الفواتير الجمركية، بوالص الشحن، وشهادات فحص الجودة الموقعة والمعتمدة إلكترونياً من الطرفين بنسيجي.',
                         style: TextStyle(fontSize: 10, color: AppColors.outline, height: 1.4),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
 
                 // Upload button
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('الوثائق الحالية (${a.documents.length})', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.onSurfaceVariant)),
+                    Text('الوثائق الحالية (${a.documents.length})', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant)),
                     ElevatedButton.icon(
                       onPressed: () => _showUploadDocDialog(context, ref, a.id),
                       style: ElevatedButton.styleFrom(
@@ -86,17 +86,17 @@ class AgreementDocumentsScreen extends ConsumerWidget {
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       ),
                       icon: const Icon(Icons.add, size: 14),
-                      label: const Text('إرفاق ملف رسمي جديد', style: TextStyle(fontSize: 10)),
+                      label: Text('إرفاق ملف رسمي جديد', style: TextStyle(fontSize: 10)),
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
 
                 if (a.documents.isEmpty)
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 40),
                     alignment: Alignment.center,
-                    child: const Text('لا توجد مستندات رسمية مرفوعة حالياً', style: TextStyle(color: AppColors.outline, fontSize: 11)),
+                    child: Text('لا توجد مستندات رسمية مرفوعة حالياً', style: TextStyle(color: AppColors.outline, fontSize: 11)),
                   )
                 else
                   ...a.documents.map((doc) => AgreementDocumentCard(
@@ -120,7 +120,7 @@ class AgreementDocumentsScreen extends ConsumerWidget {
       builder: (ctx) => Directionality(
         textDirection: TextDirection.rtl,
         child: AlertDialog(
-          title: const Text('رفع مستند رسمي جديد', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+          title: Text('رفع مستند رسمي جديد', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -128,7 +128,7 @@ class AgreementDocumentsScreen extends ConsumerWidget {
                 controller: typeController,
                 decoration: const InputDecoration(labelText: 'نوع الوثيقة'),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               TextField(
                 controller: nameController,
                 decoration: const InputDecoration(labelText: 'اسم الملف'),
@@ -136,7 +136,7 @@ class AgreementDocumentsScreen extends ConsumerWidget {
             ],
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+            TextButton(onPressed: () => Navigator.pop(ctx), child: Text('إلغاء')),
             ElevatedButton(
               onPressed: () {
                 ref.read(agreementsControllerProvider.notifier).uploadDoc(
@@ -148,7 +148,7 @@ class AgreementDocumentsScreen extends ConsumerWidget {
                 Navigator.pop(ctx);
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم رفع وتحديث مستند الاتفاقية بنجاح.')));
               },
-              child: const Text('تأكيد وحفظ الملف'),
+              child: Text('تأكيد وحفظ الملف'),
             ),
           ],
         ),

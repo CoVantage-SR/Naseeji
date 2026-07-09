@@ -24,7 +24,7 @@ class QuotationCard extends StatelessWidget {
     return Container(
       width: 290,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(18),
         border: Border.all(
           color: isAccepted 
@@ -66,15 +66,15 @@ class QuotationCard extends StatelessWidget {
                   ),
                   child: Text(
                     statusLabel,
-                    style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+                    style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 10, fontWeight: FontWeight.bold),
                   ),
                 ),
                 const Spacer(),
-                const Icon(Icons.request_quote_outlined, color: Colors.white, size: 18),
-                const SizedBox(width: 6),
+                const Icon(Icons.request_quote_outlined, color: Theme.of(context).colorScheme.surface, size: 18),
+                SizedBox(width: 6),
                 Text(
                   'عرض سعر ${data['version'] ?? ''}',
-                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                  style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.bold, fontSize: 13),
                 ),
               ],
             ),
@@ -102,8 +102,8 @@ class QuotationCard extends StatelessWidget {
               height: 36,
               child: OutlinedButton.icon(
                 onPressed: onViewDetails,
-                icon: const Icon(Icons.info_outline, size: 14, color: AppColors.onSurfaceVariant),
-                label: const Text('عرض التفاصيل', style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant)),
+                icon: const Icon(Icons.info_outline, size: 14, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                label: Text('عرض التفاصيل', style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant)),
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: AppColors.outlineVariant),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -111,7 +111,7 @@ class QuotationCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
 
           // Accept & Counter Offer buttons (only if status is pending)
           if (status == 'pending')
@@ -128,11 +128,11 @@ class QuotationCard extends StatelessWidget {
                           side: const BorderSide(color: AppColors.primary),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         ),
-                        child: const Text('عرض مضاد', style: TextStyle(fontSize: 12, color: AppColors.primary)),
+                        child: Text('عرض مضاد', style: TextStyle(fontSize: 12, color: AppColors.primary)),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   Expanded(
                     child: SizedBox(
                       height: 36,
@@ -142,7 +142,7 @@ class QuotationCard extends StatelessWidget {
                           backgroundColor: AppColors.secondary,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         ),
-                        child: const Text('قبول', style: TextStyle(fontSize: 12, color: Colors.white)),
+                        child: Text('قبول', style: TextStyle(fontSize: 12, color: Colors.white)),
                       ),
                     ),
                   ),
@@ -171,13 +171,13 @@ class _Row extends StatelessWidget {
             child: Text(
               value, 
               textAlign: TextAlign.left,
-              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+              style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          const SizedBox(width: 8),
-          Text(label, style: const TextStyle(fontSize: 11, color: AppColors.outline)),
+          SizedBox(width: 8),
+          Text(label, style: TextStyle(fontSize: 11, color: AppColors.outline)),
         ],
       ),
     );

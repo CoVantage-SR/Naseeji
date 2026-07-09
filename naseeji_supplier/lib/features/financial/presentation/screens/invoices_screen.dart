@@ -17,13 +17,13 @@ class InvoicesScreen extends ConsumerWidget {
       length: 5,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
+          title: Text(
             'نظام الفواتير الماليّة',
-            style: TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
           ),
           centerTitle: true,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+            icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
             onPressed: () => context.pop(),
           ),
           bottom: const TabBar(
@@ -44,7 +44,7 @@ class InvoicesScreen extends ConsumerWidget {
         body: Container(
           color: Theme.of(context).scaffoldBackgroundColor,
           child: invoicesAsync.when(
-            loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+            loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
             error: (err, stack) => Center(child: Text('خطأ: $err')),
             data: (invoices) {
               return TabBarView(
@@ -65,7 +65,7 @@ class InvoicesScreen extends ConsumerWidget {
 
   Widget _buildInvoiceList(BuildContext context, List<SupplierInvoice> list) {
     if (list.isEmpty) {
-      return const Center(
+      return Center(
         child: Text(
           'لا توجد فواتير مطابقة في هذا القسم',
           style: TextStyle(color: AppColors.outline),

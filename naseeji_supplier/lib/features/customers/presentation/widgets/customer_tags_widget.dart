@@ -32,7 +32,7 @@ class CustomerTagsWidget extends StatelessWidget {
                 border: Border.all(color: AppColors.primary, width: 1),
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: const Row(
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(Icons.add, size: 12, color: AppColors.primary),
@@ -60,7 +60,7 @@ class CustomerTagsWidget extends StatelessWidget {
         children: [
           Text(tag.label, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: color)),
           if (allowEdit) ...[
-            const SizedBox(width: 4),
+            SizedBox(width: 4),
             GestureDetector(
               onTap: () => onRemoveTag?.call(tag.id),
               child: Icon(Icons.close, size: 12, color: color),

@@ -19,7 +19,7 @@ class TransactionCard extends StatelessWidget {
     final dateStr = '${transaction.createdDate.year}-${transaction.createdDate.month.toString().padLeft(2, '0')}-${transaction.createdDate.day.toString().padLeft(2, '0')}';
 
     return Card(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -56,11 +56,11 @@ class TransactionCard extends StatelessWidget {
                       color: amountColor,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   PaymentStatusBadge(status: transaction.status),
                 ],
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: 16),
               // Transaction info
               Expanded(
                 child: Column(
@@ -68,25 +68,25 @@ class TransactionCard extends StatelessWidget {
                   children: [
                     Text(
                       _typeLabel(transaction.type),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.onSurface,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4),
                     Text(
                       transaction.factoryName.isNotEmpty
                           ? transaction.factoryName
                           : 'رقم الطلب: ${transaction.orderNumber}',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 11,
                         color: AppColors.outline,
                       ),
                     ),
-                    const SizedBox(height: 2),
+                    SizedBox(height: 2),
                     Text(
                       dateStr,
                       style: TextStyle(
@@ -97,7 +97,7 @@ class TransactionCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               // Type Icon indicator
               Container(
                 width: 38,

@@ -29,10 +29,10 @@ class _ProductionPreparationScreenState extends ConsumerState<ProductionPreparat
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'تحديث جاهزية الإنتاج والتغليف',
           style: TextStyle(
             color: AppColors.primary,
@@ -41,12 +41,12 @@ class _ProductionPreparationScreenState extends ConsumerState<ProductionPreparat
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
       body: prepAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+        loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
         error: (err, stack) => Center(child: Text('خطأ: $err')),
         data: (prep) {
           return Column(
@@ -60,15 +60,15 @@ class _ProductionPreparationScreenState extends ConsumerState<ProductionPreparat
                     children: [
                       // Progress Percent Card
                       _buildProgressPercentCard(prep),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
 
                       // Phase selection
                       _buildPhasesMilestones(prep),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
 
                       // Upload Proof
                       _buildUploadProofCard(prep),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
 
                       // Preparation Notes Card
                       _buildNotesCard(),
@@ -79,7 +79,7 @@ class _ProductionPreparationScreenState extends ConsumerState<ProductionPreparat
 
               // Bottom Actions
               Container(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                 child: SafeArea(
                   child: Row(
@@ -94,10 +94,10 @@ class _ProductionPreparationScreenState extends ConsumerState<ProductionPreparat
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                             padding: const EdgeInsets.symmetric(vertical: 14),
                           ),
-                          child: const Text('حفظ التقدم', style: TextStyle(color: AppColors.onSurfaceVariant, fontSize: 13, fontWeight: FontWeight.bold)),
+                          child: Text('حفظ التقدم', style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 13, fontWeight: FontWeight.bold)),
                         ),
                       ),
-                      const SizedBox(width: 12),
+                      SizedBox(width: 12),
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
@@ -111,9 +111,9 @@ class _ProductionPreparationScreenState extends ConsumerState<ProductionPreparat
                             padding: const EdgeInsets.symmetric(vertical: 14),
                             minimumSize: const Size(0, 48),
                           ),
-                          child: const Text(
+                          child: Text(
                             'إرسال لمراجعة المصنع',
-                            style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold),
+                            style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 13, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
@@ -133,7 +133,7 @@ class _ProductionPreparationScreenState extends ConsumerState<ProductionPreparat
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6)],
       ),
@@ -145,12 +145,12 @@ class _ProductionPreparationScreenState extends ConsumerState<ProductionPreparat
             children: [
               Text(
                 '${prep.progressPercent.round()}%',
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0040E0)),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF0040E0)),
               ),
-              const Text('نسبة الإنجاز الحالية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+              Text('نسبة الإنجاز الحالية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           LinearProgressIndicator(
             value: prep.progressPercent / 100,
             backgroundColor: const Color(0xFFF1F1F5),
@@ -158,7 +158,7 @@ class _ProductionPreparationScreenState extends ConsumerState<ProductionPreparat
             minHeight: 8,
             borderRadius: BorderRadius.circular(4),
           ),
-          const SizedBox(height: 14),
+          SizedBox(height: 14),
           Slider(
             value: prep.progressPercent,
             min: 0,
@@ -189,15 +189,15 @@ class _ProductionPreparationScreenState extends ConsumerState<ProductionPreparat
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('مراحل تقدم تجهيز الطلبية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 16),
+          Text('مراحل تقدم تجهيز الطلبية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 16),
           ...phasesList.map((phase) {
             final isCurrent = prep.currentPhase == phase;
             return Container(
@@ -216,10 +216,10 @@ class _ProductionPreparationScreenState extends ConsumerState<ProductionPreparat
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: isCurrent ? FontWeight.bold : FontWeight.normal,
-                      color: isCurrent ? const Color(0xFF0040E0) : AppColors.onSurface,
+                      color: isCurrent ? const Color(0xFF0040E0) : Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Icon(
                     isCurrent ? Icons.radio_button_checked : Icons.radio_button_off,
                     color: isCurrent ? const Color(0xFF0040E0) : AppColors.outline,
@@ -239,17 +239,17 @@ class _ProductionPreparationScreenState extends ConsumerState<ProductionPreparat
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('إثبات جاهزية الإنتاج (مطلوب)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 4),
-          const Text('يرجى تصوير صور للمنتج وفيديو مدته 5 ثوانٍ لتمكين المصنع من التدقيق والقبول.', style: TextStyle(fontSize: 10, color: AppColors.outline), textAlign: TextAlign.end),
-          const SizedBox(height: 16),
+          Text('إثبات جاهزية الإنتاج (مطلوب)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 4),
+          Text('يرجى تصوير صور للمنتج وفيديو مدته 5 ثوانٍ لتمكين المصنع من التدقيق والقبول.', style: TextStyle(fontSize: 10, color: AppColors.outline), textAlign: TextAlign.end),
+          SizedBox(height: 16),
           GridView.count(
             crossAxisCount: 2,
             shrinkWrap: true,
@@ -280,8 +280,8 @@ class _ProductionPreparationScreenState extends ConsumerState<ProductionPreparat
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(icon, color: const Color(0xFF0040E0), size: 24),
-          const SizedBox(height: 8),
-          Text(label, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant)),
+          SizedBox(height: 8),
+          Text(label, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurfaceVariant)),
         ],
       ),
     );
@@ -292,23 +292,23 @@ class _ProductionPreparationScreenState extends ConsumerState<ProductionPreparat
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('ملاحظات التجهيز الإضافية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 12),
+          Text('ملاحظات التجهيز الإضافية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 12),
           TextField(
             controller: _notesController,
             maxLines: 3,
             textAlign: TextAlign.end,
-            style: const TextStyle(fontSize: 12),
+            style: TextStyle(fontSize: 12),
             decoration: InputDecoration(
               hintText: 'اكتب أي ملاحظات فنية حول التجهيز والتغليف هنا...',
-              hintStyle: const TextStyle(color: AppColors.outline, fontSize: 11),
+              hintStyle: TextStyle(color: AppColors.outline, fontSize: 11),
               contentPadding: const EdgeInsets.all(12),
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: Color(0xFFE2E1EF))),
               enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: Color(0xFFE2E1EF))),
@@ -328,10 +328,10 @@ class _ProductionPreparationScreenState extends ConsumerState<ProductionPreparat
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(Icons.check_circle_outline, color: Color(0xFF16A34A), size: 48),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Text(
               message,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
               textAlign: TextAlign.center,
             ),
           ],
@@ -339,7 +339,7 @@ class _ProductionPreparationScreenState extends ConsumerState<ProductionPreparat
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('موافق'),
+            child: Text('موافق'),
           ),
         ],
       ),

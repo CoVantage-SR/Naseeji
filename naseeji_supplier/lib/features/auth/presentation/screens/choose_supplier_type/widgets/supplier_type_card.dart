@@ -28,7 +28,7 @@ class SupplierTypeCard extends StatelessWidget {
         duration: const Duration(milliseconds: 250),
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.surfaceContainerLow : AppColors.surface,
+          color: isSelected ? Theme.of(context).colorScheme.surfaceContainerLow : Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: isSelected ? AppColors.primary : AppColors.outlineVariant,
@@ -58,7 +58,7 @@ class SupplierTypeCard extends StatelessWidget {
                 size: 28,
               ),
             ),
-            const SizedBox(width: 16),
+            SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,21 +68,21 @@ class SupplierTypeCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: isSelected ? AppColors.primary : AppColors.onBackground,
+                      color: isSelected ? AppColors.primary : Theme.of(context).colorScheme.onBackground,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   Text(
                     description,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 12,
-                      color: AppColors.onSurfaceVariant,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8),
             Container(
               width: 20,
               height: 20,
@@ -94,7 +94,7 @@ class SupplierTypeCard extends StatelessWidget {
                 ),
               ),
               child: isSelected
-                  ? const Center(
+                  ? Center(
                       child: CircleAvatar(
                         radius: 5,
                         backgroundColor: AppColors.primary,

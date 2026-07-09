@@ -36,7 +36,7 @@ class FinancialSummaryCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: AppColors.outlineVariant.withValues(alpha: 0.3),
@@ -73,7 +73,7 @@ class FinancialSummaryCard extends StatelessWidget {
                 Text(
                   title,
                   textAlign: TextAlign.right,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     color: AppColors.outline,
                     fontWeight: FontWeight.w600,
@@ -81,7 +81,7 @@ class FinancialSummaryCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -89,25 +89,25 @@ class FinancialSummaryCard extends StatelessWidget {
               children: [
                 Text(
                   currency,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.onSurfaceVariant,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
-                const SizedBox(width: 4),
+                SizedBox(width: 4),
                 Text(
                   formatValue,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.onSurface,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
               ],
             ),
             if (trend != null && isPositive != null) ...[
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -119,7 +119,7 @@ class FinancialSummaryCard extends StatelessWidget {
                       color: isPositive! ? const Color(0xFF00875A) : const Color(0xFFDE350B),
                     ),
                   ),
-                  const SizedBox(width: 4),
+                  SizedBox(width: 4),
                   Icon(
                     isPositive! ? Icons.arrow_upward : Icons.arrow_downward,
                     color: isPositive! ? const Color(0xFF00875A) : const Color(0xFFDE350B),

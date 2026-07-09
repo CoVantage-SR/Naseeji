@@ -12,7 +12,7 @@ class WeeklySalesChartCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: AppColors.outlineVariant.withValues(
@@ -33,12 +33,12 @@ class WeeklySalesChartCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 'تحليل المبيعات الأسبوعي',
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.onSurface,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
               Container(
@@ -47,30 +47,30 @@ class WeeklySalesChartCard extends StatelessWidget {
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.surfaceContainerLow,
+                  color: Theme.of(context).colorScheme.surfaceContainerLow,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Row(
+                child: Row(
                   children: [
                     Text(
                       'آخر 7 أيام',
                       style: TextStyle(
                         fontSize: 11,
-                        color: AppColors.onSurfaceVariant,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                     ),
                     SizedBox(width: 4),
                     Icon(
                       Icons.expand_more,
                       size: 14,
-                      color: AppColors.onSurfaceVariant,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           SizedBox(
             height: 120,
             width: double.infinity,
@@ -78,8 +78,8 @@ class WeeklySalesChartCard extends StatelessWidget {
               painter: LineChartPainter(weeklySales),
             ),
           ),
-          const SizedBox(height: 8),
-          const Row(
+          SizedBox(height: 8),
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(

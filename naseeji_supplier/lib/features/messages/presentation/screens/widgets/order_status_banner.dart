@@ -28,7 +28,7 @@ class OrderStatusBanner extends StatelessWidget {
       margin: const EdgeInsets.only(left: 12, right: 12, bottom: 8, top: 8),
       padding: const EdgeInsets.symmetric(vertical: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -48,11 +48,11 @@ class OrderStatusBanner extends StatelessWidget {
               children: [
                 Text(
                   'مرحلة: $currentStage',
-                  style: const TextStyle(fontSize: 10, color: AppColors.outline),
+                  style: TextStyle(fontSize: 10, color: AppColors.outline),
                 ),
                 Text(
                   'الخطوة ${activeIdx + 1} من ${_stages.length}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
                     color: AppColors.primary,
@@ -61,7 +61,7 @@ class OrderStatusBanner extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           SizedBox(
             height: 64,
             child: ListView.builder(
@@ -99,7 +99,7 @@ class OrderStatusBanner extends StatelessWidget {
                             color: isActive ? Colors.white : isDone ? AppColors.secondary : AppColors.outline,
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4),
                         Text(
                           stage.label,
                           style: TextStyle(

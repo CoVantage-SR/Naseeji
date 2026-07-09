@@ -20,31 +20,31 @@ class CustomerAnalyticsScreen extends ConsumerWidget {
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
           centerTitle: true,
-          title: const Text('تحليلات العميل', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16)),
+          title: Text('تحليلات العميل', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16)),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, size: 20, color: AppColors.onSurfaceVariant),
+            icon: const Icon(Icons.arrow_back_ios_new, size: 20, color: Theme.of(context).colorScheme.onSurfaceVariant),
             onPressed: () => context.pop(),
           ),
         ),
         body: stateAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (e, _) => Center(child: Text('خطأ: $e')),
           data: (customers) {
             final idx = customers.indexWhere((c) => c.id == customerId);
-            if (idx == -1) return const Center(child: Text('العميل غير موجود'));
+            if (idx == -1) return Center(child: Text('العميل غير موجود'));
             final c = customers[idx];
             return ListView(
               padding: const EdgeInsets.all(16),
               children: [
                 _buildKpiGrid(c),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 _buildRevenueChart(c),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 _buildTopProducts(c),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 _buildPaymentHealth(c),
               ],
             );
@@ -127,15 +127,15 @@ class CustomerAnalyticsScreen extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('الإيرادات الشهرية (ر.س)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
-          const SizedBox(height: 16),
+          Text('الإيرادات الشهرية (ر.س)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
+          SizedBox(height: 16),
           SizedBox(
             height: 140,
             child: Row(
@@ -150,9 +150,9 @@ class CustomerAnalyticsScreen extends ConsumerWidget {
                       children: [
                         Text(
                           '${(m.amount / 1000).toStringAsFixed(0)}ك',
-                          style: const TextStyle(fontSize: 7, color: AppColors.outline),
+                          style: TextStyle(fontSize: 7, color: AppColors.outline),
                         ),
-                        const SizedBox(height: 3),
+                        SizedBox(height: 3),
                         AnimatedContainer(
                           duration: const Duration(milliseconds: 600),
                           height: 100 * ratio,
@@ -165,10 +165,10 @@ class CustomerAnalyticsScreen extends ConsumerWidget {
                             borderRadius: const BorderRadius.only(topLeft: Radius.circular(4), topRight: Radius.circular(4)),
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4),
                         Text(
                           m.month.substring(0, m.month.length < 3 ? m.month.length : 3),
-                          style: const TextStyle(fontSize: 7, color: AppColors.outline),
+                          style: TextStyle(fontSize: 7, color: AppColors.outline),
                         ),
                       ],
                     ),
@@ -187,15 +187,15 @@ class CustomerAnalyticsScreen extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('أكثر المنتجات طلباً', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
-          const SizedBox(height: 12),
+          Text('أكثر المنتجات طلباً', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
+          SizedBox(height: 12),
           ...c.topProducts.asMap().entries.map((entry) {
             final colors = [AppColors.primary, AppColors.secondary, AppColors.tertiary];
             final color = colors[entry.key % colors.length];
@@ -207,8 +207,8 @@ class CustomerAnalyticsScreen extends ConsumerWidget {
                   decoration: BoxDecoration(color: color.withValues(alpha: 0.15), shape: BoxShape.circle),
                   child: Center(child: Text('${entry.key + 1}', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: color))),
                 ),
-                const SizedBox(width: 10),
-                Expanded(child: Text(entry.value, style: const TextStyle(fontSize: 12, color: AppColors.onSurface))),
+                SizedBox(width: 10),
+                Expanded(child: Text(entry.value, style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurface))),
                 Icon(Icons.trending_up, size: 16, color: color),
               ]),
             );
@@ -226,40 +226,40 @@ class CustomerAnalyticsScreen extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('صحة الدفع', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
-          const SizedBox(height: 12),
+          Text('صحة الدفع', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
+          SizedBox(height: 12),
           Row(children: [
             Expanded(
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                  Text('متوسط وقت الدفع', style: const TextStyle(fontSize: 11, color: AppColors.outline)),
-                  Text('${c.averagePaymentTime.toStringAsFixed(0)} يوم', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                  Text('متوسط وقت الدفع', style: TextStyle(fontSize: 11, color: AppColors.outline)),
+                  Text('${c.averagePaymentTime.toStringAsFixed(0)} يوم', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
                 ]),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 LinearProgressIndicator(
                   value: health,
-                  backgroundColor: AppColors.surfaceContainerLow,
+                  backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
                   valueColor: AlwaysStoppedAnimation<Color>(color),
                   borderRadius: BorderRadius.circular(4),
                   minHeight: 8,
                 ),
               ]),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
               child: Text(label, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: color)),
             ),
           ]),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             _paymentStat('اتفاقيات منجزة', c.totalAgreements.toString()),
             _paymentStat('مدفوعات معلقة', c.pendingPaymentsCount.toString()),
@@ -272,8 +272,8 @@ class CustomerAnalyticsScreen extends ConsumerWidget {
 
   Widget _paymentStat(String label, String value) {
     return Column(children: [
-      Text(value, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.primary)),
-      Text(label, style: const TextStyle(fontSize: 9, color: AppColors.outline)),
+      Text(value, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.primary)),
+      Text(label, style: TextStyle(fontSize: 9, color: AppColors.outline)),
     ]);
   }
 

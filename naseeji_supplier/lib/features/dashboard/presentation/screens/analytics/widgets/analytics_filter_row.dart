@@ -21,9 +21,9 @@ class AnalyticsFilterRow extends StatelessWidget {
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
           icon: const Icon(Icons.picture_as_pdf, size: 16),
-          label: const Text('PDF', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+          label: Text('PDF', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
         ),
-        const SizedBox(width: 8),
+        SizedBox(width: 8),
         // Excel button
         ElevatedButton.icon(
           onPressed: () {},
@@ -37,23 +37,23 @@ class AnalyticsFilterRow extends StatelessWidget {
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
           icon: const Icon(Icons.download, size: 16),
-          label: const Text('Excel', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+          label: Text('Excel', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
         ),
-        const SizedBox(width: 8),
+        SizedBox(width: 8),
         // Dropdown selector
         Expanded(
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.5)),
             ),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Icon(Icons.keyboard_arrow_down, color: AppColors.outline, size: 18),
-                Text('هذا الشهر', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
+                Text('هذا الشهر', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
               ],
             ),
           ),

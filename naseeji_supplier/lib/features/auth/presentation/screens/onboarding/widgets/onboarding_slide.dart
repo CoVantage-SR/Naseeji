@@ -25,7 +25,7 @@ class OnboardingSlide extends StatelessWidget {
               width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(24),
-                color: AppColors.surfaceContainerLow,
+                color: Theme.of(context).colorScheme.surfaceContainerLow,
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withValues(alpha: 0.04),
@@ -52,27 +52,27 @@ class OnboardingSlide extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 40),
+          SizedBox(height: 40),
           Text(
             title,
             textAlign: TextAlign.center,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: AppColors.onBackground,
+              color: Theme.of(context).colorScheme.onBackground,
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           Text(
             description,
             textAlign: TextAlign.center,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 16,
               height: 1.5,
-              color: AppColors.onSurfaceVariant,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
         ],
       ),
     );

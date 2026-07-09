@@ -17,20 +17,20 @@ class WithdrawalsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'تسويات سحب الرصيد البنكي',
-          style: TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
       body: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
         child: walletAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (err, stack) => Center(child: Text('خطأ: $err')),
           data: (wallet) {
             return RefreshIndicator(
@@ -49,28 +49,28 @@ class WithdrawalsScreen extends ConsumerWidget {
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                       ),
                       child: Column(
                         children: [
-                          const Text(
+                          Text(
                             'الرصيد المتاح للسحب البنكي حالياً',
                             style: TextStyle(fontSize: 12, color: AppColors.outline, fontWeight: FontWeight.bold),
                           ),
-                          const SizedBox(height: 8),
+                          SizedBox(height: 8),
                           Text(
                             '${wallet.availableBalance.toStringAsFixed(2)} ر.س',
-                            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.primary),
+                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.primary),
                           ),
-                          const SizedBox(height: 12),
-                          const Row(
+                          SizedBox(height: 12),
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 '1,000.00 ر.س',
-                                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                               ),
                               Text(
                                 'الحد الأدنى لعملية السحب',
@@ -81,7 +81,7 @@ class WithdrawalsScreen extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     // Default linked bank account
                     methodsAsync.when(
@@ -103,26 +103,26 @@ class WithdrawalsScreen extends ConsumerWidget {
                           child: Row(
                             children: [
                               const Icon(Icons.account_balance, color: AppColors.primary, size: 20),
-                              const SizedBox(width: 12),
+                              SizedBox(width: 12),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
                                       defaultMethod.title,
-                                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                                     ),
-                                    const SizedBox(height: 2),
+                                    SizedBox(height: 2),
                                     Text(
                                       defaultMethod.identifier.isNotEmpty ? 'الآيبان: ${defaultMethod.identifier}' : defaultMethod.subtitle,
                                       textDirection: TextDirection.ltr,
-                                      style: const TextStyle(fontSize: 10, color: AppColors.outline),
+                                      style: TextStyle(fontSize: 10, color: AppColors.outline),
                                     ),
                                   ],
                                 ),
                               ),
-                              const SizedBox(width: 12),
-                              const Text(
+                              SizedBox(width: 12),
+                              Text(
                                 'حساب الاستلام:',
                                 style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.primary),
                               ),
@@ -131,34 +131,34 @@ class WithdrawalsScreen extends ConsumerWidget {
                         );
                       },
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24),
 
                     // Actions Button
                     ElevatedButton.icon(
                       onPressed: () => context.push('/finance/withdrawals/request'),
                       icon: const Icon(Icons.add_card, size: 18),
-                      label: const Text('طلب تسوية سحب جديد'),
+                      label: Text('طلب تسوية سحب جديد'),
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size.fromHeight(52),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24),
 
                     // Withdrawal requests history
-                    const Text(
+                    Text(
                       'سجل عمليات وتصفيات الحساب',
                       textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
 
                     withdrawalsAsync.when(
-                      loading: () => const Center(child: CircularProgressIndicator()),
+                      loading: () => Center(child: CircularProgressIndicator()),
                       error: (err, stack) => Center(child: Text('خطأ: $err')),
                       data: (list) {
                         if (list.isEmpty) {
-                          return const Center(child: Text('لا توجد عمليات سحب سابقة'));
+                          return Center(child: Text('لا توجد عمليات سحب سابقة'));
                         }
 
                         return ListView.builder(
@@ -172,11 +172,11 @@ class WithdrawalsScreen extends ConsumerWidget {
                                 final confirm = await showDialog<bool>(
                                   context: context,
                                   builder: (ctx) => AlertDialog(
-                                    title: const Text('تأكيد الإلغاء', textAlign: TextAlign.right),
-                                    content: const Text('هل أنت متأكد من رغبتك في إلغاء طلب السحب هذا؟ سيعاد الرصيد لمحفظتك فوراً.', textAlign: TextAlign.right),
+                                    title: Text('تأكيد الإلغاء', textAlign: TextAlign.right),
+                                    content: Text('هل أنت متأكد من رغبتك في إلغاء طلب السحب هذا؟ سيعاد الرصيد لمحفظتك فوراً.', textAlign: TextAlign.right),
                                     actions: [
-                                      TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('تراجع')),
-                                      TextButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('تأكيد الإلغاء', style: TextStyle(color: Colors.red))),
+                                      TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text('تراجع')),
+                                      TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text('تأكيد الإلغاء', style: TextStyle(color: Colors.red))),
                                     ],
                                   ),
                                 );

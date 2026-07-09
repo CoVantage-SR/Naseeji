@@ -22,7 +22,7 @@ class CreateOfferSectionCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -40,19 +40,19 @@ class CreateOfferSectionCard extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.onSurface,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Icon(icon, color: color, size: 18),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           const Divider(height: 1, color: Color(0xFFF1F1F5)),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           child,
         ],
       ),
@@ -92,24 +92,24 @@ class CreateOfferInputField extends StatelessWidget {
           if (label.isNotEmpty) ...[
             Text(
               label,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 11,
-                color: AppColors.onSurfaceVariant,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
-            const SizedBox(height: 6),
+            SizedBox(height: 6),
           ],
           TextField(
             controller: controller,
             keyboardType: keyboardType,
             maxLines: maxLines,
             textAlign: textAlign,
-            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: const TextStyle(color: AppColors.outline, fontSize: 12),
+              hintStyle: TextStyle(color: AppColors.outline, fontSize: 12),
               suffixText: suffixText,
-              suffixStyle: const TextStyle(color: AppColors.outline, fontSize: 12, fontWeight: FontWeight.normal),
+              suffixStyle: TextStyle(color: AppColors.outline, fontSize: 12, fontWeight: FontWeight.normal),
               suffixIcon: suffixIcon != null ? Icon(suffixIcon, color: AppColors.outline, size: 18) : null,
               contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               border: OutlineInputBorder(
@@ -144,22 +144,22 @@ class CreateOfferHeader extends StatelessWidget {
       children: [
         Text(
           'طلب رقم #$rfqId',
-          style: const TextStyle(
+          style: TextStyle(
             color: Color(0xFF0040E0),
             fontSize: 11,
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 4),
-        const Text(
+        SizedBox(height: 4),
+        Text(
           'أقمشة قطنية فاخرة - توريد مصانع',
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.bold,
-            color: AppColors.onSurface,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -169,7 +169,7 @@ class CreateOfferHeader extends StatelessWidget {
                 color: const Color(0xFFE2F9F5),
                 borderRadius: BorderRadius.circular(6),
               ),
-              child: const Row(
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
@@ -219,7 +219,7 @@ class PricingQuantitiesCard extends StatelessWidget {
             keyboardType: TextInputType.number,
             textAlign: TextAlign.left,
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           Row(
             children: [
               Expanded(
@@ -230,7 +230,7 @@ class PricingQuantitiesCard extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Expanded(
                 child: CreateOfferInputField(
                   label: 'الحد الأدنى (MOQ)',
@@ -273,7 +273,7 @@ class LogisticsServicesCard extends StatelessWidget {
             controller: prodPeriodController,
             suffixText: 'يوم عمل',
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           Row(
             children: [
               Expanded(
@@ -282,7 +282,7 @@ class LogisticsServicesCard extends StatelessWidget {
                   controller: shippingCostController,
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Expanded(
                 child: CreateOfferInputField(
                   label: 'مدة التوصيل',
@@ -330,7 +330,7 @@ class TermsConditionsCard extends StatelessWidget {
                   keyboardType: TextInputType.number,
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Expanded(
                 child: CreateOfferInputField(
                   label: 'خصم النقدي (%)',
@@ -340,12 +340,12 @@ class TermsConditionsCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           CreateOfferInputField(
             label: 'شروط الدفع',
             controller: paymentTermsController,
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           CreateOfferInputField(
             label: 'صلاحية العرض',
             controller: validityController,
@@ -368,7 +368,7 @@ class AdditionalNotesCard extends StatelessWidget {
     return CreateOfferSectionCard(
       icon: Icons.description_outlined,
       title: 'ملاحظات إضافية',
-      color: AppColors.onSurfaceVariant,
+      color: Theme.of(context).colorScheme.onSurfaceVariant,
       child: CreateOfferInputField(
         label: '',
         controller: notesController,
@@ -387,7 +387,7 @@ class CreateOfferAttachmentsCard extends StatelessWidget {
     return CreateOfferSectionCard(
       icon: Icons.attachment_outlined,
       title: 'المرفقات',
-      color: AppColors.onSurfaceVariant,
+      color: Theme.of(context).colorScheme.onSurfaceVariant,
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 24),
@@ -403,7 +403,7 @@ class CreateOfferAttachmentsCard extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.all(12),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: Color(0xFFE8F0FE),
                 shape: BoxShape.circle,
               ),
@@ -413,17 +413,17 @@ class CreateOfferAttachmentsCard extends StatelessWidget {
                 size: 28,
               ),
             ),
-            const SizedBox(height: 12),
-            const Text(
+            SizedBox(height: 12),
+            Text(
               'اضغط لرفع الملفات أو اسحبها هنا',
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
-                color: AppColors.onSurface,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
-            const SizedBox(height: 4),
-            const Text(
+            SizedBox(height: 4),
+            Text(
               'PDF, PNG, JPG (الحد الأقصى 10 ميجابايت)',
               style: TextStyle(
                 fontSize: 10,
@@ -452,7 +452,7 @@ class CreateOfferBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       child: SafeArea(
         child: Row(
@@ -460,7 +460,7 @@ class CreateOfferBottomBar extends StatelessWidget {
             TextButton.icon(
               onPressed: () => context.push('/orders/offer-preview?rfqId=$rfqId'),
               icon: const Icon(Icons.visibility_outlined, size: 16, color: AppColors.outline),
-              label: const Text(
+              label: Text(
                 'معاينة',
                 style: TextStyle(
                   fontSize: 12,
@@ -480,7 +480,7 @@ class CreateOfferBottomBar extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               ),
-              child: const Text(
+              child: Text(
                 'حفظ كمسودة',
                 style: TextStyle(
                   fontSize: 12,
@@ -488,16 +488,16 @@ class CreateOfferBottomBar extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 10),
+            SizedBox(width: 10),
             ElevatedButton.icon(
               onPressed: onSend,
               icon: const Icon(Icons.send, size: 16, color: Colors.white),
-              label: const Text(
+              label: Text(
                 'إرسال عرض السعر',
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                 ),
               ),
               style: ElevatedButton.styleFrom(

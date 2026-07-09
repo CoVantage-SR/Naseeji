@@ -13,24 +13,24 @@ class OfferPreviewScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F6FA),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'معاينة عرض السعر',
           style: TextStyle(
-            color: AppColors.onSurface,
+            color: Theme.of(context).colorScheme.onSurface,
             fontWeight: FontWeight.bold,
             fontSize: 14,
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.more_vert, color: AppColors.onSurfaceVariant),
+            icon: const Icon(Icons.more_vert, color: Theme.of(context).colorScheme.onSurfaceVariant),
             onPressed: () {},
           ),
         ],
@@ -57,7 +57,7 @@ class OfferPreviewScreen extends StatelessWidget {
       context: context,
       builder: (dialogContext) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        content: const Column(
+        content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.check_circle_outline, color: Color(0xFF16A34A), size: 48),
@@ -75,7 +75,7 @@ class OfferPreviewScreen extends StatelessWidget {
               Navigator.pop(dialogContext); // Pop dialog
               context.go('/orders'); // Navigate back to orders list
             },
-            child: const Text('موافق'),
+            child: Text('موافق'),
           ),
         ],
       ),

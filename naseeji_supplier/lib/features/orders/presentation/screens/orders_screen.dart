@@ -29,7 +29,7 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
       body: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
         child: stateAsync.when(
-          loading: () => const Center(
+          loading: () => Center(
             child: CircularProgressIndicator(color: AppColors.primary),
           ),
           error: (err, stack) => Center(child: Text('خطأ: $err')),
@@ -57,9 +57,9 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
                         });
                       },
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12),
                     const RfqFilterSortRow(),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
                     RfqItemsList(items: filteredItems),
                   ],
                 ),

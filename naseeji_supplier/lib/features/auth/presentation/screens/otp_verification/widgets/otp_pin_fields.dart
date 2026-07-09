@@ -27,7 +27,7 @@ class OtpPinFields extends StatelessWidget {
               focusNode: focusNodes[index],
               keyboardType: TextInputType.number,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               inputFormatters: [
                 LengthLimitingTextInputFormatter(1),
                 FilteringTextInputFormatter.digitsOnly,

@@ -36,13 +36,13 @@ class _FinancialReportsScreenState extends ConsumerState<FinancialReportsScreen>
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'مركز التقارير المالية',
-          style: TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
@@ -59,27 +59,27 @@ class _FinancialReportsScreenState extends ConsumerState<FinancialReportsScreen>
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      const Text(
+                      Text(
                         'إعداد وتصدير تقرير مالي جديد',
                         textAlign: TextAlign.right,
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
 
                       // Select Report Type
-                      const Text(
+                      Text(
                         'نوع التقرير المالي',
                         textAlign: TextAlign.right,
                         style: TextStyle(fontSize: 12, color: AppColors.outline),
                       ),
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6),
                       DropdownButtonFormField<String>(
                         value: _selectedReportType,
                         decoration: InputDecoration(
@@ -96,7 +96,7 @@ class _FinancialReportsScreenState extends ConsumerState<FinancialReportsScreen>
                             value: type,
                             child: Align(
                               alignment: Alignment.centerRight,
-                              child: Text(type, style: const TextStyle(fontSize: 13)),
+                              child: Text(type, style: TextStyle(fontSize: 13)),
                             ),
                           );
                         }).toList(),
@@ -104,15 +104,15 @@ class _FinancialReportsScreenState extends ConsumerState<FinancialReportsScreen>
                           if (val != null) setState(() => _selectedReportType = val);
                         },
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
 
                       // Date Range Selection
-                      const Text(
+                      Text(
                         'الفترة الزمنية للتقرير',
                         textAlign: TextAlign.right,
                         style: TextStyle(fontSize: 12, color: AppColors.outline),
                       ),
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6),
                       OutlinedButton.icon(
                         onPressed: _pickDateRange,
                         icon: const Icon(Icons.date_range, size: 18),
@@ -120,24 +120,24 @@ class _FinancialReportsScreenState extends ConsumerState<FinancialReportsScreen>
                           _selectedDateRange == null
                               ? 'اختر النطاق الزمني للتقرير'
                               : '${_selectedDateRange!.end.year}-${_selectedDateRange!.end.month}-${_selectedDateRange!.end.day} إلى ${_selectedDateRange!.start.year}-${_selectedDateRange!.start.month}-${_selectedDateRange!.start.day}',
-                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                         ),
                         style: OutlinedButton.styleFrom(
                           minimumSize: const Size.fromHeight(50),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                           side: const BorderSide(color: AppColors.outlineVariant),
-                          foregroundColor: AppColors.onSurfaceVariant,
+                          foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
 
                       // Select Format
-                      const Text(
+                      Text(
                         'صيغة تصدير الملف',
                         textAlign: TextAlign.right,
                         style: TextStyle(fontSize: 12, color: AppColors.outline),
                       ),
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6),
                       DropdownButtonFormField<String>(
                         value: _selectedFormat,
                         decoration: InputDecoration(
@@ -154,7 +154,7 @@ class _FinancialReportsScreenState extends ConsumerState<FinancialReportsScreen>
                             value: fmt,
                             child: Align(
                               alignment: Alignment.centerRight,
-                              child: Text(fmt, style: const TextStyle(fontSize: 13)),
+                              child: Text(fmt, style: TextStyle(fontSize: 13)),
                             ),
                           );
                         }).toList(),
@@ -162,7 +162,7 @@ class _FinancialReportsScreenState extends ConsumerState<FinancialReportsScreen>
                           if (val != null) setState(() => _selectedFormat = val);
                         },
                       ),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24),
 
                       // Generate button
                       PrimaryButton(
@@ -188,27 +188,27 @@ class _FinancialReportsScreenState extends ConsumerState<FinancialReportsScreen>
                     ],
                   ),
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
 
                 // Reports History List
-                const Text(
+                Text(
                   'التقارير الجاهزة والسابقة',
                   textAlign: TextAlign.right,
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
 
                 reportsAsync.when(
-                  loading: () => const Center(child: CircularProgressIndicator()),
+                  loading: () => Center(child: CircularProgressIndicator()),
                   error: (err, stack) => Center(child: Text('خطأ: $err')),
                   data: (reports) {
                     if (reports.isEmpty) {
-                      return const Center(child: Text('لا توجد تقارير سابقة متاحة'));
+                      return Center(child: Text('لا توجد تقارير سابقة متاحة'));
                     }
                     return Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                       ),
@@ -219,8 +219,8 @@ class _FinancialReportsScreenState extends ConsumerState<FinancialReportsScreen>
 
                           return ListTile(
                             leading: const Icon(Icons.picture_as_pdf, color: Color(0xFFBA1A1A)),
-                            title: Text(report.title, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.right),
-                            subtitle: Text('الحجم: ${report.size} | تاريخ التوليد: $dateStr', style: const TextStyle(fontSize: 10), textAlign: TextAlign.right),
+                            title: Text(report.title, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.right),
+                            subtitle: Text('الحجم: ${report.size} | تاريخ التوليد: $dateStr', style: TextStyle(fontSize: 10), textAlign: TextAlign.right),
                             trailing: IconButton(
                               icon: const Icon(Icons.download, size: 18),
                               onPressed: () {

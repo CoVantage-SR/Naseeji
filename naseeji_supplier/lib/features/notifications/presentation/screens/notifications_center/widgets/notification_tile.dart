@@ -18,7 +18,7 @@ class NotificationTile extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: AppColors.outlineVariant.withValues(alpha: 0.3),
@@ -58,16 +58,16 @@ class NotificationTile extends StatelessWidget {
                         child: Container(
                           width: 8,
                           height: 8,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             color: AppColors.primary,
                             shape: BoxShape.circle,
                           ),
                         ),
                       )
                     else
-                      const SizedBox(width: 20), // Placeholder spacing matching the dot size
+                      SizedBox(width: 20), // Placeholder spacing matching the dot size
 
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
 
                     Expanded(
                       child: Column(
@@ -75,31 +75,31 @@ class NotificationTile extends StatelessWidget {
                         children: [
                           Text(
                             item.title,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
-                              color: AppColors.onSurface,
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                           ),
-                          const SizedBox(height: 6),
+                          SizedBox(height: 6),
                           Text(
                             item.body,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
-                              color: AppColors.onSurfaceVariant,
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
                               height: 1.4,
                             ),
                           ),
-                          const SizedBox(height: 10),
+                          SizedBox(height: 10),
                           Text(
                             _formatTime(item.timestamp),
-                            style: const TextStyle(fontSize: 10, color: AppColors.outline),
+                            style: TextStyle(fontSize: 10, color: AppColors.outline),
                           ),
                         ],
                       ),
                     ),
 
-                    const SizedBox(width: 12),
+                    SizedBox(width: 12),
 
                     // Round themed icon or customer avatar image on the right
                     _buildLeading(context),

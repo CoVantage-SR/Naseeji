@@ -14,7 +14,7 @@ class SalesTrendChart extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
       ),
@@ -29,25 +29,25 @@ class SalesTrendChart extends StatelessWidget {
                   Container(
                     width: 8,
                     height: 8,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: Color(0xFF0040E0),
                       shape: BoxShape.circle,
                     ),
                   ),
-                  const SizedBox(width: 6),
-                  const Text(
+                  SizedBox(width: 6),
+                  Text(
                     'البيانات الحالية',
                     style: TextStyle(fontSize: 11, color: AppColors.outline),
                   ),
                 ],
               ),
-              const Text(
+              Text(
                 'اتجاه المبيعات',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
           SizedBox(
             height: 180,
             child: Row(
@@ -72,10 +72,10 @@ class SalesTrendChart extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     Text(
                       data['day'] as String,
-                      style: const TextStyle(fontSize: 10, color: AppColors.outline),
+                      style: TextStyle(fontSize: 10, color: AppColors.outline),
                     ),
                   ],
                 );

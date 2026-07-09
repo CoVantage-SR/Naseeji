@@ -64,7 +64,7 @@ class TimelineEventTile extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(width: 14),
+          SizedBox(width: 14),
           // Content
           Expanded(
             child: Padding(
@@ -82,7 +82,7 @@ class TimelineEventTile extends StatelessWidget {
                             color: AppColors.primary,
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: const Text('الحالي', style: TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.bold)),
+                          child: Text('الحالي', style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 9, fontWeight: FontWeight.bold)),
                         ),
                       Expanded(
                         child: Text(
@@ -90,33 +90,33 @@ class TimelineEventTile extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: isActive ? FontWeight.bold : FontWeight.w600,
-                            color: isActive ? AppColors.primary : AppColors.onSurface,
+                            color: isActive ? AppColors.primary : Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   Row(
                     children: [
                       const Icon(Icons.person_outline, size: 12, color: AppColors.outline),
-                      const SizedBox(width: 4),
-                      Text(user, style: const TextStyle(fontSize: 11, color: AppColors.outline)),
-                      const SizedBox(width: 12),
+                      SizedBox(width: 4),
+                      Text(user, style: TextStyle(fontSize: 11, color: AppColors.outline)),
+                      SizedBox(width: 12),
                       const Icon(Icons.access_time, size: 12, color: AppColors.outline),
-                      const SizedBox(width: 4),
-                      Text(timestamp, style: const TextStyle(fontSize: 11, color: AppColors.outline)),
+                      SizedBox(width: 4),
+                      Text(timestamp, style: TextStyle(fontSize: 11, color: AppColors.outline)),
                     ],
                   ),
                   if (notes != null) ...[
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: AppColors.surfaceContainerLow,
+                        color: Theme.of(context).colorScheme.surfaceContainerLow,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Text(notes!, style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant)),
+                      child: Text(notes!, style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant)),
                     ),
                   ],
                 ],

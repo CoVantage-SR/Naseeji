@@ -13,7 +13,7 @@ class NotificationsList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (items.isEmpty) {
-      return const Center(
+      return Center(
         child: Text(
           'لا توجد إشعارات حالياً',
           style: TextStyle(color: AppColors.outline),
@@ -24,7 +24,7 @@ class NotificationsList extends ConsumerWidget {
     return ListView.separated(
       itemCount: items.length,
       padding: const EdgeInsets.all(16),
-      separatorBuilder: (context, index) => const SizedBox(height: 12),
+      separatorBuilder: (context, index) => SizedBox(height: 12),
       itemBuilder: (context, index) {
         final item = items[index];
         return NotificationTile(
@@ -113,21 +113,21 @@ class NotificationsList extends ConsumerWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8),
             Icon(icon, color: iconColor),
           ],
         ),
         content: Text(
           content,
           textAlign: TextAlign.right,
-          style: const TextStyle(fontSize: 13, height: 1.5),
+          style: TextStyle(fontSize: 13, height: 1.5),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('إغلاق', style: TextStyle(color: AppColors.primary)),
+            child: Text('إغلاق', style: TextStyle(color: AppColors.primary)),
           ),
         ],
       ),

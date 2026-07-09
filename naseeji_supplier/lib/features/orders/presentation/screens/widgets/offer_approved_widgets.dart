@@ -30,34 +30,34 @@ class ApprovalHeader extends StatelessWidget {
               child: Container(
                 width: 90,
                 height: 90,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: Color(0xFF0040E0),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
                   Icons.check,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   size: 48,
                 ),
               ),
             ),
           ),
         ),
-        const SizedBox(height: 20),
-        const Text(
+        SizedBox(height: 20),
+        Text(
           'تمت الموافقة على العرض!',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
-            color: AppColors.onSurface,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
-        const SizedBox(height: 8),
-        const Text(
+        SizedBox(height: 8),
+        Text(
           'تم تأكيد عرض السعر بنجاح، يمكنك الآن المتابعة لإنشاء الطلب أو إصدار الفاتورة الأولية.',
           style: TextStyle(
             fontSize: 12,
-            color: AppColors.onSurfaceVariant,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
             height: 1.5,
           ),
           textAlign: TextAlign.center,
@@ -78,7 +78,7 @@ class OfferSummaryCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
@@ -99,15 +99,15 @@ class OfferSummaryCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const Text(
+                  Text(
                     'ملخص عرض السعر',
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.onSurface,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
@@ -116,7 +116,7 @@ class OfferSummaryCard extends StatelessWidget {
                     ),
                     child: Text(
                       'QO-2024-${details.rfqId}',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Color(0xFF006B5F),
                         fontSize: 9,
                         fontWeight: FontWeight.bold,
@@ -127,9 +127,9 @@ class OfferSummaryCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           const Divider(height: 1, color: Color(0xFFF1F1F5)),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -137,7 +137,7 @@ class OfferSummaryCard extends StatelessWidget {
               _buildSummaryItem('سعر المتر', details.meterPrice),
             ],
           ),
-          const SizedBox(height: 14),
+          SizedBox(height: 14),
           const Align(
             alignment: Alignment.centerRight,
             child: Text(
@@ -145,12 +145,12 @@ class OfferSummaryCard extends StatelessWidget {
               style: TextStyle(fontSize: 11, color: AppColors.outline),
             ),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4),
           Align(
             alignment: Alignment.centerRight,
             child: Text(
               details.totalPrice,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF0040E0),
@@ -168,18 +168,18 @@ class OfferSummaryCard extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(fontSize: 10, color: AppColors.outline),
+          style: TextStyle(fontSize: 10, color: AppColors.outline),
         ),
-        const SizedBox(height: 4),
+        SizedBox(height: 4),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               value,
-              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
             ),
             if (icon != null) ...[
-              const SizedBox(width: 4),
+              SizedBox(width: 4),
               Icon(icon, color: AppColors.outline, size: 12),
             ],
           ],
@@ -200,7 +200,7 @@ class PaymentMethodCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
@@ -212,24 +212,24 @@ class PaymentMethodCard extends StatelessWidget {
             children: [
               Text(
                 details.paymentMethodTitle,
-                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               const Icon(Icons.account_balance_outlined, color: AppColors.outline, size: 20),
             ],
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           Text(
             details.paymentMethodDesc,
-            style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+            style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant),
             textAlign: TextAlign.end,
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           const Divider(height: 1, color: Color(0xFFF1F1F5)),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           GestureDetector(
             onTap: () {},
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
@@ -260,25 +260,25 @@ class NextStepsCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text(
+          Text(
             'ما هي الخطوة التالية؟',
-            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           Row(
             children: [
               Expanded(
                 child: OutlinedButton.icon(
                   onPressed: () {},
                   icon: const Icon(Icons.picture_as_pdf, color: Color(0xFF006B5F), size: 16),
-                  label: const Text(
+                  label: Text(
                     'إصدار فاتورة',
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF006B5F)),
                   ),
@@ -289,12 +289,12 @@ class NextStepsCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 10),
+              SizedBox(width: 10),
               Expanded(
                 child: ElevatedButton.icon(
                   onPressed: () {},
-                  icon: const Icon(Icons.check_circle_outline, color: Colors.white, size: 16),
-                  label: const Text(
+                  icon: const Icon(Icons.check_circle_outline, color: Theme.of(context).colorScheme.surface, size: 16),
+                  label: Text(
                     'تحويل إلى طلب مؤكد',
                     style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.white),
                   ),
@@ -309,8 +309,8 @@ class NextStepsCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 14),
-          const Row(
+          SizedBox(height: 14),
+          Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(

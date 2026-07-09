@@ -18,7 +18,7 @@ class FinancialChartWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
       ),
@@ -28,13 +28,13 @@ class FinancialChartWidget extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.right,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
-              color: AppColors.onSurface,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
           if (type == 'bar') _buildBarChart() else if (type == 'donut') _buildDonutChart() else _buildDoubleBarChart(),
         ],
       ),
@@ -70,7 +70,7 @@ class FinancialChartWidget extends StatelessWidget {
                     message: '${val.toStringAsFixed(0)} ر.س',
                     child: Container(
                       height: 130 * normalizedHeight,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [Color(0xFF002080), Color(0xFF0040E0)],
                           begin: Alignment.bottomCenter,
@@ -82,10 +82,10 @@ class FinancialChartWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Text(
                 label,
-                style: const TextStyle(fontSize: 10, color: AppColors.outline),
+                style: TextStyle(fontSize: 10, color: AppColors.outline),
               ),
             ],
           );
@@ -120,7 +120,7 @@ class FinancialChartWidget extends StatelessWidget {
                     valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
                   ),
                 ),
-                const Column(
+                Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
@@ -137,7 +137,7 @@ class FinancialChartWidget extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: 16),
         ...data.map((item) {
           final label = item['product'] ?? item['category'] ?? item['label'] ?? '';
           final val = (item['value'] as num).toDouble();
@@ -151,15 +151,15 @@ class FinancialChartWidget extends StatelessWidget {
               children: [
                 Text(
                   '${percent.toStringAsFixed(1)}%',
-                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                 ),
                 Row(
                   children: [
                     Text(
                       label,
-                      style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant),
+                      style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     Container(
                       width: 8,
                       height: 8,
@@ -212,19 +212,19 @@ class FinancialChartWidget extends StatelessWidget {
                       child: Container(
                         width: 12,
                         height: 130 * hOutflow,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           color: Color(0xFFBA1A1A),
                           borderRadius: BorderRadius.vertical(top: Radius.circular(3)),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 4),
+                    SizedBox(width: 4),
                     Tooltip(
                       message: 'وارد: ${inflow.toStringAsFixed(0)} ر.س',
                       child: Container(
                         width: 12,
                         height: 130 * hInflow,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           color: Color(0xFF00875A),
                           borderRadius: BorderRadius.vertical(top: Radius.circular(3)),
                         ),
@@ -233,10 +233,10 @@ class FinancialChartWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Text(
                 label,
-                style: const TextStyle(fontSize: 10, color: AppColors.outline),
+                style: TextStyle(fontSize: 10, color: AppColors.outline),
               ),
             ],
           );

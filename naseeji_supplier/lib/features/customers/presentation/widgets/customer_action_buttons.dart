@@ -35,7 +35,7 @@ class CustomerActionButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: SafeArea(
         child: SingleChildScrollView(
@@ -53,12 +53,12 @@ class CustomerActionButtons extends StatelessWidget {
     final buttons = <Widget>[];
 
     void addOutline(String label, IconData icon, VoidCallback? onTap, {Color? color}) {
-      if (buttons.isNotEmpty) buttons.add(const SizedBox(width: 8));
+      if (buttons.isNotEmpty) buttons.add(SizedBox(width: 8));
       buttons.add(_buildOutlineBtn(label, icon, onTap, color: color));
     }
 
     void addPrimary(String label, IconData icon, VoidCallback? onTap) {
-      if (buttons.isNotEmpty) buttons.add(const SizedBox(width: 8));
+      if (buttons.isNotEmpty) buttons.add(SizedBox(width: 8));
       buttons.add(_buildPrimaryBtn(label, icon, onTap));
     }
 
@@ -103,7 +103,7 @@ class CustomerActionButtons extends StatelessWidget {
     return ElevatedButton.icon(
       onPressed: onTap,
       icon: Icon(icon, size: 13, color: Colors.white),
-      label: Text(label, style: const TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.white)),
+      label: Text(label, style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Colors.white)),
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),

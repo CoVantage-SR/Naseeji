@@ -15,23 +15,23 @@ class OfferDetailsScreen extends ConsumerWidget {
     final detailsAsync = ref.watch(offerDetailsControllerProvider(rfqId));
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.close, color: AppColors.onSurfaceVariant),
+          icon: const Icon(Icons.close, color: Theme.of(context).colorScheme.onSurfaceVariant),
           onPressed: () => context.pop(),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.share_outlined, color: AppColors.onSurfaceVariant),
+            icon: const Icon(Icons.share_outlined, color: Theme.of(context).colorScheme.onSurfaceVariant),
             onPressed: () {},
           ),
         ],
       ),
       body: detailsAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+        loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
         error: (err, stack) => Center(child: Text('خطأ: $err')),
         data: (details) {
           return Column(
@@ -43,9 +43,9 @@ class OfferDetailsScreen extends ConsumerWidget {
                   child: Column(
                     children: [
                       OfferDetailsHeader(details: details),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24),
                       QuickStatsCardsRow(details: details),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24),
                       Align(
                         alignment: Alignment.centerRight,
                         child: Text(
@@ -53,13 +53,13 @@ class OfferDetailsScreen extends ConsumerWidget {
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.onSurface.withValues(alpha: 0.8),
+                            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.8),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       OrderPhasesTimeline(details: details),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24),
                       Container(
                         width: double.infinity,
                         height: 120,
@@ -86,8 +86,8 @@ class OfferDetailsScreen extends ConsumerWidget {
                           alignment: Alignment.bottomRight,
                           child: Text(
                             details.factoryLabel,
-                            style: const TextStyle(
-                              color: Colors.white,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.surface,
                               fontSize: 11,
                               fontWeight: FontWeight.bold,
                             ),

@@ -10,14 +10,14 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       elevation: 0.5,
       leading: IconButton(
-        icon: const Icon(Icons.menu, color: AppColors.onSurfaceVariant),
+        icon: const Icon(Icons.menu, color: Theme.of(context).colorScheme.onSurfaceVariant),
         onPressed: () => scaffoldKey.currentState?.openDrawer(),
       ),
       centerTitle: true,
-      title: const Row(
+      title: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -35,7 +35,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.search, color: AppColors.onSurfaceVariant),
+          icon: const Icon(Icons.search, color: Theme.of(context).colorScheme.onSurfaceVariant),
           onPressed: () => context.push('/search'),
         ),
         Stack(
@@ -44,7 +44,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             IconButton(
               icon: const Icon(
                 Icons.notifications_none,
-                color: AppColors.onSurfaceVariant,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
               onPressed: () => context.push('/notifications'),
             ),
@@ -53,7 +53,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               right: 8,
               child: Container(
                 padding: const EdgeInsets.all(2),
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: AppColors.error,
                   shape: BoxShape.circle,
                 ),
@@ -61,11 +61,11 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                   minWidth: 14,
                   minHeight: 14,
                 ),
-                child: const Text(
+                child: Text(
                   '3',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     fontSize: 8,
                     fontWeight: FontWeight.bold,
                   ),
@@ -74,7 +74,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ],
         ),
-        const SizedBox(width: 8),
+        SizedBox(width: 8),
       ],
     );
   }

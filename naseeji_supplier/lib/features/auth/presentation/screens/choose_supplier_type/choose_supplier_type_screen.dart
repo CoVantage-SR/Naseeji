@@ -17,7 +17,7 @@ class ChooseSupplierTypeScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'نوع الحساب',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
@@ -28,25 +28,25 @@ class ChooseSupplierTypeScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text(
+              Text(
                 'اختر نوع حسابك كمورد',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.onBackground,
+                  color: Theme.of(context).colorScheme.onBackground,
                 ),
               ),
-              const SizedBox(height: 8),
-              const Text(
+              SizedBox(height: 8),
+              Text(
                 'حدد طبيعة عملك لنتمكن من توفير الأدوات المناسبة لك',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 14,
-                  color: AppColors.onSurfaceVariant,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
-              const SizedBox(height: 32),
+              SizedBox(height: 32),
               Expanded(
                 child: ListView(
                   children: [
@@ -60,7 +60,7 @@ class ChooseSupplierTypeScreen extends ConsumerWidget {
                         ref.read(registrationControllerProvider.notifier).updateSupplierType(SupplierType.factoryUnit);
                       },
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                     SupplierTypeCard(
                       type: SupplierType.supplier,
                       title: 'مورد خامات ومستلزمات',
@@ -71,7 +71,7 @@ class ChooseSupplierTypeScreen extends ConsumerWidget {
                         ref.read(registrationControllerProvider.notifier).updateSupplierType(SupplierType.supplier);
                       },
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                     SupplierTypeCard(
                       type: SupplierType.customizer,
                       title: 'مقدم خدمات تخصيص',

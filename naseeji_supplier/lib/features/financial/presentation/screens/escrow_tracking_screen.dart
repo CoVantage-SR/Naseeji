@@ -23,13 +23,13 @@ class _EscrowTrackingScreenState extends ConsumerState<EscrowTrackingScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'تتبع الضمان وحماية الدفعات',
-          style: TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
@@ -44,19 +44,19 @@ class _EscrowTrackingScreenState extends ConsumerState<EscrowTrackingScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Text(
+                    Text(
                       'اختر رقم طلب الشراء للتتبع',
                       textAlign: TextAlign.right,
                       style: TextStyle(fontSize: 12, color: AppColors.outline, fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     DropdownButtonFormField<String>(
                       initialValue: _selectedOrderNumber,
                       decoration: InputDecoration(
@@ -86,10 +86,10 @@ class _EscrowTrackingScreenState extends ConsumerState<EscrowTrackingScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
 
               escrowAsync.when(
-                loading: () => const Center(child: CircularProgressIndicator()),
+                loading: () => Center(child: CircularProgressIndicator()),
                 error: (err, stack) => Center(child: Text('خطأ: $err')),
                 data: (data) {
                   final releaseDateStr = data.releaseDate != null
@@ -115,16 +115,16 @@ class _EscrowTrackingScreenState extends ConsumerState<EscrowTrackingScreen> {
                         ),
                         child: Column(
                           children: [
-                            const Text(
+                            Text(
                               'قيمة الأموال المؤمنة بحساب الضمان الموحد',
                               style: TextStyle(color: Colors.white70, fontSize: 11, fontWeight: FontWeight.bold),
                             ),
-                            const SizedBox(height: 8),
+                            SizedBox(height: 8),
                             Text(
                               '${data.escrowAmount.toStringAsFixed(2)} ر.س',
-                              style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                              style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 24, fontWeight: FontWeight.bold),
                             ),
-                            const SizedBox(height: 8),
+                            SizedBox(height: 8),
                             Text(
                               'تاريخ الإفراج المقدر: $releaseDateStr',
                               style: TextStyle(color: Colors.white.withValues(alpha: 0.9), fontSize: 11),
@@ -132,7 +132,7 @@ class _EscrowTrackingScreenState extends ConsumerState<EscrowTrackingScreen> {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20),
 
                       // Hold Reason Banner
                       if (data.reasonForHold != null && data.reasonForHold!.isNotEmpty) ...[
@@ -147,31 +147,31 @@ class _EscrowTrackingScreenState extends ConsumerState<EscrowTrackingScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Icon(Icons.info_outline, color: Color(0xFFB17000), size: 18),
-                              const SizedBox(width: 8),
+                              SizedBox(width: 8),
                               Expanded(
                                 child: Text(
                                   data.reasonForHold!,
                                   textAlign: TextAlign.right,
-                                  style: const TextStyle(fontSize: 11, color: Color(0xFFB17000), fontWeight: FontWeight.bold),
+                                  style: TextStyle(fontSize: 11, color: Color(0xFFB17000), fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        SizedBox(height: 20),
                       ],
 
                       // Escrow Timeline Card
-                      const Text(
+                      Text(
                         'خطوات تسلسل تحرير وإخلاء الضمان',
                         textAlign: TextAlign.right,
-                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                        style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: 10),
                       Container(
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.surface,
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                         ),

@@ -57,7 +57,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
 
     final conv = _conversation;
     if (conv == null) {
-      return const Scaffold(
+      return Scaffold(
         body: Center(child: CircularProgressIndicator(color: AppColors.primary)),
       );
     }
@@ -65,15 +65,15 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FD),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.onSurface),
+          icon: const Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
           onPressed: () => context.pop(),
         ),
-        title: const Text(
+        title: Text(
           'تفاصيل المحادثة',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.onSurface),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
         ),
         centerTitle: true,
       ),
@@ -83,7 +83,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
           children: [
             // Company Header card
             _buildCompanyHeader(conv),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
 
             // Group: Conversation Settings
             _buildSectionHeader('المحادثة'),
@@ -131,7 +131,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
                 onTap: () => _confirmBlock(context, conv),
               ),
             ]),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
 
             // Group: Media
             _buildSectionHeader('المرفقات والوسائط المشتركة'),
@@ -157,7 +157,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
                 onTap: () => context.push('/messages/chat/${conv.id}/attachments'),
               ),
             ]),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
 
             // Group: Business Info
             _buildSectionHeader('الأعمال والمعاملات'),
@@ -183,7 +183,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
                 onTap: () => context.push('/messages/chat/${conv.id}/timeline'),
               ),
             ]),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
 
             // Group: Notification Settings
             _buildSectionHeader('تفضيلات الإشعارات للمحادثة'),
@@ -216,7 +216,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
                 ),
               ),
             ]),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
 
             // Group: Privacy Settings
             _buildSectionHeader('الخصوصية والظهور'),
@@ -249,7 +249,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
                 ),
               ),
             ]),
-            const SizedBox(height: 32),
+            SizedBox(height: 32),
           ],
         ),
       ),
@@ -261,7 +261,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 8, offset: const Offset(0, 2))],
       ),
@@ -280,7 +280,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
                 child: Center(
                   child: Text(
                     conv.companyLogoText,
-                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
+                    style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.bold, fontSize: 22),
                   ),
                 ),
               ),
@@ -291,38 +291,38 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
                   decoration: BoxDecoration(
                     color: Colors.green,
                     shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 2),
+                    border: Border.all(color: Theme.of(context).colorScheme.surface, width: 2),
                   ),
                 ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 conv.companyName,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.onSurface),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
               ),
               if (conv.isVerified) ...[
-                const SizedBox(width: 4),
+                SizedBox(width: 4),
                 const Icon(Icons.verified, size: 16, color: AppColors.primary),
               ],
             ],
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4),
           Text(
             conv.isOnline ? 'نشط الآن' : 'غير متصل',
             style: TextStyle(fontSize: 12, color: conv.isOnline ? Colors.green : AppColors.outline),
           ),
           if (conv.rfqNumber != null) ...[
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(color: AppColors.surfaceContainerLow, borderRadius: BorderRadius.circular(20)),
+              decoration: BoxDecoration(color: Theme.of(context).colorScheme.surfaceContainerLow, borderRadius: BorderRadius.circular(20)),
               child: Text(
                 'طلب الشراء: ${conv.rfqNumber}',
-                style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.primary),
+                style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.primary),
               ),
             ),
           ],
@@ -338,7 +338,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
       alignment: Alignment.centerRight,
       child: Text(
         title,
-        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.outline),
+        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.outline),
       ),
     );
   }
@@ -346,7 +346,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
   Widget _buildGroupCard(List<Widget> children) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 8, offset: const Offset(0, 2))],
       ),
@@ -367,7 +367,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
   Widget _buildSettingTile({
     required IconData icon,
     required String label,
-    Color labelColor = AppColors.onSurface,
+    Color labelColor = Theme.of(context).colorScheme.onSurface,
     Color iconColor = AppColors.primary,
     Widget? trailing,
     VoidCallback? onTap,
@@ -397,8 +397,8 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('كتم إشعارات المحادثة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-              const SizedBox(height: 16),
+              Text('كتم إشعارات المحادثة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+              SizedBox(height: 16),
               _buildDurationOption('٨ ساعات', const Duration(hours: 8), conv),
               _buildDurationOption('٢٤ ساعة', const Duration(days: 1), conv),
               _buildDurationOption('٧ أيام', const Duration(days: 7), conv),
@@ -413,7 +413,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
 
   Widget _buildDurationOption(String label, Duration? duration, Conversation conv) {
     return ListTile(
-      title: Text(label, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+      title: Text(label, style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
       onTap: () {
         ref.read(messagesControllerProvider.notifier).muteConversationForDuration(conv.id, duration);
         Navigator.pop(context);
@@ -428,10 +428,10 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('أرشفة المحادثة', textAlign: TextAlign.right),
-        content: const Text('هل تريد نقل هذه المحادثة إلى الأرشيف؟ لن تظهر في قائمة المحادثات النشطة.', textAlign: TextAlign.right),
+        title: Text('أرشفة المحادثة', textAlign: TextAlign.right),
+        content: Text('هل تريد نقل هذه المحادثة إلى الأرشيف؟ لن تظهر في قائمة المحادثات النشطة.', textAlign: TextAlign.right),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text('إلغاء')),
           ElevatedButton(
             onPressed: () {
               ref.read(messagesControllerProvider.notifier).archiveConversation(conv.id);
@@ -441,7 +441,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
                 const SnackBar(content: Text('تمت أرشفة المحادثة بنجاح')),
               );
             },
-            child: const Text('أرشفة'),
+            child: Text('أرشفة'),
           ),
         ],
       ),
@@ -452,10 +452,10 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('حذف المحادثة نهائياً', textAlign: TextAlign.right),
-        content: const Text('هل تريد حذف هذه المحادثة من جهازك؟ لن يؤدي هذا إلى حذفها لدى الطرف الآخر.', textAlign: TextAlign.right),
+        title: Text('حذف المحادثة نهائياً', textAlign: TextAlign.right),
+        content: Text('هل تريد حذف هذه المحادثة من جهازك؟ لن يؤدي هذا إلى حذفها لدى الطرف الآخر.', textAlign: TextAlign.right),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text('إلغاء')),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
             onPressed: () {
@@ -466,7 +466,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
                 const SnackBar(content: Text('تم حذف المحادثة')),
               );
             },
-            child: const Text('حذف', style: TextStyle(color: Colors.white)),
+            child: Text('حذف', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -485,7 +485,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
           textAlign: TextAlign.right,
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text('إلغاء')),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: conv.isBlocked ? Colors.green : Colors.red),
             onPressed: () {
@@ -495,7 +495,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
                 SnackBar(content: Text(conv.isBlocked ? 'تم إلغاء حظر العميل' : 'تم حظر العميل بنجاح')),
               );
             },
-            child: Text(conv.isBlocked ? 'إلغاء الحظر' : 'تأكيد الحظر', style: const TextStyle(color: Colors.white)),
+            child: Text(conv.isBlocked ? 'إلغاء الحظر' : 'تأكيد الحظر', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),

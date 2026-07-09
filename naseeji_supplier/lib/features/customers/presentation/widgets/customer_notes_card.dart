@@ -22,7 +22,7 @@ class CustomerNotesCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
           color: note.isPinned ? AppColors.primary.withValues(alpha: 0.4) : const Color(0xFFE2E1EF),
@@ -43,14 +43,14 @@ class CustomerNotesCard extends StatelessWidget {
             child: Row(
               children: [
                 if (note.isPinned)
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.only(left: 6),
                     child: Icon(Icons.push_pin, size: 13, color: AppColors.primary),
                   ),
                 Expanded(
                   child: Text(
                     note.title,
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.onSurface),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Theme.of(context).colorScheme.onSurface),
                   ),
                 ),
                 // Priority badge
@@ -65,7 +65,7 @@ class CustomerNotesCard extends StatelessWidget {
                     style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: priorityData.$2),
                   ),
                 ),
-                const SizedBox(width: 4),
+                SizedBox(width: 4),
                 PopupMenuButton<String>(
                   icon: const Icon(Icons.more_vert, size: 18, color: AppColors.outline),
                   onSelected: (v) {
@@ -74,7 +74,7 @@ class CustomerNotesCard extends StatelessWidget {
                     if (v == 'pin') onTogglePin?.call();
                   },
                   itemBuilder: (_) => [
-                    PopupMenuItem(value: 'pin', child: Row(children: [Icon(note.isPinned ? Icons.push_pin_outlined : Icons.push_pin, size: 14), const SizedBox(width: 8), Text(note.isPinned ? 'إلغاء التثبيت' : 'تثبيت')])),
+                    PopupMenuItem(value: 'pin', child: Row(children: [Icon(note.isPinned ? Icons.push_pin_outlined : Icons.push_pin, size: 14), SizedBox(width: 8), Text(note.isPinned ? 'إلغاء التثبيت' : 'تثبيت')])),
                     const PopupMenuItem(value: 'edit', child: Row(children: [Icon(Icons.edit_outlined, size: 14), SizedBox(width: 8), Text('تعديل')])),
                     const PopupMenuItem(value: 'delete', child: Row(children: [Icon(Icons.delete_outline, size: 14, color: AppColors.error), SizedBox(width: 8), Text('حذف', style: TextStyle(color: AppColors.error))])),
                   ],
@@ -82,13 +82,13 @@ class CustomerNotesCard extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: AppColors.surfaceContainerLow),
+          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
           // Body
           Padding(
             padding: const EdgeInsets.all(14),
             child: Text(
               note.description,
-              style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant, height: 1.5),
+              style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.5),
             ),
           ),
           // Footer
@@ -97,13 +97,13 @@ class CustomerNotesCard extends StatelessWidget {
             child: Row(
               children: [
                 const Icon(Icons.calendar_today_outlined, size: 10, color: AppColors.outline),
-                const SizedBox(width: 4),
-                Text('أُنشئت: ${note.createdDate}', style: const TextStyle(fontSize: 9, color: AppColors.outline)),
+                SizedBox(width: 4),
+                Text('أُنشئت: ${note.createdDate}', style: TextStyle(fontSize: 9, color: AppColors.outline)),
                 if (note.updatedDate != note.createdDate) ...[
-                  const SizedBox(width: 10),
+                  SizedBox(width: 10),
                   const Icon(Icons.update, size: 10, color: AppColors.outline),
-                  const SizedBox(width: 4),
-                  Text('عُدّلت: ${note.updatedDate}', style: const TextStyle(fontSize: 9, color: AppColors.outline)),
+                  SizedBox(width: 4),
+                  Text('عُدّلت: ${note.updatedDate}', style: TextStyle(fontSize: 9, color: AppColors.outline)),
                 ],
               ],
             ),

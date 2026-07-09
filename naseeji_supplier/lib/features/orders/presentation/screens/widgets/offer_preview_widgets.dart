@@ -12,7 +12,7 @@ class OfferPreviewDocument extends StatelessWidget {
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -30,7 +30,7 @@ class OfferPreviewDocument extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
 
             // Company Brand Header
             Row(
@@ -43,15 +43,15 @@ class OfferPreviewDocument extends StatelessWidget {
                     color: const Color(0xFF0040E0),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: const Center(
+                  child: Center(
                     child: Icon(
                       Icons.grid_view_rounded,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                       size: 24,
                     ),
                   ),
                 ),
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
@@ -67,17 +67,17 @@ class OfferPreviewDocument extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.onSurface,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                   ],
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
 
             // Sub company details
-            const Text(
+            Text(
               'الرياض، المنطقة الصناعية الثانية\nالرقم الضريبي: ٣٠٠٤٥٥٦٧٨٩٠٠٠٠٣\nهاتف: ٩٦٦١١٥٦٧٨٢٣٤+',
               style: TextStyle(
                 fontSize: 10,
@@ -86,7 +86,7 @@ class OfferPreviewDocument extends StatelessWidget {
               ),
               textAlign: TextAlign.end,
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
 
             // Preliminary badge
             Center(
@@ -96,7 +96,7 @@ class OfferPreviewDocument extends StatelessWidget {
                   color: const Color(0xFF0040E0).withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: const Text(
+                child: Text(
                   'عرض سعر مبدئي',
                   style: TextStyle(
                     color: Color(0xFF0040E0),
@@ -106,14 +106,14 @@ class OfferPreviewDocument extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
 
             // To Client metadata
-            const Text(
+            Text(
               'إلى: مصنع الغد للحلول الذكية',
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
 
             // Offer data metadata grid
             Container(
@@ -125,21 +125,21 @@ class OfferPreviewDocument extends StatelessWidget {
               child: Column(
                 children: [
                   _buildMetaRow('رقم العرض', 'QT-2024-089'),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
                   _buildMetaRow('تاريخ الإصدار', '١٢ أكتوبر ٢٠٢٤'),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
                   _buildMetaRow('صالح حتى', '٢٦ أكتوبر ٢٠٢٤'),
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
 
             // Product Details Table Title
-            const Text(
+            Text(
               'المنتجات والأسعار',
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
 
             // Table layout
             _buildTableHeader(),
@@ -147,36 +147,36 @@ class OfferPreviewDocument extends StatelessWidget {
             _buildTableRow('قطن عضوي ١٠٠٪ نسيج ناعم\nكود: CT-442 | لفة ٥٠ متر', '١٠٠', '٦٨٠.٠٠ ر.س'),
             _buildTableRow('خيوط حريرية معالجة\nكود: SI-102 | عبوة صناعية', '٥', '١,٢٠٠.٠٠ ر.س'),
 
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
             const Divider(height: 1, color: Color(0xFFE2E1EF)),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
 
             // Terms and Conditions Section
-            const Text(
+            Text(
               'الشروط والأحكام',
               style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF0040E0)),
             ),
-            const SizedBox(height: 8),
-            const Text(
+            SizedBox(height: 8),
+            Text(
               '• الأسعار المعروضة تشمل رسوم التغليف الصناعي.\n• يتم التسليم خلال ٥-٧ أيام عمل من تاريخ التعميد.\n• طريقة الدفع: ٥٠٪ مقدماً و ٥٠٪ عند الاستلام.\n• هذا العرض خاضع لتوافر المخزون في تاريخ الطلب.',
               style: TextStyle(
                 fontSize: 10,
-                color: AppColors.onSurfaceVariant,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
                 height: 1.6,
               ),
               textAlign: TextAlign.end,
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
             const Divider(height: 1, color: Color(0xFFE2E1EF)),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
 
             // Subtotal and Totals Section
             _buildSummaryRow('المجموع الفرعي', '٢١,٨٠٠.٠٠ ر.س'),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             _buildSummaryRow('ضريبة القيمة المضافة (١٥٪)', '٣,٢٧٠.٠٠ ر.س'),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             _buildSummaryRow('رسوم الشحن', '٢٥٠.٠٠ ر.س'),
-            const SizedBox(height: 14),
+            SizedBox(height: 14),
 
             // Grand total badge
             Container(
@@ -185,10 +185,10 @@ class OfferPreviewDocument extends StatelessWidget {
                 color: const Color(0xFF0040E0),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(Icons.receipt_long_outlined, color: Colors.white, size: 20),
+                  Icon(Icons.receipt_long_outlined, color: Theme.of(context).colorScheme.surface, size: 20),
                   Row(
                     children: [
                       Text(
@@ -196,7 +196,7 @@ class OfferPreviewDocument extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.surface,
                         ),
                       ),
                       SizedBox(width: 8),
@@ -204,7 +204,7 @@ class OfferPreviewDocument extends StatelessWidget {
                         'الإجمالي الكلي',
                         style: TextStyle(
                           fontSize: 12,
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.surface,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -213,15 +213,15 @@ class OfferPreviewDocument extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 24),
+            SizedBox(height: 24),
 
             // Signoff Footer
-            const Center(
+            Center(
               child: Column(
                 children: [
                   Text(
                     'صدر بواسطة: م. أحمد منصور - مدير المبيعات',
-                    style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                    style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                   ),
                   SizedBox(height: 6),
                   Text(
@@ -243,12 +243,12 @@ class OfferPreviewDocument extends StatelessWidget {
       children: [
         Text(
           value,
-          style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+          style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
         ),
         const Spacer(),
         Text(
           ':$label',
-          style: const TextStyle(fontSize: 11, color: AppColors.outline),
+          style: TextStyle(fontSize: 11, color: AppColors.outline),
         ),
       ],
     );
@@ -258,7 +258,7 @@ class OfferPreviewDocument extends StatelessWidget {
     return Container(
       color: const Color(0xFFF1F1F5),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-      child: const Row(
+      child: Row(
         children: [
           Expanded(flex: 2, child: Text('الإجمالي', textAlign: TextAlign.left, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold))),
           Expanded(child: Text('سعر الوحدة', textAlign: TextAlign.center, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold))),
@@ -278,14 +278,14 @@ class OfferPreviewDocument extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Expanded(flex: 2, child: Text('—', textAlign: TextAlign.left, style: TextStyle(fontSize: 10))),
-          Expanded(child: Text(unitPrice, textAlign: TextAlign.center, style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant))),
-          Expanded(child: Text(qty, textAlign: TextAlign.center, style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant))),
+          Expanded(flex: 2, child: Text('—', textAlign: TextAlign.left, style: TextStyle(fontSize: 10))),
+          Expanded(child: Text(unitPrice, textAlign: TextAlign.center, style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant))),
+          Expanded(child: Text(qty, textAlign: TextAlign.center, style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant))),
           Expanded(
             flex: 3,
             child: Text(
               desc,
-              style: const TextStyle(fontSize: 10, color: AppColors.onSurface, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold),
               textAlign: TextAlign.right,
             ),
           ),
@@ -300,12 +300,12 @@ class OfferPreviewDocument extends StatelessWidget {
       children: [
         Text(
           value,
-          style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+          style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
         ),
         const Spacer(),
         Text(
           label,
-          style: const TextStyle(fontSize: 11, color: AppColors.outline),
+          style: TextStyle(fontSize: 11, color: AppColors.outline),
         ),
       ],
     );
@@ -320,7 +320,7 @@ class OfferPreviewBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       child: SafeArea(
         child: Row(
@@ -331,11 +331,11 @@ class OfferPreviewBottomBar extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: IconButton(
-                icon: const Icon(Icons.download_rounded, color: AppColors.onSurfaceVariant),
+                icon: const Icon(Icons.download_rounded, color: Theme.of(context).colorScheme.onSurfaceVariant),
                 onPressed: () {},
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12),
             Expanded(
               child: OutlinedButton(
                 onPressed: () => context.pop(),
@@ -347,7 +347,7 @@ class OfferPreviewBottomBar extends StatelessWidget {
                   ),
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
-                child: const Text(
+                child: Text(
                   'تعديل',
                   style: TextStyle(
                     fontSize: 13,
@@ -356,17 +356,17 @@ class OfferPreviewBottomBar extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12),
             Expanded(
               child: ElevatedButton.icon(
                 onPressed: onSend,
                 icon: const Icon(Icons.send, size: 16, color: Colors.white),
-                label: const Text(
+                label: Text(
                   'إرسال',
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(

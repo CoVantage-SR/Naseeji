@@ -41,13 +41,13 @@ class TransactionDetailsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'تفاصيل المعاملة المالية',
-          style: TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
@@ -62,7 +62,7 @@ class TransactionDetailsScreen extends ConsumerWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                 ),
@@ -77,12 +77,12 @@ class TransactionDetailsScreen extends ConsumerWidget {
                       ),
                       child: const Icon(Icons.receipt_long, color: Color(0xFF00875A), size: 24),
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12),
                     Text(
                       _typeLabel(txn.type),
-                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     Text(
                       '${txn.amount > 0 ? "+" : ""}${txn.amount.toStringAsFixed(2)} ${txn.currency}',
                       style: TextStyle(
@@ -91,20 +91,20 @@ class TransactionDetailsScreen extends ConsumerWidget {
                         color: txn.amount > 0 ? const Color(0xFF00875A) : const Color(0xFFBA1A1A),
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     PaymentStatusBadge(status: txn.status),
                   ],
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
 
               // Transaction Info Card
               _buildSectionTitle('بيانات العملية الماليّة'),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                 ),
@@ -122,16 +122,16 @@ class TransactionDetailsScreen extends ConsumerWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
 
               // Order / Agreement Integration Details
               if (txn.orderNumber.isNotEmpty || txn.agreementNumber.isNotEmpty) ...[
                 _buildSectionTitle('المستندات المرتبطة'),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                   ),
@@ -168,16 +168,16 @@ class TransactionDetailsScreen extends ConsumerWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
               ],
 
               // Financial Breakdown & Auditing
               _buildSectionTitle('البيان الضريبي والمالي'),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                 ),
@@ -191,35 +191,35 @@ class TransactionDetailsScreen extends ConsumerWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
 
               // Notes & Terms
               _buildSectionTitle('ملاحظات وسجل تدقيق العمليات'),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    const Text(
+                    Text(
                       'تم إنشاء المعاملة تلقائياً بواسطة نظام الدفع المالي الموحد لمنصة نسيجي بعد مطابقة إيصال تسليم البضائع.',
                       textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant),
+                      style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        const Text(
+                        Text(
                           'توقيع رقمي موثق ومطابق لنظام وزارة التجارة السعودي',
                           style: TextStyle(fontSize: 10, color: AppColors.outline),
                         ),
-                        const SizedBox(width: 6),
+                        SizedBox(width: 6),
                         Icon(Icons.verified, color: const Color(0xFF00875A), size: 14),
                       ],
                     ),
@@ -237,7 +237,7 @@ class TransactionDetailsScreen extends ConsumerWidget {
     return Text(
       title,
       textAlign: TextAlign.right,
-      style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
     );
   }
 
@@ -247,11 +247,11 @@ class TransactionDetailsScreen extends ConsumerWidget {
       children: [
         Text(
           value,
-          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
         ),
         Text(
           label,
-          style: const TextStyle(fontSize: 13, color: AppColors.outline),
+          style: TextStyle(fontSize: 13, color: AppColors.outline),
         ),
       ],
     );
@@ -272,10 +272,10 @@ class TransactionDetailsScreen extends ConsumerWidget {
           child: Row(
             children: [
               const Icon(Icons.launch, size: 14, color: AppColors.primary),
-              const SizedBox(width: 4),
+              SizedBox(width: 4),
               Text(
                 value,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
                   color: AppColors.primary,
@@ -289,9 +289,9 @@ class TransactionDetailsScreen extends ConsumerWidget {
           children: [
             Text(
               label,
-              style: const TextStyle(fontSize: 13, color: AppColors.outline),
+              style: TextStyle(fontSize: 13, color: AppColors.outline),
             ),
-            const SizedBox(width: 6),
+            SizedBox(width: 6),
             Icon(icon, color: AppColors.outline, size: 16),
           ],
         ),

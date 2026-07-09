@@ -46,10 +46,10 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'إنشاء عرض سعر',
           style: TextStyle(
             color: AppColors.primary,
@@ -60,17 +60,17 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios_new,
-            color: AppColors.onSurfaceVariant,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
             size: 20,
           ),
           onPressed: () => context.pop(),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.more_vert, color: AppColors.onSurfaceVariant),
+            icon: const Icon(Icons.more_vert, color: Theme.of(context).colorScheme.onSurfaceVariant),
             onPressed: () {},
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8),
         ],
       ),
       body: Column(
@@ -83,28 +83,28 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   CreateOfferHeader(rfqId: widget.rfqId),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20),
                   PricingQuantitiesCard(
                     unitPriceController: _unitPriceController,
                     qtyController: _qtyController,
                     moqController: _moqController,
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   LogisticsServicesCard(
                     prodPeriodController: _prodPeriodController,
                     shippingCostController: _shippingCostController,
                     deliveryPeriodController: _deliveryPeriodController,
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   TermsConditionsCard(
                     vatController: _vatController,
                     cashDiscountController: _cashDiscountController,
                     paymentTermsController: _paymentTermsController,
                     validityController: _validityController,
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   AdditionalNotesCard(notesController: _notesController),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   const CreateOfferAttachmentsCard(),
                 ],
               ),
@@ -129,10 +129,10 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(Icons.check_circle_outline, color: Color(0xFF16A34A), size: 48),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Text(
               message,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
               textAlign: TextAlign.center,
             ),
           ],
@@ -143,7 +143,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
               Navigator.pop(context); // Pop dialog
               context.go('/orders'); // Navigate back to orders list
             },
-            child: const Text('موافق'),
+            child: Text('موافق'),
           ),
         ],
       ),

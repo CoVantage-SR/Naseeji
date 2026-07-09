@@ -19,12 +19,12 @@ class AgreementComparisonScreen extends ConsumerWidget {
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
           centerTitle: true,
           title: Text(
             'مقارنة عروض الاتفاقية $agreementId',
-            style: const TextStyle(
+            style: TextStyle(
               color: AppColors.primary,
               fontWeight: FontWeight.bold,
               fontSize: 13,
@@ -33,14 +33,14 @@ class AgreementComparisonScreen extends ConsumerWidget {
           leading: IconButton(
             icon: const Icon(
               Icons.arrow_back_ios_new,
-              color: AppColors.onSurfaceVariant,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
               size: 20,
             ),
             onPressed: () => context.pop(),
           ),
         ),
         body: stateAsync.when(
-          loading: () => const Center(
+          loading: () => Center(
             child: CircularProgressIndicator(color: AppColors.primary),
           ),
           error: (e, _) => Center(child: Text('خطأ: $e')),
@@ -49,7 +49,7 @@ class AgreementComparisonScreen extends ConsumerWidget {
               (a) => a.id == agreementId,
             );
             if (agreementIndex == -1) {
-              return const Center(child: Text('الاتفاقية غير موجودة'));
+              return Center(child: Text('الاتفاقية غير موجودة'));
             }
             final a = agreements[agreementIndex];
 
@@ -61,7 +61,7 @@ class AgreementComparisonScreen extends ConsumerWidget {
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.all(Radius.circular(16)),
                       boxShadow: [
                         BoxShadow(color: Color(0x05000000), blurRadius: 10),
@@ -77,18 +77,18 @@ class AgreementComparisonScreen extends ConsumerWidget {
                               color: AppColors.primary,
                               size: 22,
                             ),
-                            const SizedBox(width: 10),
+                            SizedBox(width: 10),
                             Text(
                               'تتبع مسار التفاوض للطلب ${a.orderNumber}',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12,
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 6),
-                        const Text(
+                        SizedBox(height: 6),
+                        Text(
                           'يوضح الجدول التالي التطور الزمني لبنود التعاقد من بدء طلب الشراء الأول وحتى الاستقرار على شروط الصياغة المعتمدة للاتفاقية النهائية.',
                           style: TextStyle(
                             fontSize: 10,
@@ -99,11 +99,11 @@ class AgreementComparisonScreen extends ConsumerWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
 
                   // Comparison DataTable Widget
                   AgreementComparisonTable(agreement: a),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20),
                 ],
               ),
             );

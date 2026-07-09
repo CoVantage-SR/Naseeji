@@ -10,7 +10,7 @@ class CustomerTimelineWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (events.isEmpty) {
-      return const Center(
+      return Center(
         child: Padding(
           padding: EdgeInsets.all(32),
           child: Text('لا توجد أحداث في السجل', style: TextStyle(color: AppColors.outline, fontSize: 13)),
@@ -62,14 +62,14 @@ class CustomerTimelineWidget extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: 10),
+          SizedBox(width: 10),
           // Content
           Expanded(
             child: Container(
               margin: EdgeInsets.only(bottom: isLast ? 0 : 16),
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5),
               ),
@@ -81,32 +81,32 @@ class CustomerTimelineWidget extends StatelessWidget {
                       Expanded(
                         child: Text(
                           event.title,
-                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.onSurface),
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Theme.of(context).colorScheme.onSurface),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   Row(
                     children: [
                       const Icon(Icons.calendar_today_outlined, size: 10, color: AppColors.outline),
-                      const SizedBox(width: 4),
-                      Text('${event.date} ${event.time}', style: const TextStyle(fontSize: 9, color: AppColors.outline)),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 4),
+                      Text('${event.date} ${event.time}', style: TextStyle(fontSize: 9, color: AppColors.outline)),
+                      SizedBox(width: 8),
                       const Icon(Icons.person_outline, size: 10, color: AppColors.outline),
-                      const SizedBox(width: 4),
-                      Text(event.responsibleUser, style: const TextStyle(fontSize: 9, color: AppColors.outline)),
+                      SizedBox(width: 4),
+                      Text(event.responsibleUser, style: TextStyle(fontSize: 9, color: AppColors.outline)),
                     ],
                   ),
                   if (event.notes.isNotEmpty) ...[
-                    const SizedBox(height: 6),
+                    SizedBox(height: 6),
                     Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: AppColors.surfaceContainerLow,
+                        color: Theme.of(context).colorScheme.surfaceContainerLow,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Text(event.notes, style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant, height: 1.4)),
+                      child: Text(event.notes, style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.4)),
                     ),
                   ],
                 ],

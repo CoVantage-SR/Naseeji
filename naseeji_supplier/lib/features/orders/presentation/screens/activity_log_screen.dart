@@ -24,10 +24,10 @@ class _ActivityLogScreenState extends ConsumerState<ActivityLogScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'سجل النشاطات والتدقيق للطلب',
           style: TextStyle(
             color: AppColors.primary,
@@ -36,12 +36,12 @@ class _ActivityLogScreenState extends ConsumerState<ActivityLogScreen> {
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
       body: logAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+        loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
         error: (err, stack) => Center(child: Text('خطأ: $err')),
         data: (logs) {
           final filteredLogs = _filterLogs(logs);
@@ -73,7 +73,7 @@ class _ActivityLogScreenState extends ConsumerState<ActivityLogScreen> {
   Widget _buildFiltersBar() {
     final filters = ['الكل', 'الشحن', 'المالية', 'الجودة'];
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -82,7 +82,7 @@ class _ActivityLogScreenState extends ConsumerState<ActivityLogScreen> {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4.0),
             child: ChoiceChip(
-              label: Text(f, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: isSelected ? Colors.white : AppColors.onSurfaceVariant)),
+              label: Text(f, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: isSelected ? Colors.white : Theme.of(context).colorScheme.onSurfaceVariant)),
               selected: isSelected,
               selectedColor: const Color(0xFF0040E0),
               backgroundColor: const Color(0xFFF1F1F5),
@@ -122,7 +122,7 @@ class _ActivityLogScreenState extends ConsumerState<ActivityLogScreen> {
         borderRadius: BorderRadius.circular(16),
         side: const BorderSide(color: Color(0xFFE2E1EF)),
       ),
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
@@ -132,8 +132,8 @@ class _ActivityLogScreenState extends ConsumerState<ActivityLogScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(item.date, style: const TextStyle(fontSize: 9, color: AppColors.outline)),
-                Text(item.time, style: const TextStyle(fontSize: 8, color: AppColors.outline)),
+                Text(item.date, style: TextStyle(fontSize: 9, color: AppColors.outline)),
+                Text(item.time, style: TextStyle(fontSize: 8, color: AppColors.outline)),
               ],
             ),
             const Spacer(),
@@ -146,17 +146,17 @@ class _ActivityLogScreenState extends ConsumerState<ActivityLogScreen> {
                 children: [
                   Text(
                     item.action,
-                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     textAlign: TextAlign.end,
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   Text(
                     'المستخدم: ${item.user} • الجهاز: ${item.device}',
-                    style: const TextStyle(fontSize: 9, color: AppColors.outline),
+                    style: TextStyle(fontSize: 9, color: AppColors.outline),
                     textAlign: TextAlign.end,
                   ),
                   if (item.attachments != null && item.attachments!.isNotEmpty) ...[
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     Wrap(
                       spacing: 8,
                       runSpacing: 4,
@@ -171,8 +171,8 @@ class _ActivityLogScreenState extends ConsumerState<ActivityLogScreen> {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(file, style: const TextStyle(fontSize: 8, color: AppColors.onSurfaceVariant)),
-                              const SizedBox(width: 4),
+                              Text(file, style: TextStyle(fontSize: 8, color: Theme.of(context).colorScheme.onSurfaceVariant)),
+                              SizedBox(width: 4),
                               const Icon(Icons.attach_file, size: 8, color: AppColors.outline),
                             ],
                           ),
@@ -183,7 +183,7 @@ class _ActivityLogScreenState extends ConsumerState<ActivityLogScreen> {
                 ],
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12),
 
             // Icon Tag Indicator
             Container(

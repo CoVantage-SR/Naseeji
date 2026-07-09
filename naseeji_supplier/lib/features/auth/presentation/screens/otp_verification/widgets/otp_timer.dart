@@ -64,12 +64,12 @@ class _OtpTimerState extends State<OtpTimer> {
       children: [
         Text(
           _canResend ? 'لم تستلم الرمز؟ ' : 'يمكنك إعادة إرسال الرمز خلال ',
-          style: const TextStyle(color: AppColors.onSurfaceVariant),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
         ),
         if (_canResend)
           GestureDetector(
             onTap: _handleResend,
-            child: const Text(
+            child: Text(
               'إعادة الإرسال',
               style: TextStyle(
                 color: AppColors.primary,
@@ -80,7 +80,7 @@ class _OtpTimerState extends State<OtpTimer> {
         else
           Text(
             '00:$_secondsRemaining',
-            style: const TextStyle(
+            style: TextStyle(
               color: AppColors.primary,
               fontWeight: FontWeight.bold,
             ),

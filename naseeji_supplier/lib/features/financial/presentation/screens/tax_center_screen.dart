@@ -13,20 +13,20 @@ class TaxCenterScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'المركز والربط الضريبي',
-          style: TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
       body: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
         child: taxAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (err, stack) => Center(child: Text('خطأ: $err')),
           data: (data) {
             return RefreshIndicator(
@@ -42,7 +42,7 @@ class TaxCenterScreen extends ConsumerWidget {
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                       ),
@@ -57,44 +57,44 @@ class TaxCenterScreen extends ConsumerWidget {
                                   color: const Color(0xFFE3FCEF),
                                   borderRadius: BorderRadius.circular(6),
                                 ),
-                                child: const Text(
+                                child: Text(
                                   'نشط ومربوط (زاتكا)',
                                   style: TextStyle(color: Color(0xFF00875A), fontSize: 10, fontWeight: FontWeight.bold),
                                 ),
                               ),
-                              const Text(
+                              Text(
                                 'الرقم الضريبي للمنشأة',
-                                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                               ),
                             ],
                           ),
-                          const SizedBox(height: 12),
+                          SizedBox(height: 12),
                           Text(
                             data.taxRegistrationNumber,
                             textDirection: TextDirection.ltr,
-                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.primary, letterSpacing: 1.5),
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.primary, letterSpacing: 1.5),
                           ),
-                          const SizedBox(height: 6),
+                          SizedBox(height: 6),
                           Text(
                             'نسبة ضريبة القيمة المضافة المطبقة: ${data.vatPercentage.toStringAsFixed(0)}٪',
-                            style: const TextStyle(fontSize: 11, color: AppColors.outline),
+                            style: TextStyle(fontSize: 11, color: AppColors.outline),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
 
                     // VAT summary card
-                    const Text(
+                    Text(
                       'ملخص ضريبة القيمة المضافة (VAT)',
                       textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                       ),
@@ -108,19 +108,19 @@ class TaxCenterScreen extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
 
                     // Tax documents / certificates
-                    const Text(
+                    Text(
                       'المستندات وشهادات المكلف',
                       textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                       ),
@@ -128,8 +128,8 @@ class TaxCenterScreen extends ConsumerWidget {
                         children: data.documents.map((doc) {
                           return ListTile(
                             leading: const Icon(Icons.picture_as_pdf, color: Color(0xFFBA1A1A)),
-                            title: Text(doc['name'] as String, style: const TextStyle(fontSize: 12), textAlign: TextAlign.right),
-                            subtitle: Text('تاريخ الإصدار: ${doc['date']}', style: const TextStyle(fontSize: 10), textAlign: TextAlign.right),
+                            title: Text(doc['name'] as String, style: TextStyle(fontSize: 12), textAlign: TextAlign.right),
+                            subtitle: Text('تاريخ الإصدار: ${doc['date']}', style: TextStyle(fontSize: 10), textAlign: TextAlign.right),
                             trailing: const Icon(Icons.download, size: 18),
                             onTap: () {
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -140,19 +140,19 @@ class TaxCenterScreen extends ConsumerWidget {
                         }).toList(),
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
 
                     // VAT submission reports
-                    const Text(
+                    Text(
                       'الإقرارات الضريبية السابقة',
                       textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                       ),
@@ -165,18 +165,18 @@ class TaxCenterScreen extends ConsumerWidget {
                               children: [
                                 Text(
                                   rep['status'] as String,
-                                  style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF00875A)),
+                                  style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF00875A)),
                                 ),
                                 Row(
                                   children: [
                                     Text(
                                       '${(rep['vat'] as double).toStringAsFixed(2)} ر.س',
-                                      style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
                                     ),
-                                    const SizedBox(width: 8),
+                                    SizedBox(width: 8),
                                     Text(
                                       rep['period'] as String,
-                                      style: const TextStyle(fontSize: 13, color: AppColors.onSurfaceVariant),
+                                      style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurfaceVariant),
                                     ),
                                   ],
                                 ),
@@ -212,7 +212,7 @@ class TaxCenterScreen extends ConsumerWidget {
           label,
           style: TextStyle(
             fontSize: 13,
-            color: isBold ? AppColors.onSurface : AppColors.outline,
+            color: isBold ? Theme.of(context).colorScheme.onSurface : AppColors.outline,
             fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
           ),
         ),

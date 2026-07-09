@@ -16,10 +16,10 @@ class FactoryPreparationReviewScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'تدقيق جاهزية الإنتاج للمصنع',
           style: TextStyle(
             color: AppColors.primary,
@@ -28,12 +28,12 @@ class FactoryPreparationReviewScreen extends ConsumerWidget {
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
       body: prepAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+        loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
         error: (err, stack) => Center(child: Text('خطأ: $err')),
         data: (prep) {
           return Column(
@@ -53,7 +53,7 @@ class FactoryPreparationReviewScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: Colors.orange.withValues(alpha: 0.2)),
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Expanded(
@@ -68,11 +68,11 @@ class FactoryPreparationReviewScreen extends ConsumerWidget {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20),
 
                       // Image Gallery Section
-                      const Text('معرض صور الفحص والجودة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                      const SizedBox(height: 12),
+                      Text('معرض صور الفحص والجودة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                      SizedBox(height: 12),
                       SizedBox(
                         height: 100,
                         child: ListView.builder(
@@ -92,11 +92,11 @@ class FactoryPreparationReviewScreen extends ConsumerWidget {
                           },
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20),
 
                       // Video Preview Card
-                      const Text('معاينة الفيديو المرفوع (5 ثوان)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                      const SizedBox(height: 12),
+                      Text('معاينة الفيديو المرفوع (5 ثوان)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                      SizedBox(height: 12),
                       Container(
                         width: double.infinity,
                         height: 160,
@@ -112,29 +112,29 @@ class FactoryPreparationReviewScreen extends ConsumerWidget {
                           child: Container(
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(color: Colors.black45, shape: BoxShape.circle),
-                            child: const Icon(Icons.play_arrow, color: Colors.white, size: 36),
+                            child: const Icon(Icons.play_arrow, color: Theme.of(context).colorScheme.surface, size: 36),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20),
 
                       // Notes Section
                       Container(
                         width: double.infinity,
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.surface,
                           borderRadius: BorderRadius.circular(16),
                           boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6)],
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            const Text('ملاحظات الجودة للمورد', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                            const SizedBox(height: 8),
+                            Text('ملاحظات الجودة للمورد', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                            SizedBox(height: 8),
                             Text(
                               prep.preparationNotes,
-                              style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant, height: 1.5),
+                              style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.5),
                               textAlign: TextAlign.end,
                             ),
                           ],
@@ -147,7 +147,7 @@ class FactoryPreparationReviewScreen extends ConsumerWidget {
 
               // Bottom buttons
               Container(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                 child: SafeArea(
                   child: Column(
@@ -164,10 +164,10 @@ class FactoryPreparationReviewScreen extends ConsumerWidget {
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                                 padding: const EdgeInsets.symmetric(vertical: 14),
                               ),
-                              child: const Text('طلب تعديل الخامات', style: TextStyle(color: AppColors.error, fontSize: 12, fontWeight: FontWeight.bold)),
+                              child: Text('طلب تعديل الخامات', style: TextStyle(color: AppColors.error, fontSize: 12, fontWeight: FontWeight.bold)),
                             ),
                           ),
-                          const SizedBox(width: 12),
+                          SizedBox(width: 12),
                           Expanded(
                             child: ElevatedButton(
                               onPressed: () {
@@ -179,16 +179,16 @@ class FactoryPreparationReviewScreen extends ConsumerWidget {
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                                 padding: const EdgeInsets.symmetric(vertical: 14),
                               ),
-                              child: const Text('اعتماد الجودة والشحن', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),
+                              child: Text('اعتماد الجودة والشحن', style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 12, fontWeight: FontWeight.bold)),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: 10),
                       TextButton.icon(
                         onPressed: () => context.push('/orders/chat?rfqId=${prep.rfqId}'),
                         icon: const Icon(Icons.chat_bubble_outline, color: Color(0xFF0040E0), size: 18),
-                        label: const Text('فتح المحادثة الفورية', style: TextStyle(color: Color(0xFF0040E0), fontSize: 12, fontWeight: FontWeight.bold)),
+                        label: Text('فتح المحادثة الفورية', style: TextStyle(color: Color(0xFF0040E0), fontSize: 12, fontWeight: FontWeight.bold)),
                       ),
                     ],
                   ),
@@ -210,10 +210,10 @@ class FactoryPreparationReviewScreen extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(Icons.check_circle_outline, color: Color(0xFF16A34A), size: 48),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Text(
               message,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
               textAlign: TextAlign.center,
             ),
           ],
@@ -224,7 +224,7 @@ class FactoryPreparationReviewScreen extends ConsumerWidget {
               Navigator.pop(context); // Pop dialog
               context.go('/orders/shipping-manifest?rfqId=$rfqId'); // Navigate to next step: Shipping Manifest
             },
-            child: const Text('موافق'),
+            child: Text('موافق'),
           ),
         ],
       ),
@@ -236,25 +236,25 @@ class FactoryPreparationReviewScreen extends ConsumerWidget {
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Text(title, textAlign: TextAlign.center, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+        title: Text(title, textAlign: TextAlign.center, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
         content: TextField(
           maxLines: 3,
           textAlign: TextAlign.end,
           decoration: InputDecoration(
             hintText: 'اكتب تفاصيل التعديلات المطلوبة...',
-            hintStyle: const TextStyle(fontSize: 11),
+            hintStyle: TextStyle(fontSize: 11),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('إلغاء')),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text('إلغاء')),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(successMsg)));
             },
             style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF0040E0), foregroundColor: Colors.white),
-            child: const Text('إرسال'),
+            child: Text('إرسال'),
           ),
         ],
       ),

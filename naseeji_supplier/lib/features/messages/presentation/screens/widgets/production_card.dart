@@ -11,7 +11,7 @@ class ProductionCard extends StatelessWidget {
     return Container(
       width: 280,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFF8B5CF6), width: 1.5),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 8, offset: const Offset(0, 3))],
@@ -21,16 +21,16 @@ class ProductionCard extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: Color(0xFF8B5CF6),
               borderRadius: BorderRadius.vertical(top: Radius.circular(14)),
             ),
-            child: const Row(
+            child: Row(
               children: [
                 Spacer(),
-                Icon(Icons.factory_outlined, color: Colors.white, size: 18),
+                Icon(Icons.factory_outlined, color: Theme.of(context).colorScheme.surface, size: 18),
                 SizedBox(width: 6),
-                Text('تحديث الإنتاج', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13)),
+                Text('تحديث الإنتاج', style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.bold, fontSize: 13)),
               ],
             ),
           ),
@@ -43,11 +43,11 @@ class ProductionCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('${pct.toInt()}%',
-                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF8B5CF6))),
-                    const Text('نسبة الإنجاز', style: TextStyle(fontSize: 11, color: AppColors.outline)),
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF8B5CF6))),
+                    Text('نسبة الإنجاز', style: TextStyle(fontSize: 11, color: AppColors.outline)),
                   ],
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 LinearProgressIndicator(
                   value: pct / 100,
                   backgroundColor: Colors.purple.shade50,
@@ -55,10 +55,10 @@ class ProductionCard extends StatelessWidget {
                   minHeight: 8,
                   borderRadius: BorderRadius.circular(4),
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 if (data['notes'] != null)
                   Text(data['notes'] as String,
-                      style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+                      style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant),
                       textAlign: TextAlign.right),
               ],
             ),
@@ -76,11 +76,11 @@ class ProductionCard extends StatelessWidget {
                         side: const BorderSide(color: Color(0xFF8B5CF6)),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       ),
-                      child: const Text('طلب تعديل', style: TextStyle(fontSize: 12, color: Color(0xFF8B5CF6))),
+                      child: Text('طلب تعديل', style: TextStyle(fontSize: 12, color: Color(0xFF8B5CF6))),
                     ),
                   ),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 Expanded(
                   child: SizedBox(
                     height: 36,
@@ -90,7 +90,7 @@ class ProductionCard extends StatelessWidget {
                         backgroundColor: const Color(0xFF8B5CF6),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       ),
-                      child: const Text('مراجعة', style: TextStyle(fontSize: 12, color: Colors.white)),
+                      child: Text('مراجعة', style: TextStyle(fontSize: 12, color: Colors.white)),
                     ),
                   ),
                 ),

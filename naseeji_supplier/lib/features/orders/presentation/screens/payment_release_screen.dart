@@ -16,10 +16,10 @@ class PaymentReleaseScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'الدفعة المالية والتحويل البنكي',
           style: TextStyle(
             color: AppColors.primary,
@@ -28,12 +28,12 @@ class PaymentReleaseScreen extends ConsumerWidget {
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
       body: releaseAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+        loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
         error: (err, stack) => Center(child: Text('خطأ: $err')),
         data: (release) {
           return Column(
@@ -47,11 +47,11 @@ class PaymentReleaseScreen extends ConsumerWidget {
                     children: [
                       // Status card
                       _buildStatusCard(release),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
 
                       // Financial Ledger details
                       _buildPayoutLedgerCard(release),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
 
                       // Release steps timeline log
                       _buildReleaseTimelineCard(release),
@@ -62,7 +62,7 @@ class PaymentReleaseScreen extends ConsumerWidget {
 
               // Bottom Actions
               Container(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                 child: SafeArea(
                   child: Row(
@@ -71,7 +71,7 @@ class PaymentReleaseScreen extends ConsumerWidget {
                         child: OutlinedButton.icon(
                           onPressed: () => _showActionSnackbar(context, 'جاري تحميل الفاتورة الضريبية...'),
                           icon: const Icon(Icons.download_outlined, size: 16, color: Color(0xFF0040E0)),
-                          label: const Text('تحميل الفاتورة', style: TextStyle(color: Color(0xFF0040E0), fontSize: 12, fontWeight: FontWeight.bold)),
+                          label: Text('تحميل الفاتورة', style: TextStyle(color: Color(0xFF0040E0), fontSize: 12, fontWeight: FontWeight.bold)),
                           style: OutlinedButton.styleFrom(
                             side: const BorderSide(color: Color(0xFF0040E0)),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -79,14 +79,14 @@ class PaymentReleaseScreen extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 12),
+                      SizedBox(width: 12),
                       Expanded(
                         child: ElevatedButton.icon(
                           onPressed: () {
                             context.push('/orders/activity-log?rfqId=$rfqId'); // Go to Activity Log next step
                           },
                           icon: const Icon(Icons.history_outlined, size: 16, color: Colors.white),
-                          label: const Text('سجل النشاطات الكامل', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),
+                          label: Text('سجل النشاطات الكامل', style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 12, fontWeight: FontWeight.bold)),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF0040E0),
                             elevation: 0,
@@ -112,7 +112,7 @@ class PaymentReleaseScreen extends ConsumerWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6)],
       ),
@@ -123,13 +123,13 @@ class PaymentReleaseScreen extends ConsumerWidget {
             decoration: BoxDecoration(color: Color(0xFFE2F9F5), shape: BoxShape.circle),
             child: const Icon(Icons.account_balance_wallet_outlined, color: Color(0xFF006B5F), size: 36),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Text(
             release.paymentStatus,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF006B5F)),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF006B5F)),
           ),
-          const SizedBox(height: 4),
-          const Text('الدفعة مؤمنة في حساب نسيجي الضامن (Escrow)', style: TextStyle(fontSize: 10, color: AppColors.outline)),
+          SizedBox(height: 4),
+          Text('الدفعة مؤمنة في حساب نسيجي الضامن (Escrow)', style: TextStyle(fontSize: 10, color: AppColors.outline)),
         ],
       ),
     );
@@ -140,35 +140,35 @@ class PaymentReleaseScreen extends ConsumerWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('تفاصيل الحساب المالي للطلب', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 12),
+          Text('تفاصيل الحساب المالي للطلب', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 12),
           const Divider(height: 1, color: Color(0xFFF1F1F5)),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           _buildRowItem('إجمالي قيمة الطلب للعميل', '${release.orderTotal.toStringAsFixed(2)} ر.س'),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildRowItem('عمولة منصة نسيجي (2.5%)', '${release.commission.toStringAsFixed(2)} ر.س'),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildRowItem('تاريخ التحويل المتوقع للحساب البنكي', release.expectedReleaseDate),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildRowItem('رقم المرجعية للتحويل (Reference ID)', release.transferReference),
-          const SizedBox(height: 14),
+          SizedBox(height: 14),
           const Divider(height: 1, color: Color(0xFFF1F1F5)),
-          const SizedBox(height: 14),
+          SizedBox(height: 14),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 '${release.supplierReceivable.toStringAsFixed(2)} ر.س',
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF006B5F)),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF006B5F)),
               ),
-              const Text('صافي مستحقات المورد', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+              Text('صافي مستحقات المورد', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
             ],
           ),
         ],
@@ -181,15 +181,15 @@ class PaymentReleaseScreen extends ConsumerWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('تتبع مراحل صرف الدفعة المعتمدة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 16),
+          Text('تتبع مراحل صرف الدفعة المعتمدة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 16),
           ...release.releaseTimeline.map((step) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 12.0),
@@ -199,11 +199,11 @@ class PaymentReleaseScreen extends ConsumerWidget {
                   Expanded(
                     child: Text(
                       step,
-                      style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+                      style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant),
                       textAlign: TextAlign.end,
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   const Icon(Icons.check_circle, color: Color(0xFF16A34A), size: 16),
                 ],
               ),
@@ -218,9 +218,9 @@ class PaymentReleaseScreen extends ConsumerWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Expanded(child: Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.left)),
-        const SizedBox(width: 10),
-        Text('$label:', style: const TextStyle(fontSize: 11, color: AppColors.outline)),
+        Expanded(child: Text(value, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.left)),
+        SizedBox(width: 10),
+        Text('$label:', style: TextStyle(fontSize: 11, color: AppColors.outline)),
       ],
     );
   }

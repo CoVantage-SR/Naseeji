@@ -13,10 +13,10 @@ class DeliveryConfirmationScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'تأكيد استلام وتسليم الشحنة',
           style: TextStyle(
             color: AppColors.primary,
@@ -25,7 +25,7 @@ class DeliveryConfirmationScreen extends ConsumerWidget {
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
@@ -46,7 +46,7 @@ class DeliveryConfirmationScreen extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: const Color(0xFF16A34A).withValues(alpha: 0.2)),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Expanded(
@@ -61,19 +61,19 @@ class DeliveryConfirmationScreen extends ConsumerWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20),
 
                   // Delivery Metadata Details
                   _buildDeliveryDetailsCard(),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
 
                   // Verification Checkbox checklist
                   _buildChecklistCard(),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
 
                   // Photos
-                  const Text('صور تسليم الشحنة الموثقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                  const SizedBox(height: 12),
+                  Text('صور تسليم الشحنة الموثقة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                  SizedBox(height: 12),
                   SizedBox(
                     height: 100,
                     child: ListView.builder(
@@ -103,7 +103,7 @@ class DeliveryConfirmationScreen extends ConsumerWidget {
 
           // Bottom actions
           Container(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             child: SafeArea(
               child: Column(
@@ -120,10 +120,10 @@ class DeliveryConfirmationScreen extends ConsumerWidget {
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                             padding: const EdgeInsets.symmetric(vertical: 14),
                           ),
-                          child: const Text('إبلاغ عن مشكلة / نزاع', style: TextStyle(color: AppColors.error, fontSize: 12, fontWeight: FontWeight.bold)),
+                          child: Text('إبلاغ عن مشكلة / نزاع', style: TextStyle(color: AppColors.error, fontSize: 12, fontWeight: FontWeight.bold)),
                         ),
                       ),
-                      const SizedBox(width: 12),
+                      SizedBox(width: 12),
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
@@ -135,7 +135,7 @@ class DeliveryConfirmationScreen extends ConsumerWidget {
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                             padding: const EdgeInsets.symmetric(vertical: 14),
                           ),
-                          child: const Text('تأكيد الاستلام والقبول', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),
+                          child: Text('تأكيد الاستلام والقبول', style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 12, fontWeight: FontWeight.bold)),
                         ),
                       ),
                     ],
@@ -154,23 +154,23 @@ class DeliveryConfirmationScreen extends ConsumerWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('تفاصيل وصول الإرسالية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 12),
+          Text('تفاصيل وصول الإرسالية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 12),
           const Divider(height: 1, color: Color(0xFFF1F1F5)),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           _buildRowItem('تاريخ الاستلام الفعلي', '15 يوليو 2026'),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildRowItem('حالة الشحنة عند الاستلام', 'ممتازة - خالية من التلفيات والتمزق'),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildRowItem('الكمية المستلمة', '5,000 متر (كامل الشحنة)'),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildRowItem('مدى تطابق جودة الألوان', 'متطابقة بنسبة 100%'),
         ],
       ),
@@ -182,21 +182,21 @@ class DeliveryConfirmationScreen extends ConsumerWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('فحص البنود المطابقة المعتمدة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 12),
+          Text('فحص البنود المطابقة المعتمدة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 12),
           const Divider(height: 1, color: Color(0xFFF1F1F5)),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           _buildCheckboxItem('تم التحقق من مطابقة الكمية الموردة بالكامل للاتفاقية', true),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           _buildCheckboxItem('تم فحص عينات عشوائية واختبار قوة الشد وثبات اللون', true),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           _buildCheckboxItem('اللفات مغلفة بشكل صناعي متين وخالية من الرطوبة والعيوب', true),
         ],
       ),
@@ -207,8 +207,8 @@ class DeliveryConfirmationScreen extends ConsumerWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Expanded(child: Text(label, style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant), textAlign: TextAlign.end)),
-        const SizedBox(width: 10),
+        Expanded(child: Text(label, style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant), textAlign: TextAlign.end)),
+        SizedBox(width: 10),
         Icon(val ? Icons.check_box : Icons.check_box_outline_blank, color: const Color(0xFF0040E0), size: 18),
       ],
     );
@@ -218,9 +218,9 @@ class DeliveryConfirmationScreen extends ConsumerWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Expanded(child: Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.left)),
-        const SizedBox(width: 10),
-        Text('$label:', style: const TextStyle(fontSize: 11, color: AppColors.outline)),
+        Expanded(child: Text(value, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.left)),
+        SizedBox(width: 10),
+        Text('$label:', style: TextStyle(fontSize: 11, color: AppColors.outline)),
       ],
     );
   }
@@ -230,32 +230,32 @@ class DeliveryConfirmationScreen extends ConsumerWidget {
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('رفع نزاع / إبلاغ عن مشكلة', textAlign: TextAlign.center, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.error)),
+        title: Text('رفع نزاع / إبلاغ عن مشكلة', textAlign: TextAlign.center, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.error)),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('يرجى كتابة أسباب النزاع بالتفصيل لإرسالها للتحكيم الإداري بالمنصة.', style: TextStyle(fontSize: 11), textAlign: TextAlign.center),
-            const SizedBox(height: 12),
+            Text('يرجى كتابة أسباب النزاع بالتفصيل لإرسالها للتحكيم الإداري بالمنصة.', style: TextStyle(fontSize: 11), textAlign: TextAlign.center),
+            SizedBox(height: 12),
             TextField(
               maxLines: 3,
               textAlign: TextAlign.end,
               decoration: InputDecoration(
                 hintText: 'مثال: نقص في الكمية الموردة بمقدار 200 متر أو بهتان في الألوان...',
-                hintStyle: const TextStyle(fontSize: 10),
+                hintStyle: TextStyle(fontSize: 10),
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
               ),
             ),
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('إلغاء')),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text('إلغاء')),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم تسجيل الشكوى وجاري مراجعة إدارة نسيجي للطلب')));
             },
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.error, foregroundColor: Colors.white),
-            child: const Text('إرسال الشكوى'),
+            child: Text('إرسال الشكوى'),
           ),
         ],
       ),
@@ -267,7 +267,7 @@ class DeliveryConfirmationScreen extends ConsumerWidget {
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        content: const Column(
+        content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.check_circle_outline, color: Color(0xFF16A34A), size: 48),
@@ -285,7 +285,7 @@ class DeliveryConfirmationScreen extends ConsumerWidget {
               Navigator.pop(context); // Pop dialog
               context.go('/orders/payment-release?rfqId=$rfqId'); // Go to Payment Release screen
             },
-            child: const Text('موافق'),
+            child: Text('موافق'),
           ),
         ],
       ),

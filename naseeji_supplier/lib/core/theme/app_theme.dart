@@ -15,9 +15,9 @@ class AppTheme {
         secondaryContainer: AppColors.secondaryContainer,
         error: AppColors.error,
         onError: AppColors.onError,
-        surface: AppColors.surface,
-        onSurface: AppColors.onSurface,
-        onSurfaceVariant: AppColors.onSurfaceVariant,
+        surface: Theme.of(context).colorScheme.surface,
+        onSurface: Theme.of(context).colorScheme.onSurface,
+        onSurfaceVariant: Theme.of(context).colorScheme.onSurfaceVariant,
         outline: AppColors.outline,
         outlineVariant: AppColors.outlineVariant,
       ),
@@ -25,7 +25,7 @@ class AppTheme {
       fontFamily: 'IBM Plex Sans Arabic',
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
-        foregroundColor: AppColors.onSurface,
+        foregroundColor: Theme.of(context).colorScheme.onSurface,
         elevation: 0,
         centerTitle: true,
       ),
@@ -37,7 +37,7 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          textStyle: const TextStyle(
+          textStyle: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
           ),
@@ -45,7 +45,7 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppColors.surface,
+        fillColor: Theme.of(context).colorScheme.surface,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: AppColors.outlineVariant),
@@ -63,7 +63,7 @@ class AppTheme {
           borderSide: const BorderSide(color: AppColors.error),
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        labelStyle: const TextStyle(color: AppColors.outline),
+        labelStyle: TextStyle(color: AppColors.outline),
       ),
     );
   }
@@ -103,7 +103,7 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          textStyle: const TextStyle(
+          textStyle: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
           ),
@@ -129,7 +129,7 @@ class AppTheme {
           borderSide: const BorderSide(color: AppColors.error),
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        labelStyle: const TextStyle(color: AppColors.outline),
+        labelStyle: TextStyle(color: AppColors.outline),
       ),
     );
   }

@@ -13,7 +13,7 @@ class PrimaryButton extends StatefulWidget {
   final IconData? prefixIcon;
   final Duration throttleDuration;
 
-  const PrimaryButton({
+  PrimaryButton({
     super.key,
     required this.text,
     this.onPressed,
@@ -62,7 +62,7 @@ class _PrimaryButtonState extends State<PrimaryButton> {
           ),
         ),
         child: widget.isLoading
-            ? const SizedBox(
+            ? SizedBox(
                 height: 24,
                 width: 24,
                 child: CircularProgressIndicator(
@@ -75,17 +75,17 @@ class _PrimaryButtonState extends State<PrimaryButton> {
                 children: [
                   if (widget.prefixIcon != null) ...[
                     Icon(widget.prefixIcon, size: 20),
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                   ],
                   Text(
                     widget.text,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   if (widget.suffixIcon != null) ...[
-                    const SizedBox(width: 8),
+                    SizedBox(width: 8),
                     Icon(widget.suffixIcon, size: 20),
                   ],
                 ],
@@ -109,7 +109,7 @@ class CustomTextField extends StatelessWidget {
   final bool enabled;
   final int? maxLines;
 
-  const CustomTextField({
+  CustomTextField({
     super.key,
     this.controller,
     required this.labelText,
@@ -176,7 +176,7 @@ class LoadingOverlay extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.all(24),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.surface,
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
@@ -188,7 +188,7 @@ class LoadingOverlay extends StatelessWidget {
                               ),
                             ],
                           ),
-                          child: const SizedBox(
+                          child: SizedBox(
                             width: 40,
                             height: 40,
                             child: CircularProgressIndicator(
@@ -199,8 +199,8 @@ class LoadingOverlay extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 16),
-                        const Text(
+                        SizedBox(height: 16),
+                        Text(
                           'جاري التحميل...',
                           style: TextStyle(
                             fontSize: 14,

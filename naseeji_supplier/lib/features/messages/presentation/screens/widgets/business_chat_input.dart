@@ -37,20 +37,20 @@ class _BusinessChatInputState extends State<BusinessChatInput> {
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 12),
               itemCount: widget.quickReplies.length,
-              separatorBuilder: (_, __) => const SizedBox(width: 6),
+              separatorBuilder: (_, __) => SizedBox(width: 6),
               itemBuilder: (_, i) => ActionChip(
-                label: Text(widget.quickReplies[i], style: const TextStyle(fontSize: 11)),
+                label: Text(widget.quickReplies[i], style: TextStyle(fontSize: 11)),
                 onPressed: () => widget.onQuickReply?.call(widget.quickReplies[i]),
-                backgroundColor: AppColors.surfaceContainerLow,
+                backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
                 side: BorderSide.none,
               ),
             ),
           ),
-        if (widget.quickReplies.isNotEmpty && !widget.isBlocked) const SizedBox(height: 6),
+        if (widget.quickReplies.isNotEmpty && !widget.isBlocked) SizedBox(height: 6),
         // Attach menu popup
         if (_showAttachMenu && !widget.isBlocked)
           Container(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -69,7 +69,7 @@ class _BusinessChatInputState extends State<BusinessChatInput> {
           margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16, top: 4),
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(32),
             boxShadow: [
               BoxShadow(
@@ -94,14 +94,14 @@ class _BusinessChatInputState extends State<BusinessChatInput> {
                             if (widget.controller.text.trim().isNotEmpty) widget.onSend();
                           },
                     customBorder: const CircleBorder(),
-                    child: const Padding(
+                    child: Padding(
                       padding: EdgeInsets.all(12),
-                      child: Icon(Icons.send_rounded, color: Colors.white, size: 20),
+                      child: Icon(Icons.send_rounded, color: Theme.of(context).colorScheme.surface, size: 20),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               // Text field
               Expanded(
                 child: Container(
@@ -111,10 +111,10 @@ class _BusinessChatInputState extends State<BusinessChatInput> {
                     enabled: !widget.isBlocked,
                     maxLines: null,
                     textAlign: TextAlign.right,
-                    style: const TextStyle(fontSize: 14),
+                    style: TextStyle(fontSize: 14),
                     decoration: InputDecoration(
                       hintText: widget.isBlocked ? 'المحادثة مغلقة بسبب الحظر' : 'اكتب رسالتك هنا...',
-                      hintStyle: const TextStyle(fontSize: 13, color: AppColors.outline),
+                      hintStyle: TextStyle(fontSize: 13, color: AppColors.outline),
                       border: InputBorder.none,
                       contentPadding: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
                     ),
@@ -171,7 +171,7 @@ class _AttachOption extends StatelessWidget {
             decoration: BoxDecoration(color: color.withValues(alpha: 0.1), shape: BoxShape.circle),
             child: Icon(icon, color: color, size: 22),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4),
           Text(label, style: TextStyle(fontSize: 10, color: color)),
         ],
       ),

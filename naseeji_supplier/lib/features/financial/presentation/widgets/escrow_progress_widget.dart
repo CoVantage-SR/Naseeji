@@ -44,13 +44,13 @@ class EscrowProgressWidget extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: isActive
                             ? AppColors.primary
-                            : (isCompleted ? AppColors.onSurface : AppColors.outline),
+                            : (isCompleted ? Theme.of(context).colorScheme.onSurface : AppColors.outline),
                       ),
                     ),
-                    const SizedBox(height: 2),
+                    SizedBox(height: 2),
                     Text(
                       step.description,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 10,
                         color: AppColors.outline,
                       ),
@@ -84,7 +84,7 @@ class EscrowProgressWidget extends StatelessWidget {
                             ? Container(
                                 width: 8,
                                 height: 8,
-                                decoration: const BoxDecoration(
+                                decoration: BoxDecoration(
                                   color: AppColors.primary,
                                   shape: BoxShape.circle,
                                 ),

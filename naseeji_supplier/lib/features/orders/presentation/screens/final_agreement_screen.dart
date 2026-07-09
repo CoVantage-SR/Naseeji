@@ -17,10 +17,10 @@ class FinalAgreementScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'تأكيد الاتفاقية النهائية',
           style: TextStyle(
             color: AppColors.primary,
@@ -29,12 +29,12 @@ class FinalAgreementScreen extends ConsumerWidget {
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.info_outline, color: AppColors.onSurfaceVariant),
+            icon: const Icon(Icons.info_outline, color: Theme.of(context).colorScheme.onSurfaceVariant),
             onPressed: () {
               if (agreementAsync.valueOrNull != null) {
                 final data = agreementAsync.value!;
@@ -52,7 +52,7 @@ class FinalAgreementScreen extends ConsumerWidget {
         ],
       ),
       body: agreementAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+        loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
         error: (err, stack) => Center(child: Text('خطأ: $err')),
         data: (agreement) {
           return Column(
@@ -72,7 +72,7 @@ class FinalAgreementScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: const Color(0xFF0040E0).withValues(alpha: 0.2)),
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Expanded(
@@ -87,15 +87,15 @@ class FinalAgreementScreen extends ConsumerWidget {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20),
 
                       // Parties details
                       _buildHeaderSection(agreement),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
 
                       // Pricing Comparison card
                       _buildComparisonCard(agreement),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
 
                       // Totals & Specs Card
                       _buildDetailsCard(agreement),
@@ -106,7 +106,7 @@ class FinalAgreementScreen extends ConsumerWidget {
 
               // Bottom Actions
               Container(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                 child: SafeArea(
                   child: Row(
@@ -119,10 +119,10 @@ class FinalAgreementScreen extends ConsumerWidget {
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                             padding: const EdgeInsets.symmetric(vertical: 14),
                           ),
-                          child: const Text('رجوع للتفاوض', style: TextStyle(color: AppColors.onSurfaceVariant, fontSize: 13, fontWeight: FontWeight.bold)),
+                          child: Text('رجوع للتفاوض', style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 13, fontWeight: FontWeight.bold)),
                         ),
                       ),
-                      const SizedBox(width: 12),
+                      SizedBox(width: 12),
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () => _showConfirmationDialog(context, agreement.rfqId),
@@ -133,9 +133,9 @@ class FinalAgreementScreen extends ConsumerWidget {
                             padding: const EdgeInsets.symmetric(vertical: 14),
                             minimumSize: const Size(0, 48),
                           ),
-                          child: const Text(
+                          child: Text(
                             'تأكيد الاتفاقية',
-                            style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold),
+                            style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 13, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
@@ -155,21 +155,21 @@ class FinalAgreementScreen extends ConsumerWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text('طلب السعر رقم #${agreement.rfqId}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFF0040E0))),
-          const SizedBox(height: 12),
+          Text('طلب السعر رقم #${agreement.rfqId}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFF0040E0))),
+          SizedBox(height: 12),
           _buildRowItem('اسم المصنع المشتري', agreement.factoryLabel),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           _buildRowItem('اسم المورد', agreement.supplierLabel),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           _buildRowItem('اسم المنتج المتفق عليه', agreement.productName),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           _buildRowItem('تاريخ الاتفاقية', agreement.date),
         ],
       ),
@@ -181,15 +181,15 @@ class FinalAgreementScreen extends ConsumerWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('مقارنة الأسعار التاريخية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 16),
+          Text('مقارنة الأسعار التاريخية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -208,8 +208,8 @@ class FinalAgreementScreen extends ConsumerWidget {
   Widget _buildPriceNode(String label, double val, Color color, {bool isBold = false}) {
     return Column(
       children: [
-        Text(label, style: const TextStyle(fontSize: 10, color: AppColors.outline)),
-        const SizedBox(height: 4),
+        Text(label, style: TextStyle(fontSize: 10, color: AppColors.outline)),
+        SizedBox(height: 4),
         Text(
           '${val.toStringAsFixed(2)} ر.س',
           style: TextStyle(
@@ -227,39 +227,39 @@ class FinalAgreementScreen extends ConsumerWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('تفاصيل التوريد والرسوم المعتمدة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 12),
+          Text('تفاصيل التوريد والرسوم المعتمدة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 12),
           const Divider(height: 1, color: Color(0xFFF1F1F5)),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           _buildRowItem('الكمية الإجمالية', agreement.quantity),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildRowItem('تكلفة الشحن', '${agreement.shippingCost.toStringAsFixed(2)} ر.س'),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildRowItem('ضريبة القيمة المضافة (15%)', '${agreement.taxes.toStringAsFixed(2)} ر.س'),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildRowItem('شروط وطرق الدفع', agreement.paymentTerms),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildRowItem('مدة التوصيل والتسليم', agreement.deliveryTime),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _buildRowItem('طريقة الشحن', agreement.shippingMethod),
-          const SizedBox(height: 14),
+          SizedBox(height: 14),
           const Divider(height: 1, color: Color(0xFFF1F1F5)),
-          const SizedBox(height: 14),
+          SizedBox(height: 14),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 '${agreement.totalAmount.toStringAsFixed(2)} ر.س',
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF0040E0)),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF0040E0)),
               ),
-              const Text('إجمالي مبلغ الاتفاقية', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+              Text('إجمالي مبلغ الاتفاقية', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
             ],
           ),
         ],
@@ -271,9 +271,9 @@ class FinalAgreementScreen extends ConsumerWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Expanded(child: Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.left)),
-        const SizedBox(width: 10),
-        Text('$label:', style: const TextStyle(fontSize: 11, color: AppColors.outline)),
+        Expanded(child: Text(value, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.left)),
+        SizedBox(width: 10),
+        Text('$label:', style: TextStyle(fontSize: 11, color: AppColors.outline)),
       ],
     );
   }
@@ -283,8 +283,8 @@ class FinalAgreementScreen extends ConsumerWidget {
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('تأكيد الاتفاقية نهائياً', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-        content: const Text(
+        title: Text('تأكيد الاتفاقية نهائياً', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+        content: Text(
           'هل أنت موافق على كل التفاصيل والأسعار المدرجة بالاتفاقية وتعتبر عقداً نهائياً؟',
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 12),
@@ -292,7 +292,7 @@ class FinalAgreementScreen extends ConsumerWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('تراجع'),
+            child: Text('تراجع'),
           ),
           ElevatedButton(
             onPressed: () {
@@ -300,7 +300,7 @@ class FinalAgreementScreen extends ConsumerWidget {
               context.go('/orders/production-preparation?rfqId=$rfqId'); // Go to production prep next step!
             },
             style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF0040E0), foregroundColor: Colors.white),
-            child: const Text('تأكيد وتوقيع'),
+            child: Text('تأكيد وتوقيع'),
           ),
         ],
       ),

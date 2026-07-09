@@ -23,7 +23,7 @@ class RfqDetailCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -41,13 +41,13 @@ class RfqDetailCard extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.onSurface,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
@@ -58,9 +58,9 @@ class RfqDetailCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           const Divider(height: 1, color: Color(0xFFF1F1F5)),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           child,
         ],
       ),
@@ -83,18 +83,18 @@ class RfqDetailInfoRow extends StatelessWidget {
         Expanded(
           child: Text(
             value,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
-              color: AppColors.onSurface,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
             textAlign: TextAlign.end,
           ),
         ),
-        const SizedBox(width: 8),
+        SizedBox(width: 8),
         Text(
           '$label:',
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 11,
             color: AppColors.outline,
           ),
@@ -120,15 +120,15 @@ class FactoryInfoCard extends StatelessWidget {
         children: [
           Text(
             details.companyName,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.bold,
-              color: AppColors.onSurface,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           RfqDetailInfoRow(label: 'مسؤول التواصل', value: details.contactPerson),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -140,15 +140,15 @@ class FactoryInfoCard extends StatelessWidget {
                 ),
                 child: Text(
                   details.status,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Color(0xFF16A34A),
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              const SizedBox(width: 8),
-              const Text(
+              SizedBox(width: 8),
+              Text(
                 ':الحالة',
                 style: TextStyle(
                   fontSize: 11,
@@ -180,17 +180,17 @@ class RequestedProductCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'الكمية المطلوبة',
                 style: TextStyle(
                   fontSize: 11,
                   color: AppColors.outline,
                 ),
               ),
-              const SizedBox(height: 4),
+              SizedBox(height: 4),
               Text(
                 details.quantity,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF0040E0),
@@ -201,20 +201,20 @@ class RequestedProductCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const Text(
+              Text(
                 'نوع القماش',
                 style: TextStyle(
                   fontSize: 11,
                   color: AppColors.outline,
                 ),
               ),
-              const SizedBox(height: 4),
+              SizedBox(height: 4),
               Text(
                 details.fabricType,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.onSurface,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
             ],
@@ -246,13 +246,13 @@ class TechnicalSpecsCard extends StatelessWidget {
                 children: [
                   Text(
                     details.color,
-                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(width: 6),
+                  SizedBox(width: 6),
                   Container(
                     width: 12,
                     height: 12,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: Color(0xFF0D1B2A),
                       shape: BoxShape.circle,
                     ),
@@ -260,15 +260,15 @@ class TechnicalSpecsCard extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              const Text(
+              Text(
                 'اللون:',
                 style: TextStyle(fontSize: 11, color: AppColors.outline),
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           RfqDetailInfoRow(label: 'الوزن', value: details.weight),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -280,7 +280,7 @@ class TechnicalSpecsCard extends StatelessWidget {
                 ),
                 child: Text(
                   details.quality,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Color(0xFF006B5F),
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
@@ -288,7 +288,7 @@ class TechnicalSpecsCard extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              const Text(
+              Text(
                 'الجودة:',
                 style: TextStyle(fontSize: 11, color: AppColors.outline),
               ),
@@ -315,7 +315,7 @@ class PackagingShippingCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           RfqDetailInfoRow(label: 'طريقة التغليف', value: details.packagingMethod),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           RfqDetailInfoRow(label: 'وجهة التسليم', value: details.deliveryDestination),
         ],
       ),
@@ -336,9 +336,9 @@ class FactoryNotesCard extends StatelessWidget {
       title: 'ملاحظات المصنع',
       child: Text(
         details.notes,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 12,
-          color: AppColors.onSurfaceVariant,
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
           height: 1.5,
         ),
         textAlign: TextAlign.end,
@@ -354,7 +354,7 @@ class AttachmentsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return RfqDetailCard(
       icon: Icons.attachment_outlined,
-      iconColor: AppColors.onSurfaceVariant,
+      iconColor: Theme.of(context).colorScheme.onSurfaceVariant,
       title: 'المرفقات (3)',
       child: GridView.count(
         crossAxisCount: 2,
@@ -395,10 +395,10 @@ class AttachmentsSection extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Icon(Icons.picture_as_pdf, color: AppColors.error, size: 32),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           Text(
             label,
-            style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant),
+            style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant),
           ),
         ],
       ),
@@ -411,7 +411,7 @@ class AttachmentsSection extends StatelessWidget {
         border: Border.all(color: const Color(0xFFE2E1EF), width: 1, style: BorderStyle.solid),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: const Center(
+      child: Center(
         child: Icon(Icons.add, color: AppColors.outline, size: 24),
       ),
     );
@@ -426,7 +426,7 @@ class RfqDetailsBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       child: SafeArea(
         child: Row(
@@ -441,28 +441,28 @@ class RfqDetailsBottomBar extends StatelessWidget {
                 onPressed: () => context.pop(),
               ),
             ),
-            const SizedBox(width: 10),
+            SizedBox(width: 10),
             Container(
               decoration: BoxDecoration(
                 border: Border.all(color: const Color(0xFFE2E1EF), width: 1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: IconButton(
-                icon: const Icon(Icons.handshake_outlined, color: AppColors.onSurfaceVariant),
+                icon: const Icon(Icons.handshake_outlined, color: Theme.of(context).colorScheme.onSurfaceVariant),
                 onPressed: () {},
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12),
             Expanded(
               child: ElevatedButton.icon(
                 onPressed: () => context.push('/orders/create-quotation?rfqId=$rfqId'),
                 icon: const Icon(Icons.send, size: 16, color: Colors.white),
-                label: const Text(
+                label: Text(
                   'إرسال عرض سعر',
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(

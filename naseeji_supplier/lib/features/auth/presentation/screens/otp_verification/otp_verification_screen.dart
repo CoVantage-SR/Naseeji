@@ -75,7 +75,7 @@ class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'تأكيد رقم الجوال',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
@@ -88,30 +88,30 @@ class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text(
+                Text(
                   'أدخل رمز التحقق',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.onBackground,
+                    color: Theme.of(context).colorScheme.onBackground,
                   ),
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 Text(
                   'لقد أرسلنا رمز التحقق المكون من 4 أرقام إلى جوالك $phone',
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
-                    color: AppColors.onSurfaceVariant,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
-                const SizedBox(height: 48),
+                SizedBox(height: 48),
                 OtpPinFields(
                   controllers: _pinControllers,
                   focusNodes: _focusNodes,
                 ),
-                const SizedBox(height: 32),
+                SizedBox(height: 32),
                 OtpTimer(onResend: _resendCode),
                 const Spacer(),
                 PrimaryButton(

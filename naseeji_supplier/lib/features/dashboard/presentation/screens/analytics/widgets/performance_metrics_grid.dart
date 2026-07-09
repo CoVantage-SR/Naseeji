@@ -96,7 +96,7 @@ class PerformanceMetricsGrid extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: borderColor.withValues(alpha: 0.6), width: 1.5),
         boxShadow: [
@@ -120,7 +120,7 @@ class PerformanceMetricsGrid extends StatelessWidget {
                     color: isPositive ? Colors.green : Colors.red,
                     size: 16,
                   ),
-                  const SizedBox(width: 4),
+                  SizedBox(width: 4),
                   Text(
                     trend,
                     style: TextStyle(
@@ -141,21 +141,21 @@ class PerformanceMetricsGrid extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 12,
               color: AppColors.outline,
             ),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4),
           Text(
             value,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: AppColors.onSurface,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
         ],

@@ -30,7 +30,7 @@ class NavigationDrawerView extends ConsumerWidget {
             profileAsync.when(
               loading: () => DrawerHeader(
                 decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
-                child: const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+                child: Center(child: CircularProgressIndicator(color: AppColors.primary)),
               ),
               error: (err, stack) => DrawerHeader(
                 decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
@@ -124,7 +124,7 @@ class NavigationDrawerView extends ConsumerWidget {
                     },
                   ),
 
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                     child: Divider(height: 1, color: AppColors.outlineVariant),
                   ),

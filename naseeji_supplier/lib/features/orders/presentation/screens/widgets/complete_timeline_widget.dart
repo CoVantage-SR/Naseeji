@@ -45,10 +45,10 @@ class CompleteTimelineWidget extends StatelessWidget {
 
     if (step.isCompleted) {
       nodeColor = const Color(0xFF0040E0);
-      icon = const Icon(Icons.check, color: Colors.white, size: 10);
+      icon = const Icon(Icons.check, color: Theme.of(context).colorScheme.surface, size: 10);
     } else if (step.isActive) {
       nodeColor = const Color(0xFFE8F0FE);
-      icon = const SizedBox(
+      icon = SizedBox(
         width: 10,
         height: 10,
         child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFF0040E0)),
@@ -70,18 +70,18 @@ class CompleteTimelineWidget extends StatelessWidget {
                   step.date,
                   style: TextStyle(
                     fontSize: 9,
-                    color: step.isCompleted || step.isActive ? AppColors.onSurface : AppColors.outline,
+                    color: step.isCompleted || step.isActive ? Theme.of(context).colorScheme.onSurface : AppColors.outline,
                     fontWeight: step.isCompleted || step.isActive ? FontWeight.bold : FontWeight.normal,
                   ),
                 ),
                 Text(
                   step.time,
-                  style: const TextStyle(fontSize: 8, color: AppColors.outline),
+                  style: TextStyle(fontSize: 8, color: AppColors.outline),
                 ),
               ],
             ),
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8),
 
           // Circle & Connecting Line
           Column(
@@ -108,7 +108,7 @@ class CompleteTimelineWidget extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
 
           // Content Box (Right side)
           Expanded(
@@ -122,24 +122,24 @@ class CompleteTimelineWidget extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
-                      color: step.isCompleted || step.isActive ? AppColors.onSurface : AppColors.outline,
+                      color: step.isCompleted || step.isActive ? Theme.of(context).colorScheme.onSurface : AppColors.outline,
                     ),
                   ),
-                  const SizedBox(height: 2),
+                  SizedBox(height: 2),
                   Text(
                     'بواسطة: ${step.user}',
-                    style: const TextStyle(fontSize: 9, color: AppColors.outline),
+                    style: TextStyle(fontSize: 9, color: AppColors.outline),
                   ),
                   if (step.notes != null) ...[
-                    const SizedBox(height: 4),
+                    SizedBox(height: 4),
                     Text(
                       step.notes!,
-                      style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant, height: 1.4),
+                      style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.4),
                       textAlign: TextAlign.end,
                     ),
                   ],
                   if (step.attachments != null && step.attachments!.isNotEmpty) ...[
-                    const SizedBox(height: 6),
+                    SizedBox(height: 6),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: step.attachments!.map((file) {
@@ -154,8 +154,8 @@ class CompleteTimelineWidget extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(file, style: const TextStyle(fontSize: 9, color: Color(0xFF0040E0))),
-                              const SizedBox(width: 4),
+                              Text(file, style: TextStyle(fontSize: 9, color: Color(0xFF0040E0))),
+                              SizedBox(width: 4),
                               const Icon(Icons.attach_file, size: 10, color: Color(0xFF0040E0)),
                             ],
                           ),

@@ -47,21 +47,21 @@ class _SupportChatScreenState extends ConsumerState<SupportChatScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F6FA),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.onSurface),
+          icon: const Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
           onPressed: () => context.pop(),
         ),
-        title: const Text('دعم نسيجي', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: AppColors.onSurface)),
+        title: Text('دعم نسيجي', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Theme.of(context).colorScheme.onSurface)),
         centerTitle: true,
       ),
       body: ticketAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+        loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
         error: (e, _) => Center(child: Text('خطأ: $e')),
         data: (ticket) {
           if (ticket == null) {
-            return const Center(child: Text('لم يتم العثور على التذكرة'));
+            return Center(child: Text('لم يتم العثور على التذكرة'));
           }
           _scrollToBottom();
           return Column(
@@ -142,7 +142,7 @@ class _TicketHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -158,7 +158,7 @@ class _TicketHeader extends StatelessWidget {
                 ),
                 child: Text(ticket.statusLabel, style: TextStyle(fontSize: 11, color: _statusColor, fontWeight: FontWeight.bold)),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
@@ -174,43 +174,43 @@ class _TicketHeader extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(ticket.agentName, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
-                      const Text('وكيل الدعم', style: TextStyle(fontSize: 10, color: AppColors.outline)),
+                      Text(ticket.agentName, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+                      Text('وكيل الدعم', style: TextStyle(fontSize: 10, color: AppColors.outline)),
                     ],
                   ),
-                  const SizedBox(width: 8),
-                  const CircleAvatar(radius: 18, backgroundColor: AppColors.primary, child: Icon(Icons.headset_mic, color: Colors.white, size: 16)),
+                  SizedBox(width: 8),
+                  const CircleAvatar(radius: 18, backgroundColor: AppColors.primary, child: Icon(Icons.headset_mic, color: Theme.of(context).colorScheme.surface, size: 16)),
                 ],
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(ticket.lastUpdated, style: const TextStyle(fontSize: 10, color: AppColors.outline)),
+              Text(ticket.lastUpdated, style: TextStyle(fontSize: 10, color: AppColors.outline)),
               Row(
                 children: [
                   Text(
                     ticket.subject,
-                    style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                   ),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   Text(
                     ticket.ticketId,
-                    style: const TextStyle(fontSize: 11, color: AppColors.primary, fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 11, color: AppColors.primary, fontWeight: FontWeight.w600),
                   ),
                 ],
               ),
             ],
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               const Icon(Icons.category_outlined, size: 12, color: AppColors.outline),
-              const SizedBox(width: 4),
-              Text(ticket.categoryLabel, style: const TextStyle(fontSize: 11, color: AppColors.outline)),
+              SizedBox(width: 4),
+              Text(ticket.categoryLabel, style: TextStyle(fontSize: 11, color: AppColors.outline)),
             ],
           ),
         ],
@@ -237,7 +237,7 @@ class _ActionBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: Row(
         children: [
@@ -262,7 +262,7 @@ class _ActionBar extends StatelessWidget {
             child: OutlinedButton.icon(
               onPressed: onClose,
               icon: const Icon(Icons.check_circle_outline, size: 16),
-              label: const Text('إغلاق التذكرة', style: TextStyle(fontSize: 12)),
+              label: Text('إغلاق التذكرة', style: TextStyle(fontSize: 12)),
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppColors.secondary,
                 side: const BorderSide(color: AppColors.secondary),

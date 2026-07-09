@@ -19,7 +19,7 @@ class WithdrawalCard extends StatelessWidget {
     final amountStr = '${request.amount.toStringAsFixed(2)} ر.س';
 
     return Card(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
@@ -39,7 +39,7 @@ class WithdrawalCard extends StatelessWidget {
                 PaymentStatusBadge(status: request.status),
                 Text(
                   request.id,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                     color: AppColors.outline,
@@ -47,13 +47,13 @@ class WithdrawalCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   amountStr,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: AppColors.primary,
@@ -61,15 +61,15 @@ class WithdrawalCard extends StatelessWidget {
                 ),
                 Text(
                   request.method,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.onSurface,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -81,31 +81,31 @@ class WithdrawalCard extends StatelessWidget {
                 children: [
                   Text(
                     'المستفيد: ${request.accountHolder}',
-                    style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+                    style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   Text(
                     'البنك: ${request.bankName}',
-                    style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+                    style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   Text(
                     'الآيبان: ${request.iban}',
                     textDirection: TextDirection.ltr,
-                    style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+                    style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant),
                   ),
                 ],
               ),
             ),
             if (request.notes != null && request.notes!.isNotEmpty) ...[
-              const SizedBox(height: 10),
+              SizedBox(height: 10),
               Text(
                 'ملاحظات: ${request.notes}',
                 textAlign: TextAlign.right,
-                style: const TextStyle(fontSize: 11, color: AppColors.outline, fontStyle: FontStyle.italic),
+                style: TextStyle(fontSize: 11, color: AppColors.outline, fontStyle: FontStyle.italic),
               ),
             ],
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -113,7 +113,7 @@ class WithdrawalCard extends StatelessWidget {
                   TextButton.icon(
                     onPressed: () => onCancel!(request.id),
                     icon: const Icon(Icons.cancel_outlined, size: 16, color: Color(0xFFBA1A1A)),
-                    label: const Text(
+                    label: Text(
                       'إلغاء الطلب',
                       style: TextStyle(color: Color(0xFFBA1A1A), fontSize: 12, fontWeight: FontWeight.bold),
                     ),
@@ -125,7 +125,7 @@ class WithdrawalCard extends StatelessWidget {
                   const SizedBox.shrink(),
                 Text(
                   'تاريخ الطلب: $dateStr',
-                  style: const TextStyle(fontSize: 10, color: AppColors.outline),
+                  style: TextStyle(fontSize: 10, color: AppColors.outline),
                 ),
               ],
             ),

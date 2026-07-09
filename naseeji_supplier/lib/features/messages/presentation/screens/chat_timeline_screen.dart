@@ -30,17 +30,17 @@ class ChatTimelineScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => context.pop()),
-        title: const Text('الخط الزمني', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+        title: Text('الخط الزمني', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
         centerTitle: true,
         actions: [
           IconButton(icon: const Icon(Icons.share_outlined), onPressed: () {}),
         ],
       ),
       body: stagesAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+        loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
         error: (e, _) => Center(child: Text('خطأ: $e')),
         data: (stages) {
           return RefreshIndicator(

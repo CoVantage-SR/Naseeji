@@ -40,7 +40,7 @@ class CustomerStatisticsCard extends StatelessWidget {
             ),
             child: Icon(icon, size: 14, color: activeColor),
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: AlignmentDirectional.centerStart,
@@ -49,10 +49,10 @@ class CustomerStatisticsCard extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: activeColor),
             ),
           ),
-          const SizedBox(height: 2),
+          SizedBox(height: 2),
           Text(
             label,
-            style: const TextStyle(fontSize: 9, color: AppColors.outline),
+            style: TextStyle(fontSize: 9, color: AppColors.outline),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

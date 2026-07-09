@@ -17,12 +17,12 @@ class RfqDetailsScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         centerTitle: true,
         title: Column(
           children: [
-            const Text(
+            Text(
               'تفاصيل طلب السعر',
               style: TextStyle(
                 color: AppColors.primary,
@@ -30,10 +30,10 @@ class RfqDetailsScreen extends ConsumerWidget {
                 fontSize: 15,
               ),
             ),
-            const SizedBox(height: 2),
+            SizedBox(height: 2),
             Text(
               'RFQ #$rfqId',
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppColors.outline,
                 fontSize: 10,
               ),
@@ -43,25 +43,25 @@ class RfqDetailsScreen extends ConsumerWidget {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios_new,
-            color: AppColors.onSurfaceVariant,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
             size: 20,
           ),
           onPressed: () => context.pop(),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.share_outlined, color: AppColors.onSurfaceVariant),
+            icon: const Icon(Icons.share_outlined, color: Theme.of(context).colorScheme.onSurfaceVariant),
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.more_vert, color: AppColors.onSurfaceVariant),
+            icon: const Icon(Icons.more_vert, color: Theme.of(context).colorScheme.onSurfaceVariant),
             onPressed: () {},
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8),
         ],
       ),
       body: detailsAsync.when(
-        loading: () => const Center(
+        loading: () => Center(
           child: CircularProgressIndicator(color: AppColors.primary),
         ),
         error: (err, stack) => Center(child: Text('خطأ: $err')),
@@ -76,15 +76,15 @@ class RfqDetailsScreen extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       FactoryInfoCard(details: details),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       RequestedProductCard(details: details),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       TechnicalSpecsCard(details: details),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       PackagingShippingCard(details: details),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       FactoryNotesCard(details: details),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       const AttachmentsSection(),
                     ],
                   ),

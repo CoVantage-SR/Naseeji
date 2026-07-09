@@ -60,10 +60,10 @@ class _AttachmentsScreenState extends ConsumerState<AttachmentsScreen>
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => context.pop()),
-        title: const Text('الملفات والمرفقات', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+        title: Text('الملفات والمرفقات', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
         centerTitle: true,
         actions: [
           IconButton(icon: const Icon(Icons.sort), onPressed: () {}),
@@ -77,13 +77,13 @@ class _AttachmentsScreenState extends ConsumerState<AttachmentsScreen>
             labelColor: AppColors.primary,
             unselectedLabelColor: AppColors.outline,
             indicatorColor: AppColors.primary,
-            labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+            labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
             tabs: _tabs.map((t) => Tab(text: t.label)).toList(),
           ),
         ),
       ),
       body: attachmentsAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+        loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
         error: (e, _) => Center(child: Text('خطأ: $e')),
         data: (attachments) {
           return TabBarView(
@@ -96,8 +96,8 @@ class _AttachmentsScreenState extends ConsumerState<AttachmentsScreen>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Icon(Icons.folder_open_outlined, size: 64, color: AppColors.outlineVariant),
-                      const SizedBox(height: 12),
-                      Text('لا توجد ${tab.label}', style: const TextStyle(color: AppColors.outline)),
+                      SizedBox(height: 12),
+                      Text('لا توجد ${tab.label}', style: TextStyle(color: AppColors.outline)),
                     ],
                   ),
                 );
@@ -135,7 +135,7 @@ class _GridView extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Container(
-              color: AppColors.surfaceContainerLow,
+              color: Theme.of(context).colorScheme.surfaceContainerLow,
               child: Stack(
                 fit: StackFit.expand,
                 children: [
@@ -152,7 +152,7 @@ class _GridView extends StatelessWidget {
                       color: Colors.black.withValues(alpha: 0.4),
                       child: Text(
                         att.fileSize,
-                        style: const TextStyle(fontSize: 9, color: Colors.white),
+                        style: TextStyle(fontSize: 9, color: Colors.white),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -198,14 +198,14 @@ class _ListView extends StatelessWidget {
     return ListView.separated(
       padding: const EdgeInsets.all(12),
       itemCount: attachments.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 8),
+      separatorBuilder: (_, __) => SizedBox(height: 8),
       itemBuilder: (_, i) {
         final att = attachments[i];
         final color = _colorFor(att.type);
         return Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(12),
             boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 4)],
           ),
@@ -233,20 +233,20 @@ class _ListView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(att.filename, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.onSurface), overflow: TextOverflow.ellipsis),
-                    const SizedBox(height: 3),
+                    Text(att.filename, style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface), overflow: TextOverflow.ellipsis),
+                    SizedBox(height: 3),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(att.uploadedAt, style: const TextStyle(fontSize: 10, color: AppColors.outline)),
-                        const Text(' · ', style: TextStyle(color: AppColors.outline)),
-                        Text(att.fileSize, style: const TextStyle(fontSize: 10, color: AppColors.outline)),
+                        Text(att.uploadedAt, style: TextStyle(fontSize: 10, color: AppColors.outline)),
+                        Text(' · ', style: TextStyle(color: AppColors.outline)),
+                        Text(att.fileSize, style: TextStyle(fontSize: 10, color: AppColors.outline)),
                       ],
                     ),
                   ],
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Container(
                 width: 44,
                 height: 44,

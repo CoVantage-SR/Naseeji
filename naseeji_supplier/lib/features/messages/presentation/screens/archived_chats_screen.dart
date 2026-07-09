@@ -16,20 +16,20 @@ class ArchivedChatsScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.onSurface),
+          icon: const Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
           onPressed: () => context.pop(),
         ),
-        title: const Text(
+        title: Text(
           'المحادثات المؤرشفة',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.onSurface),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
         ),
         centerTitle: true,
       ),
       body: stateAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+        loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
         error: (e, _) => Center(child: Text('خطأ: $e')),
         data: (state) {
           // Filter for archived conversations
@@ -38,7 +38,7 @@ class ArchivedChatsScreen extends ConsumerWidget {
               .toList();
 
           if (archived.isEmpty) {
-            return const Center(
+            return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -71,11 +71,11 @@ class ArchivedChatsScreen extends ConsumerWidget {
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.only(left: 20),
                   color: Colors.green.shade600,
-                  child: const Column(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.unarchive_outlined, color: Colors.white),
-                      Text('استعادة', style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold)),
+                      Text('استعادة', style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 11, fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ),
@@ -83,11 +83,11 @@ class ArchivedChatsScreen extends ConsumerWidget {
                   alignment: Alignment.centerRight,
                   padding: const EdgeInsets.only(right: 20),
                   color: Colors.red.shade700,
-                  child: const Column(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.delete_forever_outlined, color: Colors.white),
-                      Text('حذف نهائي', style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold)),
+                      Text('حذف نهائي', style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 11, fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ),
@@ -138,17 +138,17 @@ class ArchivedChatsScreen extends ConsumerWidget {
     return await showDialog<bool>(
           context: context,
           builder: (ctx) => AlertDialog(
-            title: const Text('حذف محادثة مؤرشفة', textAlign: TextAlign.right),
+            title: Text('حذف محادثة مؤرشفة', textAlign: TextAlign.right),
             content: Text(
               'هل أنت متأكد من حذف محادثة $companyName نهائياً وبشكل دائم؟ لا يمكن التراجع عن هذا الإجراء.',
               textAlign: TextAlign.right,
             ),
             actions: [
-              TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('إلغاء')),
+              TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text('إلغاء')),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 onPressed: () => Navigator.pop(ctx, true),
-                child: const Text('حذف نهائي', style: TextStyle(color: Colors.white)),
+                child: Text('حذف نهائي', style: TextStyle(color: Colors.white)),
               ),
             ],
           ),

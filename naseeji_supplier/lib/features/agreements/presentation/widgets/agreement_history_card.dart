@@ -13,9 +13,9 @@ class AgreementHistoryCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.surfaceContainerLow),
+        border: Border.all(color: Theme.of(context).colorScheme.surfaceContainerLow),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,33 +23,33 @@ class AgreementHistoryCard extends StatelessWidget {
           Row(
             children: [
               const Icon(Icons.history, color: AppColors.primary, size: 16),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Text(
                 record.action,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.onSurface),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Theme.of(context).colorScheme.onSurface),
               ),
               const Spacer(),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(color: const Color(0xFFF0F5FF), borderRadius: BorderRadius.circular(4)),
-                child: Text('نسخة v${record.versionNumber}', style: const TextStyle(fontSize: 8, color: Color(0xFF0040E0), fontWeight: FontWeight.bold)),
+                child: Text('نسخة v${record.versionNumber}', style: TextStyle(fontSize: 8, color: Color(0xFF0040E0), fontWeight: FontWeight.bold)),
               ),
             ],
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           Row(
             children: [
-              Text('المستخدم: ${record.user}', style: const TextStyle(fontSize: 10, color: AppColors.outline)),
+              Text('المستخدم: ${record.user}', style: TextStyle(fontSize: 10, color: AppColors.outline)),
               const Spacer(),
-              Text(record.timestamp, style: const TextStyle(fontSize: 9, color: AppColors.outline)),
+              Text(record.timestamp, style: TextStyle(fontSize: 9, color: AppColors.outline)),
             ],
           ),
-          const SizedBox(height: 6),
-          const Divider(height: 1, color: AppColors.surfaceContainerLow),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
+          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          SizedBox(height: 6),
           Text(
             'السبب/التفاصيل: ${record.reason}',
-            style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant, height: 1.4),
+            style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.4),
           ),
         ],
       ),

@@ -10,7 +10,7 @@ class ShipmentCard extends StatelessWidget {
     return Container(
       width: 280,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Colors.teal.shade400, width: 1.5),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 8, offset: const Offset(0, 3))],
@@ -24,12 +24,12 @@ class ShipmentCard extends StatelessWidget {
               color: Colors.teal.shade600,
               borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
             ),
-            child: const Row(
+            child: Row(
               children: [
                 Spacer(),
-                Icon(Icons.local_shipping_outlined, color: Colors.white, size: 18),
+                Icon(Icons.local_shipping_outlined, color: Theme.of(context).colorScheme.surface, size: 18),
                 SizedBox(width: 6),
-                Text('تفاصيل الشحن', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13)),
+                Text('تفاصيل الشحن', style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.bold, fontSize: 13)),
               ],
             ),
           ),
@@ -61,7 +61,7 @@ class ShipmentCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 Expanded(
                   child: SizedBox(
                     height: 36,
@@ -71,7 +71,7 @@ class ShipmentCard extends StatelessWidget {
                         backgroundColor: Colors.teal.shade600,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       ),
-                      child: const Text('تتبع', style: TextStyle(fontSize: 12, color: Colors.white)),
+                      child: Text('تتبع', style: TextStyle(fontSize: 12, color: Colors.white)),
                     ),
                   ),
                 ),
@@ -96,8 +96,8 @@ class _Row extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
-          Text(label, style: const TextStyle(fontSize: 11, color: AppColors.outline)),
+          Text(value, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
+          Text(label, style: TextStyle(fontSize: 11, color: AppColors.outline)),
         ],
       ),
     );

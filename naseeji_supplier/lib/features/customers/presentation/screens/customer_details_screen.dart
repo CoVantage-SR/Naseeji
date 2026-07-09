@@ -58,18 +58,18 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
           centerTitle: true,
-          title: const Text('تفاصيل العميل', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16)),
+          title: Text('تفاصيل العميل', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16)),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, size: 20, color: AppColors.onSurfaceVariant),
+            icon: const Icon(Icons.arrow_back_ios_new, size: 20, color: Theme.of(context).colorScheme.onSurfaceVariant),
             onPressed: () => context.pop(),
           ),
           bottom: TabBar(
             controller: _tabController,
             labelColor: AppColors.primary,
-            unselectedLabelColor: AppColors.onSurfaceVariant,
+            unselectedLabelColor: Theme.of(context).colorScheme.onSurfaceVariant,
             indicatorColor: AppColors.primary,
             isScrollable: true,
             tabAlignment: TabAlignment.start,
@@ -77,11 +77,11 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
           ),
         ),
         body: stateAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (e, _) => Center(child: Text('خطأ: $e')),
           data: (customers) {
             final idx = customers.indexWhere((c) => c.id == widget.customerId);
-            if (idx == -1) return const Center(child: Text('العميل غير موجود'));
+            if (idx == -1) return Center(child: Text('العميل غير موجود'));
             final customer = customers[idx];
 
             return Column(
@@ -129,29 +129,29 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
   Widget _buildHeader(CustomerModel customer) {
     final statusData = _statusDisplay(customer.status);
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       padding: const EdgeInsets.all(16),
       child: Row(
         children: [
           Container(
             width: 60, height: 60,
             decoration: BoxDecoration(color: Color(customer.logoBgColorValue), borderRadius: BorderRadius.circular(16)),
-            child: Center(child: Text(customer.logoText, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20))),
+            child: Center(child: Text(customer.logoText, style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.bold, fontSize: 20))),
           ),
-          const SizedBox(width: 14),
+          SizedBox(width: 14),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(children: [
-                  Flexible(child: Text(customer.factoryName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: AppColors.onSurface))),
-                  if (customer.isVerified) const SizedBox(width: 4),
+                  Flexible(child: Text(customer.factoryName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Theme.of(context).colorScheme.onSurface))),
+                  if (customer.isVerified) SizedBox(width: 4),
                   if (customer.isVerified) const Icon(Icons.verified, size: 16, color: AppColors.primary),
                 ]),
-                const SizedBox(height: 3),
-                Text('${customer.city}، ${customer.country}', style: const TextStyle(fontSize: 11, color: AppColors.outline)),
-                const SizedBox(height: 3),
-                Text(customer.businessCategory, style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant)),
+                SizedBox(height: 3),
+                Text('${customer.city}، ${customer.country}', style: TextStyle(fontSize: 11, color: AppColors.outline)),
+                SizedBox(height: 3),
+                Text(customer.businessCategory, style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant)),
               ],
             ),
           ),
@@ -175,28 +175,28 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
           _row('البريد الإلكتروني', c.email),
           if (c.website.isNotEmpty) _row('الموقع الإلكتروني', c.website),
         ]),
-        const SizedBox(height: 12),
+        SizedBox(height: 12),
         _section('معلومات الموقع', [
           _row('الدولة', c.country),
           _row('المدينة', c.city),
           if (c.address.isNotEmpty) _row('العنوان', c.address),
         ]),
-        const SizedBox(height: 12),
+        SizedBox(height: 12),
         _section('معلومات النشاط', [
           _row('تخصص الأعمال', c.businessCategory),
           _row('القطاع الصناعي', c.industry),
           _row('عضو منذ', c.relationshipSince),
         ]),
         if (c.companyDescription.isNotEmpty) ...[
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           _section('نبذة عن الشركة', [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: Text(c.companyDescription, style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant, height: 1.6)),
+              child: Text(c.companyDescription, style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.6)),
             ),
           ]),
         ],
-        const SizedBox(height: 12),
+        SizedBox(height: 12),
         _section('العلامات التعريفية', [
           CustomerTagsWidget(tags: c.tags, allowEdit: true,
             onAddTag: () => _showAddTagDialog(context, c),
@@ -232,7 +232,7 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
               CustomerStatisticsCard(label: 'نجاح التفاوض', value: '${c.negotiationSuccessRate.toStringAsFixed(0)}٪', icon: Icons.gavel, color: AppColors.secondary),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           // Current Status
           _section('الوضع الراهن', [
             _row('طلبات نشطة', c.activeOrdersCount.toString()),
@@ -270,7 +270,7 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5),
       ),
@@ -278,10 +278,10 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text(o.orderNumber, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
+            Text(o.orderNumber, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
             _badge(o.status, statusColor),
           ]),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           _row('المنتج', o.productName),
           _row('الكمية', '${o.quantity.toStringAsFixed(0)} وحدة'),
           _row('الإجمالي', '${o.totalPrice.toStringAsFixed(0)} ${o.currency}'),
@@ -303,13 +303,13 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
         return Container(
           margin: const EdgeInsets.only(bottom: 10),
           padding: const EdgeInsets.all(14),
-          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14), border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5)),
+          decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface, borderRadius: BorderRadius.circular(14), border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5)),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text(q.quotationNumber, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
+              Text(q.quotationNumber, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
               _badge(q.status, _quotationStatusColor(q.status)),
             ]),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             _row('المنتج', q.productName),
             _row('الكمية', '${q.quantity.toStringAsFixed(0)} وحدة'),
             _row('السعر', '${q.unitPrice} ${q.currency}/وحدة'),
@@ -330,20 +330,20 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
         return Container(
           margin: const EdgeInsets.only(bottom: 10),
           padding: const EdgeInsets.all(14),
-          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14), border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5)),
+          decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface, borderRadius: BorderRadius.circular(14), border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5)),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text(a.agreementNumber, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
+              Text(a.agreementNumber, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
               _badge(a.status, Colors.green),
             ]),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             _row('تاريخ الاتفاقية', a.agreementDate),
             _row('الإجمالي', '${a.grandTotal.toStringAsFixed(0)} ${a.currency}'),
             _row('طريقة الدفع', a.paymentMethod),
             _row('موعد التسليم', a.deliveryDate),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-              OutlinedButton(onPressed: () => context.push('/agreements'), style: OutlinedButton.styleFrom(side: const BorderSide(color: AppColors.primary, width: 0.5), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)), padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6)), child: const Text('عرض الاتفاقية', style: TextStyle(fontSize: 9, color: AppColors.primary))),
+              OutlinedButton(onPressed: () => context.push('/agreements'), style: OutlinedButton.styleFrom(side: const BorderSide(color: AppColors.primary, width: 0.5), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)), padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6)), child: Text('عرض الاتفاقية', style: TextStyle(fontSize: 9, color: AppColors.primary))),
             ]),
           ]),
         );
@@ -361,19 +361,19 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
         return Container(
           margin: const EdgeInsets.only(bottom: 10),
           padding: const EdgeInsets.all(14),
-          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14), border: Border.all(color: p.isLate ? AppColors.error.withValues(alpha: 0.3) : const Color(0xFFE2E1EF), width: 0.5)),
+          decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface, borderRadius: BorderRadius.circular(14), border: Border.all(color: p.isLate ? AppColors.error.withValues(alpha: 0.3) : const Color(0xFFE2E1EF), width: 0.5)),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text(p.invoiceNumber, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
+              Text(p.invoiceNumber, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
               _badge(p.paymentStatus, p.paymentStatus == 'مدفوع' ? Colors.green : const Color(0xFFFFB800)),
             ]),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             _row('المبلغ', '${p.amount.toStringAsFixed(0)} ${p.currency}'),
             _row('طريقة الدفع', p.paymentMethod),
             _row('تاريخ الدفع', p.paymentDate),
             _row('الرصيد المتبقي', '${p.outstandingBalance.toStringAsFixed(0)} ${p.currency}'),
             if (p.isLate)
-              Container(margin: const EdgeInsets.only(top: 6), padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(6)), child: const Text('⚠ دفع متأخر', style: TextStyle(fontSize: 10, color: AppColors.error, fontWeight: FontWeight.bold))),
+              Container(margin: const EdgeInsets.only(top: 6), padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(6)), child: Text('⚠ دفع متأخر', style: TextStyle(fontSize: 10, color: AppColors.error, fontWeight: FontWeight.bold))),
           ]),
         );
       },
@@ -391,20 +391,20 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
         return Container(
           margin: const EdgeInsets.only(bottom: 10),
           padding: const EdgeInsets.all(14),
-          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14), border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5)),
+          decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface, borderRadius: BorderRadius.circular(14), border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5)),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text(s.shipmentNumber, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
+              Text(s.shipmentNumber, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
               _badge(s.status, delivered ? Colors.green : Colors.orange),
             ]),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             _row('شركة الشحن', s.shippingCompany),
             _row('رقم التتبع', s.trackingNumber),
             _row('التسليم المتوقع', s.estimatedDelivery),
             if (delivered) _row('تاريخ التسليم الفعلي', s.deliveredDate!),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-              OutlinedButton.icon(onPressed: () => context.push('/shipping'), icon: const Icon(Icons.location_on_outlined, size: 13), label: const Text('تتبع الشحنة', style: TextStyle(fontSize: 9)), style: OutlinedButton.styleFrom(side: const BorderSide(color: AppColors.primary, width: 0.5), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)), padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6))),
+              OutlinedButton.icon(onPressed: () => context.push('/shipping'), icon: const Icon(Icons.location_on_outlined, size: 13), label: Text('تتبع الشحنة', style: TextStyle(fontSize: 9)), style: OutlinedButton.styleFrom(side: const BorderSide(color: AppColors.primary, width: 0.5), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)), padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6))),
             ]),
           ]),
         );
@@ -426,18 +426,18 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Text(_docTypeLabel(entry.key), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.primary)),
+              child: Text(_docTypeLabel(entry.key), style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.primary)),
             ),
             ...entry.value.map((d) => Container(
               margin: const EdgeInsets.only(bottom: 8),
               padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12), border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5)),
+              decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface, borderRadius: BorderRadius.circular(12), border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5)),
               child: Row(children: [
                 const Icon(Icons.insert_drive_file_outlined, size: 24, color: AppColors.primary),
-                const SizedBox(width: 10),
+                SizedBox(width: 10),
                 Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(d.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                  Text(d.uploadedAt, style: const TextStyle(fontSize: 10, color: AppColors.outline)),
+                  Text(d.name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                  Text(d.uploadedAt, style: TextStyle(fontSize: 10, color: AppColors.outline)),
                 ])),
                 IconButton(icon: const Icon(Icons.download_outlined, size: 18, color: AppColors.primary), onPressed: () {}),
               ]),
@@ -463,11 +463,11 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('الملاحظات الخاصة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+              Text('الملاحظات الخاصة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
               ElevatedButton.icon(
                 onPressed: () => context.push('/customers/notes/${c.id}'),
                 icon: const Icon(Icons.add, size: 14, color: Colors.white),
-                label: const Text('إضافة', style: TextStyle(fontSize: 10, color: Colors.white)),
+                label: Text('إضافة', style: TextStyle(fontSize: 10, color: Colors.white)),
                 style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, elevation: 0, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)), padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8)),
               ),
             ],
@@ -496,21 +496,21 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: note.isPinned ? AppColors.primary.withValues(alpha: 0.4) : const Color(0xFFE2E1EF), width: note.isPinned ? 1 : 0.5),
       ),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
           if (note.isPinned) const Icon(Icons.push_pin, size: 13, color: AppColors.primary),
-          if (note.isPinned) const SizedBox(width: 4),
-          Expanded(child: Text(note.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12))),
+          if (note.isPinned) SizedBox(width: 4),
+          Expanded(child: Text(note.title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12))),
           IconButton(icon: const Icon(Icons.push_pin_outlined, size: 16), onPressed: () => controller.pinNote(customerId, note.id, !note.isPinned), color: AppColors.outline),
           IconButton(icon: const Icon(Icons.delete_outline, size: 16), onPressed: () => controller.deleteNote(customerId, note.id), color: AppColors.error),
         ]),
-        Text(note.description, style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant, height: 1.4)),
-        const SizedBox(height: 4),
-        Text(note.createdDate, style: const TextStyle(fontSize: 9, color: AppColors.outline)),
+        Text(note.description, style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.4)),
+        SizedBox(height: 4),
+        Text(note.createdDate, style: TextStyle(fontSize: 9, color: AppColors.outline)),
       ]),
     );
   }
@@ -528,13 +528,13 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: const Color(0xFFFFD54F), width: 0.5),
             ),
-            child: const Row(children: [
+            child: Row(children: [
               Icon(Icons.lock_outline, size: 14, color: Color(0xFF996C00)),
               SizedBox(width: 6),
               Expanded(child: Text('هذا التقييم خاص بك ولن يُشارك مع العميل أبداً', style: TextStyle(fontSize: 10, color: Color(0xFF996C00)))),
             ]),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           CustomerRatingWidget(
             rating: c.privateRating,
             readOnly: false,
@@ -549,15 +549,15 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
 
   Widget _section(String title, List<Widget> children) {
     return Container(
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(14), border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5)),
+      decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface, borderRadius: BorderRadius.circular(14), border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(14, 12, 14, 8),
-            child: Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
+            child: Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
           ),
-          const Divider(height: 1, color: AppColors.surfaceContainerLow),
+          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
           Padding(padding: const EdgeInsets.all(14), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: children)),
         ],
       ),
@@ -568,8 +568,8 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Text(label, style: const TextStyle(fontSize: 11, color: AppColors.outline)),
-        Flexible(child: Text(value, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface), textAlign: TextAlign.end)),
+        Text(label, style: TextStyle(fontSize: 11, color: AppColors.outline)),
+        Flexible(child: Text(value, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface), textAlign: TextAlign.end)),
       ]),
     );
   }
@@ -585,8 +585,8 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
   Widget _emptyState(String msg, IconData icon) {
     return Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
       Icon(icon, size: 48, color: AppColors.outlineVariant),
-      const SizedBox(height: 10),
-      Text(msg, style: const TextStyle(color: AppColors.outline, fontSize: 13)),
+      SizedBox(height: 10),
+      Text(msg, style: TextStyle(color: AppColors.outline, fontSize: 13)),
     ]));
   }
 
@@ -623,17 +623,17 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('تأكيد الحظر', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text('تأكيد الحظر', style: TextStyle(fontWeight: FontWeight.bold)),
         content: Text('هل تريد حظر العميل "${c.factoryName}"؟ لن يتمكن من التعامل معك حتى تقوم برفع الحظر.'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('إلغاء')),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text('إلغاء')),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
               ref.read(customersControllerProvider.notifier).blockCustomer(c.id, 'تم الحظر يدوياً');
             },
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-            child: const Text('حظر', style: TextStyle(color: Colors.white)),
+            child: Text('حظر', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -645,13 +645,13 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('إضافة علامة جديدة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+        title: Text('إضافة علامة جديدة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
         content: TextField(
           controller: controller,
           decoration: const InputDecoration(hintText: 'اسم العلامة', border: OutlineInputBorder()),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('إلغاء')),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text('إلغاء')),
           ElevatedButton(
             onPressed: () {
               if (controller.text.isNotEmpty) {
@@ -660,7 +660,7 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
                 Navigator.pop(context);
               }
             },
-            child: const Text('إضافة'),
+            child: Text('إضافة'),
           ),
         ],
       ),

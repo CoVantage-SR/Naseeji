@@ -15,8 +15,8 @@ class AgreementComparisonTable extends StatelessWidget {
     final finalAg = agreement.finalAgreementData;
 
     return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.all(Radius.circular(16)),
         boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
       ),
@@ -36,12 +36,12 @@ class AgreementComparisonTable extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Text(
             agreement.savingsDifference,
-            style: const TextStyle(fontSize: 10, fontStyle: FontStyle.italic, color: AppColors.outline),
+            style: TextStyle(fontSize: 10, fontStyle: FontStyle.italic, color: AppColors.outline),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Side-by-side table scroll view
           SingleChildScrollView(
@@ -81,8 +81,8 @@ class AgreementComparisonTable extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: const TextStyle(fontSize: 9, color: AppColors.outline, fontWeight: FontWeight.bold)),
-        const SizedBox(height: 2),
+        Text(title, style: TextStyle(fontSize: 9, color: AppColors.outline, fontWeight: FontWeight.bold)),
+        SizedBox(height: 2),
         Text(val, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900, color: valColor)),
       ],
     );
@@ -95,11 +95,11 @@ class AgreementComparisonTable extends StatelessWidget {
         return null;
       }),
       cells: [
-        DataCell(Text(spec, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 10))),
-        DataCell(Text(rfq, style: const TextStyle(fontSize: 10))),
-        DataCell(Text(quote, style: const TextStyle(fontSize: 10))),
-        DataCell(Text(counter, style: const TextStyle(fontSize: 10))),
-        DataCell(Text(finalAg, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.green))),
+        DataCell(Text(spec, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10))),
+        DataCell(Text(rfq, style: TextStyle(fontSize: 10))),
+        DataCell(Text(quote, style: TextStyle(fontSize: 10))),
+        DataCell(Text(counter, style: TextStyle(fontSize: 10))),
+        DataCell(Text(finalAg, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Colors.green))),
       ],
     );
   }

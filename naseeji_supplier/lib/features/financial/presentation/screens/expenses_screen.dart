@@ -20,13 +20,13 @@ class ExpensesScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'تحليل المصروفات والرسوم',
-          style: TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
@@ -57,16 +57,16 @@ class ExpensesScreen extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    const Text(
+                    Text(
                       'إجمالي المصروفات والرسوم المقتطعة',
                       style: TextStyle(color: Colors.white70, fontSize: 12, fontWeight: FontWeight.w600),
                     ),
-                    const SizedBox(height: 8),
-                    const Text(
+                    SizedBox(height: 8),
+                    Text(
                       '27,120.00 ر.س',
-                      style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                      style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 24, fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 6),
+                    SizedBox(height: 6),
                     Text(
                       'تمثل ١٧.٥٪ من إجمالي الإيرادات الكلية للمؤسسة',
                       style: TextStyle(color: Colors.white.withValues(alpha: 0.8), fontSize: 10),
@@ -74,7 +74,7 @@ class ExpensesScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
 
               // Donut Breakdown chart
               FinancialChartWidget(
@@ -82,19 +82,19 @@ class ExpensesScreen extends StatelessWidget {
                 data: expenseData,
                 type: 'donut',
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
 
               // Detailed List
-              const Text(
+              Text(
                 'تفاصيل بنود المصروفات والرسوم',
                 textAlign: TextAlign.right,
-                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10),
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                 ),
@@ -116,11 +116,11 @@ class ExpensesScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     valStr,
-                                    style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                                   ),
                                   Text(
                                     '${(item['percent'] as double).toStringAsFixed(1)}٪ من المصروفات',
-                                    style: const TextStyle(fontSize: 9, color: AppColors.outline),
+                                    style: TextStyle(fontSize: 9, color: AppColors.outline),
                                   ),
                                 ],
                               ),
@@ -128,9 +128,9 @@ class ExpensesScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     item['label'] as String,
-                                    style: const TextStyle(fontSize: 13, color: AppColors.onSurfaceVariant),
+                                    style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurfaceVariant),
                                   ),
-                                  const SizedBox(width: 8),
+                                  SizedBox(width: 8),
                                   Container(
                                     width: 10,
                                     height: 10,

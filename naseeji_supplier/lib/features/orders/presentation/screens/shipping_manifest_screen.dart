@@ -39,10 +39,10 @@ class _ShippingManifestScreenState extends ConsumerState<ShippingManifestScreen>
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'تجهيز بيان الشحن (Manifest)',
           style: TextStyle(
             color: AppColors.primary,
@@ -51,12 +51,12 @@ class _ShippingManifestScreenState extends ConsumerState<ShippingManifestScreen>
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
       body: manifestAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+        loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
         error: (err, stack) => Center(child: Text('خطأ: $err')),
         data: (manifest) {
           return Column(
@@ -76,7 +76,7 @@ class _ShippingManifestScreenState extends ConsumerState<ShippingManifestScreen>
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: const Color(0xFF0040E0).withValues(alpha: 0.2)),
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Expanded(
@@ -102,7 +102,7 @@ class _ShippingManifestScreenState extends ConsumerState<ShippingManifestScreen>
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Expanded(
+                            Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -118,7 +118,7 @@ class _ShippingManifestScreenState extends ConsumerState<ShippingManifestScreen>
                                 ],
                               ),
                             ),
-                            const SizedBox(width: 8),
+                            SizedBox(width: 8),
                             ElevatedButton(
                               onPressed: () => context.push('/shipping'),
                               style: ElevatedButton.styleFrom(
@@ -128,16 +128,16 @@ class _ShippingManifestScreenState extends ConsumerState<ShippingManifestScreen>
                                 padding: const EdgeInsets.symmetric(horizontal: 12),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                               ),
-                              child: const Text('انتقال', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
+                              child: Text('انتقال', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20),
 
                       // Carrier Inputs
                       _buildCarrierFormCard(),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
 
                       // Document Uploads
                       _buildLoadingPhotosCard(),
@@ -148,7 +148,7 @@ class _ShippingManifestScreenState extends ConsumerState<ShippingManifestScreen>
 
               // Bottom Actions
               Container(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                 child: SafeArea(
                   child: Row(
@@ -163,10 +163,10 @@ class _ShippingManifestScreenState extends ConsumerState<ShippingManifestScreen>
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                             padding: const EdgeInsets.symmetric(vertical: 14),
                           ),
-                          child: const Text('حفظ كمسودة', style: TextStyle(color: AppColors.onSurfaceVariant, fontSize: 13, fontWeight: FontWeight.bold)),
+                          child: Text('حفظ كمسودة', style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 13, fontWeight: FontWeight.bold)),
                         ),
                       ),
-                      const SizedBox(width: 12),
+                      SizedBox(width: 12),
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
@@ -179,9 +179,9 @@ class _ShippingManifestScreenState extends ConsumerState<ShippingManifestScreen>
                             padding: const EdgeInsets.symmetric(vertical: 14),
                             minimumSize: const Size(0, 48),
                           ),
-                          child: const Text(
+                          child: Text(
                             'تأكيد الشحن الفعلي',
-                            style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.bold),
+                            style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 13, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
@@ -201,29 +201,29 @@ class _ShippingManifestScreenState extends ConsumerState<ShippingManifestScreen>
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('تفاصيل الشحن والناقل', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 16),
+          Text('تفاصيل الشحن والناقل', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 16),
           _buildTextField('شركة الشحن', _carrierController),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           _buildTextField('رقم التتبع (Tracking ID)', _trackingController),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Row(
             children: [
               Expanded(child: _buildTextField('رقم الشاحنة', _truckController)),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Expanded(child: _buildTextField('رقم الشحنة الداخلي', _shipmentNumController)),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           _buildTextField('اسم سائق الشاحنة', _driverController),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           _buildTextField('تاريخ الوصول المتوقع', _arrivalController, icon: Icons.calendar_today_outlined),
         ],
       ),
@@ -236,11 +236,11 @@ class _ShippingManifestScreenState extends ConsumerState<ShippingManifestScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant)),
-          const SizedBox(height: 6),
+          Text(label, style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant)),
+          SizedBox(height: 6),
           TextField(
             controller: ctrl,
-            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
             decoration: InputDecoration(
               suffixIcon: icon != null ? Icon(icon, size: 16) : null,
               contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
@@ -258,15 +258,15 @@ class _ShippingManifestScreenState extends ConsumerState<ShippingManifestScreen>
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('مرفقات وإثباتات التحميل الشحن', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 16),
+          Text('مرفقات وإثباتات التحميل الشحن', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 16),
           GridView.count(
             crossAxisCount: 2,
             shrinkWrap: true,
@@ -297,8 +297,8 @@ class _ShippingManifestScreenState extends ConsumerState<ShippingManifestScreen>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(icon, color: const Color(0xFF0040E0), size: 24),
-          const SizedBox(height: 8),
-          Text(label, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant), textAlign: TextAlign.center),
+          SizedBox(height: 8),
+          Text(label, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurfaceVariant), textAlign: TextAlign.center),
         ],
       ),
     );
@@ -313,10 +313,10 @@ class _ShippingManifestScreenState extends ConsumerState<ShippingManifestScreen>
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(Icons.check_circle_outline, color: Color(0xFF16A34A), size: 48),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Text(
               message,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
               textAlign: TextAlign.center,
             ),
           ],
@@ -324,7 +324,7 @@ class _ShippingManifestScreenState extends ConsumerState<ShippingManifestScreen>
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('موافق'),
+            child: Text('موافق'),
           ),
         ],
       ),
@@ -336,17 +336,17 @@ class _ShippingManifestScreenState extends ConsumerState<ShippingManifestScreen>
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('تأكيد شحن الشحنة', textAlign: TextAlign.center, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-        content: const Text('هل تم التحميل الفعلي والتحقق من صحة أوراق التوصيل؟ سيتم إشعار المصنع فوراً.', textAlign: TextAlign.center, style: TextStyle(fontSize: 12)),
+        title: Text('تأكيد شحن الشحنة', textAlign: TextAlign.center, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+        content: Text('هل تم التحميل الفعلي والتحقق من صحة أوراق التوصيل؟ سيتم إشعار المصنع فوراً.', textAlign: TextAlign.center, style: TextStyle(fontSize: 12)),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('تراجع')),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text('تراجع')),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
               context.go('/orders/delivery-confirmation?rfqId=$rfqId'); // Go to delivery check screen
             },
             style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF0040E0), foregroundColor: Colors.white),
-            child: const Text('تأكيد وإشعار'),
+            child: Text('تأكيد وإشعار'),
           ),
         ],
       ),

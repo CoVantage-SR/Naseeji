@@ -37,10 +37,10 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => context.pop()),
-        title: const Text('سجل العروض', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+        title: Text('سجل العروض', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
         centerTitle: true,
         actions: [
           TextButton(
@@ -53,11 +53,11 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
         ],
       ),
       body: historyAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+        loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
         error: (e, _) => Center(child: Text('خطأ: $e')),
         data: (quotations) {
           if (quotations.isEmpty) {
-            return const Center(
+            return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -77,7 +77,7 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
                 child: ListView.separated(
                   padding: const EdgeInsets.all(16),
                   itemCount: quotations.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 12),
+                  separatorBuilder: (_, __) => SizedBox(height: 12),
                   itemBuilder: (_, i) {
                     final q = quotations[i];
                     final data = q.cardData ?? {};
@@ -166,7 +166,7 @@ class _QuotationVersionCard extends StatelessWidget {
       onTap: isCompareMode ? onSelect : null,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: isSelected ? AppColors.primary : isAccepted ? AppColors.secondary : AppColors.outlineVariant,
@@ -189,15 +189,15 @@ class _QuotationVersionCard extends StatelessWidget {
                   if (isCompareMode)
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
-                      child: Icon(isSelected ? Icons.check_circle : Icons.circle_outlined, color: Colors.white, size: 20),
+                      child: Icon(isSelected ? Icons.check_circle : Icons.circle_outlined, color: Theme.of(context).colorScheme.surface, size: 20),
                     ),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                     decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(8)),
-                    child: Text(isAccepted ? 'مقبول' : 'في الانتظار', style: const TextStyle(color: Colors.white, fontSize: 10)),
+                    child: Text(isAccepted ? 'مقبول' : 'في الانتظار', style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 10)),
                   ),
                   const Spacer(),
-                  Text('إصدار $version · ${message.time}', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12)),
+                  Text('إصدار $version · ${message.time}', style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.bold, fontSize: 12)),
                 ],
               ),
             ),
@@ -228,11 +228,11 @@ class _QuotationVersionCard extends StatelessWidget {
                         const SizedBox.shrink(),
                       Text(
                         '${data['unitPrice'] ?? '--'} ر.س/م',
-                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.primary),
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.primary),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
                   _Row(label: 'الكمية', value: '${data['quantity'] ?? '--'}'),
                   _Row(label: 'مدة التسليم', value: '${data['deliveryDays'] ?? '--'}'),
                   _Row(label: 'شروط الدفع', value: '${data['paymentTerms'] ?? '--'}'),
@@ -258,8 +258,8 @@ class _Row extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(value, style: const TextStyle(fontSize: 12, color: AppColors.onSurface)),
-          Text(label, style: const TextStyle(fontSize: 11, color: AppColors.outline)),
+          Text(value, style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurface)),
+          Text(label, style: TextStyle(fontSize: 11, color: AppColors.outline)),
         ],
       ),
     );
@@ -283,14 +283,14 @@ class _CompareButton extends StatelessWidget {
             child: ElevatedButton.icon(
               onPressed: onCompare,
               icon: const Icon(Icons.compare_arrows, size: 16),
-              label: const Text('مقارنة الإصدارين', style: TextStyle(fontSize: 12)),
+              label: Text('مقارنة الإصدارين', style: TextStyle(fontSize: 12)),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               ),
             ),
           ),
-          const Text('تم اختيار إصدارين', style: TextStyle(fontSize: 12, color: AppColors.primary, fontWeight: FontWeight.bold)),
+          Text('تم اختيار إصدارين', style: TextStyle(fontSize: 12, color: AppColors.primary, fontWeight: FontWeight.bold)),
         ],
       ),
     );
@@ -311,8 +311,8 @@ class _ComparisonSheet extends StatelessWidget {
     final labels = ['سعر الوحدة', 'الكمية', 'مدة التسليم', 'شروط الدفع', 'صالح حتى'];
 
     return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       child: Column(
@@ -323,19 +323,19 @@ class _ComparisonSheet extends StatelessWidget {
             margin: const EdgeInsets.only(top: 12),
             decoration: BoxDecoration(color: AppColors.outlineVariant, borderRadius: BorderRadius.circular(2)),
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.all(16),
             child: Text('مقارنة العروض', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
           ),
           // Table header
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            color: AppColors.surfaceContainerLow,
+            color: Theme.of(context).colorScheme.surfaceContainerLow,
             child: Row(
               children: [
-                Expanded(flex: 2, child: Text(q2['version']?.toString() ?? 'V2', style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary), textAlign: TextAlign.center)),
-                const Expanded(flex: 2, child: Text('البند', style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.outline), textAlign: TextAlign.center)),
-                Expanded(flex: 2, child: Text(q1['version']?.toString() ?? 'V1', style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.secondary), textAlign: TextAlign.center)),
+                Expanded(flex: 2, child: Text(q2['version']?.toString() ?? 'V2', style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.primary), textAlign: TextAlign.center)),
+                Expanded(flex: 2, child: Text('البند', style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.outline), textAlign: TextAlign.center)),
+                Expanded(flex: 2, child: Text(q1['version']?.toString() ?? 'V1', style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.secondary), textAlign: TextAlign.center)),
               ],
             ),
           ),
@@ -347,9 +347,9 @@ class _ComparisonSheet extends StatelessWidget {
               separatorBuilder: (_, __) => const Divider(),
               itemBuilder: (_, i) => Row(
                 children: [
-                  Expanded(flex: 2, child: Text(q2[fields[i]]?.toString() ?? '--', textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.w600))),
-                  Expanded(flex: 2, child: Text(labels[i], textAlign: TextAlign.center, style: const TextStyle(color: AppColors.outline, fontSize: 12))),
-                  Expanded(flex: 2, child: Text(q1[fields[i]]?.toString() ?? '--', textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.w600))),
+                  Expanded(flex: 2, child: Text(q2[fields[i]]?.toString() ?? '--', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w600))),
+                  Expanded(flex: 2, child: Text(labels[i], textAlign: TextAlign.center, style: TextStyle(color: AppColors.outline, fontSize: 12))),
+                  Expanded(flex: 2, child: Text(q1[fields[i]]?.toString() ?? '--', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w600))),
                 ],
               ),
             ),

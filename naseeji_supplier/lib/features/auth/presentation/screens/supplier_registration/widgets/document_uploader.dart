@@ -29,18 +29,18 @@ class DocumentUploader extends StatelessWidget {
         child: Column(
           children: [
             const Icon(Icons.cloud_upload_outlined, size: 40, color: AppColors.primary),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             Text(
               uploadedFileName ?? 'اضغط هنا لرفع نسخة من السجل التجاري',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: uploadedFileName != null ? FontWeight.bold : FontWeight.normal,
-                color: uploadedFileName != null ? AppColors.primary : AppColors.onSurfaceVariant,
+                color: uploadedFileName != null ? AppColors.primary : Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             ),
-            const SizedBox(height: 4),
-            const Text(
+            SizedBox(height: 4),
+            Text(
               'الحد الأقصى للملف 10 ميجا بايت (صيغة PDF)',
               style: TextStyle(fontSize: 12, color: AppColors.outline),
             ),

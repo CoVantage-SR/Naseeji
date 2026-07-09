@@ -76,10 +76,10 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F6FA),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.onSurface),
+          icon: const Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
           onPressed: () => context.pop(),
         ),
         title: GestureDetector(
@@ -100,7 +100,7 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
                       child: Center(
                         child: Text(
                           conv.companyLogoText,
-                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
+                          style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.bold, fontSize: 12),
                         ),
                       ),
                     ),
@@ -114,13 +114,13 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
                           decoration: BoxDecoration(
                             color: Colors.green,
                             shape: BoxShape.circle,
-                            border: Border.all(color: Colors.white, width: 1.5),
+                            border: Border.all(color: Theme.of(context).colorScheme.surface, width: 1.5),
                           ),
                         ),
                       ),
                   ],
                 ),
-                const SizedBox(width: 10),
+                SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,12 +130,12 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
                           Flexible(
                             child: Text(
                               conv.companyName,
-                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: AppColors.onSurface),
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Theme.of(context).colorScheme.onSurface),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
                           if (conv.isVerified)
-                            const Padding(
+                            Padding(
                               padding: EdgeInsets.only(left: 4),
                               child: Icon(Icons.verified, size: 13, color: AppColors.primary),
                             ),
@@ -144,12 +144,12 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
                       Row(
                         children: [
                           if (conv.isOnline)
-                            const Text('متاح الآن', style: TextStyle(fontSize: 10, color: Colors.green))
+                            Text('متاح الآن', style: TextStyle(fontSize: 10, color: Colors.green))
                           else
-                            const Text('غير متاح', style: TextStyle(fontSize: 10, color: AppColors.outline)),
+                            Text('غير متاح', style: TextStyle(fontSize: 10, color: AppColors.outline)),
                           if (conv.rfqNumber != null) ...[
-                            const Text(' · ', style: TextStyle(color: AppColors.outline, fontSize: 10)),
-                            Text(conv.rfqNumber!, style: const TextStyle(fontSize: 10, color: AppColors.primary)),
+                            Text(' · ', style: TextStyle(color: AppColors.outline, fontSize: 10)),
+                            Text(conv.rfqNumber!, style: TextStyle(fontSize: 10, color: AppColors.primary)),
                           ],
                         ],
                       ),
@@ -162,7 +162,7 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.more_vert, color: AppColors.onSurface, size: 20),
+            icon: const Icon(Icons.more_vert, color: Theme.of(context).colorScheme.onSurface, size: 20),
             onPressed: () => _showMoreMenu(context, conv),
           ),
         ],
@@ -181,7 +181,7 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
               child: Row(
                 children: [
                   const Icon(Icons.block, color: Colors.red, size: 16),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       'المحادثة مغلقة بسبب الحظر. لا يمكنك إرسال رسائل أو مشاركة ملفات.',
@@ -199,12 +199,12 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
           // Messages list
           Expanded(
             child: messagesAsync.when(
-              loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+              loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
               error: (e, _) => Center(child: Text('خطأ: $e')),
               data: (messages) {
                 _scrollToBottom();
                 if (messages.isEmpty) {
-                  return const Center(
+                  return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -262,7 +262,7 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
   Widget _buildBusinessActions(BuildContext context, Conversation conv) {
     final double cardWidth = (MediaQuery.of(context).size.width - 48) / 4;
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -338,7 +338,7 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(icon, color: color, size: 20),
-              const SizedBox(height: 6),
+              SizedBox(height: 6),
               Text(
                 label,
                 style: TextStyle(
@@ -367,7 +367,7 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(width: 40, height: 4, decoration: BoxDecoration(color: AppColors.outlineVariant, borderRadius: BorderRadius.circular(2))),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Flexible(
                 child: SingleChildScrollView(
                   child: Column(
@@ -375,7 +375,7 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
                     children: [
                       _MenuItem(icon: Icons.business_outlined, label: 'عرض الملف الشخصي للشركة', color: AppColors.primary, onTap: () { Navigator.pop(context); context.push('/profile/public-preview'); }),
                       _MenuItem(icon: Icons.inventory_2_outlined, label: 'عرض تفاصيل الطلب', color: AppColors.secondary, onTap: () { Navigator.pop(context); context.push('/orders/order-center?rfqId=${conv?.rfqNumber ?? "8820"}'); }),
-                      _MenuItem(icon: Icons.search, label: 'البحث في المحادثة', color: AppColors.onSurfaceVariant, onTap: () { Navigator.pop(context); context.push('/messages/search?conversationId=${widget.conversationId}'); }),
+                      _MenuItem(icon: Icons.search, label: 'البحث في المحادثة', color: Theme.of(context).colorScheme.onSurfaceVariant, onTap: () { Navigator.pop(context); context.push('/messages/search?conversationId=${widget.conversationId}'); }),
                       _MenuItem(icon: Icons.volume_off_outlined, label: 'كتم الإشعارات', color: AppColors.outline, onTap: () { Navigator.pop(context); if (conv != null) _showMuteDialog(context, conv); }),
                       _MenuItem(icon: Icons.push_pin_outlined, label: conv?.isPinned == true ? 'إلغاء التثبيت' : 'تثبيت المحادثة', color: AppColors.outline, onTap: () { Navigator.pop(context); if (conv != null) _togglePin(context, conv); }),
                       _MenuItem(icon: Icons.archive_outlined, label: 'أرشفة المحادثة', color: AppColors.outline, onTap: () { Navigator.pop(context); if (conv != null) _confirmArchive(context, conv); }),
@@ -405,13 +405,13 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('كتم إشعارات المحادثة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-              const SizedBox(height: 16),
-              ListTile(title: const Text('٨ ساعات', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)), onTap: () => _applyMute(context, conv, const Duration(hours: 8), '٨ ساعات')),
-              ListTile(title: const Text('٢٤ ساعة', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)), onTap: () => _applyMute(context, conv, const Duration(days: 1), '٢٤ ساعة')),
-              ListTile(title: const Text('٧ أيام', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)), onTap: () => _applyMute(context, conv, const Duration(days: 7), '٧ أيام')),
-              ListTile(title: const Text('٣٠ يوم', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)), onTap: () => _applyMute(context, conv, const Duration(days: 30), '٣٠ يوم')),
-              ListTile(title: const Text('حتى أقوم بإعادة تفعيلها', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)), onTap: () => _applyMute(context, conv, null, 'تفعيل يدوي')),
+              Text('كتم إشعارات المحادثة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+              SizedBox(height: 16),
+              ListTile(title: Text('٨ ساعات', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)), onTap: () => _applyMute(context, conv, const Duration(hours: 8), '٨ ساعات')),
+              ListTile(title: Text('٢٤ ساعة', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)), onTap: () => _applyMute(context, conv, const Duration(days: 1), '٢٤ ساعة')),
+              ListTile(title: Text('٧ أيام', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)), onTap: () => _applyMute(context, conv, const Duration(days: 7), '٧ أيام')),
+              ListTile(title: Text('٣٠ يوم', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)), onTap: () => _applyMute(context, conv, const Duration(days: 30), '٣٠ يوم')),
+              ListTile(title: Text('حتى أقوم بإعادة تفعيلها', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)), onTap: () => _applyMute(context, conv, null, 'تفعيل يدوي')),
             ],
           ),
         ),
@@ -439,10 +439,10 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('أرشفة المحادثة', textAlign: TextAlign.right),
-        content: const Text('هل تريد نقل هذه المحادثة إلى الأرشيف؟', textAlign: TextAlign.right),
+        title: Text('أرشفة المحادثة', textAlign: TextAlign.right),
+        content: Text('هل تريد نقل هذه المحادثة إلى الأرشيف؟', textAlign: TextAlign.right),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text('إلغاء')),
           ElevatedButton(
             onPressed: () {
               ref.read(messagesControllerProvider.notifier).archiveConversation(conv.id);
@@ -450,7 +450,7 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
               context.pop();
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم نقل المحادثة إلى الأرشيف')));
             },
-            child: const Text('أرشفة'),
+            child: Text('أرشفة'),
           ),
         ],
       ),
@@ -467,7 +467,7 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
           textAlign: TextAlign.right,
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text('إلغاء')),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: conv.isBlocked ? Colors.green : Colors.red),
             onPressed: () {
@@ -475,7 +475,7 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
               Navigator.pop(ctx);
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(conv.isBlocked ? 'تم إلغاء الحظر' : 'تم حظر العميل بنجاح')));
             },
-            child: Text(conv.isBlocked ? 'تفعيل التواصل' : 'حظر العميل', style: const TextStyle(color: Colors.white)),
+            child: Text(conv.isBlocked ? 'تفعيل التواصل' : 'حظر العميل', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -486,10 +486,10 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('حذف المحادثة', textAlign: TextAlign.right),
-        content: const Text('هل تريد حذف هذه المحادثة من جهازك نهائياً؟ لن يتم حذفها لدى المصنع الآخر.', textAlign: TextAlign.right),
+        title: Text('حذف المحادثة', textAlign: TextAlign.right),
+        content: Text('هل تريد حذف هذه المحادثة من جهازك نهائياً؟ لن يتم حذفها لدى المصنع الآخر.', textAlign: TextAlign.right),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text('إلغاء')),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
             onPressed: () {
@@ -498,7 +498,7 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
               context.go('/messages');
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم حذف المحادثة')));
             },
-            child: const Text('حذف للكل', style: TextStyle(color: Colors.white)),
+            child: Text('حذف للكل', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -510,18 +510,18 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('إبلاغ عن مستخدم', textAlign: TextAlign.right),
+        title: Text('إبلاغ عن مستخدم', textAlign: TextAlign.right),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: reasons.map((r) => ListTile(
-            title: Text(r, textAlign: TextAlign.right, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+            title: Text(r, textAlign: TextAlign.right, style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
             onTap: () {
               Navigator.pop(ctx);
               showDialog(
                 context: context,
                 builder: (ctx2) => AlertDialog(
-                  content: const Text('تم استلام بلاغك بنجاح. سيقوم فريق المراجعة بمراجعته واتخاذ الإجراء اللازم.', textAlign: TextAlign.center),
-                  actions: [TextButton(onPressed: () => Navigator.pop(ctx2), child: const Text('موافق'))],
+                  content: Text('تم استلام بلاغك بنجاح. سيقوم فريق المراجعة بمراجعته واتخاذ الإجراء اللازم.', textAlign: TextAlign.center),
+                  actions: [TextButton(onPressed: () => Navigator.pop(ctx2), child: Text('موافق'))],
                 ),
               );
             },
@@ -543,7 +543,7 @@ class _MenuItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Icon(icon, color: color),
-      title: Text(label, textAlign: TextAlign.right, style: TextStyle(color: color == AppColors.outline ? AppColors.onSurface : color)),
+      title: Text(label, textAlign: TextAlign.right, style: TextStyle(color: color == AppColors.outline ? Theme.of(context).colorScheme.onSurface : color)),
       onTap: onTap,
     );
   }

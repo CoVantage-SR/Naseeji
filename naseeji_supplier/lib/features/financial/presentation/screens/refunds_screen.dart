@@ -17,13 +17,13 @@ class RefundsScreen extends ConsumerWidget {
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
+          title: Text(
             'مركز إدارة المرتجعات والتعويضات',
-            style: TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
+            style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
           ),
           centerTitle: true,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+            icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
             onPressed: () => context.pop(),
           ),
           bottom: const TabBar(
@@ -43,7 +43,7 @@ class RefundsScreen extends ConsumerWidget {
         body: Container(
           color: Theme.of(context).scaffoldBackgroundColor,
           child: refundsAsync.when(
-            loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+            loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
             error: (err, stack) => Center(child: Text('خطأ: $err')),
             data: (refunds) {
               return TabBarView(
@@ -63,7 +63,7 @@ class RefundsScreen extends ConsumerWidget {
 
   Widget _buildRefundList(BuildContext context, List<RefundRequest> list) {
     if (list.isEmpty) {
-      return const Center(
+      return Center(
         child: Text(
           'لا توجد طلبات إرجاع مالي في هذا القسم',
           style: TextStyle(color: AppColors.outline),
@@ -82,7 +82,7 @@ class RefundsScreen extends ConsumerWidget {
             : 'قيد المراجعة';
 
         return Card(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(14),
@@ -100,25 +100,25 @@ class RefundsScreen extends ConsumerWidget {
                     PaymentStatusBadge(status: refund.status),
                     Text(
                       refund.refundNumber,
-                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.outline),
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.outline),
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       '${refund.amount.toStringAsFixed(2)} ر.س',
-                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFFBA1A1A)),
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFFBA1A1A)),
                     ),
                     Text(
                       'طلب شراء رقم: ${refund.orderNumber}',
-                      style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
@@ -128,38 +128,38 @@ class RefundsScreen extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      const Text(
+                      Text(
                         'سبب طلب الإرجاع المالي:',
                         textAlign: TextAlign.right,
                         style: TextStyle(fontSize: 10, color: AppColors.outline, fontWeight: FontWeight.bold),
                       ),
-                      const SizedBox(height: 4),
+                      SizedBox(height: 4),
                       Text(
                         refund.reason,
                         textAlign: TextAlign.right,
-                        style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant),
+                        style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       'تاريخ الاكتمال: $completedDateStr',
-                      style: const TextStyle(fontSize: 11, color: AppColors.outline),
+                      style: TextStyle(fontSize: 11, color: AppColors.outline),
                     ),
                     Text(
                       'تاريخ الطلب: $createdDateStr',
-                      style: const TextStyle(fontSize: 11, color: AppColors.outline),
+                      style: TextStyle(fontSize: 11, color: AppColors.outline),
                     ),
                   ],
                 ),
                 if (refund.attachments.isNotEmpty) ...[
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12),
                   const Divider(height: 1, color: AppColors.outlineVariant),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -173,14 +173,14 @@ class RefundsScreen extends ConsumerWidget {
                               );
                             },
                             child: Chip(
-                              label: Text(file, style: const TextStyle(fontSize: 9)),
+                              label: Text(file, style: TextStyle(fontSize: 9)),
                               avatar: const Icon(Icons.attach_file, size: 10),
                               visualDensity: VisualDensity.compact,
                             ),
                           ),
                         );
                       }),
-                      const Text('المرفقات: ', style: TextStyle(fontSize: 10, color: AppColors.outline)),
+                      Text('المرفقات: ', style: TextStyle(fontSize: 10, color: AppColors.outline)),
                     ],
                   ),
                 ],

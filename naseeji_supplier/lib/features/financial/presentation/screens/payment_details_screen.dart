@@ -34,13 +34,13 @@ class PaymentDetailsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'تفاصيل الدفعة المالية',
-          style: TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
@@ -55,7 +55,7 @@ class PaymentDetailsScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                 ),
@@ -70,30 +70,30 @@ class PaymentDetailsScreen extends StatelessWidget {
                       ),
                       child: const Icon(Icons.payment, color: Color(0xFF0052CC), size: 22),
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12),
                     Text(
                       p.paymentNumber,
-                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.outline),
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.outline),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     Text(
                       '${p.amount.toStringAsFixed(2)} ر.س',
-                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.primary),
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.primary),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     PaymentStatusBadge(status: p.status),
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
 
               // Detail fields
               _buildTitle('بيانات التحويل والتسوية'),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                 ),
@@ -109,15 +109,15 @@ class PaymentDetailsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
 
               // Escrow tracker
               _buildTitle('مسار الإفراج الأمني والضمان (Escrow)'),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                 ),
@@ -132,7 +132,7 @@ class PaymentDetailsScreen extends StatelessWidget {
                               : EscrowStage.shipmentDelivered),
                     ),
                     if (p.status == PaymentStatus.pending) ...[
-                      const SizedBox(height: 12),
+                      SizedBox(height: 12),
                       Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
@@ -140,7 +140,7 @@ class PaymentDetailsScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(color: const Color(0xFFB17000).withValues(alpha: 0.2)),
                         ),
-                        child: const Text(
+                        child: Text(
                           'تنبيه: الأموال محتجزة بحساب الضمان الموحد للمنصة لحين إثبات استلام وتوقيع فحص المطابقة الفنية من المصنع.',
                           textAlign: TextAlign.right,
                           style: TextStyle(fontSize: 10, color: Color(0xFFB17000), fontWeight: FontWeight.bold),
@@ -150,7 +150,7 @@ class PaymentDetailsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
 
               // Actions
               if (p.receiptUrl != null)
@@ -161,7 +161,7 @@ class PaymentDetailsScreen extends StatelessWidget {
                     );
                   },
                   icon: const Icon(Icons.download, size: 20),
-                  label: const Text('تحميل إيصال الدفعة الرسمي'),
+                  label: Text('تحميل إيصال الدفعة الرسمي'),
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size.fromHeight(50),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -178,7 +178,7 @@ class PaymentDetailsScreen extends StatelessWidget {
     return Text(
       title,
       textAlign: TextAlign.right,
-      style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
     );
   }
 
@@ -188,11 +188,11 @@ class PaymentDetailsScreen extends StatelessWidget {
       children: [
         Text(
           value,
-          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
         ),
         Text(
           label,
-          style: const TextStyle(fontSize: 13, color: AppColors.outline),
+          style: TextStyle(fontSize: 13, color: AppColors.outline),
         ),
       ],
     );

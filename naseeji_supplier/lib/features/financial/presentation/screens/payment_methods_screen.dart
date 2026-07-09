@@ -38,13 +38,13 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'إدارة الحسابات البنكيّة ووسائل الدفع',
-          style: TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
@@ -54,11 +54,11 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen> {
           children: [
             Expanded(
               child: methodsAsync.when(
-                loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+                loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
                 error: (err, stack) => Center(child: Text('خطأ: $err')),
                 data: (methods) {
                   if (methods.isEmpty) {
-                    return const Center(child: Text('لا توجد وسائل سداد مضافة'));
+                    return Center(child: Text('لا توجد وسائل سداد مضافة'));
                   }
 
                   return ListView.builder(
@@ -68,7 +68,7 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen> {
                       final method = methods[index];
 
                       return Card(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14),
@@ -94,7 +94,7 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen> {
                                         color: AppColors.primary.withValues(alpha: 0.1),
                                         borderRadius: BorderRadius.circular(4),
                                       ),
-                                      child: const Text(
+                                      child: Text(
                                         'الافتراضي',
                                         style: TextStyle(color: AppColors.primary, fontSize: 9, fontWeight: FontWeight.bold),
                                       ),
@@ -102,27 +102,27 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen> {
                                   const Spacer(),
                                   Text(
                                     method.title,
-                                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                                   ),
-                                  const SizedBox(width: 8),
+                                  SizedBox(width: 8),
                                   Icon(_iconFor(method.type), color: AppColors.primary, size: 20),
                                 ],
                               ),
-                              const SizedBox(height: 8),
+                              SizedBox(height: 8),
                               Text(
                                 'صاحب الحساب: ${method.accountHolder}',
                                 textAlign: TextAlign.right,
-                                style: const TextStyle(fontSize: 12, color: AppColors.outline),
+                                style: TextStyle(fontSize: 12, color: AppColors.outline),
                               ),
-                              const SizedBox(height: 4),
+                              SizedBox(height: 4),
                               Text(
                                 'الآيبان / المعرف: ${method.identifier}',
                                 textAlign: TextAlign.right,
-                                style: const TextStyle(fontSize: 11, color: AppColors.outline),
+                                style: TextStyle(fontSize: 11, color: AppColors.outline),
                               ),
-                              const SizedBox(height: 12),
+                              SizedBox(height: 12),
                               const Divider(height: 1, color: AppColors.outlineVariant),
-                              const SizedBox(height: 8),
+                              SizedBox(height: 8),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -135,10 +135,10 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen> {
                                       if (!method.isVerified)
                                         TextButton(
                                           onPressed: () => _verifyMethod(method.id),
-                                          child: const Text('تفعيل وتأكيد', style: TextStyle(color: Color(0xFFB17000), fontSize: 11, fontWeight: FontWeight.bold)),
+                                          child: Text('تفعيل وتأكيد', style: TextStyle(color: Color(0xFFB17000), fontSize: 11, fontWeight: FontWeight.bold)),
                                         )
                                       else
-                                        const Row(
+                                        Row(
                                           children: [
                                             Text('حساب موثق', style: TextStyle(color: Color(0xFF00875A), fontSize: 11, fontWeight: FontWeight.bold)),
                                             SizedBox(width: 4),
@@ -150,7 +150,7 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen> {
                                   if (!method.isDefault)
                                     TextButton(
                                       onPressed: () => _setDefault(method.id),
-                                      child: const Text('تعيين كافتراضي', style: TextStyle(color: AppColors.primary, fontSize: 11, fontWeight: FontWeight.bold)),
+                                      child: Text('تعيين كافتراضي', style: TextStyle(color: AppColors.primary, fontSize: 11, fontWeight: FontWeight.bold)),
                                     )
                                   else
                                     const SizedBox.shrink(),
@@ -181,7 +181,7 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen> {
 
   Widget _buildAddMethodSheet() {
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       padding: const EdgeInsets.all(16),
       child: Form(
         key: _formKey,
@@ -197,13 +197,13 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen> {
                     icon: const Icon(Icons.close),
                     onPressed: () => setState(() => _isAdding = false),
                   ),
-                  const Text(
+                  Text(
                     'إضافة وسيلة دفع جديدة',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
               DropdownButtonFormField<String>(
                 value: _selectedType,
                 decoration: const InputDecoration(labelText: 'نوع القناة الماليّة'),
@@ -216,31 +216,31 @@ class _PaymentMethodsScreenState extends ConsumerState<PaymentMethodsScreen> {
                   if (val != null) setState(() => _selectedType = val);
                 },
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               CustomTextField(
                 controller: _titleController,
                 labelText: 'تسمية الحساب (مثال: حساب الشركة الرئيسي)',
                 validator: (val) => val == null || val.isEmpty ? 'يرجى كتابة تسمية' : null,
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               CustomTextField(
                 controller: _bankController,
                 labelText: 'اسم البنك أو جهة المحفظة',
                 validator: (val) => val == null || val.isEmpty ? 'يرجى ملء الحقل' : null,
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               CustomTextField(
                 controller: _holderController,
                 labelText: 'اسم صاحب الحساب المستفيد بالكامل',
                 validator: (val) => val == null || val.isEmpty ? 'يرجى كتابة الاسم' : null,
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12),
               CustomTextField(
                 controller: _identifierController,
                 labelText: 'رقم الآيبان (IBAN) أو رقم الهاتف للمحفظة',
                 validator: (val) => val == null || val.isEmpty ? 'يرجى إدخال البيانات الماليّة' : null,
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
               PrimaryButton(
                 text: 'تأكيد الحفظ والإضافة',
                 onPressed: _submitMethod,

@@ -10,7 +10,7 @@ class DeliveryCard extends StatelessWidget {
     return Container(
       width: 280,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.secondary, width: 1.5),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 8, offset: const Offset(0, 3))],
@@ -24,12 +24,12 @@ class DeliveryCard extends StatelessWidget {
               color: AppColors.secondary,
               borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
             ),
-            child: const Row(
+            child: Row(
               children: [
                 Spacer(),
-                Icon(Icons.inventory_2_outlined, color: Colors.white, size: 18),
+                Icon(Icons.inventory_2_outlined, color: Theme.of(context).colorScheme.surface, size: 18),
                 SizedBox(width: 6),
-                Text('تأكيد الاستلام', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13)),
+                Text('تأكيد الاستلام', style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.bold, fontSize: 13)),
               ],
             ),
           ),
@@ -56,11 +56,11 @@ class DeliveryCard extends StatelessWidget {
                         side: const BorderSide(color: Colors.red),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       ),
-                      child: const Text('إبلاغ عن مشكلة', style: TextStyle(fontSize: 11, color: Colors.red)),
+                      child: Text('إبلاغ عن مشكلة', style: TextStyle(fontSize: 11, color: Colors.red)),
                     ),
                   ),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 Expanded(
                   child: SizedBox(
                     height: 36,
@@ -70,7 +70,7 @@ class DeliveryCard extends StatelessWidget {
                         backgroundColor: AppColors.secondary,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       ),
-                      child: const Text('تأكيد', style: TextStyle(fontSize: 12, color: Colors.white)),
+                      child: Text('تأكيد', style: TextStyle(fontSize: 12, color: Colors.white)),
                     ),
                   ),
                 ),
@@ -95,8 +95,8 @@ class _Row extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
-          Text(label, style: const TextStyle(fontSize: 11, color: AppColors.outline)),
+          Text(value, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
+          Text(label, style: TextStyle(fontSize: 11, color: AppColors.outline)),
         ],
       ),
     );

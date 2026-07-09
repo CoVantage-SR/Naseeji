@@ -20,19 +20,19 @@ class OrdersDistributionCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text(
+          Text(
             'توزيع الطلبات',
             textAlign: TextAlign.right,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 20),
           Center(
             child: SizedBox(
               width: 140,
@@ -55,13 +55,13 @@ class OrdersDistributionCard extends StatelessWidget {
                     children: [
                       Text(
                         '${(readyForShippingPercentage * 100).toStringAsFixed(0)}%',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.onSurface,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
-                      const Text(
+                      Text(
                         'جاهز للشحن',
                         style: TextStyle(
                           fontSize: 10,
@@ -74,7 +74,7 @@ class OrdersDistributionCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
           _buildDistributionLegendItem('أقمشة قطنية', '$cottonOrders طلب', const Color(0xFF0040E0)),
           _buildDistributionLegendItem('منسوجات حريرية', '$silkOrders طلب', const Color(0xFF009688)),
           _buildDistributionLegendItem('خيوط صناعية', '$syntheticOrders طلب', const Color(0xFFFF5722)),
@@ -91,15 +91,15 @@ class OrdersDistributionCard extends StatelessWidget {
         children: [
           Text(
             value,
-            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
           ),
           Row(
             children: [
               Text(
                 label,
-                style: const TextStyle(fontSize: 13, color: AppColors.onSurfaceVariant),
+                style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Container(
                 width: 8,
                 height: 8,

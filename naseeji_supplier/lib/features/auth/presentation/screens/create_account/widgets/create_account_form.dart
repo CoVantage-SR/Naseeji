@@ -205,54 +205,54 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
           // Row 1: Company & Manager
           if (isMobile) ...[
             companyField,
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             managerField,
           ] else ...[
             Row(
               children: [
                 Expanded(child: companyField),
-                const SizedBox(width: 16),
+                SizedBox(width: 16),
                 Expanded(child: managerField),
               ],
             ),
           ],
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Row 2: Email & Phone
           if (isMobile) ...[
             emailField,
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             phoneField,
           ] else ...[
             Row(
               children: [
                 Expanded(child: emailField),
-                const SizedBox(width: 16),
+                SizedBox(width: 16),
                 Expanded(child: phoneField),
               ],
             ),
           ],
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Row 3: City (Full width)
           cityField,
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Row 4: Passwords
           if (isMobile) ...[
             passwordField,
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             confirmPasswordField,
           ] else ...[
             Row(
               children: [
                 Expanded(child: passwordField),
-                const SizedBox(width: 16),
+                SizedBox(width: 16),
                 Expanded(child: confirmPasswordField),
               ],
             ),
           ],
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Terms Checkbox
           Row(
@@ -266,15 +266,15 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
                   });
                 },
               ),
-              const Expanded(
+              Expanded(
                 child: Text(
                   'أوافق على الشروط والأحكام وسياسة الخصوصية.',
-                  style: TextStyle(fontSize: 13, color: AppColors.onSurfaceVariant),
+                  style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurfaceVariant),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
 
           // Action Button
           PrimaryButton(
@@ -282,10 +282,10 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
             onPressed: _submit,
             suffixIcon: Icons.arrow_back,
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Divider
-          const Row(
+          Row(
             children: [
               Expanded(child: Divider(color: AppColors.outlineVariant)),
               Padding(
@@ -298,7 +298,7 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
               Expanded(child: Divider(color: AppColors.outlineVariant)),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Social Buttons
           Row(
@@ -313,14 +313,14 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
                     ),
                     side: const BorderSide(color: AppColors.outlineVariant),
                   ),
-                  icon: const Icon(Icons.apple, color: AppColors.onSurface, size: 20),
-                  label: const Text(
+                  icon: const Icon(Icons.apple, color: Theme.of(context).colorScheme.onSurface, size: 20),
+                  label: Text(
                     'Apple',
-                    style: TextStyle(color: AppColors.onSurfaceVariant),
+                    style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                   ),
                 ),
               ),
-              const SizedBox(width: 16),
+              SizedBox(width: 16),
               Expanded(
                 child: OutlinedButton.icon(
                   onPressed: () {},
@@ -332,9 +332,9 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
                     side: const BorderSide(color: AppColors.outlineVariant),
                   ),
                   icon: const Icon(Icons.g_mobiledata_rounded, color: Colors.red, size: 24),
-                  label: const Text(
+                  label: Text(
                     'Google',
-                    style: TextStyle(color: AppColors.onSurfaceVariant),
+                    style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                   ),
                 ),
               ),

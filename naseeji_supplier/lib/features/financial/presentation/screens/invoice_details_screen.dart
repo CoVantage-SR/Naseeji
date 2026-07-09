@@ -43,13 +43,13 @@ class InvoiceDetailsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'تفاصيل فاتورة التوريد',
-          style: TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
@@ -64,7 +64,7 @@ class InvoiceDetailsScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                 ),
@@ -76,32 +76,32 @@ class InvoiceDetailsScreen extends StatelessWidget {
                         PaymentStatusBadge(status: inv.status),
                         Text(
                           inv.invoiceNumber,
-                          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.outline),
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.outline),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12),
                     Text(
                       '${inv.grandTotal.toStringAsFixed(2)} ر.س',
-                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.primary),
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.primary),
                     ),
-                    const SizedBox(height: 6),
+                    SizedBox(height: 6),
                     Text(
                       'المصنع المستفيد: ${inv.factoryName}',
-                      style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant),
+                      style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
 
               // Date card
               _buildTitle('التواريخ والمستندات المرتبطة'),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                 ),
@@ -117,15 +117,15 @@ class InvoiceDetailsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
 
               // Itemized products list
               _buildTitle('بنود الفاتورة والمواد الموردة'),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                 ),
@@ -142,25 +142,25 @@ class InvoiceDetailsScreen extends StatelessWidget {
                           children: [
                             Text(
                               '${total.toStringAsFixed(2)} ر.س',
-                              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                              style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                             ),
                             Text(
                               item.name,
-                              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                              style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                             ),
                           ],
                         ),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               'سعر الوحدة: ${item.unitPrice.toStringAsFixed(2)} ر.س',
-                              style: const TextStyle(fontSize: 11, color: AppColors.outline),
+                              style: TextStyle(fontSize: 11, color: AppColors.outline),
                             ),
                             Text(
                               'الكمية: ${item.quantity} ${item.unit}',
-                              style: const TextStyle(fontSize: 11, color: AppColors.outline),
+                              style: TextStyle(fontSize: 11, color: AppColors.outline),
                             ),
                           ],
                         ),
@@ -171,15 +171,15 @@ class InvoiceDetailsScreen extends StatelessWidget {
                   }),
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
 
               // Financial breakdown
               _buildTitle('الملخص المالي والتحليل الضريبي'),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                 ),
@@ -197,16 +197,16 @@ class InvoiceDetailsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
 
               // Attachments
               if (inv.attachments.isNotEmpty) ...[
                 _buildTitle('المرفقات والشهادات المرفقة'),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                   ),
@@ -214,7 +214,7 @@ class InvoiceDetailsScreen extends StatelessWidget {
                     children: inv.attachments.map((filename) {
                       return ListTile(
                         leading: const Icon(Icons.picture_as_pdf, color: Color(0xFFBA1A1A)),
-                        title: Text(filename, style: const TextStyle(fontSize: 12), textAlign: TextAlign.right),
+                        title: Text(filename, style: TextStyle(fontSize: 12), textAlign: TextAlign.right),
                         trailing: const Icon(Icons.download, size: 18),
                         onTap: () {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -225,7 +225,7 @@ class InvoiceDetailsScreen extends StatelessWidget {
                     }).toList(),
                   ),
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
               ],
 
               // Actions
@@ -236,7 +236,7 @@ class InvoiceDetailsScreen extends StatelessWidget {
                   );
                 },
                 icon: const Icon(Icons.download),
-                label: const Text('تحميل الفاتورة (PDF)'),
+                label: Text('تحميل الفاتورة (PDF)'),
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size.fromHeight(50),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -253,7 +253,7 @@ class InvoiceDetailsScreen extends StatelessWidget {
     return Text(
       title,
       textAlign: TextAlign.right,
-      style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
     );
   }
 
@@ -266,14 +266,14 @@ class InvoiceDetailsScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: isHighlight ? 15 : 13,
             fontWeight: FontWeight.bold,
-            color: isHighlight ? AppColors.primary : AppColors.onSurface,
+            color: isHighlight ? AppColors.primary : Theme.of(context).colorScheme.onSurface,
           ),
         ),
         Text(
           label,
           style: TextStyle(
             fontSize: 13,
-            color: isHighlight ? AppColors.onSurface : AppColors.outline,
+            color: isHighlight ? Theme.of(context).colorScheme.onSurface : AppColors.outline,
             fontWeight: isHighlight ? FontWeight.bold : FontWeight.normal,
           ),
         ),

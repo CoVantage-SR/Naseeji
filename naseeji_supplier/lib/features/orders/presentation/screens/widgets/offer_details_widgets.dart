@@ -26,13 +26,13 @@ class OfferDetailsHeader extends StatelessWidget {
                   child: Container(
                     width: 96,
                     height: 96,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: Color(0xFF0040E0),
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(
                       Icons.storefront,
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                       size: 40,
                     ),
                   ),
@@ -40,7 +40,7 @@ class OfferDetailsHeader extends StatelessWidget {
               ),
               Container(
                 padding: const EdgeInsets.all(6),
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: Color(0xFF72F8E4),
                   shape: BoxShape.circle,
                 ),
@@ -53,21 +53,21 @@ class OfferDetailsHeader extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 20),
+        SizedBox(height: 20),
         Text(
           details.statusLabel,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            color: AppColors.onSurface,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8),
         Text(
           details.statusDescription,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 12,
-            color: AppColors.onSurfaceVariant,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
             height: 1.5,
           ),
           textAlign: TextAlign.center,
@@ -99,18 +99,18 @@ class QuickStatsCardsRow extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    const Text('آخر ظهور', style: TextStyle(fontSize: 10, color: AppColors.outline)),
-                    const SizedBox(height: 4),
-                    Text(details.lastSeen, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                    Text('آخر ظهور', style: TextStyle(fontSize: 10, color: AppColors.outline)),
+                    SizedBox(height: 4),
+                    Text(details.lastSeen, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
                   ],
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 const Icon(Icons.visibility_outlined, color: Color(0xFF006B5F), size: 20),
               ],
             ),
           ),
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: 12),
         Expanded(
           child: Container(
             padding: const EdgeInsets.all(12),
@@ -124,12 +124,12 @@ class QuickStatsCardsRow extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    const Text('أرسل منذ', style: TextStyle(fontSize: 10, color: AppColors.outline)),
-                    const SizedBox(height: 4),
-                    Text(details.sentTimeAgo, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                    Text('أرسل منذ', style: TextStyle(fontSize: 10, color: AppColors.outline)),
+                    SizedBox(height: 4),
+                    Text(details.sentTimeAgo, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
                   ],
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 const Icon(Icons.file_upload_outlined, color: Color(0xFF0040E0), size: 20),
               ],
             ),
@@ -172,7 +172,7 @@ class OrderPhasesTimeline extends StatelessWidget {
       centerIcon = const Icon(Icons.check, size: 14, color: Colors.white);
     } else if (phase.isActive) {
       iconBgColor = const Color(0xFFE8F0FE);
-      centerIcon = const SizedBox(
+      centerIcon = SizedBox(
         width: 14,
         height: 14,
         child: CircularProgressIndicator(
@@ -196,12 +196,12 @@ class OrderPhasesTimeline extends StatelessWidget {
               phase.time,
               style: TextStyle(
                 fontSize: 10,
-                color: phase.isCompleted || phase.isActive ? AppColors.onSurface : AppColors.outline,
+                color: phase.isCompleted || phase.isActive ? Theme.of(context).colorScheme.onSurface : AppColors.outline,
                 fontWeight: phase.isCompleted || phase.isActive ? FontWeight.bold : FontWeight.normal,
               ),
             ),
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8),
           Column(
             children: [
               Container(
@@ -222,7 +222,7 @@ class OrderPhasesTimeline extends StatelessWidget {
                 ),
             ],
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(bottom: 20),
@@ -239,7 +239,7 @@ class OrderPhasesTimeline extends StatelessWidget {
                             color: const Color(0xFFFFEBEA),
                             borderRadius: BorderRadius.circular(6),
                           ),
-                          child: const Text(
+                          child: Text(
                             'مرحلة حرجة',
                             style: TextStyle(
                               color: AppColors.error,
@@ -248,24 +248,24 @@ class OrderPhasesTimeline extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(width: 8),
+                        SizedBox(width: 8),
                       ],
                       Text(
                         phase.title,
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
-                          color: phase.isFuture ? AppColors.outline : AppColors.onSurface,
+                          color: phase.isFuture ? AppColors.outline : Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   Text(
                     phase.description,
                     style: TextStyle(
                       fontSize: 11,
-                      color: phase.isFuture ? AppColors.outline : AppColors.onSurfaceVariant,
+                      color: phase.isFuture ? AppColors.outline : Theme.of(context).colorScheme.onSurfaceVariant,
                       height: 1.4,
                     ),
                     textAlign: TextAlign.end,
@@ -286,7 +286,7 @@ class TimelineActionButtonBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       child: SafeArea(
         child: Column(
@@ -294,12 +294,12 @@ class TimelineActionButtonBar extends StatelessWidget {
             ElevatedButton.icon(
               onPressed: () {},
               icon: const Icon(Icons.notifications_active_outlined, size: 16, color: Colors.white),
-              label: const Text(
+              label: Text(
                 'إرسال تذكير',
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                 ),
               ),
               style: ElevatedButton.styleFrom(
@@ -312,11 +312,11 @@ class TimelineActionButtonBar extends StatelessWidget {
                 minimumSize: const Size(double.infinity, 48),
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             OutlinedButton.icon(
               onPressed: () {},
               icon: const Icon(Icons.cancel_outlined, size: 16, color: AppColors.error),
-              label: const Text(
+              label: Text(
                 'إلغاء العرض',
                 style: TextStyle(
                   fontSize: 13,

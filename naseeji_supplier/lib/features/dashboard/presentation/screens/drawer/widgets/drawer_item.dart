@@ -27,11 +27,11 @@ class DrawerItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         clipBehavior: Clip.antiAlias,
         child: ListTile(
-          leading: Icon(icon, color: isActive ? Colors.white : AppColors.onSurfaceVariant),
+          leading: Icon(icon, color: isActive ? Colors.white : Theme.of(context).colorScheme.onSurfaceVariant),
           title: Text(
             title,
             style: TextStyle(
-              color: isActive ? Colors.white : AppColors.onSurface,
+              color: isActive ? Colors.white : Theme.of(context).colorScheme.onSurface,
               fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
               fontSize: 13,
             ),

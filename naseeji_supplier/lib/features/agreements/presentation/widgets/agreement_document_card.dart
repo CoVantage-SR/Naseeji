@@ -18,21 +18,21 @@ class AgreementDocumentCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.surfaceContainerLow),
+        border: Border.all(color: Theme.of(context).colorScheme.surfaceContainerLow),
       ),
       child: Row(
         children: [
           const Icon(Icons.picture_as_pdf_outlined, color: Colors.red, size: 24),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(doc.type, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.onSurface)),
-                const SizedBox(height: 2),
-                Text('${doc.name} • إصدار v${doc.version}', style: const TextStyle(fontSize: 9, color: AppColors.outline)),
+                Text(doc.type, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Theme.of(context).colorScheme.onSurface)),
+                SizedBox(height: 2),
+                Text('${doc.name} • إصدار v${doc.version}', style: TextStyle(fontSize: 9, color: AppColors.outline)),
               ],
             ),
           ),

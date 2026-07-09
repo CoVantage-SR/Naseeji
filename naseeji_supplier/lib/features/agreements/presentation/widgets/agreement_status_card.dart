@@ -49,8 +49,8 @@ class AgreementStatusCard extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.all(Radius.circular(16)),
         boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
       ),
@@ -70,29 +70,29 @@ class AgreementStatusCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
             child: LinearProgressIndicator(
               value: progress,
               color: statusColor,
-              backgroundColor: AppColors.surfaceContainerLow,
+              backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
               minHeight: 6,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('المرحلة الحالية:', style: TextStyle(fontSize: 10, color: AppColors.outline)),
+              Text('المرحلة الحالية:', style: TextStyle(fontSize: 10, color: AppColors.outline)),
               Text(
                 stageText,
-                style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant),
+                style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
             ],
           ),
           if (agreement.cancellationReason != null) ...[
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(8),

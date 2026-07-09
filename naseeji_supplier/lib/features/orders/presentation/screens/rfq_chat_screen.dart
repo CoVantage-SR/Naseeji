@@ -43,7 +43,7 @@ class _RfqChatScreenState extends ConsumerState<RfqChatScreen> {
           RfqChatInfoBar(rfqId: widget.rfqId),
           Expanded(
             child: messagesAsync.when(
-              loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+              loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
               error: (err, stack) => Center(child: Text('خطأ: $err')),
               data: (messages) {
                 return ChatMessagesList(messages: messages, rfqId: widget.rfqId);
@@ -51,7 +51,7 @@ class _RfqChatScreenState extends ConsumerState<RfqChatScreen> {
             ),
           ),
           Container(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             padding: const EdgeInsets.only(top: 8, bottom: 12),
             child: Column(
               children: [
@@ -61,7 +61,7 @@ class _RfqChatScreenState extends ConsumerState<RfqChatScreen> {
                     ref.read(rfqChatControllerProvider(widget.rfqId).notifier).sendMessage(replyText);
                   },
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 ChatInputField(
                   controller: _messageController,
                   onSend: _handleSendMessage,

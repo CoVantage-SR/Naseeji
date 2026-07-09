@@ -10,7 +10,7 @@ class NotificationsAppBar extends StatelessWidget implements PreferredSizeWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       elevation: 0.5,
       automaticallyImplyLeading: false,
       title: Row(
@@ -18,7 +18,7 @@ class NotificationsAppBar extends StatelessWidget implements PreferredSizeWidget
         children: [
           TextButton(
             onPressed: onMarkAllRead,
-            child: const Text(
+            child: Text(
               'تحديد الكل كمقروء',
               style: TextStyle(
                 fontSize: 13,
@@ -29,17 +29,17 @@ class NotificationsAppBar extends StatelessWidget implements PreferredSizeWidget
           ),
           Row(
             children: [
-              const Text(
+              Text(
                 'الإشعارات',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.onSurface,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               IconButton(
-                icon: const Icon(Icons.arrow_forward, color: AppColors.onSurface),
+                icon: const Icon(Icons.arrow_forward, color: Theme.of(context).colorScheme.onSurface),
                 onPressed: () => context.pop(),
               ),
             ],

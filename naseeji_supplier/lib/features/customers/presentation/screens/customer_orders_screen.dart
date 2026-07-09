@@ -19,25 +19,25 @@ class CustomerOrdersScreen extends ConsumerWidget {
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
           centerTitle: true,
-          title: const Text('طلبات العميل', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16)),
+          title: Text('طلبات العميل', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16)),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, size: 20, color: AppColors.onSurfaceVariant),
+            icon: const Icon(Icons.arrow_back_ios_new, size: 20, color: Theme.of(context).colorScheme.onSurfaceVariant),
             onPressed: () => context.pop(),
           ),
         ),
         body: stateAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (e, _) => Center(child: Text('خطأ: $e')),
           data: (customers) {
             final idx = customers.indexWhere((c) => c.id == customerId);
-            if (idx == -1) return const Center(child: Text('العميل غير موجود'));
+            if (idx == -1) return Center(child: Text('العميل غير موجود'));
             final customer = customers[idx];
 
             if (customer.orders.isEmpty) {
-              return const Center(
+              return Center(
                 child: Column(mainAxisSize: MainAxisSize.min, children: [
                   Icon(Icons.shopping_bag_outlined, size: 56, color: AppColors.outlineVariant),
                   SizedBox(height: 12),
@@ -68,7 +68,7 @@ class CustomerOrdersScreen extends ConsumerWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5),
         boxShadow: const [BoxShadow(color: Color(0x06000000), blurRadius: 8)],
@@ -81,12 +81,12 @@ class CustomerOrdersScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                  Text(o.orderNumber, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: AppColors.primary)),
+                  Text(o.orderNumber, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: AppColors.primary)),
                   _badge(o.status, statusColor),
                 ]),
-                const SizedBox(height: 10),
-                const Divider(height: 1, color: AppColors.surfaceContainerLow),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
+                const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+                SizedBox(height: 10),
                 _row('المنتج', o.productName),
                 _row('الكمية المطلوبة', '${o.quantity.toStringAsFixed(0)} وحدة'),
                 _row('السعر الإجمالي', '${o.totalPrice.toStringAsFixed(2)} ${o.currency}'),
@@ -98,7 +98,7 @@ class CustomerOrdersScreen extends ConsumerWidget {
           ),
           Container(
             decoration: BoxDecoration(
-              color: AppColors.surfaceContainerLow,
+              color: Theme.of(context).colorScheme.surfaceContainerLow,
               borderRadius: BorderRadius.only(bottomLeft: Radius.circular(16), bottomRight: Radius.circular(16)),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
@@ -106,9 +106,9 @@ class CustomerOrdersScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 _actionBtn('عرض التفاصيل', Icons.visibility_outlined, () => context.push('/orders')),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 _actionBtn('تتبع الشحنة', Icons.location_on_outlined, () => context.push('/shipping')),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 _actionBtn('محادثة', Icons.forum_outlined, () => context.push('/messages')),
               ],
             ),
@@ -130,8 +130,8 @@ class CustomerOrdersScreen extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Text(label, style: const TextStyle(fontSize: 11, color: AppColors.outline)),
-        Text(value, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
+        Text(label, style: TextStyle(fontSize: 11, color: AppColors.outline)),
+        Text(value, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
       ]),
     );
   }
@@ -140,7 +140,7 @@ class CustomerOrdersScreen extends ConsumerWidget {
     return TextButton.icon(
       onPressed: onTap,
       icon: Icon(icon, size: 13, color: AppColors.primary),
-      label: Text(label, style: const TextStyle(fontSize: 9, color: AppColors.primary)),
+      label: Text(label, style: TextStyle(fontSize: 9, color: AppColors.primary)),
       style: TextButton.styleFrom(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), tapTargetSize: MaterialTapTargetSize.shrinkWrap, minimumSize: Size.zero),
     );
   }

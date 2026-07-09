@@ -14,20 +14,20 @@ class EarningsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'أرباح وإيرادات المؤسسة',
-          style: TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
       body: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
         child: analyticsAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (err, stack) => Center(child: Text('خطأ: $err')),
           data: (data) {
             return RefreshIndicator(
@@ -40,12 +40,12 @@ class EarningsScreen extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Grid of standard cards
-                    const Text(
+                    Text(
                       'الملخص المالي للأرباح',
                       textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     GridView.count(
                       crossAxisCount: 2,
                       shrinkWrap: true,
@@ -60,13 +60,13 @@ class EarningsScreen extends ConsumerWidget {
                         _buildEarningMetricCard('أرباح العام الحالي', '${(data.totalRevenue * 0.85).toStringAsFixed(2)} ر.س', const Color(0xFF993100)),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
 
                     // Lifetime stats banner
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                       ),
@@ -75,16 +75,16 @@ class EarningsScreen extends ConsumerWidget {
                         children: [
                           Text(
                             '${data.totalRevenue.toStringAsFixed(2)} ر.س',
-                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primary),
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primary),
                           ),
-                          const Text(
+                          Text(
                             'إجمالي الأرباح منذ التأسيس',
-                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24),
 
                     // Bar Chart Revenue Trend
                     FinancialChartWidget(
@@ -92,7 +92,7 @@ class EarningsScreen extends ConsumerWidget {
                       data: data.revenueTrend,
                       type: 'bar',
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     // Donut Chart - Best selling products
                     FinancialChartWidget(
@@ -100,19 +100,19 @@ class EarningsScreen extends ConsumerWidget {
                       data: data.revenueByProduct,
                       type: 'donut',
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     // Customer breakdowns
-                    const Text(
+                    Text(
                       'أكبر المصانع المتعاملة والطلب',
                       textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                       ),
@@ -126,11 +126,11 @@ class EarningsScreen extends ConsumerWidget {
                               children: [
                                 Text(
                                   valStr,
-                                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                                 ),
                                 Text(
                                   cust['customer'] as String,
-                                  style: const TextStyle(fontSize: 13, color: AppColors.onSurfaceVariant),
+                                  style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurfaceVariant),
                                 ),
                               ],
                             ),
@@ -152,7 +152,7 @@ class EarningsScreen extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
       ),
@@ -163,16 +163,16 @@ class EarningsScreen extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(label, style: const TextStyle(fontSize: 11, color: AppColors.outline)),
-              const SizedBox(width: 4),
+              Text(label, style: TextStyle(fontSize: 11, color: AppColors.outline)),
+              SizedBox(width: 4),
               Container(width: 6, height: 6, decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Text(
             value,
             textAlign: TextAlign.right,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
           ),
         ],
       ),

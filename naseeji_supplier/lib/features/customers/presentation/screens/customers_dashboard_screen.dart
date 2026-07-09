@@ -82,30 +82,30 @@ class _CustomersDashboardScreenState extends ConsumerState<CustomersDashboardScr
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         drawer: const NavigationDrawerView(),
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
           leading: Builder(
             builder: (ctx) => IconButton(
-              icon: const Icon(Icons.menu, color: AppColors.onSurfaceVariant),
+              icon: const Icon(Icons.menu, color: Theme.of(context).colorScheme.onSurfaceVariant),
               onPressed: () => Scaffold.of(ctx).openDrawer(),
             ),
           ),
-          title: const Text('إدارة العملاء', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16)),
+          title: Text('إدارة العملاء', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16)),
           centerTitle: true,
           actions: [
             IconButton(
-              icon: const Icon(Icons.search, color: AppColors.onSurfaceVariant),
+              icon: const Icon(Icons.search, color: Theme.of(context).colorScheme.onSurfaceVariant),
               onPressed: () => setState(() => _showFilters = !_showFilters),
             ),
             IconButton(
-              icon: const Icon(Icons.sort, color: AppColors.onSurfaceVariant),
+              icon: const Icon(Icons.sort, color: Theme.of(context).colorScheme.onSurfaceVariant),
               onPressed: () => _showSortSheet(context),
             ),
           ],
           bottom: TabBar(
             controller: _tabController,
             labelColor: AppColors.primary,
-            unselectedLabelColor: AppColors.onSurfaceVariant,
+            unselectedLabelColor: Theme.of(context).colorScheme.onSurfaceVariant,
             indicatorColor: AppColors.primary,
             isScrollable: true,
             tabAlignment: TabAlignment.start,
@@ -113,7 +113,7 @@ class _CustomersDashboardScreenState extends ConsumerState<CustomersDashboardScr
           ),
         ),
         body: stateAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (e, _) => Center(child: Text('خطأ في تحميل العملاء: $e')),
           data: (customers) {
             return Column(
@@ -121,16 +121,16 @@ class _CustomersDashboardScreenState extends ConsumerState<CustomersDashboardScr
                 // Search bar
                 if (_showFilters)
                   Container(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
                     child: TextField(
                       autofocus: true,
                       decoration: InputDecoration(
                         hintText: 'ابحث باسم المصنع، المدينة، التخصص...',
-                        hintStyle: const TextStyle(fontSize: 12),
+                        hintStyle: TextStyle(fontSize: 12),
                         prefixIcon: const Icon(Icons.search, size: 18),
                         filled: true,
-                        fillColor: AppColors.surfaceContainerLow,
+                        fillColor: Theme.of(context).colorScheme.surfaceContainerLow,
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
                         contentPadding: const EdgeInsets.symmetric(vertical: 10),
                       ),
@@ -183,7 +183,7 @@ class _CustomersDashboardScreenState extends ConsumerState<CustomersDashboardScr
     final activeOrders = customers.fold<int>(0, (s, c) => s + c.activeOrdersCount);
 
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
       child: SizedBox(
         height: 100,
@@ -191,15 +191,15 @@ class _CustomersDashboardScreenState extends ConsumerState<CustomersDashboardScr
           scrollDirection: Axis.horizontal,
           children: [
             _summaryTile('إجمالي العملاء', total.toString(), Icons.people_outlined, AppColors.primary),
-            const SizedBox(width: 10),
+            SizedBox(width: 10),
             _summaryTile('النشطون', active.toString(), Icons.check_circle_outline, Colors.green),
-            const SizedBox(width: 10),
+            SizedBox(width: 10),
             _summaryTile('VIP', vip.toString(), Icons.star_outlined, const Color(0xFFFFB800)),
-            const SizedBox(width: 10),
+            SizedBox(width: 10),
             _summaryTile('جدد', newC.toString(), Icons.fiber_new_outlined, AppColors.secondary),
-            const SizedBox(width: 10),
+            SizedBox(width: 10),
             _summaryTile('الإيرادات', '${(revenue / 1000).toStringAsFixed(0)}ك', Icons.payments_outlined, const Color(0xFF006B5F)),
-            const SizedBox(width: 10),
+            SizedBox(width: 10),
             _summaryTile('طلبات نشطة', activeOrders.toString(), Icons.shopping_bag_outlined, AppColors.tertiary),
           ],
         ),
@@ -215,7 +215,7 @@ class _CustomersDashboardScreenState extends ConsumerState<CustomersDashboardScr
   }
 
   Widget _buildEmpty() {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -235,7 +235,7 @@ class _CustomersDashboardScreenState extends ConsumerState<CustomersDashboardScr
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.all(16),
               child: Text('ترتيب حسب', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
             ),
@@ -243,7 +243,7 @@ class _CustomersDashboardScreenState extends ConsumerState<CustomersDashboardScr
             _sortOption('عدد الطلبات', 'orders'),
             _sortOption('التقييم', 'rating'),
             _sortOption('آخر طلب', 'recent'),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
           ],
         ),
       ),
@@ -258,7 +258,7 @@ class _CustomersDashboardScreenState extends ConsumerState<CustomersDashboardScr
         color: isSelected ? AppColors.primary : AppColors.outline,
         size: 20,
       ),
-      title: Text(label, style: TextStyle(fontSize: 13, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, color: isSelected ? AppColors.primary : AppColors.onSurface)),
+      title: Text(label, style: TextStyle(fontSize: 13, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, color: isSelected ? AppColors.primary : Theme.of(context).colorScheme.onSurface)),
       onTap: () {
         setState(() => _sortBy = value);
         Navigator.pop(context);

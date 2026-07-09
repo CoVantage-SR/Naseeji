@@ -70,7 +70,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 alignment: Alignment.centerLeft,
                 child: TextButton(
                   onPressed: _onSkip,
-                  child: const Text(
+                  child: Text(
                     'عدّي',
                     style: TextStyle(
                       fontSize: 16,
@@ -103,7 +103,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               count: _slides.length,
               current: _currentPage,
             ),
-            const SizedBox(height: 32),
+            SizedBox(height: 32),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
               child: Row(
@@ -120,17 +120,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           ),
                           side: const BorderSide(color: AppColors.outlineVariant),
                         ),
-                        child: const Text(
+                        child: Text(
                           'اللي فات',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.onBackground,
+                            color: Theme.of(context).colorScheme.onBackground,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 16),
+                    SizedBox(width: 16),
                   ],
                   Expanded(
                     flex: 2,

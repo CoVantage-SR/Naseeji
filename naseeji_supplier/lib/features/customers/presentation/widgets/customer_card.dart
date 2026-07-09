@@ -23,7 +23,7 @@ class CustomerCard extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(bottom: 12),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(16),
           boxShadow: const [BoxShadow(color: Color(0x08000000), blurRadius: 12, offset: Offset(0, 2))],
           border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5),
@@ -36,13 +36,13 @@ class CustomerCard extends StatelessWidget {
               child: Row(
                 children: [
                   _buildLogo(),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Expanded(child: _buildInfo()),
                   _buildStatusBadge(),
                 ],
               ),
             ),
-            const Divider(height: 1, color: AppColors.surfaceContainerLow),
+            const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
             // ── Stats Row ──
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
@@ -65,7 +65,7 @@ class CustomerCard extends StatelessWidget {
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     itemCount: customer.tags.length,
-                    separatorBuilder: (_, __) => const SizedBox(width: 6),
+                    separatorBuilder: (_, __) => SizedBox(width: 6),
                     itemBuilder: (_, i) {
                       final tag = customer.tags[i];
                       return Container(
@@ -87,8 +87,8 @@ class CustomerCard extends StatelessWidget {
             ],
             // ── Quick Actions ──
             Container(
-              decoration: const BoxDecoration(
-                color: AppColors.surfaceContainerLow,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surfaceContainerLow,
                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(16), bottomRight: Radius.circular(16)),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
@@ -96,9 +96,9 @@ class CustomerCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   _buildActionButton('عرض الملف', Icons.person_outlined, onTap),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   _buildActionButton('محادثة', Icons.forum_outlined, onChat),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   _buildActionButton('الطلبات', Icons.shopping_bag_outlined, onOrders),
                 ],
               ),
@@ -120,7 +120,7 @@ class CustomerCard extends StatelessWidget {
       child: Center(
         child: Text(
           customer.logoText,
-          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.bold, fontSize: 16),
         ),
       ),
     );
@@ -135,26 +135,26 @@ class CustomerCard extends StatelessWidget {
             Flexible(
               child: Text(
                 customer.factoryName,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.onSurface),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Theme.of(context).colorScheme.onSurface),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
             if (customer.isVerified) ...[
-              const SizedBox(width: 4),
+              SizedBox(width: 4),
               const Icon(Icons.verified, size: 14, color: AppColors.primary),
             ],
           ],
         ),
-        const SizedBox(height: 2),
+        SizedBox(height: 2),
         Text(
           '${customer.city}، ${customer.country}',
-          style: const TextStyle(fontSize: 10, color: AppColors.outline),
+          style: TextStyle(fontSize: 10, color: AppColors.outline),
         ),
-        const SizedBox(height: 2),
+        SizedBox(height: 2),
         Text(
           customer.businessCategory,
-          style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant),
+          style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant),
         ),
       ],
     );
@@ -195,23 +195,23 @@ class CustomerCard extends StatelessWidget {
       child: Column(
         children: [
           Icon(icon, size: 14, color: color ?? AppColors.primary),
-          const SizedBox(height: 2),
-          Text(value, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
-          Text(label, style: const TextStyle(fontSize: 8, color: AppColors.outline)),
+          SizedBox(height: 2),
+          Text(value, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
+          Text(label, style: TextStyle(fontSize: 8, color: AppColors.outline)),
         ],
       ),
     );
   }
 
   Widget _buildDivider() {
-    return Container(width: 0.5, height: 30, color: AppColors.surfaceContainerLow);
+    return Container(width: 0.5, height: 30, color: Theme.of(context).colorScheme.surfaceContainerLow);
   }
 
   Widget _buildActionButton(String label, IconData icon, VoidCallback? onPressed) {
     return TextButton.icon(
       onPressed: onPressed,
       icon: Icon(icon, size: 13, color: AppColors.primary),
-      label: Text(label, style: const TextStyle(fontSize: 9, color: AppColors.primary)),
+      label: Text(label, style: TextStyle(fontSize: 9, color: AppColors.primary)),
       style: TextButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,

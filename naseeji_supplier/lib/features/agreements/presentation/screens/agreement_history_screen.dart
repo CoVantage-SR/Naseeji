@@ -40,33 +40,33 @@ class _AgreementHistoryScreenState extends ConsumerState<AgreementHistoryScreen>
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
           centerTitle: true,
           title: Text(
             'سجل وزمن الاتفاقية ${widget.agreementId}',
-            style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
+            style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
           ),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+            icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
             onPressed: () => context.pop(),
           ),
           bottom: TabBar(
             controller: _tabController,
             labelColor: const Color(0xFF0040E0),
-            unselectedLabelColor: AppColors.onSurfaceVariant,
+            unselectedLabelColor: Theme.of(context).colorScheme.onSurfaceVariant,
             indicatorColor: const Color(0xFF0040E0),
-            labelStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+            labelStyle: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
             tabs: _tabs.map((title) => Tab(text: title)).toList(),
           ),
         ),
         body: stateAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (e, _) => Center(child: Text('خطأ: $e')),
           data: (agreements) {
             final agreementIndex = agreements.indexWhere((a) => a.id == widget.agreementId);
             if (agreementIndex == -1) {
-              return const Center(child: Text('الاتفاقية غير موجودة'));
+              return Center(child: Text('الاتفاقية غير موجودة'));
             }
             final a = agreements[agreementIndex];
 
@@ -81,7 +81,7 @@ class _AgreementHistoryScreenState extends ConsumerState<AgreementHistoryScreen>
                       padding: const EdgeInsets.all(12),
                       margin: const EdgeInsets.only(bottom: 16),
                       decoration: BoxDecoration(color: Colors.blue.shade50, borderRadius: BorderRadius.circular(12)),
-                      child: const Text(
+                      child: Text(
                         'يتتبع الخط الزمني التالي مسار الإنتاج، والتحميل والفسح الجمركي، وحالة التوصيل الفعلي وتأكيد استلام وفحص الجودة.',
                         style: TextStyle(fontSize: 10, color: Colors.blue, height: 1.4),
                       ),
@@ -98,13 +98,13 @@ class _AgreementHistoryScreenState extends ConsumerState<AgreementHistoryScreen>
                       padding: const EdgeInsets.all(12),
                       margin: const EdgeInsets.only(bottom: 16),
                       decoration: BoxDecoration(color: Colors.amber.shade50, borderRadius: BorderRadius.circular(12)),
-                      child: const Text(
+                      child: Text(
                         'سجل مراجعات غير قابل للتعديل (Immutable). يتم تسجيل أي تعديل يطرأ على شروط العقد مع حفظ رقم الإصدار للتوافق مع الفوترة والفسح اللوجستي.',
                         style: TextStyle(fontSize: 10, color: Colors.amber, height: 1.4),
                       ),
                     ),
                     if (a.history.isEmpty)
-                      const Center(child: Text('لا توجد مراجعات سابقة مسجلة.', style: TextStyle(fontSize: 11, color: AppColors.outline)))
+                      Center(child: Text('لا توجد مراجعات سابقة مسجلة.', style: TextStyle(fontSize: 11, color: AppColors.outline)))
                     else
                       ...a.history.map((record) => AgreementHistoryCard(record: record)),
                   ],

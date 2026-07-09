@@ -35,25 +35,25 @@ class SplashLogo extends StatelessWidget {
             child: const Icon(
               Icons.blur_circular_rounded,
               size: 56,
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.surface,
             ),
           ),
-          const SizedBox(height: 24),
-          const Text(
+          SizedBox(height: 24),
+          Text(
             'Naseeji Supplier',
             style: TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.bold,
               letterSpacing: 0.5,
-              color: AppColors.onBackground,
+              color: Theme.of(context).colorScheme.onBackground,
             ),
           ),
-          const SizedBox(height: 8),
-          const Text(
+          SizedBox(height: 8),
+          Text(
             'منصة نسيجي للموردين والمصانع',
             style: TextStyle(
               fontSize: 16,
-              color: AppColors.onSurfaceVariant,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
               letterSpacing: 0.2,
             ),
           ),

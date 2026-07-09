@@ -12,7 +12,7 @@ class AppBottomNavigationBar extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.fromLTRB(1, 0, 1, 2),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(30),
         boxShadow: [
           BoxShadow(
@@ -37,13 +37,13 @@ class AppBottomNavigationBar extends StatelessWidget {
             ),
             labelTextStyle: WidgetStateProperty.resolveWith((states) {
               if (states.contains(WidgetState.selected)) {
-                return const TextStyle(
+                return TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                   color: Color.fromARGB(255, 2, 0, 107),
                 );
               }
-              return const TextStyle(
+              return TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
                 color: AppColors.outline,

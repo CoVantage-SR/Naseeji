@@ -15,26 +15,26 @@ class FinancialDashboardScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
-        title: const Text(
+        title: Text(
           'المركز المالي',
           style: TextStyle(
-            color: AppColors.onSurface,
+            color: Theme.of(context).colorScheme.onSurface,
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.go('/home'),
         ),
       ),
       body: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
         child: dashboardAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (err, stack) => Center(child: Text('خطأ في تحميل البيانات: $err')),
           data: (data) {
             return RefreshIndicator(
@@ -57,7 +57,7 @@ class FinancialDashboardScreen extends ConsumerWidget {
                       child: Row(
                         children: [
                           Icon(Icons.check_circle_outline, color: const Color(0xFF00875A), size: 20),
-                          const SizedBox(width: 8),
+                          SizedBox(width: 8),
                           Expanded(
                             child: Text(
                               'الحالة المالية للمؤسسة: ممتازة (مؤشر الصحة ${(data.healthIndicator * 100).toStringAsFixed(0)}%)',
@@ -72,7 +72,7 @@ class FinancialDashboardScreen extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     // Balance Grid (Top Core Cards)
                     GridView.count(
@@ -113,15 +113,15 @@ class FinancialDashboardScreen extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
 
                     // Quick Actions Section
-                    const Text(
+                    Text(
                       'إجراءات سريعة',
                       textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     GridView.count(
                       crossAxisCount: 3,
                       shrinkWrap: true,
@@ -168,19 +168,19 @@ class FinancialDashboardScreen extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24),
 
                     // Additional Metric Details
-                    const Text(
+                    Text(
                       'ملخص الأداء المالي',
                       textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                       ),
@@ -196,11 +196,11 @@ class FinancialDashboardScreen extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24),
 
                     // Navigation to Sub-modules
                     Material(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(12),
                       clipBehavior: Clip.antiAlias,
                       child: ListTile(
@@ -208,15 +208,15 @@ class FinancialDashboardScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(12),
                           side: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                         ),
-                        title: const Text('سجل المعاملات والعمليات', textAlign: TextAlign.right),
+                        title: Text('سجل المعاملات والعمليات', textAlign: TextAlign.right),
                         trailing: const Icon(Icons.arrow_back_ios, size: 14),
                         leading: const Icon(Icons.history, color: AppColors.primary),
                         onTap: () => context.push('/finance/transactions'),
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     Material(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(12),
                       clipBehavior: Clip.antiAlias,
                       child: ListTile(
@@ -224,15 +224,15 @@ class FinancialDashboardScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(12),
                           side: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                         ),
-                        title: const Text('ضمان وحماية الدفعات (Escrow)', textAlign: TextAlign.right),
+                        title: Text('ضمان وحماية الدفعات (Escrow)', textAlign: TextAlign.right),
                         trailing: const Icon(Icons.arrow_back_ios, size: 14),
                         leading: const Icon(Icons.security, color: Color(0xFF006B5F)),
                         onTap: () => context.push('/finance/escrow'),
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     Material(
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.surface,
                       borderRadius: BorderRadius.circular(12),
                       clipBehavior: Clip.antiAlias,
                       child: ListTile(
@@ -240,7 +240,7 @@ class FinancialDashboardScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(12),
                           side: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                         ),
-                        title: const Text('إدارة المرتجعات والتعويضات', textAlign: TextAlign.right),
+                        title: Text('إدارة المرتجعات والتعويضات', textAlign: TextAlign.right),
                         trailing: const Icon(Icons.arrow_back_ios, size: 14),
                         leading: const Icon(Icons.assignment_return_outlined, color: Color(0xFFBA1A1A)),
                         onTap: () => context.push('/finance/refunds'),
@@ -264,7 +264,7 @@ class FinancialDashboardScreen extends ConsumerWidget {
     required String route,
   }) {
     return Card(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -279,11 +279,11 @@ class FinancialDashboardScreen extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(icon, color: AppColors.primary, size: 22),
-              const SizedBox(height: 8),
+              SizedBox(height: 8),
               Text(
                 label,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
               ),
             ],
           ),
@@ -298,11 +298,11 @@ class FinancialDashboardScreen extends ConsumerWidget {
       children: [
         Text(
           '${val.toStringAsFixed(2)} ر.س',
-          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
         ),
         Text(
           label,
-          style: const TextStyle(fontSize: 13, color: AppColors.onSurfaceVariant),
+          style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurfaceVariant),
         ),
       ],
     );

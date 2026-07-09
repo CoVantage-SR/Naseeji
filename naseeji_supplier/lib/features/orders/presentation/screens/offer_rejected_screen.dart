@@ -17,18 +17,18 @@ class OfferRejectedScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFFBFBFD),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'تفاصيل العرض',
           style: TextStyle(
-            color: AppColors.onSurface,
+            color: Theme.of(context).colorScheme.onSurface,
             fontWeight: FontWeight.bold,
             fontSize: 14,
           ),
         ),
-        leading: const Row(
+        leading: Row(
           children:  [
             SizedBox(width: 16),
             Text(
@@ -44,13 +44,13 @@ class OfferRejectedScreen extends ConsumerWidget {
         leadingWidth: 100,
         actions: [
           IconButton(
-            icon: const Icon(Icons.close, color: AppColors.onSurfaceVariant),
+            icon: const Icon(Icons.close, color: Theme.of(context).colorScheme.onSurfaceVariant),
             onPressed: () => context.pop(),
           ),
         ],
       ),
       body: detailsAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+        loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
         error: (err, stack) => Center(child: Text('خطأ: $err')),
         data: (details) {
           return Column(
@@ -62,11 +62,11 @@ class OfferRejectedScreen extends ConsumerWidget {
                   child: Column(
                     children: [
                       RejectionHeader(details: details),
-                      const SizedBox(height: 24),
+                      SizedBox(height: 24),
                       RejectionNotesCard(details: details),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16),
                       SuggestedChangesCard(details: details),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20),
                       Container(
                         width: double.infinity,
                         height: 140,
@@ -93,8 +93,8 @@ class OfferRejectedScreen extends ConsumerWidget {
                           alignment: Alignment.bottomRight,
                           child: Text(
                             details.standardsLabel,
-                            style: const TextStyle(
-                              color: Colors.white,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.surface,
                               fontSize: 11,
                               fontWeight: FontWeight.bold,
                             ),

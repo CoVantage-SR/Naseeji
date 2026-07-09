@@ -23,7 +23,7 @@ class RejectionHeader extends StatelessWidget {
                   color: Color(0xFFFEE2E2),
                   shape: BoxShape.circle,
                 ),
-                child: const Center(
+                child: Center(
                   child: Icon(
                     Icons.cancel,
                     color: Color(0xFFDC2626),
@@ -34,7 +34,7 @@ class RejectionHeader extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
@@ -46,21 +46,21 @@ class RejectionHeader extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 16),
-        const Text(
+        SizedBox(height: 16),
+        Text(
           'تم رفض عرض السعر',
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.bold,
-            color: AppColors.onSurface,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
-        const SizedBox(height: 8),
-        const Text(
+        SizedBox(height: 8),
+        Text(
           'تمت مراجعة عرضك من قبل المصنع الذكي، ولكن لم يتم قبوله في الوقت الحالي.',
           style: TextStyle(
             fontSize: 11,
-            color: AppColors.onSurfaceVariant,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
             height: 1.5,
           ),
           textAlign: TextAlign.center,
@@ -81,7 +81,7 @@ class RejectionNotesCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: const Border(
           top: BorderSide(color: Color(0xFFDC2626), width: 3),
@@ -100,7 +100,7 @@ class RejectionNotesCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const Text(
+              Text(
                 'ملاحظات المصنع',
                 style: TextStyle(
                   fontSize: 12,
@@ -108,7 +108,7 @@ class RejectionNotesCard extends StatelessWidget {
                   color: Color(0xFFDC2626),
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
@@ -119,12 +119,12 @@ class RejectionNotesCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Text(
             details.factoryNotes,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 12,
-              color: AppColors.onSurfaceVariant,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
               height: 1.5,
             ),
             textAlign: TextAlign.left,
@@ -156,7 +156,7 @@ class SuggestedChangesCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const Text(
+              Text(
                 'التغييرات المقترحة',
                 style: TextStyle(
                   fontSize: 12,
@@ -164,7 +164,7 @@ class SuggestedChangesCard extends StatelessWidget {
                   color: Color(0xFF0040E0),
                 ),
               ),
-              const SizedBox(width: 6),
+              SizedBox(width: 6),
               Container(
                 width: 3,
                 height: 14,
@@ -172,7 +172,7 @@ class SuggestedChangesCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           ...details.suggestedChanges.map((change) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 12.0),
@@ -191,7 +191,7 @@ class SuggestedChangesCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: const Color(0xFFF1F1F5)),
       ),
@@ -201,11 +201,11 @@ class SuggestedChangesCard extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant, height: 1.4),
+              style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.4),
               textAlign: TextAlign.end,
             ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Icon(icon, color: const Color(0xFF0040E0), size: 20),
         ],
       ),
@@ -234,7 +234,7 @@ class RejectionActionButtonBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: SafeArea(
         child: Column(
@@ -242,7 +242,7 @@ class RejectionActionButtonBar extends StatelessWidget {
             ElevatedButton.icon(
               onPressed: () => context.push('/create-offer?rfqId=$rfqId'),
               icon: const Icon(Icons.edit_outlined, size: 16, color: Colors.white),
-              label: const Text(
+              label: Text(
                 'تعديل العرض',
                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
               ),
@@ -254,11 +254,11 @@ class RejectionActionButtonBar extends StatelessWidget {
                 minimumSize: const Size(double.infinity, 48),
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             OutlinedButton.icon(
               onPressed: () => context.push('/create-offer?rfqId=$rfqId'),
               icon: const Icon(Icons.send, size: 16, color: Color(0xFF006B5F)),
-              label: const Text(
+              label: Text(
                 'إرسال عرض جديد',
                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF006B5F)),
               ),
@@ -269,22 +269,22 @@ class RejectionActionButtonBar extends StatelessWidget {
                 minimumSize: const Size(double.infinity, 48),
               ),
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton.icon(
                   onPressed: () {},
-                  icon: const Icon(Icons.archive_outlined, color: AppColors.onSurfaceVariant, size: 18),
-                  label: const Text(
+                  icon: const Icon(Icons.archive_outlined, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 18),
+                  label: Text(
                     'أرشفة',
-                    style: TextStyle(color: AppColors.onSurfaceVariant, fontSize: 12, fontWeight: FontWeight.bold),
+                    style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 12, fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 6),
-            const Row(
+            SizedBox(height: 6),
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(

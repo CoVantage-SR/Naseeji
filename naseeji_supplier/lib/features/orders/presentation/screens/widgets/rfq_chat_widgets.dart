@@ -9,11 +9,11 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       elevation: 0.5,
       centerTitle: false,
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+        icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
         onPressed: () => context.pop(),
       ),
       title: Row(
@@ -22,26 +22,26 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const Text(
+              Text(
                 'مصنع الأقمشة المتطور',
                 style: TextStyle(
-                  color: AppColors.onSurface,
+                  color: Theme.of(context).colorScheme.onSurface,
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
                 ),
               ),
-              const SizedBox(height: 2),
+              SizedBox(height: 2),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text(
+                  Text(
                     'نشط الآن',
                     style: TextStyle(
                       color: Color(0xFF16A34A),
                       fontSize: 10,
                     ),
                   ),
-                  const SizedBox(width: 4),
+                  SizedBox(width: 4),
                   Container(
                     width: 6,
                     height: 6,
@@ -54,7 +54,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ],
           ),
-          const SizedBox(width: 10),
+          SizedBox(width: 10),
           Container(
             width: 38,
             height: 38,
@@ -70,7 +70,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.more_vert, color: AppColors.onSurfaceVariant),
+          icon: const Icon(Icons.more_vert, color: Theme.of(context).colorScheme.onSurfaceVariant),
           onPressed: () {},
         ),
       ],
@@ -101,7 +101,7 @@ class RfqChatInfoBar extends StatelessWidget {
               minimumSize: Size.zero,
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
-            child: const Text(
+            child: Text(
               'عرض التفاصيل',
               style: TextStyle(
                 color: Color(0xFF0040E0),
@@ -112,7 +112,7 @@ class RfqChatInfoBar extends StatelessWidget {
           ),
           Text(
             'RFQ #$rfqId - Cotton 100%',
-            style: const TextStyle(
+            style: TextStyle(
               color: Color(0xFF0040E0),
               fontSize: 12,
               fontWeight: FontWeight.bold,
@@ -181,7 +181,7 @@ class ChatMessagesList extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 16),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(color: const Color(0xFF0040E0), width: 1.5),
           ),
@@ -197,7 +197,7 @@ class ChatMessagesList extends StatelessWidget {
                       color: const Color(0xFFE2F9F5),
                       borderRadius: BorderRadius.circular(6),
                     ),
-                    child: const Text(
+                    child: Text(
                       'مراجعة مطلوبة',
                       style: TextStyle(
                         color: Color(0xFF006B5F),
@@ -206,17 +206,17 @@ class ChatMessagesList extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Text(
+                  Text(
                     'تحديث عرض السعر',
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.onSurface,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 14),
+              SizedBox(height: 14),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 decoration: BoxDecoration(
@@ -230,14 +230,14 @@ class ChatMessagesList extends StatelessWidget {
                       children: [
                         Column(
                           children: [
-                            const Text(
+                            Text(
                               'السعر الجديد',
                               style: TextStyle(fontSize: 10, color: AppColors.outline),
                             ),
-                            const SizedBox(height: 4),
+                            SizedBox(height: 4),
                             Text(
                               '${msg.priceUpdateNew!.toStringAsFixed(2)} ريال/م',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFF0040E0),
@@ -247,14 +247,14 @@ class ChatMessagesList extends StatelessWidget {
                         ),
                         Column(
                           children: [
-                            const Text(
+                            Text(
                               'السعر القديم',
                               style: TextStyle(fontSize: 10, color: AppColors.outline),
                             ),
-                            const SizedBox(height: 4),
+                            SizedBox(height: 4),
                             Text(
                               '${msg.priceUpdateOld!.toStringAsFixed(2)} ريال/م',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 13,
                                 decoration: TextDecoration.lineThrough,
                                 color: AppColors.outline,
@@ -264,33 +264,33 @@ class ChatMessagesList extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     const Divider(height: 1, color: Color(0xFFE2E1EF)),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           '${(((msg.priceUpdateOld! - msg.priceUpdateNew!).abs() / msg.priceUpdateOld!) * 100).toStringAsFixed(1)}% توفير للمصنع',
-                          style: const TextStyle(fontSize: 10, color: Color(0xFF006B5F), fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 10, color: Color(0xFF006B5F), fontWeight: FontWeight.bold),
                         ),
                         Text(
                           'الفرق: ${(msg.priceUpdateOld! - msg.priceUpdateNew!).toStringAsFixed(2)} ر.س',
-                          style: const TextStyle(fontSize: 10, color: AppColors.outline),
+                          style: TextStyle(fontSize: 10, color: AppColors.outline),
                         ),
                       ],
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10),
               if (msg.priceUpdateDesc != null)
                 Text(
                   msg.priceUpdateDesc!,
-                  style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+                  style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant),
                   textAlign: TextAlign.end,
                 ),
-              const SizedBox(height: 14),
+              SizedBox(height: 14),
               Row(
                 children: [
                   Expanded(
@@ -304,13 +304,13 @@ class ChatMessagesList extends StatelessWidget {
                         padding: EdgeInsets.zero,
                         minimumSize: const Size(0, 36),
                       ),
-                      child: const Text(
+                      child: Text(
                         'رفض',
                         style: TextStyle(color: AppColors.error, fontSize: 11, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   Expanded(
                     child: OutlinedButton(
                       onPressed: () {
@@ -322,13 +322,13 @@ class ChatMessagesList extends StatelessWidget {
                         padding: EdgeInsets.zero,
                         minimumSize: const Size(0, 36),
                       ),
-                      child: const Text(
+                      child: Text(
                         'مراجعة السجل',
                         style: TextStyle(color: Color(0xFF006B5F), fontSize: 11, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () => context.push('/orders/final-agreement?rfqId=$rfqId'),
@@ -340,7 +340,7 @@ class ChatMessagesList extends StatelessWidget {
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         padding: EdgeInsets.zero,
                       ),
-                      child: const Text(
+                      child: Text(
                         'قبول العقد',
                         style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
                       ),
@@ -381,17 +381,17 @@ class ChatMessagesList extends StatelessWidget {
                       children: [
                         Text(
                           msg.pdfName!,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
-                            color: AppColors.onSurface,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4),
                         if (msg.pdfSize != null)
                           Text(
                             msg.pdfSize!,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 10,
                               color: AppColors.outline,
                             ),
@@ -399,7 +399,7 @@ class ChatMessagesList extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
@@ -415,7 +415,7 @@ class ChatMessagesList extends StatelessWidget {
               padding: const EdgeInsets.only(left: 4, top: 4, bottom: 12),
               child: Text(
                 msg.time,
-                style: const TextStyle(fontSize: 9, color: AppColors.outline),
+                style: TextStyle(fontSize: 9, color: AppColors.outline),
               ),
             ),
           ],
@@ -480,7 +480,7 @@ class ChatMessagesList extends StatelessWidget {
             child: Text(
               msg.content,
               style: TextStyle(
-                color: msg.isOutgoing ? Colors.white : AppColors.onSurface,
+                color: msg.isOutgoing ? Colors.white : Theme.of(context).colorScheme.onSurface,
                 fontSize: 12,
                 height: 1.4,
               ),
@@ -491,7 +491,7 @@ class ChatMessagesList extends StatelessWidget {
             padding: const EdgeInsets.only(left: 4, right: 4, top: 4, bottom: 12),
             child: Text(
               msg.time,
-              style: const TextStyle(fontSize: 9, color: AppColors.outline),
+              style: TextStyle(fontSize: 9, color: AppColors.outline),
             ),
           ),
         ],
@@ -522,15 +522,15 @@ class SuggestedRepliesBar extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   border: Border.all(color: const Color(0xFFE2E1EF)),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
                   reply,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 11,
-                    color: AppColors.onSurfaceVariant,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -563,11 +563,11 @@ class ChatInputField extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             child: IconButton(
-              icon: const Icon(Icons.send_rounded, color: Colors.white, size: 18),
+              icon: const Icon(Icons.send_rounded, color: Theme.of(context).colorScheme.surface, size: 18),
               onPressed: onSend,
             ),
           ),
-          const SizedBox(width: 12),
+          SizedBox(width: 12),
           Expanded(
             child: Container(
               decoration: BoxDecoration(
@@ -578,7 +578,7 @@ class ChatInputField extends StatelessWidget {
                 textDirection: TextDirection.rtl,
                 child: TextField(
                   controller: controller,
-                  style: const TextStyle(fontSize: 13),
+                  style: TextStyle(fontSize: 13),
                   decoration: const InputDecoration(
                     hintText: 'اكتب رسالتك...',
                     hintStyle: TextStyle(color: AppColors.outline, fontSize: 12),

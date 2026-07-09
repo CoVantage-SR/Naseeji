@@ -24,7 +24,7 @@ class LoginScreen extends ConsumerWidget {
             content: Row(
               children: [
                 const Icon(Icons.error_outline, color: Colors.white),
-                const SizedBox(width: 8),
+                SizedBox(width: 8),
                 Expanded(child: Text(next.error.toString())),
               ],
             ),
@@ -47,7 +47,7 @@ class LoginScreen extends ConsumerWidget {
             content: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
                   color: AppColors.outlineVariant.withValues(alpha: 0.5),
@@ -74,13 +74,13 @@ class LoginScreen extends ConsumerWidget {
                       size: 24,
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  SizedBox(width: 12),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Text(
+                        Text(
                           'نسيجي للموردين',
                           style: TextStyle(
                             fontSize: 14,
@@ -88,12 +88,12 @@ class LoginScreen extends ConsumerWidget {
                             color: AppColors.primary,
                           ),
                         ),
-                        const SizedBox(height: 2),
+                        SizedBox(height: 2),
                         Text(
                           'أهلاً بك شريكنا المورد: ${next.value!.name} 👋 تم تسجيل الدخول بنجاح.',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
-                            color: AppColors.onSurfaceVariant,
+                            color: Theme.of(context).colorScheme.onSurfaceVariant,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -147,7 +147,7 @@ class LoginScreen extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Header / Logo
-                    const Text(
+                    Text(
                       'Naseeji',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -156,17 +156,17 @@ class LoginScreen extends ConsumerWidget {
                         color: AppColors.primary,
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    const Text(
+                    SizedBox(height: 8),
+                    Text(
                       'مرحبًا بعودتك',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.onSurfaceVariant,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                     ),
-                    const SizedBox(height: 32),
+                    SizedBox(height: 32),
                     // Login Card
                     Container(
                       padding: const EdgeInsets.all(24),
@@ -189,20 +189,20 @@ class LoginScreen extends ConsumerWidget {
                         child: const LoginForm(),
                       ),
                     ),
-                    const SizedBox(height: 32),
+                    SizedBox(height: 32),
                     // Signup link
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           'ليس لديك حساب؟',
-                          style: TextStyle(color: AppColors.onSurfaceVariant),
+                          style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                         ),
                         TextButton(
                           onPressed: () {
                             context.push('/supplier-type');
                           },
-                          child: const Text(
+                          child: Text(
                             'إنشاء حساب جديد',
                             style: TextStyle(
                               color: AppColors.primary,
@@ -212,15 +212,15 @@ class LoginScreen extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24),
                     // Footer Info
-                    const Text(
+                    Text(
                       'جميع الحقوق محفوظة © 2024 نسيجي',
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 12, color: AppColors.outline),
                     ),
-                    const SizedBox(height: 4),
-                    const Text(
+                    SizedBox(height: 4),
+                    Text(
                       'Version 1.0',
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 12, color: AppColors.outline),

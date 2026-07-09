@@ -78,27 +78,27 @@ class _CustomerRatingWidgetState extends State<CustomerRatingWidget> {
           child: Row(
             children: [
               const Icon(Icons.star_rounded, color: Color(0xFFFFB800), size: 28),
-              const SizedBox(width: 8),
+              SizedBox(width: 8),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     _current.average.toStringAsFixed(1),
-                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.primary),
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.primary),
                   ),
-                  const Text('متوسط التقييم الخاص', style: TextStyle(fontSize: 10, color: AppColors.outline)),
+                  Text('متوسط التقييم الخاص', style: TextStyle(fontSize: 10, color: AppColors.outline)),
                 ],
               ),
               const Spacer(),
               if (!widget.readOnly)
                 TextButton(
                   onPressed: () => widget.onChanged?.call(_current),
-                  child: const Text('حفظ', style: TextStyle(fontWeight: FontWeight.bold)),
+                  child: Text('حفظ', style: TextStyle(fontWeight: FontWeight.bold)),
                 ),
             ],
           ),
         ),
-        const SizedBox(height: 12),
+        SizedBox(height: 12),
         ..._criteria.map((c) => _buildCriterionRow(c.$1, c.$2)),
       ],
     );
@@ -114,7 +114,7 @@ class _CustomerRatingWidgetState extends State<CustomerRatingWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(label, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.onSurface)),
+              Text(label, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface)),
               Row(
                 children: List.generate(5, (i) {
                   final filled = i < value.round();
@@ -132,10 +132,10 @@ class _CustomerRatingWidgetState extends State<CustomerRatingWidget> {
               ),
             ],
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4),
           LinearProgressIndicator(
             value: value / 5.0,
-            backgroundColor: AppColors.surfaceContainerLow,
+            backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
             valueColor: AlwaysStoppedAnimation<Color>(_getBarColor(value)),
             borderRadius: BorderRadius.circular(4),
             minHeight: 6,

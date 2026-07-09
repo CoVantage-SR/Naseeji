@@ -63,12 +63,12 @@ class _OrderCenterScreenState extends ConsumerState<OrderCenterScreen> with Sing
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         centerTitle: true,
         title: Column(
           children: [
-            const Text(
+            Text(
               'مركز إدارة الطلبات الموحد B2B',
               style: TextStyle(
                 color: AppColors.primary,
@@ -76,10 +76,10 @@ class _OrderCenterScreenState extends ConsumerState<OrderCenterScreen> with Sing
                 fontSize: 14,
               ),
             ),
-            const SizedBox(height: 2),
+            SizedBox(height: 2),
             Text(
               'RFQ #${widget.rfqId}',
-              style: const TextStyle(
+              style: TextStyle(
                 color: AppColors.outline,
                 fontSize: 10,
               ),
@@ -87,16 +87,16 @@ class _OrderCenterScreenState extends ConsumerState<OrderCenterScreen> with Sing
           ],
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
         bottom: TabBar(
           controller: _tabController,
           isScrollable: true,
           labelColor: const Color(0xFF0040E0),
-          unselectedLabelColor: AppColors.onSurfaceVariant,
+          unselectedLabelColor: Theme.of(context).colorScheme.onSurfaceVariant,
           indicatorColor: const Color(0xFF0040E0),
-          labelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+          labelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
           tabs: tabTitles.map((title) => Tab(text: title)).toList(),
         ),
       ),
@@ -154,19 +154,19 @@ class _OrderCenterScreenState extends ConsumerState<OrderCenterScreen> with Sing
         children: [
           // B2B Stats Grid card
           _buildB2BAnalyticsCard(),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Action: Repeat Order
           _buildRepeatOrderCard(),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Embedded RFQ Specs Summary Card
-          const Text('مواصفات طلب المشتري الأصلية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 12),
+          Text('مواصفات طلب المشتري الأصلية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 12),
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(color: const Color(0xFFE2E1EF)),
             ),
@@ -174,11 +174,11 @@ class _OrderCenterScreenState extends ConsumerState<OrderCenterScreen> with Sing
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 _buildOverviewRow('نوع القماش المطلوب', 'قطن 100% طبيعي'),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 _buildOverviewRow('الكمية الإجمالية', '5,000 متر'),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 _buildOverviewRow('اللون والمواصفات الفنية', 'أزرق داكن Indigo | وزن 180 GSM'),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 _buildOverviewRow('وجهة الشحن والتسليم', 'مستودعات الرياض الصناعية'),
               ],
             ),
@@ -193,32 +193,32 @@ class _OrderCenterScreenState extends ConsumerState<OrderCenterScreen> with Sing
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('تحليلات زمن المعالجة B2B', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFF0040E0))),
-          const SizedBox(height: 12),
+          Text('تحليلات زمن المعالجة B2B', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFF0040E0))),
+          SizedBox(height: 12),
           const Divider(height: 1, color: Color(0xFFF1F1F5)),
-          const SizedBox(height: 14),
+          SizedBox(height: 14),
           _buildOverviewRow('زمن المفاوضات المالية', 'ساعتان و15 دقيقة'),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           _buildOverviewRow('عدد مراجعات العرض المتبادلة', '3 مراجعات مقترحة'),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           _buildOverviewRow('زمن إصدار الموافقة للمصنع', 'أقل من ساعة'),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           _buildOverviewRow('مدة إنتاج الطلبية الفعلي', '5 أيام عمل'),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           _buildOverviewRow('زمن الشحن اللوجستي والتسليم', '2 يوم عمل'),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           _buildOverviewRow('تأخير السداد المالي للضمان', 'تلقائي فوري (0 يوم delay)'),
-          const SizedBox(height: 14),
+          SizedBox(height: 14),
           const Divider(height: 1, color: Color(0xFFF1F1F5)),
-          const SizedBox(height: 14),
-          const Row(
+          SizedBox(height: 14),
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
@@ -238,21 +238,21 @@ class _OrderCenterScreenState extends ConsumerState<OrderCenterScreen> with Sing
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('إعادة طلب المنتجات (Repeat Order)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 4),
-          const Text('نسخ تفاصيل هذا الطلب بالكامل لإنشاء طلب جديد بشكل فوري.', style: TextStyle(fontSize: 10, color: AppColors.outline)),
-          const SizedBox(height: 14),
+          Text('إعادة طلب المنتجات (Repeat Order)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 4),
+          Text('نسخ تفاصيل هذا الطلب بالكامل لإنشاء طلب جديد بشكل فوري.', style: TextStyle(fontSize: 10, color: AppColors.outline)),
+          SizedBox(height: 14),
           ElevatedButton.icon(
             onPressed: () => _showRepeatOrderDialog(context),
             icon: const Icon(Icons.replay_rounded, size: 16, color: Colors.white),
-            label: const Text('تكرار هذا الطلب الآن', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white)),
+            label: Text('تكرار هذا الطلب الآن', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white)),
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF0040E0),
               elevation: 0,
@@ -270,8 +270,8 @@ class _OrderCenterScreenState extends ConsumerState<OrderCenterScreen> with Sing
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('تكرار طلب الشراء', textAlign: TextAlign.center, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-        content: const Column(
+        title: Text('تكرار طلب الشراء', textAlign: TextAlign.center, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+        content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -285,7 +285,7 @@ class _OrderCenterScreenState extends ConsumerState<OrderCenterScreen> with Sing
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('إلغاء')),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text('إلغاء')),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
@@ -293,7 +293,7 @@ class _OrderCenterScreenState extends ConsumerState<OrderCenterScreen> with Sing
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم تكرار الطلب وفتح المسودة للمراجعة')));
             },
             style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF0040E0), foregroundColor: Colors.white),
-            child: const Text('تكرار ومراجعة'),
+            child: Text('تكرار ومراجعة'),
           ),
         ],
       ),
@@ -379,10 +379,10 @@ class _OrderCenterScreenState extends ConsumerState<OrderCenterScreen> with Sing
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم تصدير الخط الزمني للطلب بصيغة PDF بنجاح')));
                 },
               ),
-              const Text('سجل المتابعة والتدقيق الزمني للطلب', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+              Text('سجل المتابعة والتدقيق الزمني للطلب', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           CompleteTimelineWidget(steps: mockTimelineSteps),
         ],
       ),
@@ -393,9 +393,9 @@ class _OrderCenterScreenState extends ConsumerState<OrderCenterScreen> with Sing
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Expanded(child: Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.left)),
-        const SizedBox(width: 10),
-        Text('$label:', style: const TextStyle(fontSize: 11, color: AppColors.outline)),
+        Expanded(child: Text(value, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.left)),
+        SizedBox(width: 10),
+        Text('$label:', style: TextStyle(fontSize: 11, color: AppColors.outline)),
       ],
     );
   }

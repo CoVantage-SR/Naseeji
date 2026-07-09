@@ -43,10 +43,10 @@ class _SearchMessagesScreenState extends ConsumerState<SearchMessagesScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.onSurface),
+          icon: const Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
           onPressed: () => context.pop(),
         ),
         title: TextField(
@@ -54,7 +54,7 @@ class _SearchMessagesScreenState extends ConsumerState<SearchMessagesScreen> {
           autofocus: true,
           textAlign: TextAlign.right,
           onChanged: (v) => setState(() => _searchQuery = v),
-          style: const TextStyle(fontSize: 15),
+          style: TextStyle(fontSize: 15),
           decoration: const InputDecoration(
             hintText: 'بحث في المحادثة...',
             hintStyle: TextStyle(fontSize: 14, color: AppColors.outline),
@@ -77,7 +77,7 @@ class _SearchMessagesScreenState extends ConsumerState<SearchMessagesScreen> {
         children: [
           // Filter chips
           Container(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             padding: const EdgeInsets.fromLTRB(12, 6, 12, 10),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -87,7 +87,7 @@ class _SearchMessagesScreenState extends ConsumerState<SearchMessagesScreen> {
                   return Padding(
                     padding: const EdgeInsets.only(left: 6),
                     child: FilterChip(
-                      label: Text(f, style: TextStyle(fontSize: 12, color: isSelected ? Colors.white : AppColors.onSurface)),
+                      label: Text(f, style: TextStyle(fontSize: 12, color: isSelected ? Colors.white : Theme.of(context).colorScheme.onSurface)),
                       selected: isSelected,
                       onSelected: (_) async {
                         setState(() => _selectedFilter = f);
@@ -103,7 +103,7 @@ class _SearchMessagesScreenState extends ConsumerState<SearchMessagesScreen> {
                                   colorScheme: const ColorScheme.light(
                                     primary: AppColors.primary,
                                     onPrimary: Colors.white,
-                                    onSurface: AppColors.onSurface,
+                                    onSurface: Theme.of(context).colorScheme.onSurface,
                                   ),
                                 ),
                                 child: child!,
@@ -122,7 +122,7 @@ class _SearchMessagesScreenState extends ConsumerState<SearchMessagesScreen> {
                         }
                       },
                       selectedColor: AppColors.primary,
-                      backgroundColor: AppColors.surfaceContainerLow,
+                      backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
                       showCheckmark: false,
                       side: BorderSide.none,
                     ),
@@ -131,7 +131,7 @@ class _SearchMessagesScreenState extends ConsumerState<SearchMessagesScreen> {
               ),
             ),
           ),
-          const SizedBox(height: 1),
+          SizedBox(height: 1),
           // Body
           Expanded(
             child: _searchQuery.isEmpty
@@ -144,7 +144,7 @@ class _SearchMessagesScreenState extends ConsumerState<SearchMessagesScreen> {
                     onRemove: (q) => setState(() => _recentSearches.remove(q)),
                   )
                 : messagesAsync.when(
-                    loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+                    loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
                     error: (e, _) => Center(child: Text('خطأ: $e')),
                     data: (messages) {
                       final results = messages.where((m) {
@@ -188,14 +188,14 @@ class _SearchMessagesScreenState extends ConsumerState<SearchMessagesScreen> {
                             padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
                             child: Text(
                               '${results.length} نتيجة لـ "$_searchQuery"',
-                              style: const TextStyle(fontSize: 12, color: AppColors.outline),
+                              style: TextStyle(fontSize: 12, color: AppColors.outline),
                             ),
                           ),
                           Expanded(
                             child: ListView.separated(
                               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                               itemCount: results.length,
-                              separatorBuilder: (_, __) => const SizedBox(height: 8),
+                              separatorBuilder: (_, __) => SizedBox(height: 8),
                               itemBuilder: (_, i) => _SearchResultCard(
                                 message: results[i],
                                 query: _searchQuery,
@@ -228,7 +228,7 @@ class _SearchResultCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 4)],
       ),
@@ -237,31 +237,31 @@ class _SearchResultCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text(message.time, style: const TextStyle(fontSize: 10, color: AppColors.outline)),
+              Text(message.time, style: TextStyle(fontSize: 10, color: AppColors.outline)),
               const Spacer(),
               Text(
                 message.isOutgoing ? 'مورد نسيجي' : message.senderName,
-                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.primary),
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.primary),
               ),
             ],
           ),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           hasHighlight
               ? RichText(
                   textDirection: TextDirection.rtl,
                   text: TextSpan(
-                    style: const TextStyle(fontSize: 13, color: AppColors.onSurface),
+                    style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurface),
                     children: [
                       TextSpan(text: content.substring(0, idx)),
                       TextSpan(
                         text: content.substring(idx, idx + query.length),
-                        style: const TextStyle(backgroundColor: Color(0xFFFFE58F), fontWeight: FontWeight.bold),
+                        style: TextStyle(backgroundColor: Color(0xFFFFE58F), fontWeight: FontWeight.bold),
                       ),
                       TextSpan(text: content.substring(idx + query.length)),
                     ],
                   ),
                 )
-              : Text(content, style: const TextStyle(fontSize: 13, color: AppColors.onSurface)),
+              : Text(content, style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurface)),
         ],
       ),
     );
@@ -278,12 +278,12 @@ class _RecentSearches extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (searches.isEmpty) {
-      return const Center(child: Text('لا توجد عمليات بحث سابقة', style: TextStyle(color: AppColors.outline)));
+      return Center(child: Text('لا توجد عمليات بحث سابقة', style: TextStyle(color: AppColors.outline)));
     }
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text('عمليات البحث الأخيرة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
@@ -291,17 +291,17 @@ class _RecentSearches extends StatelessWidget {
             Icon(Icons.history, size: 16, color: AppColors.outline),
           ],
         ),
-        const SizedBox(height: 10),
+        SizedBox(height: 10),
         Wrap(
           alignment: WrapAlignment.end,
           spacing: 8,
           runSpacing: 6,
           children: searches.map((s) => InputChip(
-            label: Text(s, style: const TextStyle(fontSize: 12)),
+            label: Text(s, style: TextStyle(fontSize: 12)),
             onPressed: () => onTap(s),
             deleteIcon: const Icon(Icons.close, size: 14),
             onDeleted: () => onRemove(s),
-            backgroundColor: AppColors.surfaceContainerLow,
+            backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
             side: BorderSide.none,
           )).toList(),
         ),
@@ -321,10 +321,10 @@ class _EmptyResults extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Icon(Icons.search_off, size: 64, color: AppColors.outlineVariant),
-          const SizedBox(height: 12),
-          Text('لا توجد نتائج لـ "$query"', style: const TextStyle(fontSize: 15, color: AppColors.outline)),
-          const SizedBox(height: 6),
-          const Text('جرب كلمات مختلفة', style: TextStyle(fontSize: 12, color: AppColors.outline)),
+          SizedBox(height: 12),
+          Text('لا توجد نتائج لـ "$query"', style: TextStyle(fontSize: 15, color: AppColors.outline)),
+          SizedBox(height: 6),
+          Text('جرب كلمات مختلفة', style: TextStyle(fontSize: 12, color: AppColors.outline)),
         ],
       ),
     );

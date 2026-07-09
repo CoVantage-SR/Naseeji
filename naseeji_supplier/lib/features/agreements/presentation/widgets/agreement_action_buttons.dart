@@ -15,7 +15,7 @@ class AgreementActionButtons extends ConsumerWidget {
     // 1. Pending Approval
     if (a.status == AgreementStatus.pendingApproval) {
       return Container(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         child: Row(
           children: [
@@ -28,10 +28,10 @@ class AgreementActionButtons extends ConsumerWidget {
                   minimumSize: const Size(0, 42),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
-                child: const Text('رفض وإلغاء', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                child: Text('رفض وإلغاء', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
               ),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8),
             Expanded(
               child: OutlinedButton(
                 onPressed: () => _showModificationDialog(context, ref, a.id),
@@ -41,10 +41,10 @@ class AgreementActionButtons extends ConsumerWidget {
                   minimumSize: const Size(0, 42),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
-                child: const Text('طلب تعديل البنود', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                child: Text('طلب تعديل البنود', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
               ),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8),
             Expanded(
               child: ElevatedButton(
                 onPressed: () async {
@@ -58,7 +58,7 @@ class AgreementActionButtons extends ConsumerWidget {
                   minimumSize: const Size(0, 42),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
-                child: const Text('توقيع واعتماد العقد', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                child: Text('توقيع واعتماد العقد', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
               ),
             ),
           ],
@@ -69,7 +69,7 @@ class AgreementActionButtons extends ConsumerWidget {
     // 2. Active
     if (a.status == AgreementStatus.active) {
       return Container(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         child: Row(
           children: [
@@ -79,7 +79,7 @@ class AgreementActionButtons extends ConsumerWidget {
                   context.push('/chat/business-chat?factoryName=${Uri.encodeComponent(a.factoryInfo.factoryName)}');
                 },
                 icon: const Icon(Icons.chat_outlined, size: 14),
-                label: const Text('محادثة المشتري', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                label: Text('محادثة المشتري', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.primary,
                   side: const BorderSide(color: AppColors.primary),
@@ -88,14 +88,14 @@ class AgreementActionButtons extends ConsumerWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8),
             Expanded(
               child: OutlinedButton.icon(
                 onPressed: () {
                   context.push('/shipping');
                 },
                 icon: const Icon(Icons.local_shipping_outlined, size: 14),
-                label: const Text('تفاصيل الشحن', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                label: Text('تفاصيل الشحن', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.secondary,
                   side: const BorderSide(color: AppColors.secondary),
@@ -104,14 +104,14 @@ class AgreementActionButtons extends ConsumerWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8),
             Expanded(
               child: ElevatedButton.icon(
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم تنزيل العقد المعتمد والموثق كملف PDF.')));
                 },
                 icon: const Icon(Icons.download_outlined, size: 14),
-                label: const Text('تنزيل العقد الموثق', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                label: Text('تنزيل العقد الموثق', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF0040E0),
                   foregroundColor: Colors.white,
@@ -128,7 +128,7 @@ class AgreementActionButtons extends ConsumerWidget {
     // 3. Completed
     if (a.status == AgreementStatus.completed) {
       return Container(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Row(
           children: [
@@ -141,10 +141,10 @@ class AgreementActionButtons extends ConsumerWidget {
                   minimumSize: const Size(0, 44),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
-                child: const Text('تقييم المشتري والمصنع', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+                child: Text('تقييم المشتري والمصنع', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
               ),
             ),
-            const SizedBox(width: 10),
+            SizedBox(width: 10),
             Expanded(
               child: ElevatedButton(
                 onPressed: () {
@@ -156,7 +156,7 @@ class AgreementActionButtons extends ConsumerWidget {
                   minimumSize: const Size(0, 44),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
-                child: const Text('إعادة طلب التوريد (Reorder)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+                child: Text('إعادة طلب التوريد (Reorder)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
               ),
             ),
           ],
@@ -167,7 +167,7 @@ class AgreementActionButtons extends ConsumerWidget {
     // 4. Cancelled / Expired
     if (a.status == AgreementStatus.cancelled) {
       return Container(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Row(
           children: [
@@ -182,7 +182,7 @@ class AgreementActionButtons extends ConsumerWidget {
                   minimumSize: const Size(0, 44),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
-                child: const Text('الاتصال بالمشتري للتسوية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
+                child: Text('الاتصال بالمشتري للتسوية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11)),
               ),
             ),
           ],
@@ -200,14 +200,14 @@ class AgreementActionButtons extends ConsumerWidget {
       builder: (ctx) => Directionality(
         textDirection: TextDirection.rtl,
         child: AlertDialog(
-          title: const Text('رفض وتجميد الاتفاقية', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+          title: Text('رفض وتجميد الاتفاقية', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
           content: TextField(
             controller: reasonController,
             decoration: const InputDecoration(labelText: 'سبب الرفض والتراجع عن الاتفاقية'),
             maxLines: 2,
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+            TextButton(onPressed: () => Navigator.pop(ctx), child: Text('إلغاء')),
             ElevatedButton(
               onPressed: () async {
                 if (reasonController.text.isNotEmpty) {
@@ -218,7 +218,7 @@ class AgreementActionButtons extends ConsumerWidget {
                   messenger.showSnackBar(const SnackBar(content: Text('تم رفض وإلغاء مسودة الاتفاقية.')));
                 }
               },
-              child: const Text('تأكيد الرفض'),
+              child: Text('تأكيد الرفض'),
             ),
           ],
         ),
@@ -233,14 +233,14 @@ class AgreementActionButtons extends ConsumerWidget {
       builder: (ctx) => Directionality(
         textDirection: TextDirection.rtl,
         child: AlertDialog(
-          title: const Text('طلب تعديل بنود العقد والاتفاقية', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+          title: Text('طلب تعديل بنود العقد والاتفاقية', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
           content: TextField(
             controller: notesController,
             decoration: const InputDecoration(labelText: 'الملاحظات والبنود المراد تعديلها'),
             maxLines: 3,
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+            TextButton(onPressed: () => Navigator.pop(ctx), child: Text('إلغاء')),
             ElevatedButton(
               onPressed: () async {
                 if (notesController.text.isNotEmpty) {
@@ -251,7 +251,7 @@ class AgreementActionButtons extends ConsumerWidget {
                   messenger.showSnackBar(const SnackBar(content: Text('تم إرسال طلب التعديل للمشتري وتحديث نسخة المسودة.')));
                 }
               },
-              child: const Text('إرسال طلب التعديل'),
+              child: Text('إرسال طلب التعديل'),
             ),
           ],
         ),
@@ -267,7 +267,7 @@ class AgreementActionButtons extends ConsumerWidget {
         builder: (ctx, setDialogState) => Directionality(
           textDirection: TextDirection.rtl,
           child: AlertDialog(
-            title: Text('تقييم المشتري: $name', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+            title: Text('تقييم المشتري: $name', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
             content: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(5, (index) => IconButton(
@@ -280,13 +280,13 @@ class AgreementActionButtons extends ConsumerWidget {
               )),
             ),
             actions: [
-              TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+              TextButton(onPressed: () => Navigator.pop(ctx), child: Text('إلغاء')),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pop(ctx);
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('شكرًا لتقييمك لمصنع المشتري في نسيجي.')));
                 },
-                child: const Text('تقديم التقييم'),
+                child: Text('تقديم التقييم'),
               ),
             ],
           ),

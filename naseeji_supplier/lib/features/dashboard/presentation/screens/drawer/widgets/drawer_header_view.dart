@@ -11,7 +11,7 @@ class DrawerHeaderView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 48, 16, 20),
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -20,7 +20,7 @@ class DrawerHeaderView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               IconButton(
-                icon: const Icon(Icons.close, color: AppColors.onSurfaceVariant),
+                icon: const Icon(Icons.close, color: Theme.of(context).colorScheme.onSurfaceVariant),
                 onPressed: () => Navigator.pop(context),
               ),
               Container(
@@ -39,36 +39,36 @@ class DrawerHeaderView extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           Row(
             children: [
               Text(
                 profile.companyName,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: AppColors.primary,
                 ),
               ),
-              const SizedBox(width: 6),
+              SizedBox(width: 6),
               const Icon(Icons.verified, color: AppColors.secondary, size: 18),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Row(
             children: [
-              const Text(
+              Text(
                 'معرف: #77421',
-                style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant),
+                style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
                   color: AppColors.secondaryContainer.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Text(
+                child: Text(
                   'عضوية بلاتينية',
                   style: TextStyle(
                     fontSize: 10,

@@ -15,20 +15,20 @@ class FinancialAnalyticsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'التحليلات والمؤشرات المالية',
-          style: TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
       body: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
         child: analyticsAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (err, stack) => Center(child: Text('خطأ: $err')),
           data: (data) {
             return RefreshIndicator(
@@ -41,12 +41,12 @@ class FinancialAnalyticsScreen extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Summary grid
-                    const Text(
+                    Text(
                       'مؤشرات الأداء المالي الرئيسيّة (KPIs)',
                       textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
                     GridView.count(
                       crossAxisCount: 2,
                       shrinkWrap: true,
@@ -82,13 +82,13 @@ class FinancialAnalyticsScreen extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
 
                     // Additional KPIs card
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                       ),
@@ -104,7 +104,7 @@ class FinancialAnalyticsScreen extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
 
                     // Charts
                     FinancialChartWidget(
@@ -112,14 +112,14 @@ class FinancialAnalyticsScreen extends ConsumerWidget {
                       data: data.revenueTrend,
                       type: 'bar',
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     FinancialChartWidget(
                       title: 'التدفقات النقدية اليومية (صادر / وارد)',
                       data: data.cashFlow,
                       type: 'double_bar',
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     FinancialChartWidget(
                       title: 'توزيع المبيعات بحسب فئة المنتج',
@@ -142,15 +142,15 @@ class FinancialAnalyticsScreen extends ConsumerWidget {
       children: [
         Text(
           value,
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
         ),
         Row(
           children: [
             Text(
               label,
-              style: const TextStyle(fontSize: 13, color: AppColors.onSurfaceVariant),
+              style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurfaceVariant),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8),
             Icon(icon, color: color, size: 18),
           ],
         ),

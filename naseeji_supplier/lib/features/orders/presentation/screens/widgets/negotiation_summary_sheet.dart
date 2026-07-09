@@ -22,7 +22,7 @@ class NegotiationSummarySheet extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(24),
           topRight: Radius.circular(24),
@@ -42,28 +42,28 @@ class NegotiationSummarySheet extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 16),
-          const Center(
+          SizedBox(height: 16),
+          Center(
             child: Text(
               'ملخص المفاوضات المالية',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: AppColors.onSurface,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
 
           // Compare prices
           _buildItemRow('العرض المبدئي للمورد', '${originalPrice.toStringAsFixed(2)} ر.س / متر'),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           _buildItemRow('عرض التفاوض الأول للمصنع', '13.50 ر.س / متر'),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           _buildItemRow('السعر النهائي المتفق عليه', '${finalPrice.toStringAsFixed(2)} ر.س / متر', isHighlight: true),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           const Divider(height: 1, color: Color(0xFFF1F1F5)),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
 
           // Analysis Card
           Container(
@@ -76,14 +76,14 @@ class NegotiationSummarySheet extends StatelessWidget {
             child: Column(
               children: [
                 _buildAnalysisRow('نسبة الخصم النهائي', '${diffPercent.toStringAsFixed(1)}%', isDiscount: true),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 _buildAnalysisRow('إجمالي التوفير للمصنع', '${savingsAmount.toStringAsFixed(2)} ر.س', isDiscount: true),
-                const SizedBox(height: 10),
+                SizedBox(height: 10),
                 _buildAnalysisRow('حالة الاعتماد للاتفاقية', status, statusColor: const Color(0xFF16A34A)),
               ],
             ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
           ElevatedButton(
             onPressed: () => Navigator.pop(context),
             style: ElevatedButton.styleFrom(
@@ -95,12 +95,12 @@ class NegotiationSummarySheet extends StatelessWidget {
               ),
               elevation: 0,
             ),
-            child: const Text(
+            child: Text(
               'إغلاق',
               style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
             ),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
         ],
       ),
     );
@@ -115,14 +115,14 @@ class NegotiationSummarySheet extends StatelessWidget {
           style: TextStyle(
             fontSize: 12,
             fontWeight: isHighlight ? FontWeight.bold : FontWeight.normal,
-            color: isHighlight ? const Color(0xFF0040E0) : AppColors.onSurface,
+            color: isHighlight ? const Color(0xFF0040E0) : Theme.of(context).colorScheme.onSurface,
           ),
         ),
         Text(
           label,
           style: TextStyle(
             fontSize: 12,
-            color: isHighlight ? AppColors.onSurface : AppColors.outline,
+            color: isHighlight ? Theme.of(context).colorScheme.onSurface : AppColors.outline,
           ),
         ),
       ],
@@ -138,12 +138,12 @@ class NegotiationSummarySheet extends StatelessWidget {
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.bold,
-            color: statusColor ?? (isDiscount ? const Color(0xFF006B5F) : AppColors.onSurface),
+            color: statusColor ?? (isDiscount ? const Color(0xFF006B5F) : Theme.of(context).colorScheme.onSurface),
           ),
         ),
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 11,
             color: AppColors.outline,
           ),

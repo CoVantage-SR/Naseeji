@@ -23,7 +23,7 @@ class CreateAccountScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text(
+              Text(
                 'إنشاء حساب',
                 style: TextStyle(
                   fontSize: 24,
@@ -31,29 +31,29 @@ class CreateAccountScreen extends ConsumerWidget {
                   color: AppColors.primary,
                 ),
               ),
-              const SizedBox(height: 4),
-              const Text(
+              SizedBox(height: 4),
+              Text(
                 'أدخل بيانات الشركة للبدء في رحلة التوريد الذكي',
                 style: TextStyle(
                   fontSize: 13,
-                  color: AppColors.onSurfaceVariant,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
               const CreateAccountForm(),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     'لديك حساب بالفعل؟',
-                    style: TextStyle(color: AppColors.onSurfaceVariant),
+                    style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
                   ),
                   TextButton(
                     onPressed: () {
                       context.go('/login');
                     },
-                    child: const Text(
+                    child: Text(
                       'تسجيل الدخول',
                       style: TextStyle(
                         color: AppColors.primary,
@@ -71,12 +71,12 @@ class CreateAccountScreen extends ConsumerWidget {
 
     Widget brandingContent() {
       return Container(
-        color: AppColors.surfaceContainerLow,
+        color: Theme.of(context).colorScheme.surfaceContainerLow,
         padding: const EdgeInsets.all(32),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Naseeji',
               style: TextStyle(
                 fontSize: 28,
@@ -84,17 +84,17 @@ class CreateAccountScreen extends ConsumerWidget {
                 color: AppColors.primary,
               ),
             ),
-            const SizedBox(height: 8),
-            const Text(
+            SizedBox(height: 8),
+            Text(
               'الرابط الذكي بين الموردين ومصانع النسيج المستقبلية.',
               style: TextStyle(
                 fontSize: 14,
-                color: AppColors.onSurfaceVariant,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
                 height: 1.5,
               ),
             ),
             const Spacer(),
-            const Row(
+            Row(
               children: [
                 Icon(Icons.verified, color: AppColors.secondary, size: 20),
                 SizedBox(width: 8),
@@ -104,8 +104,8 @@ class CreateAccountScreen extends ConsumerWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
-            const Row(
+            SizedBox(height: 12),
+            Row(
               children: [
                 Icon(Icons.bolt, color: AppColors.secondary, size: 20),
                 SizedBox(width: 8),

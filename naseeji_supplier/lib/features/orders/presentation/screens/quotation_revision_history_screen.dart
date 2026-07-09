@@ -34,10 +34,10 @@ class _QuotationRevisionHistoryScreenState extends ConsumerState<QuotationRevisi
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'سجل مراجعات العروض',
           style: TextStyle(
             color: AppColors.primary,
@@ -46,12 +46,12 @@ class _QuotationRevisionHistoryScreenState extends ConsumerState<QuotationRevisi
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
       body: historyAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+        loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
         error: (err, stack) => Center(child: Text('خطأ: $err')),
         data: (history) {
           return Column(
@@ -71,17 +71,17 @@ class _QuotationRevisionHistoryScreenState extends ConsumerState<QuotationRevisi
               // Compare Selector Panel
               if (history.length >= 2)
                 Container(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   padding: const EdgeInsets.all(16),
                   child: SafeArea(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        const Text(
+                        Text(
                           'قارن بين نسختين من العرض',
                           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
                         ),
-                        const SizedBox(height: 12),
+                        SizedBox(height: 12),
                         Row(
                           children: [
                             Expanded(
@@ -93,9 +93,9 @@ class _QuotationRevisionHistoryScreenState extends ConsumerState<QuotationRevisi
                                 ),
                                 child: DropdownButton<int>(
                                   value: selectedVer2,
-                                  hint: const Text('النسخة الثانية', style: TextStyle(fontSize: 12)),
+                                  hint: Text('النسخة الثانية', style: TextStyle(fontSize: 12)),
                                   isExpanded: true,
-                                  underline: const SizedBox(),
+                                  underline: SizedBox(),
                                   items: history
                                       .where((e) => e.versionNumber != selectedVer1)
                                       .map((e) => DropdownMenuItem(
@@ -111,7 +111,7 @@ class _QuotationRevisionHistoryScreenState extends ConsumerState<QuotationRevisi
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 12),
+                            SizedBox(width: 12),
                             Expanded(
                               child: Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -121,9 +121,9 @@ class _QuotationRevisionHistoryScreenState extends ConsumerState<QuotationRevisi
                                 ),
                                 child: DropdownButton<int>(
                                   value: selectedVer1,
-                                  hint: const Text('النسخة الأولى', style: TextStyle(fontSize: 12)),
+                                  hint: Text('النسخة الأولى', style: TextStyle(fontSize: 12)),
                                   isExpanded: true,
-                                  underline: const SizedBox(),
+                                  underline: SizedBox(),
                                   items: history
                                       .where((e) => e.versionNumber != selectedVer2)
                                       .map((e) => DropdownMenuItem(
@@ -141,7 +141,7 @@ class _QuotationRevisionHistoryScreenState extends ConsumerState<QuotationRevisi
                             ),
                           ],
                         ),
-                        const SizedBox(height: 14),
+                        SizedBox(height: 14),
                         ElevatedButton(
                           onPressed: (selectedVer1 != null && selectedVer2 != null) ? _handleCompare : null,
                           style: ElevatedButton.styleFrom(
@@ -153,7 +153,7 @@ class _QuotationRevisionHistoryScreenState extends ConsumerState<QuotationRevisi
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                             elevation: 0,
                           ),
-                          child: const Text('بدء المقارنة الآن', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                          child: Text('بدء المقارنة الآن', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
                         ),
                       ],
                     ),
@@ -177,7 +177,7 @@ class _QuotationRevisionHistoryScreenState extends ConsumerState<QuotationRevisi
           width: isSelected ? 1.5 : 1,
         ),
       ),
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       margin: const EdgeInsets.only(bottom: 12),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -204,22 +204,22 @@ class _QuotationRevisionHistoryScreenState extends ConsumerState<QuotationRevisi
                 ),
                 Text(
                   'مراجعة نسخة رقم #${revision.versionNumber}',
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.onSurface),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Theme.of(context).colorScheme.onSurface),
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            SizedBox(height: 12),
             _buildRowItem('بواسطة', revision.createdBy),
-            const SizedBox(height: 6),
+            SizedBox(height: 6),
             _buildRowItem('التوقيت والاصدار', '${revision.date} في ${revision.time}'),
-            const SizedBox(height: 6),
+            SizedBox(height: 6),
             _buildRowItem('السعر المقترح', '${revision.price.toStringAsFixed(2)} ر.س / م'),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             const Divider(height: 1, color: Color(0xFFF1F1F5)),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Text(
               revision.notes,
-              style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant, height: 1.4),
+              style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.4),
               textAlign: TextAlign.end,
             ),
           ],
@@ -232,9 +232,9 @@ class _QuotationRevisionHistoryScreenState extends ConsumerState<QuotationRevisi
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Text(value, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
-        const SizedBox(width: 8),
-        Text('$label:', style: const TextStyle(fontSize: 11, color: AppColors.outline)),
+        Text(value, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+        SizedBox(width: 8),
+        Text('$label:', style: TextStyle(fontSize: 11, color: AppColors.outline)),
       ],
     );
   }
@@ -256,7 +256,7 @@ class _QuotationRevisionHistoryScreenState extends ConsumerState<QuotationRevisi
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text(
+        title: Text(
           'مقارنة تفاصيل نسختي العرض',
           textAlign: TextAlign.center,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
@@ -269,38 +269,38 @@ class _QuotationRevisionHistoryScreenState extends ConsumerState<QuotationRevisi
               children: [
                 Column(
                   children: [
-                    Text('نسخة ${rev2.versionNumber}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                    const SizedBox(height: 8),
-                    Text('${rev2.price.toStringAsFixed(2)} ر.س', style: const TextStyle(fontSize: 14, color: AppColors.error, fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 4),
-                    Text(rev2.createdBy, style: const TextStyle(fontSize: 10, color: AppColors.outline)),
+                    Text('نسخة ${rev2.versionNumber}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                    SizedBox(height: 8),
+                    Text('${rev2.price.toStringAsFixed(2)} ر.س', style: TextStyle(fontSize: 14, color: AppColors.error, fontWeight: FontWeight.bold)),
+                    SizedBox(height: 4),
+                    Text(rev2.createdBy, style: TextStyle(fontSize: 10, color: AppColors.outline)),
                   ],
                 ),
                 Container(width: 1, height: 60, color: const Color(0xFFE2E1EF)),
                 Column(
                   children: [
-                    Text('نسخة ${rev1.versionNumber}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                    const SizedBox(height: 8),
-                    Text('${rev1.price.toStringAsFixed(2)} ر.س', style: const TextStyle(fontSize: 14, color: Color(0xFF16A34A), fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 4),
-                    Text(rev1.createdBy, style: const TextStyle(fontSize: 10, color: AppColors.outline)),
+                    Text('نسخة ${rev1.versionNumber}', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                    SizedBox(height: 8),
+                    Text('${rev1.price.toStringAsFixed(2)} ر.س', style: TextStyle(fontSize: 14, color: Color(0xFF16A34A), fontWeight: FontWeight.bold)),
+                    SizedBox(height: 4),
+                    Text(rev1.createdBy, style: TextStyle(fontSize: 10, color: AppColors.outline)),
                   ],
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             const Divider(),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Text(
               'الفرق في النسبة: ${(((rev2.price - rev1.price).abs() / rev2.price) * 100).toStringAsFixed(1)}%',
-              style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF0040E0), fontSize: 11),
+              style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF0040E0), fontSize: 11),
             ),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('إغلاق'),
+            child: Text('إغلاق'),
           ),
         ],
       ),

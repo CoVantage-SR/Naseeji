@@ -6,7 +6,7 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text(
@@ -14,7 +14,7 @@ class HomeHeader extends StatelessWidget {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: AppColors.onSurface,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
         SizedBox(height: 2),
@@ -22,7 +22,7 @@ class HomeHeader extends StatelessWidget {
           'نتمنى لك يومًا ناجحًا.',
           style: TextStyle(
             fontSize: 13,
-            color: AppColors.onSurfaceVariant,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
         ),
       ],

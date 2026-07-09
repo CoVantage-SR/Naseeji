@@ -16,10 +16,10 @@ class OfferApprovedScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFFBFBFD),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'Naseeji',
           style: TextStyle(
             color: Color(0xFF0040E0),
@@ -28,18 +28,18 @@ class OfferApprovedScreen extends ConsumerWidget {
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.search, color: AppColors.onSurfaceVariant),
+          icon: const Icon(Icons.search, color: Theme.of(context).colorScheme.onSurfaceVariant),
           onPressed: () {},
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.menu, color: AppColors.onSurfaceVariant),
+            icon: const Icon(Icons.menu, color: Theme.of(context).colorScheme.onSurfaceVariant),
             onPressed: () {},
           ),
         ],
       ),
       body: detailsAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+        loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
         error: (err, stack) => Center(child: Text('خطأ: $err')),
         data: (details) {
           return SingleChildScrollView(
@@ -47,13 +47,13 @@ class OfferApprovedScreen extends ConsumerWidget {
             child: Column(
               children: [
                 ApprovalHeader(details: details),
-                const SizedBox(height: 24),
+                SizedBox(height: 24),
                 OfferSummaryCard(details: details),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 PaymentMethodCard(details: details),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 const NextStepsCard(),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 Container(
                   width: double.infinity,
                   height: 130,
@@ -80,16 +80,16 @@ class OfferApprovedScreen extends ConsumerWidget {
                     alignment: Alignment.bottomRight,
                     child: Text(
                       details.fabricTextureLabel,
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.surface,
                         fontSize: 11,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 24),
-                const Center(
+                SizedBox(height: 24),
+                Center(
                   child: Text(
                     'نظام نسيجي لإدارة الموردين © 2024',
                     style: TextStyle(color: AppColors.outline, fontSize: 10),

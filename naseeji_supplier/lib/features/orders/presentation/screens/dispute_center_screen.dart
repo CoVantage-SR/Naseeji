@@ -28,10 +28,10 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'مركز إدارة النزاعات والشكاوى',
           style: TextStyle(
             color: AppColors.primary,
@@ -40,7 +40,7 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
@@ -52,11 +52,11 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
             if (hasActiveDispute) ...[
               // Active dispute details card
               _buildActiveDisputeCard(),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
 
               // Dispute Timeline
               _buildDisputeTimeline(),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
 
               // Resolution panel
               _buildAdminResolutionPanel(),
@@ -75,7 +75,7 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6)],
       ),
@@ -100,23 +100,23 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
                   ),
                 ),
               ),
-              const Text('نزاع نشط للطلب #8820', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+              Text('نزاع نشط للطلب #8820', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           const Divider(height: 1, color: Color(0xFFF1F1F5)),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           _buildRowItem('سبب النزاع المفتوح', selectedReason),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           _buildRowItem('تاريخ فتح القضية', '06 يوليو 2026'),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           _buildRowItem('المتضرر الرافع', 'مصنع الأقمشة المتطور (المشتري)'),
-          const SizedBox(height: 12),
-          const Text('شرح المشكلة المرفق', style: TextStyle(fontSize: 11, color: AppColors.outline)),
-          const SizedBox(height: 4),
-          const Text(
+          SizedBox(height: 12),
+          Text('شرح المشكلة المرفق', style: TextStyle(fontSize: 11, color: AppColors.outline)),
+          SizedBox(height: 4),
+          Text(
             'هناك اختلاف في جودة الملمس ووزن القماش المورد (الوزن المستلم 160 GSM بينما المتفق عليه بالاتفاقية 180 GSM). نطلب التعويض أو إعادة التعديل.',
-            style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant, height: 1.4),
+            style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.4),
             textAlign: TextAlign.end,
           ),
         ],
@@ -129,15 +129,15 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('خطوات معالجة النزاع والتحقيق', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 16),
+          Text('خطوات معالجة النزاع والتحقيق', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 16),
           _buildTimelineStep('تم فتح النزاع من قبل المصنع المشتري', '06 يوليو 2026 - 09:00 ص', isDone: true),
           _buildTimelineStep('جاري مراجعة الصور والإثباتات المرفقة من الإدارة', '06 يوليو 2026 - 10:15 ص', isDone: true),
           _buildTimelineStep('جاري التحقق من عينات المصنع مع تقرير جودة المورد', '06 يوليو 2026 - الآن', isActive: true),
@@ -165,16 +165,16 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: isDone || isActive ? FontWeight.bold : FontWeight.normal,
-                  color: isFuture ? AppColors.outline : AppColors.onSurface,
+                  color: isFuture ? AppColors.outline : Theme.of(context).colorScheme.onSurface,
                 ),
                 textAlign: TextAlign.end,
               ),
-              Text(time, style: const TextStyle(fontSize: 8, color: AppColors.outline)),
-              const SizedBox(height: 12),
+              Text(time, style: TextStyle(fontSize: 8, color: AppColors.outline)),
+              SizedBox(height: 12),
             ],
           ),
         ),
-        const SizedBox(width: 12),
+        SizedBox(width: 12),
         Container(
           width: 10,
           height: 10,
@@ -190,7 +190,7 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6)],
       ),
@@ -200,8 +200,8 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const Text('رأي الإدارة والحلول المقترحة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF006B5F))),
-              const SizedBox(width: 8),
+              Text('رأي الإدارة والحلول المقترحة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF006B5F))),
+              SizedBox(width: 8),
               Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(color: Color(0xFFE2F9F5), shape: BoxShape.circle),
@@ -209,13 +209,13 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 12),
-          const Text(
+          SizedBox(height: 12),
+          Text(
             'نوصي المورد بتقديم خصم إضافي بنسبة 10% على إجمالي قيمة الطلب لتعويض فرق الجودة المستلمة، أو إعادة شحن الكمية المرفوضة في غضون 5 أيام عمل لتفادي الإجراءات القانونية.',
-            style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant, height: 1.5),
+            style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.5),
             textAlign: TextAlign.end,
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           Row(
             children: [
               Expanded(
@@ -231,10 +231,10 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
                     side: const BorderSide(color: AppColors.error),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   ),
-                  child: const Text('رفض الحل المقترح', style: TextStyle(color: AppColors.error, fontSize: 11)),
+                  child: Text('رفض الحل المقترح', style: TextStyle(color: AppColors.error, fontSize: 11)),
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
@@ -249,7 +249,7 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
                     elevation: 0,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   ),
-                  child: const Text('قبول التسوية المقترحة', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                  child: Text('قبول التسوية المقترحة', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
                 ),
               ),
             ],
@@ -271,17 +271,17 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('فتح قضية نزاع جديدة للطلب', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 16),
-          const Text('سبب تقديم الشكوى', style: TextStyle(fontSize: 11, color: AppColors.outline)),
-          const SizedBox(height: 6),
+          Text('فتح قضية نزاع جديدة للطلب', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 16),
+          Text('سبب تقديم الشكوى', style: TextStyle(fontSize: 11, color: AppColors.outline)),
+          SizedBox(height: 6),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             decoration: BoxDecoration(
@@ -292,9 +292,9 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
               textDirection: TextDirection.rtl,
               child: DropdownButton<String>(
                 value: selectedReason,
-                underline: const SizedBox(),
+                underline: SizedBox(),
                 isExpanded: true,
-                style: const TextStyle(fontSize: 12, color: AppColors.onSurface, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold),
                 items: reasons.map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
                 onChanged: (val) {
                   if (val != null) {
@@ -306,23 +306,23 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
               ),
             ),
           ),
-          const SizedBox(height: 16),
-          const Text('شرح وتفاصيل المشكلة', style: TextStyle(fontSize: 11, color: AppColors.outline)),
-          const SizedBox(height: 6),
+          SizedBox(height: 16),
+          Text('شرح وتفاصيل المشكلة', style: TextStyle(fontSize: 11, color: AppColors.outline)),
+          SizedBox(height: 6),
           TextField(
             controller: _descController,
             maxLines: 4,
             textAlign: TextAlign.end,
-            style: const TextStyle(fontSize: 12),
+            style: TextStyle(fontSize: 12),
             decoration: InputDecoration(
               hintText: 'اكتب وصفاً تفصيلياً للمشكلة الحاصلة والأضرار المترتبة...',
-              hintStyle: const TextStyle(fontSize: 11, color: AppColors.outline),
+              hintStyle: TextStyle(fontSize: 11, color: AppColors.outline),
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: Color(0xFFE2E1EF))),
             ),
           ),
-          const SizedBox(height: 16),
-          const Text('إرفاق المستندات والصور الداعمة للشكوى', style: TextStyle(fontSize: 11, color: AppColors.outline)),
-          const SizedBox(height: 8),
+          SizedBox(height: 16),
+          Text('إرفاق المستندات والصور الداعمة للشكوى', style: TextStyle(fontSize: 11, color: AppColors.outline)),
+          SizedBox(height: 8),
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: 20),
@@ -330,7 +330,7 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
               border: Border.all(color: const Color(0xFFE2E1EF)),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Column(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.cloud_upload_outlined, color: Color(0xFF0040E0), size: 24),
@@ -339,7 +339,7 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
               ],
             ),
           ),
-          const SizedBox(height: 24),
+          SizedBox(height: 24),
           ElevatedButton(
             onPressed: () {
               setState(() {
@@ -355,7 +355,7 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               elevation: 0,
             ),
-            child: const Text('تقديم الشكوى بشكل رسمي', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+            child: Text('تقديم الشكوى بشكل رسمي', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
           ),
         ],
       ),
@@ -366,9 +366,9 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Expanded(child: Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.left)),
-        const SizedBox(width: 10),
-        Text('$label:', style: const TextStyle(fontSize: 11, color: AppColors.outline)),
+        Expanded(child: Text(value, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.left)),
+        SizedBox(width: 10),
+        Text('$label:', style: TextStyle(fontSize: 11, color: AppColors.outline)),
       ],
     );
   }
@@ -403,10 +403,10 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(Icons.check_circle_outline, color: Color(0xFF16A34A), size: 48),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Text(
               message,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
               textAlign: TextAlign.center,
             ),
           ],
@@ -414,7 +414,7 @@ class _DisputeCenterScreenState extends State<DisputeCenterScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('موافق'),
+            child: Text('موافق'),
           ),
         ],
       ),

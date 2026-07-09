@@ -53,11 +53,11 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
-        title: const Text(
+        title: Text(
           'مركز الرسائل',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.onSurface),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
         ),
         centerTitle: true,
         bottom: PreferredSize(
@@ -68,7 +68,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
             labelColor: AppColors.primary,
             unselectedLabelColor: AppColors.outline,
             indicatorColor: AppColors.primary,
-            labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+            labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
             tabs: _tabs.map((t) => Tab(text: t.label)).toList(),
           ),
         ),
@@ -77,7 +77,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
         children: [
           // Search bar
           Container(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.surface,
             padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
             child: TextField(
               controller: _searchController,
@@ -85,7 +85,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
               onChanged: (v) => setState(() => _searchQuery = v),
               decoration: InputDecoration(
                 hintText: 'بحث في المحادثات...',
-                hintStyle: const TextStyle(fontSize: 13, color: AppColors.outline),
+                hintStyle: TextStyle(fontSize: 13, color: AppColors.outline),
                 prefixIcon: const Icon(Icons.search, color: AppColors.outline, size: 20),
                 suffixIcon: _searchQuery.isNotEmpty
                     ? IconButton(
@@ -97,7 +97,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
                       )
                     : null,
                 filled: true,
-                fillColor: AppColors.surfaceContainerLow,
+                fillColor: Theme.of(context).colorScheme.surfaceContainerLow,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(24),
                   borderSide: BorderSide.none,
@@ -109,7 +109,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
           // Body
           Expanded(
             child: stateAsync.when(
-              loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+              loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
               error: (e, _) => Center(child: Text('خطأ: $e')),
               data: (state) {
                 final controller = ref.read(messagesControllerProvider.notifier);
@@ -139,7 +139,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
                           color: AppColors.primary,
                         ),
                         ...pinned.map((conv) => _buildDismissible(conv, context)),
-                        const SizedBox(height: 4),
+                        SizedBox(height: 4),
                       ],
                       // Recent section
                       if (unpinned.isNotEmpty) ...[
@@ -147,7 +147,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
                           const _SectionHeader(icon: Icons.forum_outlined, label: 'المحادثات الأخيرة', color: AppColors.outline),
                         ...unpinned.map((conv) => _buildDismissible(conv, context)),
                       ],
-                      const SizedBox(height: 80),
+                      SizedBox(height: 80),
                     ],
                   ),
                 );
@@ -168,9 +168,9 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
       onTap: () => context.push('/messages/archived'),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          border: Border(bottom: BorderSide(color: AppColors.surfaceContainerLow, width: 1)),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
+          border: Border(bottom: BorderSide(color: Theme.of(context).colorScheme.surfaceContainerLow, width: 1)),
         ),
         child: Row(
           children: [
@@ -182,7 +182,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
               ),
               child: Text(
                 '$archivedCount',
-                style: const TextStyle(
+                style: TextStyle(
                   color: AppColors.primary,
                   fontSize: 11,
                   fontWeight: FontWeight.bold,
@@ -190,15 +190,15 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
               ),
             ),
             const Spacer(),
-            const Text(
+            Text(
               'المحادثات المؤرشفة',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 13,
-                color: AppColors.onSurface,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12),
             const Icon(Icons.archive_outlined, color: AppColors.primary, size: 20),
           ],
         ),
@@ -214,11 +214,11 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
         alignment: Alignment.centerLeft,
         padding: const EdgeInsets.only(left: 20),
         color: Colors.red.shade700,
-        child: const Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.delete_outline, color: Colors.white),
-            Text('حذف', style: TextStyle(color: Colors.white, fontSize: 11)),
+            Text('حذف', style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 11)),
           ],
         ),
       ),
@@ -226,11 +226,11 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 20),
         color: AppColors.primary.withValues(alpha: 0.8),
-        child: const Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.more_horiz, color: Colors.white),
-            Text('خيارات', style: TextStyle(color: Colors.white, fontSize: 11)),
+            Text('خيارات', style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 11)),
           ],
         ),
       ),
@@ -268,14 +268,14 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
     return await showDialog<bool>(
           context: context,
           builder: (ctx) => AlertDialog(
-            title: const Text('حذف المحادثة', textAlign: TextAlign.right),
+            title: Text('حذف المحادثة', textAlign: TextAlign.right),
             content: Text('هل تريد حذف محادثة $name؟', textAlign: TextAlign.right),
             actions: [
-              TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('إلغاء')),
+              TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text('إلغاء')),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                 onPressed: () => Navigator.pop(ctx, true),
-                child: const Text('حذف', style: TextStyle(color: Colors.white)),
+                child: Text('حذف', style: TextStyle(color: Colors.white)),
               ),
             ],
           ),
@@ -312,7 +312,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
             ),
             ListTile(
               leading: const Icon(Icons.mark_chat_read_outlined, color: AppColors.primary),
-              title: const Text('تحديد كمقروء', textAlign: TextAlign.right),
+              title: Text('تحديد كمقروء', textAlign: TextAlign.right),
               onTap: () {
                 ref.read(messagesControllerProvider.notifier).markAsRead(conv.id);
                 Navigator.pop(context);
@@ -320,7 +320,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
             ),
             ListTile(
               leading: const Icon(Icons.archive_outlined, color: AppColors.outline),
-              title: const Text('أرشفة', textAlign: TextAlign.right),
+              title: Text('أرشفة', textAlign: TextAlign.right),
               onTap: () {
                 ref.read(messagesControllerProvider.notifier).archiveConversation(conv.id);
                 Navigator.pop(context);
@@ -352,7 +352,7 @@ class _SectionHeader extends StatelessWidget {
       child: Row(
         children: [
           Icon(icon, size: 14, color: color),
-          const SizedBox(width: 6),
+          SizedBox(width: 6),
           Text(label, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: color)),
         ],
       ),
@@ -373,10 +373,10 @@ class _EmptyState extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(isSearch ? Icons.search_off : Icons.forum_outlined, size: 64, color: AppColors.outlineVariant),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           Text(
             isSearch ? 'لا توجد نتائج لـ "$searchQuery"' : 'لا توجد محادثات',
-            style: const TextStyle(fontSize: 15, color: AppColors.outline),
+            style: TextStyle(fontSize: 15, color: AppColors.outline),
           ),
         ],
       ),

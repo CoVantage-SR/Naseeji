@@ -12,7 +12,7 @@ class AgreementCard extends StatelessWidget {
     return Container(
       width: 280,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(18),
         border: Border.all(color: AppColors.secondary.withValues(alpha: 0.3), width: 1.5),
         boxShadow: [
@@ -45,14 +45,14 @@ class AgreementCard extends StatelessWidget {
                       color: Colors.white.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Text('مؤكد ✓', style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
+                    child: Text('مؤكد ✓', style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 10, fontWeight: FontWeight.bold)),
                   ),
                 const Spacer(),
-                const Icon(Icons.handshake_outlined, color: Colors.white, size: 18),
-                const SizedBox(width: 6),
+                const Icon(Icons.handshake_outlined, color: Theme.of(context).colorScheme.surface, size: 18),
+                SizedBox(width: 6),
                 Text(
                   'الاتفاق النهائي ${data['orderNumber'] ?? ''}',
-                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
+                  style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.bold, fontSize: 12),
                 ),
               ],
             ),
@@ -79,7 +79,7 @@ class AgreementCard extends StatelessWidget {
                   backgroundColor: AppColors.secondary,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
-                child: const Text('عرض الاتفاق', style: TextStyle(fontSize: 12, color: Colors.white)),
+                child: Text('عرض الاتفاق', style: TextStyle(fontSize: 12, color: Colors.white)),
               ),
             ),
           ),
@@ -101,8 +101,8 @@ class _Row extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
-          Text(label, style: const TextStyle(fontSize: 11, color: AppColors.outline)),
+          Text(value, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
+          Text(label, style: TextStyle(fontSize: 11, color: AppColors.outline)),
         ],
       ),
     );

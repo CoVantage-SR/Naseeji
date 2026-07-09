@@ -25,13 +25,13 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'سجل المعاملات والعمليات',
-          style: TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
         actions: [
@@ -48,7 +48,7 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
       body: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
         child: transactionsAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (err, stack) => Center(child: Text('خطأ: $err')),
           data: (list) {
             // Apply filtering logic
@@ -76,7 +76,7 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
               children: [
                 // Filters and Search Bar Container
                 Container(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   padding: const EdgeInsets.all(12),
                   child: Column(
                     children: [
@@ -99,7 +99,7 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      SizedBox(height: 10),
                       // Filter chips row
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
@@ -107,15 +107,15 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
                         child: Row(
                           children: [
                             ChoiceChip(
-                              label: const Text('ترتيب حسب القيمة'),
+                              label: Text('ترتيب حسب القيمة'),
                               selected: _sortByAmount,
                               onSelected: (val) => setState(() => _sortByAmount = val),
                             ),
-                            const SizedBox(width: 8),
+                            SizedBox(width: 8),
                             DropdownButton<TransactionType>(
-                              hint: const Text('نوع العملية'),
+                              hint: Text('نوع العملية'),
                               value: _selectedType,
-                              underline: const SizedBox(),
+                              underline: SizedBox(),
                               items: TransactionType.values.map((t) {
                                 return DropdownMenuItem(
                                   value: t,
@@ -124,11 +124,11 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
                               }).toList(),
                               onChanged: (val) => setState(() => _selectedType = val),
                             ),
-                            const SizedBox(width: 8),
+                            SizedBox(width: 8),
                             DropdownButton<TransactionStatus>(
-                              hint: const Text('الحالة'),
+                              hint: Text('الحالة'),
                               value: _selectedStatus,
-                              underline: const SizedBox(),
+                              underline: SizedBox(),
                               items: TransactionStatus.values.map((s) {
                                 return DropdownMenuItem(
                                   value: s,
@@ -138,7 +138,7 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
                               onChanged: (val) => setState(() => _selectedStatus = val),
                             ),
                             if (_selectedType != null || _selectedStatus != null || _sortByAmount) ...[
-                              const SizedBox(width: 8),
+                              SizedBox(width: 8),
                               TextButton(
                                 onPressed: () {
                                   setState(() {
@@ -148,7 +148,7 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen> {
                                     _searchQuery = '';
                                   });
                                 },
-                                child: const Text('إعادة تعيين'),
+                                child: Text('إعادة تعيين'),
                               ),
                             ],
                           ],

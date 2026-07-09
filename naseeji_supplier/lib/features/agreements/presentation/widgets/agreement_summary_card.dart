@@ -39,7 +39,7 @@ class AgreementSummaryCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 10, offset: const Offset(0, 2))],
       ),
@@ -54,20 +54,20 @@ class AgreementSummaryCard extends StatelessWidget {
                 CircleAvatar(
                   radius: 18,
                   backgroundColor: Color(a.factoryInfo.logoBgColorValue),
-                  child: Text(a.factoryInfo.logoText, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 11)),
+                  child: Text(a.factoryInfo.logoText, style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.bold, fontSize: 11)),
                 ),
-                const SizedBox(width: 10),
+                SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(a.factoryInfo.factoryName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.onSurface)),
-                      const SizedBox(height: 2),
+                      Text(a.factoryInfo.factoryName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Theme.of(context).colorScheme.onSurface)),
+                      SizedBox(height: 2),
                       Row(
                         children: [
-                          Text('اتفاقية: ${a.id}', style: const TextStyle(fontSize: 10, color: AppColors.outline)),
-                          const SizedBox(width: 8),
-                          Text('طلب: ${a.orderNumber}', style: const TextStyle(fontSize: 10, color: AppColors.outline)),
+                          Text('اتفاقية: ${a.id}', style: TextStyle(fontSize: 10, color: AppColors.outline)),
+                          SizedBox(width: 8),
+                          Text('طلب: ${a.orderNumber}', style: TextStyle(fontSize: 10, color: AppColors.outline)),
                         ],
                       ),
                     ],
@@ -87,7 +87,7 @@ class AgreementSummaryCard extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: AppColors.surfaceContainerLow),
+          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
 
           // Card Content
           Padding(
@@ -95,41 +95,41 @@ class AgreementSummaryCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(a.product.name, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12, color: AppColors.onSurfaceVariant)),
-                const SizedBox(height: 6),
+                Text(a.product.name, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant)),
+                SizedBox(height: 6),
                 Row(
                   children: [
-                    const Text('الكمية: ', style: TextStyle(fontSize: 11, color: AppColors.outline)),
-                    Text('${a.product.quantity} ${a.product.unit}', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
+                    Text('الكمية: ', style: TextStyle(fontSize: 11, color: AppColors.outline)),
+                    Text('${a.product.quantity} ${a.product.unit}', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
                     const Spacer(),
-                    const Text('السعر النهائي: ', style: TextStyle(fontSize: 11, color: AppColors.outline)),
-                    Text('${a.pricing.finalPrice.toStringAsFixed(2)} ${a.pricing.currency}', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
+                    Text('السعر النهائي: ', style: TextStyle(fontSize: 11, color: AppColors.outline)),
+                    Text('${a.pricing.finalPrice.toStringAsFixed(2)} ${a.pricing.currency}', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
                   ],
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Row(
                   children: [
-                    const Text('المجموع الكلي: ', style: TextStyle(fontSize: 11, color: AppColors.outline)),
-                    Text('${a.pricing.grandTotal.toStringAsFixed(2)} ${a.pricing.currency}', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.green)),
+                    Text('المجموع الكلي: ', style: TextStyle(fontSize: 11, color: AppColors.outline)),
+                    Text('${a.pricing.grandTotal.toStringAsFixed(2)} ${a.pricing.currency}', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.green)),
                     const Spacer(),
-                    const Text('طريقة الدفع: ', style: TextStyle(fontSize: 11, color: AppColors.outline)),
-                    Text(a.paymentTerms.method.split(' ').first, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
+                    Text('طريقة الدفع: ', style: TextStyle(fontSize: 11, color: AppColors.outline)),
+                    Text(a.paymentTerms.method.split(' ').first, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
                   ],
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Row(
                   children: [
-                    const Text('تاريخ التوريد: ', style: TextStyle(fontSize: 11, color: AppColors.outline)),
-                    Text(a.deliveryTerms.deliveryDate, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
+                    Text('تاريخ التوريد: ', style: TextStyle(fontSize: 11, color: AppColors.outline)),
+                    Text(a.deliveryTerms.deliveryDate, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
                     const Spacer(),
-                    const Text('تحديث: ', style: TextStyle(fontSize: 11, color: AppColors.outline)),
-                    Text(a.lastUpdated, style: const TextStyle(fontSize: 10, color: AppColors.outline, fontStyle: FontStyle.italic)),
+                    Text('تحديث: ', style: TextStyle(fontSize: 11, color: AppColors.outline)),
+                    Text(a.lastUpdated, style: TextStyle(fontSize: 10, color: AppColors.outline, fontStyle: FontStyle.italic)),
                   ],
                 ),
               ],
             ),
           ),
-          const Divider(height: 1, color: AppColors.surfaceContainerLow),
+          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
 
           // Card Footer Actions
           Padding(
@@ -143,7 +143,7 @@ class AgreementSummaryCard extends StatelessWidget {
                       context.push('/agreements/history/${a.id}?rfqId=${a.rfqNumber}');
                     },
                     icon: const Icon(Icons.history_outlined, size: 14),
-                    label: const Text('السجل والزمن', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
+                    label: Text('السجل والزمن', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
                     style: TextButton.styleFrom(foregroundColor: AppColors.primary, padding: EdgeInsets.zero),
                   ),
                 ),
@@ -154,7 +154,7 @@ class AgreementSummaryCard extends StatelessWidget {
                       context.push('/agreements/documents/${a.id}');
                     },
                     icon: const Icon(Icons.description_outlined, size: 14),
-                    label: const Text('المستندات', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
+                    label: Text('المستندات', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
                     style: TextButton.styleFrom(foregroundColor: AppColors.secondary, padding: EdgeInsets.zero),
                   ),
                 ),
@@ -172,7 +172,7 @@ class AgreementSummaryCard extends StatelessWidget {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       padding: EdgeInsets.zero,
                     ),
-                    child: const Text('التفاصيل والفسح', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
+                    child: Text('التفاصيل والفسح', style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
                   ),
                 ),
               ],

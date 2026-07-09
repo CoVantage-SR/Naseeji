@@ -43,7 +43,7 @@ class _NotificationsCenterScreenState
           // Scrollable Notifications list
           Expanded(
             child: notificationsAsync.when(
-              loading: () => const Center(child: CircularProgressIndicator()),
+              loading: () => Center(child: CircularProgressIndicator()),
               error: (err, stack) => Center(child: Text('خطأ: $err')),
               data: (notifications) {
                 final filteredList = _applyFilter(notifications);

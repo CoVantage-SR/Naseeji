@@ -41,20 +41,20 @@ class _RequestWithdrawalScreenState extends ConsumerState<RequestWithdrawalScree
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'طلب سحب رصيد',
-          style: TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
       body: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
         child: walletAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (err, stack) => Center(child: Text('خطأ: $err')),
           data: (wallet) {
             final available = wallet.availableBalance;
@@ -77,32 +77,32 @@ class _RequestWithdrawalScreenState extends ConsumerState<RequestWithdrawalScree
                       ),
                       child: Column(
                         children: [
-                          const Text(
+                          Text(
                             'الرصيد المتاح للسحب حالياً',
                             style: TextStyle(fontSize: 12, color: AppColors.outline),
                           ),
-                          const SizedBox(height: 4),
+                          SizedBox(height: 4),
                           Text(
                             '${available.toStringAsFixed(2)} ر.س',
-                            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.primary),
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.primary),
                           ),
-                          const SizedBox(height: 4),
-                          const Text(
+                          SizedBox(height: 4),
+                          Text(
                             'الحد الأدنى للسحب: 1,000.00 ر.س',
                             style: TextStyle(fontSize: 10, color: AppColors.outline),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
 
                     // Method selector
-                    const Text(
+                    Text(
                       'اختر طريقة السحب',
                       textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     DropdownButtonFormField<String>(
                       value: _selectedMethod,
                       decoration: InputDecoration(
@@ -141,15 +141,15 @@ class _RequestWithdrawalScreenState extends ConsumerState<RequestWithdrawalScree
                         }
                       },
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     // Amount input
-                    const Text(
+                    Text(
                       'المبلغ المطلوب سحبه (ر.س)',
                       textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     CustomTextField(
                       controller: _amountController,
                       labelText: 'المبلغ',
@@ -164,63 +164,63 @@ class _RequestWithdrawalScreenState extends ConsumerState<RequestWithdrawalScree
                         return null;
                       },
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     // Account holder input
-                    const Text(
+                    Text(
                       'اسم صاحب الحساب المستفيد',
                       textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     CustomTextField(
                       controller: _holderController,
                       labelText: 'صاحب الحساب',
                       validator: (val) => val == null || val.isEmpty ? 'يرجى إدخال اسم المستفيد' : null,
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     // Bank name / wallet identifier
                     Text(
                       _selectedMethod.contains('بنكي') ? 'اسم البنك' : 'جهة المحفظة',
                       textAlign: TextAlign.right,
-                      style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     CustomTextField(
                       controller: _bankController,
                       labelText: _selectedMethod.contains('بنكي') ? 'البنك' : 'الجهة',
                       validator: (val) => val == null || val.isEmpty ? 'يرجى ملء الحقل' : null,
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     // IBAN / wallet details
                     Text(
                       _selectedMethod.contains('بنكي') ? 'رقم الآيبان (IBAN)' : 'معرف المحفظة / الرقم',
                       textAlign: TextAlign.right,
-                      style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     CustomTextField(
                       controller: _ibanController,
                       labelText: _selectedMethod.contains('بنكي') ? 'الآيبان' : 'المعرف',
                       validator: (val) => val == null || val.isEmpty ? 'يرجى كتابة رقم الحساب أو المحفظة' : null,
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
 
                     // Notes
-                    const Text(
+                    Text(
                       'ملاحظات إضافية (اختياري)',
                       textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     CustomTextField(
                       controller: _notesController,
                       labelText: 'ملاحظات',
                       maxLines: 2,
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24),
 
                     // Submit button
                     PrimaryButton(

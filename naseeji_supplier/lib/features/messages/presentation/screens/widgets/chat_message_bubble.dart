@@ -99,16 +99,16 @@ class ChatMessageBubble extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('قبول عرض السعر', textAlign: TextAlign.right),
-        content: const Text('هل أنت متأكد من قبول هذا العرض المالي وتوقيع الاتفاقية؟', textAlign: TextAlign.right),
+        title: Text('قبول عرض السعر', textAlign: TextAlign.right),
+        content: Text('هل أنت متأكد من قبول هذا العرض المالي وتوقيع الاتفاقية؟', textAlign: TextAlign.right),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text('إلغاء')),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(ctx);
               ref.read(businessChatControllerProvider(conversationId ?? 'conv_001').notifier).acceptQuotation(message.id);
             },
-            child: const Text('موافق وقبول'),
+            child: Text('موافق وقبول'),
           ),
         ],
       ),
@@ -121,7 +121,7 @@ class ChatMessageBubble extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('تقديم عرض مضاد', textAlign: TextAlign.right),
+        title: Text('تقديم عرض مضاد', textAlign: TextAlign.right),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -131,7 +131,7 @@ class ChatMessageBubble extends ConsumerWidget {
               textAlign: TextAlign.right,
               decoration: const InputDecoration(labelText: 'السعر المقترح للوحدة (ر.س)'),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             TextField(
               controller: reasonCtrl,
               textAlign: TextAlign.right,
@@ -140,7 +140,7 @@ class ChatMessageBubble extends ConsumerWidget {
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text('إلغاء')),
           ElevatedButton(
             onPressed: () {
               final price = priceCtrl.text.trim();
@@ -154,7 +154,7 @@ class ChatMessageBubble extends ConsumerWidget {
                 );
               }
             },
-            child: const Text('إرسال العرض'),
+            child: Text('إرسال العرض'),
           ),
         ],
       ),
@@ -174,10 +174,10 @@ class ChatMessageBubble extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text('تفاصيل وثيقة عرض السعر', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: AppColors.primary)),
-              const SizedBox(height: 12),
+              Text('تفاصيل وثيقة عرض السعر', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: AppColors.primary)),
+              SizedBox(height: 12),
               const Divider(),
-              const SizedBox(height: 10),
+              SizedBox(height: 10),
               _buildDetailRow('اسم المنتج المقترن', data['productName'] ?? 'خيوط غزل القطن الفاخر'),
               _buildDetailRow('الكمية الإجمالية', '${data['quantity'] ?? '--'}'),
               _buildDetailRow('سعر الوحدة المعروض', '${data['unitPrice'] ?? '--'} ر.س'),
@@ -185,11 +185,11 @@ class ChatMessageBubble extends ConsumerWidget {
               _buildDetailRow('طريقة السداد والشروط', data['paymentTerms'] ?? '--'),
               _buildDetailRow('فترة صلاحية العرض', data['validUntil'] ?? '--'),
               _buildDetailRow('مدة الإنتاج والشحن المقدرة', data['deliveryDays'] ?? '--'),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () => Navigator.pop(context),
                 style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-                child: const Text('إغلاق المعاينة'),
+                child: Text('إغلاق المعاينة'),
               ),
             ],
           ),
@@ -204,8 +204,8 @@ class ChatMessageBubble extends ConsumerWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(fontSize: 12, color: AppColors.outline)),
-          Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
+          Text(label, style: TextStyle(fontSize: 12, color: AppColors.outline)),
+          Text(value, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
         ],
       ),
     );
@@ -239,7 +239,7 @@ class _TextBubble extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: 4),
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: isOut ? Colors.white.withValues(alpha: 0.3) : AppColors.surfaceContainerLow,
+                  color: isOut ? Colors.white.withValues(alpha: 0.3) : Theme.of(context).colorScheme.surfaceContainerLow,
                   borderRadius: BorderRadius.circular(8),
                   border: Border(
                     right: BorderSide(
@@ -250,7 +250,7 @@ class _TextBubble extends StatelessWidget {
                 ),
                 child: Text(
                   message.replyToContent!,
-                  style: const TextStyle(fontSize: 11, color: AppColors.outline),
+                  style: TextStyle(fontSize: 11, color: AppColors.outline),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -290,7 +290,7 @@ class _TextBubble extends StatelessWidget {
                     message.content,
                     style: TextStyle(
                       fontSize: 14,
-                      color: isOut ? Colors.white : AppColors.onSurface,
+                      color: isOut ? Colors.white : Theme.of(context).colorScheme.onSurface,
                       height: 1.4,
                     ),
                   ),
@@ -310,13 +310,13 @@ class _TextBubble extends StatelessWidget {
                 margin: const EdgeInsets.only(top: 2),
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: AppColors.outlineVariant),
                 ),
-                child: Text(message.reaction!, style: const TextStyle(fontSize: 14)),
+                child: Text(message.reaction!, style: TextStyle(fontSize: 14)),
               ),
-            const SizedBox(height: 2),
+            SizedBox(height: 2),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -329,7 +329,7 @@ class _TextBubble extends StatelessWidget {
                   ),
                 ),
                 if (isOut) ...[
-                  const SizedBox(width: 4),
+                  SizedBox(width: 4),
                   Icon(
                     message.readStatus == ReadStatus.read
                         ? Icons.done_all
@@ -353,7 +353,7 @@ class _TextBubble extends StatelessWidget {
   void _showContextMenu(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -372,14 +372,14 @@ class _TextBubble extends StatelessWidget {
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(8),
-                  child: Text(e, style: const TextStyle(fontSize: 26)),
+                  child: Text(e, style: TextStyle(fontSize: 26)),
                 ),
               )).toList(),
             ),
             const Divider(),
             ListTile(
               leading: const Icon(Icons.copy_outlined, color: AppColors.primary),
-              title: const Text('نسخ'),
+              title: Text('نسخ'),
               onTap: () {
                 Clipboard.setData(ClipboardData(text: message.content));
                 Navigator.pop(context);
@@ -388,7 +388,7 @@ class _TextBubble extends StatelessWidget {
             if (message.isOutgoing)
               ListTile(
                 leading: const Icon(Icons.delete_outline, color: Colors.red),
-                title: const Text('حذف الرسالة', style: TextStyle(color: Colors.red)),
+                title: Text('حذف الرسالة', style: TextStyle(color: Colors.red)),
                 onTap: () {
                   onDelete?.call();
                   Navigator.pop(context);
@@ -422,13 +422,13 @@ class _BubbleWrapper extends StatelessWidget {
         crossAxisAlignment: isOutgoing ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           child,
-          const SizedBox(height: 4),
+          SizedBox(height: 4),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(time, style: const TextStyle(fontSize: 10, color: AppColors.outline)),
+              Text(time, style: TextStyle(fontSize: 10, color: AppColors.outline)),
               if (isOutgoing) ...[
-                const SizedBox(width: 4),
+                SizedBox(width: 4),
                 Icon(
                   readStatus == ReadStatus.read ? Icons.done_all : Icons.done,
                   size: 13,
@@ -459,10 +459,10 @@ class _DeletedBubble extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
         decoration: BoxDecoration(
-          color: AppColors.surfaceContainerLow,
+          color: Theme.of(context).colorScheme.surfaceContainerLow,
           borderRadius: BorderRadius.circular(18),
         ),
-        child: const Row(
+        child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.block, size: 14, color: AppColors.outline),
@@ -490,25 +490,25 @@ class _TimelineEventBubble extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
-            color: AppColors.surfaceContainerLow,
+            color: Theme.of(context).colorScheme.surfaceContainerLow,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               const Icon(Icons.info_outline, size: 12, color: AppColors.primary),
-              const SizedBox(width: 6),
+              SizedBox(width: 6),
               Flexible(
                 child: Text(
                   message.content,
-                  style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+                  style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant),
                   textAlign: TextAlign.center,
                 ),
               ),
-              const SizedBox(width: 6),
+              SizedBox(width: 6),
               Text(
                 message.time,
-                style: const TextStyle(fontSize: 10, color: AppColors.outline),
+                style: TextStyle(fontSize: 10, color: AppColors.outline),
               ),
             ],
           ),

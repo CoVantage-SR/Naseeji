@@ -16,20 +16,20 @@ class WalletScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'المحفظة الرقمية',
-          style: TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 16),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
       body: Container(
         color: Theme.of(context).scaffoldBackgroundColor,
         child: walletAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (err, stack) => Center(child: Text('خطأ: $err')),
           data: (wallet) {
             return RefreshIndicator(
@@ -51,13 +51,13 @@ class WalletScreen extends ConsumerWidget {
                       frozen: wallet.frozenBalance,
                       onWithdraw: () => context.push('/finance/withdrawals/request'),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20),
 
                     // Additional stats
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                       ),
@@ -71,7 +71,7 @@ class WalletScreen extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24),
 
                     // Recent Wallet Activity
                     Row(
@@ -79,23 +79,23 @@ class WalletScreen extends ConsumerWidget {
                       children: [
                         TextButton(
                           onPressed: () => context.push('/finance/transactions'),
-                          child: const Text('عرض الكل', style: TextStyle(color: AppColors.primary, fontSize: 12)),
+                          child: Text('عرض الكل', style: TextStyle(color: AppColors.primary, fontSize: 12)),
                         ),
-                        const Text(
+                        Text(
                           'آخر العمليات المالية للمحفظة',
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: 10),
 
                     txnsAsync.when(
-                      loading: () => const Center(child: CircularProgressIndicator()),
+                      loading: () => Center(child: CircularProgressIndicator()),
                       error: (err, s) => Center(child: Text('خطأ في تحميل المعاملات: $err')),
                       data: (txns) {
                         final recent = txns.take(3).toList();
                         if (recent.isEmpty) {
-                          return const Center(
+                          return Center(
                             child: Text('لا توجد عمليات ماليّة مؤخراً', style: TextStyle(color: AppColors.outline)),
                           );
                         }
@@ -125,11 +125,11 @@ class WalletScreen extends ConsumerWidget {
       children: [
         Text(
           value,
-          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
         ),
         Text(
           label,
-          style: const TextStyle(fontSize: 13, color: AppColors.outline),
+          style: TextStyle(fontSize: 13, color: AppColors.outline),
         ),
       ],
     );

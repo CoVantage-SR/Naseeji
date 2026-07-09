@@ -95,24 +95,24 @@ class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistratio
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
               const CircleAvatar(
                 radius: 36,
                 backgroundColor: AppColors.secondaryContainer,
                 child: Icon(Icons.check_circle, color: AppColors.secondary, size: 48),
               ),
-              const SizedBox(height: 24),
-              const Text(
+              SizedBox(height: 24),
+              Text(
                 'تم تقديم الطلب بنجاح',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 12),
-              const Text(
+              SizedBox(height: 12),
+              Text(
                 'طلب التوثيق الخاص بك قيد المراجعة الآن. سنقوم بإشعارك فور اكتمال المراجعة وتفعيل الحساب.',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14, color: AppColors.onSurfaceVariant, height: 1.5),
+                style: TextStyle(fontSize: 14, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.5),
               ),
-              const SizedBox(height: 24),
+              SizedBox(height: 24),
               PrimaryButton(
                 text: 'الانتقال للرئيسية',
                 onPressed: () {
@@ -134,7 +134,7 @@ class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistratio
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'بيانات التوثيق والمؤسسة',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
@@ -148,25 +148,25 @@ class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistratio
               key: _formKey,
               child: ListView(
                 children: [
-                  const Text(
+                  Text(
                     'توثيق حساب المورد',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.onBackground,
+                      color: Theme.of(context).colorScheme.onBackground,
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  const Text(
+                  SizedBox(height: 8),
+                  Text(
                     'يرجى تزويدنا بالبيانات التجارية الرسمية لتوثيق شركتك أو مصنعك على المنصة',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 14,
-                      color: AppColors.onSurfaceVariant,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ),
-                  const SizedBox(height: 32),
+                  SizedBox(height: 32),
                   CustomTextField(
                     controller: _companyController,
                     labelText: 'الاسم التجاري للمؤسسة / المصنع',
@@ -178,7 +178,7 @@ class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistratio
                       return null;
                     },
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   CustomTextField(
                     controller: _crController,
                     labelText: 'رقم السجل التجاري',
@@ -191,7 +191,7 @@ class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistratio
                       return null;
                     },
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   CustomTextField(
                     controller: _taxController,
                     labelText: 'الرقم الضريبي للمؤسسة',
@@ -204,33 +204,33 @@ class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistratio
                       return null;
                     },
                   ),
-                  const SizedBox(height: 24),
-                  const Text(
+                  SizedBox(height: 24),
+                  Text(
                     'التصنيفات والمنتجات التي توردها',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
                   CategorySelector(
                     availableCategories: _availableCategories,
                     selectedCategories: _selectedCategories,
                     onToggle: _toggleCategory,
                   ),
-                  const SizedBox(height: 24),
-                  const Text(
+                  SizedBox(height: 24),
+                  Text(
                     'إرفاق السجل التجاري (PDF)',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 8),
+                  SizedBox(height: 8),
                   DocumentUploader(
                     uploadedFileName: _uploadedFileName,
                     onTap: _simulateFileUpload,
                   ),
-                  const SizedBox(height: 40),
+                  SizedBox(height: 40),
                   PrimaryButton(
                     text: 'إرسال طلب التوثيق',
                     onPressed: _submit,
                   ),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24),
                 ],
               ),
             ),

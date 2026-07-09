@@ -26,7 +26,7 @@ class CategorySelector extends StatelessWidget {
           onSelected: (_) => onToggle(category),
           selectedColor: AppColors.primaryContainer,
           labelStyle: TextStyle(
-            color: isSelected ? Colors.white : AppColors.onSurface,
+            color: isSelected ? Colors.white : Theme.of(context).colorScheme.onSurface,
           ),
         );
       }).toList(),

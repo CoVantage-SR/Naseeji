@@ -23,7 +23,7 @@ class HomeScreen extends ConsumerWidget {
       drawer: const NavigationDrawerView(),
       appBar: HomeAppBar(scaffoldKey: scaffoldKey),
       body: statsAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => Center(child: CircularProgressIndicator()),
         error: (err, stack) => Center(child: Text('خطأ: $err')),
         data: (stats) {
           return RefreshIndicator(
@@ -37,25 +37,25 @@ class HomeScreen extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   const HomeHeader(),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20),
                   StatsGrid(stats: stats),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24),
                   WeeklySalesChartCard(weeklySales: stats.weeklySales),
-                  const SizedBox(height: 24),
+                  SizedBox(height: 24),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
+                      Text(
                         'الطلبات الأخيرة',
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.onSurface,
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                       TextButton(
                         onPressed: () {},
-                        child: const Text(
+                        child: Text(
                           'عرض الكل',
                           style: TextStyle(
                             fontSize: 12,
@@ -65,7 +65,7 @@ class HomeScreen extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12),
                   const RecentOrdersTable(),
                 ],
               ),

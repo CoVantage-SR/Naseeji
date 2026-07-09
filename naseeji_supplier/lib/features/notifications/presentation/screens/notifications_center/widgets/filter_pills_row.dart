@@ -14,17 +14,17 @@ class FilterPillsRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           _buildFilterPill('الدفع'),
-          const SizedBox(width: 8),
+          SizedBox(width: 8),
           _buildFilterPill('الشحن'),
-          const SizedBox(width: 8),
+          SizedBox(width: 8),
           _buildFilterPill('الطلبات'),
-          const SizedBox(width: 8),
+          SizedBox(width: 8),
           _buildFilterPill('الكل'),
         ],
       ),
@@ -45,7 +45,7 @@ class FilterPillsRow extends StatelessWidget {
           label,
           style: TextStyle(
             fontSize: 13,
-            color: isActive ? Colors.black : AppColors.onSurfaceVariant,
+            color: isActive ? Colors.black : Theme.of(context).colorScheme.onSurfaceVariant,
             fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
           ),
         ),

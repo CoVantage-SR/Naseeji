@@ -130,33 +130,33 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         centerTitle: true,
         title: Column(
           children: [
-            const Text(
+            Text(
               'إنشاء عرض سعر رسمي B2B',
               style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
             ),
-            const SizedBox(height: 2),
+            SizedBox(height: 2),
             Text(
               'RFQ #${widget.rfqId}',
-              style: const TextStyle(color: AppColors.outline, fontSize: 10),
+              style: TextStyle(color: AppColors.outline, fontSize: 10),
             ),
           ],
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
         actions: [
           TextButton(
             onPressed: () => _showSuccessToast('تم حفظ العرض كمسودة بنجاح'),
-            child: const Text('حفظ مسودة', style: TextStyle(color: Color(0xFF0040E0), fontSize: 12, fontWeight: FontWeight.bold)),
+            child: Text('حفظ مسودة', style: TextStyle(color: Color(0xFF0040E0), fontSize: 12, fontWeight: FontWeight.bold)),
           ),
           IconButton(
-            icon: const Icon(Icons.more_vert, color: AppColors.onSurfaceVariant),
+            icon: const Icon(Icons.more_vert, color: Theme.of(context).colorScheme.onSurfaceVariant),
             onPressed: () {},
           ),
         ],
@@ -171,39 +171,39 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
                 children: [
                   // SECTION 1 — Factory Request Summary
                   _buildFactorySummaryCard(),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
 
                   // SECTION 2 — Selected Product
                   _buildSelectedProductCard(),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
 
                   // SECTION 3 — Quotation Pricing
                   _buildPricingFormCard(),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
 
                   // SECTION 4 — Payment Terms
                   _buildPaymentTermsCard(),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
 
                   // SECTION 5 — Production & Delivery
                   _buildProductionDeliveryCard(),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
 
                   // SECTION 6 — Quotation Validity
                   _buildValidityCard(),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
 
                   // SECTION 7 — Attachments
                   _buildAttachmentsCard(),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
 
                   // SECTION 8 — Notes
                   _buildNotesCard('ملاحظات العميل والمواصفات الفنية', _notesController, 'اكتب أي شروط إضافية للمصنع هنا...'),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
 
                   // SECTION 9 — Internal Notes
                   _buildNotesCard('ملاحظات المورد الداخلية (سرية)', _internalNotesController, 'ملاحظات وتذكيرات لربحية العرض وهوامش التفاوض...'),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
 
                   // SECTION 10 — Live Quotation Summary Card
                   _buildLiveQuotationSummaryCard(),
@@ -224,7 +224,7 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
@@ -237,7 +237,7 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(color: const Color(0xFFE8F0FE), borderRadius: BorderRadius.circular(6)),
-                child: const Row(
+                child: Row(
                   children: [
                     Icon(Icons.verified, color: Color(0xFF0040E0), size: 12),
                     SizedBox(width: 4),
@@ -245,41 +245,41 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
                   ],
                 ),
               ),
-              const Row(
+              Row(
                 children: [
                   Text('مصنع الملابس المتحدة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
                   SizedBox(width: 8),
-                  Icon(Icons.factory_outlined, color: AppColors.onSurfaceVariant, size: 20),
+                  Icon(Icons.factory_outlined, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
                 ],
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           const Divider(height: 1, color: Color(0xFFF1F1F5)),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           _buildRowItem('رقم طلب الشراء RFQ', 'RFQ-2026-000125'),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           _buildRowItem('تاريخ الطلب المرفوع', '06 يوليو 2026'),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           _buildRowItem('تاريخ الاستلام المطلوب', '25 يوليو 2026'),
-          const SizedBox(height: 6),
+          SizedBox(height: 6),
           _buildRowItem('مكان التوصيل', 'المنطقة الصناعية الثالثة، الرياض'),
-          const SizedBox(height: 12),
-          const Text('الخامات والمواصفات الفنية المطلوبة', style: TextStyle(fontSize: 10, color: AppColors.outline)),
-          const SizedBox(height: 4),
-          const Text(
+          SizedBox(height: 12),
+          Text('الخامات والمواصفات الفنية المطلوبة', style: TextStyle(fontSize: 10, color: AppColors.outline)),
+          SizedBox(height: 4),
+          Text(
             'قماش قطن 100% طبيعي ممشط، خالي من البقع، العرض لا يقل عن 150 سم، الوزن 180 GSM.',
             style: TextStyle(fontSize: 11, height: 1.4),
             textAlign: TextAlign.end,
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           OutlinedButton(
             onPressed: () {},
             style: OutlinedButton.styleFrom(
               side: const BorderSide(color: Color(0xFFE2E1EF)),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             ),
-            child: const Text('عرض مواصفات RFQ الكاملة', style: TextStyle(fontSize: 11, color: Color(0xFF0040E0))),
+            child: Text('عرض مواصفات RFQ الكاملة', style: TextStyle(fontSize: 11, color: Color(0xFF0040E0))),
           ),
         ],
       ),
@@ -291,15 +291,15 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('المنتج المقترح للربط من الكتالوج', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 12),
+          Text('المنتج المقترح للربط من الكتالوج', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -309,15 +309,15 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    const Text('خيوط غزل القطن الفاخر - كود الكتان', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-                    const SizedBox(height: 4),
-                    const Text('SKU: IND-COT-2026 | المنشأ: مصر Egypt', style: TextStyle(fontSize: 9, color: AppColors.outline)),
-                    const SizedBox(height: 4),
-                    const Text('الكمية المتاحة بالمستودع: 15,000 متر | الحد الأدنى للطلب (MOQ): 100 متر', style: TextStyle(fontSize: 9, color: AppColors.outline)),
+                    Text('خيوط غزل القطن الفاخر - كود الكتان', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                    SizedBox(height: 4),
+                    Text('SKU: IND-COT-2026 | المنشأ: مصر Egypt', style: TextStyle(fontSize: 9, color: AppColors.outline)),
+                    SizedBox(height: 4),
+                    Text('الكمية المتاحة بالمستودع: 15,000 متر | الحد الأدنى للطلب (MOQ): 100 متر', style: TextStyle(fontSize: 9, color: AppColors.outline)),
                   ],
                 ),
               ),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Container(
                 width: 60,
                 height: 60,
@@ -331,11 +331,11 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           OutlinedButton.icon(
             onPressed: () => _showSuccessToast('جاري فتح كشاف المنتجات المعتمد...'),
             icon: const Icon(Icons.swap_horiz, size: 14, color: Color(0xFF0040E0)),
-            label: const Text('تغيير المنتج المقترن', style: TextStyle(fontSize: 11, color: Color(0xFF0040E0))),
+            label: Text('تغيير المنتج المقترن', style: TextStyle(fontSize: 11, color: Color(0xFF0040E0))),
             style: OutlinedButton.styleFrom(
               side: const BorderSide(color: Color(0xFF0040E0)),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -351,39 +351,39 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('تفاصيل تسعير العرض المالي للوحدة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFF0040E0))),
-          const SizedBox(height: 16),
+          Text('تفاصيل تسعير العرض المالي للوحدة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFF0040E0))),
+          SizedBox(height: 16),
           Row(
             children: [
               Expanded(child: _buildTextField('سعر الوحدة (ر.س/م)', _unitPriceController)),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Expanded(child: _buildTextField('الكمية المعروضة المحددة', _quotedQtyController)),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Row(
             children: [
               Expanded(child: _buildTextField('الحد الأدنى للطلب (MOQ)', _moqController)),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Expanded(child: _buildTextField('قيمة الخصم النقدي المباشر', _discountController)),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Row(
             children: [
               Expanded(child: _buildTextField('تكلفة الشحن والتأمين المباشرة', _shippingCostController)),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Expanded(child: _buildTextField('نسبة ضريبة القيمة المضافة (%)', _taxRateController)),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           _buildTextField('أية مصاريف إدارية أو إضافية أخرى', _additionalChargesController),
         ],
       ),
@@ -404,17 +404,17 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('شروط وطريقة الدفع المعتمدة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 16),
-          const Text('طريقة السداد الأساسية', style: TextStyle(fontSize: 10, color: AppColors.outline)),
-          const SizedBox(height: 6),
+          Text('شروط وطريقة الدفع المعتمدة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 16),
+          Text('طريقة السداد الأساسية', style: TextStyle(fontSize: 10, color: AppColors.outline)),
+          SizedBox(height: 6),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             decoration: BoxDecoration(
@@ -425,9 +425,9 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
               textDirection: TextDirection.rtl,
               child: DropdownButton<String>(
                 value: selectedPaymentMethod,
-                underline: const SizedBox(),
+                underline: SizedBox(),
                 isExpanded: true,
-                style: const TextStyle(fontSize: 12, color: AppColors.onSurface, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold),
                 items: paymentMethods.map((e) => DropdownMenuItem(value: e, child: Text(arPayment[e] ?? e))).toList(),
                 onChanged: (val) {
                   if (val != null) {
@@ -439,17 +439,17 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
               ),
             ),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Row(
             children: [
               Expanded(child: _buildTextField('نسبة الدفعة المقدمة (%)', _advancePercentController)),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Expanded(child: _buildTextField('نسبة الدفعة المتبقية (%)', _remainingPercentController)),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           _buildTextField('أقصى تاريخ لاستحقاق السداد المالي', _paymentDueDateController),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           _buildTextField('ملاحظات إضافية حول التسهيلات الائتمانية', _paymentNotesController),
         ],
       ),
@@ -461,33 +461,33 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('بيانات جدول الإنتاج واللوجستيات والشحن', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 16),
+          Text('بيانات جدول الإنتاج واللوجستيات والشحن', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 16),
           Row(
             children: [
               Expanded(child: _buildTextField('مدة الإنتاج والتجهيز', _productionTimeController)),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Expanded(child: _buildTextField('مدة الشحن والرحلة المتوقعة', _deliveryTimeController)),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Row(
             children: [
               Expanded(child: _buildTextField('تاريخ الشحن الفعلي المتوقع', _expectedShippingController)),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Expanded(child: _buildTextField('تاريخ الوصول المتوقع للمخازن', _estimatedArrivalController)),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           _buildTextField('شركة وطريقة الشحن المقترحة', _shippingMethodController),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -500,7 +500,7 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
                 },
                 activeThumbColor: const Color(0xFF0040E0),
               ),
-              const Text('دعم الشحن المستعجل والمضغوط', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+              Text('دعم الشحن المستعجل والمضغوط', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
             ],
           ),
         ],
@@ -515,15 +515,15 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('فترة صلاحية عرض السعر المالي والمخزون', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 12),
+          Text('فترة صلاحية عرض السعر المالي والمخزون', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: validities.map((days) {
@@ -531,7 +531,7 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
                 child: ChoiceChip(
-                  label: Text('$days أيام', style: TextStyle(fontSize: 10, color: isSelected ? Colors.white : AppColors.onSurfaceVariant)),
+                  label: Text('$days أيام', style: TextStyle(fontSize: 10, color: isSelected ? Colors.white : Theme.of(context).colorScheme.onSurfaceVariant)),
                   selected: isSelected,
                   selectedColor: const Color(0xFF0040E0),
                   backgroundColor: const Color(0xFFF1F1F5),
@@ -547,15 +547,15 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
               );
             }).toList(),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 '${customValidityDate.year}-${customValidityDate.month.toString().padLeft(2, '0')}-${customValidityDate.day.toString().padLeft(2, '0')}',
-                style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFDC2626), fontSize: 13),
+                style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFDC2626), fontSize: 13),
               ),
-              const Text('تاريخ انتهاء الصلاحية المتوقع', style: TextStyle(fontSize: 11, color: AppColors.outline)),
+              Text('تاريخ انتهاء الصلاحية المتوقع', style: TextStyle(fontSize: 11, color: AppColors.outline)),
             ],
           ),
         ],
@@ -568,15 +568,15 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('مرفقات الملفات وشهادات الجودة (اختياري)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          const SizedBox(height: 12),
+          Text('مرفقات الملفات وشهادات الجودة (اختياري)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+          SizedBox(height: 12),
           ...mockAttachments.map((file) {
             return Container(
               margin: const EdgeInsets.only(bottom: 8),
@@ -597,14 +597,14 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
                     },
                   ),
                   const Spacer(),
-                  Text(file, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
-                  const SizedBox(width: 8),
+                  Text(file, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                  SizedBox(width: 8),
                   const Icon(Icons.picture_as_pdf_outlined, color: Color(0xFF0040E0), size: 18),
                 ],
               ),
             );
           }),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: 14),
@@ -612,7 +612,7 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
               border: Border.all(color: const Color(0xFF0040E0), style: BorderStyle.solid),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text('ارفع ملفات إضافية (PDF، صور، فيديو المنتج)', style: TextStyle(color: Color(0xFF0040E0), fontSize: 11, fontWeight: FontWeight.bold)),
@@ -631,23 +631,23 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-          const SizedBox(height: 12),
+          Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+          SizedBox(height: 12),
           TextField(
             controller: controller,
             maxLines: 3,
             textAlign: TextAlign.end,
-            style: const TextStyle(fontSize: 12),
+            style: TextStyle(fontSize: 12),
             decoration: InputDecoration(
               hintText: hint,
-              hintStyle: const TextStyle(color: AppColors.outline, fontSize: 11),
+              hintStyle: TextStyle(color: AppColors.outline, fontSize: 11),
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
             ),
           ),
@@ -668,8 +668,8 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Text('معاينة العرض المالي الفوري (Live Summary)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF0F172A))),
-          const SizedBox(height: 12),
+          Text('معاينة العرض المالي الفوري (Live Summary)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF0F172A))),
+          SizedBox(height: 12),
           _buildSummaryRow('المنتج المقترح المربوط', 'خيوط غزل القطن الفاخر'),
           _buildSummaryRow('الكمية الإجمالية', '${_quotedQtyController.text} متر'),
           _buildSummaryRow('سعر الوحدة', '${_unitPriceController.text} ر.س/متر'),
@@ -678,15 +678,15 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
           _buildSummaryRow('ضريبة القيمة المضافة المعتمدة', '+ ${taxAmount.toStringAsFixed(2)} ر.س'),
           _buildSummaryRow('تكلفة النقل والشحن', '+ ${_shippingCostController.text} ر.س'),
           const Divider(height: 1, color: Color(0xFFCBD5E1)),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 '${grandTotal.toStringAsFixed(2)} ر.س',
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF16A34A)),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF16A34A)),
               ),
-              const Text('إجمالي قيمة عرض السعر (Grand Total)', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0F172A))),
+              Text('إجمالي قيمة عرض السعر (Grand Total)', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF0F172A))),
             ],
           ),
         ],
@@ -696,7 +696,7 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
 
   Widget _buildBottomActionBar() {
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       child: SafeArea(
         child: Row(
@@ -709,10 +709,10 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
-                child: const Text('معاينة العرض', style: TextStyle(color: AppColors.onSurfaceVariant, fontSize: 12, fontWeight: FontWeight.bold)),
+                child: Text('معاينة العرض', style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 12, fontWeight: FontWeight.bold)),
               ),
             ),
-            const SizedBox(width: 12),
+            SizedBox(width: 12),
             Expanded(
               child: ElevatedButton(
                 onPressed: () => _validateAndSendQuotation(),
@@ -722,7 +722,7 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
-                child: const Text('إرسال العرض المالي', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),
+                child: Text('إرسال العرض المالي', style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 12, fontWeight: FontWeight.bold)),
               ),
             ),
           ],
@@ -737,8 +737,8 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(val, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
-          Text(label, style: const TextStyle(fontSize: 10, color: AppColors.outline)),
+          Text(val, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+          Text(label, style: TextStyle(fontSize: 10, color: AppColors.outline)),
         ],
       ),
     );
@@ -750,11 +750,11 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: const TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant)),
-          const SizedBox(height: 6),
+          Text(label, style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant)),
+          SizedBox(height: 6),
           TextField(
             controller: ctrl,
-            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: Color(0xFFE2E1EF))),
@@ -770,9 +770,9 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Expanded(child: Text(value, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold), textAlign: TextAlign.left)),
-        const SizedBox(width: 10),
-        Text('$label:', style: const TextStyle(fontSize: 10, color: AppColors.outline)),
+        Expanded(child: Text(value, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold), textAlign: TextAlign.left)),
+        SizedBox(width: 10),
+        Text('$label:', style: TextStyle(fontSize: 10, color: AppColors.outline)),
       ],
     );
   }
@@ -793,10 +793,10 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text('معاينة وثيقة العرض الرسمية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-              const SizedBox(height: 12),
+              Text('معاينة وثيقة العرض الرسمية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+              SizedBox(height: 12),
               const Divider(),
-              const SizedBox(height: 10),
+              SizedBox(height: 10),
               _buildSummaryRow('اسم المشتري', 'مصنع الملابس المتحدة'),
               _buildSummaryRow('المنتج المقترح المربوط', 'خيوط غزل القطن الفاخر'),
               _buildSummaryRow('الكمية المطلوبة', '${_quotedQtyController.text} متر'),
@@ -804,11 +804,11 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
               _buildSummaryRow('السعر الإجمالي بعد الخصم والضريبة', '${grandTotal.toStringAsFixed(2)} ر.س'),
               _buildSummaryRow('طريقة السداد', selectedPaymentMethod),
               _buildSummaryRow('تاريخ الصلاحية', '${customValidityDate.year}-${customValidityDate.month.toString().padLeft(2, '0')}-${customValidityDate.day.toString().padLeft(2, '0')}'),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () => Navigator.pop(context),
                 style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF0040E0), foregroundColor: Colors.white),
-                child: const Text('موافق وإغلاق'),
+                child: Text('موافق وإغلاق'),
               ),
             ],
           ),
@@ -860,7 +860,7 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        content: const Column(
+        content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.check_circle_outline, color: Color(0xFF16A34A), size: 48),
@@ -882,7 +882,7 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
                 context.go('/orders'); // Go back to orders
               }
             },
-            child: const Text('موافق'),
+            child: Text('موافق'),
           ),
         ],
       ),
@@ -894,10 +894,10 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('خطأ في التحقق من البيانات', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.error), textAlign: TextAlign.center),
-        content: Text(msg, style: const TextStyle(fontSize: 12), textAlign: TextAlign.center),
+        title: Text('خطأ في التحقق من البيانات', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.error), textAlign: TextAlign.center),
+        content: Text(msg, style: TextStyle(fontSize: 12), textAlign: TextAlign.center),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('موافق')),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text('موافق')),
         ],
       ),
     );

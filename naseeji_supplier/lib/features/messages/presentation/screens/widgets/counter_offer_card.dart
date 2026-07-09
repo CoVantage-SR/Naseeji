@@ -11,7 +11,7 @@ class CounterOfferCard extends StatelessWidget {
     return Container(
       width: 280,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Colors.orange.shade400, width: 1.5),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 8, offset: const Offset(0, 3))],
@@ -25,12 +25,12 @@ class CounterOfferCard extends StatelessWidget {
               color: Colors.orange.shade700,
               borderRadius: const BorderRadius.vertical(top: Radius.circular(14)),
             ),
-            child: const Row(
+            child: Row(
               children: [
                 Spacer(),
-                Icon(Icons.swap_horiz, color: Colors.white, size: 18),
+                Icon(Icons.swap_horiz, color: Theme.of(context).colorScheme.surface, size: 18),
                 SizedBox(width: 6),
-                Text('عرض مضاد', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13)),
+                Text('عرض مضاد', style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.bold, fontSize: 13)),
               ],
             ),
           ),
@@ -42,21 +42,21 @@ class CounterOfferCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('${data['counterPrice'] ?? '--'} ر.س',
-                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.secondary)),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.secondary)),
                     Row(
                       children: [
                         Text('${data['currentPrice'] ?? '--'} ر.س',
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontSize: 13,
                                 decoration: TextDecoration.lineThrough,
                                 color: AppColors.outline)),
-                        const SizedBox(width: 4),
-                        const Text('السعر الأصلي', style: TextStyle(fontSize: 10, color: AppColors.outline)),
+                        SizedBox(width: 4),
+                        Text('السعر الأصلي', style: TextStyle(fontSize: 10, color: AppColors.outline)),
                       ],
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: 8),
                 if (data['reason'] != null)
                   Container(
                     width: double.infinity,
@@ -88,11 +88,11 @@ class CounterOfferCard extends StatelessWidget {
                           side: const BorderSide(color: Colors.red),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         ),
-                        child: const Text('رفض', style: TextStyle(fontSize: 12, color: Colors.red)),
+                        child: Text('رفض', style: TextStyle(fontSize: 12, color: Colors.red)),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  SizedBox(width: 8),
                   Expanded(
                     child: SizedBox(
                       height: 36,
@@ -102,7 +102,7 @@ class CounterOfferCard extends StatelessWidget {
                           backgroundColor: AppColors.secondary,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         ),
-                        child: const Text('قبول', style: TextStyle(fontSize: 12, color: Colors.white)),
+                        child: Text('قبول', style: TextStyle(fontSize: 12, color: Colors.white)),
                       ),
                     ),
                   ),

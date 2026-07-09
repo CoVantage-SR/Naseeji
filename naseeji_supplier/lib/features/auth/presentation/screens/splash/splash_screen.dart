@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
         fit: StackFit.expand,
         children: [
           Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: AppColors.background,
             ),
           ),
@@ -63,7 +63,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 const Spacer(),
                 SplashLogo(opacity: _opacity),
                 const Spacer(),
-                const SizedBox(
+                SizedBox(
                   height: 32,
                   width: 32,
                   child: CircularProgressIndicator(
@@ -71,7 +71,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
                   ),
                 ),
-                const SizedBox(height: 64),
+                SizedBox(height: 64),
               ],
             ),
           ),

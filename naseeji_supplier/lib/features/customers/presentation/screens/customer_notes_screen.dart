@@ -25,12 +25,12 @@ class _CustomerNotesScreenState extends ConsumerState<CustomerNotesScreen> {
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
           centerTitle: true,
-          title: const Text('الملاحظات الخاصة', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16)),
+          title: Text('الملاحظات الخاصة', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16)),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, size: 20, color: AppColors.onSurfaceVariant),
+            icon: const Icon(Icons.arrow_back_ios_new, size: 20, color: Theme.of(context).colorScheme.onSurfaceVariant),
             onPressed: () => context.pop(),
           ),
         ),
@@ -38,14 +38,14 @@ class _CustomerNotesScreenState extends ConsumerState<CustomerNotesScreen> {
           onPressed: () => _showNoteDialog(context, null),
           backgroundColor: AppColors.primary,
           icon: const Icon(Icons.add, color: Colors.white),
-          label: const Text('ملاحظة جديدة', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          label: Text('ملاحظة جديدة', style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.bold)),
         ),
         body: stateAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (e, _) => Center(child: Text('خطأ: $e')),
           data: (customers) {
             final idx = customers.indexWhere((c) => c.id == widget.customerId);
-            if (idx == -1) return const Center(child: Text('العميل غير موجود'));
+            if (idx == -1) return Center(child: Text('العميل غير موجود'));
             final customer = customers[idx];
 
             final pinned = customer.notes.where((n) => n.isPinned).toList();
@@ -55,7 +55,7 @@ class _CustomerNotesScreenState extends ConsumerState<CustomerNotesScreen> {
             final allNotes = [...pinned, ...others];
 
             if (allNotes.isEmpty) {
-              return const Center(
+              return Center(
                 child: Column(mainAxisSize: MainAxisSize.min, children: [
                   Icon(Icons.note_alt_outlined, size: 56, color: AppColors.outlineVariant),
                   SizedBox(height: 12),
@@ -96,7 +96,7 @@ class _CustomerNotesScreenState extends ConsumerState<CustomerNotesScreen> {
         builder: (ctx, setDialogState) => Directionality(
           textDirection: TextDirection.rtl,
           child: AlertDialog(
-            title: Text(existing == null ? 'ملاحظة جديدة' : 'تعديل الملاحظة', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+            title: Text(existing == null ? 'ملاحظة جديدة' : 'تعديل الملاحظة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
             content: SizedBox(
               width: double.maxFinite,
               child: Column(
@@ -106,27 +106,27 @@ class _CustomerNotesScreenState extends ConsumerState<CustomerNotesScreen> {
                     controller: titleCtrl,
                     decoration: const InputDecoration(labelText: 'عنوان الملاحظة', border: OutlineInputBorder()),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12),
                   TextField(
                     controller: bodyCtrl,
                     maxLines: 4,
                     decoration: const InputDecoration(labelText: 'محتوى الملاحظة', border: OutlineInputBorder(), alignLabelWithHint: true),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: 12),
                   Row(children: [
-                    const Text('الأولوية: ', style: TextStyle(fontSize: 12)),
-                    const SizedBox(width: 8),
+                    Text('الأولوية: ', style: TextStyle(fontSize: 12)),
+                    SizedBox(width: 8),
                     _priorityChip('عالية', 'high', priority, AppColors.error, setDialogState, (v) => priority = v),
-                    const SizedBox(width: 6),
+                    SizedBox(width: 6),
                     _priorityChip('متوسطة', 'medium', priority, const Color(0xFFFFB800), setDialogState, (v) => priority = v),
-                    const SizedBox(width: 6),
+                    SizedBox(width: 6),
                     _priorityChip('منخفضة', 'low', priority, Colors.green, setDialogState, (v) => priority = v),
                   ]),
                 ],
               ),
             ),
             actions: [
-              TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+              TextButton(onPressed: () => Navigator.pop(ctx), child: Text('إلغاء')),
               ElevatedButton(
                 onPressed: () {
                   if (titleCtrl.text.isEmpty) return;
@@ -153,7 +153,7 @@ class _CustomerNotesScreenState extends ConsumerState<CustomerNotesScreen> {
                   Navigator.pop(ctx);
                 },
                 style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
-                child: Text(existing == null ? 'إضافة' : 'حفظ', style: const TextStyle(color: Colors.white)),
+                child: Text(existing == null ? 'إضافة' : 'حفظ', style: TextStyle(color: Colors.white)),
               ),
             ],
           ),
@@ -182,17 +182,17 @@ class _CustomerNotesScreenState extends ConsumerState<CustomerNotesScreen> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('حذف الملاحظة', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text('حذف الملاحظة', style: TextStyle(fontWeight: FontWeight.bold)),
         content: Text('هل تريد حذف الملاحظة "${note.title}"؟ لا يمكن التراجع عن هذا الإجراء.'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('إلغاء')),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text('إلغاء')),
           ElevatedButton(
             onPressed: () {
               ref.read(customersControllerProvider.notifier).deleteNote(customerId, note.id);
               Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-            child: const Text('حذف', style: TextStyle(color: Colors.white)),
+            child: Text('حذف', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),

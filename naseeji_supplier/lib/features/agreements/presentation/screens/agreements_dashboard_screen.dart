@@ -48,29 +48,29 @@ class _AgreementsDashboardScreenState extends ConsumerState<AgreementsDashboardS
         drawer: const NavigationDrawerView(),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
           centerTitle: true,
-          title: const Text(
+          title: Text(
             'مركز إدارة الاتفاقيات والعقود B2B',
             style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 14),
           ),
           leading: IconButton(
-            icon: const Icon(Icons.menu, color: AppColors.onSurfaceVariant),
+            icon: const Icon(Icons.menu, color: Theme.of(context).colorScheme.onSurfaceVariant),
             onPressed: () => _scaffoldKey.currentState?.openDrawer(),
           ),
           bottom: TabBar(
             controller: _tabController,
             isScrollable: true,
             labelColor: const Color(0xFF0040E0),
-            unselectedLabelColor: AppColors.onSurfaceVariant,
+            unselectedLabelColor: Theme.of(context).colorScheme.onSurfaceVariant,
             indicatorColor: const Color(0xFF0040E0),
-            labelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+            labelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
             tabs: _tabs.map((title) => Tab(text: title)).toList(),
           ),
         ),
         body: stateAsync.when(
-          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (e, _) => Center(child: Text('خطأ: $e')),
           data: (agreements) {
             // Apply search & tab filters
@@ -100,7 +100,7 @@ class _AgreementsDashboardScreenState extends ConsumerState<AgreementsDashboardS
                       ],
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
 
                   // Search and Sort Row
                   Row(
@@ -109,7 +109,7 @@ class _AgreementsDashboardScreenState extends ConsumerState<AgreementsDashboardS
                         child: Container(
                           height: 40,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.surface,
                             borderRadius: BorderRadius.circular(10),
                             boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.01), blurRadius: 4)],
                           ),
@@ -129,12 +129,12 @@ class _AgreementsDashboardScreenState extends ConsumerState<AgreementsDashboardS
                           ),
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8),
                       Container(
                         height: 40,
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.surface,
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.01), blurRadius: 4)],
                         ),
@@ -159,13 +159,13 @@ class _AgreementsDashboardScreenState extends ConsumerState<AgreementsDashboardS
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
 
                   if (filtered.isEmpty)
                     _buildEmptyState()
                   else
                     ...filtered.map((a) => AgreementSummaryCard(a: a)),
-                  const SizedBox(height: 40),
+                  SizedBox(height: 40),
                 ],
               ),
             );
@@ -190,8 +190,8 @@ class _AgreementsDashboardScreenState extends ConsumerState<AgreementsDashboardS
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(count, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: color)),
-          const SizedBox(height: 2),
-          Text(label, style: const TextStyle(fontSize: 9, color: AppColors.outline, fontWeight: FontWeight.w600)),
+          SizedBox(height: 2),
+          Text(label, style: TextStyle(fontSize: 9, color: AppColors.outline, fontWeight: FontWeight.w600)),
         ],
       ),
     );
@@ -251,7 +251,7 @@ class _AgreementsDashboardScreenState extends ConsumerState<AgreementsDashboardS
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 60),
       alignment: Alignment.center,
-      child: const Column(
+      child: Column(
         children: [
           Icon(Icons.handshake_outlined, size: 54, color: AppColors.outlineVariant),
           SizedBox(height: 12),

@@ -96,11 +96,11 @@ class _OrderMediaCenterState extends State<OrderMediaCenter> {
       children: [
         // Search & Controls Bar
         _buildControlsBar(),
-        const SizedBox(height: 12),
+        SizedBox(height: 12),
 
         // Categories selector
         _buildCategoriesSelector(),
-        const SizedBox(height: 12),
+        SizedBox(height: 12),
 
         // Items View
         Expanded(
@@ -116,7 +116,7 @@ class _OrderMediaCenterState extends State<OrderMediaCenter> {
 
   Widget _buildControlsBar() {
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.surface,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: Row(
         children: [
@@ -136,8 +136,8 @@ class _OrderMediaCenterState extends State<OrderMediaCenter> {
             ),
             child: DropdownButton<String>(
               value: selectedSort,
-              underline: const SizedBox(),
-              style: const TextStyle(fontSize: 11, color: AppColors.onSurface, fontWeight: FontWeight.bold),
+              underline: SizedBox(),
+              style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold),
               items: const [
                 DropdownMenuItem(value: 'الأحدث', child: Text('الأحدث')),
                 DropdownMenuItem(value: 'الاسم', child: Text('الاسم')),
@@ -151,7 +151,7 @@ class _OrderMediaCenterState extends State<OrderMediaCenter> {
               },
             ),
           ),
-          const SizedBox(width: 10),
+          SizedBox(width: 10),
           Expanded(
             child: Container(
               height: 38,
@@ -162,7 +162,7 @@ class _OrderMediaCenterState extends State<OrderMediaCenter> {
               child: Directionality(
                 textDirection: TextDirection.rtl,
                 child: TextField(
-                  style: const TextStyle(fontSize: 12),
+                  style: TextStyle(fontSize: 12),
                   onChanged: (val) {
                     setState(() {
                       searchQuery = val;
@@ -206,10 +206,10 @@ class _OrderMediaCenterState extends State<OrderMediaCenter> {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4.0),
             child: ChoiceChip(
-              label: Text(entry.value, style: TextStyle(fontSize: 10, color: isSelected ? Colors.white : AppColors.onSurfaceVariant)),
+              label: Text(entry.value, style: TextStyle(fontSize: 10, color: isSelected ? Colors.white : Theme.of(context).colorScheme.onSurfaceVariant)),
               selected: isSelected,
               selectedColor: const Color(0xFF0040E0),
-              backgroundColor: Colors.white,
+              backgroundColor: Theme.of(context).colorScheme.surface,
               onSelected: (val) {
                 if (val) {
                   setState(() {
@@ -240,7 +240,7 @@ class _OrderMediaCenterState extends State<OrderMediaCenter> {
           onTap: () => _previewFile(item),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(color: const Color(0xFFE2E1EF)),
             ),
@@ -265,13 +265,13 @@ class _OrderMediaCenterState extends State<OrderMediaCenter> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(item.name, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold), maxLines: 1, overflow: TextOverflow.ellipsis),
-                      const SizedBox(height: 2),
+                      Text(item.name, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold), maxLines: 1, overflow: TextOverflow.ellipsis),
+                      SizedBox(height: 2),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(item.size, style: const TextStyle(fontSize: 8, color: AppColors.outline)),
-                          Text(item.date, style: const TextStyle(fontSize: 8, color: AppColors.outline)),
+                          Text(item.size, style: TextStyle(fontSize: 8, color: AppColors.outline)),
+                          Text(item.date, style: TextStyle(fontSize: 8, color: AppColors.outline)),
                         ],
                       ),
                     ],
@@ -298,11 +298,11 @@ class _OrderMediaCenterState extends State<OrderMediaCenter> {
             borderRadius: BorderRadius.circular(12),
             side: const BorderSide(color: Color(0xFFE2E1EF)),
           ),
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           child: ListTile(
             onTap: () => _previewFile(item),
-            title: Text(item.name, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.end),
-            subtitle: Text('${item.category} • ${item.size} • ${item.date}', style: const TextStyle(fontSize: 9, color: AppColors.outline), textAlign: TextAlign.end),
+            title: Text(item.name, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.end),
+            subtitle: Text('${item.category} • ${item.size} • ${item.date}', style: TextStyle(fontSize: 9, color: AppColors.outline), textAlign: TextAlign.end),
             leading: IconButton(
               icon: const Icon(Icons.download_rounded, color: Color(0xFF0040E0), size: 18),
               onPressed: () {},
@@ -315,7 +315,7 @@ class _OrderMediaCenterState extends State<OrderMediaCenter> {
   }
 
   Widget _buildEmptyState() {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -342,25 +342,25 @@ class _OrderMediaCenterState extends State<OrderMediaCenter> {
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Text(item.name, textAlign: TextAlign.center, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+        title: Text(item.name, textAlign: TextAlign.center, style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
         content: item.category == 'Images'
             ? Image.network(item.url)
             : Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(_getCategoryIcon(item.category), color: const Color(0xFF0040E0), size: 56),
-                  const SizedBox(height: 16),
-                  Text('حجم الملف: ${item.size}', style: const TextStyle(fontSize: 12)),
-                  const SizedBox(height: 8),
-                  const Text('معاينة مستندات PDF والميديا الأخرى قيد التحميل...', style: TextStyle(fontSize: 10, color: AppColors.outline), textAlign: TextAlign.center),
+                  SizedBox(height: 16),
+                  Text('حجم الملف: ${item.size}', style: TextStyle(fontSize: 12)),
+                  SizedBox(height: 8),
+                  Text('معاينة مستندات PDF والميديا الأخرى قيد التحميل...', style: TextStyle(fontSize: 10, color: AppColors.outline), textAlign: TextAlign.center),
                 ],
               ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('إغلاق')),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text('إغلاق')),
           ElevatedButton.icon(
             onPressed: () => Navigator.pop(context),
             icon: const Icon(Icons.download, size: 16, color: Colors.white),
-            label: const Text('تحميل الملف'),
+            label: Text('تحميل الملف'),
             style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF0040E0), foregroundColor: Colors.white),
           ),
         ],
