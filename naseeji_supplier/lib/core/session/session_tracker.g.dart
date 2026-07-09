@@ -6,7 +6,7 @@ part of 'session_tracker.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$sessionTrackerHash() => r'dcc4097701932bd3088c44416317b2386eb2f613';
+String _$sessionTrackerHash() => r'0ae0d34373a1b46e7f210c58597fa8dd2d9e9efc';
 
 /// See also [SessionTracker].
 @ProviderFor(SessionTracker)
