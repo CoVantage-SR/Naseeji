@@ -1,14 +1,77 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import 'package:naseeji_supplier/core/theme/theme_controller.dart';
 import 'package:naseeji_supplier/features/profile/domain/entities/supplier_profile.dart';
 
-class SettingsTabView extends StatelessWidget {
+class SettingsTabView extends ConsumerWidget {
   final SupplierProfile profile;
 
   const SettingsTabView({super.key, required this.profile});
 
+  void _showAppearanceBottomSheet(BuildContext context, WidgetRef ref) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (ctx) {
+        final currentMode = ref.watch(themeControllerProvider);
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  'المظهر',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+              const Divider(height: 1),
+              RadioListTile<ThemeMode>(
+                value: ThemeMode.light,
+                groupValue: currentMode,
+                title: const Text('فاتح', textAlign: TextAlign.right),
+                onChanged: (mode) {
+                  if (mode != null) {
+                    ref.read(themeControllerProvider.notifier).setThemeMode(mode);
+                    Navigator.pop(ctx);
+                  }
+                },
+              ),
+              RadioListTile<ThemeMode>(
+                value: ThemeMode.dark,
+                groupValue: currentMode,
+                title: const Text('داكن', textAlign: TextAlign.right),
+                onChanged: (mode) {
+                  if (mode != null) {
+                    ref.read(themeControllerProvider.notifier).setThemeMode(mode);
+                    Navigator.pop(ctx);
+                  }
+                },
+              ),
+              RadioListTile<ThemeMode>(
+                value: ThemeMode.system,
+                groupValue: currentMode,
+                title: const Text('حسب إعدادات الجهاز', textAlign: TextAlign.right),
+                onChanged: (mode) {
+                  if (mode != null) {
+                    ref.read(themeControllerProvider.notifier).setThemeMode(mode);
+                    Navigator.pop(ctx);
+                  }
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ListView(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -22,9 +85,9 @@ class SettingsTabView extends StatelessWidget {
         ),
         ListTile(
           trailing: const Icon(Icons.arrow_forward_ios, size: 14),
-          title: const Text('لغة واجهة التطبيق واللوكاليزيشن', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.end),
-          leading: const Icon(Icons.language, color: AppColors.outline),
-          onTap: () {},
+          title: const Text('المظهر', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold), textAlign: TextAlign.end),
+          leading: const Icon(Icons.brightness_medium_outlined, color: AppColors.outline),
+          onTap: () => _showAppearanceBottomSheet(context, ref),
         ),
         ListTile(
           trailing: const Icon(Icons.arrow_forward_ios, size: 14),
