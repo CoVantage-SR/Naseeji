@@ -53,7 +53,7 @@ class _InventoryTabState extends State<InventoryTab> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: AppColors.background,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: ListView.separated(
           padding: const EdgeInsets.all(16),
           itemCount: _inventoryItems.length,
@@ -149,8 +149,8 @@ class _InventoryTabState extends State<InventoryTab> {
                       icon: const Icon(Icons.edit_calendar_outlined, size: 16),
                       label: Text('تعديل كميات المخزون والمواصفات', style: TextStyle(fontSize: 12)),
                       style: OutlinedButton.styleFrom(
-                        foregroundColor: AppColors.primary,
-                        side: const BorderSide(color: AppColors.primary),
+                        foregroundColor: Theme.of(context).colorScheme.primary,
+                        side: BorderSide(color: Theme.of(context).colorScheme.primary),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                       ),
                     ),

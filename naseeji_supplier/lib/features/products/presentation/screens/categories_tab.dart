@@ -20,7 +20,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: AppColors.background,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: ListView.separated(
           padding: const EdgeInsets.all(16),
           itemCount: _categories.length,
