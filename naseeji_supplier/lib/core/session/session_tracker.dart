@@ -1,5 +1,8 @@
+import 'dart:convert';
 import 'dart:developer' as developer;
+import 'dart:io';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../security/secure_storage_service.dart';
 
 part 'session_tracker.g.dart';
 
@@ -21,11 +24,33 @@ class SessionTracker extends _$SessionTracker {
 
   @override
   UserSession? build() {
-    return null; // No active session initially
+    _loadPersistedSession();
+    return _currentSession;
+  }
+
+  void _loadPersistedSession() {
+    try {
+      final tempDir = Directory.systemTemp.path;
+      final file = File('$tempDir/naseeji_secure_session.txt');
+      if (file.existsSync()) {
+        final Map<String, dynamic> decoded = json.decode(file.readAsStringSync());
+        final userId = decoded['session_user_id'];
+        if (userId != null) {
+          _currentSession = UserSession(
+            sessionId: 'sess_restored',
+            userId: userId.toString(),
+            startTime: DateTime.now(),
+          );
+          state = _currentSession;
+        }
+      }
+    } catch (_) {}
   }
 
   void startSession(String userId) {
     final sessionId = 'sess_${DateTime.now().millisecondsSinceEpoch}';
+    final deviceModel = '${Platform.operatingSystem} (${Platform.operatingSystemVersion})';
+
     _currentSession = UserSession(
       sessionId: sessionId,
       userId: userId,
@@ -33,8 +58,13 @@ class SessionTracker extends _$SessionTracker {
     );
     state = _currentSession;
 
+    // Persist login state
+    SecureStorageService.write(key: 'session_user_id', value: userId);
+    SecureStorageService.write(key: 'device_model', value: deviceModel);
+
     logAction('SESSION_START', metadata: {
       'userId': userId,
+      'deviceModel': deviceModel,
       'startTime': _currentSession!.startTime.toIso8601String(),
     });
   }
@@ -47,6 +77,7 @@ class SessionTracker extends _$SessionTracker {
       'durationSeconds': DateTime.now().difference(_currentSession!.startTime).inSeconds,
     });
 
+    SecureStorageService.clearAll();
     _currentSession = null;
     state = null;
   }
@@ -65,7 +96,6 @@ class SessionTracker extends _$SessionTracker {
       if (metadata != null) 'metadata': metadata,
     };
 
-    // Print to developer log (which can be streamed or integrated with crashlytics/mixpanel later)
     developer.log(
       'NaseejiSessionTracker: $logPayload',
       name: 'naseeji.session',
