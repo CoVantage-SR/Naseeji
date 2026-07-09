@@ -70,7 +70,7 @@ class QuotationCard extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                const Icon(Icons.request_quote_outlined, color: Theme.of(context).colorScheme.surface, size: 18),
+                Icon(Icons.request_quote_outlined, color: AppColors.surface, size: 18),
                 SizedBox(width: 6),
                 Text(
                   'عرض سعر ${data['version'] ?? ''}',
@@ -102,7 +102,7 @@ class QuotationCard extends StatelessWidget {
               height: 36,
               child: OutlinedButton.icon(
                 onPressed: onViewDetails,
-                icon: const Icon(Icons.info_outline, size: 14, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                icon: Icon(Icons.info_outline, size: 14, color: AppColors.onSurfaceVariant),
                 label: Text('عرض التفاصيل', style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant)),
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: AppColors.outlineVariant),

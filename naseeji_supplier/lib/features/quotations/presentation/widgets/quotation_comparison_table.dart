@@ -48,7 +48,7 @@ class QuotationComparisonTable extends StatelessWidget {
             ],
           ),
           SizedBox(height: 10),
-          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          Divider(height: 1, color: AppColors.surfaceContainerLow),
           SizedBox(height: 12),
 
           // Comparison Rows Table
@@ -173,16 +173,16 @@ class QuotationComparisonTable extends StatelessWidget {
   }
 
   Widget _buildCell(String text, {bool isHeader = false, bool isBold = false, bool isPrimary = false, bool isSuccess = false}) {
-    TextStyle style = TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurface);
+    TextStyle style = TextStyle(fontSize: 10, color: AppColors.onSurface);
     if (isHeader) {
-      style = TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurfaceVariant);
+      style = TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant);
     } else if (isBold || isPrimary || isSuccess) {
       style = TextStyle(
         fontSize: 10,
         fontWeight: FontWeight.bold,
         color: isPrimary 
             ? AppColors.primary 
-            : (isSuccess ? Colors.green : Theme.of(context).colorScheme.onSurface),
+            : (isSuccess ? Colors.green : AppColors.onSurface),
       );
     }
     return TableCell(

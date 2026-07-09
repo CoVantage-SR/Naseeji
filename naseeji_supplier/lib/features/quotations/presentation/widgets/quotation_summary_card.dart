@@ -109,7 +109,7 @@ class QuotationSummaryCard extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          Divider(height: 1, color: AppColors.surfaceContainerLow),
 
           // Factory Info
           Padding(
@@ -231,7 +231,7 @@ class QuotationSummaryCard extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          Divider(height: 1, color: AppColors.surfaceContainerLow),
 
           // Actions
           Padding(
@@ -292,7 +292,7 @@ class QuotationSummaryCard extends StatelessWidget {
       width: 32,
       height: 32,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainerLow,
+        color: AppColors.surfaceContainerLow,
         borderRadius: BorderRadius.circular(8),
       ),
       child: IconButton(

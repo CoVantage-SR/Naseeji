@@ -141,8 +141,8 @@ class SubscriptionDetailsScreen extends ConsumerWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(value, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
-          Text(label, style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant)),
+          Text(value, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
+          Text(label, style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant)),
         ],
       ),
     );
@@ -155,7 +155,7 @@ class SubscriptionDetailsScreen extends ConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Expanded(
-            child: Text(text, style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant), textAlign: TextAlign.right),
+            child: Text(text, style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant), textAlign: TextAlign.right),
           ),
           SizedBox(width: 8),
           const Icon(Icons.check, color: Color(0xFF006B5F), size: 16),

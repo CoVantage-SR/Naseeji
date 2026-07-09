@@ -15,9 +15,9 @@ class AppTheme {
         secondaryContainer: AppColors.secondaryContainer,
         error: AppColors.error,
         onError: AppColors.onError,
-        surface: Theme.of(context).colorScheme.surface,
-        onSurface: Theme.of(context).colorScheme.onSurface,
-        onSurfaceVariant: Theme.of(context).colorScheme.onSurfaceVariant,
+        surface: AppColors.surface,
+        onSurface: AppColors.onSurface,
+        onSurfaceVariant: AppColors.onSurfaceVariant,
         outline: AppColors.outline,
         outlineVariant: AppColors.outlineVariant,
       ),
@@ -25,7 +25,7 @@ class AppTheme {
       fontFamily: 'IBM Plex Sans Arabic',
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
-        foregroundColor: Theme.of(context).colorScheme.onSurface,
+        foregroundColor: AppColors.onSurface,
         elevation: 0,
         centerTitle: true,
       ),
@@ -45,7 +45,7 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: Theme.of(context).colorScheme.surface,
+        fillColor: AppColors.surface,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: AppColors.outlineVariant),

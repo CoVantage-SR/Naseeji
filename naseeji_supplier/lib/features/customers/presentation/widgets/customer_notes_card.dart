@@ -82,7 +82,7 @@ class CustomerNotesCard extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          Divider(height: 1, color: AppColors.surfaceContainerLow),
           // Body
           Padding(
             padding: const EdgeInsets.all(14),

@@ -73,7 +73,7 @@ class QuotationVersionCard extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          Divider(height: 1, color: AppColors.surfaceContainerLow),
 
           // Details grid
           Padding(
@@ -127,7 +127,7 @@ class QuotationVersionCard extends StatelessWidget {
             ),
           ),
 
-          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          Divider(height: 1, color: AppColors.surfaceContainerLow),
 
           // Actions
           Padding(
@@ -172,7 +172,7 @@ class QuotationVersionCard extends StatelessWidget {
           SizedBox(height: 2),
           Text(
             value,
-            style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
+            style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: AppColors.onSurface),
           ),
         ],
       ),

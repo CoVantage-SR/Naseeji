@@ -38,7 +38,7 @@ class PaymentCard extends StatelessWidget {
                     child: Text('تم الإصدار ✓', style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 10, fontWeight: FontWeight.bold)),
                   ),
                 const Spacer(),
-                const Icon(Icons.payments_outlined, color: Theme.of(context).colorScheme.surface, size: 18),
+                Icon(Icons.payments_outlined, color: AppColors.surface, size: 18),
                 SizedBox(width: 6),
                 Text('تفاصيل الدفع', style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.bold, fontSize: 13)),
               ],

@@ -199,7 +199,7 @@ class AnalyticsTab extends StatelessWidget {
           height: 120,
           width: 28,
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surfaceContainerLow,
+            color: AppColors.surfaceContainerLow,
             borderRadius: BorderRadius.circular(6),
           ),
           alignment: Alignment.bottomCenter,
@@ -236,7 +236,7 @@ class AnalyticsTab extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 10)],
       ),
@@ -254,7 +254,7 @@ class AnalyticsTab extends StatelessWidget {
           SizedBox(height: 6),
           Text(
             value,
-            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
+            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: AppColors.onSurface),
           ),
         ],
       ),
@@ -270,7 +270,7 @@ class AnalyticsTab extends StatelessWidget {
             width: 24,
             height: 24,
             decoration: BoxDecoration(
-              color: rank == '1' ? const Color(0xFFFFD700).withValues(alpha: 0.15) : Theme.of(context).colorScheme.surfaceContainerLow,
+              color: rank == '1' ? const Color(0xFFFFD700).withValues(alpha: 0.15) : AppColors.surfaceContainerLow,
               shape: BoxShape.circle,
             ),
             child: Center(
@@ -279,7 +279,7 @@ class AnalyticsTab extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
-                  color: rank == '1' ? const Color(0xFFE6B800) : Theme.of(context).colorScheme.onSurfaceVariant,
+                  color: rank == '1' ? const Color(0xFFE6B800) : AppColors.onSurfaceVariant,
                 ),
               ),
             ),
@@ -320,7 +320,7 @@ class AnalyticsTab extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.4),
+              style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant, height: 1.4),
             ),
           ),
         ],

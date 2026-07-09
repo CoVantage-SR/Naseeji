@@ -36,7 +36,7 @@ class ApprovalHeader extends StatelessWidget {
                 ),
                 child: const Icon(
                   Icons.check,
-                  color: Theme.of(context).colorScheme.surface,
+                  color: AppColors.surface,
                   size: 48,
                 ),
               ),
@@ -176,7 +176,7 @@ class OfferSummaryCard extends StatelessWidget {
           children: [
             Text(
               value,
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
             ),
             if (icon != null) ...[
               SizedBox(width: 4),
@@ -293,7 +293,7 @@ class NextStepsCard extends StatelessWidget {
               Expanded(
                 child: ElevatedButton.icon(
                   onPressed: () {},
-                  icon: const Icon(Icons.check_circle_outline, color: Theme.of(context).colorScheme.surface, size: 16),
+                  icon: Icon(Icons.check_circle_outline, color: AppColors.surface, size: 16),
                   label: Text(
                     'تحويل إلى طلب مؤكد',
                     style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.white),

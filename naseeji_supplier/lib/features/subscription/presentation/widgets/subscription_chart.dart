@@ -65,7 +65,7 @@ class SubscriptionChart extends StatelessWidget {
             children: [
               Text(
                 val.toStringAsFixed(0),
-                style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant),
               ),
               SizedBox(height: 4),
               Container(
@@ -79,7 +79,7 @@ class SubscriptionChart extends StatelessWidget {
               SizedBox(height: 6),
               Text(
                 label,
-                style: TextStyle(fontSize: 9, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                style: TextStyle(fontSize: 9, color: AppColors.onSurfaceVariant),
               ),
             ],
           );
@@ -106,7 +106,7 @@ class SubscriptionChart extends StatelessWidget {
             children: [
               Text(
                 val.toStringAsFixed(1),
-                style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: AppColors.onSurfaceVariant),
               ),
               SizedBox(height: 4),
               Stack(
@@ -130,7 +130,7 @@ class SubscriptionChart extends StatelessWidget {
               SizedBox(height: 6),
               Text(
                 label,
-                style: TextStyle(fontSize: 9, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                style: TextStyle(fontSize: 9, color: AppColors.onSurfaceVariant),
               ),
             ],
           );
@@ -161,7 +161,7 @@ class SubscriptionChart extends StatelessWidget {
               children: [
                 Text(
                   '${labels[idx]} (${(values[idx] * 100).toStringAsFixed(0)}%)',
-                  style: TextStyle(fontSize: 9, color: Theme.of(context).colorScheme.onSurface),
+                  style: TextStyle(fontSize: 9, color: AppColors.onSurface),
                 ),
                 SizedBox(width: 4),
                 Container(

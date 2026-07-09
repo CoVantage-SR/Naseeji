@@ -13,7 +13,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0.5,
       centerTitle: false,
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
+        icon: Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
         onPressed: () => context.pop(),
       ),
       title: Row(
@@ -70,7 +70,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.more_vert, color: Theme.of(context).colorScheme.onSurfaceVariant),
+          icon: Icon(Icons.more_vert, color: AppColors.onSurfaceVariant),
           onPressed: () {},
         ),
       ],
@@ -563,7 +563,7 @@ class ChatInputField extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             child: IconButton(
-              icon: const Icon(Icons.send_rounded, color: Theme.of(context).colorScheme.surface, size: 18),
+              icon: Icon(Icons.send_rounded, color: AppColors.surface, size: 18),
               onPressed: onSend,
             ),
           ),

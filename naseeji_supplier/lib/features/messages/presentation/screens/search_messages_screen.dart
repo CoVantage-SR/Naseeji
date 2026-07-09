@@ -46,7 +46,7 @@ class _SearchMessagesScreenState extends ConsumerState<SearchMessagesScreen> {
         backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
+          icon: Icon(Icons.arrow_back, color: AppColors.onSurface),
           onPressed: () => context.pop(),
         ),
         title: TextField(
@@ -103,7 +103,7 @@ class _SearchMessagesScreenState extends ConsumerState<SearchMessagesScreen> {
                                   colorScheme: const ColorScheme.light(
                                     primary: AppColors.primary,
                                     onPrimary: Colors.white,
-                                    onSurface: Theme.of(context).colorScheme.onSurface,
+                                    onSurface: AppColors.onSurface,
                                   ),
                                 ),
                                 child: child!,

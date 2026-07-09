@@ -27,12 +27,12 @@ class GlobalSearchScreen extends ConsumerWidget {
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_forward, color: Theme.of(context).colorScheme.onSurfaceVariant),
+          icon: Icon(Icons.arrow_forward, color: AppColors.onSurfaceVariant),
           onPressed: () => Navigator.of(context).pop(),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.more_vert, color: Theme.of(context).colorScheme.onSurfaceVariant),
+            icon: Icon(Icons.more_vert, color: AppColors.onSurfaceVariant),
             onPressed: () {},
           ),
           SizedBox(width: 8),

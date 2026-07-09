@@ -191,7 +191,7 @@ class SuggestedChangesCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: const Color(0xFFF1F1F5)),
       ),
@@ -201,7 +201,7 @@ class SuggestedChangesCard extends StatelessWidget {
           Expanded(
             child: Text(
               text,
-              style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.4),
+              style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant, height: 1.4),
               textAlign: TextAlign.end,
             ),
           ),
@@ -275,7 +275,7 @@ class RejectionActionButtonBar extends StatelessWidget {
               children: [
                 TextButton.icon(
                   onPressed: () {},
-                  icon: const Icon(Icons.archive_outlined, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 18),
+                  icon: Icon(Icons.archive_outlined, color: AppColors.onSurfaceVariant, size: 18),
                   label: Text(
                     'أرشفة',
                     style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 12, fontWeight: FontWeight.bold),

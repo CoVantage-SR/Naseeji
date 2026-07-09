@@ -160,7 +160,7 @@ class PublicProfileHeaderCard extends StatelessWidget {
                   icon: const Icon(
                     Icons.chat_bubble_outline,
                     size: 15,
-                    color: Theme.of(context).colorScheme.surface,
+                    color: AppColors.surface,
                   ),
                   label: Text(
                     'بدء دردشة ثنائية',

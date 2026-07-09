@@ -55,7 +55,7 @@ class TrackingMapView extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
+            color: AppColors.surface,
             borderRadius: BorderRadius.circular(6),
             boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4)],
           ),

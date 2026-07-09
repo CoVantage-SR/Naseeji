@@ -72,7 +72,7 @@ class RecentActivityTimeline extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.onSurface,
+                  color: AppColors.onSurface,
                 ),
               ),
               SizedBox(height: 4),
@@ -81,7 +81,7 @@ class RecentActivityTimeline extends StatelessWidget {
                 textAlign: TextAlign.right,
                 style: TextStyle(
                   fontSize: 12,
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  color: AppColors.onSurfaceVariant,
                   height: 1.4,
                 ),
               ),

@@ -31,11 +31,11 @@ class SearchTextField extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               IconButton(
-                icon: const Icon(Icons.qr_code_scanner, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
+                icon: Icon(Icons.qr_code_scanner, color: AppColors.onSurfaceVariant, size: 20),
                 onPressed: () {},
               ),
               IconButton(
-                icon: const Icon(Icons.mic_none, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
+                icon: Icon(Icons.mic_none, color: AppColors.onSurfaceVariant, size: 20),
                 onPressed: () {},
               ),
             ],

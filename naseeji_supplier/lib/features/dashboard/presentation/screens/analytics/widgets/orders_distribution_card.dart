@@ -91,13 +91,13 @@ class OrdersDistributionCard extends StatelessWidget {
         children: [
           Text(
             value,
-            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
+            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
           ),
           Row(
             children: [
               Text(
                 label,
-                style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                style: TextStyle(fontSize: 13, color: AppColors.onSurfaceVariant),
               ),
               SizedBox(width: 8),
               Container(

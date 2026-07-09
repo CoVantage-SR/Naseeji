@@ -69,7 +69,7 @@ class CustomerTimelineWidget extends StatelessWidget {
               margin: EdgeInsets.only(bottom: isLast ? 0 : 16),
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
+                color: AppColors.surface,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5),
               ),
@@ -81,7 +81,7 @@ class CustomerTimelineWidget extends StatelessWidget {
                       Expanded(
                         child: Text(
                           event.title,
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Theme.of(context).colorScheme.onSurface),
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.onSurface),
                         ),
                       ),
                     ],
@@ -103,10 +103,10 @@ class CustomerTimelineWidget extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surfaceContainerLow,
+                        color: AppColors.surfaceContainerLow,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Text(event.notes, style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.4)),
+                      child: Text(event.notes, style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant, height: 1.4)),
                     ),
                   ],
                 ],

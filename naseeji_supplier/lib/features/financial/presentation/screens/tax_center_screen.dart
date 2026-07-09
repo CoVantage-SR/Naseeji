@@ -19,7 +19,7 @@ class TaxCenterScreen extends ConsumerWidget {
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
+          icon: Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
@@ -212,7 +212,7 @@ class TaxCenterScreen extends ConsumerWidget {
           label,
           style: TextStyle(
             fontSize: 13,
-            color: isBold ? Theme.of(context).colorScheme.onSurface : AppColors.outline,
+            color: isBold ? AppColors.onSurface : AppColors.outline,
             fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
           ),
         ),

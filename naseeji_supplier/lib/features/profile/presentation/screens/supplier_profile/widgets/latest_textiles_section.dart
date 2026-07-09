@@ -70,7 +70,7 @@ class LatestTextilesSection extends StatelessWidget {
     return Container(
       width: 180,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
       ),
@@ -96,7 +96,7 @@ class LatestTextilesSection extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: AppColors.onSurface,
                   ),
                 ),
                 SizedBox(height: 4),
@@ -105,7 +105,7 @@ class LatestTextilesSection extends StatelessWidget {
                   textAlign: TextAlign.right,
                   style: TextStyle(
                     fontSize: 11,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    color: AppColors.onSurfaceVariant,
                   ),
                 ),
               ],

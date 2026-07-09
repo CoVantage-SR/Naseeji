@@ -47,7 +47,7 @@ class _RequestWithdrawalScreenState extends ConsumerState<RequestWithdrawalScree
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
+          icon: Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),

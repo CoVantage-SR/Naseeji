@@ -50,7 +50,7 @@ class _SupportChatScreenState extends ConsumerState<SupportChatScreen> {
         backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
+          icon: Icon(Icons.arrow_back, color: AppColors.onSurface),
           onPressed: () => context.pop(),
         ),
         title: Text('دعم نسيجي', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15, color: Theme.of(context).colorScheme.onSurface)),
@@ -179,7 +179,7 @@ class _TicketHeader extends StatelessWidget {
                     ],
                   ),
                   SizedBox(width: 8),
-                  const CircleAvatar(radius: 18, backgroundColor: AppColors.primary, child: Icon(Icons.headset_mic, color: Theme.of(context).colorScheme.surface, size: 16)),
+                  CircleAvatar(radius: 18, backgroundColor: AppColors.primary, child: Icon(Icons.headset_mic, color: AppColors.surface, size: 16)),
                 ],
               ),
             ],

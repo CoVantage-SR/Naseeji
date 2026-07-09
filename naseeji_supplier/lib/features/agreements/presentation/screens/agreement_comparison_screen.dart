@@ -33,7 +33,7 @@ class AgreementComparisonScreen extends ConsumerWidget {
           leading: IconButton(
             icon: const Icon(
               Icons.arrow_back_ios_new,
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
+              color: AppColors.onSurfaceVariant,
               size: 20,
             ),
             onPressed: () => context.pop(),

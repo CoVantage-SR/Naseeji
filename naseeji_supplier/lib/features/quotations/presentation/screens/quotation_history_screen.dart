@@ -47,7 +47,7 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
             style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
           ),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
+            icon: Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
             onPressed: () => context.pop(),
           ),
           bottom: TabBar(
@@ -156,7 +156,7 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
             ],
           ),
           SizedBox(height: 12),
-          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          Divider(height: 1, color: AppColors.surfaceContainerLow),
           SizedBox(height: 12),
 
           Row(
@@ -186,7 +186,7 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
           ],
           
           SizedBox(height: 12),
-          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          Divider(height: 1, color: AppColors.surfaceContainerLow),
           SizedBox(height: 8),
           
           Row(

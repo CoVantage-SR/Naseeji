@@ -66,7 +66,7 @@ class OverviewTabView extends StatelessWidget {
   Widget _buildMetricCard(String label, String val, IconData icon, Color color) {
     return Container(
       padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface, borderRadius: BorderRadius.circular(12), border: Border.all(color: const Color(0xFFE2E1EF))),
+      decoration: BoxDecoration(color: AppColors.surface, borderRadius: BorderRadius.circular(12), border: Border.all(color: const Color(0xFFE2E1EF))),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

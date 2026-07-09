@@ -27,7 +27,7 @@ class FinancialDashboardScreen extends ConsumerWidget {
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
+          icon: Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
           onPressed: () => context.go('/home'),
         ),
       ),
@@ -298,11 +298,11 @@ class FinancialDashboardScreen extends ConsumerWidget {
       children: [
         Text(
           '${val.toStringAsFixed(2)} ر.س',
-          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
+          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
         ),
         Text(
           label,
-          style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurfaceVariant),
+          style: TextStyle(fontSize: 13, color: AppColors.onSurfaceVariant),
         ),
       ],
     );

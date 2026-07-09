@@ -87,7 +87,7 @@ class AgreementSummaryCard extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          Divider(height: 1, color: AppColors.surfaceContainerLow),
 
           // Card Content
           Padding(
@@ -129,7 +129,7 @@ class AgreementSummaryCard extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          Divider(height: 1, color: AppColors.surfaceContainerLow),
 
           // Card Footer Actions
           Padding(

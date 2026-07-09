@@ -86,7 +86,7 @@ class _CustomersDashboardScreenState extends ConsumerState<CustomersDashboardScr
           elevation: 0.5,
           leading: Builder(
             builder: (ctx) => IconButton(
-              icon: const Icon(Icons.menu, color: Theme.of(context).colorScheme.onSurfaceVariant),
+              icon: Icon(Icons.menu, color: AppColors.onSurfaceVariant),
               onPressed: () => Scaffold.of(ctx).openDrawer(),
             ),
           ),
@@ -94,11 +94,11 @@ class _CustomersDashboardScreenState extends ConsumerState<CustomersDashboardScr
           centerTitle: true,
           actions: [
             IconButton(
-              icon: const Icon(Icons.search, color: Theme.of(context).colorScheme.onSurfaceVariant),
+              icon: Icon(Icons.search, color: AppColors.onSurfaceVariant),
               onPressed: () => setState(() => _showFilters = !_showFilters),
             ),
             IconButton(
-              icon: const Icon(Icons.sort, color: Theme.of(context).colorScheme.onSurfaceVariant),
+              icon: Icon(Icons.sort, color: AppColors.onSurfaceVariant),
               onPressed: () => _showSortSheet(context),
             ),
           ],

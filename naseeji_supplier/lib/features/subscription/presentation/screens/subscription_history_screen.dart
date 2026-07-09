@@ -103,11 +103,11 @@ class SubscriptionHistoryScreen extends ConsumerWidget {
         children: [
           Text(
             value,
-            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
+            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface),
           ),
           Text(
             label,
-            style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant),
+            style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
           ),
         ],
       ),

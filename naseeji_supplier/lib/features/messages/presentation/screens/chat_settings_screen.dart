@@ -68,7 +68,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
         backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
+          icon: Icon(Icons.arrow_back, color: AppColors.onSurface),
           onPressed: () => context.pop(),
         ),
         title: Text(
@@ -367,7 +367,7 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
   Widget _buildSettingTile({
     required IconData icon,
     required String label,
-    Color labelColor = Theme.of(context).colorScheme.onSurface,
+    Color labelColor = AppColors.onSurface,
     Color iconColor = AppColors.primary,
     Widget? trailing,
     VoidCallback? onTap,

@@ -23,7 +23,7 @@ class DrawerBottomView extends ConsumerWidget {
           children: [
             // Night mode toggle (Egyptian Arabic label)
             ListTile(
-              leading: const Icon(Icons.dark_mode_outlined, color: Theme.of(context).colorScheme.onSurfaceVariant),
+              leading: Icon(Icons.dark_mode_outlined, color: AppColors.onSurfaceVariant),
               title: Text('الوضع الداكن', style: TextStyle(fontSize: 13)),
               trailing: Switch(
                 value: isDark,

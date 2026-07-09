@@ -139,7 +139,7 @@ class PublicOverviewTabView extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
@@ -169,7 +169,7 @@ class PublicOverviewTabView extends StatelessWidget {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 12,
-                  color: Theme.of(context).colorScheme.onSurface,
+                  color: AppColors.onSurface,
                 ),
               ),
               SizedBox(height: 2),
@@ -189,7 +189,7 @@ class PublicOverviewTabView extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
@@ -202,7 +202,7 @@ class PublicOverviewTabView extends StatelessWidget {
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.onSurface,
+                color: AppColors.onSurface,
               ),
               textAlign: TextAlign.left,
             ),

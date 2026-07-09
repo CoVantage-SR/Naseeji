@@ -42,7 +42,7 @@ class CustomerCard extends StatelessWidget {
                 ],
               ),
             ),
-            const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+            Divider(height: 1, color: AppColors.surfaceContainerLow),
             // ── Stats Row ──
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
@@ -120,7 +120,7 @@ class CustomerCard extends StatelessWidget {
       child: Center(
         child: Text(
           customer.logoText,
-          style: TextStyle(color: Theme.of(context).colorScheme.surface, fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(color: AppColors.surface, fontWeight: FontWeight.bold, fontSize: 16),
         ),
       ),
     );
@@ -135,7 +135,7 @@ class CustomerCard extends StatelessWidget {
             Flexible(
               child: Text(
                 customer.factoryName,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Theme.of(context).colorScheme.onSurface),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.onSurface),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -154,7 +154,7 @@ class CustomerCard extends StatelessWidget {
         SizedBox(height: 2),
         Text(
           customer.businessCategory,
-          style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant),
+          style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant),
         ),
       ],
     );
@@ -196,7 +196,7 @@ class CustomerCard extends StatelessWidget {
         children: [
           Icon(icon, size: 14, color: color ?? AppColors.primary),
           SizedBox(height: 2),
-          Text(value, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
+          Text(value, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
           Text(label, style: TextStyle(fontSize: 8, color: AppColors.outline)),
         ],
       ),
@@ -204,7 +204,7 @@ class CustomerCard extends StatelessWidget {
   }
 
   Widget _buildDivider() {
-    return Container(width: 0.5, height: 30, color: Theme.of(context).colorScheme.surfaceContainerLow);
+    return Container(width: 0.5, height: 30, color: AppColors.surfaceContainerLow);
   }
 
   Widget _buildActionButton(String label, IconData icon, VoidCallback? onPressed) {

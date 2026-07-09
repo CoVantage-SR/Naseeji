@@ -35,7 +35,7 @@ class SplashLogo extends StatelessWidget {
             child: const Icon(
               Icons.blur_circular_rounded,
               size: 56,
-              color: Theme.of(context).colorScheme.surface,
+              color: AppColors.surface,
             ),
           ),
           SizedBox(height: 24),

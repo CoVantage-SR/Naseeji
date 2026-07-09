@@ -45,7 +45,7 @@ class AgreementHistoryCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: 6),
-          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          Divider(height: 1, color: AppColors.surfaceContainerLow),
           SizedBox(height: 6),
           Text(
             'السبب/التفاصيل: ${record.reason}',

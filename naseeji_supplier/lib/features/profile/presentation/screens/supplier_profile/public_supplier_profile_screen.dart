@@ -69,7 +69,7 @@ class _PublicSupplierProfileScreenState extends ConsumerState<PublicSupplierProf
                   leading: IconButton(
                     icon: const Icon(
                       Icons.arrow_back_ios_new,
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      color: AppColors.onSurfaceVariant,
                       size: 25,
                     ),
                     onPressed: () => context.pop(),

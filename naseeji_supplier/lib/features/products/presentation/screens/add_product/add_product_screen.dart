@@ -58,7 +58,7 @@ class AddNewProductScreen extends ConsumerWidget {
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurfaceVariant),
+          icon: Icon(Icons.arrow_back, color: AppColors.onSurfaceVariant),
           onPressed: () => context.pop(),
         ),
       ),

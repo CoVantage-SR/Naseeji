@@ -21,7 +21,7 @@ class FinancialAnalyticsScreen extends ConsumerWidget {
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
+          icon: Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
@@ -142,13 +142,13 @@ class FinancialAnalyticsScreen extends ConsumerWidget {
       children: [
         Text(
           value,
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.onSurface),
         ),
         Row(
           children: [
             Text(
               label,
-              style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurfaceVariant),
+              style: TextStyle(fontSize: 13, color: AppColors.onSurfaceVariant),
             ),
             SizedBox(width: 8),
             Icon(icon, color: color, size: 18),

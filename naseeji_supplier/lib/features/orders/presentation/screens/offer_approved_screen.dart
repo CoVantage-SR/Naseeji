@@ -28,12 +28,12 @@ class OfferApprovedScreen extends ConsumerWidget {
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.search, color: Theme.of(context).colorScheme.onSurfaceVariant),
+          icon: Icon(Icons.search, color: AppColors.onSurfaceVariant),
           onPressed: () {},
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.menu, color: Theme.of(context).colorScheme.onSurfaceVariant),
+            icon: Icon(Icons.menu, color: AppColors.onSurfaceVariant),
             onPressed: () {},
           ),
         ],

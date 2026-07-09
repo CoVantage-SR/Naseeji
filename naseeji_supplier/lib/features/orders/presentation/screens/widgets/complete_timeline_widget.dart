@@ -45,7 +45,7 @@ class CompleteTimelineWidget extends StatelessWidget {
 
     if (step.isCompleted) {
       nodeColor = const Color(0xFF0040E0);
-      icon = const Icon(Icons.check, color: Theme.of(context).colorScheme.surface, size: 10);
+      icon = Icon(Icons.check, color: AppColors.surface, size: 10);
     } else if (step.isActive) {
       nodeColor = const Color(0xFFE8F0FE);
       icon = SizedBox(

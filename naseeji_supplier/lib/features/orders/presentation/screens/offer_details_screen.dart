@@ -20,12 +20,12 @@ class OfferDetailsScreen extends ConsumerWidget {
         backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.close, color: Theme.of(context).colorScheme.onSurfaceVariant),
+          icon: Icon(Icons.close, color: AppColors.onSurfaceVariant),
           onPressed: () => context.pop(),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.share_outlined, color: Theme.of(context).colorScheme.onSurfaceVariant),
+            icon: Icon(Icons.share_outlined, color: AppColors.onSurfaceVariant),
             onPressed: () {},
           ),
         ],

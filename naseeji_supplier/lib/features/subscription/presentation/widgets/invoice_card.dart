@@ -76,7 +76,7 @@ class InvoiceCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                  icon: const Icon(Icons.share_outlined, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
+                  icon: Icon(Icons.share_outlined, color: AppColors.onSurfaceVariant, size: 20),
                   onPressed: onShare,
                 ),
                 SizedBox(width: 8),
@@ -100,11 +100,11 @@ class InvoiceCard extends StatelessWidget {
         children: [
           Text(
             value,
-            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
+            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface),
           ),
           Text(
             label,
-            style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant),
+            style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
           ),
         ],
       ),

@@ -7,7 +7,7 @@ class AppColors {
   static const secondaryContainer = Color(0xFF72F8E4);
   
   static const background = Color(0xFFFBF8FF);
-  static const surface = Color(0xFFFFFFFF);
+  static surface = AppColors.surface;
   static const surfaceVariant = Color(0xFFE2E1EF);
   static const error = Color(0xFFBA1A1A);
   

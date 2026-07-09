@@ -28,7 +28,7 @@ class FactoryPreparationReviewScreen extends ConsumerWidget {
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
+          icon: Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
@@ -112,7 +112,7 @@ class FactoryPreparationReviewScreen extends ConsumerWidget {
                           child: Container(
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(color: Colors.black45, shape: BoxShape.circle),
-                            child: const Icon(Icons.play_arrow, color: Theme.of(context).colorScheme.surface, size: 36),
+                            child: Icon(Icons.play_arrow, color: AppColors.surface, size: 36),
                           ),
                         ),
                       ),

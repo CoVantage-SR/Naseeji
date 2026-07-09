@@ -109,7 +109,7 @@ class QuotationProgressWidget extends StatelessWidget {
                           ),
                         ),
                         child: isCompleted
-                            ? const Icon(Icons.check, color: Theme.of(context).colorScheme.surface, size: 10)
+                            ? Icon(Icons.check, color: AppColors.surface, size: 10)
                             : null,
                       ),
                       SizedBox(height: 6),

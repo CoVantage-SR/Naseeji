@@ -115,7 +115,7 @@ class StatsMetricsSection extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
       ),
@@ -128,7 +128,7 @@ class StatsMetricsSection extends StatelessWidget {
               trailingWidget,
               Text(
                 title,
-                style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                style: TextStyle(fontSize: 13, color: AppColors.onSurfaceVariant),
               ),
             ],
           ),
@@ -141,7 +141,7 @@ class StatsMetricsSection extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.onSurface,
+                  color: AppColors.onSurface,
                 ),
               ),
               SizedBox(width: 16),

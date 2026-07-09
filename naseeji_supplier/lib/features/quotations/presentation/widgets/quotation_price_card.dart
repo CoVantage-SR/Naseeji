@@ -32,7 +32,7 @@ class QuotationPriceCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: 10),
-          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          Divider(height: 1, color: AppColors.surfaceContainerLow),
           SizedBox(height: 8),
           
           _buildDetailRow('السعر المطلوب للمصنع', '${quotation.originalRequestedPrice.toStringAsFixed(2)} ${quotation.currency}'),
@@ -84,7 +84,7 @@ class QuotationPriceCard extends StatelessWidget {
   }
 
   Widget _buildDetailRow(String label, String value, {bool isBold = false, bool isPrimary = false, bool isWarning = false}) {
-    Color valueColor = Theme.of(context).colorScheme.onSurface;
+    Color valueColor = AppColors.onSurface;
     if (isPrimary) valueColor = AppColors.primary;
     if (isWarning) valueColor = AppColors.error;
 

@@ -105,7 +105,7 @@ class ShipmentListCard extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          Divider(height: 1, color: AppColors.surfaceContainerLow),
 
           // Content body
           Padding(
@@ -182,7 +182,7 @@ class ShipmentListCard extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          Divider(height: 1, color: AppColors.surfaceContainerLow),
 
           // Actions
           Padding(

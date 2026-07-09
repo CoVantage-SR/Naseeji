@@ -313,7 +313,7 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
                     ),
                     side: const BorderSide(color: AppColors.outlineVariant),
                   ),
-                  icon: const Icon(Icons.apple, color: Theme.of(context).colorScheme.onSurface, size: 20),
+                  icon: Icon(Icons.apple, color: AppColors.onSurface, size: 20),
                   label: Text(
                     'Apple',
                     style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),

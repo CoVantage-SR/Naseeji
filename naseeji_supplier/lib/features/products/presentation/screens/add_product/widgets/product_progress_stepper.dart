@@ -58,7 +58,7 @@ class ProductProgressStepper extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.bold,
-                  color: isActive ? AppColors.primary : Theme.of(context).colorScheme.onSurfaceVariant,
+                  color: isActive ? AppColors.primary : AppColors.onSurfaceVariant,
                 ),
               ),
               SizedBox(height: 2),
@@ -67,7 +67,7 @@ class ProductProgressStepper extends StatelessWidget {
                 textAlign: TextAlign.right,
                 style: TextStyle(
                   fontSize: 11,
-                  color: isActive ? Theme.of(context).colorScheme.onSurfaceVariant : AppColors.outline,
+                  color: isActive ? AppColors.onSurfaceVariant : AppColors.outline,
                 ),
               ),
             ],
@@ -78,7 +78,7 @@ class ProductProgressStepper extends StatelessWidget {
           width: 38,
           height: 38,
           decoration: BoxDecoration(
-            color: isActive ? AppColors.primary : Theme.of(context).colorScheme.surfaceContainerHighest,
+            color: isActive ? AppColors.primary : AppColors.surfaceContainerHighest,
             shape: BoxShape.circle,
             boxShadow: isActive
                 ? [
@@ -94,7 +94,7 @@ class ProductProgressStepper extends StatelessWidget {
           child: Text(
             '$number',
             style: TextStyle(
-              color: isActive ? Colors.white : Theme.of(context).colorScheme.onSurfaceVariant,
+              color: isActive ? Colors.white : AppColors.onSurfaceVariant,
               fontWeight: FontWeight.bold,
               fontSize: 14,
             ),

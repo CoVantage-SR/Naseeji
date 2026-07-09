@@ -61,7 +61,7 @@ class _ShippingCompanySelectorScreenState extends ConsumerState<ShippingCompanyS
             style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
           ),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
+            icon: Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
             onPressed: () => context.pop(),
           ),
         ),

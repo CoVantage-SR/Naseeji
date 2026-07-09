@@ -49,7 +49,7 @@ class InvoiceDetailsScreen extends StatelessWidget {
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
+          icon: Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
@@ -253,7 +253,7 @@ class InvoiceDetailsScreen extends StatelessWidget {
     return Text(
       title,
       textAlign: TextAlign.right,
-      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
+      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
     );
   }
 
@@ -266,14 +266,14 @@ class InvoiceDetailsScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: isHighlight ? 15 : 13,
             fontWeight: FontWeight.bold,
-            color: isHighlight ? AppColors.primary : Theme.of(context).colorScheme.onSurface,
+            color: isHighlight ? AppColors.primary : AppColors.onSurface,
           ),
         ),
         Text(
           label,
           style: TextStyle(
             fontSize: 13,
-            color: isHighlight ? Theme.of(context).colorScheme.onSurface : AppColors.outline,
+            color: isHighlight ? AppColors.onSurface : AppColors.outline,
             fontWeight: isHighlight ? FontWeight.bold : FontWeight.normal,
           ),
         ),

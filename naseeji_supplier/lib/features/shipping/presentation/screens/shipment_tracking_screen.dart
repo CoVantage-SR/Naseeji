@@ -28,7 +28,7 @@ class ShipmentTrackingScreen extends ConsumerWidget {
             style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 14),
           ),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
+            icon: Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
             onPressed: () => context.pop(),
           ),
         ),
@@ -73,7 +73,7 @@ class ShipmentTrackingScreen extends ConsumerWidget {
                             ),
                           ],
                         ),
-                        const Divider(height: 20, color: Theme.of(context).colorScheme.surfaceContainerLow),
+                        Divider(height: 20, color: AppColors.surfaceContainerLow),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -126,7 +126,7 @@ class ShipmentTrackingScreen extends ConsumerWidget {
       children: [
         Text(label, style: TextStyle(fontSize: 9, color: AppColors.outline)),
         SizedBox(height: 2),
-        Text(val, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: Theme.of(context).colorScheme.onSurface)),
+        Text(val, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 11, color: AppColors.onSurface)),
       ],
     );
   }

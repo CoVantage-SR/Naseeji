@@ -10,7 +10,7 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Theme.of(context).colorScheme.surface,
       elevation: 0.5,
       leading: IconButton(
-        icon: const Icon(Icons.notifications_none, color: Theme.of(context).colorScheme.onSurfaceVariant),
+        icon: Icon(Icons.notifications_none, color: AppColors.onSurfaceVariant),
         onPressed: () {},
       ),
       title: Row(
@@ -28,11 +28,11 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.search, color: Theme.of(context).colorScheme.onSurfaceVariant),
+          icon: Icon(Icons.search, color: AppColors.onSurfaceVariant),
           onPressed: () {},
         ),
         IconButton(
-          icon: const Icon(Icons.menu, color: Theme.of(context).colorScheme.onSurfaceVariant),
+          icon: Icon(Icons.menu, color: AppColors.onSurfaceVariant),
           onPressed: () {},
         ),
       ],

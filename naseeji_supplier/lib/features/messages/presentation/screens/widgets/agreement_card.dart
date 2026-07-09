@@ -48,7 +48,7 @@ class AgreementCard extends StatelessWidget {
                     child: Text('مؤكد ✓', style: TextStyle(color: Theme.of(context).colorScheme.surface, fontSize: 10, fontWeight: FontWeight.bold)),
                   ),
                 const Spacer(),
-                const Icon(Icons.handshake_outlined, color: Theme.of(context).colorScheme.surface, size: 18),
+                Icon(Icons.handshake_outlined, color: AppColors.surface, size: 18),
                 SizedBox(width: 6),
                 Text(
                   'الاتفاق النهائي ${data['orderNumber'] ?? ''}',

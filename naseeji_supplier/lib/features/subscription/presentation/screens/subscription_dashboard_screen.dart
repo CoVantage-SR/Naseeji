@@ -26,7 +26,7 @@ class SubscriptionDashboardScreen extends ConsumerWidget {
           ),
           centerTitle: true,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
+            icon: Icon(Icons.arrow_back, color: AppColors.onSurface),
             onPressed: () => context.go('/home'),
           ),
         ),

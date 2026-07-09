@@ -25,7 +25,7 @@ class CustomerAnalyticsScreen extends ConsumerWidget {
           centerTitle: true,
           title: Text('تحليلات العميل', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16)),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, size: 20, color: Theme.of(context).colorScheme.onSurfaceVariant),
+            icon: Icon(Icons.arrow_back_ios_new, size: 20, color: AppColors.onSurfaceVariant),
             onPressed: () => context.pop(),
           ),
         ),
@@ -127,7 +127,7 @@ class CustomerAnalyticsScreen extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5),
       ),
@@ -187,7 +187,7 @@ class CustomerAnalyticsScreen extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5),
       ),
@@ -208,7 +208,7 @@ class CustomerAnalyticsScreen extends ConsumerWidget {
                   child: Center(child: Text('${entry.key + 1}', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: color))),
                 ),
                 SizedBox(width: 10),
-                Expanded(child: Text(entry.value, style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurface))),
+                Expanded(child: Text(entry.value, style: TextStyle(fontSize: 12, color: AppColors.onSurface))),
                 Icon(Icons.trending_up, size: 16, color: color),
               ]),
             );
@@ -226,7 +226,7 @@ class CustomerAnalyticsScreen extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5),
       ),
@@ -245,7 +245,7 @@ class CustomerAnalyticsScreen extends ConsumerWidget {
                 SizedBox(height: 8),
                 LinearProgressIndicator(
                   value: health,
-                  backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
+                  backgroundColor: AppColors.surfaceContainerLow,
                   valueColor: AlwaysStoppedAnimation<Color>(color),
                   borderRadius: BorderRadius.circular(4),
                   minHeight: 8,

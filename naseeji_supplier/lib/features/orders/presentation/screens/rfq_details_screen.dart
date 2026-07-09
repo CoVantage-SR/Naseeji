@@ -43,18 +43,18 @@ class RfqDetailsScreen extends ConsumerWidget {
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios_new,
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
+            color: AppColors.onSurfaceVariant,
             size: 20,
           ),
           onPressed: () => context.pop(),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.share_outlined, color: Theme.of(context).colorScheme.onSurfaceVariant),
+            icon: Icon(Icons.share_outlined, color: AppColors.onSurfaceVariant),
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.more_vert, color: Theme.of(context).colorScheme.onSurfaceVariant),
+            icon: Icon(Icons.more_vert, color: AppColors.onSurfaceVariant),
             onPressed: () {},
           ),
           SizedBox(width: 8),

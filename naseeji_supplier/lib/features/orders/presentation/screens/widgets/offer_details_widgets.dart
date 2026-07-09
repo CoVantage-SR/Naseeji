@@ -32,7 +32,7 @@ class OfferDetailsHeader extends StatelessWidget {
                     ),
                     child: const Icon(
                       Icons.storefront,
-                      color: Theme.of(context).colorScheme.surface,
+                      color: AppColors.surface,
                       size: 40,
                     ),
                   ),
@@ -196,7 +196,7 @@ class OrderPhasesTimeline extends StatelessWidget {
               phase.time,
               style: TextStyle(
                 fontSize: 10,
-                color: phase.isCompleted || phase.isActive ? Theme.of(context).colorScheme.onSurface : AppColors.outline,
+                color: phase.isCompleted || phase.isActive ? AppColors.onSurface : AppColors.outline,
                 fontWeight: phase.isCompleted || phase.isActive ? FontWeight.bold : FontWeight.normal,
               ),
             ),
@@ -255,7 +255,7 @@ class OrderPhasesTimeline extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
-                          color: phase.isFuture ? AppColors.outline : Theme.of(context).colorScheme.onSurface,
+                          color: phase.isFuture ? AppColors.outline : AppColors.onSurface,
                         ),
                       ),
                     ],
@@ -265,7 +265,7 @@ class OrderPhasesTimeline extends StatelessWidget {
                     phase.description,
                     style: TextStyle(
                       fontSize: 11,
-                      color: phase.isFuture ? AppColors.outline : Theme.of(context).colorScheme.onSurfaceVariant,
+                      color: phase.isFuture ? AppColors.outline : AppColors.onSurfaceVariant,
                       height: 1.4,
                     ),
                     textAlign: TextAlign.end,

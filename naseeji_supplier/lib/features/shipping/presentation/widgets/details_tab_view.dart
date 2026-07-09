@@ -181,7 +181,7 @@ class DetailsTabView extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: AppColors.surface,
         borderRadius: BorderRadius.all(Radius.circular(16)),
         boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
       ),
@@ -207,7 +207,7 @@ class DetailsTabView extends StatelessWidget {
             child: LinearProgressIndicator(
               value: s.progress,
               color: statusColor,
-              backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
+              backgroundColor: AppColors.surfaceContainerLow,
               minHeight: 6,
             ),
           ),
@@ -224,7 +224,7 @@ class DetailsTabView extends StatelessWidget {
   Widget _buildSectionCard({required String title, required IconData icon, required List<Widget> children}) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: AppColors.surface,
         borderRadius: BorderRadius.all(Radius.circular(16)),
         boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
       ),
@@ -238,12 +238,12 @@ class DetailsTabView extends StatelessWidget {
               SizedBox(width: 8),
               Text(
                 title,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Theme.of(context).colorScheme.onSurface),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.onSurface),
               ),
             ],
           ),
           SizedBox(height: 12),
-          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          Divider(height: 1, color: AppColors.surfaceContainerLow),
           SizedBox(height: 8),
           ...children,
         ],
@@ -252,7 +252,7 @@ class DetailsTabView extends StatelessWidget {
   }
 
   Widget _buildDetailRow(String label, String value, {bool isBold = false, bool isPrimary = false, bool isWarning = false, bool isLink = false}) {
-    Color valueColor = Theme.of(context).colorScheme.onSurface;
+    Color valueColor = AppColors.onSurface;
     if (isPrimary) valueColor = AppColors.primary;
     if (isWarning) valueColor = AppColors.error;
     if (isLink) valueColor = const Color(0xFF0040E0);

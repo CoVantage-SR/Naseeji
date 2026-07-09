@@ -24,7 +24,7 @@ class CustomerOrdersScreen extends ConsumerWidget {
           centerTitle: true,
           title: Text('طلبات العميل', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16)),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, size: 20, color: Theme.of(context).colorScheme.onSurfaceVariant),
+            icon: Icon(Icons.arrow_back_ios_new, size: 20, color: AppColors.onSurfaceVariant),
             onPressed: () => context.pop(),
           ),
         ),
@@ -85,7 +85,7 @@ class CustomerOrdersScreen extends ConsumerWidget {
                   _badge(o.status, statusColor),
                 ]),
                 SizedBox(height: 10),
-                const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+                Divider(height: 1, color: AppColors.surfaceContainerLow),
                 SizedBox(height: 10),
                 _row('المنتج', o.productName),
                 _row('الكمية المطلوبة', '${o.quantity.toStringAsFixed(0)} وحدة'),
@@ -131,7 +131,7 @@ class CustomerOrdersScreen extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Text(label, style: TextStyle(fontSize: 11, color: AppColors.outline)),
-        Text(value, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
+        Text(value, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
       ]),
     );
   }

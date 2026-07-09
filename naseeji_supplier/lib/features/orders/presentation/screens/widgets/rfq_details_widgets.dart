@@ -398,7 +398,7 @@ class AttachmentsSection extends StatelessWidget {
           SizedBox(height: 6),
           Text(
             label,
-            style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant),
+            style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant),
           ),
         ],
       ),
@@ -448,7 +448,7 @@ class RfqDetailsBottomBar extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: IconButton(
-                icon: const Icon(Icons.handshake_outlined, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                icon: Icon(Icons.handshake_outlined, color: AppColors.onSurfaceVariant),
                 onPressed: () {},
               ),
             ),

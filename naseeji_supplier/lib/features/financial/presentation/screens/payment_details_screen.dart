@@ -40,7 +40,7 @@ class PaymentDetailsScreen extends StatelessWidget {
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
+          icon: Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
       ),
@@ -178,7 +178,7 @@ class PaymentDetailsScreen extends StatelessWidget {
     return Text(
       title,
       textAlign: TextAlign.right,
-      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
+      style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
     );
   }
 
@@ -188,7 +188,7 @@ class PaymentDetailsScreen extends StatelessWidget {
       children: [
         Text(
           value,
-          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
+          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: AppColors.onSurface),
         ),
         Text(
           label,

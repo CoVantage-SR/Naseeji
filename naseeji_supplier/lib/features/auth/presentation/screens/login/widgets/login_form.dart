@@ -180,7 +180,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                     ),
                     side: const BorderSide(color: AppColors.outlineVariant),
                   ),
-                  icon: const Icon(Icons.apple, color: Theme.of(context).colorScheme.onSurface, size: 20),
+                  icon: Icon(Icons.apple, color: AppColors.onSurface, size: 20),
                   label: Text(
                     'آبل',
                     style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),

@@ -44,7 +44,7 @@ class OfferRejectedScreen extends ConsumerWidget {
         leadingWidth: 100,
         actions: [
           IconButton(
-            icon: const Icon(Icons.close, color: Theme.of(context).colorScheme.onSurfaceVariant),
+            icon: Icon(Icons.close, color: AppColors.onSurfaceVariant),
             onPressed: () => context.pop(),
           ),
         ],

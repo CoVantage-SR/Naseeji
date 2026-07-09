@@ -45,7 +45,7 @@ class FilterPillsRow extends StatelessWidget {
           label,
           style: TextStyle(
             fontSize: 13,
-            color: isActive ? Colors.black : Theme.of(context).colorScheme.onSurfaceVariant,
+            color: isActive ? Colors.black : AppColors.onSurfaceVariant,
             fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
           ),
         ),

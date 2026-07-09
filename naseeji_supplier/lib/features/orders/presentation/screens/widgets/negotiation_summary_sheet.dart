@@ -115,14 +115,14 @@ class NegotiationSummarySheet extends StatelessWidget {
           style: TextStyle(
             fontSize: 12,
             fontWeight: isHighlight ? FontWeight.bold : FontWeight.normal,
-            color: isHighlight ? const Color(0xFF0040E0) : Theme.of(context).colorScheme.onSurface,
+            color: isHighlight ? const Color(0xFF0040E0) : AppColors.onSurface,
           ),
         ),
         Text(
           label,
           style: TextStyle(
             fontSize: 12,
-            color: isHighlight ? Theme.of(context).colorScheme.onSurface : AppColors.outline,
+            color: isHighlight ? AppColors.onSurface : AppColors.outline,
           ),
         ),
       ],
@@ -138,7 +138,7 @@ class NegotiationSummarySheet extends StatelessWidget {
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.bold,
-            color: statusColor ?? (isDiscount ? const Color(0xFF006B5F) : Theme.of(context).colorScheme.onSurface),
+            color: statusColor ?? (isDiscount ? const Color(0xFF006B5F) : AppColors.onSurface),
           ),
         ),
         Text(

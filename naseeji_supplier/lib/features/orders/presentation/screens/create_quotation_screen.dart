@@ -147,7 +147,7 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
           ],
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
+          icon: Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
           onPressed: () => context.pop(),
         ),
         actions: [
@@ -156,7 +156,7 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
             child: Text('حفظ مسودة', style: TextStyle(color: Color(0xFF0040E0), fontSize: 12, fontWeight: FontWeight.bold)),
           ),
           IconButton(
-            icon: const Icon(Icons.more_vert, color: Theme.of(context).colorScheme.onSurfaceVariant),
+            icon: Icon(Icons.more_vert, color: AppColors.onSurfaceVariant),
             onPressed: () {},
           ),
         ],

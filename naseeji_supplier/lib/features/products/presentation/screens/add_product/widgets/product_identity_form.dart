@@ -165,7 +165,7 @@ class _ProductIdentityFormState extends ConsumerState<ProductIdentityForm> {
               decoration: const InputDecoration(
                 contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
-              icon: const Icon(Icons.expand_more, color: Theme.of(context).colorScheme.onSurfaceVariant),
+              icon: Icon(Icons.expand_more, color: AppColors.onSurfaceVariant),
               items: _categories.map((category) {
                 return DropdownMenuItem<String>(
                   value: category,

@@ -243,7 +243,7 @@ class OfferPreviewDocument extends StatelessWidget {
       children: [
         Text(
           value,
-          style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
+          style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface),
         ),
         const Spacer(),
         Text(
@@ -279,13 +279,13 @@ class OfferPreviewDocument extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(flex: 2, child: Text('—', textAlign: TextAlign.left, style: TextStyle(fontSize: 10))),
-          Expanded(child: Text(unitPrice, textAlign: TextAlign.center, style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant))),
-          Expanded(child: Text(qty, textAlign: TextAlign.center, style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant))),
+          Expanded(child: Text(unitPrice, textAlign: TextAlign.center, style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant))),
+          Expanded(child: Text(qty, textAlign: TextAlign.center, style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant))),
           Expanded(
             flex: 3,
             child: Text(
               desc,
-              style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 10, color: AppColors.onSurface, fontWeight: FontWeight.bold),
               textAlign: TextAlign.right,
             ),
           ),
@@ -300,7 +300,7 @@ class OfferPreviewDocument extends StatelessWidget {
       children: [
         Text(
           value,
-          style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
+          style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface),
         ),
         const Spacer(),
         Text(
@@ -331,7 +331,7 @@ class OfferPreviewBottomBar extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: IconButton(
-                icon: const Icon(Icons.download_rounded, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                icon: Icon(Icons.download_rounded, color: AppColors.onSurfaceVariant),
                 onPressed: () {},
               ),
             ),

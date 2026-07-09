@@ -56,7 +56,7 @@ class _AgreementsDashboardScreenState extends ConsumerState<AgreementsDashboardS
             style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 14),
           ),
           leading: IconButton(
-            icon: const Icon(Icons.menu, color: Theme.of(context).colorScheme.onSurfaceVariant),
+            icon: Icon(Icons.menu, color: AppColors.onSurfaceVariant),
             onPressed: () => _scaffoldKey.currentState?.openDrawer(),
           ),
           bottom: TabBar(

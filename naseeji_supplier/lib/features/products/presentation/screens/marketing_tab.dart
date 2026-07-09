@@ -221,7 +221,7 @@ class MarketingTab extends StatelessWidget {
   Widget _buildSectionHeader(String title) {
     return Text(
       title,
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Theme.of(context).colorScheme.onSurface),
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.onSurface),
     );
   }
 
@@ -229,7 +229,7 @@ class MarketingTab extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 10)],
       ),
@@ -240,7 +240,7 @@ class MarketingTab extends StatelessWidget {
           SizedBox(height: 8),
           Text(
             value,
-            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: Theme.of(context).colorScheme.onSurface),
+            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 14, color: AppColors.onSurface),
           ),
           SizedBox(height: 2),
           Text(
@@ -262,7 +262,7 @@ class MarketingTab extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 10)],
       ),

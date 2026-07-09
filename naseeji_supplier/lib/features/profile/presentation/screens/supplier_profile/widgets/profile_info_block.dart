@@ -73,7 +73,7 @@ class ProfileInfoBlock extends StatelessWidget {
                   border: Border.all(color: AppColors.outlineVariant),
                 ),
                 child: IconButton(
-                  icon: const Icon(Icons.share_outlined, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
+                  icon: Icon(Icons.share_outlined, color: AppColors.onSurfaceVariant, size: 20),
                   onPressed: () {},
                 ),
               ),

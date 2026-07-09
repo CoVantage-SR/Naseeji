@@ -39,7 +39,7 @@ class NotificationsAppBar extends StatelessWidget implements PreferredSizeWidget
               ),
               SizedBox(width: 8),
               IconButton(
-                icon: const Icon(Icons.arrow_forward, color: Theme.of(context).colorScheme.onSurface),
+                icon: Icon(Icons.arrow_forward, color: AppColors.onSurface),
                 onPressed: () => context.pop(),
               ),
             ],

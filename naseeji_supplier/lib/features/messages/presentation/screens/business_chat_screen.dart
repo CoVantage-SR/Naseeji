@@ -79,7 +79,7 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
         backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
+          icon: Icon(Icons.arrow_back, color: AppColors.onSurface),
           onPressed: () => context.pop(),
         ),
         title: GestureDetector(
@@ -162,7 +162,7 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.more_vert, color: Theme.of(context).colorScheme.onSurface, size: 20),
+            icon: Icon(Icons.more_vert, color: AppColors.onSurface, size: 20),
             onPressed: () => _showMoreMenu(context, conv),
           ),
         ],

@@ -63,7 +63,7 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
           centerTitle: true,
           title: Text('تفاصيل العميل', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16)),
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, size: 20, color: Theme.of(context).colorScheme.onSurfaceVariant),
+            icon: Icon(Icons.arrow_back_ios_new, size: 20, color: AppColors.onSurfaceVariant),
             onPressed: () => context.pop(),
           ),
           bottom: TabBar(
@@ -557,7 +557,7 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
             padding: const EdgeInsets.fromLTRB(14, 12, 14, 8),
             child: Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary)),
           ),
-          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          Divider(height: 1, color: AppColors.surfaceContainerLow),
           Padding(padding: const EdgeInsets.all(14), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: children)),
         ],
       ),

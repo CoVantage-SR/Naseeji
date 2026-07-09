@@ -137,7 +137,7 @@ class BusinessInfoCard extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant),
+        style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
       ),
     );
   }

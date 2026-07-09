@@ -20,7 +20,7 @@ class DrawerHeaderView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               IconButton(
-                icon: const Icon(Icons.close, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                icon: Icon(Icons.close, color: AppColors.onSurfaceVariant),
                 onPressed: () => Navigator.pop(context),
               ),
               Container(

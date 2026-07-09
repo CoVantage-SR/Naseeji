@@ -51,7 +51,7 @@ class QuotationDetailsScreen extends ConsumerWidget {
                 ],
               ),
               leading: IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
+                icon: Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
                 onPressed: () => context.pop(),
               ),
             ),
@@ -376,7 +376,7 @@ class QuotationDetailsScreen extends ConsumerWidget {
   Widget _buildSectionCard({required String title, required IconData icon, required List<Widget> children}) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: AppColors.surface,
         borderRadius: BorderRadius.all(Radius.circular(16)),
         boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
       ),
@@ -390,12 +390,12 @@ class QuotationDetailsScreen extends ConsumerWidget {
               SizedBox(width: 8),
               Text(
                 title,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Theme.of(context).colorScheme.onSurface),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.onSurface),
               ),
             ],
           ),
           SizedBox(height: 10),
-          const Divider(height: 1, color: Theme.of(context).colorScheme.surfaceContainerLow),
+          Divider(height: 1, color: AppColors.surfaceContainerLow),
           SizedBox(height: 8),
           ...children,
         ],
@@ -404,7 +404,7 @@ class QuotationDetailsScreen extends ConsumerWidget {
   }
 
   Widget _buildDetailRow(String label, String value, {bool isBold = false, bool isPrimary = false, bool isWarning = false}) {
-    Color valueColor = Theme.of(context).colorScheme.onSurface;
+    Color valueColor = AppColors.onSurface;
     if (isPrimary) valueColor = AppColors.primary;
     if (isWarning) valueColor = AppColors.error;
 

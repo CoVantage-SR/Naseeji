@@ -151,13 +151,13 @@ class FinancialChartWidget extends StatelessWidget {
               children: [
                 Text(
                   '${percent.toStringAsFixed(1)}%',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
                 ),
                 Row(
                   children: [
                     Text(
                       label,
-                      style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                      style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant),
                     ),
                     SizedBox(width: 8),
                     Container(

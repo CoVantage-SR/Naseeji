@@ -111,7 +111,7 @@ class PublicReviewsTabView extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: const Color(0xFFE2E1EF)),
       ),
@@ -124,7 +124,7 @@ class PublicReviewsTabView extends StatelessWidget {
               Text(date, style: TextStyle(fontSize: 8, color: AppColors.outline)),
               Row(
                 children: [
-                  Text(author, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface)),
+                  Text(author, style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
                   SizedBox(width: 8),
                   Container(
                     width: 32,
@@ -150,7 +150,7 @@ class PublicReviewsTabView extends StatelessWidget {
           SizedBox(height: 8),
           Text(
             text,
-            style: TextStyle(fontSize: 10.5, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.5),
+            style: TextStyle(fontSize: 10.5, color: AppColors.onSurfaceVariant, height: 1.5),
             textAlign: TextAlign.end,
           ),
         ],
