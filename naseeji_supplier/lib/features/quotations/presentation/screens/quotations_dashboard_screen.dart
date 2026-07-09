@@ -259,6 +259,15 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
     );
   }
 
+  Color _getReadableColor(Color baseColor) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    if (!isDark) return baseColor;
+    if (baseColor == Colors.grey) return Colors.grey.shade400;
+    if (baseColor == Colors.blue.shade800) return Colors.blue.shade300;
+    if (baseColor == Colors.green.shade800) return Colors.green.shade300;
+    return baseColor;
+  }
+
   Widget _buildSummaryMiniCard(String label, String value, Color color) {
     return Container(
       width: 130,
@@ -268,17 +277,17 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         boxShadow: const [BoxShadow(color: Color(0x03000000), blurRadius: 6)],
-        border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5),
+        border: Border.all(color: Theme.of(context).colorScheme.outlineVariant.withValues(alpha: 0.3), width: 0.5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(label, style: TextStyle(fontSize: 8, color: AppColors.outline)),
-          SizedBox(height: 4),
+          Text(label, style: TextStyle(fontSize: 8, color: Theme.of(context).colorScheme.onSurfaceVariant)),
+          const SizedBox(height: 4),
           Text(
             value,
-            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: color),
+            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: _getReadableColor(color)),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -314,21 +323,21 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
               contentPadding: const EdgeInsets.symmetric(vertical: 8),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: Color(0xFFE2E1EF)),
+                borderSide: BorderSide(color: Theme.of(context).colorScheme.outlineVariant.withValues(alpha: 0.3)),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: Color(0xFFE2E1EF)),
+                borderSide: BorderSide(color: Theme.of(context).colorScheme.outlineVariant.withValues(alpha: 0.3)),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: AppColors.primary, width: 1),
+                borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: 1),
               ),
-              fillColor: AppColors.background,
+              fillColor: Theme.of(context).colorScheme.surfaceContainerLow,
               filled: true,
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
 
           // Filters and Sorting Row
           SingleChildScrollView(
@@ -346,7 +355,7 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
                     });
                   },
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
 
                 // Category Filter
                 _buildDropdownFilter(
@@ -359,7 +368,7 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
                     });
                   },
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
 
                 // Sort Dropdown
                 _buildDropdownFilter(
@@ -396,9 +405,9 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
-        color: AppColors.background,
+        color: Theme.of(context).colorScheme.surfaceContainerLow,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5),
+        border: Border.all(color: Theme.of(context).colorScheme.outlineVariant.withValues(alpha: 0.3), width: 0.5),
       ),
       child: DropdownButton<String>(
         value: value,
@@ -406,12 +415,12 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
           final displayText = labels != null ? (labels[val] ?? val) : val;
           return DropdownMenuItem<String>(
             value: val,
-            child: Text(displayText, style: TextStyle(fontSize: 10)),
+            child: Text(displayText, style: const TextStyle(fontSize: 10)),
           );
         }).toList(),
         onChanged: onChanged,
-        hint: Text(label, style: TextStyle(fontSize: 10)),
-        underline: SizedBox(),
+        hint: Text(label, style: const TextStyle(fontSize: 10)),
+        underline: const SizedBox(),
         isDense: true,
         style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold),
       ),

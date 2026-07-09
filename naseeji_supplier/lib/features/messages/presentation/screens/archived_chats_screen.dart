@@ -14,7 +14,7 @@ class ArchivedChatsScreen extends ConsumerWidget {
     final stateAsync = ref.watch(messagesControllerProvider);
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,
