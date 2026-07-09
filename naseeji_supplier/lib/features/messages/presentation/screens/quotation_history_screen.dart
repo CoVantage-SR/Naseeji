@@ -35,7 +35,7 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
     final historyAsync = ref.watch(quotationHistoryProvider(widget.conversationId));
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0.5,

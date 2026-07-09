@@ -22,7 +22,7 @@ class RfqAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         'طلبات الأسعار (RFQ)',
         style: TextStyle(
-          color: AppColors.primary,
+          color: Theme.of(context).colorScheme.onSurface,
           fontWeight: FontWeight.bold,
           fontSize: 16,
         ),
