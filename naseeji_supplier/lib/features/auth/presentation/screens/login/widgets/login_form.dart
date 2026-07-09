@@ -59,6 +59,12 @@ class _LoginFormState extends ConsumerState<LoginForm> {
               if (val == null || val.trim().isEmpty) {
                 return 'يرجى إدخال البريد الإلكتروني أو رقم الهاتف';
               }
+              final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+              final phoneRegex = RegExp(r'^\+?[0-9]{9,15}$');
+              final cleanVal = val.trim();
+              if (!emailRegex.hasMatch(cleanVal) && !phoneRegex.hasMatch(cleanVal)) {
+                return 'يرجى إدخال بريد إلكتروني صحيح أو رقم هاتف صحيح';
+              }
               return null;
             },
           ),
@@ -92,6 +98,9 @@ class _LoginFormState extends ConsumerState<LoginForm> {
             validator: (val) {
               if (val == null || val.isEmpty) {
                 return 'يرجى إدخال كلمة المرور';
+              }
+              if (val.length < 6) {
+                return 'يجب أن تتكون كلمة المرور من 6 أحرف على الأقل';
               }
               return null;
             },

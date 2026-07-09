@@ -112,6 +112,10 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
         if (val == null || val.trim().isEmpty) {
           return 'مطلوب';
         }
+        final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+        if (!emailRegex.hasMatch(val.trim())) {
+          return 'يرجى إدخال بريد إلكتروني صحيح';
+        }
         return null;
       },
     );
@@ -124,6 +128,10 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
       validator: (val) {
         if (val == null || val.trim().isEmpty) {
           return 'مطلوب';
+        }
+        final phoneRegex = RegExp(r'^[0-9]{9,11}$');
+        if (!phoneRegex.hasMatch(val.trim())) {
+          return 'يرجى إدخال رقم هاتف صحيح يتكون من 9 إلى 11 رقماً';
         }
         return null;
       },
@@ -158,6 +166,9 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
       validator: (val) {
         if (val == null || val.isEmpty) {
           return 'مطلوب';
+        }
+        if (val.length < 6) {
+          return 'يجب أن تتكون كلمة المرور من 6 أحرف على الأقل';
         }
         return null;
       },

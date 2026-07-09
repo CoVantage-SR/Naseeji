@@ -1,6 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'session_router_observer.dart';
+import '../../features/auth/presentation/controllers/auth_controller.dart';
+import '../../features/auth/domain/models/user_model.dart';
 import '../../features/auth/presentation/screens/splash/splash_screen.dart';
 import '../../features/auth/presentation/screens/onboarding/onboarding_screen.dart';
 import '../../features/auth/presentation/screens/choose_supplier_type/choose_supplier_type_screen.dart';
@@ -111,11 +115,49 @@ import '../../features/subscription/domain/entities/subscription_models.dart';
 
 part 'app_router.g.dart';
 
+class RouterNotifier extends ChangeNotifier {
+  final Ref _ref;
+
+  RouterNotifier(this._ref) {
+    _ref.listen<AsyncValue<UserModel?>>(
+      authControllerProvider,
+      (_, __) {
+        notifyListeners();
+      },
+    );
+  }
+}
+
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
+  final notifier = RouterNotifier(ref);
+
   return GoRouter(
     initialLocation: '/',
+    refreshListenable: notifier,
     observers: [SessionRouterObserver(ref)],
+    redirect: (context, state) {
+      final authState = ref.read(authControllerProvider);
+      
+      final isLoggingIn = state.uri.path == '/login' ||
+                          state.uri.path == '/register' ||
+                          state.uri.path == '/otp-verification' ||
+                          state.uri.path == '/onboarding' ||
+                          state.uri.path == '/supplier-type' ||
+                          state.uri.path == '/';
+
+      final isAuthenticated = authState.value != null;
+
+      if (!isAuthenticated && !isLoggingIn) {
+        return '/login';
+      }
+
+      if (isAuthenticated && isLoggingIn) {
+        return '/home';
+      }
+
+      return null;
+    },
     routes: [
       GoRoute(
         path: '/',
