@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import 'package:naseeji_supplier/core/widgets/app_bottom_navigation_bar.dart';
 import 'package:naseeji_supplier/features/dashboard/presentation/controllers/dashboard_controller.dart';
 import '../drawer/navigation_drawer_view.dart';
 import 'widgets/home_app_bar.dart';
-import 'widgets/home_header.dart';
 import 'widgets/recent_orders_table.dart';
 import 'widgets/stats_grid.dart';
 import 'widgets/weekly_sales_chart_card.dart';
@@ -28,21 +26,19 @@ class HomeScreen extends ConsumerWidget {
         error: (err, stack) => Center(child: Text('خطأ: $err')),
         data: (stats) {
           return RefreshIndicator(
-            onRefresh: () => ref
-                .read(dashboardControllerProvider.notifier)
-                .refreshStats(),
+            onRefresh: () =>
+                ref.read(dashboardControllerProvider.notifier).refreshStats(),
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
-              padding: const EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 100.0),
+              padding: const EdgeInsets.fromLTRB(5, 5, 5, 100.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const HomeHeader(),
-                  SizedBox(height: 20),
+                  SizedBox(height: 10),
                   StatsGrid(stats: stats),
-                  SizedBox(height: 24),
+                  SizedBox(height: 14),
                   WeeklySalesChartCard(weeklySales: stats.weeklySales),
-                  SizedBox(height: 24),
+                  SizedBox(height: 6),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -56,17 +52,19 @@ class HomeScreen extends ConsumerWidget {
                       ),
                       TextButton(
                         onPressed: () => context.push('/operations-log'),
-                        child: const Text(
+                        child: Text(
                           'عرض الكل',
                           style: TextStyle(
                             fontSize: 12,
-                            color: AppColors.primary,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurfaceVariant,
                           ),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 12),
+                  SizedBox(height: 6),
                   const RecentOrdersTable(),
                 ],
               ),

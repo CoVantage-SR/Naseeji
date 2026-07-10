@@ -29,11 +29,17 @@ class NavigationDrawerView extends ConsumerWidget {
             // Drawer Header
             profileAsync.when(
               loading: () => DrawerHeader(
-                decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
-                child: Center(child: CircularProgressIndicator(color: AppColors.primary)),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface,
+                ),
+                child: Center(
+                  child: CircularProgressIndicator(color: AppColors.primary),
+                ),
               ),
               error: (err, stack) => DrawerHeader(
-                decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface,
+                ),
                 child: Center(child: Text('خطأ: $err')),
               ),
               data: (profile) => DrawerHeaderView(profile: profile),
@@ -57,21 +63,14 @@ class NavigationDrawerView extends ConsumerWidget {
                     },
                   ),
                   DrawerItem(
-                    icon: Icons.analytics_outlined,
-                    title: 'التقارير والإحصائيات',
-                    path: '/analytics',
-                    currentRoute: currentRoute,
-                    onTap: () {
-                      Navigator.pop(context);
-                      context.go('/analytics');
-                    },
-                  ),
-                  DrawerItem(
                     icon: Icons.inventory_2_outlined,
                     title: 'المنتجات',
                     path: '/products',
                     currentRoute: currentRoute,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context);
+                      context.go('/products');
+                    },
                   ),
                   DrawerItem(
                     icon: Icons.shopping_cart_outlined,
@@ -125,7 +124,10 @@ class NavigationDrawerView extends ConsumerWidget {
                   ),
 
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 8.0,
+                    ),
                     child: Divider(height: 1, color: AppColors.outlineVariant),
                   ),
 
@@ -157,6 +159,16 @@ class NavigationDrawerView extends ConsumerWidget {
                     onTap: () {
                       Navigator.pop(context);
                       context.push('/subscription');
+                    },
+                  ),
+                  DrawerItem(
+                    icon: Icons.analytics_outlined,
+                    title: 'التقارير والإحصائيات',
+                    path: '/analytics',
+                    currentRoute: currentRoute,
+                    onTap: () {
+                      Navigator.pop(context);
+                      context.go('/analytics');
                     },
                   ),
                   DrawerItem(

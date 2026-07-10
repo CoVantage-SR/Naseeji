@@ -13,7 +13,10 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Theme.of(context).colorScheme.surface,
       elevation: 0.5,
       leading: IconButton(
-        icon: Icon(Icons.menu, color: AppColors.onSurfaceVariant),
+        icon: Icon(
+          Icons.menu,
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
         onPressed: () => scaffoldKey.currentState?.openDrawer(),
       ),
       centerTitle: true,
@@ -22,29 +25,30 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'نسيجي',
+            'NaseeJI',
             style: TextStyle(
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
           ),
-          const SizedBox(width: 4),
-          Icon(Icons.verified, color: Theme.of(context).colorScheme.primary, size: 16),
         ],
       ),
       actions: [
         IconButton(
-          icon: Icon(Icons.search, color: AppColors.onSurfaceVariant),
+          icon: Icon(
+            Icons.search,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
           onPressed: () => context.push('/search'),
         ),
         Stack(
           alignment: Alignment.center,
           children: [
             IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.notifications_none,
-                color: AppColors.onSurfaceVariant,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
               onPressed: () => context.push('/notifications'),
             ),
@@ -57,10 +61,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                   color: AppColors.error,
                   shape: BoxShape.circle,
                 ),
-                constraints: const BoxConstraints(
-                  minWidth: 14,
-                  minHeight: 14,
-                ),
+                constraints: const BoxConstraints(minWidth: 14, minHeight: 14),
                 child: Text(
                   '3',
                   textAlign: TextAlign.center,

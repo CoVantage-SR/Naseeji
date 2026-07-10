@@ -47,11 +47,10 @@ class DrawerHeaderView extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
               SizedBox(width: 6),
-              const Icon(Icons.verified, color: AppColors.secondary, size: 18),
             ],
           ),
           SizedBox(height: 8),
@@ -59,7 +58,10 @@ class DrawerHeaderView extends StatelessWidget {
             children: [
               Text(
                 'معرف: #77421',
-                style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
               ),
               SizedBox(width: 12),
               Container(
@@ -72,7 +74,7 @@ class DrawerHeaderView extends StatelessWidget {
                   'عضوية بلاتينية',
                   style: TextStyle(
                     fontSize: 10,
-                    color: AppColors.secondary,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
