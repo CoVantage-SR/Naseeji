@@ -13,7 +13,7 @@ class PrimaryButton extends StatefulWidget {
   final IconData? prefixIcon;
   final Duration throttleDuration;
 
-  PrimaryButton({
+  const PrimaryButton({
     super.key,
     required this.text,
     this.onPressed,
@@ -109,7 +109,7 @@ class CustomTextField extends StatelessWidget {
   final bool enabled;
   final int? maxLines;
 
-  CustomTextField({
+  const CustomTextField({
     super.key,
     this.controller,
     required this.labelText,

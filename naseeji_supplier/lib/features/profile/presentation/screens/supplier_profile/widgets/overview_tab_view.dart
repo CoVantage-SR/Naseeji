@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import 'package:naseeji_supplier/features/profile/domain/entities/supplier_profile.dart';
 import 'recent_activity_timeline.dart';
 import 'edit_profile_completion_card.dart';

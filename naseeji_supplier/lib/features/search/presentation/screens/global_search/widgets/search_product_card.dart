@@ -47,7 +47,7 @@ class SearchProductCard extends StatelessWidget {
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) => Container(
                 height: 180,
-                color: Theme.of(context).colorScheme.surfaceVariant,
+                color: Theme.of(context).colorScheme.surfaceContainerHighest,
                 child: const Icon(Icons.image, color: AppColors.outline, size: 40),
               ),
             ),

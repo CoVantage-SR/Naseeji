@@ -45,7 +45,7 @@ class SplashLogo extends StatelessWidget {
               fontSize: 32,
               fontWeight: FontWeight.bold,
               letterSpacing: 0.5,
-              color: Theme.of(context).colorScheme.onBackground,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
           SizedBox(height: 8),

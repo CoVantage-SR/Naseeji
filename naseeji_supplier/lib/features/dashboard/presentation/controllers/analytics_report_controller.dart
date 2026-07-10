@@ -2,28 +2,9 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter/material.dart';
 
 // Repositories
-import '../../domain/repositories/dashboard_repository.dart';
-import '../../data/repositories/dashboard_repository_impl.dart';
-import '../../../orders/domain/repositories/orders_repository.dart';
-import '../../../orders/data/repositories/orders_repository_impl.dart';
-import '../../../customers/domain/repositories/customers_repository.dart';
 import '../../../customers/data/repositories/customers_repository_impl.dart';
-import '../../../financial/domain/repositories/financial_repository.dart';
 import '../../../financial/data/repositories/financial_repository_impl.dart';
-import '../../../shipping/domain/repositories/shipping_repository.dart';
-import '../../../shipping/data/repositories/shipping_repository_impl.dart';
-import '../../../subscription/domain/repositories/subscription_repository.dart';
 import '../../../subscription/presentation/controllers/subscription_controllers.dart';
-import '../../../quotations/domain/repositories/quotations_repository.dart';
-import '../../../quotations/presentation/controllers/quotations_controller.dart';
-
-// Entities
-import '../../../orders/domain/entities/rfq_item.dart';
-import '../../../customers/domain/entities/customer_model.dart';
-import '../../../financial/domain/entities/financial_models.dart';
-import '../../../shipping/domain/entities/shipment.dart';
-import '../../../subscription/domain/entities/subscription_models.dart';
-import '../../../quotations/domain/entities/quotation_model.dart';
 
 part 'analytics_report_controller.g.dart';
 
@@ -184,21 +165,16 @@ class AnalyticsReportData extends _$AnalyticsReportData {
     final filter = ref.watch(analyticsReportFilterProvider);
 
     // Watch repo providers
-    final ordersRepo = ref.watch(ordersRepositoryProvider);
     final customersRepo = ref.watch(customersRepositoryProvider);
     final financialRepo = ref.watch(financialRepositoryProvider);
-    final shippingRepo = ref.watch(shippingRepositoryProvider);
     final subscriptionRepo = ref.watch(subscriptionRepositoryProvider);
-    final quotationsRepo = ref.watch(quotationsRepositoryProvider);
 
     // Fetch data concurrently
     final customers = await customersRepo.getCustomers();
     final financialData = await financialRepo.getDashboardData();
-    final transactions = await financialRepo.getTransactions();
-    final shipments = await shippingRepo.getShipments();
+    
     final subscription = await subscriptionRepo.getSubscription();
     final subUsage = await subscriptionRepo.getUsage();
-    final quotations = await quotationsRepo.getQuotations();
 
     // Map filters to filter simulated results
     double multiplier = 1.0;
@@ -257,8 +233,8 @@ class AnalyticsReportData extends _$AnalyticsReportData {
     }
 
     final double computedWalletBalance = financialData.availableBalance;
-    final double computedRating = 4.75;
-    final double computedGrowth = 18.4;
+    const double computedRating = 4.75;
+    const double computedGrowth = 18.4;
 
     // Build lists for charts based on time filter
     final List<Map<String, dynamic>> salesTrendData = [];
