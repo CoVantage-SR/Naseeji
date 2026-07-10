@@ -260,9 +260,9 @@ class _AgreementsDashboardScreenState extends ConsumerState<AgreementsDashboardS
       alignment: Alignment.center,
       child: Column(
         children: [
-          Icon(Icons.handshake_outlined, size: 54, color: AppColors.outlineVariant),
-          SizedBox(height: 12),
-          Text('لا توجد اتفاقيات أو عقود مطابقة حالياً', style: TextStyle(color: AppColors.outline, fontSize: 11)),
+          const Icon(Icons.handshake_outlined, size: 54, color: AppColors.outlineVariant),
+          const SizedBox(height: 12),
+          const Text('لا توجد اتفاقيات أو عقود مطابقة حالياً', style: TextStyle(color: AppColors.outline, fontSize: 11)),
         ],
       ),
     );

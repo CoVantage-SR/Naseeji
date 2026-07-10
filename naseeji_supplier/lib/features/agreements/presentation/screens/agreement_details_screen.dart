@@ -319,7 +319,7 @@ class AgreementDetailsScreen extends ConsumerWidget {
 
   Widget _buildSectionCard({required String title, required IconData icon, required List<Widget> children}) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.surface,
         borderRadius: BorderRadius.all(Radius.circular(16)),
         boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],

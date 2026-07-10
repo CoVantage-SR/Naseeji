@@ -75,12 +75,15 @@ class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistratio
           categories: _selectedCategories,
         );
 
+    // Capture messenger before the async gap to avoid stale context usage
+    final messenger = ScaffoldMessenger.of(context);
     final success = await ref.read(registrationControllerProvider.notifier).submitSupplierRegistration();
-    if (mounted && success) {
-      _showSuccessDialog(context);
-    } else if (mounted) {
+    if (!mounted) return;
+    if (success) {
+      _showSuccessDialog(this.context);
+    } else {
       final errorMsg = ref.read(registrationControllerProvider).errorMessage ?? 'حدث خطأ أثناء حفظ البيانات';
-      ScaffoldMessenger.of(context).showSnackBar(
+      messenger.showSnackBar(
         SnackBar(content: Text(errorMsg), backgroundColor: AppColors.error),
       );
     }

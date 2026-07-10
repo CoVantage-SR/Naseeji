@@ -60,8 +60,8 @@ class AgreementComparisonScreen extends ConsumerWidget {
                 children: [
                   Container(
                     padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surface,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(16)),
                       boxShadow: [
                         BoxShadow(color: Color(0x05000000), blurRadius: 10),
