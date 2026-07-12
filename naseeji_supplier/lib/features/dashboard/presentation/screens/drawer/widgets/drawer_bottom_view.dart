@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/session/session_tracker.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import 'package:naseeji_supplier/core/theme/theme_controller.dart';
+import 'package:naseeji_supplier/features/auth/presentation/controllers/auth_controller.dart';
 
 class DrawerBottomView extends ConsumerWidget {
   const DrawerBottomView({super.key});
@@ -48,6 +49,7 @@ class DrawerBottomView extends ConsumerWidget {
               ),
               onTap: () {
                 ref.read(sessionTrackerProvider.notifier).endSession();
+                ref.read(authControllerProvider.notifier).logout();
                 context.go('/login');
               },
             ),

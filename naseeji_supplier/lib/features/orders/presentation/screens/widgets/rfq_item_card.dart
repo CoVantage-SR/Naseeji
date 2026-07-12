@@ -20,6 +20,7 @@ class RfqItemCard extends StatelessWidget {
   final bool actionButtonIsOutlined;
   final bool hasIconButton;
   final IconData? iconButtonIcon;
+  final VoidCallback? onIconButtonPressed;
   final VoidCallback onActionButtonPressed;
 
   const RfqItemCard({
@@ -42,6 +43,7 @@ class RfqItemCard extends StatelessWidget {
     this.actionButtonIsOutlined = false,
     this.hasIconButton = false,
     this.iconButtonIcon,
+    this.onIconButtonPressed,
     required this.onActionButtonPressed,
   });
 
@@ -249,7 +251,7 @@ class RfqItemCard extends StatelessWidget {
                       size: 18,
                       color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
-                    onPressed: () {},
+                    onPressed: onIconButtonPressed,
                   ),
                 ),
                 SizedBox(width: 12),

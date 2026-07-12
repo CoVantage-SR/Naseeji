@@ -16,6 +16,121 @@ class OrdersScreen extends ConsumerStatefulWidget {
 
 class _OrdersScreenState extends ConsumerState<OrdersScreen> {
   String? selectedFilterStatus;
+  String selectedSort = 'الافتراضي'; // 'الافتراضي', 'الأحدث', 'الأقدم', 'الكمية (أعلى)', 'الكمية (أقل)'
+  String selectedMaterial = 'الكل'; // 'الكل', 'Cotton', 'Polyester', 'Linen', 'Wool', 'Nylon'
+
+  double _parseQuantity(String qty) {
+    final clean = qty.replaceAll(RegExp(r'[^0-9]'), '');
+    return double.tryParse(clean) ?? 0.0;
+  }
+
+  void _showFilterBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) {
+        return Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                'تصفية طلبات الأسعار',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'نوع الخامة',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: AppColors.outline,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                children: ['الكل', 'Cotton', 'Polyester', 'Linen', 'Wool', 'Nylon'].map((mat) {
+                  final isSelected = selectedMaterial == mat;
+                  return ChoiceChip(
+                    label: Text(mat),
+                    selected: isSelected,
+                    onSelected: (val) {
+                      if (val) {
+                        setState(() {
+                          selectedMaterial = mat;
+                        });
+                        Navigator.pop(ctx);
+                      }
+                    },
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 16),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showSortBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) {
+        return Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                'ترتيب حسب',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
+              const SizedBox(height: 16),
+              ...['الافتراضي', 'الأحدث', 'الأقدم', 'الكمية (أعلى)', 'الكمية (أقل)'].map((opt) {
+                final isSelected = selectedSort == opt;
+                return ListTile(
+                  trailing: isSelected ? const Icon(Icons.check, color: AppColors.primary) : null,
+                  title: Text(
+                    opt,
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                    ),
+                  ),
+                  onTap: () {
+                    setState(() {
+                      selectedSort = opt;
+                    });
+                    Navigator.pop(ctx);
+                  },
+                );
+              }),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +149,25 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
           ),
           error: (err, stack) => Center(child: Text('خطأ: $err')),
           data: (stateData) {
-            final filteredItems = selectedFilterStatus == null
-                ? stateData.items
-                : stateData.items.where((element) => element.status == selectedFilterStatus).toList();
+            // Apply filtering
+            var filteredItems = stateData.items;
+            if (selectedFilterStatus != null) {
+              filteredItems = filteredItems.where((element) => element.status == selectedFilterStatus).toList();
+            }
+            if (selectedMaterial != 'الكل') {
+              filteredItems = filteredItems.where((element) => element.material.toLowerCase().contains(selectedMaterial.toLowerCase())).toList();
+            }
+
+            // Apply sorting
+            if (selectedSort == 'الأحدث') {
+              filteredItems.sort((a, b) => b.rfqNumber.compareTo(a.rfqNumber));
+            } else if (selectedSort == 'الأقدم') {
+              filteredItems.sort((a, b) => a.rfqNumber.compareTo(b.rfqNumber));
+            } else if (selectedSort == 'الكمية (أعلى)') {
+              filteredItems.sort((a, b) => _parseQuantity(b.quantity).compareTo(_parseQuantity(a.quantity)));
+            } else if (selectedSort == 'الكمية (أقل)') {
+              filteredItems.sort((a, b) => _parseQuantity(a.quantity).compareTo(_parseQuantity(b.quantity)));
+            }
 
             return RefreshIndicator(
               color: AppColors.primary,
@@ -58,7 +189,10 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
                       },
                     ),
                     SizedBox(height: 12),
-                    const RfqFilterSortRow(),
+                    RfqFilterSortRow(
+                      onFilterPressed: () => _showFilterBottomSheet(context),
+                      onSortPressed: () => _showSortBottomSheet(context),
+                    ),
                     SizedBox(height: 20),
                     RfqItemsList(items: filteredItems),
                   ],

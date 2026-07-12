@@ -130,7 +130,14 @@ class RfqSearchBar extends StatelessWidget {
 }
 
 class RfqFilterSortRow extends StatelessWidget {
-  const RfqFilterSortRow({super.key});
+  final VoidCallback? onFilterPressed;
+  final VoidCallback? onSortPressed;
+
+  const RfqFilterSortRow({
+    super.key,
+    this.onFilterPressed,
+    this.onSortPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +145,7 @@ class RfqFilterSortRow extends StatelessWidget {
       children: [
         Expanded(
           child: OutlinedButton.icon(
-            onPressed: () {},
+            onPressed: onFilterPressed,
             icon: const Icon(
               Icons.tune,
               size: 16,
@@ -168,7 +175,7 @@ class RfqFilterSortRow extends StatelessWidget {
         SizedBox(width: 12),
         Expanded(
           child: OutlinedButton.icon(
-            onPressed: () {},
+            onPressed: onSortPressed,
             icon: const Icon(
               Icons.sort,
               size: 16,
@@ -241,7 +248,15 @@ class RfqItemsList extends StatelessWidget {
           actionButtonIsOutlined: item.actionButtonIsOutlined,
           hasIconButton: item.hasIconButton,
           iconButtonIcon: _getIconData(item.iconButtonIconType),
-           onActionButtonPressed: () {
+          onIconButtonPressed: () {
+            final id = item.rfqNumber.replaceAll("RFQ-", "");
+            if (item.iconButtonIconType == 'chat') {
+              context.push('/orders/chat?rfqId=$id');
+            } else {
+              context.push('/orders/activity-log?rfqId=$id');
+            }
+          },
+          onActionButtonPressed: () {
             final id = item.rfqNumber.replaceAll("RFQ-", "");
             if (item.actionButtonText == 'تقديم عرض') {
               context.push('/rfq-details?rfqId=$id');
