@@ -6,8 +6,7 @@ import 'package:naseeji_supplier/core/theme/app_theme.dart';
 import 'package:naseeji_supplier/core/widgets/general_widgets.dart';
 import 'package:naseeji_supplier/features/auth/domain/entities/supplier_registration_data.dart';
 import 'package:naseeji_supplier/features/auth/presentation/controllers/registration_controller.dart';
-import 'package:naseeji_supplier/features/auth/presentation/controllers/auth_controller.dart';
-import 'package:naseeji_supplier/core/session/session_tracker.dart';
+
 
 class RegisterReviewScreen extends ConsumerWidget {
   const RegisterReviewScreen({super.key});

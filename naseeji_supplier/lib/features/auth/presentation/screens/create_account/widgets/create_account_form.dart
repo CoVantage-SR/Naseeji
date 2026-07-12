@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -39,7 +41,13 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
 
   // Governorate and Cities Data
   final Map<String, List<String>> _governorateCities = {
-    'القاهرة': ['القاهرة الجديدة', 'مصر الجديدة', 'المعادي', 'وسط البلد', 'حلوان'],
+    'القاهرة': [
+      'القاهرة الجديدة',
+      'مصر الجديدة',
+      'المعادي',
+      'وسط البلد',
+      'حلوان',
+    ],
     'الجيزة': ['الدقي', 'المهندسين', 'الهرم', '6 أكتوبر', 'الشيخ زايد'],
     'الإسكندرية': ['سموحة', 'المنتزه', 'سيدي بشر', 'الرمل', 'وسط الإسكندرية'],
     'الدقهلية': ['المنصورة', 'ميت غمر', 'السنبلاوين', 'دكرنس', 'طلخا'],
@@ -102,7 +110,9 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
     if (clean.length < 3) return 'يجب أن يكون اسم الشركة 3 أحرف على الأقل.';
     if (clean.length > 100) return 'لا يجب أن يتجاوز اسم الشركة 100 حرف.';
     // Check Emojis
-    if (RegExp(r'[\u2600-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]|\uD83D[\uDE80-\uDEFF]|\uD83E[\uDD00-\uDDFF]').hasMatch(clean)) {
+    if (RegExp(
+      r'[\u2600-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]|\uD83D[\uDE80-\uDEFF]|\uD83E[\uDD00-\uDDFF]',
+    ).hasMatch(clean)) {
       return 'اسم الشركة لا يمكن أن يحتوي على رموز تعبيرية.';
     }
     if (_hasSqlInjection(clean)) return 'اسم الشركة يحتوي على إدخال غير صالح.';
@@ -116,7 +126,9 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
     if (!RegExp(r'^[a-zA-Z\u0621-\u064A\s]+$').hasMatch(clean)) {
       return 'يجب أن يحتوي اسم المسؤول على حروف فقط.';
     }
-    if (RegExp(r'[\u2600-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]|\uD83D[\uDE80-\uDEFF]|\uD83E[\uDD00-\uDDFF]').hasMatch(clean)) {
+    if (RegExp(
+      r'[\u2600-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]|\uD83D[\uDE80-\uDEFF]|\uD83E[\uDD00-\uDDFF]',
+    ).hasMatch(clean)) {
       return 'اسم المسؤول لا يمكن أن يحتوي على رموز تعبيرية.';
     }
     return null;
@@ -248,7 +260,9 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
     }
 
     // Save Data to Riverpod Controller
-    ref.read(registrationControllerProvider.notifier).updateBasicAccount(
+    ref
+        .read(registrationControllerProvider.notifier)
+        .updateBasicAccount(
           name: _managerController.text.trim(),
           email: email,
           phone: phone,
@@ -257,7 +271,9 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
           city: _selectedCity ?? '',
         );
 
-    ref.read(registrationControllerProvider.notifier).updateCompanyDetails(
+    ref
+        .read(registrationControllerProvider.notifier)
+        .updateCompanyDetails(
           companyName: _companyController.text.trim(),
           commercialRegistry: '',
           taxNumber: '',
@@ -275,8 +291,14 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
       context: context,
       barrierDismissible: false,
       builder: (ctx) => AlertDialog(
-        title: const Text('رقم الموبايل مستخدم بالفعل', textAlign: TextAlign.right),
-        content: const Text('رقم الموبايل الذي أدخلته مسجل به حساب بالفعل لدينا.', textAlign: TextAlign.right),
+        title: const Text(
+          'رقم الموبايل مستخدم بالفعل',
+          textAlign: TextAlign.right,
+        ),
+        content: const Text(
+          'رقم الموبايل الذي أدخلته مسجل به حساب بالفعل لدينا.',
+          textAlign: TextAlign.right,
+        ),
         actions: [
           TextButton(
             onPressed: () {
@@ -299,8 +321,14 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
       context: context,
       barrierDismissible: false,
       builder: (ctx) => AlertDialog(
-        title: const Text('البريد الإلكتروني مستخدم بالفعل', textAlign: TextAlign.right),
-        content: const Text('البريد الإلكتروني الذي أدخلته مسجل به حساب بالفعل لدينا.', textAlign: TextAlign.right),
+        title: const Text(
+          'البريد الإلكتروني مستخدم بالفعل',
+          textAlign: TextAlign.right,
+        ),
+        content: const Text(
+          'البريد الإلكتروني الذي أدخلته مسجل به حساب بالفعل لدينا.',
+          textAlign: TextAlign.right,
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
@@ -311,24 +339,7 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
     );
   }
 
-
-
   // Clickable Terms Dialog
-  void _showTermsDialog(BuildContext context, String title, String content) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(title, textAlign: TextAlign.right),
-        content: Text(content, textAlign: TextAlign.right),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text('حسناً'),
-          ),
-        ],
-      ),
-    );
-  }
 
   // Determine if form input is complete to enable/disable button visual status
   bool get _isFormInputComplete {
@@ -463,9 +474,13 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
               decoration: InputDecoration(
                 labelText: 'المحافظة *',
                 prefixIcon: const Icon(Icons.map_outlined),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
-              items: _governorateCities.keys.map((gov) => DropdownMenuItem(value: gov, child: Text(gov))).toList(),
+              items: _governorateCities.keys
+                  .map((gov) => DropdownMenuItem(value: gov, child: Text(gov)))
+                  .toList(),
               onChanged: state.isLoading
                   ? null
                   : (val) {
@@ -483,11 +498,18 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
               decoration: InputDecoration(
                 labelText: 'المدينة *',
                 prefixIcon: const Icon(Icons.location_city_outlined),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
               items: _selectedGovernorate == null
                   ? []
-                  : _governorateCities[_selectedGovernorate]!.map((city) => DropdownMenuItem(value: city, child: Text(city))).toList(),
+                  : _governorateCities[_selectedGovernorate]!
+                        .map(
+                          (city) =>
+                              DropdownMenuItem(value: city, child: Text(city)),
+                        )
+                        .toList(),
               onChanged: state.isLoading
                   ? null
                   : (val) {
@@ -507,9 +529,16 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
                     decoration: InputDecoration(
                       labelText: 'المحافظة *',
                       prefixIcon: const Icon(Icons.map_outlined),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
-                    items: _governorateCities.keys.map((gov) => DropdownMenuItem(value: gov, child: Text(gov))).toList(),
+                    items: _governorateCities.keys
+                        .map(
+                          (gov) =>
+                              DropdownMenuItem(value: gov, child: Text(gov)),
+                        )
+                        .toList(),
                     onChanged: state.isLoading
                         ? null
                         : (val) {
@@ -518,7 +547,8 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
                               _selectedCity = null;
                             });
                           },
-                    validator: (val) => val == null ? 'يرجى اختيار المحافظة' : null,
+                    validator: (val) =>
+                        val == null ? 'يرجى اختيار المحافظة' : null,
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -529,11 +559,20 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
                     decoration: InputDecoration(
                       labelText: 'المدينة *',
                       prefixIcon: const Icon(Icons.location_city_outlined),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
                     items: _selectedGovernorate == null
                         ? []
-                        : _governorateCities[_selectedGovernorate]!.map((city) => DropdownMenuItem(value: city, child: Text(city))).toList(),
+                        : _governorateCities[_selectedGovernorate]!
+                              .map(
+                                (city) => DropdownMenuItem(
+                                  value: city,
+                                  child: Text(city),
+                                ),
+                              )
+                              .toList(),
                     onChanged: state.isLoading
                         ? null
                         : (val) {
@@ -541,7 +580,8 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
                               _selectedCity = val;
                             });
                           },
-                    validator: (val) => val == null ? 'يرجى اختيار المدينة' : null,
+                    validator: (val) =>
+                        val == null ? 'يرجى اختيار المدينة' : null,
                   ),
                 ),
               ],
@@ -559,7 +599,9 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
               enabled: !state.isLoading,
               suffixIcon: IconButton(
                 icon: Icon(
-                  _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                  _obscurePassword
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
                   color: theme.colorScheme.outline,
                 ),
                 onPressed: () {
@@ -579,7 +621,9 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
               enabled: !state.isLoading,
               suffixIcon: IconButton(
                 icon: Icon(
-                  _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                  _obscurePassword
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
                   color: theme.colorScheme.outline,
                 ),
                 onPressed: () {
@@ -602,7 +646,9 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
                     enabled: !state.isLoading,
                     suffixIcon: IconButton(
                       icon: Icon(
-                        _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                        _obscurePassword
+                            ? Icons.visibility_outlined
+                            : Icons.visibility_off_outlined,
                         color: theme.colorScheme.outline,
                       ),
                       onPressed: () {
@@ -624,7 +670,9 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
                     enabled: !state.isLoading,
                     suffixIcon: IconButton(
                       icon: Icon(
-                        _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                        _obscurePassword
+                            ? Icons.visibility_outlined
+                            : Icons.visibility_off_outlined,
                         color: theme.colorScheme.outline,
                       ),
                       onPressed: () {
@@ -648,7 +696,11 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
               children: [
                 Text(
                   'قوة كلمة المرور: $strength',
-                  style: TextStyle(fontSize: 11, color: strengthColor, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: strengthColor,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(width: 8),
                 ...List.generate(3, (index) {
@@ -690,7 +742,10 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
                   textAlign: TextAlign.right,
                   text: TextSpan(
                     text: 'أوافق على ',
-                    style: TextStyle(fontSize: 13, color: theme.colorScheme.onSurfaceVariant),
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
                     children: [
                       TextSpan(
                         text: 'الشروط والأحكام',

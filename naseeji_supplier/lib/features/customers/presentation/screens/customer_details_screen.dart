@@ -528,6 +528,7 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
               borderRadius: BorderRadius.circular(12),
               border: Border.all(color: const Color(0xFFFFD54F), width: 0.5),
             ),
+            // ignore: prefer_const_literals_to_create_immutables
             child: Row(children: [
               Icon(Icons.lock_outline, size: 14, color: Color(0xFF996C00)),
               SizedBox(width: 6),
