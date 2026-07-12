@@ -114,6 +114,18 @@ class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistratio
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               centerTitle: true,
+              actions: [
+                TextButton(
+                  onPressed: () => context.go('/login'),
+                  child: Text(
+                    'تسجيل الدخول',
+                    style: TextStyle(
+                      color: theme.colorScheme.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
             body: SafeArea(
               child: SingleChildScrollView(
