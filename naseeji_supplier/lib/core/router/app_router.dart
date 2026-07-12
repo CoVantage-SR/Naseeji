@@ -114,6 +114,21 @@ import '../../features/subscription/presentation/screens/subscription_notificati
 import '../../features/subscription/presentation/screens/subscription_analytics_screen.dart';
 import '../../features/subscription/domain/entities/subscription_models.dart';
 
+// ─── Reports Feature ─────────────────────────────────────────────────────────
+import '../../features/reports/presentation/screens/analytics_dashboard_screen.dart';
+import '../../features/reports/presentation/screens/sales_report_screen.dart';
+import '../../features/reports/presentation/screens/orders_report_screen.dart';
+import '../../features/reports/presentation/screens/products_report_screen.dart';
+import '../../features/reports/presentation/screens/product_performance_screen.dart';
+import '../../features/reports/presentation/screens/customers_report_screen.dart';
+import '../../features/reports/presentation/screens/quotations_report_screen.dart';
+import '../../features/reports/presentation/screens/financial_report_screen.dart';
+import '../../features/reports/presentation/screens/shipping_report_screen.dart';
+import '../../features/reports/presentation/screens/subscription_report_screen.dart';
+import '../../features/reports/presentation/screens/advertisement_report_screen.dart';
+import '../../features/reports/presentation/screens/performance_report_screen.dart';
+import '../../features/reports/presentation/screens/ai_insights_screen.dart';
+
 part 'app_router.g.dart';
 
 class RouterNotifier extends ChangeNotifier {
@@ -767,12 +782,79 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/subscription/notifications',
         name: 'subscription-notifications',
-        builder: (context, state) => const SubscriptionNotificationsScreen(),
+        builder: (context, state) =>
+            const SubscriptionNotificationsScreen(),
       ),
       GoRoute(
         path: '/subscription/analytics',
         name: 'subscription-analytics',
         builder: (context, state) => const SubscriptionAnalyticsScreen(),
+      ),
+      // ─── Reports Feature ─────────────────────────────────────────────
+      GoRoute(
+        path: '/reports',
+        name: 'reports-dashboard',
+        builder: (context, state) => const AnalyticsDashboardScreen(),
+      ),
+      GoRoute(
+        path: '/reports/sales',
+        name: 'reports-sales',
+        builder: (context, state) => const SalesReportScreen(),
+      ),
+      GoRoute(
+        path: '/reports/orders',
+        name: 'reports-orders',
+        builder: (context, state) => const OrdersReportScreen(),
+      ),
+      GoRoute(
+        path: '/reports/products',
+        name: 'reports-products',
+        builder: (context, state) => const ProductsReportScreen(),
+      ),
+      GoRoute(
+        path: '/reports/products/performance',
+        name: 'reports-products-performance',
+        builder: (context, state) => const ProductPerformanceScreen(),
+      ),
+      GoRoute(
+        path: '/reports/customers',
+        name: 'reports-customers',
+        builder: (context, state) => const CustomersReportScreen(),
+      ),
+      GoRoute(
+        path: '/reports/quotations',
+        name: 'reports-quotations',
+        builder: (context, state) => const QuotationsReportScreen(),
+      ),
+      GoRoute(
+        path: '/reports/financial',
+        name: 'reports-financial',
+        builder: (context, state) => const FinancialReportScreen(),
+      ),
+      GoRoute(
+        path: '/reports/shipping',
+        name: 'reports-shipping',
+        builder: (context, state) => const ShippingReportScreen(),
+      ),
+      GoRoute(
+        path: '/reports/subscription',
+        name: 'reports-subscription',
+        builder: (context, state) => const SubscriptionReportScreen(),
+      ),
+      GoRoute(
+        path: '/reports/advertisements',
+        name: 'reports-advertisements',
+        builder: (context, state) => const AdvertisementReportScreen(),
+      ),
+      GoRoute(
+        path: '/reports/performance',
+        name: 'reports-performance',
+        builder: (context, state) => const PerformanceReportScreen(),
+      ),
+      GoRoute(
+        path: '/reports/ai-insights',
+        name: 'reports-ai-insights',
+        builder: (context, state) => const AiInsightsScreen(),
       ),
     ],
   );
