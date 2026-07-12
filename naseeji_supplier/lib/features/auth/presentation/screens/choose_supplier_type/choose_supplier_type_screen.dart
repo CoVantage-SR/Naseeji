@@ -19,12 +19,14 @@ class ChooseSupplierTypeScreen extends ConsumerWidget {
       data: AppTheme.darkTheme,
       child: Builder(
         builder: (context) {
+          final theme = Theme.of(context);
           return Scaffold(
             appBar: AppBar(
-              title: Text(
+              title: const Text(
                 'نوع الحساب',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
+              centerTitle: true,
             ),
             body: SafeArea(
               child: Padding(
@@ -32,71 +34,149 @@ class ChooseSupplierTypeScreen extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    // Step Progress Indicator
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const SizedBox.shrink(),
+                        Text(
+                          'الخطوة 2 من 5',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: theme.colorScheme.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(4),
+                      child: TweenAnimationBuilder<double>(
+                        tween: Tween<double>(begin: 0.0, end: 0.4),
+                        duration: const Duration(milliseconds: 800),
+                        curve: Curves.easeInOut,
+                        builder: (ctx, value, child) => LinearProgressIndicator(
+                          value: value,
+                          minHeight: 6,
+                          backgroundColor: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+                          valueColor: AlwaysStoppedAnimation<Color>(theme.colorScheme.primary),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Headings
                     Text(
                       'اختر نوع حسابك كمورد',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.onSurface,
+                        color: theme.colorScheme.onSurface,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
-                      'حدد طبيعة عملك لنتمكن من توفير الأدوات المناسبة لك',
+                      'حدد طبيعة نشاطك علشان نجهزلك الأدوات والخدمات المناسبة.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 14,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        color: theme.colorScheme.onSurfaceVariant,
                       ),
                     ),
-                    SizedBox(height: 32),
+                    const SizedBox(height: 32),
+
+                    // Selection Cards list with slide-fade entry animation
                     Expanded(
-                      child: ListView(
-                        children: [
-                          SupplierTypeCard(
-                            type: SupplierType.factoryUnit,
-                            title: 'مصنع أو وحدة إنتاج',
-                            description: 'إنتاج وتصنيع الملابس والمنتجات النسيجية الجاهزة.',
-                            icon: Icons.factory_outlined,
-                            isSelected: selectedType == SupplierType.factoryUnit,
-                            onTap: () {
-                              ref.read(registrationControllerProvider.notifier).updateSupplierType(SupplierType.factoryUnit);
-                            },
+                      child: TweenAnimationBuilder<double>(
+                        tween: Tween<double>(begin: 0.0, end: 1.0),
+                        duration: const Duration(milliseconds: 600),
+                        curve: Curves.easeOutCubic,
+                        builder: (ctx, animValue, child) => Transform.translate(
+                          offset: Offset(0, 30 * (1.0 - animValue)),
+                          child: Opacity(
+                            opacity: animValue,
+                            child: child,
                           ),
-                          SizedBox(height: 16),
-                          SupplierTypeCard(
-                            type: SupplierType.supplier,
-                            title: 'مورد خامات ومستلزمات',
-                            description: 'توريد الأقمشة، الخيوط، الإكسسوارات ومستلزمات الإنتاج.',
-                            icon: Icons.widgets_outlined,
-                            isSelected: selectedType == SupplierType.supplier,
-                            onTap: () {
-                              ref.read(registrationControllerProvider.notifier).updateSupplierType(SupplierType.supplier);
-                            },
-                          ),
-                          SizedBox(height: 16),
-                          SupplierTypeCard(
-                            type: SupplierType.customizer,
-                            title: 'مقدم خدمات تخصيص',
-                            description: 'خدمات الطباعة والتطريز وتصميم النماذج وغيرها.',
-                            icon: Icons.palette_outlined,
-                            isSelected: selectedType == SupplierType.customizer,
-                            onTap: () {
-                              ref.read(registrationControllerProvider.notifier).updateSupplierType(SupplierType.customizer);
-                            },
-                          ),
-                        ],
+                        ),
+                        child: ListView(
+                          physics: const BouncingScrollPhysics(),
+                          children: [
+                            SupplierTypeCard(
+                              type: SupplierType.factoryUnit,
+                              title: 'مصنع أو ورشة إنتاج',
+                              description: 'تصنيع الملابس والمنسوجات وتنفيذ طلبات الإنتاج.',
+                              emoji: '🏭',
+                              isSelected: selectedType == SupplierType.factoryUnit,
+                              onTap: () {
+                                ref.read(registrationControllerProvider.notifier).updateSupplierType(SupplierType.factoryUnit);
+                              },
+                            ),
+                            const SizedBox(height: 16),
+                            SupplierTypeCard(
+                              type: SupplierType.supplier,
+                              title: 'مورد خامات ومستلزمات',
+                              description: 'توريد الأقمشة والخيوط والإكسسوارات والتغليف وماكينات الإنتاج.',
+                              emoji: '🧵',
+                              isSelected: selectedType == SupplierType.supplier,
+                              onTap: () {
+                                ref.read(registrationControllerProvider.notifier).updateSupplierType(SupplierType.supplier);
+                              },
+                            ),
+                            const SizedBox(height: 16),
+                            SupplierTypeCard(
+                              type: SupplierType.customizer,
+                              title: 'مقدم خدمات',
+                              description: 'الطباعة، التطريز، التصميم، الصباغة، القص، التغليف وغيرها.',
+                              emoji: '🎨',
+                              isSelected: selectedType == SupplierType.customizer,
+                              onTap: () {
+                                ref.read(registrationControllerProvider.notifier).updateSupplierType(SupplierType.customizer);
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    PrimaryButton(
-                      text: 'متابعة التسجيل',
-                      onPressed: selectedType != null
-                          ? () {
-                              context.push('/register');
-                            }
-                          : null,
-                      suffixIcon: Icons.arrow_forward_rounded,
+
+                    const SizedBox(height: 16),
+
+                    // Continue button with validation snackbar and opacity signal
+                    AnimatedOpacity(
+                      duration: const Duration(milliseconds: 250),
+                      opacity: selectedType != null ? 1.0 : 0.6,
+                      child: PrimaryButton(
+                        text: 'متابعة التسجيل',
+                        onPressed: () {
+                          if (selectedType == null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      'من فضلك اختار نوع الحساب.',
+                                      style: TextStyle(
+                                        color: theme.colorScheme.onErrorContainer,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Icon(Icons.error_outline, color: theme.colorScheme.onErrorContainer),
+                                  ],
+                                ),
+                                backgroundColor: theme.colorScheme.errorContainer,
+                                behavior: SnackBarBehavior.floating,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                              ),
+                            );
+                          } else {
+                            context.push('/register');
+                          }
+                        },
+                        suffixIcon: Icons.arrow_forward_rounded,
+                      ),
                     ),
                   ],
                 ),
