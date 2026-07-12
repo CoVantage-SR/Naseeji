@@ -108,6 +108,7 @@ class CustomTextField extends StatelessWidget {
   final String? prefixText;
   final bool enabled;
   final int? maxLines;
+  final FocusNode? focusNode;
 
   const CustomTextField({
     super.key,
@@ -122,12 +123,14 @@ class CustomTextField extends StatelessWidget {
     this.prefixText,
     this.enabled = true,
     this.maxLines = 1,
+    this.focusNode,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      focusNode: focusNode,
       validator: validator,
       keyboardType: keyboardType,
       obscureText: obscureText,
