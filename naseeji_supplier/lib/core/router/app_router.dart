@@ -12,6 +12,10 @@ import '../../features/auth/presentation/screens/login/login_screen.dart';
 import '../../features/auth/presentation/screens/create_account/create_account_screen.dart';
 import '../../features/auth/presentation/screens/otp_verification/otp_verification_screen.dart';
 import '../../features/auth/presentation/screens/supplier_registration/supplier_registration_screen.dart';
+import '../../features/auth/presentation/screens/supplier_registration/register_review_screen.dart';
+import '../../features/auth/presentation/screens/terms/terms_conditions_screen.dart';
+import '../../features/auth/presentation/screens/terms/privacy_policy_screen.dart';
+import '../../features/auth/presentation/screens/google_complete_registration/google_complete_registration_screen.dart';
 import '../../features/dashboard/presentation/screens/home/home_screen.dart';
 import '../../features/dashboard/presentation/screens/analytics/analytics_screen.dart';
 import '../../features/dashboard/presentation/screens/operations_log/operations_log_screen.dart';
@@ -209,6 +213,26 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/supplier-registration',
         name: 'supplier-registration',
         builder: (context, state) => const SupplierRegistrationScreen(),
+      ),
+      GoRoute(
+        path: '/register-review',
+        name: 'register-review',
+        builder: (context, state) => const RegisterReviewScreen(),
+      ),
+      GoRoute(
+        path: '/terms',
+        name: 'terms',
+        builder: (context, state) => const TermsConditionsScreen(),
+      ),
+      GoRoute(
+        path: '/privacy',
+        name: 'privacy',
+        builder: (context, state) => const PrivacyPolicyScreen(),
+      ),
+      GoRoute(
+        path: '/google-complete-registration',
+        name: 'google-complete-registration',
+        builder: (context, state) => const GoogleCompleteRegistrationScreen(),
       ),
       GoRoute(
         path: '/home',

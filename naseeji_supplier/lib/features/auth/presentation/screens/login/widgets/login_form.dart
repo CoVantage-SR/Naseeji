@@ -4,6 +4,9 @@ import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import 'package:naseeji_supplier/core/widgets/general_widgets.dart';
 import 'package:naseeji_supplier/features/auth/presentation/controllers/auth_controller.dart';
 
+import 'package:go_router/go_router.dart';
+import 'package:naseeji_supplier/core/session/session_tracker.dart';
+
 class LoginForm extends ConsumerStatefulWidget {
   const LoginForm({super.key});
 
@@ -190,7 +193,32 @@ class _LoginFormState extends ConsumerState<LoginForm> {
               SizedBox(width: 16),
               Expanded(
                 child: OutlinedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        title: const Text('محاكاة تسجيل الدخول بجوجل', textAlign: TextAlign.right),
+                        content: const Text('اختر حالة الحساب التي ترغب في محاكاتها:', textAlign: TextAlign.right),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(ctx);
+                              ref.read(sessionTrackerProvider.notifier).startSession("100");
+                              context.go('/home');
+                            },
+                            child: const Text('حساب موجود مسبقاً'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(ctx);
+                              context.push('/google-complete-registration');
+                            },
+                            child: const Text('حساب جديد'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(

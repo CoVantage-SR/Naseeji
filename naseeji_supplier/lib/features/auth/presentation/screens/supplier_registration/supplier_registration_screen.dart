@@ -4,9 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import 'package:naseeji_supplier/core/theme/app_theme.dart';
 import 'package:naseeji_supplier/core/widgets/general_widgets.dart';
+import 'package:naseeji_supplier/features/auth/domain/entities/supplier_registration_data.dart';
 import 'package:naseeji_supplier/features/auth/presentation/controllers/registration_controller.dart';
-import 'widgets/category_selector.dart';
-import 'widgets/document_uploader.dart';
 
 class SupplierRegistrationScreen extends ConsumerStatefulWidget {
   const SupplierRegistrationScreen({super.key});
@@ -17,124 +16,92 @@ class SupplierRegistrationScreen extends ConsumerStatefulWidget {
 
 class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistrationScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _companyController = TextEditingController();
-  final _crController = TextEditingController();
-  final _taxController = TextEditingController();
-  
-  final List<String> _availableCategories = ['أقمشة', 'خيوط', 'أزرار وإكسسوارات', 'خدمات تطريز', 'خدمات طباعة', 'خامات صوف', 'خامات قطن'];
-  final List<String> _selectedCategories = [];
-  String? _uploadedFileName;
+
+  // Specializations
+  final List<String> _supplierSpecializations = [
+    'أقمشة', 'خيوط', 'إكسسوارات', 'حشو', 'تغليف', 'طباعة', 'كيماويات', 'ماكينات', 'أكياس وكرتون', 'أزرار وسوست', 'مستلزمات مصانع'
+  ];
+  final List<String> _serviceSpecializations = [
+    'طباعة', 'تطريز', 'صباغة', 'تصميم', 'قص', 'تغليف', 'خدمات أخرى'
+  ];
+
+  final List<String> _selectedSpecs = [];
+
+  // Controllers for additional fields
+  final _factoryTypeController = TextEditingController();
+  final _employeeCountController = TextEditingController();
+  final _productionCapacityController = TextEditingController();
+  final _productTypesController = TextEditingController();
+
+  final _bioController = TextEditingController();
+  final _establishedYearController = TextEditingController();
+  final _minOrderController = TextEditingController();
+  final _countriesController = TextEditingController();
+  final _websiteController = TextEditingController();
 
   @override
   void dispose() {
-    _companyController.dispose();
-    _crController.dispose();
-    _taxController.dispose();
+    _factoryTypeController.dispose();
+    _employeeCountController.dispose();
+    _productionCapacityController.dispose();
+    _productTypesController.dispose();
+    _bioController.dispose();
+    _establishedYearController.dispose();
+    _minOrderController.dispose();
+    _countriesController.dispose();
+    _websiteController.dispose();
     super.dispose();
   }
 
-  void _toggleCategory(String category) {
+  void _toggleSpecialization(String spec) {
     setState(() {
-      if (_selectedCategories.contains(category)) {
-        _selectedCategories.remove(category);
+      if (_selectedSpecs.contains(spec)) {
+        _selectedSpecs.remove(spec);
       } else {
-        _selectedCategories.add(category);
+        _selectedSpecs.add(spec);
       }
     });
   }
 
-  void _simulateFileUpload() {
-    setState(() {
-      _uploadedFileName = 'commercial_registry_doc.pdf';
-    });
-    ref.read(registrationControllerProvider.notifier).updateDocumentPath('/mock/path/commercial_registry_doc.pdf');
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('تم تحميل ملف السجل التجاري بنجاح (محاكاة).')),
-    );
-  }
+  void _submit() {
+    final registrationState = ref.read(registrationControllerProvider);
+    final selectedType = registrationState.data.supplierType;
 
-  Future<void> _submit(BuildContext context) async {
+    // Validation
+    if (selectedType != SupplierType.factoryUnit && _selectedSpecs.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('من فضلك اختر تخصص واحد على الأقل.'),
+          backgroundColor: AppColors.error,
+        ),
+      );
+      return;
+    }
+
     if (!_formKey.currentState!.validate()) return;
-    if (_selectedCategories.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('يرجى اختيار تصنيف واحد على الأقل للمواد التي توردها.'), backgroundColor: AppColors.error),
-      );
-      return;
-    }
-    if (_uploadedFileName == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('يرجى إرفاق ملف السجل التجاري لإكمال التوثيق.'), backgroundColor: AppColors.error),
-      );
-      return;
-    }
 
-    ref.read(registrationControllerProvider.notifier).updateCompanyDetails(
-          companyName: _companyController.text.trim(),
-          commercialRegistry: _crController.text.trim(),
-          taxNumber: _taxController.text.trim(),
-          categories: _selectedCategories,
+    // Save step 4 data to provider
+    ref.read(registrationControllerProvider.notifier).updateBusinessDetails(
+          specializations: _selectedSpecs,
+          factoryType: _factoryTypeController.text.trim(),
+          employeeCount: _employeeCountController.text.trim(),
+          productionCapacity: _productionCapacityController.text.trim(),
+          productTypes: _productTypesController.text.trim(),
+          companyBio: _bioController.text.trim(),
+          establishedYear: _establishedYearController.text.trim(),
+          minOrderValue: _minOrderController.text.trim(),
+          supplyCountries: _countriesController.text.trim(),
+          website: _websiteController.text.trim(),
         );
 
-    // Capture messenger before the async gap to avoid stale context usage
-    final messenger = ScaffoldMessenger.of(context);
-    final success = await ref.read(registrationControllerProvider.notifier).submitSupplierRegistration();
-    if (!mounted) return;
-    if (success) {
-      _showSuccessDialog(this.context);
-    } else {
-      final errorMsg = ref.read(registrationControllerProvider).errorMessage ?? 'حدث خطأ أثناء حفظ البيانات';
-      messenger.showSnackBar(
-        SnackBar(content: Text(errorMsg), backgroundColor: AppColors.error),
-      );
-    }
-  }
-
-  void _showSuccessDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(height: 16),
-              CircleAvatar(
-                radius: 36,
-                backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-                child: Icon(Icons.check_circle, color: Theme.of(context).colorScheme.secondary, size: 48),
-              ),
-              SizedBox(height: 24),
-              Text(
-                'تم تقديم الطلب بنجاح',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 12),
-              Text(
-                'طلب التوثيق الخاص بك قيد المراجعة الآن. سنقوم بإشعارك فور اكتمال المراجعة وتفعيل الحساب.',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.5),
-              ),
-              SizedBox(height: 24),
-              PrimaryButton(
-                text: 'الانتقال للرئيسية',
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  ref.read(registrationControllerProvider.notifier).resetSuccess();
-                  context.go('/home');
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
+    context.push('/register-review');
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(registrationControllerProvider);
+    final registrationState = ref.watch(registrationControllerProvider);
+    final selectedType = registrationState.data.supplierType ?? SupplierType.supplier;
+    final theme = Theme.of(context);
 
     return Theme(
       data: AppTheme.darkTheme,
@@ -142,105 +109,204 @@ class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistratio
         builder: (context) {
           return Scaffold(
             appBar: AppBar(
-              title: Text(
-                'بيانات التوثيق والمؤسسة',
+              title: const Text(
+                'التخصصات والبيانات التجارية',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
+              centerTitle: true,
             ),
             body: SafeArea(
-              child: LoadingOverlay(
-                isLoading: state.isLoading,
-                child: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: Form(
-                    key: _formKey,
-                    child: ListView(
-                      children: [
-                        Text(
-                          'توثيق حساب المورد',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.onSurface,
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(24.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // Step Progress Indicator
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const SizedBox.shrink(),
+                          Text(
+                            'الخطوة 4 من 5',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: theme.colorScheme.primary,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: TweenAnimationBuilder<double>(
+                          tween: Tween<double>(begin: 0.0, end: 0.8),
+                          duration: const Duration(milliseconds: 800),
+                          curve: Curves.easeInOut,
+                          builder: (ctx, value, child) => LinearProgressIndicator(
+                            value: value,
+                            minHeight: 6,
+                            backgroundColor: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+                            valueColor: AlwaysStoppedAnimation<Color>(theme.colorScheme.primary),
                           ),
                         ),
-                        SizedBox(height: 8),
+                      ),
+                      const SizedBox(height: 24),
+
+                      Text(
+                        'التخصصات والبيانات التجارية',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: theme.colorScheme.onSurface,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'اختار التخصصات اللي شركتك بتشتغل فيها.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+
+                      // Conditional view based on Account Type
+                      if (selectedType == SupplierType.supplier) ...[
                         Text(
-                          'يرجى تزويدنا بالبيانات التجارية الرسمية لتوثيق شركتك أو مصنعك على المنصة',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Theme.of(context).colorScheme.onSurfaceVariant,
-                          ),
+                          'التخصصات المتاحة *',
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: theme.colorScheme.primary),
+                          textAlign: TextAlign.right,
                         ),
-                        SizedBox(height: 32),
-                        CustomTextField(
-                          controller: _companyController,
-                          labelText: 'الاسم التجاري للمؤسسة / المصنع',
-                          prefixIcon: Icons.business_outlined,
-                          validator: (val) {
-                            if (val == null || val.trim().isEmpty) {
-                              return 'يرجى إدخال اسم المؤسسة';
-                            }
-                            return null;
-                          },
+                        const SizedBox(height: 12),
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          alignment: WrapAlignment.end,
+                          children: _supplierSpecializations.map((spec) {
+                            final isSelected = _selectedSpecs.contains(spec);
+                            return FilterChip(
+                              label: Text(spec),
+                              selected: isSelected,
+                              onSelected: (_) => _toggleSpecialization(spec),
+                            );
+                          }).toList(),
                         ),
-                        SizedBox(height: 16),
+                      ] else if (selectedType == SupplierType.customizer) ...[
+                        Text(
+                          'الخدمات المتاحة *',
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: theme.colorScheme.primary),
+                          textAlign: TextAlign.right,
+                        ),
+                        const SizedBox(height: 12),
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          alignment: WrapAlignment.end,
+                          children: _serviceSpecializations.map((spec) {
+                            final isSelected = _selectedSpecs.contains(spec);
+                            return FilterChip(
+                              label: Text(spec),
+                              selected: isSelected,
+                              onSelected: (_) => _toggleSpecialization(spec),
+                            );
+                          }).toList(),
+                        ),
+                      ] else if (selectedType == SupplierType.factoryUnit) ...[
                         CustomTextField(
-                          controller: _crController,
-                          labelText: 'رقم السجل التجاري',
-                          prefixIcon: Icons.analytics_outlined,
+                          controller: _factoryTypeController,
+                          labelText: 'نوع المصنع *',
+                          prefixIcon: Icons.factory_outlined,
+                          validator: (val) => val == null || val.trim().isEmpty ? 'حقل مطلوب' : null,
+                        ),
+                        const SizedBox(height: 16),
+                        CustomTextField(
+                          controller: _employeeCountController,
+                          labelText: 'عدد العمال *',
+                          prefixIcon: Icons.people_outline,
                           keyboardType: TextInputType.number,
-                          validator: (val) {
-                            if (val == null || val.trim().isEmpty) {
-                              return 'يرجى إدخال رقم السجل التجاري';
-                            }
-                            return null;
-                          },
+                          validator: (val) => val == null || val.trim().isEmpty ? 'حقل مطلوب' : null,
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         CustomTextField(
-                          controller: _taxController,
-                          labelText: 'الرقم الضريبي للمؤسسة',
-                          prefixIcon: Icons.receipt_long_outlined,
-                          keyboardType: TextInputType.number,
-                          validator: (val) {
-                            if (val == null || val.trim().isEmpty) {
-                              return 'يرجى إدخال الرقم الضريبي';
-                            }
-                            return null;
-                          },
+                          controller: _productionCapacityController,
+                          labelText: 'الطاقة الإنتاجية *',
+                          prefixIcon: Icons.bolt_outlined,
+                          validator: (val) => val == null || val.trim().isEmpty ? 'حقل مطلوب' : null,
                         ),
-                        SizedBox(height: 24),
-                        Text(
-                          'التصنيفات والمنتجات التي توردها',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        const SizedBox(height: 16),
+                        CustomTextField(
+                          controller: _productTypesController,
+                          labelText: 'أنواع المنتجات *',
+                          prefixIcon: Icons.category_outlined,
+                          validator: (val) => val == null || val.trim().isEmpty ? 'حقل مطلوب' : null,
                         ),
-                        SizedBox(height: 8),
-                        CategorySelector(
-                          availableCategories: _availableCategories,
-                          selectedCategories: _selectedCategories,
-                          onToggle: _toggleCategory,
-                        ),
-                        SizedBox(height: 24),
-                        Text(
-                          'إرفاق السجل التجاري (PDF)',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: 8),
-                        DocumentUploader(
-                          uploadedFileName: _uploadedFileName,
-                          onTap: _simulateFileUpload,
-                        ),
-                        SizedBox(height: 40),
-                        PrimaryButton(
-                          text: 'إرسال طلب التوثيق',
-                          onPressed: () => _submit(context),
-                        ),
-                        SizedBox(height: 24),
                       ],
-                    ),
+
+                      const SizedBox(height: 24),
+                      const Divider(),
+                      const SizedBox(height: 16),
+
+                      Text(
+                        'بيانات المؤسسة الإضافية',
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: theme.colorScheme.primary),
+                        textAlign: TextAlign.right,
+                      ),
+                      const SizedBox(height: 16),
+
+                      CustomTextField(
+                        controller: _bioController,
+                        labelText: 'نبذة عن الشركة *',
+                        prefixIcon: Icons.description_outlined,
+                        maxLines: 3,
+                        validator: (val) => val == null || val.trim().isEmpty ? 'حقل مطلوب' : null,
+                      ),
+                      const SizedBox(height: 16),
+
+                      CustomTextField(
+                        controller: _establishedYearController,
+                        labelText: 'سنة التأسيس *',
+                        prefixIcon: Icons.calendar_today_outlined,
+                        keyboardType: TextInputType.number,
+                        validator: (val) => val == null || val.trim().isEmpty ? 'حقل مطلوب' : null,
+                      ),
+                      const SizedBox(height: 16),
+
+                      CustomTextField(
+                        controller: _minOrderController,
+                        labelText: 'الحد الأدنى للطلب *',
+                        prefixIcon: Icons.shopping_basket_outlined,
+                        keyboardType: TextInputType.number,
+                        validator: (val) => val == null || val.trim().isEmpty ? 'حقل مطلوب' : null,
+                      ),
+                      const SizedBox(height: 16),
+
+                      CustomTextField(
+                        controller: _countriesController,
+                        labelText: 'الدول التي يتم التوريد لها (اختياري)',
+                        prefixIcon: Icons.public_outlined,
+                      ),
+                      const SizedBox(height: 16),
+
+                      CustomTextField(
+                        controller: _websiteController,
+                        labelText: 'موقع إلكتروني (اختياري)',
+                        prefixIcon: Icons.language_outlined,
+                        keyboardType: TextInputType.url,
+                      ),
+
+                      const SizedBox(height: 32),
+
+                      PrimaryButton(
+                        text: 'متابعة',
+                        onPressed: _submit,
+                        suffixIcon: Icons.arrow_forward_rounded,
+                      ),
+                    ],
                   ),
                 ),
               ),

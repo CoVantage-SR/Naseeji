@@ -62,6 +62,8 @@ class RegistrationController extends _$RegistrationController {
     required String email,
     required String phone,
     required String password,
+    required String governorate,
+    required String city,
   }) {
     state = state.copyWith(
       data: state.data.copyWith(
@@ -69,6 +71,8 @@ class RegistrationController extends _$RegistrationController {
         email: email,
         phone: phone,
         password: password,
+        governorate: governorate,
+        city: city,
       ),
     );
   }
@@ -85,6 +89,34 @@ class RegistrationController extends _$RegistrationController {
         commercialRegistry: commercialRegistry,
         taxNumber: taxNumber,
         categories: categories,
+      ),
+    );
+  }
+
+  void updateBusinessDetails({
+    required List<String> specializations,
+    required String factoryType,
+    required String employeeCount,
+    required String productionCapacity,
+    required String productTypes,
+    required String companyBio,
+    required String establishedYear,
+    required String minOrderValue,
+    required String supplyCountries,
+    required String website,
+  }) {
+    state = state.copyWith(
+      data: state.data.copyWith(
+        categories: specializations,
+        factoryType: factoryType,
+        employeeCount: employeeCount,
+        productionCapacity: productionCapacity,
+        productTypes: productTypes,
+        companyBio: companyBio,
+        establishedYear: establishedYear,
+        minOrderValue: minOrderValue,
+        supplyCountries: supplyCountries,
+        website: website,
       ),
     );
   }
@@ -130,7 +162,7 @@ class RegistrationController extends _$RegistrationController {
       return false;
     }
   }
-  
+
   void resetSuccess() {
     state = state.copyWith(isSuccess: false);
   }

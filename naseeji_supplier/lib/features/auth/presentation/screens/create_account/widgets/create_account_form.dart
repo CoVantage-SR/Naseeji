@@ -253,24 +253,12 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
           email: email,
           phone: phone,
           password: _passwordController.text,
+          governorate: _selectedGovernorate ?? '',
+          city: _selectedCity ?? '',
         );
 
-    // Call submit / send OTP
-    final success = await ref.read(registrationControllerProvider.notifier).sendOtp();
     if (mounted) {
-      if (success) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('تم حفظ البيانات بنجاح.'),
-            backgroundColor: Colors.green,
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
-        context.push('/verify-otp');
-      } else {
-        final errorMsg = ref.read(registrationControllerProvider).errorMessage ?? '';
-        _handleNetworkError(errorMsg);
-      }
+      context.push('/supplier-registration');
     }
   }
 
@@ -316,38 +304,7 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
     );
   }
 
-  // Network Error Dialog
-  void _handleNetworkError(String error) {
-    String message = 'حصل خطأ غير متوقع.';
-    if (error.contains('SocketException') || error.contains('No Internet') || error.contains('connection')) {
-      message = 'مفيش اتصال بالإنترنت.';
-    } else if (error.contains('Server') || error.contains('500')) {
-      message = 'حصلت مشكلة في السيرفر. حاول مرة تانية.';
-    } else if (error.contains('Timeout') || error.contains('timeout')) {
-      message = 'انتهت مهلة الاتصال.';
-    }
 
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('خطأ في الاتصال', textAlign: TextAlign.right),
-        content: Text(message, textAlign: TextAlign.right),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(ctx);
-              _submit(); // Retry
-            },
-            child: const Text('إعادة المحاولة'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text('إلغاء'),
-          ),
-        ],
-      ),
-    );
-  }
 
   // Clickable Terms Dialog
   void _showTermsDialog(BuildContext context, String title, String content) {
@@ -737,7 +694,7 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            _showTermsDialog(context, 'الشروط والأحكام', 'هنا نص الشروط والأحكام الخاصة بمنصة نسيجي للتوريد...');
+                            context.push('/terms');
                           },
                       ),
                       const TextSpan(text: ' و '),
@@ -750,7 +707,7 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            _showTermsDialog(context, 'سياسة الخصوصية', 'هنا نص سياسة الخصوصية الخاصة بمنصة نسيجي للتوريد...');
+                            context.push('/privacy');
                           },
                       ),
                       const TextSpan(text: '.'),

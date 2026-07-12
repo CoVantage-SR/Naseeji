@@ -35,7 +35,7 @@ class SettingsTabView extends ConsumerWidget {
               RadioListTile<ThemeMode>(
                 value: ThemeMode.light,
                 groupValue: currentMode,
-                title: const Text('فاتح', textAlign: TextAlign.right),
+                title: const Text('☀ فاتح', textAlign: TextAlign.right),
                 onChanged: (mode) {
                   if (mode != null) {
                     ref.read(themeControllerProvider.notifier).setThemeMode(mode);
@@ -46,7 +46,7 @@ class SettingsTabView extends ConsumerWidget {
               RadioListTile<ThemeMode>(
                 value: ThemeMode.dark,
                 groupValue: currentMode,
-                title: const Text('داكن', textAlign: TextAlign.right),
+                title: const Text('🌙 داكن', textAlign: TextAlign.right),
                 onChanged: (mode) {
                   if (mode != null) {
                     ref.read(themeControllerProvider.notifier).setThemeMode(mode);
@@ -57,7 +57,7 @@ class SettingsTabView extends ConsumerWidget {
               RadioListTile<ThemeMode>(
                 value: ThemeMode.system,
                 groupValue: currentMode,
-                title: const Text('زي إعدادات الموبايل', textAlign: TextAlign.right),
+                title: const Text('📱 حسب إعدادات الجهاز', textAlign: TextAlign.right),
                 onChanged: (mode) {
                   if (mode != null) {
                     ref.read(themeControllerProvider.notifier).setThemeMode(mode);

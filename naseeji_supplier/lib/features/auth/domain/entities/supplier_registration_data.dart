@@ -19,6 +19,19 @@ class SupplierRegistrationData {
   final List<String> categories;
   final String? commercialRegistryFilePath;
 
+  // New Fields for Step 4 & Step 5
+  final String governorate;
+  final String city;
+  final String factoryType;
+  final String employeeCount;
+  final String productionCapacity;
+  final String productTypes;
+  final String companyBio;
+  final String establishedYear;
+  final String minOrderValue;
+  final String supplyCountries;
+  final String website;
+
   const SupplierRegistrationData({
     this.supplierType,
     this.fullName = '',
@@ -30,6 +43,17 @@ class SupplierRegistrationData {
     this.taxNumber = '',
     this.categories = const [],
     this.commercialRegistryFilePath,
+    this.governorate = '',
+    this.city = '',
+    this.factoryType = '',
+    this.employeeCount = '',
+    this.productionCapacity = '',
+    this.productTypes = '',
+    this.companyBio = '',
+    this.establishedYear = '',
+    this.minOrderValue = '',
+    this.supplyCountries = '',
+    this.website = '',
   });
 
   SupplierRegistrationData copyWith({
@@ -43,6 +67,17 @@ class SupplierRegistrationData {
     String? taxNumber,
     List<String>? categories,
     String? commercialRegistryFilePath,
+    String? governorate,
+    String? city,
+    String? factoryType,
+    String? employeeCount,
+    String? productionCapacity,
+    String? productTypes,
+    String? companyBio,
+    String? establishedYear,
+    String? minOrderValue,
+    String? supplyCountries,
+    String? website,
   }) {
     return SupplierRegistrationData(
       supplierType: supplierType ?? this.supplierType,
@@ -55,6 +90,17 @@ class SupplierRegistrationData {
       taxNumber: taxNumber ?? this.taxNumber,
       categories: categories ?? this.categories,
       commercialRegistryFilePath: commercialRegistryFilePath ?? this.commercialRegistryFilePath,
+      governorate: governorate ?? this.governorate,
+      city: city ?? this.city,
+      factoryType: factoryType ?? this.factoryType,
+      employeeCount: employeeCount ?? this.employeeCount,
+      productionCapacity: productionCapacity ?? this.productionCapacity,
+      productTypes: productTypes ?? this.productTypes,
+      companyBio: companyBio ?? this.companyBio,
+      establishedYear: establishedYear ?? this.establishedYear,
+      minOrderValue: minOrderValue ?? this.minOrderValue,
+      supplyCountries: supplyCountries ?? this.supplyCountries,
+      website: website ?? this.website,
     );
   }
 }
