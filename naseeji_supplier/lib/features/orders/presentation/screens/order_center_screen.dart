@@ -270,7 +270,7 @@ class _OrderCenterScreenState extends ConsumerState<OrderCenterScreen> with Sing
         date: '2026-07-03',
         time: '12:15 م',
         user: 'مصنع الأقمشة المتطور',
-        notes: 'تم تثبيت السعر النهائي على 12.00 ريال/متر.',
+        notes: 'تم تثبيت السعر النهائي على 13.50 ريال/متر.',
         isCompleted: true,
       ),
       const TimelineStepData(
