@@ -73,7 +73,7 @@ class QuickActionsGrid extends StatelessWidget {
               label: 'التقارير',
               backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
               iconColor: Theme.of(context).colorScheme.onSurfaceVariant,
-              onTap: () => context.push('/analytics'),
+              onTap: () => context.push('/reports'),
             ),
           ],
         ),

@@ -164,11 +164,11 @@ class NavigationDrawerView extends ConsumerWidget {
                   DrawerItem(
                     icon: Icons.analytics_outlined,
                     title: 'التقارير والإحصائيات',
-                    path: '/analytics',
+                    path: '/reports',
                     currentRoute: currentRoute,
                     onTap: () {
                       Navigator.pop(context);
-                      context.go('/analytics');
+                      context.go('/reports');
                     },
                   ),
                   DrawerItem(
