@@ -88,7 +88,13 @@ class _OrderCenterScreenState extends ConsumerState<OrderCenterScreen> with Sing
         ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
-          onPressed: () => context.pop(),
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go('/orders');
+            }
+          },
         ),
         bottom: TabBar(
           controller: _tabController,

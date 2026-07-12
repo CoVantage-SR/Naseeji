@@ -438,7 +438,13 @@ class RfqDetailsBottomBar extends StatelessWidget {
               ),
               child: IconButton(
                 icon: const Icon(Icons.close, color: AppColors.error),
-                onPressed: () => context.pop(),
+                onPressed: () {
+                  if (context.canPop()) {
+                    context.pop();
+                  } else {
+                    context.go('/orders/order-center?rfqId=$rfqId');
+                  }
+                },
               ),
             ),
             SizedBox(width: 10),

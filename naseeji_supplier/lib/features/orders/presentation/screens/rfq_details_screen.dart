@@ -46,7 +46,13 @@ class RfqDetailsScreen extends ConsumerWidget {
             color: AppColors.onSurfaceVariant,
             size: 20,
           ),
-          onPressed: () => context.pop(),
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go('/orders/order-center?rfqId=$rfqId');
+            }
+          },
         ),
         actions: [
           IconButton(

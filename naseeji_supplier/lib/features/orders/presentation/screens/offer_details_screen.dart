@@ -21,7 +21,13 @@ class OfferDetailsScreen extends ConsumerWidget {
         elevation: 0,
         leading: IconButton(
           icon: Icon(Icons.close, color: AppColors.onSurfaceVariant),
-          onPressed: () => context.pop(),
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go('/orders/order-center?rfqId=$rfqId');
+            }
+          },
         ),
         actions: [
           IconButton(

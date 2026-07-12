@@ -338,7 +338,13 @@ class OfferPreviewBottomBar extends StatelessWidget {
             SizedBox(width: 12),
             Expanded(
               child: OutlinedButton(
-                onPressed: () => context.pop(),
+                onPressed: () {
+                  if (context.canPop()) {
+                    context.pop();
+                  } else {
+                    context.go('/orders');
+                  }
+                },
                 style: OutlinedButton.styleFrom(
                   foregroundColor: const Color(0xFF0040E0),
                   side: const BorderSide(color: Color(0xFF0040E0), width: 1),

@@ -30,7 +30,13 @@ class FinalAgreementScreen extends ConsumerWidget {
         ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
-          onPressed: () => context.pop(),
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go('/orders/order-center?rfqId=$rfqId');
+            }
+          },
         ),
         actions: [
           IconButton(
@@ -113,7 +119,13 @@ class FinalAgreementScreen extends ConsumerWidget {
                     children: [
                       Expanded(
                         child: OutlinedButton(
-                          onPressed: () => context.pop(),
+                          onPressed: () {
+                            if (context.canPop()) {
+                              context.pop();
+                            } else {
+                              context.go('/orders/order-center?rfqId=$rfqId');
+                            }
+                          },
                           style: OutlinedButton.styleFrom(
                             side: const BorderSide(color: AppColors.outline),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),

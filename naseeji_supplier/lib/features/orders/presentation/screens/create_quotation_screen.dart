@@ -148,7 +148,13 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
         ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
-          onPressed: () => context.pop(),
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go('/orders/order-center?rfqId=${widget.rfqId}');
+            }
+          },
         ),
         actions: [
           TextButton(
@@ -877,7 +883,11 @@ class _CreateQuotationScreenState extends ConsumerState<CreateQuotationScreen> {
             onPressed: () {
               Navigator.pop(context); // Pop dialog
               if (convId != null) {
-                context.pop(); // Go back to chat screen
+                if (context.canPop()) {
+                  context.pop(); // Go back to chat screen
+                } else {
+                  context.go('/orders/chat?rfqId=${widget.rfqId}');
+                }
               } else {
                 context.go('/orders'); // Go back to orders
               }
