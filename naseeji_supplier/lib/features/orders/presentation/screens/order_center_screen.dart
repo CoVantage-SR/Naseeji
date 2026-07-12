@@ -156,10 +156,6 @@ class _OrderCenterScreenState extends ConsumerState<OrderCenterScreen> with Sing
           _buildB2BAnalyticsCard(),
           SizedBox(height: 16),
 
-          // Action: Repeat Order
-          _buildRepeatOrderCard(),
-          SizedBox(height: 16),
-
           // Embedded RFQ Specs Summary Card
           Text('مواصفات طلب المشتري الأصلية', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
           SizedBox(height: 12),
@@ -204,17 +200,13 @@ class _OrderCenterScreenState extends ConsumerState<OrderCenterScreen> with Sing
           SizedBox(height: 12),
           const Divider(height: 1, color: Color(0xFFF1F1F5)),
           SizedBox(height: 14),
-          _buildOverviewRow('زمن المفاوضات المالية', 'ساعتان و15 دقيقة'),
+          _buildOverviewRow('زمن المفاوضات', 'ساعتان و15 دقيقة'),
           SizedBox(height: 8),
-          _buildOverviewRow('عدد مراجعات العرض المتبادلة', '3 مراجعات مقترحة'),
+          _buildOverviewRow('مراجعات العرض', '3 مراجعات مقترحة'),
           SizedBox(height: 8),
-          _buildOverviewRow('زمن إصدار الموافقة للمصنع', 'أقل من ساعة'),
+          _buildOverviewRow('زمن الشحن والتسليم', '2 يوم عمل'),
           SizedBox(height: 8),
-          _buildOverviewRow('مدة إنتاج الطلبية الفعلي', '5 أيام عمل'),
-          SizedBox(height: 8),
-          _buildOverviewRow('زمن الشحن اللوجستي والتسليم', '2 يوم عمل'),
-          SizedBox(height: 8),
-          _buildOverviewRow('تأخير السداد المالي للضمان', 'تلقائي فوري (0 يوم delay)'),
+          _buildOverviewRow('تأخير السداد', 'تلقائي فوري (0 يوم delay)'),
           SizedBox(height: 14),
           const Divider(height: 1, color: Color(0xFFF1F1F5)),
           SizedBox(height: 14),
@@ -225,7 +217,7 @@ class _OrderCenterScreenState extends ConsumerState<OrderCenterScreen> with Sing
                 '7 أيام و 3 ساعات',
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Color(0xFF006B5F)),
               ),
-              Text('إجمالي دورة حياة الطلب (Cycle Time)', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+              Text('دورة حياة الطلب', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
             ],
           ),
         ],
@@ -233,72 +225,6 @@ class _OrderCenterScreenState extends ConsumerState<OrderCenterScreen> with Sing
     );
   }
 
-  Widget _buildRepeatOrderCard() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE2E1EF)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Text('إعادة طلب المنتجات (Repeat Order)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-          SizedBox(height: 4),
-          Text('نسخ تفاصيل هذا الطلب بالكامل لإنشاء طلب جديد بشكل فوري.', style: TextStyle(fontSize: 10, color: AppColors.outline)),
-          SizedBox(height: 14),
-          ElevatedButton.icon(
-            onPressed: () => _showRepeatOrderDialog(context),
-            icon: const Icon(Icons.replay_rounded, size: 16, color: Colors.white),
-            label: Text('تكرار هذا الطلب الآن', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white)),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF0040E0),
-              elevation: 0,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              minimumSize: const Size(double.infinity, 44),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showRepeatOrderDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Text('تكرار طلب الشراء', textAlign: TextAlign.center, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text('سيتم نسخ البيانات التالية وتكرارها:', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
-            SizedBox(height: 10),
-            Text('• الخامات: قطن 100% طبيعي (5000 متر)', style: TextStyle(fontSize: 11)),
-            Text('• الوجهة: مستودعات الرياض الصناعية', style: TextStyle(fontSize: 11)),
-            Text('• طريقة السداد: تحويل بنكي ضامن', style: TextStyle(fontSize: 11)),
-            SizedBox(height: 12),
-            Text('هل ترغب في الانتقال إلى صفحة المراجعة والتعديل قبل الإرسال؟', style: TextStyle(fontSize: 11, color: AppColors.outline), textAlign: TextAlign.end),
-          ],
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: Text('إلغاء')),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              context.go('/orders');
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم تكرار الطلب وفتح المسودة للمراجعة')));
-            },
-            style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF0040E0), foregroundColor: Colors.white),
-            child: Text('تكرار ومراجعة'),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _buildTimelineTab() {
     final mockTimelineSteps = [

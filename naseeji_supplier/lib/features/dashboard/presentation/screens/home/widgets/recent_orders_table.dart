@@ -41,10 +41,7 @@ class RecentOrdersTable extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 16.0,
-              vertical: 12.0,
-            ),
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -71,6 +68,7 @@ class RecentOrdersTable extends StatelessWidget {
                     ),
                   ),
                 ),
+                
                 Expanded(
                   flex: 2,
                   child: Text(
@@ -134,7 +132,9 @@ class RecentOrdersTable extends StatelessWidget {
                             order['id']!,
                             style: TextStyle(
                               fontSize: 10,
-                              color: Theme.of(context).colorScheme.onSurfaceVariant,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onSurfaceVariant,
                             ),
                           ),
                         ],
@@ -169,17 +169,23 @@ class RecentOrdersTable extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         child: Container(
                           padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
+                            horizontal: 20,
+                            vertical: 7,
                           ),
                           decoration: BoxDecoration(
                             color: isDelivered
-                                ? AppColors.primaryContainer.withValues(
-                                    alpha: 0.1,
-                                  )
-                                : AppColors.secondaryContainer.withValues(
-                                    alpha: 0.1,
-                                  ),
+                                ? const Color.fromARGB(
+                                    255,
+                                    17,
+                                    66,
+                                    246,
+                                  ).withValues(alpha: 0.1)
+                                : const Color.fromARGB(
+                                    255,
+                                    22,
+                                    142,
+                                    52,
+                                  ).withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
@@ -187,9 +193,9 @@ class RecentOrdersTable extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 9,
                               fontWeight: FontWeight.bold,
-                              color: isDelivered
-                                  ? AppColors.primary
-                                  : AppColors.secondary,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onSurfaceVariant,
                             ),
                           ),
                         ),
