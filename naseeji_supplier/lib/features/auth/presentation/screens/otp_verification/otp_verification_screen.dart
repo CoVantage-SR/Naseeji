@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import 'package:naseeji_supplier/core/theme/app_theme.dart';
 import 'package:naseeji_supplier/core/widgets/general_widgets.dart';
+import 'package:naseeji_supplier/features/auth/presentation/controllers/auth_controller.dart';
 import 'package:naseeji_supplier/features/auth/presentation/controllers/registration_controller.dart';
+import 'package:naseeji_supplier/core/session/session_tracker.dart';
 import 'widgets/otp_pin_fields.dart';
 import 'widgets/otp_timer.dart';
 
@@ -59,7 +61,27 @@ class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
     final success = await ref.read(registrationControllerProvider.notifier).verifyOtp(code);
     if (mounted) {
       if (success) {
-        context.push('/supplier-registration');
+        // Finalize registration and submit to server
+        final regSuccess = await ref.read(registrationControllerProvider.notifier).submitSupplierRegistration();
+        if (mounted) {
+          if (regSuccess) {
+            // Start user session
+            ref.read(sessionTrackerProvider.notifier).startSession("100");
+            
+            // Log in the user in the AuthController
+            ref.read(authControllerProvider.notifier).login(
+              ref.read(registrationControllerProvider).data.email,
+              "DummyPassword123",
+            );
+            
+            context.go('/home');
+          } else {
+            final errorMsg = ref.read(registrationControllerProvider).errorMessage ?? 'فشل إكمال التسجيل';
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(errorMsg), backgroundColor: AppColors.error),
+            );
+          }
+        }
       } else {
         final errorMsg = ref.read(registrationControllerProvider).errorMessage ?? 'رمز التحقق غير صحيح';
         ScaffoldMessenger.of(context).showSnackBar(

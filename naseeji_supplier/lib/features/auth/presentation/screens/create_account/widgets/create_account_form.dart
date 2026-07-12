@@ -257,6 +257,13 @@ class _CreateAccountFormState extends ConsumerState<CreateAccountForm> {
           city: _selectedCity ?? '',
         );
 
+    ref.read(registrationControllerProvider.notifier).updateCompanyDetails(
+          companyName: _companyController.text.trim(),
+          commercialRegistry: '',
+          taxNumber: '',
+          categories: const [],
+        );
+
     if (mounted) {
       context.push('/supplier-registration');
     }

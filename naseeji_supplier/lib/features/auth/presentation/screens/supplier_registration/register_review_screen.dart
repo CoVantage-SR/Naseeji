@@ -6,12 +6,13 @@ import 'package:naseeji_supplier/core/theme/app_theme.dart';
 import 'package:naseeji_supplier/core/widgets/general_widgets.dart';
 import 'package:naseeji_supplier/features/auth/domain/entities/supplier_registration_data.dart';
 import 'package:naseeji_supplier/features/auth/presentation/controllers/registration_controller.dart';
+import 'package:naseeji_supplier/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:naseeji_supplier/core/session/session_tracker.dart';
 
 class RegisterReviewScreen extends ConsumerWidget {
   const RegisterReviewScreen({super.key});
 
   Future<void> _confirmAndSubmit(BuildContext context, WidgetRef ref) async {
-    // Submit registration details and send OTP
     final success = await ref.read(registrationControllerProvider.notifier).sendOtp();
     if (context.mounted) {
       if (success) {
@@ -40,7 +41,6 @@ class RegisterReviewScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(registrationControllerProvider);
     final data = state.data;
-    final theme = Theme.of(context);
 
     String getAccountTypeLabel(SupplierType? type) {
       if (type == SupplierType.supplier) return 'مورد خامات ومستلزمات';
@@ -53,6 +53,7 @@ class RegisterReviewScreen extends ConsumerWidget {
       data: AppTheme.darkTheme,
       child: Builder(
         builder: (context) {
+          final theme = Theme.of(context);
           return Scaffold(
             appBar: AppBar(
               title: const Text(
@@ -139,43 +140,58 @@ class RegisterReviewScreen extends ConsumerWidget {
 
                             // Data review card
                             Container(
-                              padding: const EdgeInsets.all(16),
+                              padding: const EdgeInsets.all(20),
                               decoration: BoxDecoration(
-                                color: theme.colorScheme.surfaceContainer,
-                                borderRadius: BorderRadius.circular(16),
+                                color: const Color(0xFF1E1E2E), // Solid dark color
+                                borderRadius: BorderRadius.circular(20),
                                 border: Border.all(
-                                  color: theme.colorScheme.outlineVariant.withValues(alpha: 0.3),
+                                  color: theme.colorScheme.outlineVariant.withValues(alpha: 0.2),
+                                  width: 1.5,
                                 ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.3),
+                                    blurRadius: 15,
+                                    offset: const Offset(0, 8),
+                                  ),
+                                ],
                               ),
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
-                                  _buildReviewRow('نوع الحساب', getAccountTypeLabel(data.supplierType)),
-                                  const Divider(height: 20),
-                                  _buildReviewRow('اسم الشركة', data.companyName),
-                                  const Divider(height: 20),
-                                  _buildReviewRow('اسم المسؤول', data.fullName),
-                                  const Divider(height: 20),
-                                  _buildReviewRow('رقم الهاتف', data.phone),
-                                  const Divider(height: 20),
-                                  _buildReviewRow('البريد الإلكتروني', data.email),
-                                  const Divider(height: 20),
-                                  _buildReviewRow('المحافظة', data.governorate),
-                                  const Divider(height: 20),
-                                  _buildReviewRow('المدينة', data.city),
-                                  const Divider(height: 20),
+                                  _buildSectionHeader(theme, 'بيانات الحساب الأساسية'),
+                                  const SizedBox(height: 12),
+                                  _buildReviewRow(theme, Icons.badge_outlined, 'نوع الحساب', getAccountTypeLabel(data.supplierType)),
+                                  _buildDivider(theme),
+                                  _buildReviewRow(theme, Icons.person_outline, 'اسم المسؤول', data.fullName),
+                                  _buildDivider(theme),
+                                  _buildReviewRow(theme, Icons.phone_outlined, 'رقم الهاتف', data.phone),
+                                  _buildDivider(theme),
+                                  _buildReviewRow(theme, Icons.email_outlined, 'البريد الإلكتروني', data.email),
+                                  _buildDivider(theme),
+                                  _buildReviewRow(theme, Icons.map_outlined, 'المحافظة', data.governorate),
+                                  _buildDivider(theme),
+                                  _buildReviewRow(theme, Icons.location_city_outlined, 'المدينة', data.city),
+                                  
+                                  const SizedBox(height: 24),
+                                  _buildSectionHeader(theme, 'بيانات المنشأة والتجارة'),
+                                  const SizedBox(height: 12),
+                                  _buildReviewRow(theme, Icons.business_outlined, 'اسم الشركة', data.companyName),
+                                  _buildDivider(theme),
+                                  
                                   if (data.supplierType == SupplierType.factoryUnit) ...[
-                                    _buildReviewRow('نوع المصنع', data.factoryType),
-                                    const Divider(height: 20),
-                                    _buildReviewRow('عدد العمال', data.employeeCount),
-                                    const Divider(height: 20),
-                                    _buildReviewRow('طاقة الإنتاجية', data.productionCapacity),
-                                    const Divider(height: 20),
-                                    _buildReviewRow('أنواع المنتجات', data.productTypes),
+                                    _buildReviewRow(theme, Icons.factory_outlined, 'نوع المصنع', data.factoryType),
+                                    _buildDivider(theme),
+                                    _buildReviewRow(theme, Icons.people_outline, 'عدد العمال', data.employeeCount),
+                                    _buildDivider(theme),
+                                    _buildReviewRow(theme, Icons.bolt_outlined, 'الطاقة الإنتاجية', data.productionCapacity),
+                                    _buildDivider(theme),
+                                    _buildReviewRow(theme, Icons.category_outlined, 'أنواع المنتجات', data.productTypes),
                                   ] else ...[
-                                    _buildReviewRow('التخصصات', data.categories.join('، ')),
+                                    _buildReviewRow(theme, Icons.category_outlined, 'التخصصات', data.categories.join('، ')),
                                   ],
-                                  const Divider(height: 20),
-                                  _buildReviewRow('نبذة الشركة', data.companyBio),
+                                  _buildDivider(theme),
+                                  _buildReviewRow(theme, Icons.description_outlined, 'نبذة الشركة', data.companyBio),
                                 ],
                               ),
                             ),
@@ -221,25 +237,71 @@ class RegisterReviewScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildReviewRow(String label, String value) {
+  Widget _buildSectionHeader(ThemeData theme, String title) {
+    return Row(
+      children: [
+        Expanded(child: Divider(color: theme.colorScheme.primary.withValues(alpha: 0.3), thickness: 1)),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          child: Text(
+            title,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              color: theme.colorScheme.primary,
+              letterSpacing: 0.5,
+            ),
+          ),
+        ),
+        Expanded(child: Divider(color: theme.colorScheme.primary.withValues(alpha: 0.3), thickness: 1)),
+      ],
+    );
+  }
+
+  Widget _buildDivider(ThemeData theme) {
+    return Divider(
+      height: 24,
+      color: theme.colorScheme.outlineVariant.withValues(alpha: 0.1),
+    );
+  }
+
+  Widget _buildReviewRow(ThemeData theme, IconData icon, String label, String value) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Value on the Left
         Expanded(
           flex: 2,
           child: Text(
             value.isEmpty ? '—' : value,
             textAlign: TextAlign.left,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 13,
+              color: Colors.white,
+            ),
           ),
         ),
         const SizedBox(width: 16),
-        Expanded(
-          child: Text(
-            label,
-            textAlign: TextAlign.right,
-            style: const TextStyle(color: AppColors.outline, fontSize: 13),
-          ),
+        // Label on the Right
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              label,
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+                fontSize: 13,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Icon(
+              icon,
+              size: 16,
+              color: theme.colorScheme.primary.withValues(alpha: 0.8),
+            ),
+          ],
         ),
       ],
     );

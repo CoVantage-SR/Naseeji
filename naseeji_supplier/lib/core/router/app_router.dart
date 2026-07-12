@@ -161,7 +161,12 @@ GoRouter goRouter(GoRouterRef ref) {
       
       final isLoggingIn = state.uri.path == '/login' ||
                           state.uri.path == '/register' ||
-                          state.uri.path == '/otp-verification' ||
+                          state.uri.path == '/verify-otp' ||
+                          state.uri.path == '/supplier-registration' ||
+                          state.uri.path == '/register-review' ||
+                          state.uri.path == '/google-complete-registration' ||
+                          state.uri.path == '/terms' ||
+                          state.uri.path == '/privacy' ||
                           state.uri.path == '/onboarding' ||
                           state.uri.path == '/supplier-type' ||
                           state.uri.path == '/';
