@@ -293,7 +293,7 @@ class OrdersRepositoryImpl implements OrdersRepository {
       paymentTerms: '50% مقدم، 50% عند الاستلام',
       deliveryTime: '7 أيام عمل',
       shippingMethod: 'شحن بري سريع',
-      date: '06 يوليو 2026',
+      date: '03 يوليو 2026',
       version: 'v3.0',
     );
   }
@@ -305,8 +305,8 @@ class OrdersRepositoryImpl implements OrdersRepository {
       QuotationRevision(
         versionNumber: 3,
         createdBy: 'مورد نسيجي',
-        date: '2026-07-06',
-        time: '11:00 ص',
+        date: '2026-07-03',
+        time: '12:15 م',
         price: 12.00,
         notes: 'تمت الموافقة على السعر النهائي مع الخصم الإضافي.',
         status: 'مقبول',
@@ -314,8 +314,8 @@ class OrdersRepositoryImpl implements OrdersRepository {
       QuotationRevision(
         versionNumber: 2,
         createdBy: 'مصنع الأقمشة المتطور',
-        date: '2026-07-05',
-        time: '04:30 م',
+        date: '2026-07-03',
+        time: '11:15 ص',
         price: 13.50,
         notes: 'طلب خصم إضافي نظراً لحجم الطلب الكبير.',
         status: 'مرفوض',
@@ -323,8 +323,8 @@ class OrdersRepositoryImpl implements OrdersRepository {
       QuotationRevision(
         versionNumber: 1,
         createdBy: 'مورد نسيجي',
-        date: '2026-07-05',
-        time: '10:00 ص',
+        date: '2026-07-02',
+        time: '02:30 م',
         price: 15.00,
         notes: 'العرض المبدئي بناء على مواصفات طلب السعر.',
         status: 'مستبدل',

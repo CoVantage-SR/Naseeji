@@ -71,7 +71,19 @@ class _QuotationRevisionHistoryScreenState extends ConsumerState<QuotationRevisi
               // Compare Selector Panel
               if (history.length >= 2)
                 Container(
-                  color: Theme.of(context).colorScheme.surface,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surface,
+                    border: const Border(
+                      top: BorderSide(color: Color(0xFF0040E0), width: 2.5),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.08),
+                        blurRadius: 12,
+                        offset: const Offset(0, -4),
+                      ),
+                    ],
+                  ),
                   padding: const EdgeInsets.all(16),
                   child: SafeArea(
                     child: Column(
