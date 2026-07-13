@@ -9,8 +9,7 @@ abstract class Failure implements Exception {
 }
 
 class NetworkFailure extends Failure {
-  const NetworkFailure([String message = 'لا يوجد اتصال بالإنترنت. يرجى التحقق من الشبكة.'])
-      : super(message);
+  const NetworkFailure([super.message = 'لا يوجد اتصال بالإنترنت. يرجى التحقق من الشبكة.']);
 }
 
 class ServerFailure extends Failure {
@@ -22,8 +21,7 @@ class ServerFailure extends Failure {
 }
 
 class AuthFailure extends Failure {
-  const AuthFailure([String message = 'جلسة العمل انتهت أو غير صالحة. يرجى تسجيل الدخول مرة أخرى.'])
-      : super(message);
+  const AuthFailure([super.message = 'جلسة العمل انتهت أو غير صالحة. يرجى تسجيل الدخول مرة أخرى.']);
 }
 
 class ValidationFailure extends Failure {
@@ -35,8 +33,7 @@ class ValidationFailure extends Failure {
 }
 
 class UnexpectedFailure extends Failure {
-  const UnexpectedFailure([String message = 'حدث خطأ غير متوقع. يرجى المحاولة لاحقاً.'])
-      : super(message);
+  const UnexpectedFailure([super.message = 'حدث خطأ غير متوقع. يرجى المحاولة لاحقاً.']);
 }
 
 class ErrorHandler {
