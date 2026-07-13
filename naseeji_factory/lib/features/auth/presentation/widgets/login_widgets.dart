@@ -10,11 +10,12 @@ import '../../../../core/widgets/app_logo.dart';
 import '../providers/auth_provider.dart';
 
 class LoginHeaderWidget extends StatelessWidget {
-  const LoginHeaderWidget({super.key});
+  final double size;
+  const LoginHeaderWidget({super.key, this.size = 120});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: AppLogo(size: 120, showText: false));
+    return Center(child: AppLogo(size: size, showText: false));
   }
 }
 

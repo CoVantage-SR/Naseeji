@@ -59,6 +59,7 @@ class _FactoryInfoScreenState extends ConsumerState<FactoryInfoScreen> {
   @override
   Widget build(BuildContext context) {
     final regState = ref.watch(registrationProvider);
+    final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
 
     return Scaffold(
       appBar: AppBar(
@@ -67,52 +68,56 @@ class _FactoryInfoScreenState extends ConsumerState<FactoryInfoScreen> {
           onPressed: () => context.pop(),
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const StepIndicatorWidget(currentStep: 3, totalSteps: 3),
-                AppSpacing.hLG,
-                const FactoryInfoHeaderWidget(),
-                AppSpacing.hXL,
-                FactoryNameWidget(controller: _nameController),
-                AppSpacing.hMD,
-                OwnerNameWidget(controller: _ownerController),
-                AppSpacing.hMD,
-                GovernorateWidget(
-                  value: _selectedGov,
-                  onChanged: (val) {
-                    setState(() {
-                      _selectedGov = val;
-                    });
-                  },
-                ),
-                AppSpacing.hMD,
-                CityWidget(controller: _cityController),
-                AppSpacing.hMD,
-                EmployeesWidget(
-                  value: _selectedRange,
-                  onChanged: (val) {
-                    if (val != null) {
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const StepIndicatorWidget(currentStep: 3, totalSteps: 3),
+                  isKeyboardOpen ? AppSpacing.hSM : AppSpacing.hLG,
+                  FactoryInfoHeaderWidget(compact: isKeyboardOpen),
+                  isKeyboardOpen ? AppSpacing.hMD : AppSpacing.hXL,
+                  FactoryNameWidget(controller: _nameController),
+                  AppSpacing.hMD,
+                  OwnerNameWidget(controller: _ownerController),
+                  AppSpacing.hMD,
+                  GovernorateWidget(
+                    value: _selectedGov,
+                    onChanged: (val) {
                       setState(() {
-                        _selectedRange = val;
+                        _selectedGov = val;
                       });
-                    }
-                  },
-                ),
-                AppSpacing.hMD,
-                DescriptionWidget(controller: _descController),
-                AppSpacing.hXXL,
-                AppButton.primary(
-                  text: 'إرسال وإنشاء الرمز',
-                  isLoading: regState.isLoading,
-                  onPressed: _onContinue,
-                ),
-              ],
+                    },
+                  ),
+                  AppSpacing.hMD,
+                  CityWidget(controller: _cityController),
+                  AppSpacing.hMD,
+                  EmployeesWidget(
+                    value: _selectedRange,
+                    onChanged: (val) {
+                      if (val != null) {
+                        setState(() {
+                          _selectedRange = val;
+                        });
+                      }
+                    },
+                  ),
+                  AppSpacing.hMD,
+                  DescriptionWidget(controller: _descController),
+                  isKeyboardOpen ? AppSpacing.hLG : AppSpacing.hXXL,
+                  AppButton.primary(
+                    text: 'إرسال وإنشاء الرمز',
+                    isLoading: regState.isLoading,
+                    onPressed: _onContinue,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

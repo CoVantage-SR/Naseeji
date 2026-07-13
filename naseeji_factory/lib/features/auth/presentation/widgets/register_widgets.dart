@@ -7,7 +7,8 @@ import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/utils/validation.dart';
 
 class RegisterHeaderWidget extends StatelessWidget {
-  const RegisterHeaderWidget({super.key});
+  final bool compact;
+  const RegisterHeaderWidget({super.key, this.compact = false});
 
   @override
   Widget build(BuildContext context) {
@@ -16,17 +17,23 @@ class RegisterHeaderWidget extends StatelessWidget {
       children: [
         Text(
           'إنشاء حساب مصنع جديد',
-          style: context.textTheme.headlineMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+          style: compact
+              ? context.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                )
+              : context.textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
         ),
-        AppSpacing.hXS,
-        Text(
-          'سجل حسابك الأساسي للبدء في إعداد ملف المصنع الخاص بك.',
-          style: context.textTheme.bodyMedium?.copyWith(
-            color: AppColors.textSecondaryLight,
+        if (!compact) ...[
+          AppSpacing.hXS,
+          Text(
+            'سجل حسابك الأساسي للبدء في إعداد ملف المصنع الخاص بك.',
+            style: context.textTheme.bodyMedium?.copyWith(
+              color: AppColors.textSecondaryLight,
+            ),
           ),
-        ),
+        ],
       ],
     );
   }

@@ -63,6 +63,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -70,50 +72,54 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           onPressed: () => context.go('/login'),
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const StepIndicatorWidget(currentStep: 1, totalSteps: 3),
-                AppSpacing.hLG,
-                const RegisterHeaderWidget(),
-                AppSpacing.hXL,
-                PhoneFieldWidget(controller: _phoneController),
-                AppSpacing.hMD,
-                EmailFieldWidget(controller: _emailController),
-                AppSpacing.hMD,
-                // Stateful Password input for live strength calculation
-                AppPasswordField(
-                  labelText: 'كلمة المرور',
-                  controller: _passwordController,
-                ),
-                AppSpacing.hSM,
-                PasswordStrengthWidget(password: _passwordText),
-                AppSpacing.hMD,
-                ConfirmPasswordFieldWidget(
-                  controller: _confirmPasswordController,
-                  passwordController: _passwordController,
-                ),
-                AppSpacing.hMD,
-                TermsCheckboxWidget(
-                  onChanged: (val) {
-                    setState(() {
-                      _termsAccepted = val;
-                    });
-                  },
-                ),
-                AppSpacing.hXL,
-                AppButton.primary(
-                  text: 'متابعة',
-                  onPressed: _termsAccepted ? _onContinue : null,
-                ),
-                AppSpacing.hLG,
-                const AlreadyHaveAccountWidget(),
-              ],
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const StepIndicatorWidget(currentStep: 1, totalSteps: 3),
+                  isKeyboardOpen ? AppSpacing.hSM : AppSpacing.hLG,
+                  RegisterHeaderWidget(compact: isKeyboardOpen),
+                  isKeyboardOpen ? AppSpacing.hMD : AppSpacing.hXL,
+                  PhoneFieldWidget(controller: _phoneController),
+                  AppSpacing.hMD,
+                  EmailFieldWidget(controller: _emailController),
+                  AppSpacing.hMD,
+                  // Stateful Password input for live strength calculation
+                  AppPasswordField(
+                    labelText: 'كلمة المرور',
+                    controller: _passwordController,
+                  ),
+                  AppSpacing.hSM,
+                  PasswordStrengthWidget(password: _passwordText),
+                  AppSpacing.hMD,
+                  ConfirmPasswordFieldWidget(
+                    controller: _confirmPasswordController,
+                    passwordController: _passwordController,
+                  ),
+                  AppSpacing.hMD,
+                  TermsCheckboxWidget(
+                    onChanged: (val) {
+                      setState(() {
+                        _termsAccepted = val;
+                      });
+                    },
+                  ),
+                  AppSpacing.hXL,
+                  AppButton.primary(
+                    text: 'متابعة',
+                    onPressed: _termsAccepted ? _onContinue : null,
+                  ),
+                  AppSpacing.hLG,
+                  const AlreadyHaveAccountWidget(),
+                ],
+              ),
             ),
           ),
         ),

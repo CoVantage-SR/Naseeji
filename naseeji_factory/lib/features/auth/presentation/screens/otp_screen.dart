@@ -27,6 +27,7 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
   Widget build(BuildContext context) {
     final otpState = ref.watch(otpVerificationProvider);
     final isLoading = otpState.status == OtpStatus.loading;
+    final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
 
     // Listen to verification success to login/route home
     ref.listen<OtpState>(otpVerificationProvider, (prev, next) {
@@ -44,34 +45,38 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
           onPressed: () => context.pop(),
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppSpacing.hLG,
-              const OtpHeaderWidget(),
-              AppSpacing.hXL,
-              OtpFieldWidget(
-                onCompleted: (code) {
-                  setState(() {
-                    _otpCode = code;
-                  });
-                },
-              ),
-              AppSpacing.hLG,
-              const OtpErrorWidget(),
-              AppSpacing.hLG,
-              const CountdownWidget(),
-              const ResendWidget(),
-              AppSpacing.hXXL,
-              AppButton.primary(
-                text: 'تأكيد الرمز',
-                isLoading: isLoading,
-                onPressed: _otpCode.length == 4 ? _onVerify : null,
-              ),
-            ],
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                isKeyboardOpen ? AppSpacing.hSM : AppSpacing.hLG,
+                const OtpHeaderWidget(),
+                isKeyboardOpen ? AppSpacing.hLG : AppSpacing.hXL,
+                OtpFieldWidget(
+                  onCompleted: (code) {
+                    setState(() {
+                      _otpCode = code;
+                    });
+                  },
+                ),
+                AppSpacing.hLG,
+                const OtpErrorWidget(),
+                AppSpacing.hLG,
+                const CountdownWidget(),
+                const ResendWidget(),
+                isKeyboardOpen ? AppSpacing.hLG : AppSpacing.hXXL,
+                AppButton.primary(
+                  text: 'تأكيد الرمز',
+                  isLoading: isLoading,
+                  onPressed: _otpCode.length == 4 ? _onVerify : null,
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -4,7 +4,8 @@ import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/extensions/context_extensions.dart';
 
 class FactoryInfoHeaderWidget extends StatelessWidget {
-  const FactoryInfoHeaderWidget({super.key});
+  final bool compact;
+  const FactoryInfoHeaderWidget({super.key, this.compact = false});
 
   @override
   Widget build(BuildContext context) {
@@ -13,17 +14,23 @@ class FactoryInfoHeaderWidget extends StatelessWidget {
       children: [
         Text(
           'بيانات المصنع',
-          style: context.textTheme.headlineMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+          style: compact
+              ? context.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                )
+              : context.textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
         ),
-        AppSpacing.hXS,
-        Text(
-          'أدخل تفاصيل المصنع لإكمال إنشاء الملف التجاري.',
-          style: context.textTheme.bodyMedium?.copyWith(
-            color: AppColors.textSecondaryLight,
+        if (!compact) ...[
+          AppSpacing.hXS,
+          Text(
+            'أدخل تفاصيل المصنع لإكمال إنشاء الملف التجاري.',
+            style: context.textTheme.bodyMedium?.copyWith(
+              color: AppColors.textSecondaryLight,
+            ),
           ),
-        ),
+        ],
       ],
     );
   }

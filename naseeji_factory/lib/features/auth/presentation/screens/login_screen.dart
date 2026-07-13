@@ -51,73 +51,79 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       );
     });
 
+    final isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
+
     return Scaffold(
-      body: Stack(
-        children: [
-          SafeArea(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 16.0,
-              ),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AppSpacing.hXXL,
-                    const LoginHeaderWidget(),
-                    AppSpacing.hXL,
-                    const LoginWelcomeWidget(),
-                    AppSpacing.hXL,
-                    EmailOrPhoneFieldWidget(
-                      controller: _emailOrPhoneController,
-                      validator: (val) {
-                        if (val == null || val.isEmpty) {
-                          return 'يرجى إدخال البريد الإلكتروني أو رقم الهاتف';
-                        }
-                        return null;
-                      },
-                    ),
-                    AppSpacing.hMD,
-                    PasswordFieldWidget(
-                      controller: _passwordController,
-                      validator: (val) {
-                        if (val == null || val.isEmpty) {
-                          return 'يرجى إدخال كلمة المرور';
-                        }
-                        return null;
-                      },
-                    ),
-                    AppSpacing.hSM,
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [RememberMeWidget(), ForgotPasswordWidget()],
-                    ),
-                    AppSpacing.hLG,
-                    const ValidationMessageWidget(),
-                    AppSpacing.hMD,
-                    LoginButtonWidget(onPressed: _onLogin),
-                    AppSpacing.hLG,
-                    Center(
-                      child: Text(
-                        'أو',
-                        style: Theme.of(
-                          context,
-                        ).textTheme.bodyMedium?.copyWith(color: Colors.grey),
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Stack(
+          children: [
+            SafeArea(
+              child: SingleChildScrollView(
+                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 16.0,
+                ),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      isKeyboardOpen ? AppSpacing.hMD : AppSpacing.hXXL,
+                      LoginHeaderWidget(size: isKeyboardOpen ? 70 : 120),
+                      isKeyboardOpen ? AppSpacing.hSM : AppSpacing.hXL,
+                      const LoginWelcomeWidget(),
+                      isKeyboardOpen ? AppSpacing.hMD : AppSpacing.hXL,
+                      EmailOrPhoneFieldWidget(
+                        controller: _emailOrPhoneController,
+                        validator: (val) {
+                          if (val == null || val.isEmpty) {
+                            return 'يرجى إدخال البريد الإلكتروني أو رقم الهاتف';
+                          }
+                          return null;
+                        },
                       ),
-                    ),
-                    AppSpacing.hLG,
-                    const GoogleLoginButtonWidget(),
-                    AppSpacing.hXL,
-                    const CreateAccountWidget(),
-                  ],
+                      AppSpacing.hMD,
+                      PasswordFieldWidget(
+                        controller: _passwordController,
+                        validator: (val) {
+                          if (val == null || val.isEmpty) {
+                            return 'يرجى إدخال كلمة المرور';
+                          }
+                          return null;
+                        },
+                      ),
+                      AppSpacing.hSM,
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [RememberMeWidget(), ForgotPasswordWidget()],
+                      ),
+                      AppSpacing.hLG,
+                      const ValidationMessageWidget(),
+                      AppSpacing.hMD,
+                      LoginButtonWidget(onPressed: _onLogin),
+                      AppSpacing.hLG,
+                      Center(
+                        child: Text(
+                          'أو',
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium?.copyWith(color: Colors.grey),
+                        ),
+                      ),
+                      AppSpacing.hLG,
+                      const GoogleLoginButtonWidget(),
+                      AppSpacing.hXL,
+                      const CreateAccountWidget(),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          const LoadingOverlayWidget(),
-        ],
+            const LoadingOverlayWidget(),
+          ],
+        ),
       ),
     );
   }
