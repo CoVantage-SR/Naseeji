@@ -39,7 +39,7 @@ class QuickStatisticsScreen extends ConsumerWidget {
                 crossAxisCount: 2,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
-                childAspectRatio: context.responsiveValue(mobile: 1.15, tablet: 1.5),
+                childAspectRatio: context.responsiveValue(mobile: 1.35, tablet: 1.5),
                 children: [
                   StatisticsCard(
                     label: 'إجمالي الطلبات',

@@ -94,7 +94,7 @@ class GreetingCardWidget extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: isDark
@@ -113,22 +113,22 @@ class GreetingCardWidget extends StatelessWidget {
         children: [
           Text(
             greeting,
-            style: context.textTheme.bodyMedium?.copyWith(
+            style: context.textTheme.bodySmall?.copyWith(
               color: AppColors.primary,
               fontWeight: FontWeight.bold,
             ),
           ),
-          AppSpacing.hXS,
+          const SizedBox(height: 4.0),
           Text(
             factoryName,
-            style: context.textTheme.headlineSmall?.copyWith(
+            style: context.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),
-          AppSpacing.hSM,
+          const SizedBox(height: 6.0),
           Text(
             'مرحباً بك في لوحة تحكم نسيجي. تابع عمليات التوريد والإنتاج الخاصة بمصنعك اليوم.',
-            style: context.textTheme.bodyMedium?.copyWith(
+            style: context.textTheme.bodySmall?.copyWith(
               color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
             ),
           ),
@@ -157,7 +157,7 @@ class FactorySummaryCardWidget extends StatelessWidget {
       crossAxisCount: context.responsiveValue(mobile: 2, tablet: 4).toInt(),
       crossAxisSpacing: 12,
       mainAxisSpacing: 12,
-      childAspectRatio: context.responsiveValue(mobile: 1.15, tablet: 1.4),
+      childAspectRatio: context.responsiveValue(mobile: 1.35, tablet: 1.4),
       children: [
         StatisticsCard(
           label: 'طلبات نشطة',
@@ -205,7 +205,7 @@ class QuickActionsWidget extends StatelessWidget {
           crossAxisCount: context.responsiveValue(mobile: 2, tablet: 4).toInt(),
           crossAxisSpacing: 12,
           mainAxisSpacing: 12,
-          childAspectRatio: 1.3,
+          childAspectRatio: context.responsiveValue(mobile: 1.35, tablet: 1.4),
           children: [
             QuickActionButtonWidget(
               title: 'إرسال طلب عرض سعر',

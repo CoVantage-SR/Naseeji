@@ -147,7 +147,7 @@ class StatisticsCard extends StatelessWidget {
 
     return PrimaryCard(
       onTap: onTap,
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -156,12 +156,12 @@ class StatisticsCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
                   color: color.withValues(alpha: isDark ? 0.2 : 0.1),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(icon, color: color, size: 20),
+                child: Icon(icon, color: color, size: 16),
               ),
               if (trendText != null)
                 Row(
@@ -170,7 +170,7 @@ class StatisticsCard extends StatelessWidget {
                     Icon(
                       trendPositive ? Icons.trending_up_rounded : Icons.trending_down_rounded,
                       color: trendPositive ? AppColors.success : AppColors.error,
-                      size: 14,
+                      size: 12,
                     ),
                     const SizedBox(width: 2),
                     Text(
@@ -178,16 +178,17 @@ class StatisticsCard extends StatelessWidget {
                       style: context.textTheme.labelSmall?.copyWith(
                         color: trendPositive ? AppColors.success : AppColors.error,
                         fontWeight: FontWeight.bold,
+                        fontSize: 9,
                       ),
                     ),
                   ],
                 ),
             ],
           ),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 6.0),
           Text(
             value,
-            style: context.textTheme.headlineMedium?.copyWith(
+            style: context.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -198,6 +199,7 @@ class StatisticsCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: context.textTheme.bodySmall?.copyWith(
               color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+              fontSize: 11,
             ),
           ),
         ],
@@ -228,24 +230,27 @@ class QuickActionCard extends StatelessWidget {
 
     return PrimaryCard(
       onTap: onTap,
-      padding: const EdgeInsets.all(12.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: color.withValues(alpha: isDark ? 0.2 : 0.08),
               borderRadius: AppRadius.rMD,
             ),
-            child: Icon(icon, color: color, size: 26),
+            child: Icon(icon, color: color, size: 20),
           ),
-          AppSpacing.hSM,
+          const SizedBox(height: 8.0),
           Text(
             title,
             textAlign: TextAlign.center,
-            style: context.textTheme.titleSmall?.copyWith(
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: context.textTheme.bodySmall?.copyWith(
               fontWeight: FontWeight.bold,
+              fontSize: 11,
             ),
           ),
         ],
