@@ -13,6 +13,10 @@ import '../../features/auth/presentation/screens/register_screen.dart';
 import '../../features/auth/presentation/screens/splash_screen.dart';
 import '../../features/chat/presentation/screens/chat_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/home/presentation/screens/notifications_screen.dart';
+import '../../features/home/presentation/screens/search_screen.dart';
+import '../../features/home/presentation/screens/quick_statistics_screen.dart';
+import '../../features/home/presentation/screens/mini_profile_screen.dart';
 import '../../features/orders/presentation/screens/orders_screen.dart';
 import '../../features/products/presentation/screens/products_screen.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
@@ -85,6 +89,30 @@ GoRouter appRouter(AppRouterRef ref) {
       GoRoute(
         path: '/chat',
         builder: (context, state) => const ChatScreen(),
+      ),
+      // Notifications
+      GoRoute(
+        path: '/notifications',
+        builder: (context, state) => const NotificationsScreen(),
+      ),
+      // Search
+      GoRoute(
+        path: '/search',
+        builder: (context, state) {
+          final type = state.uri.queryParameters['type'];
+          final favorites = state.uri.queryParameters['favorites'] == 'true';
+          return SearchScreen(initialType: type, onlyFavorites: favorites);
+        },
+      ),
+      // Quick Statistics
+      GoRoute(
+        path: '/statistics',
+        builder: (context, state) => const QuickStatisticsScreen(),
+      ),
+      // Mini Profile
+      GoRoute(
+        path: '/mini-profile',
+        builder: (context, state) => const MiniProfileScreen(),
       ),
 
       // Bottom Navigation Stateful Shell
