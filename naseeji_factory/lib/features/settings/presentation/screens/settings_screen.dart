@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/extensions/context_extensions.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -36,7 +35,7 @@ class SettingsScreen extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 6),
       child: ListTile(
         onTap: onTap,
-        leading: const Icon(icon, color: AppColors.primary),
+        leading: Icon(icon, color: AppColors.primary),
         title: Text(
           title,
           style: context.textTheme.bodyMedium?.copyWith(

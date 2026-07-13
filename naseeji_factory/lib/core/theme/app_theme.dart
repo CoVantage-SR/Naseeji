@@ -40,36 +40,36 @@ class AppTheme {
         displayColor: AppColors.textPrimaryLight,
         fontFamily: AppTypography.fontFamily,
       ),
-      cardTheme: CardTheme(
+      cardTheme: const CardThemeData(
         color: AppColors.surfaceLight,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: AppRadius.rMD,
-          side: const BorderSide(color: AppColors.borderLight, width: 1),
+          side: BorderSide(color: AppColors.borderLight, width: 1),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.surfaceLight,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        border: OutlineInputBorder(
+        border: const OutlineInputBorder(
           borderRadius: AppRadius.rMD,
-          borderSide: const BorderSide(color: AppColors.borderLight, width: 1),
+          borderSide: BorderSide(color: AppColors.borderLight, width: 1),
         ),
-        enabledBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderRadius: AppRadius.rMD,
-          borderSide: const BorderSide(color: AppColors.borderLight, width: 1),
+          borderSide: BorderSide(color: AppColors.borderLight, width: 1),
         ),
-        focusedBorder: OutlineInputBorder(
+        focusedBorder: const OutlineInputBorder(
           borderRadius: AppRadius.rMD,
-          borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+          borderSide: BorderSide(color: AppColors.primary, width: 1.5),
         ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderRadius: AppRadius.rMD,
-          borderSide: const BorderSide(color: AppColors.error, width: 1),
+          borderSide: BorderSide(color: AppColors.error, width: 1),
         ),
         labelStyle: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondaryLight),
-        hintStyle: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondaryLight.withOpacity(0.6)),
+        hintStyle: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondaryLight.withValues(alpha: 0.6)),
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.surfaceLight,
@@ -124,36 +124,36 @@ class AppTheme {
         displayColor: AppColors.textPrimaryDark,
         fontFamily: AppTypography.fontFamily,
       ),
-      cardTheme: CardTheme(
+      cardTheme: const CardThemeData(
         color: AppColors.surfaceDark,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: AppRadius.rMD,
-          side: const BorderSide(color: AppColors.borderDark, width: 1),
+          side: BorderSide(color: AppColors.borderDark, width: 1),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.surfaceDark,
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        border: OutlineInputBorder(
+        border: const OutlineInputBorder(
           borderRadius: AppRadius.rMD,
-          borderSide: const BorderSide(color: AppColors.borderDark, width: 1),
+          borderSide: BorderSide(color: AppColors.borderDark, width: 1),
         ),
-        enabledBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderRadius: AppRadius.rMD,
-          borderSide: const BorderSide(color: AppColors.borderDark, width: 1),
+          borderSide: BorderSide(color: AppColors.borderDark, width: 1),
         ),
-        focusedBorder: OutlineInputBorder(
+        focusedBorder: const OutlineInputBorder(
           borderRadius: AppRadius.rMD,
-          borderSide: const BorderSide(color: AppColors.primaryLight, width: 1.5),
+          borderSide: BorderSide(color: AppColors.primaryLight, width: 1.5),
         ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderRadius: AppRadius.rMD,
-          borderSide: const BorderSide(color: AppColors.error, width: 1),
+          borderSide: BorderSide(color: AppColors.error, width: 1),
         ),
         labelStyle: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondaryDark),
-        hintStyle: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondaryDark.withOpacity(0.6)),
+        hintStyle: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondaryDark.withValues(alpha: 0.6)),
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.surfaceDark,
