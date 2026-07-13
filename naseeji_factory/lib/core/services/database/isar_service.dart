@@ -1,6 +1,7 @@
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'models/app_setting.dart';
 
 part 'isar_service.g.dart';
 
@@ -14,7 +15,7 @@ class IsarService {
   static Future<IsarService> init() async {
     final dir = await getApplicationDocumentsDirectory();
     final isar = await Isar.open(
-      [], // No collections yet as per MVP architecture rules
+      [AppSettingSchema],
       directory: dir.path,
     );
     return IsarService(isar);
