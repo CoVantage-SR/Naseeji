@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
-import '../../../../core/extensions/context_extensions.dart';
+import '../widgets/splash_widgets.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -27,34 +27,29 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: AppColors.primary,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.blur_on_rounded, // Premium abstract logo shape
-              size: 80,
-              color: Colors.white,
-            ),
-            AppSpacing.hMD,
-            Text(
-              'مصنع نسيجي',
-              style: context.textTheme.displaySmall?.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 24.0),
+          child: Column(
+            children: [
+              Spacer(),
+              SplashAnimationWidget(
+                child: Column(
+                  children: [
+                    SplashLogoWidget(),
+                    AppSpacing.hMD,
+                    SplashTitleWidget(),
+                    AppSpacing.hXS,
+                    SplashSubtitleWidget(),
+                  ],
+                ),
               ),
-            ),
-            AppSpacing.hXS,
-            const SizedBox(
-              width: 140,
-              child: LinearProgressIndicator(
-                color: Colors.white,
-                backgroundColor: Colors.white24,
-              ),
-            ),
-          ],
+              Spacer(),
+              SplashFooterWidget(),
+            ],
+          ),
         ),
       ),
     );

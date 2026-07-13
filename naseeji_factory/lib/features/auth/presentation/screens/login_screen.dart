@@ -1,111 +1,125 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
-import '../../../../core/extensions/context_extensions.dart';
+import '../../../../core/utils/validation.dart';
+import '../providers/auth_provider.dart';
+import '../widgets/login_widgets.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   @override
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends ConsumerState<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _emailOrPhoneController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailOrPhoneController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void _onLogin() {
+    if (_formKey.currentState!.validate()) {
+      ref.read(authProvider.notifier).login(
+            _emailOrPhoneController.text.trim(),
+            _passwordController.text,
+          );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // Listen to Auth State to redirect
+    ref.listen<AuthState>(authProvider, (previous, next) {
+      next.maybeWhen(
+        authenticated: (user) {
+          if (user.isProfileCompleted) {
+            context.go('/home');
+          } else {
+            context.go('/factory-type');
+          }
+        },
+        googleCompleteRegistrationRequired: (_, __, ___, ____) {
+          context.go('/complete-registration');
+        },
+        orElse: () {},
+      );
+    });
+
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppSpacing.hLG,
-              Text(
-                'تسجيل الدخول',
-                style: context.textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              AppSpacing.hXS,
-              Text(
-                'مرحباً بك مجدداً، سجل دخولك للمتابعة',
-                style: context.textTheme.bodyMedium?.copyWith(
-                  color: AppColors.textSecondaryLight,
-                ),
-              ),
-              AppSpacing.hXL,
-              TextField(
-                decoration: const InputDecoration(
-                  labelText: 'البريد الإلكتروني أو رقم الهاتف',
-                  prefixIcon: Icon(Icons.email_outlined),
-                ),
-                keyboardType: TextInputType.emailAddress,
-              ),
-              AppSpacing.hMD,
-              TextField(
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'كلمة المرور',
-                  prefixIcon: Icon(Icons.lock_outline),
-                ),
-              ),
-              AppSpacing.hSM,
-              Align(
-                alignment: Alignment.centerLeft,
-                child: TextButton(
-                  onPressed: () {},
-                  child: const Text('نسيت كلمة المرور؟'),
-                ),
-              ),
-              AppSpacing.hMD,
-              ElevatedButton(
-                onPressed: () => context.go('/otp'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
-                  minimumSize: const Size.fromHeight(56),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: Text(
-                  'تسجيل الدخول',
-                  style: context.textTheme.titleMedium?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              AppSpacing.hLG,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'ليس لديك حساب؟ ',
-                    style: context.textTheme.bodyMedium,
-                  ),
-                  TextButton(
-                    onPressed: () => context.push('/register'),
-                    child: const Text(
-                      'حساب جديد',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+      body: Stack(
+        children: [
+          SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppSpacing.hLG,
+                    const LoginHeaderWidget(),
+                    AppSpacing.hLG,
+                    const LoginWelcomeWidget(),
+                    AppSpacing.hXL,
+                    EmailOrPhoneFieldWidget(
+                      controller: _emailOrPhoneController,
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return 'يرجى إدخال البريد الإلكتروني أو رقم الهاتف';
+                        }
+                        return null;
+                      },
                     ),
-                  ),
-                ],
-              ),
-              AppSpacing.hMD,
-              OutlinedButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.g_mobiledata_rounded, size: 28),
-                label: const Text('تسجيل الدخول باستخدام Google'),
-                style: OutlinedButton.styleFrom(
-                  minimumSize: const Size.fromHeight(56),
-                  side: const BorderSide(color: AppColors.borderLight),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+                    AppSpacing.hMD,
+                    PasswordFieldWidget(
+                      controller: _passwordController,
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return 'يرجى إدخال كلمة المرور';
+                        }
+                        return null;
+                      },
+                    ),
+                    AppSpacing.hSM,
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        RememberMeWidget(),
+                        ForgotPasswordWidget(),
+                      ],
+                    ),
+                    AppSpacing.hLG,
+                    const ValidationMessageWidget(),
+                    AppSpacing.hMD,
+                    LoginButtonWidget(onPressed: _onLogin),
+                    AppSpacing.hLG,
+                    Center(
+                      child: Text(
+                        'أو',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: Colors.grey,
+                            ),
+                      ),
+                    ),
+                    AppSpacing.hLG,
+                    const GoogleLoginButtonWidget(),
+                    AppSpacing.hXL,
+                    const CreateAccountWidget(),
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
-        ),
+          const LoadingOverlayWidget(),
+        ],
       ),
     );
   }

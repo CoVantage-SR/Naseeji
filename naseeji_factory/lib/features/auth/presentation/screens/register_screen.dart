@@ -1,88 +1,120 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
-import '../../../../core/extensions/context_extensions.dart';
+import '../../../../core/widgets/app_buttons.dart';
+import '../../../../core/widgets/app_text_fields.dart';
+import '../providers/registration_provider.dart';
+import '../widgets/register_widgets.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
+
+  @override
+  ConsumerState<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends ConsumerState<RegisterScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _phoneController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  bool _termsAccepted = false;
+  String _passwordText = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _passwordController.addListener(() {
+      setState(() {
+        _passwordText = _passwordController.text;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _phoneController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  void _onContinue() {
+    if (_formKey.currentState!.validate() && _termsAccepted) {
+      // Save data to registration state provider
+      ref.read(registrationProvider.notifier).updateBasicInfo(
+            factoryName: '',
+            ownerName: '',
+            phone: _phoneController.text.trim(),
+            email: _emailController.text.trim(),
+            governorate: '',
+            city: '',
+            employeesRange: '1-10',
+            description: '',
+          );
+      
+      // Navigate to Step 2: Factory Type Selection
+      context.push('/factory-type');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('إنشاء حساب جديد'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_forward_rounded),
+          onPressed: () => context.go('/login'),
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'انضم إلينا',
-                style: context.textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              AppSpacing.hXS,
-              Text(
-                'قم بتعبئة البيانات لإنشاء حساب مصنع جديد',
-                style: context.textTheme.bodyMedium?.copyWith(
-                  color: AppColors.textSecondaryLight,
-                ),
-              ),
-              AppSpacing.hXL,
-              TextField(
-                decoration: const InputDecoration(
-                  labelText: 'اسم المصنع',
-                  prefixIcon: Icon(Icons.factory_outlined),
-                ),
-              ),
-              AppSpacing.hMD,
-              TextField(
-                decoration: const InputDecoration(
-                  labelText: 'البريد الإلكتروني',
-                  prefixIcon: Icon(Icons.email_outlined),
-                ),
-                keyboardType: TextInputType.emailAddress,
-              ),
-              AppSpacing.hMD,
-              TextField(
-                decoration: const InputDecoration(
-                  labelText: 'رقم الهاتف',
-                  prefixIcon: Icon(Icons.phone_outlined),
-                ),
-                keyboardType: TextInputType.phone,
-              ),
-              AppSpacing.hMD,
-              TextField(
-                obscureText: true,
-                decoration: const InputDecoration(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const StepIndicatorWidget(currentStep: 1, totalSteps: 3),
+                AppSpacing.hLG,
+                const RegisterHeaderWidget(),
+                AppSpacing.hXL,
+                PhoneFieldWidget(controller: _phoneController),
+                AppSpacing.hMD,
+                EmailFieldWidget(controller: _emailController),
+                AppSpacing.hMD,
+                // Stateful Password input for live strength calculation
+                AppPasswordField(
                   labelText: 'كلمة المرور',
-                  prefixIcon: Icon(Icons.lock_outline),
+                  controller: _passwordController,
                 ),
-              ),
-              AppSpacing.hXL,
-              ElevatedButton(
-                onPressed: () => context.go('/otp'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
-                  minimumSize: const Size.fromHeight(56),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+                AppSpacing.hSM,
+                PasswordStrengthWidget(password: _passwordText),
+                AppSpacing.hMD,
+                ConfirmPasswordFieldWidget(
+                  controller: _confirmPasswordController,
+                  passwordController: _passwordController,
                 ),
-                child: Text(
-                  'تسجيل الحساب',
-                  style: context.textTheme.titleMedium?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+                AppSpacing.hMD,
+                TermsCheckboxWidget(
+                  onChanged: (val) {
+                    setState(() {
+                      _termsAccepted = val;
+                    });
+                  },
                 ),
-              ),
-            ],
+                AppSpacing.hXL,
+                AppButton.primary(
+                  text: 'متابعة',
+                  onPressed: _termsAccepted ? _onContinue : null,
+                ),
+                AppSpacing.hLG,
+                const AlreadyHaveAccountWidget(),
+              ],
+            ),
           ),
         ),
       ),
