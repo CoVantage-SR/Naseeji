@@ -14,9 +14,7 @@ class LoginHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: AppLogo(size: 64, showText: false),
-    );
+    return const Center(child: AppLogo(size: 120, showText: false));
   }
 }
 
@@ -26,7 +24,7 @@ class LoginWelcomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
           'تسجيل الدخول',
@@ -102,7 +100,9 @@ class _PasswordFieldWidgetState extends State<PasswordFieldWidget> {
         prefixIcon: const Icon(Icons.lock_outline_rounded),
         suffixIcon: IconButton(
           icon: Icon(
-            _obscureText ? Icons.visibility_off_rounded : Icons.visibility_rounded,
+            _obscureText
+                ? Icons.visibility_off_rounded
+                : Icons.visibility_rounded,
           ),
           onPressed: () {
             setState(() {
@@ -139,10 +139,7 @@ class _RememberMeWidgetState extends State<RememberMeWidget> {
             });
           },
         ),
-        Text(
-          'تذكرني',
-          style: context.textTheme.bodyMedium,
-        ),
+        Text('تذكرني', style: context.textTheme.bodyMedium),
       ],
     );
   }
@@ -197,14 +194,16 @@ class GoogleLoginButtonWidget extends ConsumerWidget {
       style: OutlinedButton.styleFrom(
         minimumSize: const Size.fromHeight(52),
         side: const BorderSide(color: AppColors.borderLight, width: 1.5),
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadius.rMD,
-        ),
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.rMD),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.g_mobiledata_rounded, size: 28, color: AppColors.primary),
+          const Icon(
+            Icons.g_mobiledata_rounded,
+            size: 28,
+            color: AppColors.primary,
+          ),
           AppSpacing.wXS,
           Text(
             'تسجيل الدخول باستخدام Google',
@@ -226,10 +225,7 @@ class CreateAccountWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          'ليس لديك حساب مصنع؟ ',
-          style: context.textTheme.bodyMedium,
-        ),
+        Text('ليس لديك حساب مصنع؟ ', style: context.textTheme.bodyMedium),
         TextButton(
           onPressed: () => context.push('/register'),
           child: const Text(
