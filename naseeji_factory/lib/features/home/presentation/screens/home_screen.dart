@@ -1,119 +1,64 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_colors.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_spacing.dart';
-import '../../../../core/extensions/context_extensions.dart';
+import '../providers/home_provider.dart';
+import '../providers/notifications_provider.dart';
+import '../widgets/home_drawer.dart';
+import '../widgets/home_widgets.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('الرئيسية'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_none_rounded),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Banner Card
-            Card(
-              color: AppColors.primary.withValues(alpha: 0.1),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'أهلاً بك في مصنع نسيجي 👋',
-                            style: context.textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primary,
-                            ),
-                          ),
-                          AppSpacing.hXS,
-                          Text(
-                            'ابدأ بمراجعة طلبات عروض الأسعار الجديدة اليوم وزيادة إنتاجيتك.',
-                            style: context.textTheme.bodyMedium,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            AppSpacing.hLG,
-            Text(
-              'نظرة عامة على الإنتاج',
-              style: context.textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            AppSpacing.hMD,
-            GridView.count(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              crossAxisCount: context.responsiveValue(mobile: 2, tablet: 4).toInt(),
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
-              childAspectRatio: 1.3,
-              children: [
-                _buildStatCard(context, 'الطلبات النشطة', '١٢', Icons.shopping_bag_outlined, AppColors.primary),
-                _buildStatCard(context, 'عروض الأسعار المعلقة', '٧', Icons.request_quote_outlined, AppColors.secondary),
-                _buildStatCard(context, 'المنتجات في الكتالوج', '٤٥', Icons.grid_view_outlined, AppColors.info),
-                _buildStatCard(context, 'رسائل غير مقروءة', '٣', Icons.chat_bubble_outline_rounded, AppColors.success),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context, WidgetRef ref) {
+    final homeState = ref.watch(homeDataProvider);
+    final notifications = ref.watch(notificationsNotifierProvider);
+    final unreadCount = notifications.where((n) => !n.isRead).length;
 
-  Widget _buildStatCard(
-    BuildContext context,
-    String label,
-    String value,
-    IconData icon,
-    Color color,
-  ) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Scaffold(
+      appBar: HomeAppBarWidget(
+        factoryName: 'مصنع النسيج الحديث',
+        logoUrl: '',
+        notificationCount: unreadCount,
+        onNotificationTap: () => context.push('/notifications'),
+        onAvatarTap: () => context.push('/mini-profile'),
+      ),
+      drawer: const HomeDrawer(currentRoute: '/home'),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(icon, color: color),
-                Text(
-                  value,
-                  style: context.textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                const GreetingCardWidget(factoryName: 'مصنع النسيج الحديث'),
+                AppSpacing.hLG,
+                FactorySummaryCardWidget(stats: homeState.summaryStats),
+                AppSpacing.hLG,
+                const QuickActionsWidget(),
+                AppSpacing.hLG,
+                const StatisticsCardsWidget(),
+                AppSpacing.hLG,
+                LatestRFQWidget(
+                  rfqs: homeState.latestRfqs,
+                  onActionTap: () => context.go('/rfq'),
                 ),
+                AppSpacing.hLG,
+                CurrentOrdersWidget(
+                  orders: homeState.currentOrders,
+                  onActionTap: () => context.go('/orders'),
+                ),
+                AppSpacing.hLG,
+                RecommendedSuppliersWidget(
+                  suppliers: homeState.recommendedSuppliers,
+                  onActionTap: () => context.push('/search?type=suppliers'),
+                ),
+                AppSpacing.hLG,
+                RecentActivityWidget(activities: homeState.recentActivities),
               ],
             ),
-            Text(
-              label,
-              style: context.textTheme.bodySmall?.copyWith(
-                color: AppColors.textSecondaryLight,
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
