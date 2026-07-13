@@ -45,7 +45,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             context.go('/factory-type');
           }
         },
-        googleCompleteRegistrationRequired: (_, __, ___, ____) {
+        googleCompleteRegistrationRequired: (_, _, _, _) {
           context.go('/complete-registration');
         },
         orElse: () {},
