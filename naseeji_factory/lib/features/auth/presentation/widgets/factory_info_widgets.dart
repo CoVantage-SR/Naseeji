@@ -173,7 +173,7 @@ class CityWidget extends StatelessWidget {
 }
 
 class EmployeesWidget extends StatelessWidget {
-  final String value;
+  final String? value;
   final ValueChanged<String?> onChanged;
 
   const EmployeesWidget({
@@ -191,21 +191,30 @@ class EmployeesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final resolvedValue = _ranges.contains(value) ? value : null;
+
     return DropdownButtonFormField<String>(
-      initialValue: value,
+      initialValue: resolvedValue,
       onChanged: onChanged,
       alignment: Alignment.centerRight,
       decoration: const InputDecoration(
-        labelText: 'عدد العمال والموظفين',
+        labelText: 'عدد العمال والموظفين (اختياري)',
         prefixIcon: Icon(Icons.people_outline_rounded),
       ),
-      items: _ranges.map((range) {
-        return DropdownMenuItem<String>(
-          value: range,
+      items: [
+        const DropdownMenuItem<String>(
+          value: null,
           alignment: Alignment.centerRight,
-          child: Text('$range موظف'),
-        );
-      }).toList(),
+          child: Text('غير محدد'),
+        ),
+        ..._ranges.map((range) {
+          return DropdownMenuItem<String>(
+            value: range,
+            alignment: Alignment.centerRight,
+            child: Text('$range موظف'),
+          );
+        }),
+      ],
     );
   }
 }

@@ -10,6 +10,7 @@ import '../providers/registration_provider.dart';
 import '../providers/otp_provider.dart';
 import '../widgets/register_widgets.dart';
 import '../widgets/otp_widgets.dart';
+import '../widgets/reusable_registration_widgets.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -111,7 +112,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const StepIndicatorWidget(currentStep: 1, totalSteps: 3),
+                  const RegistrationProgress(currentStep: 1, totalSteps: 4),
                   isKeyboardOpen ? AppSpacing.hSM : AppSpacing.hLG,
                   RegisterHeaderWidget(compact: isKeyboardOpen),
                   isKeyboardOpen ? AppSpacing.hMD : AppSpacing.hXL,

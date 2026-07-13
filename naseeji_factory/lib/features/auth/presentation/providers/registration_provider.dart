@@ -8,13 +8,14 @@ part 'registration_provider.g.dart';
 class RegistrationFormState with _$RegistrationFormState {
   const factory RegistrationFormState({
     @Default('') String selectedFactoryType,
+    @Default(<String>[]) List<String> selectedBusinessCategories,
     @Default('') String factoryName,
     @Default('') String ownerName,
     @Default('') String phone,
     @Default('') String email,
     @Default('') String governorate,
     @Default('') String city,
-    @Default('1-10') String employeesRange,
+    @Default('') String employeesRange,
     @Default('') String description,
     @Default(false) bool isLoading,
     @Default('') String errorMessage,
@@ -30,6 +31,10 @@ class Registration extends _$Registration {
 
   void updateFactoryType(String type) {
     state = state.copyWith(selectedFactoryType: type);
+  }
+
+  void updateBusinessCategories(List<String> categories) {
+    state = state.copyWith(selectedBusinessCategories: categories);
   }
 
   void updateBasicInfo({

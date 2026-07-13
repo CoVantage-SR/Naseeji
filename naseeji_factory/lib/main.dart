@@ -52,8 +52,9 @@ class MyApp extends ConsumerWidget {
       routerConfig: router,
 
       // RTL Arabic Egyptian Localization Settings
-      locale: const Locale('ar', 'EG'),
+      locale: const Locale('ar'),
       supportedLocales: const [
+        Locale('ar'),
         Locale('ar', 'EG'),
       ],
       localizationsDelegates: const [
@@ -61,6 +62,9 @@ class MyApp extends ConsumerWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      localeResolutionCallback: (locale, supportedLocales) {
+        return const Locale('ar');
+      },
 
       // Force RTL layout throughout the app
       builder: (context, child) {

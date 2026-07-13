@@ -17,6 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$RegistrationFormState {
   String get selectedFactoryType => throw _privateConstructorUsedError;
+  List<String> get selectedBusinessCategories =>
+      throw _privateConstructorUsedError;
   String get factoryName => throw _privateConstructorUsedError;
   String get ownerName => throw _privateConstructorUsedError;
   String get phone => throw _privateConstructorUsedError;
@@ -41,6 +43,7 @@ abstract class $RegistrationFormStateCopyWith<$Res> {
   @useResult
   $Res call(
       {String selectedFactoryType,
+      List<String> selectedBusinessCategories,
       String factoryName,
       String ownerName,
       String phone,
@@ -68,6 +71,7 @@ class _$RegistrationFormStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? selectedFactoryType = null,
+    Object? selectedBusinessCategories = null,
     Object? factoryName = null,
     Object? ownerName = null,
     Object? phone = null,
@@ -84,6 +88,10 @@ class _$RegistrationFormStateCopyWithImpl<$Res,
           ? _value.selectedFactoryType
           : selectedFactoryType // ignore: cast_nullable_to_non_nullable
               as String,
+      selectedBusinessCategories: null == selectedBusinessCategories
+          ? _value.selectedBusinessCategories
+          : selectedBusinessCategories // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       factoryName: null == factoryName
           ? _value.factoryName
           : factoryName // ignore: cast_nullable_to_non_nullable
@@ -139,6 +147,7 @@ abstract class _$$RegistrationFormStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {String selectedFactoryType,
+      List<String> selectedBusinessCategories,
       String factoryName,
       String ownerName,
       String phone,
@@ -164,6 +173,7 @@ class __$$RegistrationFormStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? selectedFactoryType = null,
+    Object? selectedBusinessCategories = null,
     Object? factoryName = null,
     Object? ownerName = null,
     Object? phone = null,
@@ -180,6 +190,10 @@ class __$$RegistrationFormStateImplCopyWithImpl<$Res>
           ? _value.selectedFactoryType
           : selectedFactoryType // ignore: cast_nullable_to_non_nullable
               as String,
+      selectedBusinessCategories: null == selectedBusinessCategories
+          ? _value._selectedBusinessCategories
+          : selectedBusinessCategories // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       factoryName: null == factoryName
           ? _value.factoryName
           : factoryName // ignore: cast_nullable_to_non_nullable
@@ -229,20 +243,32 @@ class __$$RegistrationFormStateImplCopyWithImpl<$Res>
 class _$RegistrationFormStateImpl implements _RegistrationFormState {
   const _$RegistrationFormStateImpl(
       {this.selectedFactoryType = '',
+      final List<String> selectedBusinessCategories = const <String>[],
       this.factoryName = '',
       this.ownerName = '',
       this.phone = '',
       this.email = '',
       this.governorate = '',
       this.city = '',
-      this.employeesRange = '1-10',
+      this.employeesRange = '',
       this.description = '',
       this.isLoading = false,
-      this.errorMessage = ''});
+      this.errorMessage = ''})
+      : _selectedBusinessCategories = selectedBusinessCategories;
 
   @override
   @JsonKey()
   final String selectedFactoryType;
+  final List<String> _selectedBusinessCategories;
+  @override
+  @JsonKey()
+  List<String> get selectedBusinessCategories {
+    if (_selectedBusinessCategories is EqualUnmodifiableListView)
+      return _selectedBusinessCategories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_selectedBusinessCategories);
+  }
+
   @override
   @JsonKey()
   final String factoryName;
@@ -276,7 +302,7 @@ class _$RegistrationFormStateImpl implements _RegistrationFormState {
 
   @override
   String toString() {
-    return 'RegistrationFormState(selectedFactoryType: $selectedFactoryType, factoryName: $factoryName, ownerName: $ownerName, phone: $phone, email: $email, governorate: $governorate, city: $city, employeesRange: $employeesRange, description: $description, isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'RegistrationFormState(selectedFactoryType: $selectedFactoryType, selectedBusinessCategories: $selectedBusinessCategories, factoryName: $factoryName, ownerName: $ownerName, phone: $phone, email: $email, governorate: $governorate, city: $city, employeesRange: $employeesRange, description: $description, isLoading: $isLoading, errorMessage: $errorMessage)';
   }
 
   @override
@@ -286,6 +312,9 @@ class _$RegistrationFormStateImpl implements _RegistrationFormState {
             other is _$RegistrationFormStateImpl &&
             (identical(other.selectedFactoryType, selectedFactoryType) ||
                 other.selectedFactoryType == selectedFactoryType) &&
+            const DeepCollectionEquality().equals(
+                other._selectedBusinessCategories,
+                _selectedBusinessCategories) &&
             (identical(other.factoryName, factoryName) ||
                 other.factoryName == factoryName) &&
             (identical(other.ownerName, ownerName) ||
@@ -309,6 +338,7 @@ class _$RegistrationFormStateImpl implements _RegistrationFormState {
   int get hashCode => Object.hash(
       runtimeType,
       selectedFactoryType,
+      const DeepCollectionEquality().hash(_selectedBusinessCategories),
       factoryName,
       ownerName,
       phone,
@@ -331,6 +361,7 @@ class _$RegistrationFormStateImpl implements _RegistrationFormState {
 abstract class _RegistrationFormState implements RegistrationFormState {
   const factory _RegistrationFormState(
       {final String selectedFactoryType,
+      final List<String> selectedBusinessCategories,
       final String factoryName,
       final String ownerName,
       final String phone,
@@ -344,6 +375,8 @@ abstract class _RegistrationFormState implements RegistrationFormState {
 
   @override
   String get selectedFactoryType;
+  @override
+  List<String> get selectedBusinessCategories;
   @override
   String get factoryName;
   @override

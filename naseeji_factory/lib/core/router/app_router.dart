@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../features/auth/presentation/screens/business_categories_screen.dart';
 import '../../features/auth/presentation/screens/complete_registration_screen.dart';
 import '../../features/auth/presentation/screens/factory_info_screen.dart';
 import '../../features/auth/presentation/screens/factory_type_screen.dart';
@@ -64,6 +65,11 @@ GoRouter appRouter(AppRouterRef ref) {
       GoRoute(
         path: '/factory-type',
         builder: (context, state) => const FactoryTypeScreen(),
+      ),
+      // Business Categories Selection
+      GoRoute(
+        path: '/business-categories',
+        builder: (context, state) => const BusinessCategoriesScreen(),
       ),
       // Factory Information Form
       GoRoute(
