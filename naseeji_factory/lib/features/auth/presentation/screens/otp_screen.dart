@@ -1,82 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
-import '../../../../core/extensions/context_extensions.dart';
+import '../../../../core/widgets/app_buttons.dart';
+import '../providers/auth_provider.dart';
+import '../providers/otp_provider.dart';
+import '../widgets/otp_widgets.dart';
 
-class OtpScreen extends StatelessWidget {
+class OtpScreen extends ConsumerStatefulWidget {
   const OtpScreen({super.key});
 
   @override
+  ConsumerState<OtpScreen> createState() => _OtpScreenState();
+}
+
+class _OtpScreenState extends ConsumerState<OtpScreen> {
+  String _otpCode = '';
+
+  void _onVerify() async {
+    if (_otpCode.length == 4) {
+      await ref.read(otpVerificationProvider.notifier).verifyOtp(_otpCode);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final otpState = ref.watch(otpVerificationProvider);
+    final isLoading = otpState.status == OtpStatus.loading;
+
+    // Listen to verification success to login/route home
+    ref.listen<OtpState>(otpVerificationProvider, (prev, next) {
+      if (next.status == OtpStatus.verified) {
+        // Authenticate the user successfully
+        ref.read(authProvider.notifier).login('test@naseeji.com', 'dummy');
+        context.go('/home');
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('رمز التحقق'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_forward_rounded),
+          onPressed: () => context.pop(),
+        ),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'أدخل رمز التحقق',
-                style: context.textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              AppSpacing.hXS,
-              Text(
-                'لقد أرسلنا رمز تحقق مكون من 4 أرقام لهاتفك.',
-                style: context.textTheme.bodyMedium?.copyWith(
-                  color: AppColors.textSecondaryLight,
-                ),
-              ),
+              AppSpacing.hLG,
+              const OtpHeaderWidget(),
               AppSpacing.hXL,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: List.generate(4, (index) {
-                  return SizedBox(
-                    width: 60,
-                    height: 60,
-                    child: TextField(
-                      autofocus: index == 0,
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      maxLength: 1,
-                      style: context.textTheme.headlineMedium,
-                      decoration: const InputDecoration(
-                        counterText: '',
-                      ),
-                    ),
-                  );
-                }),
+              OtpFieldWidget(
+                onCompleted: (code) {
+                  setState(() {
+                    _otpCode = code;
+                  });
+                },
               ),
-              AppSpacing.hXL,
-              ElevatedButton(
-                onPressed: () => context.go('/home'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
-                  minimumSize: const Size.fromHeight(56),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: Text(
-                  'تأكيد الرمز',
-                  style: context.textTheme.titleMedium?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              const Spacer(),
-              Center(
-                child: TextButton(
-                  onPressed: () {},
-                  child: const Text('إعادة إرسال الرمز'),
-                ),
+              AppSpacing.hLG,
+              const OtpErrorWidget(),
+              AppSpacing.hLG,
+              const CountdownWidget(),
+              const ResendWidget(),
+              AppSpacing.hXXL,
+              AppButton.primary(
+                text: 'تأكيد الرمز',
+                isLoading: isLoading,
+                onPressed: _otpCode.length == 4 ? _onVerify : null,
               ),
             ],
           ),

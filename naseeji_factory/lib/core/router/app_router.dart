@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../features/auth/presentation/screens/complete_registration_screen.dart';
+import '../../features/auth/presentation/screens/factory_info_screen.dart';
+import '../../features/auth/presentation/screens/factory_type_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/onboarding_screen.dart';
 import '../../features/auth/presentation/screens/otp_screen.dart';
@@ -51,6 +54,21 @@ GoRouter appRouter(AppRouterRef ref) {
       GoRoute(
         path: '/otp',
         builder: (context, state) => const OtpScreen(),
+      ),
+      // Complete Registration
+      GoRoute(
+        path: '/complete-registration',
+        builder: (context, state) => const CompleteRegistrationScreen(),
+      ),
+      // Factory Type Selection
+      GoRoute(
+        path: '/factory-type',
+        builder: (context, state) => const FactoryTypeScreen(),
+      ),
+      // Factory Information Form
+      GoRoute(
+        path: '/factory-info',
+        builder: (context, state) => const FactoryInfoScreen(),
       ),
       // Settings
       GoRoute(
