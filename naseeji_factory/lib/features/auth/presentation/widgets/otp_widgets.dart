@@ -50,6 +50,22 @@ class _OtpFieldWidgetState extends State<OtpFieldWidget> {
   final List<FocusNode> _focusNodes = List.generate(4, (_) => FocusNode());
 
   @override
+  void initState() {
+    super.initState();
+    // Auto-select text on focus to allow easy overwrite
+    for (int i = 0; i < 4; i++) {
+      _focusNodes[i].addListener(() {
+        if (_focusNodes[i].hasFocus) {
+          _controllers[i].selection = TextSelection(
+            baseOffset: 0,
+            extentOffset: _controllers[i].text.length,
+          );
+        }
+      });
+    }
+  }
+
+  @override
   void dispose() {
     for (var c in _controllers) {
       c.dispose();
@@ -61,8 +77,18 @@ class _OtpFieldWidgetState extends State<OtpFieldWidget> {
   }
 
   void _onChanged(String val, int index) {
-    if (val.length == 1 && index < 3) {
-      _focusNodes[index + 1].requestFocus();
+    if (val.isNotEmpty) {
+      if (index < 3) {
+        _focusNodes[index + 1].requestFocus();
+      } else {
+        // Last digit, unfocus keyboard
+        _focusNodes[index].unfocus();
+      }
+    } else {
+      // User pressed backspace / cleared value
+      if (index > 0) {
+        _focusNodes[index - 1].requestFocus();
+      }
     }
     
     // Check if code complete
@@ -86,6 +112,7 @@ class _OtpFieldWidgetState extends State<OtpFieldWidget> {
             onChanged: (val) => _onChanged(val, index),
             textAlign: TextAlign.center,
             keyboardType: TextInputType.number,
+            textInputAction: index < 3 ? TextInputAction.next : TextInputAction.done,
             maxLength: 1,
             style: context.textTheme.headlineMedium?.copyWith(
               fontWeight: FontWeight.bold,

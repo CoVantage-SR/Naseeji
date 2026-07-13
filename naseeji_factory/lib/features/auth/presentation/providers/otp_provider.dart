@@ -29,7 +29,6 @@ class OtpVerification extends _$OtpVerification {
   @override
   OtpState build() {
     ref.onDispose(() => _timer?.cancel());
-    startCountdown();
     return const OtpState();
   }
 

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/widgets/app_buttons.dart';
+import '../providers/auth_provider.dart';
 import '../providers/registration_provider.dart';
 import '../widgets/factory_info_widgets.dart';
 import '../widgets/register_widgets.dart';
@@ -49,9 +50,12 @@ class _FactoryInfoScreenState extends ConsumerState<FactoryInfoScreen> {
       // Submit registration mock state
       await ref.read(registrationProvider.notifier).submitRegistration();
 
-      // Navigate to OTP Screen
+      // Authenticate the user successfully
+      ref.read(authProvider.notifier).login(ref.read(registrationProvider).phone, 'dummy');
+
+      // Navigate directly to Home
       if (mounted) {
-        context.push('/otp');
+        context.go('/home');
       }
     }
   }
