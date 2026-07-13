@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _navigateToNext() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 3));
     if (mounted) {
       context.go('/onboarding');
     }
@@ -27,28 +27,40 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: AppColors.primary,
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 24.0),
-          child: Column(
-            children: [
-              Spacer(),
-              SplashAnimationWidget(
-                child: Column(
-                  children: [
-                    SplashLogoWidget(),
-                    AppSpacing.hMD,
-                    SplashTitleWidget(),
-                    AppSpacing.hXS,
-                    SplashSubtitleWidget(),
-                  ],
-                ),
-              ),
-              Spacer(),
-              SplashFooterWidget(),
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              AppColors.primary,
+              Color(0xFF0C625B), // Darker brand teal
+              Color(0xFF06332F), // Deep industrial teal/slate
             ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: const SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 24.0),
+            child: Column(
+              children: [
+                Spacer(),
+                SplashAnimationWidget(
+                  child: Column(
+                    children: [
+                      SplashLogoWidget(),
+                      AppSpacing.hMD,
+                      SplashTitleWidget(),
+                      AppSpacing.hXS,
+                      SplashSubtitleWidget(),
+                    ],
+                  ),
+                ),
+                Spacer(),
+                SplashFooterWidget(),
+              ],
+            ),
           ),
         ),
       ),

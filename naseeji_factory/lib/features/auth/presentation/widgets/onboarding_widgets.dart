@@ -5,39 +5,129 @@ import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/extensions/context_extensions.dart';
 
 class OnboardingImageWidget extends StatelessWidget {
-  final IconData icon;
+  final String? imageUrl;
+  final IconData fallbackIcon;
   final String label;
 
   const OnboardingImageWidget({
     super.key,
-    required this.icon,
+    required this.imageUrl,
+    required this.fallbackIcon,
     required this.label,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 200,
-      height: 200,
+      width: double.infinity,
+      height: 320,
+      margin: const EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
-        color: AppColors.primary.withValues(alpha: 0.1),
-        shape: BoxShape.circle,
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.08),
+            blurRadius: 24,
+            offset: const Offset(0, 12),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(24),
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            // Network Image with fallback
+            if (imageUrl != null && imageUrl!.isNotEmpty)
+              Image.network(
+                imageUrl!,
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Container(
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? AppColors.borderLight.withValues(alpha: 0.3)
+                        : AppColors.borderDark.withValues(alpha: 0.3),
+                    child: const Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+                      ),
+                    ),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return _buildFallback();
+                },
+              )
+            else
+              _buildFallback(),
+            // Soft gradient overlay at the bottom to blend image with text
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.black.withValues(alpha: 0.0),
+                    Colors.black.withValues(alpha: 0.35),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
+            ),
+            // Floating label tag
+            Positioned(
+              top: 16,
+              right: 16,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.black.withValues(alpha: 0.6),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  label,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFallback() {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            AppColors.primary.withValues(alpha: 0.15),
+            AppColors.primary.withValues(alpha: 0.05),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
       ),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              icon,
+              fallbackIcon,
               size: 80,
               color: AppColors.primary,
             ),
-            AppSpacing.hXS,
+            const SizedBox(height: 12),
             Text(
               label,
-              style: context.textTheme.labelLarge?.copyWith(
+              style: const TextStyle(
                 color: AppColors.primary,
                 fontWeight: FontWeight.bold,
+                fontSize: 16,
               ),
             ),
           ],
@@ -59,6 +149,7 @@ class OnboardingTitleWidget extends StatelessWidget {
       textAlign: TextAlign.center,
       style: context.textTheme.headlineMedium?.copyWith(
         fontWeight: FontWeight.bold,
+        height: 1.3,
         color: Theme.of(context).brightness == Brightness.light
             ? AppColors.textPrimaryLight
             : AppColors.textPrimaryDark,
@@ -99,18 +190,29 @@ class ProgressIndicatorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(count, (index) {
         final isActive = index == currentIndex;
         return AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 350),
+          curve: Curves.easeOutCubic,
           margin: const EdgeInsets.symmetric(horizontal: 4),
           height: 8,
-          width: isActive ? 24 : 8,
+          width: isActive ? 28 : 8,
           decoration: BoxDecoration(
-            color: isActive ? AppColors.primary : AppColors.borderLight,
+            color: isActive 
+                ? AppColors.primary 
+                : (isDark ? AppColors.borderDark : AppColors.borderLight),
             borderRadius: AppRadius.rRound,
+            boxShadow: isActive ? [
+              BoxShadow(
+                color: AppColors.primary.withValues(alpha: 0.3),
+                blurRadius: 6,
+                offset: const Offset(0, 2),
+              ),
+            ] : null,
           ),
         );
       }),
@@ -130,21 +232,34 @@ class NextButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        minimumSize: const Size.fromHeight(56),
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadius.rMD,
-        ),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: AppRadius.rMD,
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary.withValues(alpha: 0.25),
+            blurRadius: 16,
+            offset: const Offset(0, 6),
+          ),
+        ],
       ),
-      child: Text(
-        text,
-        style: context.textTheme.titleMedium?.copyWith(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          foregroundColor: Colors.white,
+          minimumSize: const Size.fromHeight(56),
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: AppRadius.rMD,
+          ),
+        ),
+        child: Text(
+          text,
+          style: context.textTheme.titleMedium?.copyWith(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
@@ -160,10 +275,18 @@ class SkipButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: onPressed,
+      style: TextButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
       child: Text(
         'تخطي',
         style: context.textTheme.bodyMedium?.copyWith(
-          color: AppColors.textSecondaryLight,
+          color: Theme.of(context).brightness == Brightness.light
+              ? AppColors.textSecondaryLight
+              : AppColors.textSecondaryDark,
           fontWeight: FontWeight.bold,
         ),
       ),

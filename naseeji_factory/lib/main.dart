@@ -11,7 +11,7 @@ import 'core/services/theme_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+ 
   // Initialize async services concurrently
   final results = await Future.wait([
     SharedPreferences.getInstance(),
