@@ -116,7 +116,7 @@ class GovernorateWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
-      value: value,
+      initialValue: value,
       onChanged: onChanged,
       validator: (val) {
         if (val == null || val.isEmpty) {
@@ -185,7 +185,7 @@ class EmployeesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
-      value: value,
+      initialValue: value,
       onChanged: onChanged,
       alignment: Alignment.centerRight,
       decoration: const InputDecoration(
