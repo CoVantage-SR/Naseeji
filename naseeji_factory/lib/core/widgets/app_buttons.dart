@@ -106,7 +106,7 @@ class AppButton extends StatelessWidget {
             borderRadius: AppRadius.rMD,
           ),
           disabledBackgroundColor: isPrimary 
-              ? AppColors.primary.withOpacity(0.4) 
+              ? AppColors.primary.withValues(alpha: 0.4) 
               : Colors.transparent,
         ),
         child: content,

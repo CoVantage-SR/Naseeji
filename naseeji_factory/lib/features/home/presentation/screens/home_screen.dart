@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             // Banner Card
             Card(
-              color: AppColors.primary.withOpacity(0.1),
+              color: AppColors.primary.withValues(alpha: 0.1),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
