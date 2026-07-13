@@ -184,14 +184,14 @@ class StatisticsCard extends StatelessWidget {
                 ),
             ],
           ),
-          AppSpacing.hMD,
+          const SizedBox(height: 8.0),
           Text(
             value,
             style: context.textTheme.headlineMedium?.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),
-          AppSpacing.hXXS,
+          const SizedBox(height: 2.0),
           Text(
             label,
             maxLines: 1,

@@ -157,7 +157,7 @@ class FactorySummaryCardWidget extends StatelessWidget {
       crossAxisCount: context.responsiveValue(mobile: 2, tablet: 4).toInt(),
       crossAxisSpacing: 12,
       mainAxisSpacing: 12,
-      childAspectRatio: 1.4,
+      childAspectRatio: context.responsiveValue(mobile: 1.15, tablet: 1.4),
       children: [
         StatisticsCard(
           label: 'طلبات نشطة',

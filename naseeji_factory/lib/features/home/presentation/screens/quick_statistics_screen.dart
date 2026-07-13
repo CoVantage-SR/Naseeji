@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/constants/app_spacing.dart';
+import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/widgets/reusable_widgets.dart';
 import '../providers/statistics_provider.dart';
 import '../widgets/statistics_widgets.dart';
@@ -38,7 +39,7 @@ class QuickStatisticsScreen extends ConsumerWidget {
                 crossAxisCount: 2,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 12,
-                childAspectRatio: 1.5,
+                childAspectRatio: context.responsiveValue(mobile: 1.15, tablet: 1.5),
                 children: [
                   StatisticsCard(
                     label: 'إجمالي الطلبات',

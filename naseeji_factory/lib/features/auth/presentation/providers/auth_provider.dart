@@ -44,7 +44,9 @@ class Auth extends _$Auth {
     state = const AuthState.loading();
     await Future.delayed(const Duration(seconds: 1)); // Mock network delay
     
-    if (emailOrPhone.contains('@') && !emailOrPhone.contains('test@naseeji.com')) {
+    if (emailOrPhone.contains('@') &&
+        !emailOrPhone.contains('test@naseeji.com') &&
+        !emailOrPhone.contains('factory@naseeji.com')) {
       state = const AuthState.error('الحساب غير موجود أو كلمة المرور خاطئة');
       return;
     }

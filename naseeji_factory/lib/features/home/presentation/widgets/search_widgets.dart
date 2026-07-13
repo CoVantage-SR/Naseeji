@@ -174,7 +174,7 @@ class _FilterWidgetState extends State<FilterWidget> {
 
           // Category Dropdown
           DropdownButtonFormField<String>(
-            value: _selectedCategory.isEmpty ? null : _selectedCategory,
+            initialValue: _selectedCategory.isEmpty ? null : _selectedCategory,
             onChanged: (val) => setState(() => _selectedCategory = val ?? ''),
             alignment: Alignment.centerRight,
             decoration: const InputDecoration(
@@ -193,7 +193,7 @@ class _FilterWidgetState extends State<FilterWidget> {
 
           // Governorate Dropdown
           DropdownButtonFormField<String>(
-            value: _selectedGov.isEmpty ? null : _selectedGov,
+            initialValue: _selectedGov.isEmpty ? null : _selectedGov,
             onChanged: (val) => setState(() => _selectedGov = val ?? ''),
             alignment: Alignment.centerRight,
             decoration: const InputDecoration(
