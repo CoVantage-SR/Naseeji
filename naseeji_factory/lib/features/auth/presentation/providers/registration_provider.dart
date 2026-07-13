@@ -56,7 +56,7 @@ class Registration extends _$Registration {
 
   Future<void> submitRegistration() async {
     state = state.copyWith(isLoading: true, errorMessage: '');
-    await Future.delayed(const Duration(seconds: 1.5)); // Mock network delay
+    await Future.delayed(const Duration(milliseconds: 1500)); // Mock network delay
     state = state.copyWith(isLoading: false);
   }
 }

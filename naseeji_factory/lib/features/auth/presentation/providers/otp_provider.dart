@@ -53,7 +53,7 @@ class OtpVerification extends _$OtpVerification {
     }
     
     state = state.copyWith(status: OtpStatus.loading);
-    await Future.delayed(const Duration(seconds: 1.5)); // Mock network verify
+    await Future.delayed(const Duration(milliseconds: 1500)); // Mock network verify
 
     // For testing, mock code "1234" is correct
     if (code == '1234') {
