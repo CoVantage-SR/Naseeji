@@ -25,6 +25,15 @@ import '../../features/home/presentation/screens/search_screen.dart';
 import '../../features/home/presentation/screens/quick_statistics_screen.dart';
 import '../../features/home/presentation/screens/mini_profile_screen.dart';
 import '../../features/orders/presentation/screens/orders_screen.dart';
+import '../../features/orders/presentation/screens/order_details_screen.dart';
+import '../../features/orders/presentation/screens/order_timeline_screen.dart';
+import '../../features/orders/presentation/screens/production_progress_screen.dart';
+import '../../features/orders/presentation/screens/preparation_gallery_screen.dart';
+import '../../features/orders/presentation/screens/preparation_videos_screen.dart';
+import '../../features/orders/presentation/screens/shipment_tracking_screen.dart';
+import '../../features/orders/presentation/screens/shipment_details_screen.dart';
+import '../../features/orders/presentation/screens/delivery_confirmation_screen.dart';
+import '../../features/orders/presentation/screens/live_order_status_screen.dart';
 import '../../features/products/presentation/screens/products_screen.dart';
 import '../../features/products/presentation/screens/product_details_screen.dart';
 import '../../features/products/presentation/screens/product_search_screen.dart';
@@ -297,6 +306,79 @@ GoRouter appRouter(AppRouterRef ref) {
         builder: (context, state) {
           final id = state.pathParameters['quoteId'] ?? '';
           return QuotationRevisionHistoryScreen(quoteId: id);
+        },
+      ),
+
+      // Order Details
+      GoRoute(
+        path: '/orders/:id',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return OrderDetailsScreen(orderId: id);
+        },
+      ),
+      // Order Timeline
+      GoRoute(
+        path: '/orders/:id/timeline',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return OrderTimelineScreen(orderId: id);
+        },
+      ),
+      // Production Progress
+      GoRoute(
+        path: '/orders/:id/production',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return ProductionProgressScreen(orderId: id);
+        },
+      ),
+      // Preparation Gallery
+      GoRoute(
+        path: '/orders/:id/gallery',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return PreparationGalleryScreen(orderId: id);
+        },
+      ),
+      // Preparation Videos
+      GoRoute(
+        path: '/orders/:id/videos',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return PreparationVideosScreen(orderId: id);
+        },
+      ),
+      // Shipment Tracking
+      GoRoute(
+        path: '/orders/:id/shipment',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return ShipmentTrackingScreen(orderId: id);
+        },
+      ),
+      // Shipment Details
+      GoRoute(
+        path: '/orders/:id/shipment/details',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return ShipmentDetailsScreen(orderId: id);
+        },
+      ),
+      // Delivery Confirmation
+      GoRoute(
+        path: '/orders/:id/confirm',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return DeliveryConfirmationScreen(orderId: id);
+        },
+      ),
+      // Live Order Status
+      GoRoute(
+        path: '/orders/:id/live',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return LiveOrderStatusScreen(orderId: id);
         },
       ),
 
