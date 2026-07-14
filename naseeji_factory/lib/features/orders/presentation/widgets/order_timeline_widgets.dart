@@ -75,30 +75,69 @@ class TimelineItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TimelineTile(
-      title: item.stage,
-      description: item.notes,
-      time: '${item.date} • ${item.time}',
-      icon: Icons.check_circle_rounded,
-      color: AppColors.success,
-      isLast: isLast,
-      // Custom additions: updatedBy and attachments rendered below
-      trailingWidget: Padding(
-        padding: const EdgeInsets.only(top: 6.0, bottom: 12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Column(
           children: [
-            Text(
-              'بواسطة: ${item.updatedBy}',
-              style: const TextStyle(color: Colors.grey, fontSize: 9, fontWeight: FontWeight.bold),
+            Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                color: AppColors.success.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: AppColors.success.withValues(alpha: 0.3),
+                  width: 1.5,
+                ),
+              ),
+              child: const Icon(Icons.check_circle_rounded, color: AppColors.success, size: 16),
             ),
-            if (item.attachments.isNotEmpty) ...[
-              const SizedBox(height: 8),
-              TimelineAttachmentWidget(attachments: item.attachments),
-            ],
+            if (!isLast)
+              Container(
+                width: 2,
+                height: 100,
+                color: Colors.grey.shade300,
+              ),
           ],
         ),
-      ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    item.stage,
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                  ),
+                  Text(
+                    '${item.date} • ${item.time}',
+                    style: const TextStyle(color: Colors.grey, fontSize: 9),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
+              Text(
+                item.notes,
+                style: const TextStyle(fontSize: 10, height: 1.4),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                'بواسطة: ${item.updatedBy}',
+                style: const TextStyle(color: Colors.grey, fontSize: 9, fontWeight: FontWeight.bold),
+              ),
+              if (item.attachments.isNotEmpty) ...[
+                const SizedBox(height: 8),
+                TimelineAttachmentWidget(attachments: item.attachments),
+              ],
+              const SizedBox(height: 16),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

@@ -111,16 +111,18 @@ class VideoPlayerWidget extends StatelessWidget {
               style: const TextStyle(color: Colors.white, fontSize: 12),
             ),
           ),
-          Container(
+          AspectRatio(
             aspectRatio: 16 / 9,
-            color: Colors.black,
-            alignment: Alignment.center,
-            child: const Stack(
+            child: Container(
+              color: Colors.black,
               alignment: Alignment.center,
-              children: [
-                Icon(Icons.movie_creation_outlined, color: Colors.white30, size: 64),
-                Icon(Icons.play_circle_fill_rounded, color: Colors.white, size: 48),
-              ],
+              child: const Stack(
+                alignment: Alignment.center,
+                children: [
+                  Icon(Icons.movie_creation_outlined, color: Colors.white30, size: 64),
+                  Icon(Icons.play_circle_fill_rounded, color: Colors.white, size: 48),
+                ],
+              ),
             ),
           ),
           Padding(
