@@ -15,7 +15,7 @@ void main() async {
     SharedPreferences.getInstance(),
     IsarService.init(),
   ]);
-  
+
   final sharedPrefs = results[0] as SharedPreferences;
   final isarServiceInstance = results[1] as IsarService;
 
@@ -42,10 +42,10 @@ class MyApp extends ConsumerWidget {
 
     return MaterialApp.router(
       title: 'مصنع نسيجي',
-      
+
       // Theme Configuration (Material 3 enabled, light/dark modes, system mode default)
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
+      theme: AppTheme.dark,
+      darkTheme: AppTheme.light,
       themeMode: themeMode,
 
       // Router Config (GoRouter)
@@ -53,10 +53,7 @@ class MyApp extends ConsumerWidget {
 
       // RTL Arabic Egyptian Localization Settings
       locale: const Locale('ar'),
-      supportedLocales: const [
-        Locale('ar'),
-        Locale('ar', 'EG'),
-      ],
+      supportedLocales: const [Locale('ar'), Locale('ar', 'EG')],
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

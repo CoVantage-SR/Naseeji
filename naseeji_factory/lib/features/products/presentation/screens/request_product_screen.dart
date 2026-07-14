@@ -46,7 +46,6 @@ class _RequestProductScreenState extends ConsumerState<RequestProductScreen> {
       initialDate: current,
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 365)),
-      alignment: Alignment.center,
     );
     if (picked != null) {
       notifier.updateDeliveryDate(picked);
@@ -55,7 +54,7 @@ class _RequestProductScreenState extends ConsumerState<RequestProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final product = ref.watch(productsNotifierProvider.notifier).getProductById(productId);
+    final product = ref.watch(productsNotifierProvider.notifier).getProductById(widget.productId);
     final formState = ref.watch(requestProductNotifierProvider);
     final notifier = ref.read(requestProductNotifierProvider.notifier);
 
@@ -102,7 +101,7 @@ class _RequestProductScreenState extends ConsumerState<RequestProductScreen> {
                             keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
                               labelText: 'الكمية المطلوبة',
-                              prefixIcon: Icon(Icons.onetwo_three_rounded),
+                              prefixIcon: Icon(Icons.numbers_rounded),
                             ),
                             onChanged: (val) {
                               final parsed = int.tryParse(val) ?? 0;
@@ -114,7 +113,7 @@ class _RequestProductScreenState extends ConsumerState<RequestProductScreen> {
                         Expanded(
                           flex: 2,
                           child: DropdownButtonFormField<String>(
-                            value: formState.unit,
+                            initialValue: formState.unit,
                             onChanged: (val) => notifier.updateUnit(val ?? 'كيلو جرام'),
                             decoration: const InputDecoration(
                               labelText: 'الوحدة',

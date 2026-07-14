@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -83,7 +85,7 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                   FilterSectionWidget(
                     title: 'التصنيف الرئيسي',
                     child: DropdownButtonFormField<String>(
-                      value: _selectedCategory.isEmpty ? null : _selectedCategory,
+                      initialValue: _selectedCategory.isEmpty ? null : _selectedCategory,
                       onChanged: (val) => setSheetState(() => _selectedCategory = val ?? ''),
                       decoration: const InputDecoration(hintText: 'اختر التصنيف'),
                       items: const [
@@ -96,7 +98,7 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                   FilterSectionWidget(
                     title: 'محافظة المورد',
                     child: DropdownButtonFormField<String>(
-                      value: _selectedGov.isEmpty ? null : _selectedGov,
+                      initialValue: _selectedGov.isEmpty ? null : _selectedGov,
                       onChanged: (val) => setSheetState(() => _selectedGov = val ?? ''),
                       decoration: const InputDecoration(hintText: 'اختر المحافظة'),
                       items: const [
@@ -131,7 +133,7 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                   SwitchListTile(
                     title: const Text('موردين موثقين فقط', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
                     value: _verifiedOnly,
-                    activeColor: AppColors.primary,
+                    activeThumbColor: AppColors.primary,
                     onChanged: (val) => setSheetState(() => _verifiedOnly = val),
                   ),
                   const SizedBox(height: 16),
