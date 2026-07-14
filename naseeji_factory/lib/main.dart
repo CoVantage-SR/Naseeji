@@ -10,6 +10,7 @@ import 'core/services/theme_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   final results = await Future.wait([
     SharedPreferences.getInstance(),
     IsarService.init(),
