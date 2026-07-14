@@ -30,7 +30,7 @@ Map<String, dynamic> _$$AuthUserImplToJson(_$AuthUserImpl instance) =>
 // RiverpodGenerator
 // **************************************************************************
 
-String _$authHash() => r'324f2fcb2aadeac50cbcbab825e1405dd2122a65';
+String _$authHash() => r'5efd032bba0f9d522e63b5b13e54122920433d96';
 
 /// See also [Auth].
 @ProviderFor(Auth)

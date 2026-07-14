@@ -15,7 +15,7 @@ void main() async {
     SharedPreferences.getInstance(),
     IsarService.init(),
   ]);
-
+  
   final sharedPrefs = results[0] as SharedPreferences;
   final isarServiceInstance = results[1] as IsarService;
 

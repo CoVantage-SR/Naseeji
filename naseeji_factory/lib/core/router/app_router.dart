@@ -21,6 +21,15 @@ import '../../features/home/presentation/screens/quick_statistics_screen.dart';
 import '../../features/home/presentation/screens/mini_profile_screen.dart';
 import '../../features/orders/presentation/screens/orders_screen.dart';
 import '../../features/products/presentation/screens/products_screen.dart';
+import '../../features/products/presentation/screens/product_details_screen.dart';
+import '../../features/products/presentation/screens/product_search_screen.dart';
+import '../../features/products/presentation/screens/suppliers_screen.dart';
+import '../../features/products/presentation/screens/supplier_details_screen.dart';
+import '../../features/products/presentation/screens/suppliers_comparison_screen.dart';
+import '../../features/products/presentation/screens/price_comparison_screen.dart';
+import '../../features/products/presentation/screens/delivery_comparison_screen.dart';
+import '../../features/products/presentation/screens/favorite_suppliers_screen.dart';
+import '../../features/products/presentation/screens/request_product_screen.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/rfq/presentation/screens/rfq_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
@@ -115,6 +124,60 @@ GoRouter appRouter(AppRouterRef ref) {
       GoRoute(
         path: '/mini-profile',
         builder: (context, state) => const MiniProfileScreen(),
+      ),
+      // Product Details
+      GoRoute(
+        path: '/products/:id',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return ProductDetailsScreen(productId: id);
+        },
+      ),
+      // Product Search & Filters
+      GoRoute(
+        path: '/product-search',
+        builder: (context, state) => const ProductSearchScreen(),
+      ),
+      // Suppliers List
+      GoRoute(
+        path: '/suppliers',
+        builder: (context, state) => const SuppliersScreen(),
+      ),
+      // Supplier Details
+      GoRoute(
+        path: '/suppliers/:id',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return SupplierDetailsScreen(supplierId: id);
+        },
+      ),
+      // Suppliers Comparison
+      GoRoute(
+        path: '/suppliers-comparison',
+        builder: (context, state) => const SuppliersComparisonScreen(),
+      ),
+      // Price Comparison
+      GoRoute(
+        path: '/price-comparison',
+        builder: (context, state) => const PriceComparisonScreen(),
+      ),
+      // Delivery Comparison
+      GoRoute(
+        path: '/delivery-comparison',
+        builder: (context, state) => const DeliveryComparisonScreen(),
+      ),
+      // Favorite Suppliers
+      GoRoute(
+        path: '/favorite-suppliers',
+        builder: (context, state) => const FavoriteSuppliersScreen(),
+      ),
+      // Request Product
+      GoRoute(
+        path: '/request-product',
+        builder: (context, state) {
+          final id = state.uri.queryParameters['id'] ?? 'prod_1';
+          return RequestProductScreen(productId: id);
+        },
       ),
 
       // Bottom Navigation Stateful Shell
