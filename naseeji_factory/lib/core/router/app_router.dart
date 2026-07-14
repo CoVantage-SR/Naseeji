@@ -62,6 +62,15 @@ import '../../features/quality/presentation/screens/issue_report_screen.dart';
 import '../../features/quality/presentation/screens/reject_delivery_screen.dart';
 import '../../features/quality/presentation/screens/replacement_request_screen.dart';
 import '../../features/quality/presentation/screens/return_request_screen.dart';
+import '../../features/purchases/presentation/screens/purchase_history_screen.dart';
+import '../../features/purchases/presentation/screens/purchase_details_screen.dart';
+import '../../features/purchases/presentation/screens/reorder_screen.dart';
+import '../../features/purchases/presentation/screens/favorite_suppliers_screen.dart' as purchase_favs;
+import '../../features/purchases/presentation/screens/invoices_screen.dart';
+import '../../features/reviews/presentation/screens/rate_supplier_screen.dart';
+import '../../features/reviews/presentation/screens/write_review_screen.dart';
+import '../../features/reviews/presentation/screens/reviews_screen.dart';
+import '../../features/reviews/presentation/screens/review_details_screen.dart';
 import '../constants/app_icons.dart';
 
 part 'app_router.g.dart';
@@ -433,6 +442,64 @@ GoRouter appRouter(AppRouterRef ref) {
         builder: (context, state) {
           final id = state.pathParameters['id'] ?? '';
           return ReturnRequestScreen(orderId: id);
+        },
+      ),
+
+      // Purchase History Routes
+      GoRoute(
+        path: '/purchases',
+        builder: (context, state) => const PurchaseHistoryScreen(),
+      ),
+      GoRoute(
+        path: '/purchases/favorites',
+        builder: (context, state) => const purchase_favs.FavoriteSuppliersScreen(),
+      ),
+      GoRoute(
+        path: '/purchases/invoices',
+        builder: (context, state) => const InvoicesScreen(),
+      ),
+      GoRoute(
+        path: '/purchases/:id',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return PurchaseDetailsScreen(orderId: id);
+        },
+      ),
+      GoRoute(
+        path: '/purchases/:id/reorder',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return ReorderScreen(orderId: id);
+        },
+      ),
+
+      // Reviews Routes
+      GoRoute(
+        path: '/reviews/rate/:orderId',
+        builder: (context, state) {
+          final id = state.pathParameters['orderId'] ?? '';
+          return RateSupplierScreen(orderId: id);
+        },
+      ),
+      GoRoute(
+        path: '/reviews/write/:orderId',
+        builder: (context, state) {
+          final id = state.pathParameters['orderId'] ?? '';
+          return WriteReviewScreen(orderId: id);
+        },
+      ),
+      GoRoute(
+        path: '/reviews/supplier/:supplierId',
+        builder: (context, state) {
+          final id = state.pathParameters['supplierId'] ?? '';
+          return ReviewsScreen(supplierId: id);
+        },
+      ),
+      GoRoute(
+        path: '/reviews/details/:reviewId',
+        builder: (context, state) {
+          final id = state.pathParameters['reviewId'] ?? '';
+          return ReviewDetailsScreen(reviewId: id);
         },
       ),
 
