@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../orders/presentation/providers/orders_provider.dart';
 import '../providers/quality_provider.dart';
 import '../widgets/issue_report_widgets.dart';
+import '../widgets/quality_reusable_widgets.dart';
 
 class IssueReportScreen extends ConsumerStatefulWidget {
   final String orderId;
@@ -35,7 +37,6 @@ class _IssueReportScreenState extends ConsumerState<IssueReportScreen> {
 
   void _simulateUploadImage() {
     setState(() {
-      final index = _uploadedImages.length + 1;
       _uploadedImages.add('https://images.unsplash.com/photo-1541099649105-f69ad21f3246');
     });
     ScaffoldMessenger.of(context).showSnackBar(
