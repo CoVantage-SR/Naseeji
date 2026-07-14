@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_radius.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/widgets/reusable_widgets.dart';
 import '../providers/chat_provider.dart';
@@ -71,7 +70,7 @@ class ChatSettingsScreen extends ConsumerWidget {
                     SwitchListTile(
                       value: conversation.isPinned,
                       onChanged: (_) => notifier.togglePin(conversationId),
-                      activeColor: AppColors.primary,
+                      activeThumbColor: AppColors.primary,
                       secondary: const Icon(Icons.push_pin_outlined, color: AppColors.primary),
                       title: const Text('تثبيت المحادثة في الأعلى', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
                     ),
@@ -79,7 +78,7 @@ class ChatSettingsScreen extends ConsumerWidget {
                     SwitchListTile(
                       value: conversation.isMuted,
                       onChanged: (_) => notifier.toggleMute(conversationId),
-                      activeColor: AppColors.primary,
+                      activeThumbColor: AppColors.primary,
                       secondary: const Icon(Icons.volume_off_outlined, color: AppColors.primary),
                       title: const Text('كتم الإشعارات للرسائل الجديدة', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
                     ),

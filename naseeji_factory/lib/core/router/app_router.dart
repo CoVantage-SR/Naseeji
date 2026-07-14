@@ -14,6 +14,11 @@ import '../../features/auth/presentation/screens/otp_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
 import '../../features/auth/presentation/screens/splash_screen.dart';
 import '../../features/chat/presentation/screens/chat_screen.dart';
+import '../../features/chat/presentation/screens/chat_detail_screen.dart';
+import '../../features/chat/presentation/screens/negotiation_summary_screen.dart';
+import '../../features/chat/presentation/screens/shared_files_screen.dart';
+import '../../features/chat/presentation/screens/chat_settings_screen.dart';
+import '../../features/chat/presentation/screens/archived_conversations_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/home/presentation/screens/notifications_screen.dart';
 import '../../features/home/presentation/screens/search_screen.dart';
@@ -109,6 +114,43 @@ GoRouter appRouter(AppRouterRef ref) {
       GoRoute(
         path: '/chat',
         builder: (context, state) => const ChatScreen(),
+      ),
+      // Chat details
+      GoRoute(
+        path: '/chat/:id',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return ChatDetailScreen(conversationId: id);
+        },
+      ),
+      // Negotiation Summary
+      GoRoute(
+        path: '/chat/:id/summary',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return NegotiationSummaryScreen(conversationId: id);
+        },
+      ),
+      // Shared Files
+      GoRoute(
+        path: '/chat/:id/files',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return SharedFilesScreen(conversationId: id);
+        },
+      ),
+      // Chat Settings
+      GoRoute(
+        path: '/chat/:id/settings',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return ChatSettingsScreen(conversationId: id);
+        },
+      ),
+      // Archived Conversations
+      GoRoute(
+        path: '/chat/archived',
+        builder: (context, state) => const ArchivedConversationsScreen(),
       ),
       // Notifications
       GoRoute(
