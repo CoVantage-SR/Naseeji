@@ -20,7 +20,7 @@ class ShipmentDetailsScreen extends ConsumerWidget {
       );
     }
 
-    void _downloadDoc(String docName) {
+    void downloadDoc(String docName) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('جاري بدء تحميل مستند: $docName')),
       );
@@ -49,7 +49,7 @@ class ShipmentDetailsScreen extends ConsumerWidget {
               ShipmentImagesWidget(),
               AppSpacing.hMD,
               ShipmentDocumentsWidget(
-                onDownload: () => _downloadDoc('مستندات_الشحن.pdf'),
+                onDownload: () => downloadDoc('مستندات_الشحن.pdf'),
               ),
               const SizedBox(height: 32),
             ],
