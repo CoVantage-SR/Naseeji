@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -17,6 +18,26 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
   String _searchQuery = '';
   int _currentPage = 1;
   final int _itemsPerPage = 4;
+  bool _showBanner = true;
+  Timer? _bannerTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    _bannerTimer = Timer(const Duration(seconds: 8), () {
+      if (mounted) {
+        setState(() {
+          _showBanner = false;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _bannerTimer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +49,15 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
 
     if (_selectedCategory != 'all') {
       if (_selectedCategory == 'yarn') {
-        filteredProducts = filteredProducts.where((p) => p.id == 'prod_1' || p.id == 'prod_3').toList();
+        filteredProducts = filteredProducts.where((p) => p.id == 'prod_1' || p.id == 'prod_3' || p.id == 'prod_5').toList();
       } else if (_selectedCategory == 'fabric') {
         filteredProducts = filteredProducts.where((p) => p.id == 'prod_2').toList();
+      } else if (_selectedCategory == 'acc') {
+        filteredProducts = filteredProducts.where((p) => p.id == 'prod_4').toList();
+      } else if (_selectedCategory == 'embroidery') {
+        filteredProducts = filteredProducts.where((p) => p.id == 'prod_5').toList();
+      } else if (_selectedCategory == 'packaging') {
+        filteredProducts = filteredProducts.where((p) => p.id == 'prod_6').toList();
       } else {
         filteredProducts = [];
       }
@@ -85,11 +112,21 @@ class _ProductsScreenState extends ConsumerState<ProductsScreen> {
                   },
                 ),
                 AppSpacing.hMD,
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  child: FeaturedBannerWidget(),
+                AnimatedCrossFade(
+                  duration: const Duration(milliseconds: 500),
+                  firstChild: const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child: FeaturedBannerWidget(),
+                      ),
+                      AppSpacing.hLG,
+                    ],
+                  ),
+                  secondChild: const SizedBox.shrink(),
+                  crossFadeState: _showBanner ? CrossFadeState.showFirst : CrossFadeState.showSecond,
                 ),
-                AppSpacing.hLG,
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: ProductsGridWidget(
