@@ -45,8 +45,8 @@ class NotificationsSettingsScreen extends ConsumerWidget {
               icon: cat.$2,
               title: cat.$1,
               color: cat.$3,
-              pushEnabled: notifier.getNotification(cat.$1, 'push'),
-              emailEnabled: notifier.getNotification(cat.$1, 'email'),
+              pushEnabled: settings.notificationSettings[cat.$1]?['push'] ?? false,
+              emailEnabled: settings.notificationSettings[cat.$1]?['email'] ?? false,
               onPushChanged: (v) => notifier.setNotification(cat.$1, 'push', v),
               onEmailChanged: (v) => notifier.setNotification(cat.$1, 'email', v),
             );

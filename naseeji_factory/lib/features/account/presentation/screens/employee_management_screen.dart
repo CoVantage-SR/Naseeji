@@ -19,6 +19,7 @@ class _EmployeeManagementScreenState extends ConsumerState<EmployeeManagementScr
 
   @override
   Widget build(BuildContext context) {
+    ref.watch(accountNotifierProvider);
     final notifier = ref.read(accountNotifierProvider.notifier);
     final employees = notifier.searchEmployees(_searchQuery);
 

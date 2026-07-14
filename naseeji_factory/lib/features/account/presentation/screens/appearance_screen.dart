@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_radius.dart';
 import '../../../../core/constants/app_spacing.dart';
+import '../../../../core/services/theme_service.dart';
 import '../providers/account_provider.dart';
 import '../widgets/account_reusable_widgets.dart';
 
@@ -62,6 +63,12 @@ class AppearanceScreen extends ConsumerWidget {
                 label: 'تطبيق الثيم',
                 icon: Icons.check_rounded,
                 onPressed: () {
+                  final themeMode = switch (currentMode) {
+                    AppThemeMode.light => ThemeMode.light,
+                    AppThemeMode.dark => ThemeMode.dark,
+                    AppThemeMode.system => ThemeMode.system,
+                  };
+                  ref.read(themeServiceProvider.notifier).setThemeMode(themeMode);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('تم تطبيق ثيم: ${currentMode.label}')),
                   );
