@@ -17,7 +17,6 @@ class QuotationDetailsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quotation = ref.watch(quotationsNotifierProvider.notifier).getQuotationById(quoteId);
-    final isDark = context.theme.brightness == Brightness.dark;
 
     if (quotation == null) {
       return Scaffold(

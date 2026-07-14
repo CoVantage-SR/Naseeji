@@ -143,7 +143,7 @@ class _CounterOfferScreenState extends ConsumerState<CounterOfferScreen> {
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                           labelText: 'الكمية المطلوبة المعدلة',
-                          prefixIcon: Icon(Icons.onetwo_three_rounded),
+                          prefixIcon: Icon(Icons.numbers_rounded),
                         ),
                         validator: (val) {
                           if (val == null || val.isEmpty) return 'يرجى تحديد الكمية';

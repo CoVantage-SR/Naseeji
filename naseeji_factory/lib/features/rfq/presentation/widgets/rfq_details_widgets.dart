@@ -155,8 +155,10 @@ class RFQTimelineWidget extends StatelessWidget {
           for (int i = 0; i < steps.length; i++) ...[
             TimelineTile(
               title: steps[i]['title'] as String,
-              subtitle: i == steps.length - 1 && status == 'approved' ? 'تاريخ الاعتماد: ٢٠٢٦/٠٧/١٤' : '',
-              isCompleted: steps[i]['done'] as bool,
+              description: (steps[i]['done'] as bool) ? 'مكتمل' : 'قيد الانتظار',
+              time: i == steps.length - 1 && status == 'approved' ? '٢٠٢٦/٠٧/١٤' : '',
+              icon: (steps[i]['done'] as bool) ? Icons.check_circle_rounded : Icons.radio_button_unchecked_rounded,
+              color: (steps[i]['done'] as bool) ? AppColors.success : Colors.grey,
               isLast: i == steps.length - 1,
             ),
           ],

@@ -51,7 +51,7 @@ class _RejectOfferScreenState extends ConsumerState<RejectOfferScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final quotation = ref.watch(quotationsNotifierProvider.notifier).getQuotationById(quoteId);
+    final quotation = ref.watch(quotationsNotifierProvider.notifier).getQuotationById(widget.quoteId);
 
     if (quotation == null) {
       return Scaffold(
