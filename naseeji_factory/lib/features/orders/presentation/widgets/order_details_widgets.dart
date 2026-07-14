@@ -182,7 +182,7 @@ class QuickActionsWidget extends StatelessWidget {
                 child: PrimaryButton(
                   label: 'تأكيد الاستلام والاعتماد',
                   icon: Icons.check_circle_outline_rounded,
-                  onPressed: () => context.push('/orders/${order.id}/confirm'),
+                  onPressed: () => context.push('/orders/${order.id}/delivery-receipt'),
                 ),
               ),
             ],

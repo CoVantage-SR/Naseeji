@@ -56,6 +56,12 @@ import '../../features/rfq/presentation/screens/approve_offer_screen.dart';
 import '../../features/rfq/presentation/screens/reject_offer_screen.dart';
 import '../../features/rfq/presentation/screens/quotation_revision_history_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
+import '../../features/quality/presentation/screens/delivery_receipt_screen.dart';
+import '../../features/quality/presentation/screens/quality_inspection_screen.dart';
+import '../../features/quality/presentation/screens/issue_report_screen.dart';
+import '../../features/quality/presentation/screens/reject_delivery_screen.dart';
+import '../../features/quality/presentation/screens/replacement_request_screen.dart';
+import '../../features/quality/presentation/screens/return_request_screen.dart';
 import '../constants/app_icons.dart';
 
 part 'app_router.g.dart';
@@ -379,6 +385,54 @@ GoRouter appRouter(AppRouterRef ref) {
         builder: (context, state) {
           final id = state.pathParameters['id'] ?? '';
           return LiveOrderStatusScreen(orderId: id);
+        },
+      ),
+      // Delivery Receipt Screen
+      GoRoute(
+        path: '/orders/:id/delivery-receipt',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return DeliveryReceiptScreen(orderId: id);
+        },
+      ),
+      // Quality Inspection Screen
+      GoRoute(
+        path: '/orders/:id/quality-inspection',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return QualityInspectionScreen(orderId: id);
+        },
+      ),
+      // Issue Report Screen
+      GoRoute(
+        path: '/orders/:id/issue-report',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return IssueReportScreen(orderId: id);
+        },
+      ),
+      // Reject Delivery Screen
+      GoRoute(
+        path: '/orders/:id/reject-delivery',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return RejectDeliveryScreen(orderId: id);
+        },
+      ),
+      // Replacement Request Screen
+      GoRoute(
+        path: '/orders/:id/replacement-request',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return ReplacementRequestScreen(orderId: id);
+        },
+      ),
+      // Return Request Screen
+      GoRoute(
+        path: '/orders/:id/return-request',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return ReturnRequestScreen(orderId: id);
         },
       ),
 
