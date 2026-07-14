@@ -128,6 +128,8 @@ class _ReplacementRequestScreenState extends ConsumerState<ReplacementRequestScr
                 order: order,
                 selectedQuantity: _quantity,
                 onQuantityChanged: (val) => setState(() => _quantity = val),
+                title: 'تحديد السلع المراد استبدالها والكمية',
+                quantityLabel: 'الكمية المطلوب استبدالها:',
               ),
               AppSpacing.hMD,
               ReplacementReasonWidget(

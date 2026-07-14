@@ -876,3 +876,101 @@ class EvidenceWidget extends StatelessWidget {
     );
   }
 }
+
+class ItemsSelectorWidget extends StatelessWidget {
+  final OrderModel order;
+  final int selectedQuantity;
+  final ValueChanged<int> onQuantityChanged;
+  final String title;
+  final String quantityLabel;
+
+  const ItemsSelectorWidget({
+    super.key,
+    required this.order,
+    required this.selectedQuantity,
+    required this.onQuantityChanged,
+    required this.title,
+    required this.quantityLabel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final maxQuantity = order.quantity;
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadius.rMD,
+        side: BorderSide(
+          color: context.theme.brightness == Brightness.dark ? AppColors.borderDark : AppColors.borderLight,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary),
+            ),
+            const SizedBox(height: 12),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: ClipRRect(
+                borderRadius: AppRadius.rSM,
+                child: Image.network(
+                  order.productImage,
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => const Icon(Icons.image_not_supported_rounded),
+                ),
+              ),
+              title: Text(
+                order.productName,
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+              ),
+              subtitle: Text(
+                'الكمية الإجمالية المستلمة: ${order.quantity} وحدة',
+                style: const TextStyle(fontSize: 10, color: Colors.grey),
+              ),
+            ),
+            const Divider(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  quantityLabel,
+                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.remove_circle_outline_rounded, color: AppColors.primary),
+                      onPressed: selectedQuantity > 1 ? () => onQuantityChanged(selectedQuantity - 1) : null,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
+                        borderRadius: AppRadius.rSM,
+                      ),
+                      child: Text(
+                        '$selectedQuantity',
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.add_circle_outline_rounded, color: AppColors.primary),
+                      onPressed: selectedQuantity < maxQuantity ? () => onQuantityChanged(selectedQuantity + 1) : null,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
