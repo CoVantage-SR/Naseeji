@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_spacing.dart';
+import '../../../../core/widgets/reusable_widgets.dart';
 import '../providers/home_provider.dart';
 import '../providers/notifications_provider.dart';
 import '../widgets/home_drawer.dart';
@@ -40,8 +41,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         factoryName: 'مصنع النسيج الحديث',
         logoUrl: '',
         notificationCount: unreadCount,
-        onNotificationTap: () => context.push('/notifications'),
-        onAvatarTap: () => context.push('/mini-profile'),
+        onNotificationTap: () => checkGuestAction(context, ref, () => context.push('/notifications')),
+        onAvatarTap: () => checkGuestAction(context, ref, () => context.push('/mini-profile')),
       ),
       drawer: const HomeDrawer(currentRoute: '/home'),
       body: SafeArea(
@@ -70,12 +71,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 AppSpacing.hLG,
                 LatestRFQWidget(
                   rfqs: homeState.latestRfqs,
-                  onActionTap: () => context.go('/rfq'),
+                  onActionTap: () => checkGuestAction(context, ref, () => context.go('/rfq')),
                 ),
                 AppSpacing.hLG,
                 CurrentOrdersWidget(
                   orders: homeState.currentOrders,
-                  onActionTap: () => context.go('/orders'),
+                  onActionTap: () => checkGuestAction(context, ref, () => context.go('/orders')),
                 ),
                 AppSpacing.hLG,
                 RecommendedSuppliersWidget(
