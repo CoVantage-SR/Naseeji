@@ -32,13 +32,89 @@ class _DeliveryConfirmationScreenState extends ConsumerState<DeliveryConfirmatio
     super.dispose();
   }
 
+  void _showRatingDialog() {
+    double rating = 5;
+    final commentController = TextEditingController();
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            return AlertDialog(
+              title: const Text('تقييم المورد والخدمة', style: TextStyle(fontWeight: FontWeight.bold)),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('شكراً لتأكيد الاستلام! يرجى تقييم جودة المنتج والتزام المورد بمواعيد التسليم:'),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(5, (index) {
+                      final starValue = index + 1;
+                      return IconButton(
+                        icon: Icon(
+                          rating >= starValue ? Icons.star_rounded : Icons.star_border_rounded,
+                          color: Colors.amber,
+                          size: 32,
+                        ),
+                        onPressed: () {
+                          setDialogState(() {
+                            rating = starValue.toDouble();
+                          });
+                        },
+                      );
+                    }),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: commentController,
+                    decoration: const InputDecoration(
+                      labelText: 'ملاحظات إضافية حول جودة التوريد...',
+                      prefixIcon: Icon(Icons.rate_review_rounded),
+                    ),
+                  ),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _executeConfirmation();
+                  },
+                  child: const Text('تخطي التقييم'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('شكراً لك! تم تسجيل تقييمك بمعدل $rating/5 نجوم للمورد.')),
+                    );
+                    _executeConfirmation();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: const Text('إرسال التقييم والإنهاء'),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  void _executeConfirmation() {
+    ref.read(ordersNotifierProvider.notifier).confirmDelivery(widget.orderId);
+    context.go('/orders');
+  }
+
   void _confirmReceipt() {
     if (!_isChecked) return;
-    ref.read(ordersNotifierProvider.notifier).confirmDelivery(widget.orderId);
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('تم تأكيد الاستلام بنجاح واعتمدت الصفقة.')),
-    );
-    context.go('/orders');
+    _showRatingDialog();
   }
 
   void _reportDispute() {
