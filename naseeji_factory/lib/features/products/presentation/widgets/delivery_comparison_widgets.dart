@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_radius.dart';
 import '../../../../core/constants/app_spacing.dart';
-import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/widgets/reusable_widgets.dart';
 import '../providers/comparison_provider.dart';
 
@@ -19,7 +17,6 @@ class DeliveryCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.theme.brightness == Brightness.dark;
 
     return PrimaryCard(
       color: isFastest ? AppColors.info.withValues(alpha: 0.04) : null,

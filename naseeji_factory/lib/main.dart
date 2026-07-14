@@ -44,8 +44,8 @@ class MyApp extends ConsumerWidget {
       title: 'مصنع نسيجي',
 
       // Theme Configuration (Material 3 enabled, light/dark modes, system mode default)
-      theme: AppTheme.dark,
-      darkTheme: AppTheme.light,
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
       themeMode: themeMode,
 
       // Router Config (GoRouter)
