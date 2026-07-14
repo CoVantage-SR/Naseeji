@@ -71,6 +71,14 @@ import '../../features/reviews/presentation/screens/rate_supplier_screen.dart';
 import '../../features/reviews/presentation/screens/write_review_screen.dart';
 import '../../features/reviews/presentation/screens/reviews_screen.dart';
 import '../../features/reviews/presentation/screens/review_details_screen.dart';
+import '../../features/account/presentation/screens/account_profile_screen.dart';
+import '../../features/account/presentation/screens/edit_profile_screen.dart';
+import '../../features/account/presentation/screens/employee_management_screen.dart';
+import '../../features/account/presentation/screens/general_settings_screen.dart';
+import '../../features/account/presentation/screens/notifications_settings_screen.dart';
+import '../../features/account/presentation/screens/appearance_screen.dart';
+import '../../features/account/presentation/screens/terms_screen.dart';
+import '../../features/account/presentation/screens/privacy_screen.dart';
 import '../constants/app_icons.dart';
 
 part 'app_router.g.dart';
@@ -501,6 +509,40 @@ GoRouter appRouter(AppRouterRef ref) {
           final id = state.pathParameters['reviewId'] ?? '';
           return ReviewDetailsScreen(reviewId: id);
         },
+      ),
+
+      // Account & Settings Routes
+      GoRoute(
+        path: '/account/profile',
+        builder: (context, state) => const AccountProfileScreen(),
+      ),
+      GoRoute(
+        path: '/account/profile/edit',
+        builder: (context, state) => const EditProfileScreen(),
+      ),
+      GoRoute(
+        path: '/account/employees',
+        builder: (context, state) => const EmployeeManagementScreen(),
+      ),
+      GoRoute(
+        path: '/account/settings',
+        builder: (context, state) => const GeneralSettingsScreen(),
+      ),
+      GoRoute(
+        path: '/account/notifications',
+        builder: (context, state) => const NotificationsSettingsScreen(),
+      ),
+      GoRoute(
+        path: '/account/appearance',
+        builder: (context, state) => const AppearanceScreen(),
+      ),
+      GoRoute(
+        path: '/account/terms',
+        builder: (context, state) => const TermsScreen(),
+      ),
+      GoRoute(
+        path: '/account/privacy',
+        builder: (context, state) => const PrivacyScreen(),
       ),
 
       // Bottom Navigation Stateful Shell
