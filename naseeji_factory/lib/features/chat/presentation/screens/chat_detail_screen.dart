@@ -5,9 +5,12 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_radius.dart';
 import '../../../../core/widgets/reusable_widgets.dart';
 import '../providers/chat_provider.dart';
+import '../widgets/chat_detail/attachment_menu_widget.dart';
+import '../widgets/chat_detail/chat_messages_widget.dart';
+import '../widgets/chat_detail/message_input_widget.dart';
 import '../widgets/chat_detail_widgets.dart';
-import 'send_quotation_sheet.dart';
 import 'edit_quotation_sheet.dart';
+import 'send_quotation_sheet.dart';
 
 class ChatDetailScreen extends ConsumerStatefulWidget {
   final String conversationId;
@@ -58,73 +61,11 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
       context: context,
       shape: RoundedRectangleBorder(borderRadius: AppRadius.rLG),
       builder: (context) {
-        return SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  'إرفاق ملف أو مستند',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _buildAttachmentItem(context, Icons.camera_alt_rounded, 'كاميرا', () {
-                      Navigator.pop(context);
-                      ref.read(messagesNotifierProvider.notifier).sendMessage(
-                            widget.conversationId,
-                            'تم إرسال صورة من الكاميرا.',
-                            type: 'image',
-                          );
-                    }),
-                    _buildAttachmentItem(context, Icons.photo_library_rounded, 'المعرض', () {
-                      Navigator.pop(context);
-                      ref.read(messagesNotifierProvider.notifier).sendMessage(
-                            widget.conversationId,
-                            'تم إرسال صورة من المعرض.',
-                            type: 'image',
-                          );
-                    }),
-                    _buildAttachmentItem(context, Icons.insert_drive_file_rounded, 'مستند PDF', () {
-                      Navigator.pop(context);
-                      ref.read(messagesNotifierProvider.notifier).sendMessage(
-                            widget.conversationId,
-                            'المواصفات_الفنية_النهائية.pdf',
-                            type: 'pdf',
-                          );
-                    }),
-                    _buildAttachmentItem(context, Icons.request_quote_rounded, 'عرض سعر', () {
-                      Navigator.pop(context);
-                      _openSendQuotationSheet(context);
-                    }),
-                  ],
-                ),
-              ],
-            ),
-          ),
+        return AttachmentMenuWidget(
+          conversationId: widget.conversationId,
+          onSendQuotationTap: () => _openSendQuotationSheet(context),
         );
       },
-    );
-  }
-
-  Widget _buildAttachmentItem(BuildContext context, IconData icon, String label, VoidCallback onTap) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: AppRadius.rMD,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          CircleAvatar(
-            backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-            child: Icon(icon, color: AppColors.primary),
-          ),
-          const SizedBox(height: 6),
-          Text(label, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
-        ],
-      ),
     );
   }
 
@@ -220,68 +161,18 @@ class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
             ),
             const Divider(height: 1),
             Expanded(
-              child: ListView.builder(
-                controller: _scrollController,
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                itemCount: messages.length,
-                itemBuilder: (context, index) {
-                  final msg = messages[index];
-                  return MessageBubbleWidget(
-                    message: msg,
-                    onAcceptQuotation: () {
-                      context.push('/rfq/quotation/QTE-101/approve');
-                    },
-                    onRejectQuotation: () {
-                      context.push('/rfq/quotation/QTE-101/reject');
-                    },
-                    onEditQuotation: () {
-                      _openEditQuotationSheet(context, msg);
-                    },
-                  );
-                },
+              child: ChatMessagesWidget(
+                scrollController: _scrollController,
+                messages: messages,
+                onEditQuotation: (msg) => _openEditQuotationSheet(context, msg),
+                onAcceptQuotation: () => context.push('/rfq/quotation/QTE-101/approve'),
+                onRejectQuotation: () => context.push('/rfq/quotation/QTE-101/reject'),
               ),
             ),
-            // Bottom composer
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-              decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
-                border: const Border(top: BorderSide(color: Colors.grey, width: 0.2)),
-              ),
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.add_circle_outline_rounded, color: AppColors.primary),
-                    onPressed: () => _showAttachmentMenu(context),
-                  ),
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).brightness == Brightness.dark
-                            ? AppColors.borderDark
-                            : Colors.grey.shade100,
-                        borderRadius: AppRadius.rLG,
-                      ),
-                      child: TextField(
-                        controller: _messageController,
-                        maxLines: null,
-                        decoration: const InputDecoration(
-                          hintText: 'اكتب رسالة هنا للاتفاق والمفاوضة...',
-                          border: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  IconButton(
-                    icon: const Icon(Icons.send_rounded, color: AppColors.primary),
-                    onPressed: _sendMessage,
-                  ),
-                ],
-              ),
+            MessageInputWidget(
+              controller: _messageController,
+              onSend: _sendMessage,
+              onAttachmentTap: () => _showAttachmentMenu(context),
             ),
           ],
         ),

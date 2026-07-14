@@ -5,7 +5,11 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../providers/account_provider.dart';
 import '../widgets/account_reusable_widgets.dart';
-import '../widgets/employee_management_widgets.dart';
+import '../widgets/employee_management/add_employee_button.dart';
+import '../widgets/employee_management/add_employee_form.dart';
+import '../widgets/employee_management/edit_permissions_sheet.dart';
+import '../widgets/employee_management/employee_list_widget.dart';
+import '../widgets/employee_management/employee_search_widget.dart';
 
 class EmployeeManagementScreen extends ConsumerStatefulWidget {
   const EmployeeManagementScreen({super.key});
@@ -93,7 +97,7 @@ class _EmployeeManagementScreenState extends ConsumerState<EmployeeManagementScr
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (_) => _AddEmployeeForm(
+      builder: (_) => AddEmployeeForm(
         onSave: (emp) {
           ref.read(accountNotifierProvider.notifier).addEmployee(emp);
           Navigator.pop(context);
@@ -112,7 +116,7 @@ class _EmployeeManagementScreenState extends ConsumerState<EmployeeManagementScr
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (_) => _EditPermissionsSheet(
+      builder: (_) => EditPermissionsSheet(
         employee: emp,
         onSave: (updated) {
           ref.read(accountNotifierProvider.notifier).updateEmployee(updated);
@@ -144,141 +148,6 @@ class _EmployeeManagementScreenState extends ConsumerState<EmployeeManagementScr
             child: const Text('حذف', style: TextStyle(color: Colors.red)),
           ),
         ],
-      ),
-    );
-  }
-}
-
-// ─── Add Employee Form ─────────────────────────────────────────────────────
-class _AddEmployeeForm extends StatefulWidget {
-  final Function(EmployeeModel) onSave;
-  const _AddEmployeeForm({required this.onSave});
-
-  @override
-  State<_AddEmployeeForm> createState() => _AddEmployeeFormState();
-}
-
-class _AddEmployeeFormState extends State<_AddEmployeeForm> {
-  String _name = '';
-  String _job = '';
-  String _phone = '';
-  String _email = '';
-  EmployeeRole _role = EmployeeRole.viewer;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(16, 20, 16, MediaQuery.of(context).viewInsets.bottom + 20),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text('إضافة موظف جديد', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-            const SizedBox(height: 16),
-            _field('الاسم الكامل', (v) => _name = v),
-            const SizedBox(height: 10),
-            _field('المسمى الوظيفي', (v) => _job = v),
-            const SizedBox(height: 10),
-            _field('رقم الهاتف', (v) => _phone = v),
-            const SizedBox(height: 10),
-            _field('البريد الإلكتروني', (v) => _email = v),
-            const SizedBox(height: 10),
-            DropdownButtonFormField<EmployeeRole>(
-              value: _role,
-              decoration: const InputDecoration(labelText: 'الدور الوظيفي', border: OutlineInputBorder()),
-              items: EmployeeRole.values
-                  .map((r) => DropdownMenuItem(value: r, child: Text(r.label, style: const TextStyle(fontSize: 12))))
-                  .toList(),
-              onChanged: (v) => setState(() => _role = v!),
-            ),
-            const SizedBox(height: 16),
-            PrimaryButton(
-              label: 'إضافة الموظف',
-              icon: Icons.person_add_rounded,
-              onPressed: _name.isNotEmpty
-                  ? () => widget.onSave(EmployeeModel(
-                        id: 'EMP-${DateTime.now().millisecondsSinceEpoch}',
-                        name: _name,
-                        jobTitle: _job,
-                        phone: _phone,
-                        email: _email,
-                        photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100',
-                        role: _role,
-                        status: EmployeeStatus.pending,
-                        lastLogin: 'لم يسجل دخولاً بعد',
-                        permissions: {},
-                      ))
-                  : null,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _field(String label, ValueChanged<String> onChanged) {
-    return TextFormField(
-      onChanged: onChanged,
-      style: const TextStyle(fontSize: 13),
-      decoration: InputDecoration(
-        labelText: label,
-        border: const OutlineInputBorder(),
-        contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-      ),
-    );
-  }
-}
-
-// ─── Edit Permissions Sheet ────────────────────────────────────────────────
-class _EditPermissionsSheet extends StatefulWidget {
-  final EmployeeModel employee;
-  final Function(EmployeeModel) onSave;
-  const _EditPermissionsSheet({required this.employee, required this.onSave});
-
-  @override
-  State<_EditPermissionsSheet> createState() => _EditPermissionsSheetState();
-}
-
-class _EditPermissionsSheetState extends State<_EditPermissionsSheet> {
-  late EmployeeRole _role;
-  late Map<String, bool> _permissions;
-
-  @override
-  void initState() {
-    super.initState();
-    _role = widget.employee.role;
-    _permissions = Map.from(widget.employee.permissions);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(16, 20, 16, MediaQuery.of(context).viewInsets.bottom + 20),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text('تعديل: ${widget.employee.name}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-            const SizedBox(height: 16),
-            RoleWidget(
-              selected: _role,
-              onChanged: (r) => setState(() => _role = r),
-            ),
-            const SizedBox(height: 12),
-            PermissionWidget(
-              permissions: _permissions,
-              onToggle: (key, val) => setState(() => _permissions[key] = val),
-            ),
-            const SizedBox(height: 16),
-            PrimaryButton(
-              label: 'حفظ التغييرات',
-              icon: Icons.save_rounded,
-              onPressed: () => widget.onSave(widget.employee.copyWith(role: _role, permissions: _permissions)),
-            ),
-          ],
-        ),
       ),
     );
   }

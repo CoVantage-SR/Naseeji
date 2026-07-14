@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_radius.dart';
-import '../../../../core/extensions/context_extensions.dart';
 import '../widgets/account_reusable_widgets.dart';
+import '../widgets/terms/accept_widget.dart';
+import '../widgets/terms/terms_search_widget.dart';
 
 class TermsScreen extends StatefulWidget {
   const TermsScreen({super.key});
@@ -58,7 +57,6 @@ class _TermsScreenState extends State<TermsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.theme.brightness == Brightness.dark;
     final filtered = _filteredIndexes;
 
     return Scaffold(
@@ -91,23 +89,16 @@ class _TermsScreenState extends State<TermsScreen> {
             // Search bar
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-              child: TextField(
+              child: TermsSearchWidget(
                 onChanged: (v) => setState(() => _query = v),
-                decoration: InputDecoration(
-                  hintText: 'البحث في الشروط...',
-                  prefixIcon: const Icon(Icons.search_rounded, color: Colors.grey),
-                  border: OutlineInputBorder(borderRadius: AppRadius.rMD),
-                  contentPadding: const EdgeInsets.symmetric(vertical: 12),
-                  filled: true,
-                ),
               ),
             ),
             const SizedBox(height: 4),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: Text(
                 'آخر تحديث: ١ يناير ٢٠٢٦',
-                style: const TextStyle(fontSize: 10, color: Colors.grey),
+                style: TextStyle(fontSize: 10, color: Colors.grey),
               ),
             ),
             // Sections
@@ -140,22 +131,13 @@ class _TermsScreenState extends State<TermsScreen> {
                     ),
             ),
             // Accept Banner
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: isDark ? const Color(0xFF0D1B2A) : const Color(0xFFF0FDF4),
-                border: Border(top: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
-              ),
-              child: PrimaryButton(
-                label: 'أوافق على الشروط والأحكام',
-                icon: Icons.check_circle_rounded,
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('شكراً على موافقتك على الشروط والأحكام.')),
-                  );
-                  context.pop();
-                },
-              ),
+            AcceptWidget(
+              onAccept: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('شكراً على موافقتك على الشروط والأحكام.')),
+                );
+                context.pop();
+              },
             ),
           ],
         ),
