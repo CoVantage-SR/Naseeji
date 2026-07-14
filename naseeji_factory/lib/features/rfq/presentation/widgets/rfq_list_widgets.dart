@@ -19,8 +19,6 @@ class RFQCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.theme.brightness == Brightness.dark;
-
     Color statusColor;
     String statusText;
     switch (rfq.status) {
