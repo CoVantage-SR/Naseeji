@@ -157,37 +157,35 @@ class ProblemReportWidget extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: OutlinedButton.styleFrom(
-                    foregroundColor: AppColors.primary,
-                  ).apply(
-                    child: OutlinedButton(
-                      onPressed: onUploadImage,
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.photo_library_outlined, size: 18),
-                          SizedBox(width: 8),
-                          Text('إرفاق صور العيوب', style: TextStyle(fontSize: 10)),
-                        ],
-                      ),
+                  child: OutlinedButton(
+                    onPressed: onUploadImage,
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppColors.primary,
+                    ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.photo_library_outlined, size: 18),
+                        SizedBox(width: 8),
+                        Text('إرفاق صور العيوب', style: TextStyle(fontSize: 10)),
+                      ],
                     ),
                   ),
                 ),
                 const SizedBox(width: 10),
                 Expanded(
-                  child: OutlinedButton.styleFrom(
-                    foregroundColor: AppColors.primary,
-                  ).apply(
-                    child: OutlinedButton(
-                      onPressed: onUploadVideo,
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.videocam_outlined, size: 18),
-                          SizedBox(width: 8),
-                          Text('إرفاق فيديو الخلل', style: TextStyle(fontSize: 10)),
-                        ],
-                      ),
+                  child: OutlinedButton(
+                    onPressed: onUploadVideo,
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppColors.primary,
+                    ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.videocam_outlined, size: 18),
+                        SizedBox(width: 8),
+                        Text('إرفاق فيديو الخلل', style: TextStyle(fontSize: 10)),
+                      ],
                     ),
                   ),
                 ),

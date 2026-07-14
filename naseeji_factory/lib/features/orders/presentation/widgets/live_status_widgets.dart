@@ -220,14 +220,14 @@ class LatestMediaWidget extends StatelessWidget {
                     borderRadius: AppRadius.rMD,
                     color: Colors.black.withValues(alpha: 0.05),
                   ),
-                  child: const Stack(
+                  child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      Icon(Icons.video_collection_outlined, color: Colors.grey),
+                      const Icon(Icons.video_collection_outlined, color: Colors.grey),
                       CircleAvatar(
                         radius: 12,
-                        backgroundColor: Colors.black55,
-                        child: Icon(Icons.play_arrow_rounded, color: Colors.white, size: 14),
+                        backgroundColor: Colors.black.withValues(alpha: 0.55),
+                        child: const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 14),
                       ),
                     ],
                   ),
