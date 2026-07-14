@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/widgets/reusable_widgets.dart';
 import '../providers/mini_profile_provider.dart';
 import 'drawer_widgets.dart';
 
@@ -15,10 +16,22 @@ class HomeDrawer extends ConsumerWidget {
 
     void navigate(String route) {
       context.pop(); // close drawer
-      if (route == '/home' || route == '/products' || route == '/rfq' || route == '/orders' || route == '/profile') {
-        context.go(route);
+      if (route != '/home' && route != '/products') {
+        checkGuestAction(context, ref, () {
+          if (route == '/home' || route == '/products' ||
+              route == '/rfq' || route == '/orders' || route == '/profile') {
+            context.go(route);
+          } else {
+            context.push(route);
+          }
+        });
       } else {
-        context.push(route);
+        if (route == '/home' || route == '/products' ||
+            route == '/rfq' || route == '/orders' || route == '/profile') {
+          context.go(route);
+        } else {
+          context.push(route);
+        }
       }
     }
 

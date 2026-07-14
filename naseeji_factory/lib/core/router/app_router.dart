@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../widgets/reusable_widgets.dart';
 
 import '../../features/auth/presentation/screens/business_categories_screen.dart';
 import '../../features/auth/presentation/screens/complete_registration_screen.dart';
@@ -172,7 +174,7 @@ GoRouter appRouter(AppRouterRef ref) {
   );
 }
 
-class ScaffoldWithNestedNavigation extends StatelessWidget {
+class ScaffoldWithNestedNavigation extends ConsumerWidget {
   final StatefulNavigationShell navigationShell;
 
   const ScaffoldWithNestedNavigation({
@@ -180,20 +182,29 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
     required this.navigationShell,
   });
 
-  void _onTap(BuildContext context, int index) {
-    navigationShell.goBranch(
-      index,
-      initialLocation: index == navigationShell.currentIndex,
-    );
+  void _onTap(BuildContext context, WidgetRef ref, int index) {
+    if (index >= 2) {
+      checkGuestAction(context, ref, () {
+        navigationShell.goBranch(
+          index,
+          initialLocation: index == navigationShell.currentIndex,
+        );
+      });
+    } else {
+      navigationShell.goBranch(
+        index,
+        initialLocation: index == navigationShell.currentIndex,
+      );
+    }
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: navigationShell.currentIndex,
-        onTap: (index) => _onTap(context, index),
+        onTap: (index) => _onTap(context, ref, index),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(AppIcons.home),
