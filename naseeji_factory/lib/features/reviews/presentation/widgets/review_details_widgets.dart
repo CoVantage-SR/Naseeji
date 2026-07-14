@@ -4,7 +4,6 @@ import '../../../../core/constants/app_radius.dart';
 import '../../../../core/extensions/context_extensions.dart';
 import '../providers/reviews_provider.dart';
 import 'reviews_reusable_widgets.dart';
-import 'rate_supplier_widgets.dart';
 
 // ─── Review Information Widget ─────────────────────────────────────────────
 class ReviewInformationWidget extends StatelessWidget {

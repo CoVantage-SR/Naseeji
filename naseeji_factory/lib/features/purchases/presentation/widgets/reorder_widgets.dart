@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_radius.dart';
-import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../orders/presentation/providers/orders_provider.dart';
 
@@ -12,7 +11,6 @@ class PreviousOrderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.theme.brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -252,7 +250,6 @@ class SummaryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.theme.brightness == Brightness.dark;
     final estimatedTotal = quantity * unitPrice;
     return Card(
       elevation: 0,

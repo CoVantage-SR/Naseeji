@@ -1,6 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../orders/presentation/providers/orders_provider.dart';
-import '../../../../core/constants/app_colors.dart';
 
 part 'purchases_provider.g.dart';
 

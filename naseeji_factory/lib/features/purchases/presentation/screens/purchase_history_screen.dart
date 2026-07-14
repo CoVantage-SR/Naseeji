@@ -5,7 +5,6 @@ import '../../../../core/constants/app_spacing.dart';
 import '../../../orders/presentation/providers/orders_provider.dart';
 import '../providers/purchases_provider.dart';
 import '../widgets/purchase_history_widgets.dart';
-import '../widgets/purchases_reusable_widgets.dart';
 
 class PurchaseHistoryScreen extends ConsumerStatefulWidget {
   const PurchaseHistoryScreen({super.key});
