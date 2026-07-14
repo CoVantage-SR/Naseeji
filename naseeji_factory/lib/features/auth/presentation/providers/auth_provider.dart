@@ -92,6 +92,21 @@ class Auth extends _$Auth {
     );
   }
 
+  Future<void> loginAsGuest() async {
+    state = const AuthState.loading();
+    await Future.delayed(const Duration(milliseconds: 500));
+    state = const AuthState.authenticated(
+      AuthUser(
+        uid: 'guest_user',
+        email: 'guest@naseeji.com',
+        name: 'زائر',
+        phone: '',
+        photoUrl: '',
+        isProfileCompleted: true,
+      ),
+    );
+  }
+
   void logout() {
     state = const AuthState.unauthenticated();
   }

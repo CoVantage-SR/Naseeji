@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../providers/auth_provider.dart';
 import '../widgets/login_widgets.dart';
@@ -116,6 +117,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       const GoogleLoginButtonWidget(),
                       AppSpacing.hXL,
                       const CreateAccountWidget(),
+                      AppSpacing.hMD,
+                      Center(
+                        child: TextButton(
+                          onPressed: () {
+                            ref.read(authProvider.notifier).loginAsGuest();
+                          },
+                          child: const Text(
+                            'الدخول كزائر (تصفح فقط)',
+                            style: TextStyle(
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

@@ -7,11 +7,30 @@ import '../providers/notifications_provider.dart';
 import '../widgets/home_drawer.dart';
 import '../widgets/home_widgets.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  bool _showGreeting = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 10), () {
+      if (mounted) {
+        setState(() {
+          _showGreeting = false;
+        });
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final homeState = ref.watch(homeDataProvider);
     final notifications = ref.watch(notificationsNotifierProvider);
     final unreadCount = notifications.where((n) => !n.isRead).length;
@@ -32,11 +51,20 @@ class HomeScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const GreetingCardWidget(factoryName: 'مصنع النسيج الحديث'),
-                AppSpacing.hLG,
+                AnimatedCrossFade(
+                  duration: const Duration(milliseconds: 400),
+                  firstChild: Column(
+                    children: [
+                      const GreetingCardWidget(factoryName: 'مصنع النسيج الحديث'),
+                      AppSpacing.hLG,
+                    ],
+                  ),
+                  secondChild: const SizedBox.shrink(),
+                  crossFadeState: _showGreeting
+                      ? CrossFadeState.showFirst
+                      : CrossFadeState.showSecond,
+                ),
                 FactorySummaryCardWidget(stats: homeState.summaryStats),
-                AppSpacing.hLG,
-                const QuickActionsWidget(),
                 AppSpacing.hLG,
                 const StatisticsCardsWidget(),
                 AppSpacing.hLG,
