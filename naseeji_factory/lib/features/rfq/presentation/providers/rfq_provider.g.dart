@@ -1,24 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'app_router.dart';
+part of 'rfq_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appRouterHash() => r'e98c19d78393f025706789cc43b0640df97ad0b8';
+String _$rFQNotifierHash() => r'a40275e210e43dd23bc9f92617c483b6ed764f08';
 
-/// See also [appRouter].
-@ProviderFor(appRouter)
-final appRouterProvider = AutoDisposeProvider<GoRouter>.internal(
-  appRouter,
-  name: r'appRouterProvider',
+/// See also [RFQNotifier].
+@ProviderFor(RFQNotifier)
+final rFQNotifierProvider =
+    AutoDisposeNotifierProvider<RFQNotifier, List<RFQ>>.internal(
+  RFQNotifier.new,
+  name: r'rFQNotifierProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$appRouterHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$rFQNotifierHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef AppRouterRef = AutoDisposeProviderRef<GoRouter>;
+typedef _$RFQNotifier = AutoDisposeNotifier<List<RFQ>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

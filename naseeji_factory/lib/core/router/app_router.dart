@@ -32,6 +32,15 @@ import '../../features/products/presentation/screens/favorite_suppliers_screen.d
 import '../../features/products/presentation/screens/request_product_screen.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/rfq/presentation/screens/rfq_screen.dart';
+import '../../features/rfq/presentation/screens/create_rfq_screen.dart';
+import '../../features/rfq/presentation/screens/rfq_details_screen.dart';
+import '../../features/rfq/presentation/screens/received_quotations_screen.dart';
+import '../../features/rfq/presentation/screens/quotation_details_screen.dart';
+import '../../features/rfq/presentation/screens/quotations_comparison_screen.dart';
+import '../../features/rfq/presentation/screens/counter_offer_screen.dart';
+import '../../features/rfq/presentation/screens/approve_offer_screen.dart';
+import '../../features/rfq/presentation/screens/reject_offer_screen.dart';
+import '../../features/rfq/presentation/screens/quotation_revision_history_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
 import '../constants/app_icons.dart';
 
@@ -177,6 +186,75 @@ GoRouter appRouter(AppRouterRef ref) {
         builder: (context, state) {
           final id = state.uri.queryParameters['id'] ?? 'prod_1';
           return RequestProductScreen(productId: id);
+        },
+      ),
+      // Create RFQ
+      GoRoute(
+        path: '/rfq/create',
+        builder: (context, state) => const CreateRFQScreen(),
+      ),
+      // RFQ Details
+      GoRoute(
+        path: '/rfq/:id',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return RFQDetailsScreen(rfqId: id);
+        },
+      ),
+      // Received Quotations
+      GoRoute(
+        path: '/rfq/:id/quotations',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return ReceivedQuotationsScreen(rfqId: id);
+        },
+      ),
+      // Quotation Details
+      GoRoute(
+        path: '/rfq/quotation/:quoteId',
+        builder: (context, state) {
+          final id = state.pathParameters['quoteId'] ?? '';
+          return QuotationDetailsScreen(quoteId: id);
+        },
+      ),
+      // Compare Quotations
+      GoRoute(
+        path: '/rfq/:id/compare-quotations',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return QuotationsComparisonScreen(rfqId: id);
+        },
+      ),
+      // Counter Offer
+      GoRoute(
+        path: '/rfq/quotation/:quoteId/counter',
+        builder: (context, state) {
+          final id = state.pathParameters['quoteId'] ?? '';
+          return CounterOfferScreen(quoteId: id);
+        },
+      ),
+      // Approve Offer
+      GoRoute(
+        path: '/rfq/quotation/:quoteId/approve',
+        builder: (context, state) {
+          final id = state.pathParameters['quoteId'] ?? '';
+          return ApproveOfferScreen(quoteId: id);
+        },
+      ),
+      // Reject Offer
+      GoRoute(
+        path: '/rfq/quotation/:quoteId/reject',
+        builder: (context, state) {
+          final id = state.pathParameters['quoteId'] ?? '';
+          return RejectOfferScreen(quoteId: id);
+        },
+      ),
+      // Quotation Revision History
+      GoRoute(
+        path: '/rfq/quotation/:quoteId/revisions',
+        builder: (context, state) {
+          final id = state.pathParameters['quoteId'] ?? '';
+          return QuotationRevisionHistoryScreen(quoteId: id);
         },
       ),
 
