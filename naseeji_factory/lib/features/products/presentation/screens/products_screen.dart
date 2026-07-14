@@ -1,68 +1,118 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_colors.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_spacing.dart';
-import '../../../../core/extensions/context_extensions.dart';
+import '../providers/products_provider.dart';
+import '../widgets/products_widgets.dart';
 
-class ProductsScreen extends StatelessWidget {
+class ProductsScreen extends ConsumerStatefulWidget {
   const ProductsScreen({super.key});
 
   @override
+  ConsumerState<ProductsScreen> createState() => _ProductsScreenState();
+}
+
+class _ProductsScreenState extends ConsumerState<ProductsScreen> {
+  String _selectedCategory = 'all';
+  String _searchQuery = '';
+  int _currentPage = 1;
+  final int _itemsPerPage = 4;
+
+  @override
   Widget build(BuildContext context) {
+    final allProducts = ref.watch(productsNotifierProvider);
+    final notifier = ref.read(productsNotifierProvider.notifier);
+
+    // Apply filters
+    var filteredProducts = allProducts;
+
+    if (_selectedCategory != 'all') {
+      if (_selectedCategory == 'yarn') {
+        filteredProducts = filteredProducts.where((p) => p.id == 'prod_1' || p.id == 'prod_3').toList();
+      } else if (_selectedCategory == 'fabric') {
+        filteredProducts = filteredProducts.where((p) => p.id == 'prod_2').toList();
+      } else {
+        filteredProducts = [];
+      }
+    }
+
+    if (_searchQuery.isNotEmpty) {
+      filteredProducts = filteredProducts
+          .where((p) => p.name.contains(_searchQuery) || p.supplierName.contains(_searchQuery))
+          .toList();
+    }
+
+    // Pagination
+    final totalItems = filteredProducts.length;
+    final totalPages = (totalItems / _itemsPerPage).ceil() == 0 ? 1 : (totalItems / _itemsPerPage).ceil();
+
+    final startIndex = (_currentPage - 1) * _itemsPerPage;
+    final paginatedProducts = filteredProducts.skip(startIndex).take(_itemsPerPage).toList();
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('كتالوج المنتجات'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add_rounded),
-            onPressed: () {},
-          ),
-        ],
+      appBar: ProductsAppBarWidget(
+        onSearchTap: () => context.push('/product-search'),
+        onFavoritesTap: () => context.push('/favorite-suppliers'),
+        onComparisonTap: () => context.push('/suppliers-comparison'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'البحث عن منتج...',
-                prefixIcon: const Icon(Icons.search_rounded),
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.filter_list_rounded),
-                  onPressed: () {},
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: SearchBarWidget(
+                    onChanged: (val) {
+                      setState(() {
+                        _searchQuery = val;
+                        _currentPage = 1;
+                      });
+                    },
+                    onFilterTap: () => context.push('/product-search'),
+                  ),
                 ),
-              ),
-            ),
-            AppSpacing.hLG,
-            Expanded(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.grid_view_rounded,
-                      size: 64,
-                      color: AppColors.textSecondaryDark,
-                    ),
-                    AppSpacing.hMD,
-                    Text(
-                      'لا توجد منتجات حالياً',
-                      style: context.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    AppSpacing.hXS,
-                    Text(
-                      'يمكنك البدء بإضافة منتجات جديدة للمصنع الخاص بك لعرضها في السوق.',
-                      textAlign: TextAlign.center,
-                      style: context.textTheme.bodyMedium?.copyWith(
-                        color: AppColors.textSecondaryLight,
-                      ),
-                    ),
-                  ],
+                AppSpacing.hMD,
+                CategoriesWidget(
+                  selectedCategory: _selectedCategory,
+                  onCategorySelected: (cat) {
+                    setState(() {
+                      _selectedCategory = cat;
+                      _currentPage = 1;
+                    });
+                  },
                 ),
-              ),
+                AppSpacing.hMD,
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: FeaturedBannerWidget(),
+                ),
+                AppSpacing.hLG,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: ProductsGridWidget(
+                    products: paginatedProducts,
+                    onFavoriteToggle: (id) => notifier.toggleFavorite(id),
+                    onProductTap: (prod) => context.push('/products/${prod.id}'),
+                  ),
+                ),
+                if (totalPages > 1) ...[
+                  AppSpacing.hLG,
+                  PaginationWidget(
+                    currentPage: _currentPage,
+                    totalPages: totalPages,
+                    onPageChanged: (page) {
+                      setState(() {
+                        _currentPage = page;
+                      });
+                    },
+                  ),
+                ],
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
