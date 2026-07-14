@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:naseeji_factory/features/quality/presentation/widgets/quality_reusable_widgets.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../orders/presentation/providers/orders_provider.dart';
 import '../providers/quality_provider.dart';
 import '../widgets/delivery_receipt_widgets.dart';
-import '../widgets/issue_report_widgets.dart';
 import '../widgets/reject_delivery_widgets.dart';
 
 class RejectDeliveryScreen extends ConsumerStatefulWidget {

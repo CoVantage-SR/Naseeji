@@ -121,6 +121,7 @@ class _ReturnRequestScreenState extends ConsumerState<ReturnRequestScreen> {
                 selectedReason: _selectedReason,
                 reasons: _returnReasons,
                 onChanged: (val) => setState(() => _selectedReason = val),
+                title: 'سبب طلب الإرجاع بالتفصيل',
               ),
               AppSpacing.hMD,
               PhotoUploaderWidget(

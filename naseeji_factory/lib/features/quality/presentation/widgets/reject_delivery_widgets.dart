@@ -1,7 +1,8 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_radius.dart';
-import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../orders/presentation/providers/orders_provider.dart';
 import 'quality_reusable_widgets.dart';
@@ -38,7 +39,10 @@ class RejectHeaderWidget extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   'المورد: ${order.supplierName} | رقم الطلب: ${order.id}',
-                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ],
             ),
@@ -68,7 +72,9 @@ class ReasonSelectorWidget extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: AppRadius.rMD,
         side: BorderSide(
-          color: context.theme.brightness == Brightness.dark ? AppColors.borderDark : AppColors.borderLight,
+          color: context.theme.brightness == Brightness.dark
+              ? AppColors.borderDark
+              : AppColors.borderLight,
         ),
       ),
       child: Padding(
@@ -78,7 +84,11 @@ class ReasonSelectorWidget extends StatelessWidget {
           children: [
             const Text(
               'سبب رفض الشحنة الرئيسي',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 13,
+                color: AppColors.primary,
+              ),
             ),
             const SizedBox(height: 12),
             for (final reason in reasons)
@@ -116,7 +126,11 @@ class DeclarationWidget extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: AppRadius.rMD,
         side: BorderSide(
-          color: isChecked ? AppColors.error.withValues(alpha: 0.3) : (context.theme.brightness == Brightness.dark ? AppColors.borderDark : AppColors.borderLight),
+          color: isChecked
+              ? AppColors.error.withValues(alpha: 0.3)
+              : (context.theme.brightness == Brightness.dark
+                    ? AppColors.borderDark
+                    : AppColors.borderLight),
         ),
       ),
       child: Padding(
@@ -134,7 +148,11 @@ class DeclarationWidget extends StatelessWidget {
                 padding: EdgeInsets.only(top: 8.0),
                 child: Text(
                   'أقر بصفتي ممثل مصنع نسيجي برفض هذه الشحنة بالكامل وإعادتها للمورد، وأتحمل مسؤولية الإجراءات المترتبة على ذلك قانونياً وتجارياً وبدء النزاع المالي.',
-                  style: TextStyle(fontSize: 11, height: 1.5, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 11,
+                    height: 1.5,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
