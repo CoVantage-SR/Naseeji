@@ -51,54 +51,7 @@ class ReplacementHeaderWidget extends StatelessWidget {
 
 
 
-class ReplacementReasonWidget extends StatelessWidget {
-  final String selectedReason;
-  final ValueChanged<String> onChanged;
-  final List<String> reasons;
 
-  const ReplacementReasonWidget({
-    super.key,
-    required this.selectedReason,
-    required this.onChanged,
-    required this.reasons,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadius.rMD,
-        side: BorderSide(
-          color: context.theme.brightness == Brightness.dark ? AppColors.borderDark : AppColors.borderLight,
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'سبب طلب الاستبدال بالتفصيل',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary),
-            ),
-            const SizedBox(height: 12),
-            for (final reason in reasons)
-              RadioListTile<String>(
-                title: Text(reason, style: const TextStyle(fontSize: 12)),
-                value: reason,
-                groupValue: selectedReason,
-                activeColor: AppColors.primary,
-                onChanged: (val) => onChanged(val ?? ''),
-                contentPadding: EdgeInsets.zero,
-                dense: true,
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class AddressWidget extends StatelessWidget {
   final String address;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_radius.dart';
 import '../../../../core/extensions/context_extensions.dart';
+import '../../../orders/presentation/providers/orders_provider.dart';
 
 /// PrimaryButton - Rounded brand primary button
 class PrimaryButton extends StatelessWidget {
@@ -968,6 +969,57 @@ class ItemsSelectorWidget extends StatelessWidget {
                 ),
               ],
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ReplacementReasonWidget extends StatelessWidget {
+  final String selectedReason;
+  final ValueChanged<String> onChanged;
+  final List<String> reasons;
+  final String title;
+
+  const ReplacementReasonWidget({
+    super.key,
+    required this.selectedReason,
+    required this.onChanged,
+    required this.reasons,
+    required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadius.rMD,
+        side: BorderSide(
+          color: context.theme.brightness == Brightness.dark ? AppColors.borderDark : AppColors.borderLight,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary),
+            ),
+            const SizedBox(height: 12),
+            for (final reason in reasons)
+              RadioListTile<String>(
+                title: Text(reason, style: const TextStyle(fontSize: 12)),
+                value: reason,
+                groupValue: selectedReason,
+                activeColor: AppColors.primary,
+                onChanged: (val) => onChanged(val ?? ''),
+                contentPadding: EdgeInsets.zero,
+                dense: true,
+              ),
           ],
         ),
       ),

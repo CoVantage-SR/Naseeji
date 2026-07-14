@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_radius.dart';
-import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../orders/presentation/providers/orders_provider.dart';
 import 'quality_reusable_widgets.dart';
@@ -99,6 +98,37 @@ class RefundInformationWidget extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class SubmitWidget extends StatelessWidget {
+  final VoidCallback onSubmit;
+  final VoidCallback onCancel;
+
+  const SubmitWidget({
+    super.key,
+    required this.onSubmit,
+    required this.onCancel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        PrimaryButton(
+          label: 'تقديم طلب إرجاع السلع واسترداد الأموال',
+          icon: Icons.assignment_return_rounded,
+          onPressed: onSubmit,
+        ),
+        const SizedBox(height: 10),
+        SecondaryButton(
+          label: 'إلغاء وتراجع',
+          icon: Icons.close_rounded,
+          color: Colors.grey,
+          onPressed: onCancel,
+        ),
+      ],
     );
   }
 }

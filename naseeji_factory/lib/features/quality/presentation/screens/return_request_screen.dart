@@ -4,9 +4,8 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../orders/presentation/providers/orders_provider.dart';
 import '../providers/quality_provider.dart';
-import '../widgets/issue_report_widgets.dart';
-import '../widgets/replacement_request_widgets.dart';
 import '../widgets/return_request_widgets.dart';
+import '../widgets/quality_reusable_widgets.dart';
 
 class ReturnRequestScreen extends ConsumerStatefulWidget {
   final String orderId;
@@ -114,6 +113,8 @@ class _ReturnRequestScreenState extends ConsumerState<ReturnRequestScreen> {
                 order: order,
                 selectedQuantity: _quantity,
                 onQuantityChanged: (val) => setState(() => _quantity = val),
+                title: 'تحديد السلع المراد إرجاعها والكمية',
+                quantityLabel: 'الكمية المطلوب إرجاعها:',
               ),
               AppSpacing.hMD,
               ReplacementReasonWidget(

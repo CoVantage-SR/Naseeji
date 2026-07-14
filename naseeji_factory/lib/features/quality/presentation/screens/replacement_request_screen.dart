@@ -136,6 +136,7 @@ class _ReplacementRequestScreenState extends ConsumerState<ReplacementRequestScr
                 selectedReason: _selectedReason,
                 reasons: _replacementReasons,
                 onChanged: (val) => setState(() => _selectedReason = val),
+                title: 'سبب طلب الاستبدال بالتفصيل',
               ),
               AppSpacing.hMD,
               PhotoUploaderWidget(

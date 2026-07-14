@@ -70,7 +70,6 @@ class QualityInspectionState {
 
 @riverpod
 class QualityNotifier extends _$QualityNotifier {
-  @override
   Map<String, QualityInspectionState> build() {
     return {};
   }
