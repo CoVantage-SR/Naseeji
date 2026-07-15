@@ -9,7 +9,7 @@ import '../delivery_confirmation_widgets.dart';
 import './delivery_rating_dialog.dart';
 
 class DeliveryConfirmationBody extends ConsumerStatefulWidget {
-  final Order order;
+  final OrderModel order;
 
   const DeliveryConfirmationBody({super.key, required this.order});
 
