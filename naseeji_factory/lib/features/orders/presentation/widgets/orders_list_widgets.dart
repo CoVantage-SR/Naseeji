@@ -259,6 +259,7 @@ class FloatingSearchButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      heroTag: null,
       backgroundColor: AppColors.primary,
       foregroundColor: Colors.white,
       onPressed: onTap,

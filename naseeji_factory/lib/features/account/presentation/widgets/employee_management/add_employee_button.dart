@@ -8,6 +8,7 @@ class AddEmployeeButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
+      heroTag: null,
       onPressed: onTap,
       backgroundColor: AppColors.primary,
       foregroundColor: Colors.white,
