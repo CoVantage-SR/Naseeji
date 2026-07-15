@@ -2,52 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_radius.dart';
-import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/widgets/reusable_widgets.dart';
 import '../providers/comparison_provider.dart';
 import '../providers/suppliers_provider.dart';
+import '../widgets/suppliers_comparison/comparison_add_dialog.dart';
+import '../widgets/suppliers_comparison/comparison_table_widget.dart';
 import '../widgets/suppliers_comparison_widgets.dart';
 
 class SuppliersComparisonScreen extends ConsumerWidget {
   const SuppliersComparisonScreen({super.key});
 
   void _showAddSupplierDialog(BuildContext context, WidgetRef ref, List<Supplier> allSuppliers, List<String> currentIds) {
-    final available = allSuppliers.where((s) => !currentIds.contains(s.id)).toList();
-
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          alignment: Alignment.center,
-          title: const Text('أضف مورد للمقارنة', style: TextStyle(fontWeight: FontWeight.bold)),
-          content: available.isEmpty
-              ? const Text('جميع الموردين مضافين بالفعل للمقارنة.')
-              : SizedBox(
-                  width: double.maxFinite,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: available.length,
-                    itemBuilder: (context, index) {
-                      final sup = available[index];
-                      return ListTile(
-                        leading: SupplierAvatar(name: sup.name, size: 32),
-                        title: Text(sup.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                        subtitle: Text(sup.type, style: const TextStyle(fontSize: 10)),
-                        onTap: () {
-                          ref.read(comparisonNotifierProvider.notifier).toggleSupplier(sup.id);
-                          Navigator.of(context).pop();
-                        },
-                      );
-                    },
-                  ),
-                ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('تراجع'),
-            ),
-          ],
+        return ComparisonAddDialog(
+          allSuppliers: allSuppliers,
+          currentIds: currentIds,
         );
       },
     );
@@ -116,72 +87,10 @@ class SuppliersComparisonScreen extends ConsumerWidget {
                     )
                   : SingleChildScrollView(
                       padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        children: [
-                          ComparisonRowWidget(
-                            label: 'الشكل القانوني',
-                            values: selectedSuppliers.map((s) => s.type).toList(),
-                          ),
-                          ComparisonRowWidget(
-                            label: 'التقييم العام',
-                            values: selectedSuppliers.map((s) => '${s.rating} ⭐').toList(),
-                            highlightBest: selectedSuppliers.map((s) => s.rating == selectedSuppliers.map((s) => s.rating).reduce((a, b) => a > b ? a : b)).toList(),
-                          ),
-                          ComparisonRowWidget(
-                            label: 'سنوات الخبرة',
-                            values: selectedSuppliers.map((s) => s.experience).toList(),
-                          ),
-                          ComparisonRowWidget(
-                            label: 'الطلبات المكتملة',
-                            values: selectedSuppliers.map((s) => '${s.completedOrders}+').toList(),
-                          ),
-                          ComparisonRowWidget(
-                            label: 'الالتزام بالتسليم',
-                            values: selectedSuppliers.map((s) => s.deliveryPerformance).toList(),
-                          ),
-                          ComparisonRowWidget(
-                            label: 'سرعة الرد',
-                            values: selectedSuppliers.map((s) => s.responseSpeed).toList(),
-                          ),
-                          ComparisonRowWidget(
-                            label: 'شهادات الاعتماد',
-                            values: selectedSuppliers.map((s) => s.certificates.join('، ')).toList(),
-                          ),
-                          ComparisonRowWidget(
-                            label: 'حالة التوثيق',
-                            values: selectedSuppliers.map((s) => s.isVerified ? 'موثق ✅' : 'نشط').toList(),
-                          ),
-                          AppSpacing.hLG,
-                          Row(
-                            children: [
-                              Expanded(
-                                child: OutlinedButton(
-                                  onPressed: () => context.push('/delivery-comparison'),
-                                  style: OutlinedButton.styleFrom(
-                                    padding: const EdgeInsets.symmetric(vertical: 14),
-                                    side: const BorderSide(color: AppColors.primary),
-                                    foregroundColor: AppColors.primary,
-                                    shape: RoundedRectangleBorder(borderRadius: AppRadius.rMD),
-                                  ),
-                                  child: const Text('مقارنة مواعيد الشحن'),
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: ElevatedButton(
-                                  onPressed: () => context.push('/price-comparison'),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.primary,
-                                    foregroundColor: Colors.white,
-                                    padding: const EdgeInsets.symmetric(vertical: 14),
-                                    shape: RoundedRectangleBorder(borderRadius: AppRadius.rMD),
-                                  ),
-                                  child: const Text('مقارنة الأسعار والعروض'),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                      child: ComparisonTableWidget(
+                        selectedSuppliers: selectedSuppliers,
+                        onDeliveryComparisonTap: () => context.push('/delivery-comparison'),
+                        onPriceComparisonTap: () => context.push('/price-comparison'),
                       ),
                     ),
             ),
