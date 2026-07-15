@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_const
+
 import 'package:flutter/material.dart';
 import 'package:naseeji_factory/core/constants/app_colors.dart';
 import 'package:naseeji_factory/core/constants/app_radius.dart';

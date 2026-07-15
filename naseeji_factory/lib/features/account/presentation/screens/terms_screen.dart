@@ -122,8 +122,11 @@ class _TermsScreenState extends State<TermsScreen> {
                           isExpanded: isExp,
                           onToggle: () {
                             setState(() {
-                              if (isExp) _expanded.remove(idx);
-                              else _expanded.add(idx);
+                              if (isExp) {
+                                _expanded.remove(idx);
+                              } else {
+                                _expanded.add(idx);
+                              }
                             });
                           },
                         );

@@ -79,7 +79,7 @@ class _ProductFilterSheetState extends State<ProductFilterSheet> {
           FilterSectionWidget(
             title: 'التصنيف الرئيسي',
             child: DropdownButtonFormField<String>(
-              value: _selectedCategory.isEmpty ? null : _selectedCategory,
+              initialValue: _selectedCategory.isEmpty ? null : _selectedCategory,
               onChanged: (val) => setState(() => _selectedCategory = val ?? ''),
               decoration: const InputDecoration(hintText: 'اختر التصنيف'),
               items: const [
@@ -92,7 +92,7 @@ class _ProductFilterSheetState extends State<ProductFilterSheet> {
           FilterSectionWidget(
             title: 'محافظة المورد',
             child: DropdownButtonFormField<String>(
-              value: _selectedGov.isEmpty ? null : _selectedGov,
+              initialValue: _selectedGov.isEmpty ? null : _selectedGov,
               onChanged: (val) => setState(() => _selectedGov = val ?? ''),
               decoration: const InputDecoration(hintText: 'اختر المحافظة'),
               items: const [

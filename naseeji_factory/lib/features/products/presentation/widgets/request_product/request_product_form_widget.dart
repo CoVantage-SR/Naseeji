@@ -91,7 +91,7 @@ class _RequestProductFormWidgetState extends ConsumerState<RequestProductFormWid
               Expanded(
                 flex: 2,
                 child: DropdownButtonFormField<String>(
-                  value: formState.unit,
+                  initialValue: formState.unit,
                   onChanged: (val) => notifier.updateUnit(val ?? 'كيلو جرام'),
                   decoration: const InputDecoration(
                     labelText: 'الوحدة',

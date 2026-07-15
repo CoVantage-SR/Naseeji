@@ -90,7 +90,7 @@ class NotificationTile extends StatelessWidget {
           Switch(
             value: value && enabled,
             onChanged: enabled ? onChanged : null,
-            activeColor: AppColors.primary,
+            activeThumbColor: AppColors.primary,
           ),
         ],
       ),
@@ -377,7 +377,7 @@ class ProfileCard extends StatelessWidget {
                 width: 56,
                 height: 56,
                 fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => Container(
+                errorBuilder: (_, _, _) => Container(
                   width: 56,
                   height: 56,
                   color: AppColors.primary.withValues(alpha: 0.1),
@@ -527,7 +527,7 @@ class EmployeeCard extends StatelessWidget {
                     width: 46,
                     height: 46,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Container(
+                    errorBuilder: (_, _, _) => Container(
                       width: 46,
                       height: 46,
                       color: AppColors.primary.withValues(alpha: 0.1),

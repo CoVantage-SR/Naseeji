@@ -4,7 +4,7 @@ import '../account_reusable_widgets.dart';
 
 class AddEmployeeForm extends StatefulWidget {
   final Function(EmployeeModel) onSave;
-  const AddEmployeeForm({required this.onSave});
+  const AddEmployeeForm({super.key, required this.onSave});
 
   @override
   State<AddEmployeeForm> createState() => _AddEmployeeFormState();
@@ -37,7 +37,7 @@ class _AddEmployeeFormState extends State<AddEmployeeForm> {
             _field('البريد الإلكتروني', (v) => _email = v),
             const SizedBox(height: 10),
             DropdownButtonFormField<EmployeeRole>(
-              value: _role,
+              initialValue: _role,
               decoration: const InputDecoration(labelText: 'الدور الوظيفي', border: OutlineInputBorder()),
               items: EmployeeRole.values
                   .map((r) => DropdownMenuItem(value: r, child: Text(r.label, style: const TextStyle(fontSize: 12))))

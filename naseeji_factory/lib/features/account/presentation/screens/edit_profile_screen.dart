@@ -190,7 +190,7 @@ class _FactoryInfoFields extends StatelessWidget {
     return Column(
       children: [
         DropdownButtonFormField<String>(
-          value: types.contains(profile.factoryType) ? profile.factoryType : types.first,
+          initialValue: types.contains(profile.factoryType) ? profile.factoryType : types.first,
           items: types.map((t) => DropdownMenuItem(value: t, child: Text(t, style: const TextStyle(fontSize: 12)))).toList(),
           onChanged: (v) => onTypeChanged(v ?? ''),
           decoration: const InputDecoration(labelText: 'نوع المصنع', border: OutlineInputBorder()),

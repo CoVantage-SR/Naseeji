@@ -7,7 +7,7 @@ import 'permission_widget.dart';
 class EditPermissionsSheet extends StatefulWidget {
   final EmployeeModel employee;
   final Function(EmployeeModel) onSave;
-  const EditPermissionsSheet({required this.employee, required this.onSave});
+  const EditPermissionsSheet({super.key, required this.employee, required this.onSave});
 
   @override
   State<EditPermissionsSheet> createState() => _EditPermissionsSheetState();

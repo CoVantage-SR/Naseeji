@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_factory/core/constants/app_spacing.dart';
-import '../../../orders/presentation/providers/orders_provider.dart';
+import 'package:naseeji_factory/features/orders/presentation/providers/orders_provider.dart';
+import 'package:naseeji_factory/features/quality/presentation/widgets/quality_reusable_widgets.dart';
 import '../../providers/quality_provider.dart';
 import '../delivery_receipt_widgets.dart';
 import '../reject_delivery_widgets.dart';
 
 class RejectDeliveryForm extends ConsumerStatefulWidget {
-  final Order order;
+  final OrderModel order;
 
   const RejectDeliveryForm({super.key, required this.order});
 

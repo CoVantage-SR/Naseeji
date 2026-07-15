@@ -43,7 +43,7 @@ class BasicInformationWidget extends StatelessWidget {
                     CircleAvatar(
                       radius: 36,
                       backgroundImage: NetworkImage(profile.logoUrl),
-                      onBackgroundImageError: (_, __) {},
+                      onBackgroundImageError: (_, _) {},
                       backgroundColor: AppColors.primary.withValues(alpha: 0.1),
                       child: const Icon(Icons.factory_rounded, color: AppColors.primary),
                     ),
@@ -70,7 +70,7 @@ class BasicInformationWidget extends StatelessWidget {
                           profile.coverUrl,
                           height: 60,
                           fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => Container(
+                          errorBuilder: (_, _, _) => Container(
                             height: 60,
                             color: AppColors.primary.withValues(alpha: 0.1),
                             child: const Icon(Icons.image_rounded, color: AppColors.primary),
@@ -215,7 +215,7 @@ class EditFactoryInformationWidget extends StatelessWidget {
         Text(label, style: const TextStyle(fontSize: 11, color: Colors.grey)),
         const SizedBox(height: 6),
         DropdownButtonFormField<String>(
-          value: items.contains(value) ? value : items.first,
+          initialValue: items.contains(value) ? value : items.first,
           onChanged: (v) => onChanged(v ?? ''),
           items: items.map((e) => DropdownMenuItem(value: e, child: Text(e, style: const TextStyle(fontSize: 12)))).toList(),
           decoration: InputDecoration(

@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -116,7 +118,7 @@ class _CreateRFQFormState extends ConsumerState<CreateRFQForm> {
                   ),
                   AppSpacing.hMD,
                   DropdownButtonFormField<String>(
-                    value: _selectedCategory,
+                    initialValue: _selectedCategory,
                     onChanged: (val) => setState(() => _selectedCategory = val ?? ''),
                     decoration: const InputDecoration(
                       labelText: 'التصنيف الرئيسي للطلب',
@@ -231,7 +233,7 @@ class _CreateRFQFormState extends ConsumerState<CreateRFQForm> {
                   Expanded(
                     flex: 2,
                     child: DropdownButtonFormField<String>(
-                      value: _selectedUnit,
+                      initialValue: _selectedUnit,
                       onChanged: (val) => setState(() => _selectedUnit = val ?? 'كيلو جرام'),
                       decoration: const InputDecoration(
                         labelText: 'الوحدة',
@@ -277,7 +279,7 @@ class _CreateRFQFormState extends ConsumerState<CreateRFQForm> {
                     children: [
                       Expanded(
                         child: DropdownButtonFormField<String>(
-                          value: _selectedGov,
+                          initialValue: _selectedGov,
                           onChanged: (val) => setState(() => _selectedGov = val ?? ''),
                           decoration: const InputDecoration(labelText: 'المحافظة'),
                           items: const [
@@ -291,7 +293,7 @@ class _CreateRFQFormState extends ConsumerState<CreateRFQForm> {
                       const SizedBox(width: 12),
                       Expanded(
                         child: DropdownButtonFormField<String>(
-                          value: _selectedCity,
+                          initialValue: _selectedCity,
                           onChanged: (val) => setState(() => _selectedCity = val ?? ''),
                           decoration: const InputDecoration(labelText: 'المدينة'),
                           items: const [
