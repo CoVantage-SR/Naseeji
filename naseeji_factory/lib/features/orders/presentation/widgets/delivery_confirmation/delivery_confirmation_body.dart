@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_radius.dart';
-import '../../../../core/constants/app_spacing.dart';
+import 'package:naseeji_factory/core/constants/app_colors.dart';
+import 'package:naseeji_factory/core/constants/app_radius.dart';
+import 'package:naseeji_factory/core/constants/app_spacing.dart';
 import '../../providers/orders_provider.dart';
 import '../delivery_confirmation_widgets.dart';
 import './delivery_rating_dialog.dart';

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_radius.dart';
-import '../../../../core/constants/app_spacing.dart';
-import '../../../../core/widgets/reusable_widgets.dart';
+import 'package:naseeji_factory/core/constants/app_colors.dart';
+import 'package:naseeji_factory/core/constants/app_radius.dart';
+import 'package:naseeji_factory/core/constants/app_spacing.dart';
+import 'package:naseeji_factory/core/widgets/reusable_widgets.dart';
 import '../../providers/products_provider.dart';
 import '../../providers/suppliers_provider.dart';
 import '../products_widgets.dart';

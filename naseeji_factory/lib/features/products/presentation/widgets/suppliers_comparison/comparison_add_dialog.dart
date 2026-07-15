@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../core/widgets/reusable_widgets.dart';
+import 'package:naseeji_factory/core/widgets/reusable_widgets.dart';
 import '../../providers/comparison_provider.dart';
 import '../../providers/suppliers_provider.dart';
 
