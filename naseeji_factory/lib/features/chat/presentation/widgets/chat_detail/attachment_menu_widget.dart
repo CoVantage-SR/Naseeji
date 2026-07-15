@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_radius.dart';
+import 'package:naseeji_factory/core/constants/app_colors.dart';
+import 'package:naseeji_factory/core/constants/app_radius.dart';
 import '../../providers/chat_provider.dart';
 
 class AttachmentMenuWidget extends ConsumerWidget {

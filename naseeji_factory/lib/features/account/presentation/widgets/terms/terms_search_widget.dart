@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_radius.dart';
+import 'package:naseeji_factory/core/constants/app_radius.dart';
 
 class TermsSearchWidget extends StatelessWidget {
   final ValueChanged<String> onChanged;
