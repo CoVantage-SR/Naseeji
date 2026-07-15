@@ -32,7 +32,13 @@ class PrimaryButton extends StatelessWidget {
             Icon(icon, size: 18),
             const SizedBox(width: 8),
           ],
-          Text(label, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+          Flexible(
+            child: Text(
+              label,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+              textAlign: TextAlign.center,
+            ),
+          ),
         ],
       ),
     );
@@ -71,7 +77,13 @@ class SecondaryButton extends StatelessWidget {
             Icon(icon, size: 18),
             const SizedBox(width: 8),
           ],
-          Text(label, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+          Flexible(
+            child: Text(
+              label,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+              textAlign: TextAlign.center,
+            ),
+          ),
         ],
       ),
     );

@@ -33,13 +33,13 @@ class PrimaryButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (icon != null) ...[
-            Icon(icon, size: 18),
-            const SizedBox(width: 8),
-          ],
-          Text(
-            label,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+          if (icon != null) ...[Icon(icon, size: 18), const SizedBox(width: 8)],
+          Flexible(
+            child: Text(
+              label,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+              textAlign: TextAlign.center,
+            ),
           ),
         ],
       ),
@@ -76,13 +76,13 @@ class SecondaryButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (icon != null) ...[
-            Icon(icon, size: 18),
-            const SizedBox(width: 8),
-          ],
-          Text(
-            label,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+          if (icon != null) ...[Icon(icon, size: 18), const SizedBox(width: 8)],
+          Flexible(
+            child: Text(
+              label,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+              textAlign: TextAlign.center,
+            ),
           ),
         ],
       ),
@@ -196,7 +196,9 @@ class InspectionCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: AppRadius.rMD,
         side: BorderSide(
-          color: context.theme.brightness == Brightness.dark ? AppColors.borderDark : AppColors.borderLight,
+          color: context.theme.brightness == Brightness.dark
+              ? AppColors.borderDark
+              : AppColors.borderLight,
         ),
       ),
       child: Padding(
@@ -206,7 +208,11 @@ class InspectionCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.primary),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+                color: AppColors.primary,
+              ),
             ),
             const SizedBox(height: 10),
             Row(
@@ -222,7 +228,9 @@ class InspectionCard extends StatelessWidget {
                     return GestureDetector(
                       onTap: () => onRatingChanged(starValue),
                       child: Icon(
-                        rating >= starValue ? Icons.star_rounded : Icons.star_border_rounded,
+                        rating >= starValue
+                            ? Icons.star_rounded
+                            : Icons.star_border_rounded,
                         color: Colors.amber,
                         size: 28,
                       ),
@@ -237,7 +245,10 @@ class InspectionCard extends StatelessWidget {
               decoration: const InputDecoration(
                 hintText: 'أضف ملاحظاتك أو تعليقاتك هنا...',
                 prefixIcon: Icon(Icons.comment_outlined, size: 16),
-                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 10,
+                ),
               ),
               style: const TextStyle(fontSize: 12),
               onChanged: onCommentChanged,
@@ -272,10 +283,14 @@ class ChecklistItem extends StatelessWidget {
         side: BorderSide(
           color: value
               ? AppColors.primary.withValues(alpha: 0.5)
-              : (context.theme.brightness == Brightness.dark ? AppColors.borderDark : AppColors.borderLight),
+              : (context.theme.brightness == Brightness.dark
+                    ? AppColors.borderDark
+                    : AppColors.borderLight),
         ),
       ),
-      color: value ? AppColors.primary.withValues(alpha: 0.05) : Colors.transparent,
+      color: value
+          ? AppColors.primary.withValues(alpha: 0.05)
+          : Colors.transparent,
       child: CheckboxListTile(
         title: Text(
           label,
@@ -299,11 +314,7 @@ class ImagePreviewCard extends StatelessWidget {
   final String imagePath;
   final VoidCallback? onRemove;
 
-  const ImagePreviewCard({
-    super.key,
-    required this.imagePath,
-    this.onRemove,
-  });
+  const ImagePreviewCard({super.key, required this.imagePath, this.onRemove});
 
   @override
   Widget build(BuildContext context) {
@@ -318,7 +329,9 @@ class ImagePreviewCard extends StatelessWidget {
             borderRadius: AppRadius.rMD,
             border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
             image: DecorationImage(
-              image: isNetwork ? NetworkImage(imagePath) as ImageProvider : AssetImage(imagePath),
+              image: isNetwork
+                  ? NetworkImage(imagePath) as ImageProvider
+                  : AssetImage(imagePath),
               fit: BoxFit.cover,
             ),
           ),
@@ -353,11 +366,7 @@ class VideoPreviewCard extends StatelessWidget {
   final String title;
   final VoidCallback? onRemove;
 
-  const VideoPreviewCard({
-    super.key,
-    required this.title,
-    this.onRemove,
-  });
+  const VideoPreviewCard({super.key, required this.title, this.onRemove});
 
   @override
   Widget build(BuildContext context) {
@@ -423,11 +432,7 @@ class AttachmentCard extends StatelessWidget {
   final String fileName;
   final VoidCallback? onRemove;
 
-  const AttachmentCard({
-    super.key,
-    required this.fileName,
-    this.onRemove,
-  });
+  const AttachmentCard({super.key, required this.fileName, this.onRemove});
 
   @override
   Widget build(BuildContext context) {
@@ -442,7 +447,10 @@ class AttachmentCard extends StatelessWidget {
         ),
       ),
       child: ListTile(
-        leading: const Icon(Icons.insert_drive_file_rounded, color: AppColors.primary),
+        leading: const Icon(
+          Icons.insert_drive_file_rounded,
+          color: AppColors.primary,
+        ),
         title: Text(
           fileName,
           style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
@@ -451,7 +459,11 @@ class AttachmentCard extends StatelessWidget {
         ),
         trailing: onRemove != null
             ? IconButton(
-                icon: const Icon(Icons.delete_outline_rounded, color: AppColors.error, size: 20),
+                icon: const Icon(
+                  Icons.delete_outline_rounded,
+                  color: AppColors.error,
+                  size: 20,
+                ),
                 onPressed: onRemove,
               )
             : null,
@@ -488,7 +500,9 @@ class EvidenceUploader extends StatelessWidget {
             width: 1.5,
           ),
           borderRadius: AppRadius.rMD,
-          color: isDark ? AppColors.surfaceDark.withValues(alpha: 0.5) : AppColors.backgroundLight,
+          color: isDark
+              ? AppColors.surfaceDark.withValues(alpha: 0.5)
+              : AppColors.backgroundLight,
         ),
         child: Column(
           children: [
@@ -496,7 +510,11 @@ class EvidenceUploader extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               label,
-              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.primary),
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: AppColors.primary,
+              ),
             ),
           ],
         ),
@@ -550,7 +568,10 @@ class TimelineCard extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                ),
               ),
               const SizedBox(height: 4),
               Text(
@@ -595,11 +616,7 @@ class EmptyStateWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              color: Colors.grey.shade400,
-              size: 48,
-            ),
+            Icon(icon, color: Colors.grey.shade400, size: 48),
             const SizedBox(height: 12),
             Text(
               message,
@@ -622,11 +639,7 @@ class InformationCard extends StatelessWidget {
   final String title;
   final List<Map<String, String>> items;
 
-  const InformationCard({
-    super.key,
-    required this.title,
-    required this.items,
-  });
+  const InformationCard({super.key, required this.title, required this.items});
 
   @override
   Widget build(BuildContext context) {
@@ -662,7 +675,9 @@ class InformationCard extends StatelessWidget {
                     Text(
                       item['label'] ?? '',
                       style: TextStyle(
-                        color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                        color: isDark
+                            ? AppColors.textSecondaryDark
+                            : AppColors.textSecondaryLight,
                         fontSize: 11,
                       ),
                     ),
@@ -678,7 +693,9 @@ class InformationCard extends StatelessWidget {
               ),
               if (item != items.last)
                 Divider(
-                  color: isDark ? AppColors.borderDark.withValues(alpha: 0.5) : AppColors.borderLight.withValues(alpha: 0.5),
+                  color: isDark
+                      ? AppColors.borderDark.withValues(alpha: 0.5)
+                      : AppColors.borderLight.withValues(alpha: 0.5),
                   height: 12,
                 ),
             ],
@@ -707,7 +724,8 @@ class PhotoUploaderWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         EvidenceUploader(
-          label: 'إرفاق صور إثبات التلف / العيوب الميكانيكية (صور العقد والمطابقة)',
+          label:
+              'إرفاق صور إثبات التلف / العيوب الميكانيكية (صور العقد والمطابقة)',
           icon: Icons.camera_alt_rounded,
           onTap: onUpload,
         ),
@@ -797,7 +815,9 @@ class DescriptionWidget extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: AppRadius.rMD,
         side: BorderSide(
-          color: context.theme.brightness == Brightness.dark ? AppColors.borderDark : AppColors.borderLight,
+          color: context.theme.brightness == Brightness.dark
+              ? AppColors.borderDark
+              : AppColors.borderLight,
         ),
       ),
       child: Padding(
@@ -807,14 +827,19 @@ class DescriptionWidget extends StatelessWidget {
           children: [
             const Text(
               'شرح ووصف تفصيلي للمشكلة',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.primary),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+                color: AppColors.primary,
+              ),
             ),
             const SizedBox(height: 12),
             TextField(
               controller: controller,
               maxLines: 5,
               decoration: const InputDecoration(
-                hintText: 'يرجى كتابة تفاصيل دقيقة لتسهل على المورد فهم العيب وحل المشكلة...',
+                hintText:
+                    'يرجى كتابة تفاصيل دقيقة لتسهل على المورد فهم العيب وحل المشكلة...',
                 contentPadding: EdgeInsets.all(12),
               ),
               style: const TextStyle(fontSize: 12),
@@ -846,7 +871,9 @@ class EvidenceWidget extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: AppRadius.rMD,
         side: BorderSide(
-          color: context.theme.brightness == Brightness.dark ? AppColors.borderDark : AppColors.borderLight,
+          color: context.theme.brightness == Brightness.dark
+              ? AppColors.borderDark
+              : AppColors.borderLight,
         ),
       ),
       child: Padding(
@@ -856,7 +883,11 @@ class EvidenceWidget extends StatelessWidget {
           children: [
             const Text(
               'ملفات ومستندات فنية داعمة (تقارير مختبرات خارجية / قياسات)',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: AppColors.primary),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+                color: AppColors.primary,
+              ),
             ),
             const SizedBox(height: 12),
             EvidenceUploader(
@@ -904,7 +935,9 @@ class ItemsSelectorWidget extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: AppRadius.rMD,
         side: BorderSide(
-          color: context.theme.brightness == Brightness.dark ? AppColors.borderDark : AppColors.borderLight,
+          color: context.theme.brightness == Brightness.dark
+              ? AppColors.borderDark
+              : AppColors.borderLight,
         ),
       ),
       child: Padding(
@@ -914,7 +947,11 @@ class ItemsSelectorWidget extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 13,
+                color: AppColors.primary,
+              ),
             ),
             const SizedBox(height: 12),
             ListTile(
@@ -926,12 +963,16 @@ class ItemsSelectorWidget extends StatelessWidget {
                   width: 50,
                   height: 50,
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => const Icon(Icons.image_not_supported_rounded),
+                  errorBuilder: (context, error, stackTrace) =>
+                      const Icon(Icons.image_not_supported_rounded),
                 ),
               ),
               title: Text(
                 order.productName,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                ),
               ),
               subtitle: Text(
                 'الكمية الإجمالية المستلمة: ${order.quantity} وحدة',
@@ -944,28 +985,49 @@ class ItemsSelectorWidget extends StatelessWidget {
               children: [
                 Text(
                   quantityLabel,
-                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Row(
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.remove_circle_outline_rounded, color: AppColors.primary),
-                      onPressed: selectedQuantity > 1 ? () => onQuantityChanged(selectedQuantity - 1) : null,
+                      icon: const Icon(
+                        Icons.remove_circle_outline_rounded,
+                        color: AppColors.primary,
+                      ),
+                      onPressed: selectedQuantity > 1
+                          ? () => onQuantityChanged(selectedQuantity - 1)
+                          : null,
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
                       decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
+                        border: Border.all(
+                          color: AppColors.primary.withValues(alpha: 0.3),
+                        ),
                         borderRadius: AppRadius.rSM,
                       ),
                       child: Text(
                         '$selectedQuantity',
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.add_circle_outline_rounded, color: AppColors.primary),
-                      onPressed: selectedQuantity < maxQuantity ? () => onQuantityChanged(selectedQuantity + 1) : null,
+                      icon: const Icon(
+                        Icons.add_circle_outline_rounded,
+                        color: AppColors.primary,
+                      ),
+                      onPressed: selectedQuantity < maxQuantity
+                          ? () => onQuantityChanged(selectedQuantity + 1)
+                          : null,
                     ),
                   ],
                 ),
@@ -999,7 +1061,9 @@ class ReplacementReasonWidget extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: AppRadius.rMD,
         side: BorderSide(
-          color: context.theme.brightness == Brightness.dark ? AppColors.borderDark : AppColors.borderLight,
+          color: context.theme.brightness == Brightness.dark
+              ? AppColors.borderDark
+              : AppColors.borderLight,
         ),
       ),
       child: Padding(
@@ -1009,7 +1073,11 @@ class ReplacementReasonWidget extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.primary),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 13,
+                color: AppColors.primary,
+              ),
             ),
             const SizedBox(height: 12),
             for (final reason in reasons)

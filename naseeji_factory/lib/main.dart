@@ -42,7 +42,7 @@ class MyApp extends ConsumerWidget {
 
     return MaterialApp.router(
       title: 'مصنع نسيجي',
-
+      debugShowCheckedModeBanner: false,
       // Theme Configuration (Material 3 enabled, light/dark modes, system mode default)
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,

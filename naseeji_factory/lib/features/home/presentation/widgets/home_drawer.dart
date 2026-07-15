@@ -15,23 +15,29 @@ class HomeDrawer extends ConsumerWidget {
     final profile = ref.watch(miniProfileNotifierProvider);
 
     void navigate(String route) {
-      context.pop(); // close drawer
-      if (route != '/home' && route != '/products') {
-        checkGuestAction(context, ref, () {
-          if (route == '/home' || route == '/products' ||
-              route == '/rfq' || route == '/orders' || route == '/profile') {
+      final isTabRoute = route == '/home' || route == '/products' ||
+          route == '/rfq' || route == '/orders' || route == '/profile';
+
+      final requiresAuth = route != '/home' && 
+                           route != '/products' && 
+                           route != '/search?type=suppliers';
+
+      void executeNavigation() {
+        context.pop(); // close drawer
+        Future.delayed(const Duration(milliseconds: 250), () {
+          if (!context.mounted) return;
+          if (isTabRoute) {
             context.go(route);
           } else {
             context.push(route);
           }
         });
+      }
+
+      if (requiresAuth) {
+        checkGuestAction(context, ref, executeNavigation);
       } else {
-        if (route == '/home' || route == '/products' ||
-            route == '/rfq' || route == '/orders' || route == '/profile') {
-          context.go(route);
-        } else {
-          context.push(route);
-        }
+        executeNavigation();
       }
     }
 
@@ -95,8 +101,8 @@ class HomeDrawer extends ConsumerWidget {
                   DrawerItemWidget(
                     title: 'سجل المشتريات',
                     icon: Icons.history_rounded,
-                    isSelected: currentRoute == '/purchase-history',
-                    onTap: () => navigate('/statistics'),
+                    isSelected: currentRoute == '/purchases',
+                    onTap: () => navigate('/purchases'),
                   ),
                   DrawerItemWidget(
                     title: 'التقارير والإحصائيات',
@@ -119,12 +125,12 @@ class HomeDrawer extends ConsumerWidget {
                   DrawerItemWidget(
                     title: 'الشروط والأحكام',
                     icon: Icons.description_outlined,
-                    onTap: () {},
+                    onTap: () => navigate('/account/terms'),
                   ),
                   DrawerItemWidget(
                     title: 'سياسة الخصوصية',
                     icon: Icons.privacy_tip_outlined,
-                    onTap: () {},
+                    onTap: () => navigate('/account/privacy'),
                   ),
                 ],
               ),

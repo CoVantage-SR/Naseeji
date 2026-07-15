@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
@@ -139,13 +140,13 @@ class GreetingCardWidget extends StatelessWidget {
 }
 
 /// 3. FactorySummaryCardWidget
-class FactorySummaryCardWidget extends StatelessWidget {
+class FactorySummaryCardWidget extends ConsumerWidget {
   final Map<String, dynamic> stats;
 
   const FactorySummaryCardWidget({super.key, required this.stats});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final activeOrders = stats['active_orders']?.toString() ?? '٠';
     final completedOrders = stats['completed_orders']?.toString() ?? '٠';
     final newRfqs = stats['new_rfqs']?.toString() ?? '٠';
@@ -164,24 +165,28 @@ class FactorySummaryCardWidget extends StatelessWidget {
           value: activeOrders,
           icon: Icons.receipt_long_outlined,
           color: AppColors.primary,
+          onTap: () => checkGuestAction(context, ref, () => context.go('/orders')),
         ),
         StatisticsCard(
           label: 'طلبات مكتملة',
           value: completedOrders,
           icon: Icons.check_circle_outline_rounded,
           color: AppColors.success,
+          onTap: () => checkGuestAction(context, ref, () => context.go('/orders')),
         ),
         StatisticsCard(
           label: 'عروض أسعار جديدة',
           value: newRfqs,
           icon: Icons.request_quote_outlined,
           color: AppColors.secondary,
+          onTap: () => checkGuestAction(context, ref, () => context.go('/rfq')),
         ),
         StatisticsCard(
           label: 'طلبات قيد الشحن',
           value: shippingOrders,
           icon: Icons.local_shipping_outlined,
           color: AppColors.info,
+          onTap: () => checkGuestAction(context, ref, () => context.go('/orders')),
         ),
       ],
     );
@@ -265,11 +270,11 @@ class QuickActionButtonWidget extends StatelessWidget {
 }
 
 /// 6. StatisticsCardsWidget - Statistics section on dashboard
-class StatisticsCardsWidget extends StatelessWidget {
+class StatisticsCardsWidget extends ConsumerWidget {
   const StatisticsCardsWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Row(
       children: [
         Expanded(
@@ -280,6 +285,7 @@ class StatisticsCardsWidget extends StatelessWidget {
             color: AppColors.primary,
             trendText: '+١٢%',
             trendPositive: true,
+            onTap: () => checkGuestAction(context, ref, () => context.push('/statistics')),
           ),
         ),
         const SizedBox(width: 12),
@@ -291,6 +297,7 @@ class StatisticsCardsWidget extends StatelessWidget {
             color: AppColors.secondary,
             trendText: '-٥%',
             trendPositive: false,
+            onTap: () => checkGuestAction(context, ref, () => context.push('/statistics')),
           ),
         ),
       ],
@@ -343,13 +350,13 @@ class LatestRFQWidget extends StatelessWidget {
 }
 
 /// 8. LatestRFQCardWidget
-class LatestRFQCardWidget extends StatelessWidget {
+class LatestRFQCardWidget extends ConsumerWidget {
   final Map<String, dynamic> rfq;
 
   const LatestRFQCardWidget({super.key, required this.rfq});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isDark = context.theme.brightness == Brightness.dark;
     final String supplierName = rfq['supplier_name'] ?? 'مورد غير معروف';
     final String price = rfq['price'] ?? 'غير محدد';
@@ -367,12 +374,17 @@ class LatestRFQCardWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                supplierName,
-                style: context.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
+              Expanded(
+                child: Text(
+                  supplierName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: context.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
+              const SizedBox(width: 8),
               StatusChip(label: status, color: statusColor),
             ],
           ),
@@ -413,7 +425,13 @@ class LatestRFQCardWidget extends StatelessWidget {
                 ],
               ),
               OutlinedButton(
-                onPressed: () {},
+                onPressed: () {
+                  checkGuestAction(
+                    context,
+                    ref,
+                    () => context.push('/rfq/${rfq['id']}'),
+                  );
+                },
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: AppColors.primary),
                   shape: RoundedRectangleBorder(borderRadius: AppRadius.rSM),
@@ -473,13 +491,13 @@ class CurrentOrdersWidget extends StatelessWidget {
 }
 
 /// 10. OrderCardWidget
-class OrderCardWidget extends StatelessWidget {
+class OrderCardWidget extends ConsumerWidget {
   final Map<String, dynamic> order;
 
   const OrderCardWidget({super.key, required this.order});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final String orderId = order['id'] ?? 'ORD-0000';
     final String supplierName = order['supplier_name'] ?? 'مورد غير معروف';
     final String status = order['status'] ?? 'معلق';
@@ -497,7 +515,13 @@ class OrderCardWidget extends StatelessWidget {
       progressColor: progressColor,
       footerLeft: 'حالة الطلب: $status',
       footerRight: 'التسليم المتوقع: $expectedDelivery',
-      onTap: () {},
+      onTap: () {
+        checkGuestAction(
+          context,
+          ref,
+          () => context.push('/orders/$orderId'),
+        );
+      },
     );
   }
 }
@@ -544,14 +568,15 @@ class RecommendedSuppliersWidget extends StatelessWidget {
 }
 
 /// 12. SupplierCardWidget
-class SupplierCardWidget extends StatelessWidget {
+class SupplierCardWidget extends ConsumerWidget {
   final Map<String, dynamic> supplier;
 
   const SupplierCardWidget({super.key, required this.supplier});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isDark = context.theme.brightness == Brightness.dark;
+    final String id = supplier['id'] ?? 'sup_1';
     final String name = supplier['name'] ?? 'مورد غير معروف';
     final double rating = supplier['rating'] ?? 0.0;
     final String specialization = supplier['specialization'] ?? '';
@@ -614,7 +639,9 @@ class SupplierCardWidget extends StatelessWidget {
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        context.push('/suppliers/$id');
+                      },
                       child: const Text(
                         'عرض الملف الشخصي',
                         style: TextStyle(
