@@ -6,7 +6,7 @@ import '../../../../../../core/constants/app_spacing.dart';
 import '../../../../../../core/extensions/context_extensions.dart';
 import '../../../../../../core/widgets/reusable_widgets.dart';
 import '../../providers/bulk_pricing_provider.dart';
-import '../../../../domain/entities/product_detail_entities.dart';
+import '../../../domain/entities/product_detail_entities.dart';
 
 /// Displays tiered bulk pricing table with discount percentages.
 /// Reads data from [bulkPricingProvider].
