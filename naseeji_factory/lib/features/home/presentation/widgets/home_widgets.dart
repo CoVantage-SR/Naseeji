@@ -576,11 +576,11 @@ class SupplierCardWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isDark = context.theme.brightness == Brightness.dark;
-    final String id = supplier['id'] ?? 'sup_1';
-    final String name = supplier['name'] ?? 'مورد غير معروف';
-    final double rating = supplier['rating'] ?? 0.0;
-    final String specialization = supplier['specialization'] ?? '';
-    final String minOrder = supplier['min_order'] ?? '';
+    final String id = supplier['id']?.toString() ?? 'sup_1';
+    final String name = supplier['name']?.toString() ?? 'مورد غير معروف';
+    final double rating = (supplier['rating'] as num?)?.toDouble() ?? 0.0;
+    final String specialization = supplier['specialization']?.toString() ?? '';
+    final String minOrder = supplier['min_order']?.toString() ?? '';
 
     return PrimaryCard(
       child: Row(

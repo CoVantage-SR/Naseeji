@@ -18,9 +18,9 @@ class HomeDrawer extends ConsumerWidget {
       final isTabRoute = route == '/home' || route == '/products' ||
           route == '/rfq' || route == '/orders' || route == '/profile';
 
-      final requiresAuth = route != '/home' && 
-                           route != '/products' && 
-                           route != '/search?type=suppliers';
+      final requiresAuth = route != '/home' &&
+          route != '/products' &&
+          route != '/search?type=suppliers';
 
       void executeNavigation() {
         context.pop(); // close drawer
