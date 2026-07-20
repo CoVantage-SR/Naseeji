@@ -9,7 +9,6 @@ import '../../features/auth/presentation/screens/complete_registration_screen.da
 import '../../features/auth/presentation/screens/factory_info_screen.dart';
 import '../../features/auth/presentation/screens/factory_type_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
-import '../../features/auth/presentation/screens/onboarding_screen.dart';
 import '../../features/auth/presentation/screens/otp_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
 import '../../features/auth/presentation/screens/splash_screen.dart';
@@ -96,11 +95,6 @@ GoRouter appRouter(AppRouterRef ref) {
       GoRoute(
         path: '/',
         builder: (context, state) => const SplashScreen(),
-      ),
-      // Onboarding
-      GoRoute(
-        path: '/onboarding',
-        builder: (context, state) => const OnboardingScreen(),
       ),
       // Login
       GoRoute(
