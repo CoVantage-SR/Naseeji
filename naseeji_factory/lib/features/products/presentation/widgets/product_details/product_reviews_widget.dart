@@ -6,6 +6,7 @@ import '../../../../../core/constants/app_spacing.dart';
 import '../../../../../core/extensions/context_extensions.dart';
 import '../../../../../core/widgets/reusable_widgets.dart';
 import '../providers/reviews_provider.dart';
+import '../../../domain/entities/product_detail_entities.dart';
 
 /// Displays the top B2B factory reviews for a product.
 /// Reads data from [reviewsProvider].
@@ -56,7 +57,7 @@ class ProductReviewsWidget extends ConsumerWidget {
 }
 
 class _ReviewCard extends StatelessWidget {
-  final dynamic review;
+  final ProductReview review;
 
   const _ReviewCard({required this.review});
 
@@ -81,9 +82,9 @@ class _ReviewCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(review.reviewerName as String, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                    Text(review.reviewerName, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
                     Text(
-                      review.factoryName as String,
+                      review.factoryName,
                       style: context.textTheme.bodySmall?.copyWith(color: Colors.grey),
                     ),
                   ],
@@ -95,23 +96,23 @@ class _ReviewCard extends StatelessWidget {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: List.generate(5, (i) => Icon(
-                      i < (review.rating as double).round() ? Icons.star_rounded : Icons.star_outline_rounded,
+                      i < review.rating.round() ? Icons.star_rounded : Icons.star_outline_rounded,
                       color: Colors.amber,
                       size: 14,
                     )),
                   ),
                   const SizedBox(height: 2),
-                  if (review.verifiedPurchase as bool)
+                  if (review.verifiedPurchase)
                     StatusChip(label: 'شراء موثق', color: AppColors.success),
                 ],
               ),
             ],
           ),
           const SizedBox(height: 8),
-          Text(review.comment as String, style: context.textTheme.bodySmall?.copyWith(height: 1.5)),
+          Text(review.comment, style: context.textTheme.bodySmall?.copyWith(height: 1.5)),
           const SizedBox(height: 4),
           Text(
-            review.date as String,
+            review.date,
             style: context.textTheme.bodySmall?.copyWith(color: Colors.grey, fontSize: 10),
           ),
         ],

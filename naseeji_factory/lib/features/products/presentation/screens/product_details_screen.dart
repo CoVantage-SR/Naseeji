@@ -2,14 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_radius.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/widgets/reusable_widgets.dart';
 import '../providers/products_provider.dart';
 import '../providers/suppliers_provider.dart';
 import '../widgets/favorites_widgets.dart';
-import '../widgets/product_details_widgets.dart';
 import '../widgets/share_widgets.dart';
+
+// Product-details sub-widgets
+import '../widgets/product_details/product_gallery_widget.dart';
+import '../widgets/product_details/product_summary_widget.dart';
+import '../widgets/product_details/product_technical_specs_widget.dart';
+import '../widgets/product_details/product_pricing_widget.dart';
+import '../widgets/product_details/bulk_pricing_widget.dart';
+import '../widgets/product_details/production_capacity_widget.dart';
+import '../widgets/product_details/logistics_widget.dart';
+import '../widgets/product_details/documents_widget.dart';
+import '../widgets/product_details/sample_widget.dart';
+import '../widgets/product_details/product_reviews_widget.dart';
+import '../widgets/product_details/supplier_preview_widget.dart';
+import '../widgets/product_details/video_preview_widget.dart';
+import '../widgets/product_details/procurement_timeline_widget.dart';
+import '../widgets/product_details/product_bottom_action_bar_widget.dart';
 
 class ProductDetailsScreen extends ConsumerWidget {
   final String productId;
@@ -20,24 +34,22 @@ class ProductDetailsScreen extends ConsumerWidget {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
-      builder: (context) {
-        return ShareProductBottomSheet(
-          productName: name,
-          supplierName: supplier,
-          onCopyLink: () {
-            Navigator.of(context).pop();
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('تم نسخ رابط المنتج بنجاح!')),
-            );
-          },
-          onDownloadPdf: () {
-            Navigator.of(context).pop();
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('بدء تحميل الكتالوج الفني...')),
-            );
-          },
-        );
-      },
+      builder: (context) => ShareProductBottomSheet(
+        productName: name,
+        supplierName: supplier,
+        onCopyLink: () {
+          Navigator.of(context).pop();
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('تم نسخ رابط المنتج بنجاح!')),
+          );
+        },
+        onDownloadPdf: () {
+          Navigator.of(context).pop();
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('بدء تحميل الكتالوج الفني...')),
+          );
+        },
+      ),
     );
   }
 
@@ -52,22 +64,20 @@ class ProductDetailsScreen extends ConsumerWidget {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) {
-        return AddToFavoritesBottomSheet(
-          supplierName: name,
-          supplierType: type,
-          onSave: (category, note) {
-            ref.read(suppliersNotifierProvider.notifier).toggleFavorite(
-                  supplierId,
-                  category: category,
-                  note: note,
-                );
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('تم إضافة المورد إلى المفضلة بنجاح!')),
-            );
-          },
-        );
-      },
+      builder: (context) => AddToFavoritesBottomSheet(
+        supplierName: name,
+        supplierType: type,
+        onSave: (category, note) {
+          ref.read(suppliersNotifierProvider.notifier).toggleFavorite(
+                supplierId,
+                category: category,
+                note: note,
+              );
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('تم إضافة المورد إلى المفضلة بنجاح!')),
+          );
+        },
+      ),
     );
   }
 
@@ -104,93 +114,88 @@ class ProductDetailsScreen extends ConsumerWidget {
           const SizedBox(width: 8),
         ],
       ),
+      bottomNavigationBar: ProductBottomActionBarWidget(
+        onFavoriteSupplier: () {
+          final supplier = ref.read(suppliersNotifierProvider.notifier).getSupplierById(product.supplierId);
+          if (supplier != null) {
+            checkGuestAction(
+              context,
+              ref,
+              () => _showFavoriteBottomSheet(context, ref, supplier.id, supplier.name, supplier.type),
+            );
+          }
+        },
+        onRequestQuote: () => checkGuestAction(
+          context,
+          ref,
+          () => context.push('/request-product?id=${product.id}'),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // 1. Image Gallery
               ProductGalleryWidget(product: product),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ProductInformationWidget(product: product),
+                    // 2. Product Name, Rating, Description
+                    ProductSummaryWidget(product: product),
                     AppSpacing.hMD,
-                    const VideoPreviewWidget(),
+                    // 3. Video Preview
+                    VideoPreviewWidget(onTap: () {}),
+                    AppSpacing.hLG,
+                    // 4. Base Unit Pricing + MOQ
+                    ProductPricingWidget(product: product),
                     AppSpacing.hMD,
-                    PdfCatalogWidget(
-                      onDownload: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('بدء تحميل الكتالوج الفني...')),
-                        );
-                      },
+                    // 5. Bulk Pricing Tiers (NEW)
+                    BulkPricingWidget(productId: productId),
+                    AppSpacing.hLG,
+                    // 6. Technical Specifications
+                    ProductTechnicalSpecsWidget(product: product),
+                    AppSpacing.hLG,
+                    // 7. Production Capacity (NEW)
+                    ProductionCapacityWidget(productId: productId),
+                    AppSpacing.hLG,
+                    // 8. Naseeji Logistics (NEW) — Naseeji Logistics Only, 48h SLA
+                    LogisticsWidget(productId: productId),
+                    AppSpacing.hLG,
+                    // 9. Documents & Certificates (NEW)
+                    DocumentsWidget(
+                      productId: productId,
+                      onDownload: () => ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('بدء تحميل الوثيقة...')),
+                      ),
                     ),
                     AppSpacing.hLG,
-                    ProductPricingWidget(product: product),
+                    // 10. Physical Samples (NEW)
+                    SampleWidget(
+                      productId: productId,
+                      onRequestSample: () => checkGuestAction(
+                        context,
+                        ref,
+                        () => ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('سيتم التواصل معك لترتيب إرسال العينة.')),
+                        ),
+                      ),
+                    ),
                     AppSpacing.hLG,
-                    TechnicalSpecificationsWidget(product: product),
-                    AppSpacing.hLG,
+                    // 11. Supplier Profile Preview
                     SupplierPreviewWidget(
                       supplierName: product.supplierName,
                       onTap: () => context.push('/suppliers/${product.supplierId}'),
                     ),
-                    const SizedBox(height: 24),
-                    // Action Buttons Row
-                    Row(
-                      children: [
-                        Expanded(
-                          child: OutlinedButton.icon(
-                            onPressed: () {
-                              final supplier = ref
-                                  .read(suppliersNotifierProvider.notifier)
-                                  .getSupplierById(product.supplierId);
-                              if (supplier != null) {
-                                checkGuestAction(
-                                  context,
-                                  ref,
-                                  () => _showFavoriteBottomSheet(
-                                    context,
-                                    ref,
-                                    supplier.id,
-                                    supplier.name,
-                                    supplier.type,
-                                  ),
-                                );
-                              }
-                            },
-                            icon: const Icon(Icons.favorite_border_rounded),
-                            label: const Text('مفضلة الموردين'),
-                            style: OutlinedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 14),
-                              side: const BorderSide(color: AppColors.primary),
-                              foregroundColor: AppColors.primary,
-                              shape: RoundedRectangleBorder(borderRadius: AppRadius.rMD),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              checkGuestAction(
-                                context,
-                                ref,
-                                () => context.push('/request-product?id=${product.id}'),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primary,
-                              foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(vertical: 14),
-                              shape: RoundedRectangleBorder(borderRadius: AppRadius.rMD),
-                            ),
-                            child: const Text('طلب عرض سعر'),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 32),
+                    AppSpacing.hLG,
+                    // 12. B2B Reviews (NEW)
+                    ProductReviewsWidget(productId: productId),
+                    AppSpacing.hLG,
+                    // 13. Procurement Timeline — 24 steps (NEW)
+                    ProcurementTimelineWidget(productId: productId),
+                    const SizedBox(height: 16),
                   ],
                 ),
               ),

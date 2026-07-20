@@ -6,6 +6,7 @@ import '../../../../../core/constants/app_spacing.dart';
 import '../../../../../core/extensions/context_extensions.dart';
 import '../../../../../core/widgets/reusable_widgets.dart';
 import '../providers/documents_provider.dart';
+import '../../../domain/entities/product_detail_entities.dart';
 
 /// Displays downloadable product documents: PDFs, certificates, lab reports.
 /// Reads data from [documentsProvider].
@@ -46,13 +47,13 @@ class DocumentsWidget extends ConsumerWidget {
 }
 
 class _DocumentRow extends StatelessWidget {
-  final dynamic doc;
+  final DocumentItem doc;
   final VoidCallback onDownload;
 
   const _DocumentRow({required this.doc, required this.onDownload});
 
   IconData get _typeIcon {
-    return switch (doc.type as String) {
+    return switch (doc.type) {
       'certificate' => Icons.workspace_premium_rounded,
       'lab_report' => Icons.science_rounded,
       _ => Icons.picture_as_pdf_rounded,
@@ -60,7 +61,7 @@ class _DocumentRow extends StatelessWidget {
   }
 
   Color get _typeColor {
-    return switch (doc.type as String) {
+    return switch (doc.type) {
       'certificate' => AppColors.warning,
       'lab_report' => AppColors.success,
       _ => AppColors.info,
@@ -88,12 +89,12 @@ class _DocumentRow extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(doc.title as String, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                Text(doc.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
                 Text(sizeText, style: context.textTheme.bodySmall?.copyWith(color: Colors.grey)),
               ],
             ),
           ),
-          if (doc.isDownloadable as bool)
+          if (doc.isDownloadable)
             IconButton(
               icon: const Icon(Icons.download_rounded),
               color: _typeColor,
