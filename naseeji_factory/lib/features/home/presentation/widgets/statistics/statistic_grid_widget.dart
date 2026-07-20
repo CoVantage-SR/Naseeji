@@ -27,7 +27,6 @@ class StatisticGridWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final columnsCount = context.responsiveValue(mobile: 2, tablet: 3).toInt();
-    final isDark = context.theme.brightness == Brightness.dark;
 
     return GridView.count(
       shrinkWrap: true,

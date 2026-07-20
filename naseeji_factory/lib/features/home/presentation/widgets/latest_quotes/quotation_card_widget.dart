@@ -23,8 +23,6 @@ class QuotationCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.theme.brightness == Brightness.dark;
-
     return CardContainerWidget(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

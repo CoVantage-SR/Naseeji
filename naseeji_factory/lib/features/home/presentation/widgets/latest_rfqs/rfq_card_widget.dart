@@ -21,8 +21,6 @@ class RFQCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.theme.brightness == Brightness.dark;
-
     Color statusColor = AppColors.warning;
     if (rfq.status == 'مقبول') statusColor = AppColors.success;
     if (rfq.status == 'مرفوض') statusColor = AppColors.error;
