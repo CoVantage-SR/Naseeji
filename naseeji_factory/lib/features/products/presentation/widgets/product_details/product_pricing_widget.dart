@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../../../core/constants/app_colors.dart';
-import '../../../../../core/constants/app_spacing.dart';
-import '../../../../../core/widgets/reusable_widgets.dart';
-import '../providers/products_provider.dart';
+import '../../../../../../core/constants/app_colors.dart';
+import '../../../../../../core/constants/app_spacing.dart';
+import '../../../../../../core/widgets/reusable_widgets.dart';
+import '../../providers/products_provider.dart';
 
 /// Displays the base unit price, MOQ, and preparation time.
 /// Migrated from ProductPricingWidget in product_details_widgets.dart.

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../../../../core/constants/app_colors.dart';
-import '../../../../../core/constants/app_spacing.dart';
-import '../../../../../core/extensions/context_extensions.dart';
-import '../../../../../core/widgets/reusable_widgets.dart';
-import '../providers/products_provider.dart';
+import '../../../../../../core/constants/app_colors.dart';
+import '../../../../../../core/constants/app_spacing.dart';
+import '../../../../../../core/extensions/context_extensions.dart';
+import '../../../../../../core/widgets/reusable_widgets.dart';
+import '../../providers/products_provider.dart';
 
 /// Displays product name, rating, verified supplier badge, country of origin, and description.
 /// Migrated from ProductInformationWidget in product_details_widgets.dart.

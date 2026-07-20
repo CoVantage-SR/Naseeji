@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../../../core/constants/app_spacing.dart';
-import '../../../../../core/extensions/context_extensions.dart';
-import '../../../../../core/widgets/reusable_widgets.dart';
-import '../providers/products_provider.dart';
+import '../../../../../../core/constants/app_spacing.dart';
+import '../../../../../../core/extensions/context_extensions.dart';
+import '../../../../../../core/widgets/reusable_widgets.dart';
+import '../../providers/products_provider.dart';
 
 /// Technical specifications table for the product.
 /// Migrated from TechnicalSpecificationsWidget in product_details_widgets.dart.

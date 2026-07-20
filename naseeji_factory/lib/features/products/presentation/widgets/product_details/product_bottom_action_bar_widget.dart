@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../../core/constants/app_colors.dart';
-import '../../../../../core/constants/app_radius.dart';
+import '../../../../../../core/constants/app_colors.dart';
+import '../../../../../../core/constants/app_radius.dart';
 
 /// Sticky bottom action bar with two procurement actions.
 /// Replaces the inline action buttons row that was previously in the screen.

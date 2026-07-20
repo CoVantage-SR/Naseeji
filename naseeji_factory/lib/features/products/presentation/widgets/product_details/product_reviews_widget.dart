@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../../core/constants/app_colors.dart';
-import '../../../../../core/constants/app_radius.dart';
-import '../../../../../core/constants/app_spacing.dart';
-import '../../../../../core/extensions/context_extensions.dart';
-import '../../../../../core/widgets/reusable_widgets.dart';
-import '../providers/reviews_provider.dart';
-import '../../../domain/entities/product_detail_entities.dart';
+import '../../../../../../core/constants/app_colors.dart';
+import '../../../../../../core/constants/app_radius.dart';
+import '../../../../../../core/constants/app_spacing.dart';
+import '../../../../../../core/extensions/context_extensions.dart';
+import '../../../../../../core/widgets/reusable_widgets.dart';
+import '../../providers/reviews_provider.dart';
+import '../../../../domain/entities/product_detail_entities.dart';
 
 /// Displays the top B2B factory reviews for a product.
 /// Reads data from [reviewsProvider].
@@ -21,7 +21,7 @@ class ProductReviewsWidget extends ConsumerWidget {
 
     return state.when(
       loading: () => const SizedBox(height: 80, child: Center(child: CircularProgressIndicator())),
-      error: (_, __) => const SizedBox.shrink(),
+      error: (_, _) => const SizedBox.shrink(),
       data: (reviews) {
         if (reviews.isEmpty) return const SizedBox.shrink();
         final avgRating = reviews.map((r) => r.rating).reduce((a, b) => a + b) / reviews.length;

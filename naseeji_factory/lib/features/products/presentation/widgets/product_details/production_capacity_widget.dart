@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../../core/constants/app_colors.dart';
-import '../../../../../core/constants/app_radius.dart';
-import '../../../../../core/constants/app_spacing.dart';
-import '../../../../../core/extensions/context_extensions.dart';
-import '../../../../../core/widgets/reusable_widgets.dart';
-import '../providers/production_capacity_provider.dart';
+import '../../../../../../core/constants/app_colors.dart';
+import '../../../../../../core/constants/app_radius.dart';
+import '../../../../../../core/constants/app_spacing.dart';
+import '../../../../../../core/extensions/context_extensions.dart';
+import '../../../../../../core/widgets/reusable_widgets.dart';
+import '../../providers/production_capacity_provider.dart';
 
 /// Displays supplier production capacity with a utilization progress bar.
 /// Reads data from [productionCapacityProvider].
@@ -21,7 +21,7 @@ class ProductionCapacityWidget extends ConsumerWidget {
 
     return state.when(
       loading: () => const SizedBox(height: 80, child: Center(child: CircularProgressIndicator())),
-      error: (_, __) => const SizedBox.shrink(),
+      error: (_, _) => const SizedBox.shrink(),
       data: (capacity) {
         final utilizationPercent = (capacity.currentUtilization * 100).toInt();
         final utilizationColor = capacity.currentUtilization > 0.85

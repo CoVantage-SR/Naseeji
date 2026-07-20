@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../../core/constants/app_colors.dart';
-import '../providers/products_provider.dart';
+import '../../../../../../core/constants/app_colors.dart';
+import '../../providers/products_provider.dart';
 
 /// Product image gallery with page indicator dots.
 /// Migrated from the monolithic product_details_widgets.dart.

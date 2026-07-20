@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../../core/constants/app_colors.dart';
-import '../../../../../core/constants/app_radius.dart';
-import '../../../../../core/constants/app_spacing.dart';
-import '../../../../../core/extensions/context_extensions.dart';
-import '../../../../../core/widgets/reusable_widgets.dart';
-import '../providers/procurement_timeline_provider.dart';
-import '../../../domain/entities/product_detail_entities.dart';
+import '../../../../../../core/constants/app_colors.dart';
+import '../../../../../../core/constants/app_radius.dart';
+import '../../../../../../core/constants/app_spacing.dart';
+import '../../../../../../core/extensions/context_extensions.dart';
+import '../../../../../../core/widgets/reusable_widgets.dart';
+import '../../providers/procurement_timeline_provider.dart';
+import '../../../../domain/entities/product_detail_entities.dart';
 
 /// Displays the full 24-step procurement timeline.
 /// Shows the active step highlighted. Collapsed to 5 steps by default.
@@ -30,7 +30,7 @@ class _ProcurementTimelineWidgetState extends ConsumerState<ProcurementTimelineW
 
     return state.when(
       loading: () => const SizedBox(height: 80, child: Center(child: CircularProgressIndicator())),
-      error: (_, __) => const SizedBox.shrink(),
+      error: (_, _) => const SizedBox.shrink(),
       data: (stages) {
         final completedCount = stages.where((s) => s.isCompleted).length;
         final activeStep = stages.firstWhere((s) => s.isActive, orElse: () => stages.last);
