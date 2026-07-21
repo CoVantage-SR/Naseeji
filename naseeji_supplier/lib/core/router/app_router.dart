@@ -6,7 +6,6 @@ import 'session_router_observer.dart';
 import '../../features/auth/presentation/controllers/auth_controller.dart';
 import '../../features/auth/domain/models/user_model.dart';
 import '../../features/auth/presentation/screens/splash/splash_screen.dart';
-import '../../features/auth/presentation/screens/onboarding/onboarding_screen.dart';
 import '../../features/auth/presentation/screens/choose_supplier_type/choose_supplier_type_screen.dart';
 import '../../features/auth/presentation/screens/login/login_screen.dart';
 import '../../features/auth/presentation/screens/create_account/create_account_screen.dart';
@@ -167,7 +166,6 @@ GoRouter goRouter(GoRouterRef ref) {
                           state.uri.path == '/google-complete-registration' ||
                           state.uri.path == '/terms' ||
                           state.uri.path == '/privacy' ||
-                          state.uri.path == '/onboarding' ||
                           state.uri.path == '/supplier-type' ||
                           state.uri.path == '/';
 
@@ -188,11 +186,6 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/',
         name: 'splash',
         builder: (context, state) => const SplashScreen(),
-      ),
-      GoRoute(
-        path: '/onboarding',
-        name: 'onboarding',
-        builder: (context, state) => const OnboardingScreen(),
       ),
       GoRoute(
         path: '/supplier-type',
