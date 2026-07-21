@@ -30,32 +30,27 @@ class SupplierDashboardController extends StateNotifier<SupplierDashboardState> 
 
   SupplierDashboardController(this._ref) : super(SupplierDashboardState());
 
-  /// Refreshes all dashboard providers concurrently
+  /// Refreshes all task-driven dashboard providers concurrently
   Future<void> refreshAll() async {
     state = state.copyWith(isRefreshing: true, errorMessage: null);
 
     try {
       _ref.invalidate(supplierHeaderProvider);
-      _ref.invalidate(dashboardStatsProvider);
-      _ref.invalidate(subscriptionProvider);
-      _ref.invalidate(rfqOverviewProvider);
-      _ref.invalidate(ordersOverviewProvider);
+      _ref.invalidate(todayTasksProvider);
+      _ref.invalidate(ordersProvider);
+      _ref.invalidate(rfqsProvider);
       _ref.invalidate(financeProvider);
-      _ref.invalidate(performanceProvider);
+      _ref.invalidate(subscriptionProvider);
       _ref.invalidate(notificationsProvider);
-      _ref.invalidate(quickActionsProvider);
 
-      // Wait for primary providers to resolve
       await Future.wait([
         _ref.read(supplierHeaderProvider.future),
-        _ref.read(dashboardStatsProvider.future),
-        _ref.read(subscriptionProvider.future),
-        _ref.read(rfqOverviewProvider.future),
-        _ref.read(ordersOverviewProvider.future),
+        _ref.read(todayTasksProvider.future),
+        _ref.read(ordersProvider.future),
+        _ref.read(rfqsProvider.future),
         _ref.read(financeProvider.future),
-        _ref.read(performanceProvider.future),
+        _ref.read(subscriptionProvider.future),
         _ref.read(notificationsProvider.future),
-        _ref.read(quickActionsProvider.future),
       ]);
 
       state = state.copyWith(
@@ -65,7 +60,7 @@ class SupplierDashboardController extends StateNotifier<SupplierDashboardState> 
     } catch (e) {
       state = state.copyWith(
         isRefreshing: false,
-        errorMessage: 'فشل في تحديث بيانات لوحة التحكم: $e',
+        errorMessage: 'فشل في تحديث مهام اللوحة: $e',
       );
     }
   }

@@ -1,13 +1,11 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../domain/entities/supplier_header_model.dart';
-import '../../domain/entities/dashboard_stats_model.dart';
-import '../../domain/entities/subscription_overview_model.dart';
+import '../../domain/entities/task_item_model.dart';
+import '../../domain/entities/active_order_model.dart';
 import '../../domain/entities/rfq_item_model.dart';
-import '../../domain/entities/orders_overview_model.dart';
 import '../../domain/entities/finance_overview_model.dart';
-import '../../domain/entities/performance_overview_model.dart';
+import '../../domain/entities/subscription_overview_model.dart';
 import '../../domain/entities/notification_item_model.dart';
-import '../../domain/entities/quick_action_item_model.dart';
 import '../../domain/entities/sales_stats.dart';
 import '../../domain/entities/analytics_data.dart';
 import '../../domain/repositories/dashboard_repository.dart';
@@ -25,37 +23,31 @@ class DashboardRepositoryImpl implements DashboardRepository {
   Future<SupplierHeaderModel> getSupplierHeader() => _remoteDatasource.fetchSupplierHeader();
 
   @override
-  Future<DashboardStatsModel> getDashboardStats() => _remoteDatasource.fetchDashboardStats();
+  Future<List<TaskItemModel>> getTodayTasks() => _remoteDatasource.fetchTodayTasks();
 
   @override
-  Future<SubscriptionOverviewModel> getSubscriptionOverview() => _remoteDatasource.fetchSubscriptionOverview();
+  Future<List<ActiveOrderModel>> getActiveOrders() => _remoteDatasource.fetchActiveOrders();
 
   @override
   Future<List<RfqItemModel>> getRecentRfqs() => _remoteDatasource.fetchRecentRfqs();
 
   @override
-  Future<OrdersOverviewModel> getOrdersOverview() => _remoteDatasource.fetchOrdersOverview();
+  Future<FinanceOverviewModel> getFinanceSummary() => _remoteDatasource.fetchFinanceSummary();
 
   @override
-  Future<FinanceOverviewModel> getFinanceOverview() => _remoteDatasource.fetchFinanceOverview();
-
-  @override
-  Future<PerformanceOverviewModel> getPerformanceOverview() => _remoteDatasource.fetchPerformanceOverview();
+  Future<SubscriptionOverviewModel> getSubscriptionOverview() => _remoteDatasource.fetchSubscriptionOverview();
 
   @override
   Future<List<NotificationItemModel>> getRecentNotifications() => _remoteDatasource.fetchRecentNotifications();
 
-  @override
-  Future<List<QuickActionItemModel>> getQuickActions() => _remoteDatasource.fetchQuickActions();
-
-  // Legacy compatibility implementations
+  // Legacy compatibility
   @override
   Future<SalesStats> getSalesStats() async {
-    final stats = await getDashboardStats();
+    final fin = await getFinanceSummary();
     return SalesStats(
       todaySales: 2500.0,
-      monthlyEarnings: stats.monthlyRevenue,
-      pendingOrders: stats.ordersInProduction,
+      monthlyEarnings: fin.monthlyRevenue,
+      pendingOrders: 3,
       activeProducts: 58,
       weeklySales: const [80.0, 60.0, 70.0, 30.0, 50.0, 20.0, 90.0],
     );

@@ -1,82 +1,131 @@
-import 'package:flutter/material.dart';
 import '../../domain/entities/supplier_header_model.dart';
-import '../../domain/entities/dashboard_stats_model.dart';
-import '../../domain/entities/subscription_overview_model.dart';
+import '../../domain/entities/task_item_model.dart';
+import '../../domain/entities/active_order_model.dart';
 import '../../domain/entities/rfq_item_model.dart';
-import '../../domain/entities/orders_overview_model.dart';
 import '../../domain/entities/finance_overview_model.dart';
-import '../../domain/entities/performance_overview_model.dart';
+import '../../domain/entities/subscription_overview_model.dart';
 import '../../domain/entities/notification_item_model.dart';
-import '../../domain/entities/quick_action_item_model.dart';
 
 abstract class DashboardRemoteDatasource {
   Future<SupplierHeaderModel> fetchSupplierHeader();
-  Future<DashboardStatsModel> fetchDashboardStats();
-  Future<SubscriptionOverviewModel> fetchSubscriptionOverview();
+  Future<List<TaskItemModel>> fetchTodayTasks();
+  Future<List<ActiveOrderModel>> fetchActiveOrders();
   Future<List<RfqItemModel>> fetchRecentRfqs();
-  Future<OrdersOverviewModel> fetchOrdersOverview();
-  Future<FinanceOverviewModel> fetchFinanceOverview();
-  Future<PerformanceOverviewModel> fetchPerformanceOverview();
+  Future<FinanceOverviewModel> fetchFinanceSummary();
+  Future<SubscriptionOverviewModel> fetchSubscriptionOverview();
   Future<List<NotificationItemModel>> fetchRecentNotifications();
-  Future<List<QuickActionItemModel>> fetchQuickActions();
 }
 
 class DashboardRemoteDatasourceImpl implements DashboardRemoteDatasource {
   @override
   Future<SupplierHeaderModel> fetchSupplierHeader() async {
-    await Future.delayed(const Duration(milliseconds: 250));
-    return const SupplierHeaderModel(
-      supplierId: 'SUP-89421',
-      supplierName: 'شركة النسيج العربي المتقدمة',
-      companyName: 'مصانع نسيج القاهرة الكبرى',
-      subscriptionBadge: 'احترافي',
-      unreadNotificationCount: 6,
-      rating: 4.9,
-      isVerified: true,
-    );
-  }
-
-  @override
-  Future<DashboardStatsModel> fetchDashboardStats() async {
-    await Future.delayed(const Duration(milliseconds: 300));
-    return const DashboardStatsModel(
-      newRfqs: 14,
-      waitingQuotations: 8,
-      ordersUnderNegotiation: 5,
-      ordersInProduction: 12,
-      readyForShipment: 4,
-      delayedOrders: 1,
-      completedOrders: 184,
-      monthlyRevenue: 285400.00,
-    );
-  }
-
-  @override
-  Future<SubscriptionOverviewModel> fetchSubscriptionOverview() async {
     await Future.delayed(const Duration(milliseconds: 200));
-    return SubscriptionOverviewModel(
-      currentPlan: 'Professional (احترافي)',
-      productsUsed: 58,
-      productsLimit: 100,
-      advertisementsUsed: 2,
-      advertisementsLimit: 5,
-      featuredProductsUsed: 1,
-      featuredProductsLimit: 3,
-      rfqsUsed: 34,
-      rfqsLimit: 100,
-      expiryDate: DateTime.now().add(const Duration(days: 45)),
-      isExpiringSoon: false,
+    return const SupplierHeaderModel(
+      greeting: 'السلام عليكم يا أ/ محمد',
+      supplierName: 'محمد أحمد العرابي',
+      companyName: 'شركة النسيج العربي',
+      ratingStars: '★★★★★',
+      subscriptionBadge: 'احترافي',
+      isVerified: true,
+      unreadNotificationCount: 3,
     );
+  }
+
+  @override
+  Future<List<TaskItemModel>> fetchTodayTasks() async {
+    await Future.delayed(const Duration(milliseconds: 250));
+    final now = DateTime.now();
+
+    return [
+      TaskItemModel(
+        id: 'TASK-1',
+        title: 'لديك 3 طلبات RFQ تحتاج الرد',
+        description: 'طلبات عروض أسعار عاجلة من مشتريين بانتظار تقديم تسعيرك.',
+        priority: TaskPriority.urgent,
+        statusLabel: 'عاجل جداً',
+        actionLabel: 'عرض',
+        actionRoute: '/orders',
+        deadlineFormatted: 'متبقي ٣ ساعات',
+        createdAt: now.subtract(const Duration(hours: 1)),
+      ),
+      TaskItemModel(
+        id: 'TASK-2',
+        title: 'يوجد عرض يحتاج تفاوض',
+        description: 'قدم المشتري عرضاً مضاداً على الطلب ORD-2304.',
+        priority: TaskPriority.today,
+        statusLabel: 'يحتاج تفاوض',
+        actionLabel: 'فتح',
+        actionRoute: '/orders',
+        deadlineFormatted: 'اليوم ٥:٠٠ م',
+        createdAt: now.subtract(const Duration(hours: 3)),
+      ),
+      TaskItemModel(
+        id: 'TASK-3',
+        title: 'يوجد طلب جاهز للشحن',
+        description: 'اكتمل تجهيز الطلب ORD-2305 في المصنع وبانتظار التغليف.',
+        priority: TaskPriority.waiting,
+        statusLabel: 'جاهز للشحن',
+        actionLabel: 'إنشاء بوليصة',
+        actionRoute: '/shipping',
+        deadlineFormatted: 'غداً ١٢:٠٠ م',
+        createdAt: now.subtract(const Duration(hours: 5)),
+      ),
+      TaskItemModel(
+        id: 'TASK-4',
+        title: 'تم تأكيد الاستلام',
+        description: 'أكد العميل استلام الشحنة SHP-9081 ويمكنك سحب المبلغ.',
+        priority: TaskPriority.informational,
+        statusLabel: 'مستحقات محررة',
+        actionLabel: 'استلام المستحقات',
+        actionRoute: '/financial',
+        deadlineFormatted: 'م متاح الآن',
+        createdAt: now.subtract(const Duration(days: 1)),
+      ),
+    ];
+  }
+
+  @override
+  Future<List<ActiveOrderModel>> fetchActiveOrders() async {
+    await Future.delayed(const Duration(milliseconds: 250));
+    return const [
+      ActiveOrderModel(
+        orderId: 'ORD-2304',
+        buyerName: 'مجموعة المنسوجات الشرقية',
+        currentStage: 'قيد الإنتاج',
+        progressPercentage: 0.60,
+        expectedDelivery: '٢٥ يوليو ٢٠٢٦',
+        actionLabel: 'فتح الطلب',
+        actionRoute: '/orders',
+      ),
+      ActiveOrderModel(
+        orderId: 'ORD-2305',
+        buyerName: 'مصانع الملابس الجاهزة',
+        currentStage: 'جاهز للاستلام',
+        progressPercentage: 1.00,
+        expectedDelivery: 'اليوم',
+        actionLabel: 'إنشاء شحنة',
+        actionRoute: '/shipping',
+      ),
+      ActiveOrderModel(
+        orderId: 'ORD-2308',
+        buyerName: 'شركة النجم الفضي للتجارة',
+        currentStage: 'جاري التغليف والفحص',
+        progressPercentage: 0.85,
+        expectedDelivery: 'غداً',
+        actionLabel: 'فتح الطلب',
+        actionRoute: '/orders',
+      ),
+    ];
   }
 
   @override
   Future<List<RfqItemModel>> fetchRecentRfqs() async {
-    await Future.delayed(const Duration(milliseconds: 350));
+    await Future.delayed(const Duration(milliseconds: 300));
     final now = DateTime.now();
     return [
       RfqItemModel(
         id: 'RFQ-2026-9081',
-        title: 'طلب توريد قماش قطن مصري ممتاز ١٠٠٪ - ٥٠٠٠ متر',
+        title: 'طلب توريد قماش قطن مصري ممتاز ١٠٠٪',
         buyerName: 'مجموعة المنسوجات الشرقية',
         fabricType: 'قطن مصري 100%',
         quantity: '5,000 متر',
@@ -88,8 +137,8 @@ class DashboardRemoteDatasourceImpl implements DashboardRemoteDatasource {
       ),
       RfqItemModel(
         id: 'RFQ-2026-9075',
-        title: 'خيوط غزل صوف مصبوغ عالي الجودة - ٢000 كجم',
-        buyerName: 'مصانع الملابس الجاهزة بالتحرير',
+        title: 'خيوط غزل صوف مصبوغ عالي الجودة',
+        buyerName: 'مصانع الملابس الجاهزة',
         fabricType: 'صوف مصبوغ',
         quantity: '2,000 كجم',
         status: RfqStatus.underReview,
@@ -98,59 +147,37 @@ class DashboardRemoteDatasourceImpl implements DashboardRemoteDatasource {
         remainingTimeFormatted: 'يومان متبقيان',
         createdAt: now.subtract(const Duration(hours: 8)),
       ),
-      RfqItemModel(
-        id: 'RFQ-2026-9062',
-        title: 'أقمشة بوليستر عازلة للماء للأقمشة الخارجية',
-        buyerName: 'شركة النجم الفضي للتجارة',
-        fabricType: 'بوليستر معالج',
-        quantity: '10,000 متر',
-        status: RfqStatus.quoted,
-        priority: RfqPriority.medium,
-        deadline: now.add(const Duration(days: 4)),
-        remainingTimeFormatted: '٤ أيام متبقية',
-        createdAt: now.subtract(const Duration(days: 1)),
-      ),
     ];
   }
 
   @override
-  Future<OrdersOverviewModel> fetchOrdersOverview() async {
-    await Future.delayed(const Duration(milliseconds: 250));
-    return const OrdersOverviewModel(
-      preparing: 6,
-      readyForPickup: 4,
-      waitingLogistics: 3,
-      shipping: 5,
-      delivered: 14,
-      completed: 184,
-      delayed: 1,
-    );
-  }
-
-  @override
-  Future<FinanceOverviewModel> fetchFinanceOverview() async {
-    await Future.delayed(const Duration(milliseconds: 300));
+  Future<FinanceOverviewModel> fetchFinanceSummary() async {
+    await Future.delayed(const Duration(milliseconds: 200));
     return const FinanceOverviewModel(
+      monthlyRevenue: 285400.00,
       pendingPayments: 42500.00,
       escrowBalance: 118200.00,
       releasedPayments: 242900.00,
-      monthlyRevenue: 285400.00,
       outstandingInvoices: 18500.00,
       currency: 'ج.م',
     );
   }
 
   @override
-  Future<PerformanceOverviewModel> fetchPerformanceOverview() async {
-    await Future.delayed(const Duration(milliseconds: 250));
-    return const PerformanceOverviewModel(
-      supplierRating: 4.9,
-      responseRate: 98.4,
-      onTimeDeliveryRate: 96.2,
-      acceptedQuotations: 48,
-      rejectedQuotations: 6,
-      completedOrders: 184,
-      customerSatisfaction: 97.8,
+  Future<SubscriptionOverviewModel> fetchSubscriptionOverview() async {
+    await Future.delayed(const Duration(milliseconds: 200));
+    return SubscriptionOverviewModel(
+      currentPlan: 'Professional',
+      productsUsed: 58,
+      productsLimit: 100,
+      advertisementsUsed: 2,
+      advertisementsLimit: 5,
+      featuredProductsUsed: 1,
+      featuredProductsLimit: 3,
+      rfqsUsed: 34,
+      rfqsLimit: 100,
+      expiryDate: DateTime(2026, 9, 5),
+      isExpiringSoon: false,
     );
   }
 
@@ -161,17 +188,17 @@ class DashboardRemoteDatasourceImpl implements DashboardRemoteDatasource {
     return [
       NotificationItemModel(
         id: 'NOTIF-101',
-        title: 'طلب عروض أسعار جديد (RFQ)',
+        title: 'طلب أسعار جديد (RFQ)',
         message: 'تم استلام RFQ-2026-9081 من مجموعة المنسوجات الشرقية.',
         type: NotificationType.newRfq,
         timestamp: now.subtract(const Duration(minutes: 15)),
         isRead: false,
-        targetRoute: '/orders/rfq-details/RFQ-2026-9081',
+        targetRoute: '/orders',
       ),
       NotificationItemModel(
         id: 'NOTIF-102',
-        title: 'استلام عرض مضاد (Counter Offer)',
-        message: 'قدم العميل عرضاً مضاداً على الطلب ORD-4421 بقيمة 85,000 ج.م.',
+        title: 'عرض مضاد جديد',
+        message: 'قدم العميل عرضاً مضاداً على الطلب ORD-2304.',
         type: NotificationType.counterOffer,
         timestamp: now.subtract(const Duration(hours: 1, minutes: 40)),
         isRead: false,
@@ -179,102 +206,21 @@ class DashboardRemoteDatasourceImpl implements DashboardRemoteDatasource {
       ),
       NotificationItemModel(
         id: 'NOTIF-103',
-        title: 'اعتماد الاتفاقية النهائية',
-        message: 'تمت الموافقة والتوقيع الرقمي على الاتفاقية AGR-7720.',
-        type: NotificationType.agreementApproved,
-        timestamp: now.subtract(const Duration(hours: 3)),
-        isRead: true,
-        targetRoute: '/agreements',
-      ),
-      NotificationItemModel(
-        id: 'NOTIF-104',
-        title: 'إنشاء الشحنة وبوليسة الشحن',
-        message: 'تم استخراج بوليصة الشحن مع أرامكس للطلب ORD-4390.',
+        title: 'تم إنشاء الشحنة',
+        message: 'تم استخراج بوليسة الشحن للطلب ORD-2305.',
         type: NotificationType.shipmentCreated,
-        timestamp: now.subtract(const Duration(hours: 5)),
+        timestamp: now.subtract(const Duration(hours: 3)),
         isRead: true,
         targetRoute: '/shipping',
       ),
       NotificationItemModel(
-        id: 'NOTIF-105',
-        title: 'تحرير المستحقات المالية (Escrow)',
-        message: 'تم إيداع مبلغ 64,500 ج.م في محفظتك الإلكترونية.',
+        id: 'NOTIF-104',
+        title: 'تحرير مبلغ الضمان',
+        message: 'تم تحويل مبلغ 42,900 ج.م لحسابك البنكي.',
         type: NotificationType.paymentReleased,
         timestamp: now.subtract(const Duration(days: 1)),
         isRead: true,
         targetRoute: '/financial',
-      ),
-      NotificationItemModel(
-        id: 'NOTIF-106',
-        title: 'تنبيه اشتراك الباقة',
-        message: 'المتبقي من حصة RFQs الشهرية ٣٤ طلب فقط. يمكنك الترقية الآن.',
-        type: NotificationType.subscriptionExpiring,
-        timestamp: now.subtract(const Duration(days: 2)),
-        isRead: true,
-        targetRoute: '/subscription',
-      ),
-    ];
-  }
-
-  @override
-  Future<List<QuickActionItemModel>> fetchQuickActions() async {
-    return const [
-      QuickActionItemModel(
-        id: 'add_product',
-        title: 'إضافة منتج',
-        icon: Icons.add_circle_outline_rounded,
-        route: '/add-product',
-        iconColor: Color(0xFF0040E0),
-      ),
-      QuickActionItemModel(
-        id: 'create_ad',
-        title: 'إنشاء إعلان',
-        icon: Icons.campaign_outlined,
-        route: '/subscription/addons',
-        iconColor: Color(0xFFE65100),
-      ),
-      QuickActionItemModel(
-        id: 'view_products',
-        title: 'المنتجات',
-        icon: Icons.inventory_2_outlined,
-        route: '/products',
-        iconColor: Color(0xFF006B5F),
-      ),
-      QuickActionItemModel(
-        id: 'view_rfqs',
-        title: 'طلبات الأسعار',
-        icon: Icons.request_quote_outlined,
-        route: '/orders',
-        iconColor: Color(0xFF673AB7),
-        badgeCount: 14,
-      ),
-      QuickActionItemModel(
-        id: 'orders',
-        title: 'إدارة الطلبات',
-        icon: Icons.shopping_bag_outlined,
-        route: '/orders',
-        iconColor: Color(0xFF0288D1),
-      ),
-      QuickActionItemModel(
-        id: 'finance',
-        title: 'المالية',
-        icon: Icons.account_balance_wallet_outlined,
-        route: '/financial',
-        iconColor: Color(0xFF2E7D32),
-      ),
-      QuickActionItemModel(
-        id: 'subscription',
-        title: 'الاشتراك',
-        icon: Icons.card_membership_outlined,
-        route: '/subscription',
-        iconColor: Color(0xFFC2185B),
-      ),
-      QuickActionItemModel(
-        id: 'analytics',
-        title: 'التحليلات',
-        icon: Icons.insights_outlined,
-        route: '/analytics',
-        iconColor: Color(0xFFD81B60),
       ),
     ];
   }

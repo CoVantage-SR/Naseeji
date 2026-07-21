@@ -2,15 +2,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/repositories/dashboard_repository_impl.dart';
 import '../../domain/repositories/dashboard_repository.dart';
 import '../../domain/entities/supplier_header_model.dart';
-import '../../domain/entities/dashboard_stats_model.dart';
-import '../../domain/entities/subscription_overview_model.dart';
+import '../../domain/entities/task_item_model.dart';
+import '../../domain/entities/active_order_model.dart';
 import '../../domain/entities/rfq_item_model.dart';
-import '../../domain/entities/orders_overview_model.dart';
 import '../../domain/entities/finance_overview_model.dart';
-import '../../domain/entities/performance_overview_model.dart';
+import '../../domain/entities/subscription_overview_model.dart';
 import '../../domain/entities/notification_item_model.dart';
-import '../../domain/entities/quick_action_item_model.dart';
-import '../../domain/usecases/get_supplier_dashboard_data_usecase.dart';
+import '../../domain/usecases/get_task_dashboard_data_usecases.dart';
 
 // Repository Provider
 final dashboardRepositoryProvider = Provider<DashboardRepository>((ref) {
@@ -23,14 +21,14 @@ final getSupplierHeaderUseCaseProvider = Provider<GetSupplierHeaderUseCase>((ref
   return GetSupplierHeaderUseCase(repo);
 });
 
-final getDashboardStatsUseCaseProvider = Provider<GetDashboardStatsUseCase>((ref) {
+final getTodayTasksUseCaseProvider = Provider<GetTodayTasksUseCase>((ref) {
   final repo = ref.watch(dashboardRepositoryProvider);
-  return GetDashboardStatsUseCase(repo);
+  return GetTodayTasksUseCase(repo);
 });
 
-final getSubscriptionOverviewUseCaseProvider = Provider<GetSubscriptionOverviewUseCase>((ref) {
+final getActiveOrdersUseCaseProvider = Provider<GetActiveOrdersUseCase>((ref) {
   final repo = ref.watch(dashboardRepositoryProvider);
-  return GetSubscriptionOverviewUseCase(repo);
+  return GetActiveOrdersUseCase(repo);
 });
 
 final getRecentRfqsUseCaseProvider = Provider<GetRecentRfqsUseCase>((ref) {
@@ -38,19 +36,14 @@ final getRecentRfqsUseCaseProvider = Provider<GetRecentRfqsUseCase>((ref) {
   return GetRecentRfqsUseCase(repo);
 });
 
-final getOrdersOverviewUseCaseProvider = Provider<GetOrdersOverviewUseCase>((ref) {
+final getFinanceSummaryUseCaseProvider = Provider<GetFinanceSummaryUseCase>((ref) {
   final repo = ref.watch(dashboardRepositoryProvider);
-  return GetOrdersOverviewUseCase(repo);
+  return GetFinanceSummaryUseCase(repo);
 });
 
-final getFinanceOverviewUseCaseProvider = Provider<GetFinanceOverviewUseCase>((ref) {
+final getSubscriptionOverviewUseCaseProvider = Provider<GetSubscriptionOverviewUseCase>((ref) {
   final repo = ref.watch(dashboardRepositoryProvider);
-  return GetFinanceOverviewUseCase(repo);
-});
-
-final getPerformanceOverviewUseCaseProvider = Provider<GetPerformanceOverviewUseCase>((ref) {
-  final repo = ref.watch(dashboardRepositoryProvider);
-  return GetPerformanceOverviewUseCase(repo);
+  return GetSubscriptionOverviewUseCase(repo);
 });
 
 final getRecentNotificationsUseCaseProvider = Provider<GetRecentNotificationsUseCase>((ref) {
@@ -58,12 +51,7 @@ final getRecentNotificationsUseCaseProvider = Provider<GetRecentNotificationsUse
   return GetRecentNotificationsUseCase(repo);
 });
 
-final getQuickActionsUseCaseProvider = Provider<GetQuickActionsUseCase>((ref) {
-  final repo = ref.watch(dashboardRepositoryProvider);
-  return GetQuickActionsUseCase(repo);
-});
-
-// Explicit Feature Riverpod Providers (as requested)
+// Explicit Task-Driven Riverpod Providers (Exact Names Requested)
 
 /// 1. Supplier Header Provider
 final supplierHeaderProvider = FutureProvider.autoDispose<SupplierHeaderModel>((ref) async {
@@ -71,50 +59,38 @@ final supplierHeaderProvider = FutureProvider.autoDispose<SupplierHeaderModel>((
   return useCase();
 });
 
-/// 2. Dashboard Stats Provider (Business Overview Cards)
-final dashboardStatsProvider = FutureProvider.autoDispose<DashboardStatsModel>((ref) async {
-  final useCase = ref.watch(getDashboardStatsUseCaseProvider);
+/// 2. Today's Tasks Provider (Sorted by Priority: Urgent -> Today -> Waiting -> Informational)
+final todayTasksProvider = FutureProvider.autoDispose<List<TaskItemModel>>((ref) async {
+  final useCase = ref.watch(getTodayTasksUseCaseProvider);
   return useCase();
 });
 
-/// 3. Subscription Status Provider
+/// 3. Active Orders Provider
+final ordersProvider = FutureProvider.autoDispose<List<ActiveOrderModel>>((ref) async {
+  final useCase = ref.watch(getActiveOrdersUseCaseProvider);
+  return useCase();
+});
+
+/// 4. RFQs Provider
+final rfqsProvider = FutureProvider.autoDispose<List<RfqItemModel>>((ref) async {
+  final useCase = ref.watch(getRecentRfqsUseCaseProvider);
+  return useCase();
+});
+
+/// 5. Finance Provider
+final financeProvider = FutureProvider.autoDispose<FinanceOverviewModel>((ref) async {
+  final useCase = ref.watch(getFinanceSummaryUseCaseProvider);
+  return useCase();
+});
+
+/// 6. Subscription Provider
 final subscriptionProvider = FutureProvider.autoDispose<SubscriptionOverviewModel>((ref) async {
   final useCase = ref.watch(getSubscriptionOverviewUseCaseProvider);
   return useCase();
 });
 
-/// 4. RFQ Activity Provider
-final rfqOverviewProvider = FutureProvider.autoDispose<List<RfqItemModel>>((ref) async {
-  final useCase = ref.watch(getRecentRfqsUseCaseProvider);
-  return useCase();
-});
-
-/// 5. Orders Overview Provider
-final ordersOverviewProvider = FutureProvider.autoDispose<OrdersOverviewModel>((ref) async {
-  final useCase = ref.watch(getOrdersOverviewUseCaseProvider);
-  return useCase();
-});
-
-/// 6. Financial Summary Provider
-final financeProvider = FutureProvider.autoDispose<FinanceOverviewModel>((ref) async {
-  final useCase = ref.watch(getFinanceOverviewUseCaseProvider);
-  return useCase();
-});
-
-/// 7. Supplier Performance Provider
-final performanceProvider = FutureProvider.autoDispose<PerformanceOverviewModel>((ref) async {
-  final useCase = ref.watch(getPerformanceOverviewUseCaseProvider);
-  return useCase();
-});
-
-/// 8. Notifications Provider
+/// 7. Notifications Provider (Latest 3 notifications)
 final notificationsProvider = FutureProvider.autoDispose<List<NotificationItemModel>>((ref) async {
   final useCase = ref.watch(getRecentNotificationsUseCaseProvider);
-  return useCase();
-});
-
-/// 9. Quick Actions Provider
-final quickActionsProvider = FutureProvider.autoDispose<List<QuickActionItemModel>>((ref) async {
-  final useCase = ref.watch(getQuickActionsUseCaseProvider);
   return useCase();
 });

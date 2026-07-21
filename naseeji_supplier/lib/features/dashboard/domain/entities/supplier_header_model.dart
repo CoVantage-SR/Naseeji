@@ -1,21 +1,21 @@
 class SupplierHeaderModel {
-  final String supplierId;
+  final String greeting;
   final String supplierName;
   final String companyName;
-  final String? companyLogoUrl;
+  final String ratingStars;
   final String subscriptionBadge;
-  final int unreadNotificationCount;
-  final double rating;
   final bool isVerified;
+  final int unreadNotificationCount;
+  final String? logoUrl;
 
   const SupplierHeaderModel({
-    required this.supplierId,
+    required this.greeting,
     required this.supplierName,
     required this.companyName,
-    this.companyLogoUrl,
+    required this.ratingStars,
     required this.subscriptionBadge,
-    required this.unreadNotificationCount,
-    required this.rating,
     required this.isVerified,
+    required this.unreadNotificationCount,
+    this.logoUrl,
   });
 }
