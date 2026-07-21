@@ -30,7 +30,7 @@ class DashboardStatCardWidget extends StatelessWidget {
 
     return DashboardCardWidget(
       onTap: onTap,
-      padding: const EdgeInsets.all(14.0),
+      padding: const EdgeInsets.all(12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -39,54 +39,61 @@ class DashboardStatCardWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: accentColor.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(
                   icon,
                   color: accentColor,
-                  size: 22,
+                  size: 20,
                 ),
               ),
               if (trendText != null && isPositiveTrend != null)
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: (isPositiveTrend! ? Colors.green : Colors.red).withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        isPositiveTrend!
-                            ? Icons.trending_up_rounded
-                            : Icons.trending_down_rounded,
-                        size: 14,
-                        color: isPositiveTrend! ? Colors.green.shade700 : Colors.red.shade700,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        trendText!,
-                        style: TextStyle(
-                          fontSize: 11,
-                          fontWeight: FontWeight.bold,
+                Flexible(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: (isPositiveTrend! ? Colors.green : Colors.red).withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          isPositiveTrend!
+                              ? Icons.trending_up_rounded
+                              : Icons.trending_down_rounded,
+                          size: 12,
                           color: isPositiveTrend! ? Colors.green.shade700 : Colors.red.shade700,
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 3),
+                        Flexible(
+                          child: Text(
+                            trendText!,
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: isPositiveTrend! ? Colors.green.shade700 : Colors.red.shade700,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
           Text(
             value,
             style: theme.textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.bold,
               color: colorScheme.onSurface,
+              fontSize: 18,
               height: 1.1,
             ),
             maxLines: 1,
@@ -98,7 +105,7 @@ class DashboardStatCardWidget extends StatelessWidget {
             style: theme.textTheme.bodyMedium?.copyWith(
               color: colorScheme.onSurfaceVariant,
               fontWeight: FontWeight.w600,
-              fontSize: 13,
+              fontSize: 12,
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -109,7 +116,7 @@ class DashboardStatCardWidget extends StatelessWidget {
               subtitle!,
               style: theme.textTheme.bodySmall?.copyWith(
                 color: colorScheme.outline,
-                fontSize: 11,
+                fontSize: 10,
               ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
