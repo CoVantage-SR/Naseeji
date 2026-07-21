@@ -2,46 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../providers/dashboard_providers.dart';
-import '../shared/dashboard_card_widget.dart';
-import '../shared/dashboard_section_title_widget.dart';
+import '../shared/dashboard_card.dart';
+import '../shared/dashboard_section_title.dart';
 import '../shared/status_badge_widget.dart';
-import '../shared/dashboard_loading_widget.dart';
-import '../shared/dashboard_empty_state_widget.dart';
+import '../shared/loading_widget.dart';
+import '../shared/empty_state_widget.dart';
+import '../shared/error_state_widget.dart';
 
-class RecentRFQWidget extends ConsumerWidget {
-  const RecentRFQWidget({super.key});
+class RecentRFQsWidget extends ConsumerWidget {
+  const RecentRFQsWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final rfqAsync = ref.watch(rfqOverviewProvider);
+    final rfqAsync = ref.watch(rfqsProvider);
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        DashboardSectionTitleWidget(
-          title: 'أحدث طلبات عروض الأسعار (RFQs)',
-          subtitle: 'طلبات التوريد الواردة من المشتريين',
+        DashboardSectionTitle(
+          title: 'طلبات الأسعار الحديثة (RFQs)',
+          subtitle: 'فرص التوريد الجديدة الواردة من المشتريين',
           icon: Icons.request_quote_rounded,
           actionText: 'عرض الكل',
           onActionTap: () => context.push('/orders'),
         ),
         rfqAsync.when(
-          loading: () => const DashboardLoadingWidget(height: 220),
-          error: (err, stack) => Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: colorScheme.errorContainer,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Text('خطأ في تحميل RFQs: $err'),
+          loading: () => const LoadingWidget(height: 180),
+          error: (err, stack) => ErrorStateWidget(
+            message: 'خطأ في تحميل طلبات الأسعار: $err',
+            onRetry: () => ref.invalidate(rfqsProvider),
           ),
           data: (rfqs) {
             if (rfqs.isEmpty) {
-              return const DashboardEmptyStateWidget(
+              return const EmptyStateWidget(
                 title: 'لا توجد طلبات أسعار جارية',
-                description: 'سيتم ظهور طلبات التوريد الجديدة من العملاء هنا فور ورودها.',
+                description: 'ستصلك طلبات التسعير فور إنشائها بواسطة المشتريين.',
                 icon: Icons.assignment_outlined,
               );
             }
@@ -53,13 +50,14 @@ class RecentRFQWidget extends ConsumerWidget {
               separatorBuilder: (context, index) => const SizedBox(height: 10),
               itemBuilder: (context, index) {
                 final rfq = rfqs[index];
-                return DashboardCardWidget(
+
+                return DashboardCard(
                   padding: const EdgeInsets.all(14),
                   onTap: () => context.push('/orders/rfq-details/${rfq.id}'),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // ID & Badges
+                      // Header ID & Badges
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -73,7 +71,7 @@ class RecentRFQWidget extends ConsumerWidget {
                                   color: colorScheme.primary,
                                 ),
                               ),
-                              const SizedBox(width: 8),
+                              const SizedBox(width: 6),
                               StatusBadgeWidget.priority(rfq.priority.name),
                             ],
                           ),
@@ -95,9 +93,9 @@ class RecentRFQWidget extends ConsumerWidget {
                       ),
                       const SizedBox(height: 8),
 
-                      // Details Row: Buyer, Fabric, Quantity, Deadline
+                      // Details: Buyer, Quantity, Remaining Time
                       Wrap(
-                        spacing: 16,
+                        spacing: 14,
                         runSpacing: 6,
                         children: [
                           Row(
@@ -141,49 +139,51 @@ class RecentRFQWidget extends ConsumerWidget {
                       ),
 
                       const SizedBox(height: 12),
-                      Divider(
-                        color: colorScheme.outlineVariant.withValues(alpha: 0.4),
-                      ),
-                      const SizedBox(height: 6),
+                      Divider(color: colorScheme.outlineVariant.withValues(alpha: 0.4), height: 1),
+                      const SizedBox(height: 8),
 
-                      // Quick Action Buttons
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                      // Actions: Accept, Reject, Counter Offer, Open
+                      Wrap(
+                        spacing: 6,
+                        runSpacing: 6,
+                        alignment: WrapAlignment.end,
                         children: [
-                          OutlinedButton.icon(
+                          OutlinedButton(
                             onPressed: () {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text('تم رفض الطلب ${rfq.id}')),
                               );
                             },
-                            icon: const Icon(Icons.close_rounded, size: 16),
-                            label: const Text('رفض'),
                             style: OutlinedButton.styleFrom(
                               foregroundColor: colorScheme.error,
                               side: BorderSide(color: colorScheme.error.withValues(alpha: 0.5)),
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                               minimumSize: Size.zero,
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
+                            child: const Text('رفض', style: TextStyle(fontSize: 11)),
                           ),
-                          const SizedBox(width: 8),
-                          ElevatedButton.icon(
+                          OutlinedButton(
                             onPressed: () => context.push('/orders/create-offer/${rfq.id}'),
-                            icon: const Icon(Icons.send_rounded, size: 16),
-                            label: const Text('تقديم عرض سعر'),
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: Colors.orange.shade900,
+                              side: BorderSide(color: Colors.orange.shade400),
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                              minimumSize: Size.zero,
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
+                            child: const Text('عرض مضاد', style: TextStyle(fontSize: 11)),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => context.push('/orders/create-offer/${rfq.id}'),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: colorScheme.primary,
                               foregroundColor: colorScheme.onPrimary,
-                              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                               minimumSize: Size.zero,
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
-                          ),
-                          const SizedBox(width: 8),
-                          IconButton(
-                            onPressed: () => context.push('/orders/rfq-details/${rfq.id}'),
-                            icon: const Icon(Icons.open_in_new_rounded, size: 18),
-                            tooltip: 'فتح التفاصيل',
+                            child: const Text('قبول وتقديم عرض', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
                           ),
                         ],
                       ),

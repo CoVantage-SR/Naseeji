@@ -3,14 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naseeji_supplier/core/widgets/app_bottom_navigation_bar.dart';
 import '../controllers/supplier_dashboard_controller.dart';
 import '../widgets/header/supplier_header_widget.dart';
-import '../widgets/overview/business_overview_grid_widget.dart';
-import '../widgets/quick_actions/quick_action_grid_widget.dart';
-import '../widgets/subscription/subscription_overview_widget.dart';
+import '../widgets/today_tasks/today_tasks_widget.dart';
+import '../widgets/active_orders/active_orders_widget.dart';
 import '../widgets/rfq/recent_rfq_widget.dart';
-import '../widgets/orders/orders_overview_widget.dart';
-import '../widgets/finance/finance_overview_widget.dart';
-import '../widgets/performance/performance_overview_widget.dart';
+import '../widgets/finance/finance_summary_widget.dart';
+import '../widgets/subscription/subscription_card_widget.dart';
 import '../widgets/notifications/recent_notifications_widget.dart';
+import '../widgets/quick_actions/quick_actions_bottom_sheet.dart';
 import 'drawer/navigation_drawer_view.dart';
 
 class SupplierDashboardScreen extends ConsumerWidget {
@@ -20,6 +19,7 @@ class SupplierDashboardScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final scaffoldKey = GlobalKey<ScaffoldState>();
     final dashboardState = ref.watch(supplierDashboardControllerProvider);
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       key: scaffoldKey,
@@ -28,6 +28,16 @@ class SupplierDashboardScreen extends ConsumerWidget {
         toolbarHeight: 0,
         elevation: 0,
         backgroundColor: Colors.transparent,
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => QuickActionsBottomSheet.show(context),
+        backgroundColor: colorScheme.primary,
+        foregroundColor: colorScheme.onPrimary,
+        icon: const Icon(Icons.flash_on_rounded),
+        label: const Text(
+          'عملية سريعة',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+        ),
       ),
       body: SafeArea(
         child: Consumer(
@@ -47,14 +57,14 @@ class SupplierDashboardScreen extends ConsumerWidget {
                         padding: const EdgeInsets.all(12),
                         margin: const EdgeInsets.only(bottom: 12),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.errorContainer,
+                          color: colorScheme.errorContainer,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Row(
                           children: [
                             Icon(
                               Icons.error_outline_rounded,
-                              color: Theme.of(context).colorScheme.onErrorContainer,
+                              color: colorScheme.onErrorContainer,
                             ),
                             const SizedBox(width: 8),
                             Expanded(
@@ -62,7 +72,7 @@ class SupplierDashboardScreen extends ConsumerWidget {
                                 dashboardState.errorMessage!,
                                 style: TextStyle(
                                   fontSize: 12,
-                                  color: Theme.of(context).colorScheme.onErrorContainer,
+                                  color: colorScheme.onErrorContainer,
                                 ),
                               ),
                             ),
@@ -71,41 +81,33 @@ class SupplierDashboardScreen extends ConsumerWidget {
                       ),
                     ],
 
-                    // Section 1: Header
+                    // Section 1: Header (Greeting, Supplier Name, Badges, Notification & Profile)
                     SupplierHeaderWidget(
                       onOpenDrawer: () => scaffoldKey.currentState?.openDrawer(),
                     ),
                     const SizedBox(height: 16),
 
-                    // Section 2: Business Overview Cards
-                    const BusinessOverviewGridWidget(),
+                    // Section 2: Today's Tasks (🔴 Urgent -> 🟠 Today -> 🟡 Waiting -> 🟢 Informational)
+                    const TodayTasksWidget(),
                     const SizedBox(height: 20),
 
-                    // Section 8: Quick Actions
-                    const QuickActionGridWidget(),
+                    // Section 3: Active Orders Workflow Cards
+                    const ActiveOrdersWidget(),
                     const SizedBox(height: 20),
 
-                    // Section 3: Subscription Status
-                    const SubscriptionOverviewWidget(),
+                    // Section 4: RFQs (Recent RFQs & Action Buttons)
+                    const RecentRFQsWidget(),
                     const SizedBox(height: 20),
 
-                    // Section 4: RFQ Activity
-                    const RecentRFQWidget(),
+                    // Section 5: Finance Summary (Revenue, Escrow, Pending, Released, Invoices)
+                    const FinanceSummaryWidget(),
                     const SizedBox(height: 20),
 
-                    // Section 5: Orders Overview
-                    const OrdersOverviewWidget(),
+                    // Section 6: Subscription Card (Compact Tier Limits & Expiry)
+                    const SubscriptionCardWidget(),
                     const SizedBox(height: 20),
 
-                    // Section 6: Financial Summary
-                    const FinanceOverviewWidget(),
-                    const SizedBox(height: 20),
-
-                    // Section 7: Supplier Performance
-                    const PerformanceOverviewWidget(),
-                    const SizedBox(height: 20),
-
-                    // Section 9: Notifications
+                    // Section 7: Notifications (Latest 3 Notifications)
                     const RecentNotificationsWidget(),
                   ],
                 ),

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../providers/dashboard_providers.dart';
-import '../shared/dashboard_loading_widget.dart';
+import '../shared/loading_widget.dart';
+import '../shared/error_state_widget.dart';
 
 class SupplierHeaderWidget extends ConsumerWidget {
   final VoidCallback? onOpenDrawer;
@@ -16,21 +17,14 @@ class SupplierHeaderWidget extends ConsumerWidget {
     final colorScheme = theme.colorScheme;
 
     return headerAsync.when(
-      loading: () => const DashboardLoadingWidget(height: 70),
-      error: (err, stack) => Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: colorScheme.errorContainer,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Text(
-          'تعذر تحميل بيانات المورد: $err',
-          style: TextStyle(color: colorScheme.onErrorContainer, fontSize: 12),
-        ),
+      loading: () => const LoadingWidget(height: 75),
+      error: (err, stack) => ErrorStateWidget(
+        message: 'تعذر تحميل ترويسة الصفحة: $err',
+        onRetry: () => ref.invalidate(supplierHeaderProvider),
       ),
       data: (header) {
         return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
           decoration: BoxDecoration(
             color: colorScheme.surface,
             borderRadius: BorderRadius.circular(16),
@@ -40,7 +34,7 @@ class SupplierHeaderWidget extends ConsumerWidget {
           ),
           child: Row(
             children: [
-              // Company Logo / Avatar
+              // Supplier Avatar / Logo
               GestureDetector(
                 onTap: () => context.push('/profile'),
                 child: Container(
@@ -70,79 +64,73 @@ class SupplierHeaderWidget extends ConsumerWidget {
               ),
               const SizedBox(width: 12),
 
-              // Supplier Name, Company & Subscription Badge
+              // Greeting, Company Name, Stars & Badges
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Row(
-                      children: [
-                        Flexible(
-                          child: Text(
-                            header.supplierName,
-                            style: theme.textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: colorScheme.onSurface,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        if (header.isVerified) ...[
-                          const SizedBox(width: 4),
-                          Icon(
-                            Icons.verified_rounded,
-                            size: 16,
-                            color: colorScheme.primary,
-                          ),
-                        ],
-                      ],
+                    // Greeting (السلام عليكم يا أ/ محمد)
+                    Text(
+                      header.greeting,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onSurface,
+                        fontSize: 15,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 2),
-                    Row(
+
+                    // Company Name + Rating Stars + Badges
+                    Wrap(
+                      cross: WrapCrossAlignment.center,
+                      spacing: 6,
+                      runSpacing: 4,
                       children: [
                         Text(
                           header.companyName,
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: colorScheme.onSurfaceVariant,
+                            fontWeight: FontWeight.w600,
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
-                        const SizedBox(width: 8),
-                        // Subscription Badge
+                        // Rating Stars (★★★★★)
+                        Text(
+                          header.ratingStars,
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.amber.shade800,
+                            letterSpacing: 1.0,
+                          ),
+                        ),
+                        if (header.isVerified)
+                          Icon(
+                            Icons.verified_rounded,
+                            size: 14,
+                            color: colorScheme.primary,
+                          ),
+                        // Subscription Badge (احترافي)
                         Container(
                           padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 2,
+                            horizontal: 6,
+                            vertical: 1,
                           ),
                           decoration: BoxDecoration(
-                            color: colorScheme.primary.withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(12),
+                            color: colorScheme.primary.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(10),
                             border: Border.all(
                               color: colorScheme.primary.withValues(alpha: 0.3),
-                              width: 1,
                             ),
                           ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(
-                                Icons.workspace_premium_rounded,
-                                size: 12,
-                                color: colorScheme.primary,
-                              ),
-                              const SizedBox(width: 3),
-                              Text(
-                                header.subscriptionBadge,
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                  color: colorScheme.primary,
-                                ),
-                              ),
-                            ],
+                          child: Text(
+                            header.subscriptionBadge,
+                            style: TextStyle(
+                              fontSize: 9,
+                              fontWeight: FontWeight.bold,
+                              color: colorScheme.primary,
+                            ),
                           ),
                         ),
                       ],
@@ -155,7 +143,6 @@ class SupplierHeaderWidget extends ConsumerWidget {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Notifications Icon with badge count
                   Stack(
                     children: [
                       IconButton(
@@ -163,22 +150,25 @@ class SupplierHeaderWidget extends ConsumerWidget {
                         icon: Icon(
                           Icons.notifications_outlined,
                           color: colorScheme.onSurfaceVariant,
+                          size: 22,
                         ),
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
                         tooltip: 'الإشعارات',
                       ),
                       if (header.unreadNotificationCount > 0)
                         Positioned(
-                          right: 8,
-                          top: 8,
+                          right: 4,
+                          top: 4,
                           child: Container(
-                            padding: const EdgeInsets.all(4),
+                            padding: const EdgeInsets.all(3),
                             decoration: const BoxDecoration(
                               color: Colors.red,
                               shape: BoxShape.circle,
                             ),
                             constraints: const BoxConstraints(
-                              minWidth: 16,
-                              minHeight: 16,
+                              minWidth: 14,
+                              minHeight: 14,
                             ),
                             child: Text(
                               '${header.unreadNotificationCount}',
@@ -193,15 +183,16 @@ class SupplierHeaderWidget extends ConsumerWidget {
                         ),
                     ],
                   ),
-
-                  // Profile Button
                   IconButton(
                     onPressed: () => context.push('/profile'),
                     icon: Icon(
                       Icons.account_circle_outlined,
                       color: colorScheme.primary,
+                      size: 24,
                     ),
-                    tooltip: 'الملف الشخصي',
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
+                    tooltip: 'حسابي',
                   ),
                 ],
               ),
