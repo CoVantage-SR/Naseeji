@@ -24,7 +24,7 @@ final analyticsReportFilterProvider =
 
 typedef _$AnalyticsReportFilter = AutoDisposeNotifier<ReportFilter>;
 String _$analyticsReportDataHash() =>
-    r'0abfbc4f0ae98ba258f1c161dab24124462be5d3';
+    r'0d9d9bcb5908546b39d31cbbe7446c33ebf1aabd';
 
 /// See also [AnalyticsReportData].
 @ProviderFor(AnalyticsReportData)

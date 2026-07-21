@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../domain/entities/notification_item_model.dart';
+import '../../../domain/entities/notification_item_model.dart';
 import '../../providers/dashboard_providers.dart';
 import '../shared/dashboard_card_widget.dart';
 import '../shared/dashboard_section_title_widget.dart';

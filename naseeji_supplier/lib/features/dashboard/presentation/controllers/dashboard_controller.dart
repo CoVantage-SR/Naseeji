@@ -1,11 +1,9 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'dart:async';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/sales_stats.dart';
-import '../../data/repositories/dashboard_repository_impl.dart';
+import '../providers/dashboard_providers.dart';
 
-part 'dashboard_controller.g.dart';
-
-@riverpod
-class DashboardController extends _$DashboardController {
+class DashboardController extends AutoDisposeAsyncNotifier<SalesStats> {
   @override
   FutureOr<SalesStats> build() async {
     final repo = ref.watch(dashboardRepositoryProvider);
@@ -20,3 +18,8 @@ class DashboardController extends _$DashboardController {
     });
   }
 }
+
+final dashboardControllerProvider =
+    AsyncNotifierProvider.autoDispose<DashboardController, SalesStats>(
+  DashboardController.new,
+);

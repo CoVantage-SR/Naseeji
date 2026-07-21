@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/repositories/dashboard_repository_impl.dart';
+import '../../domain/repositories/dashboard_repository.dart';
 import '../../domain/entities/supplier_header_model.dart';
 import '../../domain/entities/dashboard_stats_model.dart';
 import '../../domain/entities/subscription_overview_model.dart';
@@ -10,6 +11,11 @@ import '../../domain/entities/performance_overview_model.dart';
 import '../../domain/entities/notification_item_model.dart';
 import '../../domain/entities/quick_action_item_model.dart';
 import '../../domain/usecases/get_supplier_dashboard_data_usecase.dart';
+
+// Repository Provider
+final dashboardRepositoryProvider = Provider<DashboardRepository>((ref) {
+  return DashboardRepositoryImpl();
+});
 
 // Use Cases Providers
 final getSupplierHeaderUseCaseProvider = Provider<GetSupplierHeaderUseCase>((ref) {

@@ -64,7 +64,7 @@ class OrdersOverviewWidget extends ConsumerWidget {
               {
                 'title': 'تم التوصيل',
                 'count': orders.delivered,
-                'icon': Icons.mark_unread_chat_space_rounded,
+                'icon': Icons.mark_chat_read_outlined,
                 'color': const Color(0xFF006B5F),
               },
               {
