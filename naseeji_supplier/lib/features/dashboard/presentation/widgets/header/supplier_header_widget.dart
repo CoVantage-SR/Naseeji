@@ -85,7 +85,7 @@ class SupplierHeaderWidget extends ConsumerWidget {
 
                     // Company Name + Rating Stars + Badges
                     Wrap(
-                      cross: WrapCrossAlignment.center,
+                      crossAxisAlignment: WrapCrossAlignment.center,
                       spacing: 6,
                       runSpacing: 4,
                       children: [

@@ -1,12 +1,10 @@
 import '../entities/supplier_header_model.dart';
-import '../entities/dashboard_stats_model.dart';
-import '../entities/subscription_overview_model.dart';
+import '../entities/task_item_model.dart';
+import '../entities/active_order_model.dart';
 import '../entities/rfq_item_model.dart';
-import '../entities/orders_overview_model.dart';
 import '../entities/finance_overview_model.dart';
-import '../entities/performance_overview_model.dart';
+import '../entities/subscription_overview_model.dart';
 import '../entities/notification_item_model.dart';
-import '../entities/quick_action_item_model.dart';
 import '../repositories/dashboard_repository.dart';
 
 class GetSupplierHeaderUseCase {
@@ -16,18 +14,22 @@ class GetSupplierHeaderUseCase {
   Future<SupplierHeaderModel> call() => _repository.getSupplierHeader();
 }
 
-class GetDashboardStatsUseCase {
+class GetTodayTasksUseCase {
   final DashboardRepository _repository;
-  const GetDashboardStatsUseCase(this._repository);
+  const GetTodayTasksUseCase(this._repository);
 
-  Future<DashboardStatsModel> call() => _repository.getDashboardStats();
+  Future<List<TaskItemModel>> call() async {
+    final tasks = await _repository.getTodayTasks();
+    tasks.sort((a, b) => a.priority.index.compareTo(b.priority.index));
+    return tasks;
+  }
 }
 
-class GetSubscriptionOverviewUseCase {
+class GetActiveOrdersUseCase {
   final DashboardRepository _repository;
-  const GetSubscriptionOverviewUseCase(this._repository);
+  const GetActiveOrdersUseCase(this._repository);
 
-  Future<SubscriptionOverviewModel> call() => _repository.getSubscriptionOverview();
+  Future<List<ActiveOrderModel>> call() => _repository.getActiveOrders();
 }
 
 class GetRecentRfqsUseCase {
@@ -37,37 +39,26 @@ class GetRecentRfqsUseCase {
   Future<List<RfqItemModel>> call() => _repository.getRecentRfqs();
 }
 
-class GetOrdersOverviewUseCase {
+class GetFinanceSummaryUseCase {
   final DashboardRepository _repository;
-  const GetOrdersOverviewUseCase(this._repository);
+  const GetFinanceSummaryUseCase(this._repository);
 
-  Future<OrdersOverviewModel> call() => _repository.getOrdersOverview();
+  Future<FinanceOverviewModel> call() => _repository.getFinanceSummary();
 }
 
-class GetFinanceOverviewUseCase {
+class GetSubscriptionOverviewUseCase {
   final DashboardRepository _repository;
-  const GetFinanceOverviewUseCase(this._repository);
+  const GetSubscriptionOverviewUseCase(this._repository);
 
-  Future<FinanceOverviewModel> call() => _repository.getFinanceOverview();
-}
-
-class GetPerformanceOverviewUseCase {
-  final DashboardRepository _repository;
-  const GetPerformanceOverviewUseCase(this._repository);
-
-  Future<PerformanceOverviewModel> call() => _repository.getPerformanceOverview();
+  Future<SubscriptionOverviewModel> call() => _repository.getSubscriptionOverview();
 }
 
 class GetRecentNotificationsUseCase {
   final DashboardRepository _repository;
   const GetRecentNotificationsUseCase(this._repository);
 
-  Future<List<NotificationItemModel>> call() => _repository.getRecentNotifications();
-}
-
-class GetQuickActionsUseCase {
-  final DashboardRepository _repository;
-  const GetQuickActionsUseCase(this._repository);
-
-  Future<List<QuickActionItemModel>> call() => _repository.getQuickActions();
+  Future<List<NotificationItemModel>> call() async {
+    final notifs = await _repository.getRecentNotifications();
+    return notifs.take(3).toList();
+  }
 }
