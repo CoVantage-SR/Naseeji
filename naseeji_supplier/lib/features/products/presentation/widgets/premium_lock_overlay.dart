@@ -55,7 +55,7 @@ class PremiumLockOverlay extends StatelessWidget {
                       width: 56,
                       height: 56,
                       decoration: BoxDecoration(
-                        gradient: LinearGradient(
+                        gradient: const LinearGradient(
                           colors: [Color(0xFFFFD700), Color(0xFFFFA500)],
                         ),
                         shape: BoxShape.circle,

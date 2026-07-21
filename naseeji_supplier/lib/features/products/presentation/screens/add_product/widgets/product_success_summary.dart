@@ -15,7 +15,7 @@ class ProductSuccessSummary extends StatelessWidget {
           children: [
             Stack(
               alignment: Alignment.center,
-              children: [
+              children: const [
                 CircleAvatar(
                   radius: 40,
                   backgroundColor: Color(0xFFE8F6F3),

@@ -89,7 +89,7 @@ class SubscriptionSummaryCard extends StatelessWidget {
             SizedBox(height: 12),
             GestureDetector(
               onTap: onDetailsTap,
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(

@@ -25,7 +25,7 @@ class AddNewProductScreen extends ConsumerWidget {
     Widget buildStepContent(int step) {
       switch (step) {
         case 1:
-          return Column(
+          return const Column(
             children: [
               ProductIdentityForm(),
               SizedBox(height: 24),

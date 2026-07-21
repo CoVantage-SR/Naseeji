@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../providers/products_providers.dart';
+import 'package:naseeji_supplier/features/products/presentation/providers/products_providers.dart';
 
 class ProductFilterBar extends ConsumerWidget {
   const ProductFilterBar({super.key});
@@ -11,7 +11,7 @@ class ProductFilterBar extends ConsumerWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    final List<String> statuses = const ['الكل', 'منشور', 'مخفي', 'مسودة', 'منتهي'];
+    const List<String> statuses = ['الكل', 'منشور', 'مخفي', 'مسودة', 'منتهي'];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

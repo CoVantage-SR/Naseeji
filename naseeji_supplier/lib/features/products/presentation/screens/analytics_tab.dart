@@ -161,7 +161,7 @@ class AnalyticsTab extends StatelessWidget {
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          children: const [
                             Text('تقرير أداء شهر يونيو ٢٠٢٦ جاهز', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
                             SizedBox(height: 2),
                             Text('يحتوي على كافة أرقام المبيعات، الزيارات، وعروض الأسعار المكتملة.', style: TextStyle(fontSize: 10, color: AppColors.outline)),
