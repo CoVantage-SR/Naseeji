@@ -55,6 +55,7 @@ import '../../features/messages/presentation/screens/chat_timeline_screen.dart';
 import '../../features/messages/presentation/screens/search_messages_screen.dart';
 import '../../features/messages/presentation/screens/chat_settings_screen.dart';
 import '../../features/messages/presentation/screens/archived_chats_screen.dart';
+import '../../features/products/presentation/screens/product_details_screen.dart';
 
 import '../../features/shipping/presentation/screens/shipping_dashboard_screen.dart';
 import '../../features/shipping/presentation/screens/shipment_details_screen.dart';
@@ -284,6 +285,13 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/products/usage',
         name: 'products-usage',
         builder: (context, state) => const ProductUsageScreen(),
+      ),
+      GoRoute(
+        path: '/products/details/:id',
+        name: 'product-details',
+        builder: (context, state) => ProductDetailsScreen(
+          productId: state.pathParameters['id'] ?? '',
+        ),
       ),
       GoRoute(
         path: '/shipping',
