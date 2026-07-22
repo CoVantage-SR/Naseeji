@@ -1,82 +1,57 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/product_model.dart';
+import '../../domain/services/product_service.dart';
+import '../../domain/services/product_validation_service.dart';
 import '../providers/products_providers.dart';
 
-class ProductsControllerState {
-  final bool isLoading;
-  final String? errorMessage;
-  final String? successMessage;
-
-  const ProductsControllerState({
-    this.isLoading = false,
-    this.errorMessage,
-    this.successMessage,
-  });
-
-  ProductsControllerState copyWith({
-    bool? isLoading,
-    String? errorMessage,
-    String? successMessage,
-  }) {
-    return ProductsControllerState(
-      isLoading: isLoading ?? this.isLoading,
-      errorMessage: errorMessage,
-      successMessage: successMessage,
-    );
-  }
-}
-
-class ProductsController extends StateNotifier<ProductsControllerState> {
+class ProductsController extends StateNotifier<AsyncValue<void>> {
   final Ref _ref;
 
-  ProductsController(this._ref) : super(const ProductsControllerState());
+  ProductsController(this._ref) : super(const AsyncValue.data(null));
 
-  Future<void> toggleProductStatus(String productId, ProductStatus newStatus) async {
-    state = state.copyWith(isLoading: true, errorMessage: null, successMessage: null);
-    try {
-      final useCase = _ref.read(updateProductStatusUseCaseProvider);
-      final success = await useCase(productId, newStatus);
-      if (success) {
-        _ref.invalidate(productsListProvider);
-        _ref.invalidate(productDetailsProvider(productId));
-        state = state.copyWith(
-          isLoading: false,
-          successMessage: 'تم تحديث حالة المنتج بنجاح',
-        );
-      } else {
-        state = state.copyWith(
-          isLoading: false,
-          errorMessage: 'تعذر تغيير حالة المنتج',
-        );
-      }
-    } catch (e) {
-      state = state.copyWith(
-        isLoading: false,
-        errorMessage: 'خطأ: $e',
-      );
-    }
+  ProductService get _service => _ref.read(productServiceProvider);
+
+  Future<void> updateStatus(String productId, ProductStatus newStatus) async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      await _service.updateStatus(productId, newStatus);
+      _ref.invalidate(productsProvider);
+      _ref.invalidate(productDetailsProvider(productId));
+    });
+  }
+
+  Future<void> updateStock(String productId, int newStock) async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      await _service.updateStock(productId, newStock);
+      _ref.invalidate(productsProvider);
+      _ref.invalidate(productDetailsProvider(productId));
+    });
   }
 
   Future<void> duplicateProduct(String productId) async {
-    state = state.copyWith(isLoading: true, errorMessage: null, successMessage: null);
-    try {
-      final useCase = _ref.read(duplicateProductUseCaseProvider);
-      final duplicated = await useCase(productId);
-      _ref.invalidate(productsListProvider);
-      state = state.copyWith(
-        isLoading: false,
-        successMessage: 'تم نسخ المنتج "${duplicated.name}" كمسودة جديدة',
-      );
-    } catch (e) {
-      state = state.copyWith(
-        isLoading: false,
-        errorMessage: 'خطأ أثناء نسخ المنتج: $e',
-      );
-    }
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      await _service.duplicate(productId);
+      _ref.invalidate(productsProvider);
+    });
+  }
+
+  Future<void> archiveProduct(String productId) async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      await _service.archive(productId);
+      _ref.invalidate(productsProvider);
+    });
+  }
+
+  Future<ValidationResult> validateAddProduct() async {
+    final limits = await _ref.read(subscriptionLimitsProvider.future);
+    final validator = _ref.read(productValidationServiceProvider);
+    return validator.validateAddProduct(limits);
   }
 }
 
-final productsControllerProvider =
-    StateNotifierProvider.autoDispose<ProductsController, ProductsControllerState>((ref) {
+final productsControllerProvider = StateNotifierProvider<ProductsController, AsyncValue<void>>((ref) {
   return ProductsController(ref);
 });

@@ -1,12 +1,68 @@
+import 'package:flutter/material.dart';
 import 'product_tier_price.dart';
 import 'product_performance_model.dart';
 import 'product_lifecycle_model.dart';
 
 enum ProductStatus {
-  published, // منشور
-  hidden, // مخفي
-  draft, // مسودة
-  outOfStock, // منتهي
+  draft,          // مسودة
+  pendingReview,  // بانتظار المراجعة
+  published,      // منشور
+  outOfStock,     // غير متوفر
+  hidden,         // مخفي
+  archived,       // مؤرشف
+}
+
+extension ProductStatusExtension on ProductStatus {
+  String get titleAr {
+    switch (this) {
+      case ProductStatus.draft:
+        return 'مسودة';
+      case ProductStatus.pendingReview:
+        return 'بانتظار المراجعة';
+      case ProductStatus.published:
+        return 'منشور';
+      case ProductStatus.outOfStock:
+        return 'غير متوفر';
+      case ProductStatus.hidden:
+        return 'مخفي';
+      case ProductStatus.archived:
+        return 'مؤرشف';
+    }
+  }
+
+  Color get color {
+    switch (this) {
+      case ProductStatus.draft:
+        return const Color(0xFF6B7280); // Grey
+      case ProductStatus.pendingReview:
+        return const Color(0xFFEAB308); // Yellow / Amber
+      case ProductStatus.published:
+        return const Color(0xFF16A34A); // Green
+      case ProductStatus.outOfStock:
+        return const Color(0xFFF97316); // Orange
+      case ProductStatus.hidden:
+        return const Color(0xFF9CA3AF); // Muted Grey
+      case ProductStatus.archived:
+        return const Color(0xFF374151); // Dark Slate Grey
+    }
+  }
+
+  IconData get icon {
+    switch (this) {
+      case ProductStatus.draft:
+        return Icons.edit_note_outlined;
+      case ProductStatus.pendingReview:
+        return Icons.hourglass_empty_rounded;
+      case ProductStatus.published:
+        return Icons.check_circle_outline;
+      case ProductStatus.outOfStock:
+        return Icons.remove_shopping_cart_outlined;
+      case ProductStatus.hidden:
+        return Icons.visibility_off_outlined;
+      case ProductStatus.archived:
+        return Icons.archive_outlined;
+    }
+  }
 }
 
 class ProductModel {
@@ -17,7 +73,7 @@ class ProductModel {
   final String subCategory;
   final double startingPrice;
   final String currency;
-  final int moq; // أقل كمية للطلب
+  final int moq;
   final int availableStock;
   final ProductStatus status;
   final int viewsCount;
@@ -31,11 +87,11 @@ class ProductModel {
   final List<String> pdfUrls;
   final String? catalogUrl;
 
-  // Descriptions & Origin
+  // Description
   final String shortDescription;
   final String fullDescription;
-  final String countryOfOrigin; // بلد المنشأ (e.g. مصر)
-  final String brand; // العلامة التجارية
+  final String countryOfOrigin;
+  final String brand;
 
   // Tier Pricing
   final List<ProductTierPrice> tieredPrices;
@@ -43,27 +99,26 @@ class ProductModel {
   final double maxPrice;
   final String? discountText;
 
-  // Manufacturing & Logistics Capacity
-  final String dailyCapacity; // الطاقة الإنتاجية اليومية
-  final String monthlyCapacity; // الطاقة الإنتاجية الشهرية
-  final String manufacturingLeadTime; // مدة التصنيع
-  final String preparationTime; // مدة التجهيز
-  final int readyForShipmentHours; // جاهز للشحن خلال X ساعة/يوم
+  // Manufacturing & Logistics
+  final String dailyCapacity;
+  final String monthlyCapacity;
+  final String manufacturingLeadTime;
+  final String preparationTime;
+  final int readyForShipmentHours;
 
-  // Quality & Compliance
-  final List<String> qualityCertificates; // شهادات الجودة و ISO
+  // Quality & Packaging
+  final List<String> qualityCertificates;
   final List<String> labTestReports;
-
-  // Packaging & Pickup
-  final String packagingMethod; // طريقة التغليف
-  final double cartonWeightKg; // وزن الكرتونة/الرول
-  final int unitsPerBox; // عدد الوحدات بالعبوة
-  final String pickupLocation; // مكان الاستلام بالمصنع
+  final String packagingMethod;
+  final double cartonWeightKg;
+  final int unitsPerBox;
+  final String pickupLocation;
 
   // Performance & Lifecycle
   final ProductPerformanceModel performance;
   final ProductLifecycleModel lifecycle;
   final DateTime createdAt;
+  final DateTime updatedAt;
 
   const ProductModel({
     required this.id,
@@ -106,32 +161,36 @@ class ProductModel {
     required this.performance,
     required this.lifecycle,
     required this.createdAt,
+    required this.updatedAt,
   });
 
-  String get statusArabicLabel {
-    switch (status) {
-      case ProductStatus.published:
-        return 'منشور';
-      case ProductStatus.hidden:
-        return 'مخفي';
-      case ProductStatus.draft:
-        return 'مسودة';
-      case ProductStatus.outOfStock:
-        return 'منتهي';
+  String get statusArabicLabel => status.titleAr;
+
+  String get formattedLastUpdated {
+    final diff = DateTime.now().difference(updatedAt);
+    if (diff.inMinutes < 60) {
+      return 'منذ ${diff.inMinutes} دقيقة';
+    } else if (diff.inHours < 24) {
+      return 'منذ ${diff.inHours} ساعة';
+    } else {
+      return 'منذ ${diff.inDays} يوم';
     }
   }
 
   ProductModel copyWith({
+    String? name,
     ProductStatus? status,
     int? availableStock,
+    double? startingPrice,
+    DateTime? updatedAt,
   }) {
     return ProductModel(
       id: id,
-      name: name,
+      name: name ?? this.name,
       sku: sku,
       category: category,
       subCategory: subCategory,
-      startingPrice: startingPrice,
+      startingPrice: startingPrice ?? this.startingPrice,
       currency: currency,
       moq: moq,
       availableStock: availableStock ?? this.availableStock,
@@ -166,6 +225,7 @@ class ProductModel {
       performance: performance,
       lifecycle: lifecycle,
       createdAt: createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 }

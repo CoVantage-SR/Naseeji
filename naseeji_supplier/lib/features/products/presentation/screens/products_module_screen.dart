@@ -3,286 +3,169 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import 'package:naseeji_supplier/core/widgets/app_bottom_navigation_bar.dart';
-import 'package:naseeji_supplier/core/widgets/general_widgets.dart';
-import 'products_tab.dart';
-import 'categories_tab.dart';
-import 'inventory_tab.dart';
-import 'marketing_tab.dart';
-import 'analytics_tab.dart';
-import '../widgets/premium_badge.dart';
-import '../widgets/subscription_required_widget.dart';
-import '../../../subscription/presentation/controllers/subscription_controllers.dart';
-import '../../../subscription/domain/entities/subscription_models.dart';
 
-class ProductsModuleScreen extends ConsumerStatefulWidget {
+import '../providers/products_providers.dart';
+import '../controllers/products_controller.dart';
+import '../widgets/products_dashboard_widget.dart';
+import '../widgets/subscription_card_widget.dart';
+import '../widgets/product_search_widget.dart';
+import '../widgets/product_filter_widget.dart';
+import '../widgets/performance_suggestion_card.dart';
+import '../widgets/product_card_widget.dart';
+import '../widgets/empty_products_widget.dart';
+import '../widgets/loading_widget.dart';
+import '../widgets/subscription_limit_dialog.dart';
+import '../widgets/add_product_wizard_bottom_sheet.dart';
+
+class ProductsModuleScreen extends ConsumerWidget {
   const ProductsModuleScreen({super.key});
 
   @override
-  ConsumerState<ProductsModuleScreen> createState() => _ProductsModuleScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
-class _ProductsModuleScreenState extends ConsumerState<ProductsModuleScreen> with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 5, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final subAsync = ref.watch(activeSubscriptionControllerProvider);
+    final productsAsync = ref.watch(productsProvider);
+    final limitsAsync = ref.watch(subscriptionLimitsProvider);
+    final searchQuery = ref.watch(productSearchQueryProvider);
+    final statusFilter = ref.watch(productStatusFilterProvider);
+    final categoryFilter = ref.watch(productCategoryFilterProvider);
+    final sortBy = ref.watch(productSortByProvider);
 
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        body: subAsync.when(
-          loading: () => Center(child: CircularProgressIndicator()),
-          error: (e, _) => Center(child: Text('خطأ: $e')),
-          data: (sub) {
-            // Case 1: No subscription (or free plan if we require subscription)
-            if (sub.planId == 'free' || sub.planId.isEmpty) {
-              return Scaffold(
-                appBar: AppBar(
-                  backgroundColor: Theme.of(context).colorScheme.surface,
-                  elevation: 0.5,
-                  title: Text(
-                    'إدارة المنتجات',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
-                  ),
-                  centerTitle: true,
-                  leading: IconButton(
-                    icon: Icon(Icons.arrow_back, color: AppColors.onSurface),
-                    onPressed: () => context.go('/home'),
-                  ),
-                ),
-                body: SubscriptionRequiredWidget(
-                  onChoosePlan: () => context.push('/subscription/plans'),
-                ),
-              );
-            }
-
-            // Case 2: Subscription Expired
-            if (sub.status == SubscriptionStatus.expired) {
-              return Scaffold(
-                appBar: AppBar(
-                  backgroundColor: Theme.of(context).colorScheme.surface,
-                  elevation: 0.5,
-                  title: Text(
-                    'الاشتراك منتهي الصلاحية',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
-                  ),
-                  centerTitle: true,
-                  leading: IconButton(
-                    icon: Icon(Icons.arrow_back, color: AppColors.onSurface),
-                    onPressed: () => context.go('/home'),
-                  ),
-                ),
-                body: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFBA1A1A).withValues(alpha: 0.1),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: Text(
-                            '⚠️',
-                            style: TextStyle(fontSize: 40),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 24),
-                      Text(
-                        'اشتراكك منتهي الصلاحية',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 12),
-                      Text(
-                        'منتجات خامات المنسوجات الخاصة بك مخفية مؤقتاً عن المشترين والمصانع حتى تقوم بتجديد باقة الاشتراك.',
-                        style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.5),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 32),
-                      PrimaryButton(
-                        text: 'تجديد الاشتراك الآن',
-                        onPressed: () async {
-                          await ref.read(activeSubscriptionControllerProvider.notifier).renew();
-                          if (context.mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('تم تجديد الباقة وتفعيل المنتجات بنجاح!')),
-                            );
-                          }
-                        },
-                      ),
-                      SizedBox(height: 12),
-                      OutlinedButton(
-                        onPressed: () => context.push('/subscription/plans'),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: const Color(0xFF0040E0),
-                          side: const BorderSide(color: Color(0xFF0040E0)),
-                          minimumSize: const Size.fromHeight(56),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                        ),
-                        child: Text('مقارنة الخطط والباقات B2B', style: TextStyle(fontWeight: FontWeight.bold)),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            }
-
-            // Case 3: Suspended
-            if (sub.status == SubscriptionStatus.cancelled || sub.status == SubscriptionStatus.pending) {
-              return Scaffold(
-                appBar: AppBar(
-                  backgroundColor: Theme.of(context).colorScheme.surface,
-                  elevation: 0.5,
-                  title: Text(
-                    'الاشتراك معلق',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
-                  ),
-                  centerTitle: true,
-                  leading: IconButton(
-                    icon: Icon(Icons.arrow_back, color: AppColors.onSurface),
-                    onPressed: () => context.go('/home'),
-                  ),
-                ),
-                body: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: AppColors.outline.withValues(alpha: 0.1),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: Text(
-                            '🚫',
-                            style: TextStyle(fontSize: 40),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 24),
-                      Text(
-                        'تم تعليق الاشتراك',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 12),
-                      Text(
-                        'لقد تم تعطيل إدارة ونشر المنتجات للمؤسسة مؤقتاً لوجود مستحقات مالية معلقة أو بطلب الإدارة. يرجى مراجعة الدعم الفني.',
-                        style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant, height: 1.5),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 32),
-                      PrimaryButton(
-                        text: 'التواصل مع الدعم الفني لنسيجي',
-                        onPressed: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('تم إرسال طلب تواصل للدعم الفني وسيتصل بك أحد ممثلينا قريباً.')),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            }
-
-            // Case 4: Subscription Active
-            return Scaffold(
-              appBar: AppBar(
-                backgroundColor: Theme.of(context).colorScheme.surface,
-                elevation: 0.5,
-                title: Text(
-                  'إدارة المنتجات',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
-                ),
-                centerTitle: true,
-                actions: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8, top: 12, bottom: 12),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF0040E0).withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        sub.planName,
-                        style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Color(0xFF0040E0)),
-                      ),
-                    ),
-                  ),
-                ],
-                bottom: TabBar(
-                  controller: _tabController,
-                  isScrollable: true,
-                  tabAlignment: TabAlignment.start,
-                  indicatorColor: const Color(0xFF0040E0),
-                  labelColor: const Color(0xFF0040E0),
-                  unselectedLabelColor: AppColors.outline,
-                  labelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-                  unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
-                  indicatorWeight: 3,
-                  tabs: const [
-                    Tab(text: 'منتجاتنا'),
-                    Tab(text: 'التصنيفات'),
-                    Tab(text: 'المخزون'),
-                    Tab(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text('التسويق'),
-                          SizedBox(width: 6),
-                          PremiumBadge(fontSize: 8, padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2)),
-                        ],
-                      ),
-                    ),
-                    Tab(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text('التحليلات'),
-                          SizedBox(width: 6),
-                          PremiumBadge(fontSize: 8, padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2)),
-                        ],
-                      ),
-                    ),
-                  ],
+        backgroundColor: theme.scaffoldBackgroundColor,
+        appBar: AppBar(
+          backgroundColor: colorScheme.surface,
+          elevation: 0.5,
+          centerTitle: true,
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.inventory_2_rounded, size: 18, color: AppColors.primary),
+              const SizedBox(width: 6),
+              const Text(
+                'إدارة المنتجات والخامات B2B',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primary,
                 ),
               ),
-              body: TabBarView(
-                controller: _tabController,
-                children: [
-                  const ProductsTab(),
-                  const CategoriesTab(),
-                  const InventoryTab(),
-                  MarketingTab(onCancelVip: () => _tabController.animateTo(0)),
-                  AnalyticsTab(onCancelVip: () => _tabController.animateTo(0)),
-                ],
-              ),
+            ],
+          ),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: colorScheme.onSurface),
+            onPressed: () {
+              if (context.canPop()) {
+                context.pop();
+              } else {
+                context.go('/home');
+              }
+            },
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.tune_rounded, size: 20),
+              tooltip: 'الفلاتر السريعة',
+              onPressed: () {
+                ref.read(productStatusFilterProvider.notifier).state = null;
+                ref.read(productCategoryFilterProvider.notifier).state = null;
+                ref.read(productSearchQueryProvider.notifier).state = '';
+              },
+            ),
+          ],
+        ),
+        body: productsAsync.when(
+          loading: () => const LoadingWidget(),
+          error: (err, _) => Center(
+            child: Text('حدث خطأ في تحميل المنتجات: $err', style: const TextStyle(color: Colors.red, fontSize: 11)),
+          ),
+          data: (products) {
+            return Column(
+              children: [
+                const SizedBox(height: 8),
+
+                // 1. Dashboard Mini Cards Header (عدد المنتجات المنشورة والمراجعة والتخزين)
+                ProductsDashboardWidget(
+                  products: products,
+                  activeFilter: statusFilter,
+                  onSelectFilter: (filterKey) {
+                    ref.read(productStatusFilterProvider.notifier).state = filterKey;
+                  },
+                ),
+                const SizedBox(height: 8),
+
+                // 2. Subscription Status Card (اسم الباقة والمساحة والحدود)
+                limitsAsync.when(
+                  data: (limits) => SubscriptionCardWidget(
+                    limits: limits,
+                    onUpgrade: () => context.push('/subscription/plans'),
+                  ),
+                  loading: () => const SizedBox.shrink(),
+                  error: (_, __) => const SizedBox.shrink(),
+                ),
+                const SizedBox(height: 8),
+
+                // 3. Search Bar
+                ProductSearchWidget(
+                  query: searchQuery,
+                  onChanged: (val) {
+                    ref.read(productSearchQueryProvider.notifier).state = val;
+                  },
+                  onClear: () {
+                    ref.read(productSearchQueryProvider.notifier).state = '';
+                  },
+                ),
+                const SizedBox(height: 6),
+
+                // 4. Compact Filter Bar
+                ProductFilterWidget(
+                  selectedStatus: statusFilter,
+                  selectedCategory: categoryFilter,
+                  selectedSort: sortBy,
+                  onStatusChanged: (val) {
+                    ref.read(productStatusFilterProvider.notifier).state = val;
+                  },
+                  onCategoryChanged: (val) {
+                    ref.read(productCategoryFilterProvider.notifier).state = val;
+                  },
+                  onSortChanged: (val) {
+                    ref.read(productSortByProvider.notifier).state = val;
+                  },
+                ),
+                const SizedBox(height: 6),
+
+                // 5. Performance Suggestion Card
+                if (products.isNotEmpty) PerformanceSuggestionCard(products: products),
+                const SizedBox(height: 6),
+
+                // 6. Compact Product Cards List
+                Expanded(
+                  child: products.isEmpty
+                      ? EmptyProductsWidget(
+                          onAddProduct: () => _handleAddProduct(context, ref),
+                        )
+                      : ListView.builder(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                          itemCount: products.length,
+                          itemBuilder: (context, index) {
+                            return ProductCardWidget(product: products[index]);
+                          },
+                        ),
+                ),
+              ],
             );
           },
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () => _handleAddProduct(context, ref),
+          backgroundColor: AppColors.primary,
+          foregroundColor: Colors.white,
+          elevation: 2,
+          icon: const Icon(Icons.add_rounded, size: 20),
+          label: const Text('إضافة منتج خامة', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
         ),
         bottomNavigationBar: const Directionality(
           textDirection: TextDirection.ltr,
@@ -290,5 +173,20 @@ class _ProductsModuleScreenState extends ConsumerState<ProductsModuleScreen> wit
         ),
       ),
     );
+  }
+
+  Future<void> _handleAddProduct(BuildContext context, WidgetRef ref) async {
+    final controller = ref.read(productsControllerProvider.notifier);
+    final validation = await controller.validateAddProduct();
+
+    if (!validation.isValid) {
+      if (context.mounted) {
+        SubscriptionLimitDialog.show(context, validation.errorMessage ?? 'وصلت للحد الأقصى المسموح بباقتك.');
+      }
+    } else {
+      if (context.mounted) {
+        AddProductWizardBottomSheet.show(context);
+      }
+    }
   }
 }

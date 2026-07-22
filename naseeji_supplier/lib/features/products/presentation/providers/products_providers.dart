@@ -1,89 +1,72 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../data/repositories/products_repository_impl.dart';
-import '../../domain/repositories/products_repository.dart';
 import '../../domain/entities/product_model.dart';
+import '../../domain/entities/product_performance_model.dart';
 import '../../domain/entities/product_subscription_limit_model.dart';
-import '../../domain/usecases/products_usecases.dart';
+import '../../domain/services/product_service.dart';
+import '../../domain/services/subscription_service.dart';
+import '../../domain/services/analytics_service.dart';
+import '../../domain/services/product_validation_service.dart';
+import '../../data/repositories/products_repository_impl.dart';
 
-// Repository Provider
-final productsRepositoryProvider = Provider<ProductsRepository>((ref) {
+final productsRepositoryImplProvider = Provider<ProductsRepositoryImpl>((ref) {
   return ProductsRepositoryImpl();
 });
 
-// Use Cases Providers
-final getProductsUseCaseProvider = Provider<GetProductsUseCase>((ref) {
-  final repo = ref.watch(productsRepositoryProvider);
-  return GetProductsUseCase(repo);
+final productServiceProvider = Provider<ProductService>((ref) {
+  final repo = ref.watch(productsRepositoryImplProvider);
+  return ProductService(repo);
 });
 
-final getProductDetailsUseCaseProvider = Provider<GetProductDetailsUseCase>((ref) {
-  final repo = ref.watch(productsRepositoryProvider);
-  return GetProductDetailsUseCase(repo);
+final subscriptionServiceProvider = Provider<SubscriptionService>((ref) {
+  final repo = ref.watch(productsRepositoryImplProvider);
+  return SubscriptionService(repo);
 });
 
-final updateProductStatusUseCaseProvider = Provider<UpdateProductStatusUseCase>((ref) {
-  final repo = ref.watch(productsRepositoryProvider);
-  return UpdateProductStatusUseCase(repo);
+final analyticsServiceProvider = Provider<AnalyticsService>((ref) {
+  final repo = ref.watch(productsRepositoryImplProvider);
+  return AnalyticsService(repo);
 });
 
-final duplicateProductUseCaseProvider = Provider<DuplicateProductUseCase>((ref) {
-  final repo = ref.watch(productsRepositoryProvider);
-  return DuplicateProductUseCase(repo);
+final productValidationServiceProvider = Provider<ProductValidationService>((ref) {
+  return ProductValidationService();
 });
 
-final getSubscriptionLimitsUseCaseProvider = Provider<GetSubscriptionLimitsUseCase>((ref) {
-  final repo = ref.watch(productsRepositoryProvider);
-  return GetSubscriptionLimitsUseCase(repo);
-});
+// State Providers for Search & Filters
+final productSearchQueryProvider = StateProvider<String>((ref) => '');
+final productStatusFilterProvider = StateProvider<String?>((ref) => null);
+final productCategoryFilterProvider = StateProvider<String?>((ref) => null);
+final productSortByProvider = StateProvider<String>((ref) => 'updated');
 
-// State Filters
-class ProductFilterState {
-  final String statusFilter;
-  final String categoryFilter;
-  final String searchQuery;
+// Main Products List Provider
+final productsProvider = FutureProvider<List<ProductModel>>((ref) async {
+  final service = ref.watch(productServiceProvider);
+  final searchQuery = ref.watch(productSearchQueryProvider);
+  final statusFilter = ref.watch(productStatusFilterProvider);
+  final categoryFilter = ref.watch(productCategoryFilterProvider);
+  final sortBy = ref.watch(productSortByProvider);
 
-  const ProductFilterState({
-    this.statusFilter = 'الكل',
-    this.categoryFilter = 'الكل',
-    this.searchQuery = '',
-  });
-
-  ProductFilterState copyWith({
-    String? statusFilter,
-    String? categoryFilter,
-    String? searchQuery,
-  }) {
-    return ProductFilterState(
-      statusFilter: statusFilter ?? this.statusFilter,
-      categoryFilter: categoryFilter ?? this.categoryFilter,
-      searchQuery: searchQuery ?? this.searchQuery,
-    );
-  }
-}
-
-final productFilterProvider = StateProvider<ProductFilterState>((ref) {
-  return const ProductFilterState();
-});
-
-// Reactive Products List Provider
-final productsListProvider = FutureProvider.autoDispose<List<ProductModel>>((ref) async {
-  final filter = ref.watch(productFilterProvider);
-  final useCase = ref.watch(getProductsUseCaseProvider);
-  return useCase(
-    statusFilter: filter.statusFilter,
-    categoryFilter: filter.categoryFilter,
-    searchQuery: filter.searchQuery,
+  return service.getProducts(
+    searchQuery: searchQuery,
+    statusFilter: statusFilter,
+    categoryFilter: categoryFilter,
+    sortBy: sortBy,
   );
 });
 
-// Product Details Provider
-final productDetailsProvider = FutureProvider.autoDispose.family<ProductModel, String>((ref, productId) async {
-  final useCase = ref.watch(getProductDetailsUseCaseProvider);
-  return useCase(productId);
+// Single Product Details Provider
+final productDetailsProvider = FutureProvider.family<ProductModel?, String>((ref, productId) async {
+  final service = ref.watch(productServiceProvider);
+  return service.getProductById(productId);
 });
 
-// Subscription Limits Provider
-final productSubscriptionLimitsProvider = FutureProvider.autoDispose<ProductSubscriptionLimitModel>((ref) async {
-  final useCase = ref.watch(getSubscriptionLimitsUseCaseProvider);
-  return useCase();
+// Subscription Limit & Quota Provider
+final subscriptionLimitsProvider = FutureProvider<ProductSubscriptionLimitModel>((ref) async {
+  final service = ref.watch(subscriptionServiceProvider);
+  return service.getLimits();
+});
+
+// Product Analytics Provider
+final productAnalyticsProvider = FutureProvider.family<ProductPerformanceModel, String>((ref, productId) async {
+  final service = ref.watch(analyticsServiceProvider);
+  return service.getProductAnalytics(productId);
 });
