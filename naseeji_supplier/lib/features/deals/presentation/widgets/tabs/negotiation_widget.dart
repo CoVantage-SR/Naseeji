@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../domain/entities/deal_model.dart';
-import '../controllers/deals_controller.dart';
+import 'package:naseeji_supplier/features/deals/domain/entities/deal_model.dart';
+import 'package:naseeji_supplier/features/deals/presentation/controllers/deals_controller.dart';
 
 class NegotiationWidget extends ConsumerStatefulWidget {
   final DealModel deal;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../domain/entities/deal_model.dart';
-import '../controllers/deals_controller.dart';
+import 'package:naseeji_supplier/features/deals/domain/entities/deal_model.dart';
+import 'package:naseeji_supplier/features/deals/presentation/controllers/deals_controller.dart';
 
 class QualityWidget extends ConsumerWidget {
   final DealModel deal;
@@ -51,7 +51,7 @@ class QualityWidget extends ConsumerWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  qual?.statusText ?? 'المصنع يقوم بفحص جودة الخيوط/الأقمشة واختبار المعايرة حالياً.',
+                  qual?.statusText ?? 'المصنع يقوم بفحص جودة الخيوط/الأقمشة وااختبار المعايرة حالياً.',
                   style: const TextStyle(fontSize: 11, color: Colors.black87, fontWeight: FontWeight.bold),
                 ),
                 if (qual?.notes != null) ...[

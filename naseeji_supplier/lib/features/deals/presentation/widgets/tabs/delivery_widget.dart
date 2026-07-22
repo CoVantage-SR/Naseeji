@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../domain/entities/deal_model.dart';
-import '../controllers/deals_controller.dart';
+import 'package:naseeji_supplier/features/deals/domain/entities/deal_model.dart';
+import 'package:naseeji_supplier/features/deals/presentation/controllers/deals_controller.dart';
 
 class DeliveryWidget extends ConsumerStatefulWidget {
   final DealModel deal;
@@ -105,7 +105,9 @@ class _DeliveryWidgetState extends ConsumerState<DeliveryWidget> {
                 RadioListTile<DeliveryMethod>(
                   value: DeliveryMethod.supplierDelivery,
                   groupValue: _method,
-                  onChanged: (val) => setState(() => _method = val!),
+                  onChanged: (val) {
+                    if (val != null) setState(() => _method = val);
+                  },
                   title: const Text('المورد يقوم بالتوصيل لمقر/مخزن المصنع', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
                   subtitle: const Text('سيقوم أسطول المورد أو السائق التابع بالتوصيل لموقع المصنع مباشرة.', style: TextStyle(fontSize: 9.5)),
                   contentPadding: EdgeInsets.zero,
@@ -116,7 +118,9 @@ class _DeliveryWidgetState extends ConsumerState<DeliveryWidget> {
                 RadioListTile<DeliveryMethod>(
                   value: DeliveryMethod.factoryPickup,
                   groupValue: _method,
-                  onChanged: (val) => setState(() => _method = val!),
+                  onChanged: (val) {
+                    if (val != null) setState(() => _method = val);
+                  },
                   title: const Text('المصنع يستلم من مخزن المورد مباشرة', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
                   subtitle: const Text('يقوم مندوب أو سيارة المصنع بالحضور لم مخزن المنشأة للتسلم والتوقيع.', style: TextStyle(fontSize: 9.5)),
                   contentPadding: EdgeInsets.zero,
