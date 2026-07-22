@@ -69,7 +69,7 @@ class ProductQuickActionsBarWidget extends ConsumerWidget {
                 icon: isPublished ? Icons.pause_circle_outline_rounded : Icons.play_circle_outline_rounded,
                 color: isPublished ? Colors.orange.shade800 : Colors.green.shade800,
                 onTap: () {
-                  ref.read(productsControllerProvider.notifier).toggleProductStatus(
+                  ref.read(productsControllerProvider.notifier).updateStatus(
                         product.id,
                         isPublished ? ProductStatus.hidden : ProductStatus.published,
                       );
@@ -86,7 +86,7 @@ class ProductQuickActionsBarWidget extends ConsumerWidget {
                 icon: Icons.visibility_off_outlined,
                 color: colorScheme.outline,
                 onTap: () {
-                  ref.read(productsControllerProvider.notifier).toggleProductStatus(
+                  ref.read(productsControllerProvider.notifier).updateStatus(
                         product.id,
                         ProductStatus.hidden,
                       );

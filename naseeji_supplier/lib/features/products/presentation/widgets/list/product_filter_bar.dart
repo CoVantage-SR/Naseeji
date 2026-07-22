@@ -7,20 +7,18 @@ class ProductFilterBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final filter = ref.watch(productFilterProvider);
+    final statusFilter = ref.watch(productStatusFilterProvider);
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    const List<String> statuses = ['الكل', 'منشور', 'مخفي', 'مسودة', 'منتهي'];
+    const List<String> statuses = ['الكل', 'منشور', 'بانتظار المراجعة', 'مخفي', 'مسودة', 'غير متوفر'];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Search Input
         TextField(
           onChanged: (val) {
-            ref.read(productFilterProvider.notifier).state =
-                filter.copyWith(searchQuery: val);
+            ref.read(productSearchQueryProvider.notifier).state = val;
           },
           decoration: InputDecoration(
             hintText: 'ابحث باسم المنتج أو كود SKU...',
@@ -41,7 +39,6 @@ class ProductFilterBar extends ConsumerWidget {
         ),
         const SizedBox(height: 10),
 
-        // Status Chips Horizontal Scroll
         SizedBox(
           height: 36,
           child: ListView.separated(
@@ -50,15 +47,14 @@ class ProductFilterBar extends ConsumerWidget {
             separatorBuilder: (context, index) => const SizedBox(width: 8),
             itemBuilder: (context, index) {
               final status = statuses[index];
-              final isSelected = filter.statusFilter == status;
+              final isSelected = (statusFilter == null && status == 'الكل') || (statusFilter == status);
 
               return ChoiceChip(
                 label: Text(status),
                 selected: isSelected,
                 onSelected: (selected) {
                   if (selected) {
-                    ref.read(productFilterProvider.notifier).state =
-                        filter.copyWith(statusFilter: status);
+                    ref.read(productStatusFilterProvider.notifier).state = status == 'الكل' ? null : status;
                   }
                 },
                 selectedColor: colorScheme.primary,

@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/products_providers.dart';
-import '../controllers/products_controller.dart';
-import '../../domain/entities/product_model.dart';
-import '../../domain/entities/product_tier_price.dart';
-import '../../domain/entities/product_performance_model.dart';
-import '../../domain/entities/product_lifecycle_model.dart';
 
 class AddProductWizardBottomSheet extends ConsumerStatefulWidget {
   const AddProductWizardBottomSheet({super.key});
@@ -40,8 +35,6 @@ class _AddProductWizardBottomSheetState extends ConsumerState<AddProductWizardBo
   final _moqController = TextEditingController(text: '100');
   final _stockController = TextEditingController(text: '2500');
   final _pickupController = TextEditingController(text: 'مخزن العاشر من رمضان');
-
-  final String _mainImage = 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&fit=crop&w=400&q=80';
 
   @override
   void dispose() {
@@ -330,73 +323,7 @@ class _AddProductWizardBottomSheetState extends ConsumerState<AddProductWizardBo
   }
 
   void _submitProduct() {
-    final newProduct = ProductModel(
-      id: 'prod-${DateTime.now().millisecondsSinceEpoch}',
-      name: _nameController.text,
-      sku: 'SKU-${DateTime.now().millisecondsSinceEpoch.toString().substring(8)}',
-      category: _categoryController.text,
-      subCategory: _subCategoryController.text,
-      startingPrice: double.tryParse(_priceController.text) ?? 80.0,
-      currency: 'ج.م',
-      moq: int.tryParse(_moqController.text) ?? 100,
-      availableStock: int.tryParse(_stockController.text) ?? 2500,
-      status: ProductStatus.pendingReview,
-      viewsCount: 0,
-      rfqCount: 0,
-      savesCount: 0,
-      mainImageUrl: _mainImage,
-      additionalImages: const [],
-      videoUrl: null,
-      pdfUrls: const [],
-      shortDescription: _nameController.text,
-      fullDescription: _nameController.text,
-      countryOfOrigin: _countryController.text,
-      brand: _brandController.text,
-      tieredPrices: [
-        ProductTierPrice(
-          minQuantity: int.tryParse(_moqController.text) ?? 100,
-          pricePerUnit: double.tryParse(_priceController.text) ?? 80.0,
-          formattedLabel: '${_moqController.text} وحدة = ${_priceController.text} ج.م',
-        ),
-      ],
-      minPrice: double.tryParse(_priceController.text) ?? 80.0,
-      maxPrice: double.tryParse(_priceController.text) ?? 80.0,
-      dailyCapacity: '3000 وحدة/يوم',
-      monthlyCapacity: '90000 وحدة/شهر',
-      manufacturingLeadTime: '5 أيام',
-      preparationTime: '24 ساعة',
-      readyForShipmentHours: 24,
-      qualityCertificates: const ['شهادة ISO 9001'],
-      labTestReports: const [],
-      packagingMethod: 'كراتين مغلفة لحماية الخامات',
-      cartonWeightKg: 25.0,
-      unitsPerBox: 10,
-      pickupLocation: _pickupController.text,
-      performance: const ProductPerformanceModel(
-        views: 0,
-        pageVisits: 0,
-        saves: 0,
-        catalogDownloads: 0,
-        videoViews: 0,
-        rfqRequests: 0,
-        quotesSubmitted: 0,
-        completedOrders: 0,
-        conversionRatePercent: 0.0,
-        topKeywords: ['قطن', 'تريكو', 'منسوجات'],
-        lastActivityText: 'حديث النشر',
-        totalRevenue: 0.0,
-      ),
-      lifecycle: const ProductLifecycleModel(
-        currentStepIndex: 0,
-        steps: [
-          ProductLifecycleStep(stepIndex: 0, title: 'تم تقديم المنتج للمراجعة', isCompleted: true, isCurrent: true),
-        ],
-      ),
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    );
-
-    ref.read(productsProvider);
+    ref.invalidate(productsProvider);
     Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(

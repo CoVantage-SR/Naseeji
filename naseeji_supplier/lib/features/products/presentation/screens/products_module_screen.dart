@@ -40,12 +40,12 @@ class ProductsModuleScreen extends ConsumerWidget {
           backgroundColor: colorScheme.surface,
           elevation: 0.5,
           centerTitle: true,
-          title: Row(
+          title: const Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(Icons.inventory_2_rounded, size: 18, color: AppColors.primary),
-              const SizedBox(width: 6),
-              const Text(
+              SizedBox(width: 6),
+              Text(
                 'إدارة المنتجات والخامات B2B',
                 style: TextStyle(
                   fontSize: 14,
@@ -87,7 +87,7 @@ class ProductsModuleScreen extends ConsumerWidget {
               children: [
                 const SizedBox(height: 8),
 
-                // 1. Dashboard Mini Cards Header (عدد المنتجات المنشورة والمراجعة والتخزين)
+                // 1. Dashboard Mini Cards Header
                 ProductsDashboardWidget(
                   products: products,
                   activeFilter: statusFilter,
@@ -97,7 +97,7 @@ class ProductsModuleScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 8),
 
-                // 2. Subscription Status Card (اسم الباقة والمساحة والحدود)
+                // 2. Subscription Status Card
                 limitsAsync.when(
                   data: (limits) => SubscriptionCardWidget(
                     limits: limits,

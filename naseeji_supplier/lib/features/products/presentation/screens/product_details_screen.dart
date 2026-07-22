@@ -81,6 +81,9 @@ class ProductDetailsScreen extends ConsumerWidget {
               ),
             ),
             data: (product) {
+              if (product == null) {
+                return const Center(child: Text('المنتج غير موجود'));
+              }
               return SingleChildScrollView(
                 padding: const EdgeInsets.all(14.0),
                 child: Column(

@@ -79,15 +79,20 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
       pickupLocation: 'مخزن المحلة الكبرى - المنطقة الصناعية الأولى - المحلة',
       performance: const ProductPerformanceModel(
         views: 1420,
+        pageVisits: 890,
         saves: 64,
         catalogDownloads: 38,
         videoViews: 125,
         rfqRequests: 18,
+        quotesSubmitted: 15,
         completedOrders: 12,
+        conversionRatePercent: 8.5,
+        topKeywords: ['قطن', 'غزل', 'تريكو', 'المحلة'],
+        lastActivityText: 'منذ ساعتين (طلب RFQ)',
         totalRevenue: 284000.0,
       ),
       lifecycle: const ProductLifecycleModel(
-        currentStepIndex: 7, // بدأ التصنيع
+        currentStepIndex: 7,
         steps: [
           ProductLifecycleStep(stepIndex: 0, title: 'تم نشر المنتج', isCompleted: true, isCurrent: false),
           ProductLifecycleStep(stepIndex: 1, title: 'ظهر في نتائج البحث', isCompleted: true, isCurrent: false),
@@ -97,13 +102,10 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
           ProductLifecycleStep(stepIndex: 5, title: 'تم التفاوض', isCompleted: true, isCurrent: false),
           ProductLifecycleStep(stepIndex: 6, title: 'تم اعتماد العرض', isCompleted: true, isCurrent: false),
           ProductLifecycleStep(stepIndex: 7, title: 'بدأ التصنيع', isCompleted: true, isCurrent: true),
-          ProductLifecycleStep(stepIndex: 8, title: 'جاهز للاستلام', isCompleted: false, isCurrent: false),
-          ProductLifecycleStep(stepIndex: 9, title: 'استلمت شركة الشحن الطلب', isCompleted: false, isCurrent: false),
-          ProductLifecycleStep(stepIndex: 10, title: 'أكد المصنع الاستلام', isCompleted: false, isCurrent: false),
-          ProductLifecycleStep(stepIndex: 11, title: 'تم تحويل المستحقات', isCompleted: false, isCurrent: false),
         ],
       ),
       createdAt: DateTime(2026, 1, 10),
+      updatedAt: DateTime(2026, 2, 22),
     ),
     ProductModel(
       id: 'prod-102',
@@ -158,15 +160,20 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
       pickupLocation: 'مخزن العاشر من رمضان - المنطقة الصناعية ٣',
       performance: const ProductPerformanceModel(
         views: 2890,
+        pageVisits: 1650,
         saves: 112,
         catalogDownloads: 94,
         videoViews: 0,
         rfqRequests: 32,
+        quotesSubmitted: 28,
         completedOrders: 24,
+        conversionRatePercent: 11.2,
+        topKeywords: ['قماش', 'تريكو', 'قطن', 'العاشر'],
+        lastActivityText: 'منذ يوم (طلب أمر إنتاج)',
         totalRevenue: 480000.0,
       ),
       lifecycle: const ProductLifecycleModel(
-        currentStepIndex: 11, // تم تحويل المستحقات
+        currentStepIndex: 11,
         steps: [
           ProductLifecycleStep(stepIndex: 0, title: 'تم نشر المنتج', isCompleted: true, isCurrent: false),
           ProductLifecycleStep(stepIndex: 1, title: 'ظهر في نتائج البحث', isCompleted: true, isCurrent: false),
@@ -183,6 +190,7 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
         ],
       ),
       createdAt: DateTime(2026, 2, 1),
+      updatedAt: DateTime(2026, 2, 23),
     ),
     ProductModel(
       id: 'prod-103',
@@ -227,11 +235,16 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
       pickupLocation: 'مخزن مدينة شبرا الخيمة الصناعية',
       performance: const ProductPerformanceModel(
         views: 820,
+        pageVisits: 450,
         saves: 22,
         catalogDownloads: 12,
         videoViews: 0,
         rfqRequests: 6,
+        quotesSubmitted: 5,
         completedOrders: 4,
+        conversionRatePercent: 4.8,
+        topKeywords: ['صوف', 'بدل', 'شتوي'],
+        lastActivityText: 'منذ 3 أيام',
         totalRevenue: 96000.0,
       ),
       lifecycle: const ProductLifecycleModel(
@@ -241,17 +254,10 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
           ProductLifecycleStep(stepIndex: 1, title: 'ظهر في نتائج البحث', isCompleted: true, isCurrent: false),
           ProductLifecycleStep(stepIndex: 2, title: 'شاهده 120 مصنع', isCompleted: true, isCurrent: false),
           ProductLifecycleStep(stepIndex: 3, title: 'تم حفظه لدى 35 مصنع', isCompleted: true, isCurrent: true),
-          ProductLifecycleStep(stepIndex: 4, title: 'استلم 8 طلبات RFQ', isCompleted: false, isCurrent: false),
-          ProductLifecycleStep(stepIndex: 5, title: 'تم التفاوض', isCompleted: false, isCurrent: false),
-          ProductLifecycleStep(stepIndex: 6, title: 'تم اعتماد العرض', isCompleted: false, isCurrent: false),
-          ProductLifecycleStep(stepIndex: 7, title: 'بدأ التصنيع', isCompleted: false, isCurrent: false),
-          ProductLifecycleStep(stepIndex: 8, title: 'جاهز للاستلام', isCompleted: false, isCurrent: false),
-          ProductLifecycleStep(stepIndex: 9, title: 'استلمت شركة الشحن الطلب', isCompleted: false, isCurrent: false),
-          ProductLifecycleStep(stepIndex: 10, title: 'أكد المصنع الاستلام', isCompleted: false, isCurrent: false),
-          ProductLifecycleStep(stepIndex: 11, title: 'تم تحويل المستحقات', isCompleted: false, isCurrent: false),
         ],
       ),
       createdAt: DateTime(2026, 2, 15),
+      updatedAt: DateTime(2026, 2, 20),
     ),
     ProductModel(
       id: 'prod-104',
@@ -295,11 +301,16 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
       pickupLocation: 'مخزن مدينة 6 أكتوبر الصناعية',
       performance: const ProductPerformanceModel(
         views: 650,
+        pageVisits: 310,
         saves: 15,
         catalogDownloads: 4,
         videoViews: 0,
         rfqRequests: 2,
+        quotesSubmitted: 2,
         completedOrders: 2,
+        conversionRatePercent: 3.1,
+        topKeywords: ['بوليستر', 'خيوط متينة'],
+        lastActivityText: 'منذ أسبوع',
         totalRevenue: 28000.0,
       ),
       lifecycle: const ProductLifecycleModel(
@@ -307,19 +318,10 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
         steps: [
           ProductLifecycleStep(stepIndex: 0, title: 'تم نشر المنتج', isCompleted: true, isCurrent: false),
           ProductLifecycleStep(stepIndex: 1, title: 'ظهر في نتائج البحث', isCompleted: true, isCurrent: true),
-          ProductLifecycleStep(stepIndex: 2, title: 'شاهده 120 مصنع', isCompleted: false, isCurrent: false),
-          ProductLifecycleStep(stepIndex: 3, title: 'تم حفظه لدى 35 مصنع', isCompleted: false, isCurrent: false),
-          ProductLifecycleStep(stepIndex: 4, title: 'استلم 8 طلبات RFQ', isCompleted: false, isCurrent: false),
-          ProductLifecycleStep(stepIndex: 5, title: 'تم التفاوض', isCompleted: false, isCurrent: false),
-          ProductLifecycleStep(stepIndex: 6, title: 'تم اعتماد العرض', isCompleted: false, isCurrent: false),
-          ProductLifecycleStep(stepIndex: 7, title: 'بدأ التصنيع', isCompleted: false, isCurrent: false),
-          ProductLifecycleStep(stepIndex: 8, title: 'جاهز للاستلام', isCompleted: false, isCurrent: false),
-          ProductLifecycleStep(stepIndex: 9, title: 'استلمت شركة الشحن الطلب', isCompleted: false, isCurrent: false),
-          ProductLifecycleStep(stepIndex: 10, title: 'أكد المصنع الاستلام', isCompleted: false, isCurrent: false),
-          ProductLifecycleStep(stepIndex: 11, title: 'تم تحويل المستحقات', isCompleted: false, isCurrent: false),
         ],
       ),
       createdAt: DateTime(2026, 2, 20),
+      updatedAt: DateTime(2026, 2, 21),
     ),
   ];
 
@@ -362,7 +364,7 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
     await Future.delayed(const Duration(milliseconds: 200));
     final index = _mockProducts.indexWhere((p) => p.id == productId);
     if (index != -1) {
-      _mockProducts[index] = _mockProducts[index].copyWith(status: newStatus);
+      _mockProducts[index] = _mockProducts[index].copyWith(status: newStatus, updatedAt: DateTime.now());
       return true;
     }
     return false;
@@ -374,6 +376,7 @@ class ProductsRemoteDatasourceImpl implements ProductsRemoteDatasource {
     final original = await fetchProductDetails(productId);
     final duplicated = original.copyWith(
       status: ProductStatus.draft,
+      updatedAt: DateTime.now(),
     );
     _mockProducts.add(duplicated);
     return duplicated;

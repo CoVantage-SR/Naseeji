@@ -10,7 +10,6 @@ class PerformanceSuggestionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    // Find product needing optimization
     final lowPerformingProduct = products.firstWhere(
       (p) => p.viewsCount > 300 && p.rfqCount == 0,
       orElse: () => products.firstWhere((p) => p.viewsCount > 100 && p.rfqCount < 3, orElse: () => products.first),
@@ -23,7 +22,7 @@ class PerformanceSuggestionCard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 16),
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: const Color(0xFFFEF3C7), // Light Amber
+          color: const Color(0xFFFEF3C7),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: const Color(0xFFF59E0B).withValues(alpha: 0.4)),
         ),
@@ -47,7 +46,7 @@ class PerformanceSuggestionCard extends StatelessWidget {
                   const SizedBox(height: 2),
                   Text(
                     'منتج "${lowPerformingProduct.name}" حصل على ${lowPerformingProduct.viewsCount} مشاهدة بدون أي طلب عرض سعر (RFQ).',
-                    style: TextStyle(fontSize: 9.5, color: Colors.amber.shade950, height: 1.3),
+                    style: const TextStyle(fontSize: 9.5, color: Color(0xFF451A03), height: 1.3),
                   ),
                   const SizedBox(height: 4),
                   Row(
@@ -71,7 +70,7 @@ class PerformanceSuggestionCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: const Color(0xFFDCFCE7), // Light Green
+        color: const Color(0xFFDCFCE7),
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: const Color(0xFF22C55E).withValues(alpha: 0.4)),
       ),

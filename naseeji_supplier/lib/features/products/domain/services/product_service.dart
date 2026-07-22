@@ -40,8 +40,7 @@ class ProductService {
   Future<bool> updateStock(String productId, int newStock) async {
     final product = await _repository.getProductDetails(productId);
     final status = newStock <= 0 ? ProductStatus.outOfStock : (product.status == ProductStatus.outOfStock ? ProductStatus.published : product.status);
-    final updated = product.copyWith(availableStock: newStock, status: status, updatedAt: DateTime.now());
-    // update mock dataset
+    product.copyWith(availableStock: newStock, status: status, updatedAt: DateTime.now());
     return true;
   }
 

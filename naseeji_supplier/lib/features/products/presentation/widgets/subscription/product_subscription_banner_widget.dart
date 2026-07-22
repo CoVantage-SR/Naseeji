@@ -8,7 +8,7 @@ class ProductSubscriptionBannerWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final limitsAsync = ref.watch(productSubscriptionLimitsProvider);
+    final limitsAsync = ref.watch(subscriptionLimitsProvider);
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
