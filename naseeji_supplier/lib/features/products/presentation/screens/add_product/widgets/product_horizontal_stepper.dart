@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:naseeji_supplier/features/products/presentation/controllers/add_product_controller.dart';
 import 'wizard_progress_header.dart';
-import '../controllers/add_product_controller.dart';
 
 class ProductHorizontalStepper extends ConsumerWidget {
   const ProductHorizontalStepper({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:naseeji_supplier/features/products/presentation/controllers/add_product_controller.dart';
 import '../steps/step6_pricing_tiers_widget.dart';
-import '../controllers/add_product_controller.dart';
 
 class ProductPricingForm extends ConsumerWidget {
   const ProductPricingForm({super.key});
