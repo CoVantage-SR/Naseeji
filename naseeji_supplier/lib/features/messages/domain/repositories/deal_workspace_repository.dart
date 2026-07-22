@@ -1,7 +1,6 @@
-import '../entities/deal_workspace_model.dart';
-import '../entities/business_message.dart';
-import '../entities/deal_quotation_model.dart';
-import '../entities/deal_status_enum.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_workspace_model.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/business_message.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_status_enum.dart';
 
 abstract class DealWorkspaceRepository {
   Future<DealWorkspaceModel> getDealWorkspace(String dealId);

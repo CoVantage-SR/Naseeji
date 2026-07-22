@@ -1,10 +1,10 @@
-import '../domain/entities/deal_workspace_model.dart';
-import '../domain/entities/deal_status_enum.dart';
-import '../domain/entities/deal_quotation_model.dart';
-import '../domain/entities/deal_agreement_model.dart';
-import '../domain/entities/deal_file_model.dart';
-import '../domain/entities/deal_timeline_model.dart';
-import '../domain/entities/business_message.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_workspace_model.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_status_enum.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_quotation_model.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_agreement_model.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_file_model.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_timeline_model.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/business_message.dart';
 
 abstract class DealWorkspaceRemoteDatasource {
   Future<DealWorkspaceModel> fetchDealWorkspace(String dealId);
@@ -40,7 +40,6 @@ class DealWorkspaceRemoteDatasourceImpl implements DealWorkspaceRemoteDatasource
         timestamp: DateTime.now().subtract(const Duration(hours: 3)),
         isMe: true,
       ),
-      // System Change Notification inside Chat
       BusinessMessage(
         id: 'msg-sys-1',
         senderId: 'system',
@@ -110,7 +109,7 @@ class DealWorkspaceRemoteDatasourceImpl implements DealWorkspaceRemoteDatasource
       ),
     ],
     timeline: const DealTimelineModel(
-      currentStepIndex: 2, // بدأ التفاوض
+      currentStepIndex: 2,
       steps: [
         DealTimelineStep(stepIndex: 0, title: 'تم إنشاء RFQ', subtitle: 'استلام طلب السعر من المصنع', isCompleted: true, isCurrent: false),
         DealTimelineStep(stepIndex: 1, title: 'تم إرسال عرض السعر', subtitle: 'تقديم عرض سعر 45 جنيه/كجم', isCompleted: true, isCurrent: false),
@@ -174,7 +173,6 @@ class DealWorkspaceRemoteDatasourceImpl implements DealWorkspaceRemoteDatasource
       createdAt: DateTime.now(),
     );
 
-    // Insert System Notification in Chat
     final systemNotif = BusinessMessage(
       id: 'sys-${DateTime.now().millisecondsSinceEpoch}',
       senderId: 'system',

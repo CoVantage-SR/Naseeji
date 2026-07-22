@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../domain/entities/deal_workspace_model.dart';
-import '../../domain/entities/deal_status_enum.dart';
-import '../../domain/services/content_moderation_service.dart';
-import '../../domain/repositories/deal_workspace_repository.dart';
-import '../../data/datasources/deal_workspace_remote_datasource.dart';
-import '../../data/repositories/deal_workspace_repository_impl.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_workspace_model.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_status_enum.dart';
+import 'package:naseeji_supplier/features/messages/domain/services/content_moderation_service.dart';
+import 'package:naseeji_supplier/features/messages/domain/repositories/deal_workspace_repository.dart';
+import 'package:naseeji_supplier/features/messages/data/datasources/deal_workspace_remote_datasource.dart';
+import 'package:naseeji_supplier/features/messages/data/repositories/deal_workspace_repository_impl.dart';
 
 final dealWorkspaceRepositoryProvider = Provider<DealWorkspaceRepository>((ref) {
   return DealWorkspaceRepositoryImpl(
@@ -16,7 +16,7 @@ class DealWorkspaceState {
   final bool isLoading;
   final String? errorMessage;
   final DealWorkspaceModel? workspace;
-  final int activeTabIndex; // 0: المحادثة, 1: عرض السعر, 2: الاتفاق, 3: الملفات, 4: الخط الزمني
+  final int activeTabIndex;
   final ContentModerationResult moderationResult;
   final String searchQuery;
 
@@ -86,11 +86,10 @@ class DealWorkspaceController extends StateNotifier<DealWorkspaceState> {
   Future<bool> sendMessage(String text, {String? attachmentUrl}) async {
     if (state.workspace == null) return false;
 
-    // 1. Run Security Content Moderation Check
     final check = moderationService.moderate(text);
     if (check.isProhibited) {
       state = state.copyWith(moderationResult: check);
-      return false; // Block sending
+      return false;
     }
 
     state = state.copyWith(moderationResult: ContentModerationResult.clean);

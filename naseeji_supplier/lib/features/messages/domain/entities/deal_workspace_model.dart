@@ -1,17 +1,17 @@
-import 'deal_status_enum.dart';
-import 'deal_quotation_model.dart';
-import 'deal_agreement_model.dart';
-import 'deal_file_model.dart';
-import 'deal_timeline_model.dart';
-import 'business_message.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_status_enum.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_quotation_model.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_agreement_model.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_file_model.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_timeline_model.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/business_message.dart';
 
 class DealWorkspaceModel {
   final String dealId;
-  final String orderId; // رقم الطلب (e.g. ORD-2304)
-  final String rfqId; // رقم RFQ (e.g. RFQ-1025)
-  final String factoryName; // اسم المصنع (e.g. شركة النسيج الحديثة)
+  final String orderId;
+  final String rfqId;
+  final String factoryName;
   final String factoryAvatarUrl;
-  final bool isFactoryOnline; // حالة الاتصال (نشط الآن)
+  final bool isFactoryOnline;
   final bool isFactoryVerified;
   final DealStatus currentStatus;
 
