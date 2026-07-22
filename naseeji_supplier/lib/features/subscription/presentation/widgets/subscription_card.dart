@@ -59,35 +59,41 @@ class SubscriptionCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SubscriptionBadge(
-                      tier: subscription.tier,
-                      planName: subscription.planName,
-                      status: subscription.status,
-                    ),
-                    const SizedBox(height: 6),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.calendar_month,
-                          size: 14,
-                          color: colorScheme.onSurfaceVariant,
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          'ينتهي في  $formattedDate',
-                          style: theme.textTheme.bodySmall?.copyWith(
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SubscriptionBadge(
+                        tier: subscription.tier,
+                        planName: subscription.planName,
+                        status: subscription.status,
+                      ),
+                      const SizedBox(height: 6),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.calendar_month,
+                            size: 14,
                             color: colorScheme.onSurfaceVariant,
-                            fontWeight: FontWeight.w600,
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          const SizedBox(width: 4),
+                          Flexible(
+                            child: Text(
+                              'ينتهي في  $formattedDate',
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-                if (onUpgradePressed != null)
+                if (onUpgradePressed != null) ...[
+                  const SizedBox(width: 8),
                   ElevatedButton.icon(
                     onPressed: onUpgradePressed,
                     icon: const Icon(Icons.bolt, size: 16),
@@ -104,6 +110,7 @@ class SubscriptionCard extends StatelessWidget {
                       ),
                     ),
                   ),
+                ],
               ],
             ),
             const Padding(
