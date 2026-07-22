@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../domain/entities/deal_model.dart';
+import 'package:naseeji_supplier/features/deals/domain/entities/deal_model.dart';
 import 'deal_status_badge_widget.dart';
 
 class DealCardWidget extends StatelessWidget {

@@ -5,6 +5,7 @@ import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import 'package:naseeji_supplier/core/widgets/app_bottom_navigation_bar.dart';
 
 import '../providers/deals_providers.dart';
+import '../../domain/entities/deal_model.dart';
 import '../widgets/deals_dashboard_widget.dart';
 import '../widgets/action_required_widget.dart';
 import '../widgets/deal_card_widget.dart';
@@ -21,7 +22,6 @@ class DealsDashboardScreen extends ConsumerWidget {
 
     final dealsAsync = ref.watch(dealsProvider);
     final statusFilter = ref.watch(dealStatusFilterProvider);
-    final searchQuery = ref.watch(dealSearchQueryProvider);
     final onlyActionRequired = ref.watch(onlyActionRequiredProvider);
 
     return Directionality(

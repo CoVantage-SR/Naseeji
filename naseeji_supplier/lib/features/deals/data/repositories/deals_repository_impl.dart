@@ -291,7 +291,7 @@ class DealsRepositoryImpl implements DealsRepository {
       negotiation: null,
       agreement: null,
       production: null,
-      delivery: const DeliveryData(
+      delivery: DeliveryData(
         method: DeliveryMethod.factoryPickup,
         estimatedDeliveryDate: DateTime(2026, 2, 20),
         responsiblePersonName: 'مندوب استلام المصنع',

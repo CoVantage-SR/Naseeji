@@ -63,6 +63,13 @@ class QuickActionsWidget extends ConsumerWidget {
           style: ElevatedButton.styleFrom(backgroundColor: colorScheme.primary, foregroundColor: Colors.white),
         );
 
+      case DealStatus.quotationSent:
+        return OutlinedButton.icon(
+          onPressed: () {},
+          icon: const Icon(Icons.edit_outlined, size: 16),
+          label: const Text('تم إرسال العرض (تعديل العرض الحالي)'),
+        );
+
       case DealStatus.negotiation:
         return ElevatedButton.icon(
           onPressed: () {},

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../domain/entities/deal_model.dart';
+import 'package:naseeji_supplier/features/deals/domain/entities/deal_model.dart';
 
 class ActionRequiredWidget extends StatelessWidget {
   final List<DealModel> actionDeals;
@@ -105,6 +105,8 @@ class ActionRequiredWidget extends StatelessWidget {
       case DealStatus.newDeal:
       case DealStatus.waitingSupplierReview:
         return 'أرسل عرض السعر';
+      case DealStatus.quotationSent:
+        return 'تم إرسال العرض';
       case DealStatus.negotiation:
         return 'رد على العرض المقابل';
       case DealStatus.agreementPending:
