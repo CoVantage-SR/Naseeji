@@ -61,7 +61,7 @@ class AppBottomNavigationBar extends StatelessWidget {
                   context.go('/products');
                   break;
                 case 2:
-                  context.go('/orders');
+                  context.go('/deals');
                   break;
                 case 3:
                   context.go('/messages');
@@ -83,9 +83,9 @@ class AppBottomNavigationBar extends StatelessWidget {
                 label: 'المنتجات',
               ),
               NavigationDestination(
-                icon: Icon(Icons.shopping_cart_outlined, color: onSurfaceVar),
-                selectedIcon: Icon(Icons.shopping_cart_rounded, color: primaryColor),
-                label: 'الطلبات',
+                icon: Icon(Icons.handshake_outlined, color: onSurfaceVar),
+                selectedIcon: Icon(Icons.handshake_rounded, color: primaryColor),
+                label: 'الصفقات',
               ),
               NavigationDestination(
                 icon: Icon(Icons.chat_bubble_outline_rounded, color: onSurfaceVar),

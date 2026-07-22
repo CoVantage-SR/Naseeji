@@ -24,6 +24,9 @@ import '../../features/profile/presentation/screens/supplier_profile/supplier_pr
 import '../../features/products/presentation/screens/add_product/add_product_screen.dart';
 import '../../features/products/presentation/screens/products_module_screen.dart';
 import '../../features/products/presentation/screens/product_usage_screen.dart';
+import '../../features/deals/presentation/screens/deals_dashboard_screen.dart';
+import '../../features/deals/presentation/screens/deal_details_screen.dart';
+
 import '../../features/orders/presentation/screens/orders_screen.dart';
 import '../../features/orders/presentation/screens/rfq_details_screen.dart';
 import '../../features/orders/presentation/screens/create_offer_screen.dart';
@@ -371,10 +374,23 @@ GoRouter goRouter(GoRouterRef ref) {
         ),
       ),
       GoRoute(
+        path: '/deals',
+        name: 'deals',
+        pageBuilder: (context, state) =>
+            const NoTransitionPage(child: DealsDashboardScreen()),
+      ),
+      GoRoute(
+        path: '/deals/details/:id',
+        name: 'deals-details',
+        builder: (context, state) => DealDetailsScreen(
+          dealId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+      GoRoute(
         path: '/orders',
         name: 'orders',
         pageBuilder: (context, state) =>
-            const NoTransitionPage(child: OrdersScreen()),
+            const NoTransitionPage(child: DealsDashboardScreen()),
       ),
       GoRoute(
         path: '/rfq-details',
