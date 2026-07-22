@@ -218,7 +218,7 @@ class DealsRepositoryImpl implements DealsRepository {
         notes: 'تم الانتهاء من غزل 3,250 كجم وجاري التجهيز للتعبئة.',
         lastUpdatedAt: DateTime.now().subtract(const Duration(hours: 6)),
       ),
-      delivery: const DeliveryData(
+      delivery: DeliveryData(
         method: DeliveryMethod.supplierDelivery,
         estimatedDeliveryDate: DateTime(2026, 3, 1),
         responsiblePersonName: 'أحمد إبراهيم (سائق الشحنة)',
