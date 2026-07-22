@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../controllers/add_product_controller.dart';
+import 'package:naseeji_supplier/features/products/presentation/controllers/add_product_controller.dart';
 import 'widgets/wizard_progress_header.dart';
 import 'widgets/wizard_navigation_bar.dart';
 import 'steps/step1_basic_info_widget.dart';
@@ -42,8 +42,6 @@ class AddProductWizardScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final formData = ref.watch(addProductControllerProvider);
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
 
     return Directionality(
       textDirection: TextDirection.rtl,
