@@ -14,7 +14,7 @@ class Step1BasicInfoWidget extends ConsumerWidget {
     final colorScheme = theme.colorScheme;
     final controller = ref.read(addProductControllerProvider.notifier);
 
-    final List<String> categories = const [
+    const List<String> categories = [
       'خيوط ونُسُج',
       'أقمشة ملابس',
       'أقمشة راقية',
@@ -22,7 +22,7 @@ class Step1BasicInfoWidget extends ConsumerWidget {
       'مستلزمات ومعدات إنتاج',
     ];
 
-    final List<String> subCategories = const [
+    const List<String> subCategories = [
       'خيوط قطن غزل دائرية',
       'أقمشة سادة قطن تريكو',
       'أقمشة صوف مخلوط',
@@ -30,7 +30,7 @@ class Step1BasicInfoWidget extends ConsumerWidget {
       'أقمشة كتان معالجة',
     ];
 
-    final List<String> countries = const [
+    const List<String> countries = [
       'جمهورية مصر العربية',
       'تركيا',
       'الهند',
@@ -73,7 +73,7 @@ class Step1BasicInfoWidget extends ConsumerWidget {
             children: [
               Expanded(
                 child: DropdownButtonFormField<String>(
-                  value: categories.contains(formData.category) ? formData.category : categories.first,
+                  initialValue: categories.contains(formData.category) ? formData.category : categories.first,
                   onChanged: (val) => controller.updateBasicInfo(category: val),
                   items: categories
                       .map((c) => DropdownMenuItem(value: c, child: Text(c, style: const TextStyle(fontSize: 13))))
@@ -87,7 +87,7 @@ class Step1BasicInfoWidget extends ConsumerWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: DropdownButtonFormField<String>(
-                  value: subCategories.contains(formData.subCategory) ? formData.subCategory : subCategories.first,
+                  initialValue: subCategories.contains(formData.subCategory) ? formData.subCategory : subCategories.first,
                   onChanged: (val) => controller.updateBasicInfo(subCategory: val),
                   items: subCategories
                       .map((c) => DropdownMenuItem(value: c, child: Text(c, style: const TextStyle(fontSize: 13))))
@@ -107,7 +107,7 @@ class Step1BasicInfoWidget extends ConsumerWidget {
             children: [
               Expanded(
                 child: DropdownButtonFormField<String>(
-                  value: countries.contains(formData.countryOfOrigin) ? formData.countryOfOrigin : countries.first,
+                  initialValue: countries.contains(formData.countryOfOrigin) ? formData.countryOfOrigin : countries.first,
                   onChanged: (val) => controller.updateBasicInfo(countryOfOrigin: val),
                   items: countries
                       .map((c) => DropdownMenuItem(value: c, child: Text(c, style: const TextStyle(fontSize: 13))))
