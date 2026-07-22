@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../domain/entities/deal_timeline_model.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_timeline_model.dart';
 
 class TimelineTabWidget extends StatelessWidget {
   final DealTimelineModel timeline;
@@ -31,7 +31,6 @@ class TimelineTabWidget extends StatelessWidget {
           ),
           const SizedBox(height: 16),
 
-          // Timeline Steps List
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -44,7 +43,6 @@ class TimelineTabWidget extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Timeline Line & Indicator Icon
                     Column(
                       children: [
                         Container(
@@ -81,7 +79,6 @@ class TimelineTabWidget extends StatelessWidget {
                     ),
                     const SizedBox(width: 12),
 
-                    // Step Content Card
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 16.0),

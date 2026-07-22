@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../domain/entities/deal_agreement_model.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_agreement_model.dart';
 
 class AgreementTabWidget extends StatelessWidget {
   final DealAgreementModel agreement;
@@ -59,7 +59,6 @@ class AgreementTabWidget extends StatelessWidget {
           ),
           const SizedBox(height: 16),
 
-          // Approved Agreement Card
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
@@ -90,7 +89,6 @@ class AgreementTabWidget extends StatelessWidget {
           ),
           const SizedBox(height: 16),
 
-          // Summary Details Grid
           _buildInfoRow(context, label: 'إجمالي السعر النهائي:', value: '${agreement.finalTotalPrice.toStringAsFixed(0)} ${agreement.currency}'),
           const SizedBox(height: 8),
           _buildInfoRow(context, label: 'الكمية النهائية المتفق عليها:', value: '${agreement.finalQuantity} وحدة'),
@@ -102,7 +100,6 @@ class AgreementTabWidget extends StatelessWidget {
           _buildInfoRow(context, label: 'طريقة الدفع والتسديد:', value: agreement.paymentMethod),
           const SizedBox(height: 20),
 
-          // Approval Dual Badges
           Row(
             children: [
               Expanded(

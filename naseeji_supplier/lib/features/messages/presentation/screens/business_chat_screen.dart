@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../controllers/deal_workspace_controller.dart';
-import '../widgets/header/conversation_header_widget.dart';
-import '../widgets/tabs/messages_tab_widget.dart';
-import '../widgets/tabs/quotation_tab_widget.dart';
-import '../widgets/tabs/agreement_tab_widget.dart';
-import '../widgets/tabs/files_tab_widget.dart';
-import '../widgets/tabs/timeline_tab_widget.dart';
-import '../widgets/input/message_input_widget.dart';
-import '../widgets/moderation_warning_dialog.dart';
+import 'package:naseeji_supplier/features/messages/presentation/controllers/deal_workspace_controller.dart';
+import 'package:naseeji_supplier/features/messages/presentation/widgets/header/conversation_header_widget.dart';
+import 'package:naseeji_supplier/features/messages/presentation/widgets/tabs/messages_tab_widget.dart';
+import 'package:naseeji_supplier/features/messages/presentation/widgets/tabs/quotation_tab_widget.dart';
+import 'package:naseeji_supplier/features/messages/presentation/widgets/tabs/agreement_tab_widget.dart';
+import 'package:naseeji_supplier/features/messages/presentation/widgets/tabs/files_tab_widget.dart';
+import 'package:naseeji_supplier/features/messages/presentation/widgets/tabs/timeline_tab_widget.dart';
+import 'package:naseeji_supplier/features/messages/presentation/widgets/input/message_input_widget.dart';
+import 'package:naseeji_supplier/features/messages/presentation/widgets/moderation_warning_dialog.dart';
 
 class BusinessChatScreen extends ConsumerStatefulWidget {
   final String dealId;
@@ -28,7 +28,7 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> with Si
 
   @override
   void initState() {
-    super.initState() ;
+    super.initState();
     _tabController = TabController(length: 5, vsync: this);
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) {
@@ -162,7 +162,6 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> with Si
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    // Listen to Moderation Violations & Show Alert Dialog
     ref.listen<DealWorkspaceState>(dealWorkspaceControllerProvider(widget.dealId), (previous, next) {
       if (next.moderationResult.isProhibited) {
         showDialog(
@@ -215,10 +214,8 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> with Si
         ),
         body: Column(
           children: [
-            // Top Conversation Header (Factory Info, RFQ & Status)
             ConversationHeaderWidget(workspace: workspace),
 
-            // 5 Tabs Navigation Bar
             Container(
               color: colorScheme.surface,
               child: TabBar(
@@ -235,35 +232,24 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> with Si
               ),
             ),
 
-            // Tab Views Body Content
             Expanded(
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  // Tab 1: Chat Messages
                   MessagesTabWidget(messages: workspace.messages),
-
-                  // Tab 2: Quotation Details
                   QuotationTabWidget(
                     quotation: workspace.latestQuotation,
                     onAccept: () => controller.acceptQuotation(),
                     onReject: () => controller.rejectQuotation(),
                     onCounterOffer: () => _showCounterOfferBottomSheet(context),
                   ),
-
-                  // Tab 3: Final Agreement
                   AgreementTabWidget(agreement: workspace.finalAgreement),
-
-                  // Tab 4: Files & Attachments
                   FilesTabWidget(files: workspace.files),
-
-                  // Tab 5: Deal Journey Timeline
                   TimelineTabWidget(timeline: workspace.timeline),
                 ],
               ),
             ),
 
-            // Bottom Quick Actions & Message Input Bar
             MessageInputWidget(
               onSendMessage: (text) => controller.sendMessage(text),
               onSendAttachment: () {

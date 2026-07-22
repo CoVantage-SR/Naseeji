@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../domain/entities/deal_quotation_model.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_quotation_model.dart';
 
 class QuotationTabWidget extends StatelessWidget {
   final DealQuotationModel quotation;
@@ -90,7 +90,7 @@ class QuotationTabWidget extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   'سعر الوحدة: ${quotation.unitPrice} ${quotation.currency} • الكمية: ${quotation.quantity} وحدة',
-                  style: const TextStyle(fontSize: 12, color: Colors.white90),
+                  style: TextStyle(fontSize: 12, color: Colors.white.withValues(alpha: 0.9)),
                 ),
               ],
             ),

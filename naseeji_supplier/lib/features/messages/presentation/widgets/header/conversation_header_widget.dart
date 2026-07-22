@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../domain/entities/deal_workspace_model.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_workspace_model.dart';
 import 'status_badge_widget.dart';
 
 class ConversationHeaderWidget extends StatelessWidget {
@@ -34,7 +34,6 @@ class ConversationHeaderWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              // Factory Avatar with Online Indicator
               Stack(
                 children: [
                   CircleAvatar(
@@ -59,7 +58,6 @@ class ConversationHeaderWidget extends StatelessWidget {
               ),
               const SizedBox(width: 10),
 
-              // Factory Name & Online Status Subtitle
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,13 +93,11 @@ class ConversationHeaderWidget extends StatelessWidget {
                 ),
               ),
 
-              // Deal Status Badge
               StatusBadgeWidget(status: workspace.currentStatus),
             ],
           ),
           const SizedBox(height: 10),
 
-          // Order & RFQ Badges Row
           Row(
             children: [
               _buildIdTag(context, label: 'طلب', id: workspace.orderId, icon: Icons.receipt_long_outlined),

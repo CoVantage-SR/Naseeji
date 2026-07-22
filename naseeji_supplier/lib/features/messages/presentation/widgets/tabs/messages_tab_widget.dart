@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../domain/entities/business_message.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/business_message.dart';
 
 class MessagesTabWidget extends StatelessWidget {
   final List<BusinessMessage> messages;
@@ -30,7 +30,6 @@ class MessagesTabWidget extends StatelessWidget {
       itemBuilder: (context, index) {
         final msg = messages[index];
 
-        // 1. System Notification Event Card inside Chat
         if (msg.isSystemNotification) {
           return Center(
             child: Container(
@@ -59,7 +58,6 @@ class MessagesTabWidget extends StatelessWidget {
           );
         }
 
-        // 2. Chat Bubble (Me vs Factory)
         final isMe = msg.isMe;
         return Align(
           alignment: isMe ? Alignment.centerLeft : Alignment.centerRight,
@@ -78,7 +76,7 @@ class MessagesTabWidget extends StatelessWidget {
               border: isMe ? null : Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.4)),
             ),
             child: Column(
-              crossAxisAlignment: isMe ? CrossAlignment.end : CrossAlignment.start,
+              crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
               children: [
                 Text(
                   msg.senderName,

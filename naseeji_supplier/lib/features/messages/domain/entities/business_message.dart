@@ -37,15 +37,15 @@ class BusinessMessage {
   final bool isDeleted;
   final bool isEdited;
 
-  const BusinessMessage({
+  BusinessMessage({
     required this.id,
     required this.senderId,
     required this.senderName,
-    required this.senderAvatar,
-    required this.content,
-    required this.time,
-    required this.isOutgoing,
-    required this.type,
+    this.senderAvatar = '',
+    required String content,
+    String? time,
+    required bool isOutgoing,
+    MessageType? type,
     this.readStatus = ReadStatus.sent,
     this.attachmentUrls,
     this.replyToId,
@@ -54,7 +54,22 @@ class BusinessMessage {
     this.reaction,
     this.isDeleted = false,
     this.isEdited = false,
-  });
+
+    // Aliases for Deal Workspace compatibility
+    String? text,
+    DateTime? timestamp,
+    bool? isMe,
+    bool? isSystemNotification,
+  })  : content = text ?? content,
+        time = time ?? (timestamp != null ? timestamp.toIso8601String() : DateTime.now().toIso8601String()),
+        isOutgoing = isMe ?? isOutgoing,
+        type = type ?? ((isSystemNotification ?? false) ? MessageType.timelineEvent : MessageType.text);
+
+  // Helper Getters for Deal Workspace & UI
+  String get text => content;
+  bool get isMe => isOutgoing;
+  bool get isSystemNotification => type == MessageType.timelineEvent;
+  DateTime get timestamp => DateTime.tryParse(time) ?? DateTime.now();
 
   BusinessMessage copyWith({
     ReadStatus? readStatus,

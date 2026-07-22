@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../domain/entities/deal_file_model.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_file_model.dart';
 
 class FilesTabWidget extends StatefulWidget {
   final List<DealFileModel> files;
@@ -31,7 +31,6 @@ class _FilesTabWidgetState extends State<FilesTabWidget> {
           padding: const EdgeInsets.fromLTRB(14, 12, 14, 8),
           child: Column(
             children: [
-              // Search Input
               TextField(
                 onChanged: (val) => setState(() => _searchQuery = val),
                 decoration: InputDecoration(
@@ -48,7 +47,6 @@ class _FilesTabWidgetState extends State<FilesTabWidget> {
               ),
               const SizedBox(height: 8),
 
-              // Filter Chips Row
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -69,7 +67,6 @@ class _FilesTabWidgetState extends State<FilesTabWidget> {
           ),
         ),
 
-        // Files List View
         Expanded(
           child: filteredFiles.isEmpty
               ? Center(
