@@ -141,7 +141,7 @@ class QuotationSummaryCard extends StatelessWidget {
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: [
+                      children: const [
                         Icon(Icons.gavel, color: Colors.orange, size: 8),
                         SizedBox(width: 2),
                         Text('طلب تفاوض', style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold, color: Colors.orange)),

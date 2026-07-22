@@ -65,7 +65,7 @@ class QuotationStatusCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.all(Radius.circular(16)),
-        boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
+        boxShadow: const [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

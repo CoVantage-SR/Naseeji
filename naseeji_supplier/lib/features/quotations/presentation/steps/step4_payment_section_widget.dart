@@ -32,29 +32,42 @@ class Step4PaymentSectionWidget extends ConsumerWidget {
           ),
           const SizedBox(height: 16),
 
-          // Payment Methods Chips Selection
           Text('طريقة الدفع المحددة بالعرض *', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: colorScheme.onSurface)),
           const SizedBox(height: 8),
 
           Column(
             children: PaymentMethodType.values.map((type) {
               final isSelected = formData.paymentMethod == type;
-              return Container(
-                margin: const EdgeInsets.only(bottom: 6),
-                child: RadioListTile<PaymentMethodType>(
-                  value: type,
-                  groupValue: formData.paymentMethod,
-                  onChanged: (val) {
-                    if (val != null) controller.updatePaymentDetails(paymentMethod: val);
-                  },
-                  title: Text(type.arabicLabel, style: TextStyle(fontSize: 13, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal)),
-                  activeColor: colorScheme.primary,
-                  tileColor: isSelected ? colorScheme.primary.withValues(alpha: 0.08) : colorScheme.surface,
-                  shape: RoundedRectangleBorder(
+              return InkWell(
+                onTap: () => controller.updatePaymentDetails(paymentMethod: type),
+                borderRadius: BorderRadius.circular(12),
+                child: Container(
+                  margin: const EdgeInsets.only(bottom: 6),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: isSelected ? colorScheme.primary.withValues(alpha: 0.08) : colorScheme.surface,
                     borderRadius: BorderRadius.circular(12),
-                    side: BorderSide(
+                    border: Border.all(
                       color: isSelected ? colorScheme.primary : colorScheme.outlineVariant.withValues(alpha: 0.4),
                     ),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        isSelected ? Icons.radio_button_checked_rounded : Icons.radio_button_off_rounded,
+                        color: isSelected ? colorScheme.primary : colorScheme.outline,
+                        size: 20,
+                      ),
+                      const SizedBox(width: 10),
+                      Text(
+                        type.arabicLabel,
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                          color: isSelected ? colorScheme.primary : colorScheme.onSurface,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               );

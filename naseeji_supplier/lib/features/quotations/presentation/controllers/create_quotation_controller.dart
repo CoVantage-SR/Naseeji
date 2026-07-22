@@ -186,17 +186,17 @@ class CreateQuotationController extends StateNotifier<CreateQuotationFormData> {
           child: AlertDialog(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
             title: Row(
-              children: [
-                const Icon(Icons.check_circle_rounded, color: Colors.green, size: 28),
-                const SizedBox(width: 8),
-                const Text('تم إنشاء وإرسال عرض السعر!'),
+              children: const [
+                Icon(Icons.check_circle_rounded, color: Colors.green, size: 28),
+                SizedBox(width: 8),
+                Text('تم إنشاء وإرسال عرض السعر!'),
               ],
             ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('تم إصدار وثيقة الـ PDF الرسمية بنجاح:'),
+                const Text('تم إصدار وثيقة الـ PDF الرسمية بنجاح:'),
                 const SizedBox(height: 8),
                 Container(
                   padding: const EdgeInsets.all(12),
