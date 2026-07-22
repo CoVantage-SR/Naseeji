@@ -45,28 +45,28 @@ class _AgreementHistoryScreenState extends ConsumerState<AgreementHistoryScreen>
           centerTitle: true,
           title: Text(
             'سجل وزمن الاتفاقية ${widget.agreementId}',
-            style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
+            style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13),
           ),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
+            icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.onSurfaceVariant, size: 20),
             onPressed: () => context.pop(),
           ),
           bottom: TabBar(
             controller: _tabController,
-            labelColor: const Color(0xFF0040E0),
+            labelColor: AppColors.primary,
             unselectedLabelColor: Theme.of(context).colorScheme.onSurfaceVariant,
-            indicatorColor: const Color(0xFF0040E0),
-            labelStyle: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+            indicatorColor: AppColors.primary,
+            labelStyle: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
             tabs: _tabs.map((title) => Tab(text: title)).toList(),
           ),
         ),
         body: stateAsync.when(
-          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (e, _) => Center(child: Text('خطأ: $e')),
           data: (agreements) {
             final agreementIndex = agreements.indexWhere((a) => a.id == widget.agreementId);
             if (agreementIndex == -1) {
-              return Center(child: Text('الاتفاقية غير موجودة'));
+              return const Center(child: Text('الاتفاقية غير موجودة'));
             }
             final a = agreements[agreementIndex];
 
@@ -81,12 +81,12 @@ class _AgreementHistoryScreenState extends ConsumerState<AgreementHistoryScreen>
                       padding: const EdgeInsets.all(12),
                       margin: const EdgeInsets.only(bottom: 16),
                       decoration: BoxDecoration(color: Colors.blue.shade50, borderRadius: BorderRadius.circular(12)),
-                      child: Text(
+                      child: const Text(
                         'يتتبع الخط الزمني التالي مسار الإنتاج، والتحميل والفسح الجمركي، وحالة التوصيل الفعلي وتأكيد استلام وفحص الجودة.',
                         style: TextStyle(fontSize: 10, color: Colors.blue, height: 1.4),
                       ),
                     ),
-                    AgreementTimelineWidget(steps: a.timeline),
+                    AgreementTimelineWidget(timeline: a.timeline),
                   ],
                 ),
 
@@ -98,13 +98,13 @@ class _AgreementHistoryScreenState extends ConsumerState<AgreementHistoryScreen>
                       padding: const EdgeInsets.all(12),
                       margin: const EdgeInsets.only(bottom: 16),
                       decoration: BoxDecoration(color: Colors.amber.shade50, borderRadius: BorderRadius.circular(12)),
-                      child: Text(
+                      child: const Text(
                         'سجل مراجعات غير قابل للتعديل (Immutable). يتم تسجيل أي تعديل يطرأ على شروط العقد مع حفظ رقم الإصدار للتوافق مع الفوترة والفسح اللوجستي.',
                         style: TextStyle(fontSize: 10, color: Colors.amber, height: 1.4),
                       ),
                     ),
                     if (a.history.isEmpty)
-                      Center(child: Text('لا توجد مراجعات سابقة مسجلة.', style: TextStyle(fontSize: 11, color: AppColors.outline)))
+                      const Center(child: Text('لا توجد مراجعات سابقة مسجلة.', style: TextStyle(fontSize: 11, color: AppColors.outline)))
                     else
                       ...a.history.map((record) => AgreementHistoryCard(record: record)),
                   ],

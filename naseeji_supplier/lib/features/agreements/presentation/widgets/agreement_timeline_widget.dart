@@ -1,103 +1,142 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../domain/entities/agreement_model.dart';
 
 class AgreementTimelineWidget extends StatelessWidget {
-  final List<AgreementTimelineStep> steps;
+  final List<AgreementTimelineStep> timeline;
 
-  const AgreementTimelineWidget({super.key, required this.steps});
+  const AgreementTimelineWidget({super.key, required this.timeline});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: steps.length,
-      itemBuilder: (context, index) {
-        final ev = steps[steps.length - 1 - index]; // Show latest first
-        final bool isFirst = index == 0;
-        final bool isLast = index == steps.length - 1;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Time & Date
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(ev.time, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Theme.of(context).colorScheme.onSurface)),
-                SizedBox(height: 2),
-                Text(ev.date, style: TextStyle(fontSize: 9, color: AppColors.outline)),
-              ],
-            ),
-            SizedBox(width: 16),
-            
-            // Timeline Line & Dot Indicator
-            Column(
-              children: [
-                Container(
-                  width: 12,
-                  height: 12,
-                  decoration: BoxDecoration(
-                    color: isFirst ? const Color(0xFF0040E0) : Colors.transparent,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: const Color(0xFF0040E0), width: 3),
-                  ),
-                ),
-                if (!isLast)
-                  Container(
-                    width: 2,
-                    height: 60,
-                    color: AppColors.outlineVariant,
-                  ),
-              ],
-            ),
-            SizedBox(width: 16),
-
-            // Event Details Card
-            Expanded(
-              child: Container(
-                margin: const EdgeInsets.only(bottom: 16),
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface,
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
-                  boxShadow: [BoxShadow(color: Color(0x03000000), blurRadius: 4)],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(ev.status, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Color(0xFF0040E0))),
-                    SizedBox(height: 2),
-                    Text('بواسطة: ${ev.user}', style: TextStyle(fontSize: 9, color: AppColors.outline)),
-                    SizedBox(height: 6),
-                    Text(ev.notes, style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant)),
-                    if (ev.attachments.isNotEmpty) ...[
-                      SizedBox(height: 8),
-                      Row(
-                        children: ev.attachments.map((fileName) => Container(
-                          margin: const EdgeInsets.only(left: 6),
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                          decoration: BoxDecoration(color: const Color(0xFFFFF2EC), borderRadius: BorderRadius.circular(6)),
-                          child: Row(
-                            children: [
-                              const Icon(Icons.picture_as_pdf, color: Colors.orange, size: 10),
-                              SizedBox(width: 4),
-                              Text(fileName, style: TextStyle(fontSize: 8, color: Colors.orange, fontWeight: FontWeight.bold)),
-                            ],
-                          ),
-                        )).toList(),
-                      ),
-                    ],
-                  ],
+    return Container(
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 10,
+          ),
+        ],
+        border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.5)),
+      ),
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.timeline_outlined, color: AppColors.primary, size: 18),
+              const SizedBox(width: 8),
+              Text(
+                'الخط الزمني وسجل إجراءات الاتفاق',
+                style: theme.textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.primary,
                 ),
               ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          const Divider(height: 1),
+          const SizedBox(height: 12),
+
+          if (timeline.isEmpty)
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Text(
+                  'لا يوجد خط زمني مسجل حتى الآن.',
+                  style: theme.textTheme.bodySmall?.copyWith(color: colorScheme.outline),
+                ),
+              ),
+            )
+          else
+            Column(
+              children: List.generate(timeline.length, (index) {
+                final step = timeline[index];
+                final isLast = index == timeline.length - 1;
+
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      children: [
+                        Container(
+                          width: 12,
+                          height: 12,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: isLast ? AppColors.primary : colorScheme.outline,
+                          ),
+                        ),
+                        if (index < timeline.length - 1)
+                          Container(
+                            width: 2,
+                            height: 40,
+                            color: colorScheme.outlineVariant,
+                          ),
+                      ],
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  step.status,
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  '${step.date} • ${step.time}',
+                                  style: theme.textTheme.labelSmall?.copyWith(
+                                    color: colorScheme.outline,
+                                    fontSize: 9,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 2),
+                            Text(
+                              'بواسطة: ${step.user}',
+                              style: theme.textTheme.labelSmall?.copyWith(
+                                color: AppColors.primary,
+                                fontSize: 9,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            if (step.notes.isNotEmpty) ...[
+                              const SizedBox(height: 4),
+                              Text(
+                                step.notes,
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: colorScheme.onSurfaceVariant,
+                                  fontSize: 10,
+                                  height: 1.3,
+                                ),
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              }),
             ),
-          ],
-        );
-      },
+        ],
+      ),
     );
   }
 }

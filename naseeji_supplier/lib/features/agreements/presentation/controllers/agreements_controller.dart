@@ -1,65 +1,64 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../domain/entities/agreement_model.dart';
 import '../../domain/services/agreement_service.dart';
 import '../../data/repositories/agreements_repository_impl.dart';
 
-part 'agreements_controller.g.dart';
-
-@riverpod
-AgreementService agreementService(AgreementServiceRef ref) {
+final agreementServiceProvider = Provider<AgreementService>((ref) {
   final repo = ref.watch(agreementsRepositoryProvider);
   return AgreementService(repo);
-}
+});
 
-/// Provider لإدارة قائمة الاتفاقيات مع الفلترة والبحث
-@riverpod
-class AgreementsController extends _$AgreementsController {
-  @override
-  FutureOr<List<B2BAgreement>> build() async {
-    final service = ref.watch(agreementServiceProvider);
-    return service.getAgreements();
+class AgreementsControllerNotifier extends StateNotifier<AsyncValue<List<B2BAgreement>>> {
+  final AgreementService _service;
+
+  AgreementsControllerNotifier(this._service) : super(const AsyncValue.loading()) {
+    loadAgreements();
+  }
+
+  Future<void> loadAgreements() async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() => _service.getAgreements());
   }
 
   Future<void> refresh() async {
-    state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() async {
-      final service = ref.read(agreementServiceProvider);
-      return service.getAgreements();
-    });
+    await loadAgreements();
   }
 
   Future<void> filterByStatus(AgreementStatus? status) async {
     state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() async {
-      final service = ref.read(agreementServiceProvider);
-      return service.getAgreements(statusFilter: status);
-    });
+    state = await AsyncValue.guard(() => _service.getAgreements(statusFilter: status));
   }
 
   Future<void> search(String query) async {
     state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() => _service.getAgreements(searchQuery: query));
+  }
+
+  Future<void> uploadDoc(String id, String type, String name, String url) async {
+    state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
-      final service = ref.read(agreementServiceProvider);
-      return service.getAgreements(searchQuery: query);
+      await _service.getAgreements();
+      return _service.getAgreements();
     });
   }
 }
 
-/// Provider لجلب تفاصيل اتفاقية معينة بواسطة الـ ID
-@riverpod
-FutureOr<B2BAgreement?> agreementDetails(AgreementDetailsRef ref, String agreementId) async {
+final agreementsControllerProvider =
+    StateNotifierProvider<AgreementsControllerNotifier, AsyncValue<List<B2BAgreement>>>((ref) {
   final service = ref.watch(agreementServiceProvider);
-  return service.getAgreementById(agreementId);
-}
+  return AgreementsControllerNotifier(service);
+});
 
-/// Provider لإدارة التوقيع والموافقة على البنود
-@riverpod
-class AgreementSignatureController extends _$AgreementSignatureController {
-  @override
-  bool build(String agreementId) {
-    return false; // حالة الـ Checkbox (غير موافق في البداية)
-  }
+final agreementDetailsProvider = FutureProvider.family<B2BAgreement?, String>((ref, id) async {
+  final service = ref.watch(agreementServiceProvider);
+  return service.getAgreementById(id);
+});
+
+class AgreementSignatureNotifier extends StateNotifier<bool> {
+  final Ref _ref;
+  final String _agreementId;
+
+  AgreementSignatureNotifier(this._ref, this._agreementId) : super(false);
 
   void toggleAgreementConsent(bool? value) {
     state = value ?? false;
@@ -70,21 +69,25 @@ class AgreementSignatureController extends _$AgreementSignatureController {
     required String supplierUserName,
   }) async {
     if (!state) return false;
-    final service = ref.read(agreementServiceProvider);
+    final service = _ref.read(agreementServiceProvider);
     await service.signAgreementBySupplier(
-      agreementId,
+      _agreementId,
       supplierUserId: supplierUserId,
       supplierUserName: supplierUserName,
     );
-    ref.invalidate(agreementsControllerProvider);
-    ref.invalidate(agreementDetailsProvider(agreementId));
+    _ref.invalidate(agreementsControllerProvider);
+    _ref.invalidate(agreementDetailsProvider(_agreementId));
     return true;
   }
 }
 
-/// Provider لإدارة الخط الزمني وسجل الأحداث للاتفاق
-@riverpod
-FutureOr<List<AgreementTimelineStep>> agreementTimeline(AgreementTimelineRef ref, String agreementId) async {
-  final agreement = await ref.watch(agreementDetailsProvider(agreementId).future);
+final agreementSignatureControllerProvider =
+    StateNotifierProvider.family<AgreementSignatureNotifier, bool, String>((ref, id) {
+  return AgreementSignatureNotifier(ref, id);
+});
+
+final agreementTimelineProvider = FutureProvider.family<List<AgreementTimelineStep>, String>((ref, id) async {
+  final service = ref.watch(agreementServiceProvider);
+  final agreement = await service.getAgreementById(id);
   return agreement?.timeline ?? [];
-}
+});

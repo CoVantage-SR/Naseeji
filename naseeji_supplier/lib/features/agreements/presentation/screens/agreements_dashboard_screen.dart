@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -19,9 +17,9 @@ class AgreementsDashboardScreen extends ConsumerStatefulWidget {
 class _AgreementsDashboardScreenState extends ConsumerState<AgreementsDashboardScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final List<String> _tabs = ['الكل', 'قيد الموافقة', 'نشطة', 'مكتملة', 'ملغاة', 'منتهية'];
+  final List<String> _tabs = ['الكل', 'بانتظار التوقيع', 'نشطة وسارية', 'مكتملة', 'ملغاة', 'منتهية'];
   String _searchQuery = '';
-  String _sortBy = 'date_desc'; // 'date_desc', 'date_asc', 'price_desc', 'price_asc'
+  String _sortBy = 'date_desc';
 
   @override
   void initState() {
@@ -54,7 +52,7 @@ class _AgreementsDashboardScreenState extends ConsumerState<AgreementsDashboardS
           backgroundColor: Theme.of(context).colorScheme.surface,
           elevation: 0.5,
           centerTitle: true,
-          title: Text(
+          title: const Text(
             'مركز إدارة الاتفاقيات والعقود B2B',
             style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 14),
           ),
@@ -71,24 +69,22 @@ class _AgreementsDashboardScreenState extends ConsumerState<AgreementsDashboardS
           bottom: TabBar(
             controller: _tabController,
             isScrollable: true,
-            labelColor: const Color(0xFF0040E0),
+            labelColor: AppColors.primary,
             unselectedLabelColor: Theme.of(context).colorScheme.onSurfaceVariant,
-            indicatorColor: const Color(0xFF0040E0),
-            labelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+            indicatorColor: AppColors.primary,
+            labelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
             tabs: _tabs.map((title) => Tab(text: title)).toList(),
           ),
         ),
         body: stateAsync.when(
-          loading: () => Center(child: CircularProgressIndicator(color: AppColors.primary)),
+          loading: () => const Center(child: CircularProgressIndicator(color: AppColors.primary)),
           error: (e, _) => Center(child: Text('خطأ: $e')),
           data: (agreements) {
-            // Apply search & tab filters
             final filtered = _filterAndSort(agreements);
 
-            // Calculate status totals
             final totalCount = agreements.length;
-            final pendingCount = agreements.where((a) => a.status == AgreementStatus.pendingApproval).length;
-            final activeCount = agreements.where((a) => a.status == AgreementStatus.active).length;
+            final pendingCount = agreements.where((a) => a.status == AgreementStatus.awaitingSupplierSignature).length;
+            final activeCount = agreements.where((a) => a.status == AgreementStatus.active || a.status == AgreementStatus.inProduction).length;
             final completedCount = agreements.where((a) => a.status == AgreementStatus.completed).length;
 
             return RefreshIndicator(
@@ -96,22 +92,20 @@ class _AgreementsDashboardScreenState extends ConsumerState<AgreementsDashboardS
               child: ListView(
                 padding: const EdgeInsets.all(16.0),
                 children: [
-                  // Top Summary Horizontal Grid Scroll
                   SizedBox(
                     height: 64,
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
-                        _buildSummaryMiniCard('إجمالي العقود', '$totalCount', Colors.blue),
-                        _buildSummaryMiniCard('بانتظار موافقتك', '$pendingCount', Colors.orange),
-                        _buildSummaryMiniCard('العقود النشطة', '$activeCount', Colors.green),
-                        _buildSummaryMiniCard('المسواة المكتملة', '$completedCount', Colors.purple),
+                        _buildSummaryMiniCard('إجمالي الاتفاقات', '$totalCount', Colors.blue),
+                        _buildSummaryMiniCard('بانتظار توقيعك', '$pendingCount', Colors.orange),
+                        _buildSummaryMiniCard('سارية وقيد التنفيذ', '$activeCount', Colors.green),
+                        _buildSummaryMiniCard('المكتملة والمغلقة', '$completedCount', Colors.purple),
                       ],
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
 
-                  // Search and Sort Row
                   Row(
                     children: [
                       Expanded(
@@ -129,7 +123,7 @@ class _AgreementsDashboardScreenState extends ConsumerState<AgreementsDashboardS
                               });
                             },
                             decoration: InputDecoration(
-                              hintText: 'ابحث باسم المصنع أو رقم العقد...',
+                              hintText: 'ابحث باسم المصنع أو رقم الاتفاقية...',
                               hintStyle: TextStyle(fontSize: 10, color: Colors.grey.shade400),
                               prefixIcon: Icon(Icons.search, color: Colors.grey.shade400, size: 18),
                               border: InputBorder.none,
@@ -138,7 +132,7 @@ class _AgreementsDashboardScreenState extends ConsumerState<AgreementsDashboardS
                           ),
                         ),
                       ),
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       Container(
                         height: 40,
                         padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -168,13 +162,13 @@ class _AgreementsDashboardScreenState extends ConsumerState<AgreementsDashboardS
                       ),
                     ],
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
 
                   if (filtered.isEmpty)
                     _buildEmptyState()
                   else
                     ...filtered.map((a) => AgreementSummaryCard(a: a)),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                 ],
               ),
             );
@@ -186,7 +180,7 @@ class _AgreementsDashboardScreenState extends ConsumerState<AgreementsDashboardS
 
   Widget _buildSummaryMiniCard(String label, String count, Color color) {
     return Container(
-      width: 120,
+      width: 125,
       margin: const EdgeInsets.only(left: 8),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
@@ -199,8 +193,8 @@ class _AgreementsDashboardScreenState extends ConsumerState<AgreementsDashboardS
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(count, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: color)),
-          SizedBox(height: 2),
-          Text(label, style: TextStyle(fontSize: 9, color: AppColors.outline, fontWeight: FontWeight.w600)),
+          const SizedBox(height: 2),
+          Text(label, style: const TextStyle(fontSize: 9, color: AppColors.outline, fontWeight: FontWeight.w600)),
         ],
       ),
     );
@@ -209,13 +203,12 @@ class _AgreementsDashboardScreenState extends ConsumerState<AgreementsDashboardS
   List<B2BAgreement> _filterAndSort(List<B2BAgreement> list) {
     List<B2BAgreement> filtered = List.from(list);
 
-    // Apply Tab Filter
     switch (_tabController.index) {
       case 1:
-        filtered = filtered.where((a) => a.status == AgreementStatus.pendingApproval).toList();
+        filtered = filtered.where((a) => a.status == AgreementStatus.awaitingSupplierSignature).toList();
         break;
       case 2:
-        filtered = filtered.where((a) => a.status == AgreementStatus.active).toList();
+        filtered = filtered.where((a) => a.status == AgreementStatus.active || a.status == AgreementStatus.inProduction).toList();
         break;
       case 3:
         filtered = filtered.where((a) => a.status == AgreementStatus.completed).toList();
@@ -228,7 +221,6 @@ class _AgreementsDashboardScreenState extends ConsumerState<AgreementsDashboardS
         break;
     }
 
-    // Apply Search
     if (_searchQuery.isNotEmpty) {
       filtered = filtered.where((a) => 
         a.id.toLowerCase().contains(_searchQuery.toLowerCase()) || 
@@ -237,18 +229,17 @@ class _AgreementsDashboardScreenState extends ConsumerState<AgreementsDashboardS
       ).toList();
     }
 
-    // Apply Sorting
     switch (_sortBy) {
       case 'date_asc':
         filtered.sort((x, y) => x.createdDate.compareTo(y.createdDate));
         break;
       case 'price_desc':
-        filtered.sort((x, y) => y.pricing.grandTotal.compareTo(x.pricing.grandTotal));
+        filtered.sort((x, y) => y.product.totalPrice.compareTo(x.product.totalPrice));
         break;
       case 'price_asc':
-        filtered.sort((x, y) => x.pricing.grandTotal.compareTo(y.pricing.grandTotal));
+        filtered.sort((x, y) => x.product.totalPrice.compareTo(y.product.totalPrice));
         break;
-      default: // date_desc
+      default:
         filtered.sort((x, y) => y.createdDate.compareTo(x.createdDate));
         break;
     }
@@ -260,11 +251,11 @@ class _AgreementsDashboardScreenState extends ConsumerState<AgreementsDashboardS
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 60),
       alignment: Alignment.center,
-      child: Column(
+      child: const Column(
         children: [
-          const Icon(Icons.handshake_outlined, size: 54, color: AppColors.outlineVariant),
-          const SizedBox(height: 12),
-          const Text('لا توجد اتفاقيات أو عقود مطابقة حالياً', style: TextStyle(color: AppColors.outline, fontSize: 11)),
+          Icon(Icons.handshake_outlined, size: 54, color: AppColors.outlineVariant),
+          SizedBox(height: 12),
+          Text('لا توجد اتفاقيات أو عقود مطابقة حالياً', style: TextStyle(color: AppColors.outline, fontSize: 11)),
         ],
       ),
     );

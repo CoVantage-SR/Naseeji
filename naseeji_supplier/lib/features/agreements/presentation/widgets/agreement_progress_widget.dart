@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import '../../domain/entities/agreement_model.dart';
@@ -14,18 +12,18 @@ class AgreementProgressWidget extends StatelessWidget {
     final status = agreement.status;
 
     final steps = [
-      _ProgressStep(title: 'إنشاء المسودة', completed: true),
+      _ProgressStep(title: 'المسودة', completed: true),
       _ProgressStep(
-        title: 'موافقة المورد', 
-        completed: status != AgreementStatus.pendingApproval,
+        title: 'توقيع المورد', 
+        completed: status != AgreementStatus.draft && status != AgreementStatus.awaitingSupplierSignature,
       ),
       _ProgressStep(
-        title: 'تفعيل العقد من المصنع', 
-        completed: status == AgreementStatus.active || status == AgreementStatus.completed,
+        title: 'توقيع المصنع', 
+        completed: status == AgreementStatus.active || status == AgreementStatus.inProduction || status == AgreementStatus.completed,
       ),
       _ProgressStep(
-        title: 'التوريد والفسح المالي', 
-        completed: status == AgreementStatus.completed,
+        title: 'الإنتاج والتسليم', 
+        completed: status == AgreementStatus.inProduction || status == AgreementStatus.completed,
       ),
     ];
 
@@ -33,14 +31,21 @@ class AgreementProgressWidget extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.all(Radius.circular(16)),
-        boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
+        borderRadius: const BorderRadius.all(Radius.circular(16)),
+        boxShadow: const [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('خطوات اعتماد وتفعيل العقد', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12, color: Theme.of(context).colorScheme.onSurface)),
-          SizedBox(height: 16),
+          Text(
+            'خطوات اعتماد وتفعيل العقد',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+          ),
+          const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: List.generate(steps.length, (index) {
@@ -52,20 +57,20 @@ class AgreementProgressWidget extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 10,
-                          backgroundColor: step.completed ? const Color(0xFF0040E0) : Theme.of(context).colorScheme.surfaceContainerLow,
+                          backgroundColor: step.completed ? AppColors.primary : Theme.of(context).colorScheme.surfaceContainerLow,
                           child: Icon(
                             step.completed ? Icons.check : Icons.circle_outlined,
                             size: 10,
                             color: step.completed ? Colors.white : AppColors.outline,
                           ),
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         Text(
                           step.title,
                           style: TextStyle(
                             fontSize: 8,
                             fontWeight: FontWeight.bold,
-                            color: step.completed ? const Color(0xFF0040E0) : AppColors.outline,
+                            color: step.completed ? AppColors.primary : AppColors.outline,
                           ),
                         ),
                       ],
@@ -75,7 +80,7 @@ class AgreementProgressWidget extends StatelessWidget {
                         child: Container(
                           margin: const EdgeInsets.only(bottom: 12),
                           height: 2,
-                          color: step.completed ? const Color(0xFF0040E0) : AppColors.outlineVariant,
+                          color: step.completed ? AppColors.primary : AppColors.outlineVariant,
                         ),
                       ),
                   ],

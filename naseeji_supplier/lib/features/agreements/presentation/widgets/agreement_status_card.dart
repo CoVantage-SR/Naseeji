@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 import '../../domain/entities/agreement_model.dart';
@@ -11,41 +9,33 @@ class AgreementStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color statusColor = Colors.grey;
-    String statusText = '';
+    final statusColor = agreement.status.color;
+    final statusText = agreement.status.titleAr;
     double progress = 0.0;
-    String stageText = '';
+    String stageText = agreement.status.descriptionEg;
 
     switch (agreement.status) {
-      case AgreementStatus.pendingApproval:
-        statusColor = Colors.orange;
-        statusText = 'انتظار الموافقة';
-        progress = 0.25;
-        stageText = 'توقيع الطرفين';
+      case AgreementStatus.draft:
+        progress = 0.1;
+        break;
+      case AgreementStatus.awaitingSupplierSignature:
+        progress = 0.3;
+        break;
+      case AgreementStatus.awaitingFactorySignature:
+        progress = 0.5;
         break;
       case AgreementStatus.active:
-        statusColor = Colors.green;
-        statusText = 'سارية ونشطة';
-        progress = 0.65;
-        stageText = 'مرحلة التوريد والإنتاج';
+        progress = 0.7;
+        break;
+      case AgreementStatus.inProduction:
+        progress = 0.85;
         break;
       case AgreementStatus.completed:
-        statusColor = Colors.blue.shade800;
-        statusText = 'مكتملة ومغلقة';
         progress = 1.0;
-        stageText = 'تم التسليم والفسح المالي';
         break;
       case AgreementStatus.cancelled:
-        statusColor = Colors.red;
-        statusText = 'ملغاة';
-        progress = 1.0;
-        stageText = 'عقد ملغي ومجمد';
-        break;
       case AgreementStatus.expired:
-        statusColor = Colors.grey.shade700;
-        statusText = 'منتهية الصلاحية';
         progress = 1.0;
-        stageText = 'انقضاء فترة الصلاحية';
         break;
     }
 
@@ -53,8 +43,9 @@ class AgreementStatusCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
-        borderRadius: BorderRadius.all(Radius.circular(16)),
-        boxShadow: [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
+        borderRadius: const BorderRadius.all(Radius.circular(16)),
+        boxShadow: const [BoxShadow(color: Color(0x05000000), blurRadius: 10)],
+        border: Border.all(color: statusColor.withValues(alpha: 0.2)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +63,7 @@ class AgreementStatusCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
             child: LinearProgressIndicator(
@@ -82,19 +73,22 @@ class AgreementStatusCard extends StatelessWidget {
               minHeight: 6,
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('المرحلة الحالية:', style: TextStyle(fontSize: 10, color: AppColors.outline)),
-              Text(
-                stageText,
-                style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurfaceVariant),
+              const Text('المرحلة الحالية:', style: TextStyle(fontSize: 10, color: AppColors.outline)),
+              Expanded(
+                child: Text(
+                  stageText,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                ),
               ),
             ],
           ),
           if (agreement.cancellationReason != null) ...[
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(8),
