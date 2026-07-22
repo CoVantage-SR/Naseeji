@@ -24,7 +24,7 @@ class DealWorkspaceRemoteDatasourceImpl implements DealWorkspaceRemoteDatasource
     isFactoryVerified: true,
     currentStatus: DealStatus.negotiating,
     messages: [
-      BusinessMessage(
+      BusinessMessage.create(
         id: 'msg-1',
         senderId: 'factory-1',
         senderName: 'شركة النسيج الحديثة',
@@ -32,7 +32,7 @@ class DealWorkspaceRemoteDatasourceImpl implements DealWorkspaceRemoteDatasource
         timestamp: DateTime.now().subtract(const Duration(hours: 4)),
         isMe: false,
       ),
-      BusinessMessage(
+      BusinessMessage.create(
         id: 'msg-2',
         senderId: 'supplier-1',
         senderName: 'م/ محمد النسيج',
@@ -40,7 +40,7 @@ class DealWorkspaceRemoteDatasourceImpl implements DealWorkspaceRemoteDatasource
         timestamp: DateTime.now().subtract(const Duration(hours: 3)),
         isMe: true,
       ),
-      BusinessMessage(
+      BusinessMessage.create(
         id: 'msg-sys-1',
         senderId: 'system',
         senderName: 'النظام',
@@ -49,7 +49,7 @@ class DealWorkspaceRemoteDatasourceImpl implements DealWorkspaceRemoteDatasource
         isMe: false,
         isSystemNotification: true,
       ),
-      BusinessMessage(
+      BusinessMessage.create(
         id: 'msg-3',
         senderId: 'factory-1',
         senderName: 'شركة النسيج الحديثة',
@@ -139,7 +139,7 @@ class DealWorkspaceRemoteDatasourceImpl implements DealWorkspaceRemoteDatasource
     String? attachmentUrl,
   }) async {
     await Future.delayed(const Duration(milliseconds: 150));
-    final newMsg = BusinessMessage(
+    final newMsg = BusinessMessage.create(
       id: 'msg-${DateTime.now().millisecondsSinceEpoch}',
       senderId: 'supplier-1',
       senderName: 'م/ محمد النسيج',
@@ -173,7 +173,7 @@ class DealWorkspaceRemoteDatasourceImpl implements DealWorkspaceRemoteDatasource
       createdAt: DateTime.now(),
     );
 
-    final systemNotif = BusinessMessage(
+    final systemNotif = BusinessMessage.create(
       id: 'sys-${DateTime.now().millisecondsSinceEpoch}',
       senderId: 'system',
       senderName: 'النظام',

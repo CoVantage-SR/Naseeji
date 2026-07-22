@@ -37,15 +37,15 @@ class BusinessMessage {
   final bool isDeleted;
   final bool isEdited;
 
-  BusinessMessage({
+  const BusinessMessage({
     required this.id,
     required this.senderId,
     required this.senderName,
     this.senderAvatar = '',
-    required String content,
-    String? time,
-    required bool isOutgoing,
-    MessageType? type,
+    this.content = '',
+    this.time = '',
+    this.isOutgoing = false,
+    this.type = MessageType.text,
     this.readStatus = ReadStatus.sent,
     this.attachmentUrls,
     this.replyToId,
@@ -54,18 +54,32 @@ class BusinessMessage {
     this.reaction,
     this.isDeleted = false,
     this.isEdited = false,
+  });
 
-    // Aliases for Deal Workspace compatibility
-    String? text,
-    DateTime? timestamp,
-    bool? isMe,
-    bool? isSystemNotification,
-  })  : content = text ?? content,
-        time = time ?? (timestamp != null ? timestamp.toIso8601String() : DateTime.now().toIso8601String()),
-        isOutgoing = isMe ?? isOutgoing,
-        type = type ?? ((isSystemNotification ?? false) ? MessageType.timelineEvent : MessageType.text);
+  // Factory helper constructor for Deal Workspace messages
+  factory BusinessMessage.create({
+    required String id,
+    required String senderId,
+    required String senderName,
+    required String text,
+    required DateTime timestamp,
+    required bool isMe,
+    bool isSystemNotification = false,
+    String senderAvatar = '',
+  }) {
+    return BusinessMessage(
+      id: id,
+      senderId: senderId,
+      senderName: senderName,
+      senderAvatar: senderAvatar,
+      content: text,
+      time: timestamp.toIso8601String(),
+      isOutgoing: isMe,
+      type: isSystemNotification ? MessageType.timelineEvent : MessageType.text,
+    );
+  }
 
-  // Helper Getters for Deal Workspace & UI
+  // Getters for Deal Workspace UI
   String get text => content;
   bool get isMe => isOutgoing;
   bool get isSystemNotification => type == MessageType.timelineEvent;

@@ -41,7 +41,7 @@ class ArchivedChatsScreen extends ConsumerWidget {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: const [
                   Icon(Icons.archive_outlined, size: 64, color: AppColors.outlineVariant),
                   SizedBox(height: 16),
                   Text(
