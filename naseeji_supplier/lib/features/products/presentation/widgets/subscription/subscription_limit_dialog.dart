@@ -82,6 +82,7 @@ class SubscriptionLimitDialog extends StatelessWidget {
             backgroundColor: colorScheme.primary,
             foregroundColor: colorScheme.onPrimary,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            minimumSize: const Size(0, 36),
           ),
         ),
       ],

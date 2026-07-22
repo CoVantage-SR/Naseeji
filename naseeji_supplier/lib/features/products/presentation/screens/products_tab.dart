@@ -63,6 +63,7 @@ class ProductsTab extends ConsumerWidget {
                     backgroundColor: colorScheme.primary,
                     foregroundColor: colorScheme.onPrimary,
                     padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                    minimumSize: const Size(0, 36),
                     elevation: 0,
                   ),
                 ),
@@ -131,6 +132,10 @@ class ProductsTab extends ConsumerWidget {
                           onPressed: () => context.push('/add-product'),
                           icon: const Icon(Icons.add),
                           label: const Text('إضافة منتج الآن'),
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(0, 40),
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          ),
                         ),
                       ],
                     ),
