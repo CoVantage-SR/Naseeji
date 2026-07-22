@@ -13,11 +13,14 @@ import 'package:naseeji_supplier/features/messages/presentation/widgets/moderati
 
 class BusinessChatScreen extends ConsumerStatefulWidget {
   final String dealId;
+  final String? conversationId;
 
-  const BusinessChatScreen({
+  BusinessChatScreen({
     super.key,
-    required this.dealId,
-  });
+    String? dealId,
+    String? conversationId,
+  })  : dealId = dealId ?? conversationId ?? 'deal-101',
+        conversationId = conversationId ?? dealId;
 
   @override
   ConsumerState<BusinessChatScreen> createState() => _BusinessChatScreenState();

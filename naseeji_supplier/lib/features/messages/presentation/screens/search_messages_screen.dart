@@ -285,7 +285,7 @@ class _RecentSearches extends StatelessWidget {
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          children: [
+          children: const [
             Text('عمليات البحث الأخيرة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
             SizedBox(width: 6),
             Icon(Icons.history, size: 16, color: AppColors.outline),

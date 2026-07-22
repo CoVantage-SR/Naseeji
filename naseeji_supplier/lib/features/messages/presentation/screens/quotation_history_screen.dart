@@ -60,7 +60,7 @@ class _QuotationHistoryScreenState extends ConsumerState<QuotationHistoryScreen>
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: const [
                   Icon(Icons.request_quote_outlined, size: 64, color: AppColors.outlineVariant),
                   SizedBox(height: 12),
                   Text('لا توجد عروض أسعار بعد', style: TextStyle(color: AppColors.outline)),

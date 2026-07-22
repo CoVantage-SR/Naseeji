@@ -464,7 +464,7 @@ class _DeletedBubble extends StatelessWidget {
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          children: [
+          children: const [
             Icon(Icons.block, size: 14, color: AppColors.outline),
             SizedBox(width: 6),
             Text(
