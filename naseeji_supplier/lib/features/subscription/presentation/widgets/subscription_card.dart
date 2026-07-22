@@ -101,6 +101,7 @@ class SubscriptionCard extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: colorScheme.primary,
                       foregroundColor: colorScheme.onPrimary,
+                      minimumSize: const Size(0, 36),
                       padding: const EdgeInsets.symmetric(
                         horizontal: 14,
                         vertical: 8,
