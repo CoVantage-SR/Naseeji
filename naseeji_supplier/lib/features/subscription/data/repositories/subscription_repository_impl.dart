@@ -2,58 +2,101 @@ import '../../domain/entities/subscription_models.dart';
 import '../../domain/repositories/subscription_repository.dart';
 
 class SubscriptionRepositoryImpl implements SubscriptionRepository {
-  // --- Simulated State ---
+  // Static limits for each plan tier
+  static const ResourceLimits freeLimits = ResourceLimits(
+    maxProducts: 5,
+    maxImagesPerProduct: 3,
+    maxVideosPerProduct: 0,
+    maxPdfsPerProduct: 1,
+    maxAdvertisements: 5,
+    maxMonthlyRfqs: 10,
+    maxFeaturedProducts: 0,
+    maxStorageGb: 2.0,
+    maxEmployees: 1,
+  );
+
+  static const ResourceLimits basicLimits = ResourceLimits(
+    maxProducts: 30,
+    maxImagesPerProduct: 6,
+    maxVideosPerProduct: 1,
+    maxPdfsPerProduct: 1,
+    maxAdvertisements: 20,
+    maxMonthlyRfqs: 50,
+    maxFeaturedProducts: 1,
+    maxStorageGb: 10.0,
+    maxEmployees: 5,
+  );
+
+  static const ResourceLimits proLimits = ResourceLimits(
+    maxProducts: 100,
+    maxImagesPerProduct: 10,
+    maxVideosPerProduct: 1,
+    maxPdfsPerProduct: 2,
+    maxAdvertisements: 100,
+    maxMonthlyRfqs: -1, // Unlimited
+    maxFeaturedProducts: 5,
+    maxStorageGb: 50.0,
+    maxEmployees: 25,
+    hasAiInsights: true,
+    hasPrioritySupport: true,
+  );
+
+  static const ResourceLimits enterpriseLimits = ResourceLimits(
+    maxProducts: -1, // Unlimited
+    maxImagesPerProduct: 20,
+    maxVideosPerProduct: -1, // Unlimited
+    maxPdfsPerProduct: -1, // Unlimited
+    maxAdvertisements: -1, // Unlimited
+    maxMonthlyRfqs: -1, // Unlimited
+    maxFeaturedProducts: -1, // Unlimited
+    maxStorageGb: 500.0,
+    maxEmployees: 100,
+    hasAiInsights: true,
+    hasPrioritySupport: true,
+    hasApiAccess: true,
+    hasBulkUpload: true,
+  );
+
+  // Default active subscription matching user prompt example (Professional)
   SupplierSubscription _subscription = SupplierSubscription(
-    planId: 'free',
-    planName: 'الباقة المجانية (Free)',
+    planId: 'professional',
+    tier: PlanTier.professional,
+    planName: 'Professional',
     status: SubscriptionStatus.active,
     billingCycle: BillingCycle.monthly,
-    startDate: DateTime.now().subtract(const Duration(days: 12)),
-    expiryDate: DateTime.now().add(const Duration(days: 18)),
-    nextRenewal: DateTime.now().add(const Duration(days: 18)),
-    remainingDays: 18,
+    startDate: DateTime(2025, 10, 15),
+    expiryDate: DateTime(2026, 10, 15),
+    nextRenewal: DateTime(2026, 10, 15),
+    remainingDays: 85,
     autoRenew: true,
-    price: 0.0,
-    paymentMethod: 'مدى بطاقة **** 4820',
+    price: 699.0,
+    paymentMethod: 'بطاقة مدى **** 4820',
+    limits: proLimits,
   );
 
-  final SubscriptionUsage _usage = const SubscriptionUsage(
-    productsUsed: 0,
-    advertisementsUsed: 0,
-    featuredProductsUsed: 0,
-    storageUsedGb: 0.0,
-    employeesUsed: 0,
-    branchesUsed: 0,
-    campaignsUsed: 0,
-    couponsUsed: 0,
-    notificationsUsed: 0,
-    aiReportsUsed: 0,
-  );
-
-  // Dynamic limits starts with Free defaults (which will be modified by upgrades or add-ons)
-  ResourceLimits _customLimits = const ResourceLimits(
-    maxProducts: 0,
-    maxAdvertisements: 0,
-    maxFeaturedProducts: 0,
-    maxStorageGb: 0.0,
-    maxEmployees: 1,
-    maxBranches: 1,
-    maxCampaigns: 0,
-    maxCoupons: 0,
-    maxNotifications: 0,
-    maxAiReports: 0,
-    hasAiInsights: false,
-    hasPrioritySupport: false,
-    hasApiAccess: false,
-    hasBulkUpload: false,
+  // Usage stats matching user prompt example
+  SubscriptionUsage _usage = const SubscriptionUsage(
+    productsUsed: 58,
+    advertisementsUsed: 22,
+    featuredProductsUsed: 2,
+    rfqsUsed: 10,
+    videosUsed: 1,
+    pdfsUsed: 1,
+    storageUsedGb: 14.5,
+    employeesUsed: 8,
+    branchesUsed: 3,
+    campaignsUsed: 5,
+    couponsUsed: 12,
+    notificationsUsed: 350,
+    aiReportsUsed: 15,
   );
 
   BillingData _billing = BillingData(
-    currentBill: 199.0,
-    nextInvoiceDate: DateTime.now().add(const Duration(days: 18)),
+    currentBill: 699.0,
+    nextInvoiceDate: DateTime(2026, 10, 15),
     outstandingBalance: 0.0,
-    paidAmount: 199.0,
-    tax: 29.85, // 15% VAT
+    paidAmount: 699.0,
+    tax: 104.85, // 15% VAT
     discount: 0.0,
   );
 
@@ -61,7 +104,7 @@ class SubscriptionRepositoryImpl implements SubscriptionRepository {
     const PaymentMethodItem(
       id: 'PM-1',
       type: PaymentMethodType.creditCard,
-      name: 'بطاقة مدى بنك الراجحي',
+      name: 'بطاقة مدى - بنك الراجحي',
       details: '**** **** **** 4820 | 09/28',
       isDefault: true,
       isVerified: true,
@@ -74,263 +117,165 @@ class SubscriptionRepositoryImpl implements SubscriptionRepository {
       isDefault: false,
       isVerified: true,
     ),
-    const PaymentMethodItem(
-      id: 'PM-3',
-      type: PaymentMethodType.bankTransfer,
-      name: 'الحساب الجاري لبنك الأهلي SNB',
-      details: 'SA84 3000 0000 1092 8493 0294',
-      isDefault: false,
-      isVerified: false,
-    ),
   ];
 
   final List<SubscriptionHistoryItem> _history = [
     SubscriptionHistoryItem(
-      id: 'HST-1',
-      planName: 'المبتدئ (Starter)',
-      price: 199.0,
+      id: 'HST-101',
+      planName: 'Professional',
+      price: 699.0,
       billingCycle: 'شهري',
-      startDate: DateTime.now().subtract(const Duration(days: 12)),
-      endDate: DateTime.now().add(const Duration(days: 18)),
+      startDate: DateTime(2025, 10, 15),
+      endDate: DateTime(2026, 10, 15),
       status: 'نشط',
       paymentStatus: 'مدفوع',
-      invoiceNumber: 'INV-2026-089',
+      invoiceNumber: 'INV-2025-992',
     ),
     SubscriptionHistoryItem(
-      id: 'HST-2',
-      planName: 'المجاني (Free)',
+      id: 'HST-100',
+      planName: 'Basic',
+      price: 299.0,
+      billingCycle: 'شهري',
+      startDate: DateTime(2025, 4, 15),
+      endDate: DateTime(2025, 10, 15),
+      status: 'مكتمل',
+      paymentStatus: 'مدفوع',
+      invoiceNumber: 'INV-2025-412',
+    ),
+    SubscriptionHistoryItem(
+      id: 'HST-099',
+      planName: 'Free',
       price: 0.0,
       billingCycle: 'شهري',
-      startDate: DateTime.now().subtract(const Duration(days: 42)),
-      endDate: DateTime.now().subtract(const Duration(days: 12)),
+      startDate: DateTime(2025, 1, 15),
+      endDate: DateTime(2025, 4, 15),
       status: 'منتهي',
       paymentStatus: 'مجاني',
-      invoiceNumber: 'INV-2026-041',
+      invoiceNumber: 'INV-2025-001',
     ),
   ];
 
   final List<SubscriptionInvoice> _invoices = [
     SubscriptionInvoice(
-      invoiceNumber: 'INV-2026-089',
-      planName: 'باقة المبتدئ (Starter) - شهري',
-      amount: 199.0,
-      vat: 29.85,
+      invoiceNumber: 'INV-2025-992',
+      planName: 'Professional - شهري',
+      amount: 699.0,
+      vat: 104.85,
       discount: 0.0,
       status: 'مدفوعة',
-      createdDate: DateTime.now().subtract(const Duration(days: 12)),
-      paidDate: DateTime.now().subtract(const Duration(days: 12)),
+      createdDate: DateTime(2025, 10, 15),
+      paidDate: DateTime(2025, 10, 15),
     ),
   ];
 
   final List<SubscriptionNotification> _notifications = [
     SubscriptionNotification(
       id: 'NOT-1',
-      title: 'تفعيل باقة المبتدئ',
-      body: 'تم تفعيل باقة المبتدئ (Starter) بنجاح للمؤسسة، تسري حتى تاريخ التجديد القادم.',
-      timestamp: DateTime.now().subtract(const Duration(days: 12)),
+      title: 'تفعيل باقة Professional',
+      body: 'تم تفعيل باقة Professional بنجاح لمؤسستك.',
+      timestamp: DateTime(2025, 10, 15),
       type: 'success',
-    ),
-    SubscriptionNotification(
-      id: 'NOT-2',
-      title: 'اقتراب نفاذ سعة المنتجات (80%)',
-      body: 'لقد استهلكت 18 من أصل 50 منتجاً متاحاً في الباقة الحالية (Starter).',
-      timestamp: DateTime.now().subtract(const Duration(days: 2)),
-      type: 'warning',
     ),
   ];
 
-  // Static Plans List
+  // The 4 mandatory subscription plans
   final List<SubscriptionPlan> _plans = const [
     SubscriptionPlan(
       id: 'free',
-      name: 'الباقة المجانية (Free)',
+      tier: PlanTier.free,
+      name: 'Free',
       price: 0.0,
       billingCycle: BillingCycle.monthly,
       isRecommended: false,
       features: [
-        'لا تتضمن إضافة منتجات (تتطلب اشتراك)',
-        'ظهور إعلاني عادي',
-        'مساحة تخزين 0 جيجابايت',
-        'مستخدم واحد (المالك)',
-        '1 فرع فقط',
-        'لا تتضمن حملات تسويقية',
-        'دعم فني عادي عبر التذاكر',
+        '5 منتجات',
+        '3 صور لكل منتج',
+        'بدون فيديو',
+        'PDF واحد لكل منتج',
+        '5 إعلانات',
+        '10 RFQ شهرياً',
+        'بدون منتجات مميزة',
       ],
-      limits: ResourceLimits(
-        maxProducts: 0,
-        maxAdvertisements: 0,
-        maxFeaturedProducts: 0,
-        maxStorageGb: 0.0,
-        maxEmployees: 1,
-        maxBranches: 1,
-        maxCampaigns: 0,
-        maxCoupons: 0,
-        maxNotifications: 0,
-        maxAiReports: 0,
-        hasAiInsights: false,
-        hasPrioritySupport: false,
-        hasApiAccess: false,
-        hasBulkUpload: false,
-      ),
+      limits: freeLimits,
     ),
     SubscriptionPlan(
-      id: 'starter',
-      name: 'باقة المبتدئ (Starter)',
-      price: 199.0,
+      id: 'basic',
+      tier: PlanTier.basic,
+      name: 'Basic',
+      price: 299.0,
       billingCycle: BillingCycle.monthly,
       isRecommended: false,
       features: [
-        'إضافة حتى 50 منتجاً',
-        '5 إعلانات ممولة جارية',
-        '3 منتجات مميزة بالرعاية',
-        'مساحة تخزين 5 جيجابايت',
-        'حتى 5 موظفين إضافيين',
-        'فرعين للمؤسسة',
-        '10 حملات تسويقية شهرياً',
-        '20 كوبون خصم نشط',
-        '1,000 إشعار للمصانع',
-        '20 تقرير تحليل أداء شهري',
-        'دعم فني سريع',
+        '30 منتج',
+        '6 صور لكل منتج',
+        'فيديو واحد لكل منتج',
+        'PDF واحد لكل منتج',
+        '20 إعلان',
+        '50 RFQ شهرياً',
+        'منتج مميز واحد',
       ],
-      limits: ResourceLimits(
-        maxProducts: 50,
-        maxAdvertisements: 5,
-        maxFeaturedProducts: 3,
-        maxStorageGb: 5.0,
-        maxEmployees: 5,
-        maxBranches: 2,
-        maxCampaigns: 10,
-        maxCoupons: 20,
-        maxNotifications: 1000,
-        maxAiReports: 20,
-        hasAiInsights: false,
-        hasPrioritySupport: false,
-        hasApiAccess: false,
-        hasBulkUpload: false,
-      ),
+      limits: basicLimits,
     ),
     SubscriptionPlan(
       id: 'professional',
-      name: 'الباقة الاحترافية (Professional)',
-      price: 499.0,
+      tier: PlanTier.professional,
+      name: 'Professional',
+      price: 699.0,
       billingCycle: BillingCycle.monthly,
       isRecommended: true,
       features: [
-        'إضافة حتى 200 منتج',
-        '20 إعلان ممول جاري',
-        '10 منتجات مميزة بالرعاية',
-        'مساحة تخزين 20 جيجابايت',
-        'حتى 20 موظفاً وصلاحيات كاملة',
-        '5 فروع للمؤسسة',
-        '30 حملة تسويقية نشطة',
-        '50 كوبون خصم نشط',
-        '5,000 إشعار بث للمصانع',
-        'تقارير ذكاء اصطناعي وتحليل متقدم',
-        'توصيات استهداف المصانع الذكية',
-        'دعم فني ذو أولوية 24/7',
-        'استيراد المنتجات بالجملة (Bulk)',
+        '100 منتج',
+        '10 صور لكل منتج',
+        'فيديو واحد لكل منتج',
+        '2 PDF لكل منتج',
+        '100 إعلان',
+        'RFQ غير محدود',
+        '5 منتجات مميزة',
       ],
-      limits: ResourceLimits(
-        maxProducts: 200,
-        maxAdvertisements: 20,
-        maxFeaturedProducts: 10,
-        maxStorageGb: 20.0,
-        maxEmployees: 20,
-        maxBranches: 5,
-        maxCampaigns: 30,
-        maxCoupons: 50,
-        maxNotifications: 5000,
-        maxAiReports: 50,
-        hasAiInsights: true,
-        hasPrioritySupport: true,
-        hasApiAccess: false,
-        hasBulkUpload: true,
-      ),
+      limits: proLimits,
     ),
     SubscriptionPlan(
-      id: 'business',
-      name: 'باقة الأعمال (Business)',
-      price: 999.0,
+      id: 'enterprise',
+      tier: PlanTier.enterprise,
+      name: 'Enterprise',
+      price: 1499.0,
       billingCycle: BillingCycle.monthly,
       isRecommended: false,
       features: [
-        'إضافة حتى 1000 منتج خامات',
-        '100 إعلان ممول نشط جاري',
-        '50 منتج مميز بالمنصة',
-        'مساحة تخزين 100 جيجابايت',
-        'موظفين غير محدودين',
-        '15 فرع للمؤسسة والمخازن',
-        'حملات تسويقية غير محدودة',
-        'كوبونات خصم غير محدودة',
-        '20,000 إشعار بث للمصانع شهرياً',
-        'تحليلات الذكاء والنمو متكاملة',
-        'دعم فني مخصص (مدير حساب)',
-        'استيراد بالجملة وربط الـ API للمصانع',
-        'علامة تجارية مخصصة',
+        'منتجات غير محدودة',
+        '20 صورة لكل منتج',
+        'فيديوهات غير محدودة',
+        'ملفات PDF غير محدودة',
+        'إعلانات غير محدودة',
+        'RFQ غير محدود',
+        'منتجات مميزة غير محدودة',
       ],
-      limits: ResourceLimits(
-        maxProducts: 1000,
-        maxAdvertisements: 100,
-        maxFeaturedProducts: 50,
-        maxStorageGb: 100.0,
-        maxEmployees: 100, // Large cap
-        maxBranches: 15,
-        maxCampaigns: 100,
-        maxCoupons: 100,
-        maxNotifications: 20000,
-        maxAiReports: 200,
-        hasAiInsights: true,
-        hasPrioritySupport: true,
-        hasApiAccess: true,
-        hasBulkUpload: true,
-      ),
+      limits: enterpriseLimits,
     ),
   ];
 
   final List<AddonItem> _addons = const [
     AddonItem(
       id: 'ADD-PROD-50',
-      name: 'باقة زيادة المنتجات (+50)',
-      price: 49.0,
-      description: 'أضف 50 منتجاً إضافياً لكتالوج الخامات والمواد الخاص بك دون ترقية خطتك الأساسية.',
-      validity: 'ساري طوال فترة الاشتراك الحالي',
+      name: 'حزمة +50 منتج إضافي',
+      price: 99.0,
+      description: 'إضافة 50 منتجاً لكتالوج التوريد دون الحاجة لترقية الباقة.',
+      validity: 'سارية مع الاشتراك الحالي',
       usage: '+50 منتج',
       type: AddonType.products,
       quantity: 50,
     ),
     AddonItem(
-      id: 'ADD-STOR-5G',
-      name: 'باقة زيادة التخزين (+5 جيجابايت)',
-      price: 29.0,
-      description: 'ارفع مساحة الملفات والتصاميم وصور المنتجات لكتالوج التوريد بـ 5 جيجابايت إضافية.',
-      validity: 'ساري طوال فترة الاشتراك الحالي',
-      usage: '+5 جيجابايت مساحة',
-      type: AddonType.storage,
-      quantity: 5,
-    ),
-    AddonItem(
-      id: 'ADD-ADS-5',
-      name: 'باقة زيادة الإعلانات الممولة (+5)',
-      price: 99.0,
-      description: 'تسمح بإنشاء 5 إعلانات ممولة جارية إضافية لضمان تفاعل المصانع مع عروضك.',
-      validity: '30 يوماً من تاريخ التفعيل',
-      usage: '+5 إعلانات جارية',
-      type: AddonType.ads,
-      quantity: 5,
-    ),
-    AddonItem(
-      id: 'ADD-AI-PACK',
-      name: 'حزمة تقارير الذكاء الاصطناعي الذكي',
+      id: 'ADD-ADS-10',
+      name: 'حزمة +10 إعلانات إضافية',
       price: 149.0,
-      description: 'تفعيل كامل للتوصيات التلقائية وعينات تحليل سلوك مصانع المنسوجات والأزياء.',
-      validity: '30 يوماً من تاريخ التفعيل',
-      usage: 'تفعيل لوحة التوصيات الذكية',
-      type: AddonType.aiAnalytics,
-      quantity: 1,
+      description: 'نشر 10 إعلانات إضافية لزيادة وصول منتجاتك.',
+      validity: '30 يوماً',
+      usage: '+10 إعلانات',
+      type: AddonType.ads,
+      quantity: 10,
     ),
   ];
-
-  // --- Methods Implementation ---
 
   @override
   Future<SupplierSubscription> getSubscription() async {
@@ -358,26 +303,33 @@ class SubscriptionRepositoryImpl implements SubscriptionRepository {
   }
 
   @override
-  Future<void> addPaymentMethod(PaymentMethodItem method) async {
-    _paymentMethods.add(method);
-  }
-
-  @override
-  Future<void> deletePaymentMethod(String id) async {
-    _paymentMethods.removeWhere((item) => item.id == id);
+  Future<List<SubscriptionHistoryItem>> getSubscriptionHistory() async {
+    return _history;
   }
 
   @override
   Future<void> setDefaultPaymentMethod(String id) async {
-    for (int i = 0; i < _paymentMethods.length; i++) {
+    for (var i = 0; i < _paymentMethods.length; i++) {
       final item = _paymentMethods[i];
       _paymentMethods[i] = item.copyWith(isDefault: item.id == id);
     }
   }
 
   @override
-  Future<List<SubscriptionHistoryItem>> getSubscriptionHistory() async {
-    return _history;
+  Future<void> purchasePayAsYouGo(String serviceName, double cost) async {
+    _invoices.insert(
+      0,
+      SubscriptionInvoice(
+        invoiceNumber: 'INV-${DateTime.now().year}-${DateTime.now().millisecondsSinceEpoch.toString().substring(7)}',
+        planName: 'دفع حسب الاستخدام: $serviceName',
+        amount: cost,
+        vat: cost * 0.15,
+        discount: 0.0,
+        status: 'مدفوعة',
+        createdDate: DateTime.now(),
+        paidDate: DateTime.now(),
+      ),
+    );
   }
 
   @override
@@ -391,232 +343,28 @@ class SubscriptionRepositoryImpl implements SubscriptionRepository {
   }
 
   @override
-  Future<void> purchaseAddon(String addonId) async {
-    final addon = _addons.firstWhere((item) => item.id == addonId);
-    
-    // Add to usage bounds
-    if (addon.type == AddonType.products) {
-      _customLimits = _customLimits.copyWith(maxProducts: _customLimits.maxProducts + addon.quantity);
-    } else if (addon.type == AddonType.storage) {
-      _customLimits = _customLimits.copyWith(maxStorageGb: _customLimits.maxStorageGb + addon.quantity);
-    } else if (addon.type == AddonType.ads) {
-      _customLimits = _customLimits.copyWith(maxAdvertisements: _customLimits.maxAdvertisements + addon.quantity);
-    } else if (addon.type == AddonType.aiAnalytics) {
-      _customLimits = _customLimits.copyWith(hasAiInsights: true);
-    }
-
-    // Add invoice
-    final invNum = 'INV-ADD-${DateTime.now().millisecondsSinceEpoch.toString().substring(8)}';
-    _invoices.insert(
-      0,
-      SubscriptionInvoice(
-        invoiceNumber: invNum,
-        planName: '${addon.name} (إضافة)',
-        amount: addon.price,
-        vat: addon.price * 0.15,
-        discount: 0.0,
-        status: 'مدفوعة',
-        createdDate: DateTime.now(),
-        paidDate: DateTime.now(),
-      ),
-    );
-
-    // Add History
-    _history.insert(
-      0,
-      SubscriptionHistoryItem(
-        id: 'HST-${DateTime.now().millisecondsSinceEpoch}',
-        planName: addon.name,
-        price: addon.price,
-        billingCycle: 'مرة واحدة',
-        startDate: DateTime.now(),
-        endDate: DateTime.now().add(const Duration(days: 30)),
-        status: 'نشط',
-        paymentStatus: 'مدفوع',
-        invoiceNumber: invNum,
-      ),
-    );
-
-    // Send Alert Notification
-    _notifications.insert(
-      0,
-      SubscriptionNotification(
-        id: 'NOT-${DateTime.now().millisecondsSinceEpoch}',
-        title: 'تفعيل الميزة الإضافية',
-        body: 'تم شراء وتفعيل ${addon.name} بنجاح وإضافة المزايا لحسابك.',
-        timestamp: DateTime.now(),
-        type: 'success',
-      ),
-    );
+  Future<List<SubscriptionNotification>> getNotifications() async {
+    return _notifications;
   }
 
   @override
-  Future<void> purchasePayAsYouGo(String serviceName, double cost) async {
-    final invNum = 'INV-PAYG-${DateTime.now().millisecondsSinceEpoch.toString().substring(8)}';
-    
-    // Add invoice
-    _invoices.insert(
-      0,
-      SubscriptionInvoice(
-        invoiceNumber: invNum,
-        planName: '$serviceName (دفع حسب الاستخدام)',
-        amount: cost,
-        vat: cost * 0.15,
-        discount: 0.0,
-        status: 'مدفوعة',
-        createdDate: DateTime.now(),
-        paidDate: DateTime.now(),
-      ),
-    );
-
-    // Add Notification
-    _notifications.insert(
-      0,
-      SubscriptionNotification(
-        id: 'NOT-${DateTime.now().millisecondsSinceEpoch}',
-        title: 'تفعيل خدمة فردية',
-        body: 'تم شراء وتفعيل خدمة $serviceName بنجاح بمبلغ $cost جنيه.',
-        timestamp: DateTime.now(),
-        type: 'success',
-      ),
-    );
-  }
-
-  @override
-  Future<void> upgradePlan(String planId, BillingCycle cycle) async {
-    final targetPlan = _plans.firstWhere((p) => p.id == planId);
-
-    _subscription = SupplierSubscription(
-      planId: targetPlan.id,
-      planName: targetPlan.name,
-      status: SubscriptionStatus.active,
-      billingCycle: cycle,
-      startDate: DateTime.now(),
-      expiryDate: DateTime.now().add(cycle == BillingCycle.yearly ? const Duration(days: 365) : const Duration(days: 30)),
-      nextRenewal: DateTime.now().add(cycle == BillingCycle.yearly ? const Duration(days: 365) : const Duration(days: 30)),
-      remainingDays: cycle == BillingCycle.yearly ? 365 : 30,
-      autoRenew: true,
-      price: targetPlan.price,
-      paymentMethod: 'مدى بطاقة **** 4820',
-    );
-
-    _customLimits = targetPlan.limits;
-
-    // Reset billing details
-    _billing = BillingData(
-      currentBill: targetPlan.price,
-      nextInvoiceDate: _subscription.nextRenewal,
-      outstandingBalance: 0.0,
-      paidAmount: targetPlan.price,
-      tax: targetPlan.price * 0.15,
-      discount: 0.0,
-    );
-
-    // Add invoice
-    final invNum = 'INV-UPG-${DateTime.now().millisecondsSinceEpoch.toString().substring(8)}';
-    _invoices.insert(
-      0,
-      SubscriptionInvoice(
-        invoiceNumber: invNum,
-        planName: 'ترقية إلى ${targetPlan.name}',
-        amount: targetPlan.price,
-        vat: targetPlan.price * 0.15,
-        discount: 0.0,
-        status: 'مدفوعة',
-        createdDate: DateTime.now(),
-        paidDate: DateTime.now(),
-      ),
-    );
-
-    // Add History
-    _history.insert(
-      0,
-      SubscriptionHistoryItem(
-        id: 'HST-${DateTime.now().millisecondsSinceEpoch}',
-        planName: targetPlan.name,
-        price: targetPlan.price,
-        billingCycle: cycle == BillingCycle.yearly ? 'سنوي' : 'شهري',
-        startDate: DateTime.now(),
-        endDate: _subscription.expiryDate,
-        status: 'نشط',
-        paymentStatus: 'مدفوع',
-        invoiceNumber: invNum,
-      ),
-    );
-
-    // Add Notification
-    _notifications.insert(
-      0,
-      SubscriptionNotification(
-        id: 'NOT-${DateTime.now().millisecondsSinceEpoch}',
-        title: 'ترقية الاشتراك بنجاح',
-        body: 'تمت ترقية باقة حسابك إلى ${targetPlan.name} بنجاح.',
-        timestamp: DateTime.now(),
-        type: 'success',
-      ),
-    );
-  }
-
-  @override
-  Future<void> downgradePlan(String planId, BillingCycle cycle) async {
-    final targetPlan = _plans.firstWhere((p) => p.id == planId);
-
-    _subscription = _subscription.copyWith(
-      planId: targetPlan.id,
-      planName: targetPlan.name,
-      price: targetPlan.price,
-    );
-
-    _customLimits = targetPlan.limits;
-
-    // Add Notification
-    _notifications.insert(
-      0,
-      SubscriptionNotification(
-        id: 'NOT-${DateTime.now().millisecondsSinceEpoch}',
-        title: 'تنزيل الاشتراك',
-        body: 'تم جدولة تخفيض الباقة لتبدأ من الدورة القادمة لحسابك.',
-        timestamp: DateTime.now(),
-        type: 'info',
-      ),
-    );
-  }
-
-  @override
-  Future<void> renewSubscription() async {
-    _subscription = _subscription.copyWith(
-      startDate: DateTime.now(),
-      expiryDate: DateTime.now().add(const Duration(days: 30)),
-      nextRenewal: DateTime.now().add(const Duration(days: 30)),
-      remainingDays: 30,
-    );
-
-    // Add invoice
-    final invNum = 'INV-RNW-${DateTime.now().millisecondsSinceEpoch.toString().substring(8)}';
-    _invoices.insert(
-      0,
-      SubscriptionInvoice(
-        invoiceNumber: invNum,
-        planName: 'تجديد ${_subscription.planName}',
-        amount: _subscription.price,
-        vat: _subscription.price * 0.15,
-        discount: 0.0,
-        status: 'مدفوعة',
-        createdDate: DateTime.now(),
-        paidDate: DateTime.now(),
-      ),
-    );
-
-    // Add Notification
-    _notifications.insert(
-      0,
-      SubscriptionNotification(
-        id: 'NOT-${DateTime.now().millisecondsSinceEpoch}',
-        title: 'تجديد الاشتراك تلقائياً',
-        body: 'تم سداد رسوم اشتراك باقة ${_subscription.planName} بنجاح.',
-        timestamp: DateTime.now(),
-        type: 'success',
-      ),
+  Future<SubscriptionAnalyticsData> getAnalytics() async {
+    return const SubscriptionAnalyticsData(
+      monthlySpending: [0, 299, 299, 699, 699, 699],
+      subscriptionCost: 699.0,
+      addonSpending: 0.0,
+      featureUsagePercent: {
+        'المنتجات': 58.0,
+        'الإعلانات': 22.0,
+        'الفيديو': 100.0,
+        'PDF': 50.0,
+      },
+      storageGrowthGb: [2.0, 5.0, 8.5, 14.5],
+      adUsageGrowth: [5, 10, 15, 22],
+      productGrowth: [10, 25, 40, 58],
+      roi: 340.0,
+      subscriptionSavings: 1200.0,
+      recommendedPlanId: 'professional',
     );
   }
 
@@ -626,39 +374,124 @@ class SubscriptionRepositoryImpl implements SubscriptionRepository {
   }
 
   @override
-  Future<void> applyCoupon(String couponCode) async {
-    if (couponCode.toUpperCase() == 'NASEEJI20') {
+  Future<void> renewSubscription() async {
+    final nextExp = DateTime.now().add(const Duration(days: 30));
+    _subscription = _subscription.copyWith(
+      status: SubscriptionStatus.active,
+      expiryDate: nextExp,
+      nextRenewal: nextExp,
+      remainingDays: 30,
+    );
+  }
+
+  @override
+  Future<void> upgradePlan(String planId, BillingCycle cycle) async {
+    final targetPlan = _plans.firstWhere((p) => p.id == planId, orElse: () => _plans[2]);
+    _subscription = SupplierSubscription(
+      planId: targetPlan.id,
+      tier: targetPlan.tier,
+      planName: targetPlan.name,
+      status: SubscriptionStatus.active,
+      billingCycle: cycle,
+      startDate: DateTime.now(),
+      expiryDate: DateTime.now().add(const Duration(days: 30)),
+      nextRenewal: DateTime.now().add(const Duration(days: 30)),
+      remainingDays: 30,
+      autoRenew: true,
+      price: targetPlan.price,
+      paymentMethod: _subscription.paymentMethod,
+      limits: targetPlan.limits,
+    );
+
+    _history.insert(
+      0,
+      SubscriptionHistoryItem(
+        id: 'HST-${DateTime.now().millisecondsSinceEpoch}',
+        planName: targetPlan.name,
+        price: targetPlan.price,
+        billingCycle: cycle == BillingCycle.monthly ? 'شهري' : 'سنوي',
+        startDate: DateTime.now(),
+        endDate: DateTime.now().add(const Duration(days: 30)),
+        status: 'نشط',
+        paymentStatus: 'مدفوع',
+        invoiceNumber: 'INV-${DateTime.now().year}-${DateTime.now().millisecondsSinceEpoch.toString().substring(7)}',
+      ),
+    );
+  }
+
+  @override
+  Future<void> downgradePlan(String planId, BillingCycle cycle) async {
+    await upgradePlan(planId, cycle);
+  }
+
+  @override
+  Future<void> applyCoupon(String code) async {
+    if (code.trim().toUpperCase() == 'NASEEJI10') {
+      final current = _billing.currentBill;
       _billing = _billing.copyWith(
-        discount: _billing.currentBill * 0.20, // 20% discount
-        couponCode: couponCode,
+        discount: current * 0.10,
+        couponCode: code,
       );
     }
   }
 
   @override
-  Future<List<SubscriptionNotification>> getNotifications() async {
-    return _notifications;
+  Future<void> addPaymentMethod(PaymentMethodItem method) async {
+    _paymentMethods.add(method);
   }
 
   @override
-  Future<SubscriptionAnalyticsData> getAnalytics() async {
-    return const SubscriptionAnalyticsData(
-      monthlySpending: [199.0, 199.0, 199.0, 199.0, 199.0],
-      subscriptionCost: 199.0,
-      addonSpending: 49.0,
-      featureUsagePercent: {
-        'المنتجات': 0.36,
-        'الإعلانات': 0.40,
-        'الزيارات': 0.85,
-        'المساحة': 0.36,
-        'الموظفين': 0.60,
-      },
-      storageGrowthGb: [1.0, 1.2, 1.5, 1.7, 1.8],
-      adUsageGrowth: [1, 1, 2, 2, 2],
-      productGrowth: [10, 12, 15, 17, 18],
-      roi: 3.5,
-      subscriptionSavings: 420.0,
-      recommendedPlanId: 'professional',
+  Future<void> deletePaymentMethod(String id) async {
+    _paymentMethods.removeWhere((m) => m.id == id);
+  }
+
+  @override
+  Future<void> purchaseAddon(String addonId) async {
+    final addon = _addons.firstWhere((a) => a.id == addonId);
+    if (addon.type == AddonType.products) {
+      // Add extra capacity to current limits
+      _subscription = _subscription.copyWith(
+        limits: _subscription.limits.copyWith(
+          maxProducts: _subscription.limits.maxProducts == -1
+              ? -1
+              : _subscription.limits.maxProducts + addon.quantity,
+        ),
+      );
+    }
+  }
+
+  // --- Utility methods for simulation/testing in controllers ---
+  void incrementProductsUsed() {
+    _usage = _usage.copyWith(productsUsed: _usage.productsUsed + 1);
+  }
+
+  void incrementAdsUsed() {
+    _usage = _usage.copyWith(advertisementsUsed: _usage.advertisementsUsed + 1);
+  }
+
+  void incrementFeaturedProductsUsed() {
+    _usage = _usage.copyWith(featuredProductsUsed: _usage.featuredProductsUsed + 1);
+  }
+
+  void incrementRfqsUsed() {
+    _usage = _usage.copyWith(rfqsUsed: _usage.rfqsUsed + 1);
+  }
+
+  void setUsage({
+    int? products,
+    int? ads,
+    int? videos,
+    int? pdfs,
+    int? rfqs,
+    int? featured,
+  }) {
+    _usage = _usage.copyWith(
+      productsUsed: products ?? _usage.productsUsed,
+      advertisementsUsed: ads ?? _usage.advertisementsUsed,
+      videosUsed: videos ?? _usage.videosUsed,
+      pdfsUsed: pdfs ?? _usage.pdfsUsed,
+      rfqsUsed: rfqs ?? _usage.rfqsUsed,
+      featuredProductsUsed: featured ?? _usage.featuredProductsUsed,
     );
   }
 }

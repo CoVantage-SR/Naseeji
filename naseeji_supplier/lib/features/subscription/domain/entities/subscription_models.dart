@@ -33,9 +33,20 @@ enum AddonType {
   bulkImport,
 }
 
+enum PlanTier {
+  free,
+  basic,
+  professional,
+  enterprise,
+}
+
 class ResourceLimits {
   final int maxProducts;
+  final int maxImagesPerProduct;
+  final int maxVideosPerProduct;
+  final int maxPdfsPerProduct;
   final int maxAdvertisements;
+  final int maxMonthlyRfqs;
   final int maxFeaturedProducts;
   final double maxStorageGb;
   final int maxEmployees;
@@ -51,24 +62,32 @@ class ResourceLimits {
 
   const ResourceLimits({
     required this.maxProducts,
+    required this.maxImagesPerProduct,
+    required this.maxVideosPerProduct,
+    required this.maxPdfsPerProduct,
     required this.maxAdvertisements,
+    required this.maxMonthlyRfqs,
     required this.maxFeaturedProducts,
-    required this.maxStorageGb,
-    required this.maxEmployees,
-    required this.maxBranches,
-    required this.maxCampaigns,
-    required this.maxCoupons,
-    required this.maxNotifications,
-    required this.maxAiReports,
-    required this.hasAiInsights,
-    required this.hasPrioritySupport,
-    required this.hasApiAccess,
-    required this.hasBulkUpload,
+    this.maxStorageGb = 5.0,
+    this.maxEmployees = 2,
+    this.maxBranches = 1,
+    this.maxCampaigns = 2,
+    this.maxCoupons = 5,
+    this.maxNotifications = 100,
+    this.maxAiReports = 5,
+    this.hasAiInsights = false,
+    this.hasPrioritySupport = false,
+    this.hasApiAccess = false,
+    this.hasBulkUpload = false,
   });
 
   ResourceLimits copyWith({
     int? maxProducts,
+    int? maxImagesPerProduct,
+    int? maxVideosPerProduct,
+    int? maxPdfsPerProduct,
     int? maxAdvertisements,
+    int? maxMonthlyRfqs,
     int? maxFeaturedProducts,
     double? maxStorageGb,
     int? maxEmployees,
@@ -84,7 +103,11 @@ class ResourceLimits {
   }) {
     return ResourceLimits(
       maxProducts: maxProducts ?? this.maxProducts,
+      maxImagesPerProduct: maxImagesPerProduct ?? this.maxImagesPerProduct,
+      maxVideosPerProduct: maxVideosPerProduct ?? this.maxVideosPerProduct,
+      maxPdfsPerProduct: maxPdfsPerProduct ?? this.maxPdfsPerProduct,
       maxAdvertisements: maxAdvertisements ?? this.maxAdvertisements,
+      maxMonthlyRfqs: maxMonthlyRfqs ?? this.maxMonthlyRfqs,
       maxFeaturedProducts: maxFeaturedProducts ?? this.maxFeaturedProducts,
       maxStorageGb: maxStorageGb ?? this.maxStorageGb,
       maxEmployees: maxEmployees ?? this.maxEmployees,
@@ -103,6 +126,7 @@ class ResourceLimits {
 
 class SubscriptionPlan {
   final String id;
+  final PlanTier tier;
   final String name;
   final double price;
   final BillingCycle billingCycle;
@@ -112,6 +136,7 @@ class SubscriptionPlan {
 
   const SubscriptionPlan({
     required this.id,
+    required this.tier,
     required this.name,
     required this.price,
     required this.billingCycle,
@@ -123,6 +148,7 @@ class SubscriptionPlan {
 
 class SupplierSubscription {
   final String planId;
+  final PlanTier tier;
   final String planName;
   final SubscriptionStatus status;
   final BillingCycle billingCycle;
@@ -133,9 +159,11 @@ class SupplierSubscription {
   final bool autoRenew;
   final double price;
   final String paymentMethod;
+  final ResourceLimits limits;
 
   const SupplierSubscription({
     required this.planId,
+    required this.tier,
     required this.planName,
     required this.status,
     required this.billingCycle,
@@ -146,10 +174,12 @@ class SupplierSubscription {
     required this.autoRenew,
     required this.price,
     required this.paymentMethod,
+    required this.limits,
   });
 
   SupplierSubscription copyWith({
     String? planId,
+    PlanTier? tier,
     String? planName,
     SubscriptionStatus? status,
     BillingCycle? billingCycle,
@@ -160,9 +190,11 @@ class SupplierSubscription {
     bool? autoRenew,
     double? price,
     String? paymentMethod,
+    ResourceLimits? limits,
   }) {
     return SupplierSubscription(
       planId: planId ?? this.planId,
+      tier: tier ?? this.tier,
       planName: planName ?? this.planName,
       status: status ?? this.status,
       billingCycle: billingCycle ?? this.billingCycle,
@@ -173,6 +205,7 @@ class SupplierSubscription {
       autoRenew: autoRenew ?? this.autoRenew,
       price: price ?? this.price,
       paymentMethod: paymentMethod ?? this.paymentMethod,
+      limits: limits ?? this.limits,
     );
   }
 }
@@ -181,6 +214,9 @@ class SubscriptionUsage {
   final int productsUsed;
   final int advertisementsUsed;
   final int featuredProductsUsed;
+  final int rfqsUsed;
+  final int videosUsed;
+  final int pdfsUsed;
   final double storageUsedGb;
   final int employeesUsed;
   final int branchesUsed;
@@ -193,6 +229,9 @@ class SubscriptionUsage {
     required this.productsUsed,
     required this.advertisementsUsed,
     required this.featuredProductsUsed,
+    required this.rfqsUsed,
+    required this.videosUsed,
+    required this.pdfsUsed,
     required this.storageUsedGb,
     required this.employeesUsed,
     required this.branchesUsed,
@@ -206,6 +245,9 @@ class SubscriptionUsage {
     int? productsUsed,
     int? advertisementsUsed,
     int? featuredProductsUsed,
+    int? rfqsUsed,
+    int? videosUsed,
+    int? pdfsUsed,
     double? storageUsedGb,
     int? employeesUsed,
     int? branchesUsed,
@@ -218,6 +260,9 @@ class SubscriptionUsage {
       productsUsed: productsUsed ?? this.productsUsed,
       advertisementsUsed: advertisementsUsed ?? this.advertisementsUsed,
       featuredProductsUsed: featuredProductsUsed ?? this.featuredProductsUsed,
+      rfqsUsed: rfqsUsed ?? this.rfqsUsed,
+      videosUsed: videosUsed ?? this.videosUsed,
+      pdfsUsed: pdfsUsed ?? this.pdfsUsed,
       storageUsedGb: storageUsedGb ?? this.storageUsedGb,
       employeesUsed: employeesUsed ?? this.employeesUsed,
       branchesUsed: branchesUsed ?? this.branchesUsed,
@@ -225,6 +270,37 @@ class SubscriptionUsage {
       couponsUsed: couponsUsed ?? this.couponsUsed,
       notificationsUsed: notificationsUsed ?? this.notificationsUsed,
       aiReportsUsed: aiReportsUsed ?? this.aiReportsUsed,
+    );
+  }
+}
+
+class ValidationResult {
+  final bool isAllowed;
+  final String? title;
+  final String? errorMessage;
+  final bool requiresUpgrade;
+
+  const ValidationResult({
+    required this.isAllowed,
+    this.title,
+    this.errorMessage,
+    this.requiresUpgrade = false,
+  });
+
+  factory ValidationResult.allowed() {
+    return const ValidationResult(isAllowed: true);
+  }
+
+  factory ValidationResult.denied({
+    required String title,
+    required String errorMessage,
+    bool requiresUpgrade = true,
+  }) {
+    return ValidationResult(
+      isAllowed: false,
+      title: title,
+      errorMessage: errorMessage,
+      requiresUpgrade: requiresUpgrade,
     );
   }
 }

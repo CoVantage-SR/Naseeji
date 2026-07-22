@@ -26,6 +26,65 @@ final subscriptionRepositoryProvider =
 // ignore: unused_element
 typedef SubscriptionRepositoryRef =
     AutoDisposeProviderRef<SubscriptionRepository>;
+String _$subscriptionServiceHash() =>
+    r'4c9f11fe90286e9f2540bddb549e4dd8b9ba5ea5';
+
+/// See also [subscriptionService].
+@ProviderFor(subscriptionService)
+final subscriptionServiceProvider =
+    AutoDisposeProvider<SubscriptionService>.internal(
+      subscriptionService,
+      name: r'subscriptionServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$subscriptionServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef SubscriptionServiceRef = AutoDisposeProviderRef<SubscriptionService>;
+String _$subscriptionHash() => r'ef5d63d466ed9d01daf8e143129784607682185b';
+
+/// Direct provider alias: subscriptionProvider
+///
+/// Copied from [subscription].
+@ProviderFor(subscription)
+final subscriptionProvider =
+    AutoDisposeFutureProvider<SupplierSubscription>.internal(
+      subscription,
+      name: r'subscriptionProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$subscriptionHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef SubscriptionRef = AutoDisposeFutureProviderRef<SupplierSubscription>;
+String _$subscriptionUsageHash() => r'76b3757ac2254086e30eb10a423fe7bc3cc1f33b';
+
+/// Direct provider alias: subscriptionUsageProvider
+///
+/// Copied from [subscriptionUsage].
+@ProviderFor(subscriptionUsage)
+final subscriptionUsageProvider =
+    AutoDisposeFutureProvider<SubscriptionUsage>.internal(
+      subscriptionUsage,
+      name: r'subscriptionUsageProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$subscriptionUsageHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef SubscriptionUsageRef = AutoDisposeFutureProviderRef<SubscriptionUsage>;
 String _$activeSubscriptionControllerHash() =>
     r'3d14ad7695c6446c2ad2350197255adf69d8aba2';
 
@@ -69,7 +128,7 @@ final subscriptionPlansControllerProvider =
 typedef _$SubscriptionPlansController =
     AutoDisposeAsyncNotifier<List<SubscriptionPlan>>;
 String _$subscriptionUsageControllerHash() =>
-    r'1e8c6e18cb53137aab7ef8b4ea4d9907298cd8cf';
+    r'013a55e6f7f4f5d15804e87542c1bb2e8014c8a1';
 
 /// See also [SubscriptionUsageController].
 @ProviderFor(SubscriptionUsageController)
@@ -89,6 +148,25 @@ final subscriptionUsageControllerProvider =
 
 typedef _$SubscriptionUsageController =
     AutoDisposeAsyncNotifier<SubscriptionUsage>;
+String _$subscriptionValidationHash() =>
+    r'69178c08609d68751fbba1cbd80f7fb2d479a9fb';
+
+/// Riverpod provider for subscription validations
+///
+/// Copied from [SubscriptionValidation].
+@ProviderFor(SubscriptionValidation)
+final subscriptionValidationProvider =
+    AutoDisposeNotifierProvider<SubscriptionValidation, void>.internal(
+      SubscriptionValidation.new,
+      name: r'subscriptionValidationProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$subscriptionValidationHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+typedef _$SubscriptionValidation = AutoDisposeNotifier<void>;
 String _$billingControllerHash() => r'f73221ef62ca5b3f4706dd663903597907b381f2';
 
 /// See also [BillingController].
@@ -127,7 +205,7 @@ final paymentMethodsControllerProvider =
 typedef _$PaymentMethodsController =
     AutoDisposeAsyncNotifier<List<PaymentMethodItem>>;
 String _$addonsStoreControllerHash() =>
-    r'c1c301eb050ec31107a020b8758d961a064b99aa';
+    r'cfcecfcd3dbd963112a715846029fb2b8ef47450';
 
 /// See also [AddonsStoreController].
 @ProviderFor(AddonsStoreController)

@@ -117,6 +117,8 @@ import '../../features/subscription/presentation/screens/checkout_screen.dart';
 import '../../features/subscription/presentation/screens/billing_invoices_screen.dart';
 import '../../features/subscription/presentation/screens/subscription_notifications_screen.dart';
 import '../../features/subscription/presentation/screens/subscription_analytics_screen.dart';
+import '../../features/subscription/presentation/screens/subscription_management_screen.dart';
+import '../../features/subscription/presentation/screens/subscription_test_demo_screen.dart';
 import '../../features/subscription/domain/entities/subscription_models.dart';
 
 // ─── Reports Feature ─────────────────────────────────────────────────────────
@@ -825,6 +827,16 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/subscription/analytics',
         name: 'subscription-analytics',
         builder: (context, state) => const SubscriptionAnalyticsScreen(),
+      ),
+      GoRoute(
+        path: '/subscription/manage',
+        name: 'subscription-manage',
+        builder: (context, state) => const SubscriptionManagementScreen(),
+      ),
+      GoRoute(
+        path: '/subscription/test-demo',
+        name: 'subscription-test-demo',
+        builder: (context, state) => const SubscriptionTestDemoScreen(),
       ),
       // ─── Reports Feature ─────────────────────────────────────────────
       GoRoute(

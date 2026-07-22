@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../domain/entities/subscription_models.dart';
 import '../../domain/repositories/subscription_repository.dart';
+import '../../domain/services/subscription_service.dart';
 import '../../data/repositories/subscription_repository_impl.dart';
 
 part 'subscription_controllers.g.dart';
@@ -8,6 +9,11 @@ part 'subscription_controllers.g.dart';
 @riverpod
 SubscriptionRepository subscriptionRepository(SubscriptionRepositoryRef ref) {
   return SubscriptionRepositoryImpl();
+}
+
+@riverpod
+SubscriptionService subscriptionService(SubscriptionServiceRef ref) {
+  return const SubscriptionService();
 }
 
 @riverpod
@@ -27,7 +33,6 @@ class ActiveSubscriptionController extends _$ActiveSubscriptionController {
     state = const AsyncValue.loading();
     await ref.read(subscriptionRepositoryProvider).renewSubscription();
     ref.invalidateSelf();
-    // Invalidate usages and invoices to trigger refreshes
     ref.invalidate(subscriptionUsageControllerProvider);
     ref.invalidate(billingInvoicesControllerProvider);
     ref.invalidate(billingControllerProvider);
@@ -51,6 +56,12 @@ class ActiveSubscriptionController extends _$ActiveSubscriptionController {
   }
 }
 
+/// Direct provider alias: subscriptionProvider
+@riverpod
+FutureOr<SupplierSubscription> subscription(SubscriptionRef ref) {
+  return ref.watch(activeSubscriptionControllerProvider.future);
+}
+
 @riverpod
 class SubscriptionPlansController extends _$SubscriptionPlansController {
   @override
@@ -64,6 +75,122 @@ class SubscriptionUsageController extends _$SubscriptionUsageController {
   @override
   FutureOr<SubscriptionUsage> build() {
     return ref.watch(subscriptionRepositoryProvider).getUsage();
+  }
+
+  void incrementProducts() {
+    final repo = ref.read(subscriptionRepositoryProvider);
+    if (repo is SubscriptionRepositoryImpl) {
+      repo.incrementProductsUsed();
+      ref.invalidateSelf();
+    }
+  }
+
+  void incrementAds() {
+    final repo = ref.read(subscriptionRepositoryProvider);
+    if (repo is SubscriptionRepositoryImpl) {
+      repo.incrementAdsUsed();
+      ref.invalidateSelf();
+    }
+  }
+
+  void incrementFeaturedProducts() {
+    final repo = ref.read(subscriptionRepositoryProvider);
+    if (repo is SubscriptionRepositoryImpl) {
+      repo.incrementFeaturedProductsUsed();
+      ref.invalidateSelf();
+    }
+  }
+
+  void incrementRfqs() {
+    final repo = ref.read(subscriptionRepositoryProvider);
+    if (repo is SubscriptionRepositoryImpl) {
+      repo.incrementRfqsUsed();
+      ref.invalidateSelf();
+    }
+  }
+
+  void updateUsage({
+    int? products,
+    int? ads,
+    int? videos,
+    int? pdfs,
+    int? rfqs,
+    int? featured,
+  }) {
+    final repo = ref.read(subscriptionRepositoryProvider);
+    if (repo is SubscriptionRepositoryImpl) {
+      repo.setUsage(
+        products: products,
+        ads: ads,
+        videos: videos,
+        pdfs: pdfs,
+        rfqs: rfqs,
+        featured: featured,
+      );
+      ref.invalidateSelf();
+    }
+  }
+}
+
+/// Direct provider alias: subscriptionUsageProvider
+@riverpod
+FutureOr<SubscriptionUsage> subscriptionUsage(SubscriptionUsageRef ref) {
+  return ref.watch(subscriptionUsageControllerProvider.future);
+}
+
+/// Riverpod provider for subscription validations
+@riverpod
+class SubscriptionValidation extends _$SubscriptionValidation {
+  @override
+  void build() {}
+
+  ValidationResult validateAddProduct(
+      SupplierSubscription sub, SubscriptionUsage usage) {
+    return ref
+        .read(subscriptionServiceProvider)
+        .validateAddProduct(subscription: sub, usage: usage);
+  }
+
+  ValidationResult validateAddImage(
+      SupplierSubscription sub, int currentCount) {
+    return ref
+        .read(subscriptionServiceProvider)
+        .validateAddImage(subscription: sub, currentImagesCount: currentCount);
+  }
+
+  ValidationResult validateAddVideo(
+      SupplierSubscription sub, int currentCount) {
+    return ref
+        .read(subscriptionServiceProvider)
+        .validateAddVideo(subscription: sub, currentVideosCount: currentCount);
+  }
+
+  ValidationResult validateAddPdf(
+      SupplierSubscription sub, int currentCount) {
+    return ref
+        .read(subscriptionServiceProvider)
+        .validateAddPdf(subscription: sub, currentPdfsCount: currentCount);
+  }
+
+  ValidationResult validateAddAdvertisement(
+      SupplierSubscription sub, SubscriptionUsage usage) {
+    return ref
+        .read(subscriptionServiceProvider)
+        .validateAddAdvertisement(subscription: sub, usage: usage);
+  }
+
+  ValidationResult validateSetFeaturedProduct(
+      SupplierSubscription sub, SubscriptionUsage usage) {
+    return ref
+        .read(subscriptionServiceProvider)
+        .validateSetFeaturedProduct(subscription: sub, usage: usage);
+  }
+
+  ValidationResult validateSubmitRfq(
+      SupplierSubscription sub, SubscriptionUsage usage) {
+    return ref
+        .read(subscriptionServiceProvider)
+        .validateSubmitRfq(subscription: sub, usage: usage);
   }
 }
 
@@ -127,7 +254,9 @@ class AddonsStoreController extends _$AddonsStoreController {
 
   Future<void> buyPayAsYouGo(String serviceName, double cost) async {
     state = const AsyncValue.loading();
-    await ref.read(subscriptionRepositoryProvider).purchasePayAsYouGo(serviceName, cost);
+    await ref
+        .read(subscriptionRepositoryProvider)
+        .purchasePayAsYouGo(serviceName, cost);
     ref.invalidateSelf();
     ref.invalidate(billingInvoicesControllerProvider);
   }

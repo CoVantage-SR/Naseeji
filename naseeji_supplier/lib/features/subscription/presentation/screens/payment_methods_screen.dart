@@ -190,7 +190,7 @@ class _SubscriptionPaymentMethodsScreenState extends ConsumerState<SubscriptionP
                           Text('نوع طريقة الدفع', style: TextStyle(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant)),
                           SizedBox(height: 6),
                           DropdownButtonFormField<PaymentMethodType>(
-                            value: _selectedType,
+                            initialValue: _selectedType,
                             items: const [
                               DropdownMenuItem(value: PaymentMethodType.creditCard, child: Text('بطاقة ائتمانية / مدى', style: TextStyle(fontSize: 12))),
                               DropdownMenuItem(value: PaymentMethodType.bankTransfer, child: Text('تحويل بنكي رسمي للمؤسسة', style: TextStyle(fontSize: 12))),
