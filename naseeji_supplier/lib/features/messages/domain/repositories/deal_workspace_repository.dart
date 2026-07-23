@@ -11,11 +11,19 @@ abstract class DealWorkspaceRepository {
     String? attachmentUrl,
   });
 
-  Future<bool> sendCounterOffer({
+  Future<bool> sendNewOfferVersion({
     required String dealId,
-    required double newUnitPrice,
+    required double unitPrice,
     required int quantity,
+    required String productionLeadTime,
+    required String validityPeriod,
+    required String paymentTerms,
+    required String deliveryTerms,
+    DateTime? expectedDeliveryDate,
+    String? notes,
   });
 
   Future<bool> updateDealStatus(String dealId, DealStatus newStatus);
+  Future<bool> acceptQuotation(String dealId);
+  Future<bool> rejectQuotation(String dealId);
 }

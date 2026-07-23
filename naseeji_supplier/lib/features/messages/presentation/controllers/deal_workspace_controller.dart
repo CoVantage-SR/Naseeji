@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naseeji_supplier/features/messages/domain/entities/deal_workspace_model.dart';
 import 'package:naseeji_supplier/features/messages/domain/entities/deal_status_enum.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_quotation_model.dart';
 import 'package:naseeji_supplier/features/messages/domain/services/content_moderation_service.dart';
 import 'package:naseeji_supplier/features/messages/domain/repositories/deal_workspace_repository.dart';
 import 'package:naseeji_supplier/features/messages/data/datasources/deal_workspace_remote_datasource.dart';
@@ -111,14 +112,39 @@ class DealWorkspaceController extends StateNotifier<DealWorkspaceState> {
     }
   }
 
-  Future<bool> submitCounterOffer(double newUnitPrice, int quantity) async {
+  Future<bool> submitNewOfferVersion({
+    required double unitPrice,
+    required int quantity,
+    required String productionLeadTime,
+    required String validityPeriod,
+    required String paymentTerms,
+    required String deliveryTerms,
+    DateTime? expectedDeliveryDate,
+    String? notes,
+  }) async {
     if (state.workspace == null) return false;
+
+    // Check notes for external contact
+    if (notes != null && notes.isNotEmpty) {
+      final check = moderationService.moderate(notes);
+      if (check.isProhibited) {
+        state = state.copyWith(moderationResult: check);
+        return false;
+      }
+    }
+
     state = state.copyWith(isLoading: true);
     try {
-      await repository.sendCounterOffer(
+      await repository.sendNewOfferVersion(
         dealId: dealId,
-        newUnitPrice: newUnitPrice,
+        unitPrice: unitPrice,
         quantity: quantity,
+        productionLeadTime: productionLeadTime,
+        validityPeriod: validityPeriod,
+        paymentTerms: paymentTerms,
+        deliveryTerms: deliveryTerms,
+        expectedDeliveryDate: expectedDeliveryDate,
+        notes: notes,
       );
       await loadWorkspace();
       return true;
@@ -130,13 +156,15 @@ class DealWorkspaceController extends StateNotifier<DealWorkspaceState> {
 
   Future<void> acceptQuotation() async {
     if (state.workspace == null) return;
-    await repository.updateDealStatus(dealId, DealStatus.agreed);
+    state = state.copyWith(isLoading: true);
+    await repository.acceptQuotation(dealId);
     await loadWorkspace();
   }
 
   Future<void> rejectQuotation() async {
     if (state.workspace == null) return;
-    await repository.updateDealStatus(dealId, DealStatus.negotiating);
+    state = state.copyWith(isLoading: true);
+    await repository.rejectQuotation(dealId);
     await loadWorkspace();
   }
 }

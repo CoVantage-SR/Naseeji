@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:naseeji_supplier/features/messages/domain/entities/deal_workspace_model.dart';
 import 'status_badge_widget.dart';
+import 'quick_actions_widget.dart';
 
 class ConversationHeaderWidget extends StatelessWidget {
   final DealWorkspaceModel workspace;
+  final VoidCallback? onViewDealDetails;
+  final VoidCallback? onViewProduct;
+  final VoidCallback? onViewAgreement;
+  final VoidCallback? onViewFiles;
+  final VoidCallback? onDownloadPdf;
 
   const ConversationHeaderWidget({
     super.key,
     required this.workspace,
+    this.onViewDealDetails,
+    this.onViewProduct,
+    this.onViewAgreement,
+    this.onViewFiles,
+    this.onDownloadPdf,
   });
 
   @override
@@ -15,12 +26,15 @@ class ConversationHeaderWidget extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
+    final formattedValue = '${workspace.dealValue.toStringAsFixed(0)} ج.م';
+    final formattedTime = '${workspace.lastUpdated.hour}:${workspace.lastUpdated.minute.toString().padLeft(2, '0')}';
+
     return Container(
-      padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+      padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
       decoration: BoxDecoration(
         color: colorScheme.surface,
         border: Border(
-          bottom: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.4)),
+          bottom: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.3)),
         ),
         boxShadow: [
           BoxShadow(
@@ -31,13 +45,15 @@ class ConversationHeaderWidget extends StatelessWidget {
         ],
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Top Row: Avatar + Factory Name + Status Badge
           Row(
             children: [
               Stack(
                 children: [
                   CircleAvatar(
-                    radius: 22,
+                    radius: 20,
                     backgroundImage: NetworkImage(workspace.factoryAvatarUrl),
                   ),
                   if (workspace.isFactoryOnline)
@@ -45,18 +61,18 @@ class ConversationHeaderWidget extends StatelessWidget {
                       bottom: 0,
                       right: 0,
                       child: Container(
-                        width: 12,
-                        height: 12,
+                        width: 10,
+                        height: 10,
                         decoration: BoxDecoration(
                           color: Colors.green.shade600,
                           shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white, width: 2),
+                          border: Border.all(color: Colors.white, width: 1.5),
                         ),
                       ),
                     ),
                 ],
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 8),
 
               Expanded(
                 child: Column(
@@ -69,7 +85,7 @@ class ConversationHeaderWidget extends StatelessWidget {
                             workspace.factoryName,
                             style: theme.textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.bold,
-                              fontSize: 14,
+                              fontSize: 13.5,
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -77,17 +93,14 @@ class ConversationHeaderWidget extends StatelessWidget {
                         ),
                         if (workspace.isFactoryVerified) ...[
                           const SizedBox(width: 4),
-                          Icon(Icons.verified_rounded, size: 16, color: colorScheme.primary),
+                          Icon(Icons.verified_rounded, size: 15, color: colorScheme.primary),
                         ],
                       ],
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      workspace.isFactoryOnline ? 'متصل الآن • استجابة خلال دقائق' : 'غير متصل حالياً',
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: workspace.isFactoryOnline ? Colors.green.shade800 : colorScheme.outline,
-                      ),
+                      'طلب: ${workspace.orderId} • RFQ: ${workspace.rfqId}',
+                      style: TextStyle(fontSize: 10.5, color: colorScheme.onSurfaceVariant),
                     ),
                   ],
                 ),
@@ -96,43 +109,76 @@ class ConversationHeaderWidget extends StatelessWidget {
               StatusBadgeWidget(status: workspace.currentStatus),
             ],
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
 
+          // Second Row: Product Name + Deal Value & Quantity
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            decoration: BoxDecoration(
+              color: colorScheme.surfaceContainerLow,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.25)),
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.inventory_2_outlined, size: 14, color: colorScheme.primary),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                    workspace.productName,
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.onSurface,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: colorScheme.primary.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    formattedValue,
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.primary,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  '(${workspace.totalQuantity} كجم)',
+                  style: TextStyle(fontSize: 10, color: colorScheme.onSurfaceVariant),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 6),
+
+          // Quick Actions Bar + Last Updated
           Row(
             children: [
-              _buildIdTag(context, label: 'طلب', id: workspace.orderId, icon: Icons.receipt_long_outlined),
-              const SizedBox(width: 8),
-              _buildIdTag(context, label: 'RFQ', id: workspace.rfqId, icon: Icons.request_quote_outlined),
-              const Spacer(),
+              Expanded(
+                child: QuickActionsWidget(
+                  onViewDealDetails: onViewDealDetails ?? () {},
+                  onViewProduct: onViewProduct ?? () {},
+                  onViewAgreement: onViewAgreement ?? () {},
+                  onViewFiles: onViewFiles ?? () {},
+                  onDownloadPdf: onDownloadPdf ?? () {},
+                ),
+              ),
+              const SizedBox(width: 6),
               Text(
-                'مساحة إدارة الصفقة',
-                style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: colorScheme.outline),
+                'تحديث: $formattedTime',
+                style: TextStyle(fontSize: 9.5, color: colorScheme.outline),
               ),
             ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildIdTag(BuildContext context, {required String label, required String id, required IconData icon}) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-      decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.4),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.3)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 12, color: colorScheme.primary),
-          const SizedBox(width: 4),
-          Text(
-            '$label: $id',
-            style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: colorScheme.onSurface),
           ),
         ],
       ),

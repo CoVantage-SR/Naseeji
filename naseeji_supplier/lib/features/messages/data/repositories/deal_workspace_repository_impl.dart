@@ -24,12 +24,38 @@ class DealWorkspaceRepositoryImpl implements DealWorkspaceRepository {
   }
 
   @override
-  Future<bool> sendCounterOffer({
+  Future<bool> sendNewOfferVersion({
     required String dealId,
-    required double newUnitPrice,
+    required double unitPrice,
     required int quantity,
+    required String productionLeadTime,
+    required String validityPeriod,
+    required String paymentTerms,
+    required String deliveryTerms,
+    DateTime? expectedDeliveryDate,
+    String? notes,
   }) {
-    return datasource.sendCounterOffer(dealId: dealId, newUnitPrice: newUnitPrice, quantity: quantity);
+    return datasource.sendNewOfferVersion(
+      dealId: dealId,
+      unitPrice: unitPrice,
+      quantity: quantity,
+      productionLeadTime: productionLeadTime,
+      validityPeriod: validityPeriod,
+      paymentTerms: paymentTerms,
+      deliveryTerms: deliveryTerms,
+      expectedDeliveryDate: expectedDeliveryDate,
+      notes: notes,
+    );
+  }
+
+  @override
+  Future<bool> acceptQuotation(String dealId) {
+    return datasource.acceptQuotation(dealId);
+  }
+
+  @override
+  Future<bool> rejectQuotation(String dealId) {
+    return datasource.rejectQuotation(dealId);
   }
 
   @override
