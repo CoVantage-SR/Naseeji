@@ -29,6 +29,7 @@ class SupplierDashboardScreen extends ConsumerWidget {
         backgroundColor: Colors.transparent,
       ),
       floatingActionButton: FloatingActionButton.extended(
+        heroTag: 'home_quick_action_fab',
         onPressed: () => QuickActionsBottomSheet.show(context),
         backgroundColor: colorScheme.primary,
         foregroundColor: colorScheme.onPrimary,

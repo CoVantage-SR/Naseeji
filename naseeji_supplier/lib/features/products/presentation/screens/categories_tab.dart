@@ -85,6 +85,7 @@ class _CategoriesTabState extends State<CategoriesTab> {
           },
         ),
         floatingActionButton: FloatingActionButton.extended(
+          heroTag: 'categories_add_fab',
           onPressed: () => _showAddEditDialog(context),
           backgroundColor: const Color(0xFF0040E0),
           foregroundColor: Colors.white,

@@ -159,6 +159,7 @@ class ProductsModuleScreen extends ConsumerWidget {
           },
         ),
         floatingActionButton: FloatingActionButton.extended(
+          heroTag: 'products_add_fab',
           onPressed: () => _handleAddProduct(context, ref),
           backgroundColor: AppColors.primary,
           foregroundColor: Colors.white,

@@ -37,6 +37,7 @@ class _CustomerNotesScreenState extends ConsumerState<CustomerNotesScreen> {
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
+          heroTag: 'customer_notes_add_fab',
           onPressed: () => _showNoteDialog(context, null),
           backgroundColor: AppColors.primary,
           icon: const Icon(Icons.add, color: Colors.white),
