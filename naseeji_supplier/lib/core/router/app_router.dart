@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'session_router_observer.dart';
+import '../widgets/main_shell_scaffold.dart';
 import '../../features/auth/presentation/controllers/auth_controller.dart';
 import '../../features/auth/domain/models/user_model.dart';
 import '../../features/auth/presentation/screens/splash/splash_screen.dart';
@@ -238,11 +239,67 @@ GoRouter goRouter(GoRouterRef ref) {
         name: 'google-complete-registration',
         builder: (context, state) => const GoogleCompleteRegistrationScreen(),
       ),
-      GoRoute(
-        path: '/home',
-        name: 'home',
-        pageBuilder: (context, state) =>
-            const NoTransitionPage(child: HomeScreen()),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) {
+          return MainShellScaffold(navigationShell: navigationShell);
+        },
+        branches: [
+          // Branch 0: الرئيسية (Home)
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/home',
+                name: 'home',
+                pageBuilder: (context, state) =>
+                    const NoTransitionPage(child: HomeScreen()),
+              ),
+            ],
+          ),
+          // Branch 1: المنتجات (Products)
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/products',
+                name: 'products',
+                pageBuilder: (context, state) =>
+                    const NoTransitionPage(child: ProductsModuleScreen()),
+              ),
+            ],
+          ),
+          // Branch 2: الصفقات (Deals)
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/deals',
+                name: 'deals',
+                pageBuilder: (context, state) =>
+                    const NoTransitionPage(child: DealsDashboardScreen()),
+              ),
+            ],
+          ),
+          // Branch 3: الإحصائيات (Reports)
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/reports',
+                name: 'reports-dashboard',
+                pageBuilder: (context, state) =>
+                    const NoTransitionPage(child: AnalyticsDashboardScreen()),
+              ),
+            ],
+          ),
+          // Branch 4: الحساب (Profile)
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/profile',
+                name: 'profile',
+                pageBuilder: (context, state) =>
+                    const NoTransitionPage(child: SupplierProfileScreen()),
+              ),
+            ],
+          ),
+        ],
       ),
       GoRoute(
         path: '/analytics',
@@ -265,21 +322,9 @@ GoRouter goRouter(GoRouterRef ref) {
         builder: (context, state) => const GlobalSearchScreen(),
       ),
       GoRoute(
-        path: '/profile',
-        name: 'profile',
-        pageBuilder: (context, state) =>
-            const NoTransitionPage(child: SupplierProfileScreen()),
-      ),
-      GoRoute(
         path: '/profile/edit',
         name: 'profile-edit',
         builder: (context, state) => const EditSupplierProfileScreen(),
-      ),
-      GoRoute(
-        path: '/products',
-        name: 'products',
-        pageBuilder: (context, state) =>
-            const NoTransitionPage(child: ProductsModuleScreen()),
       ),
       GoRoute(
         path: '/add-product',
@@ -371,12 +416,6 @@ GoRouter goRouter(GoRouterRef ref) {
         builder: (context, state) => AgreementHistoryScreen(
           agreementId: state.pathParameters['id'] ?? '',
         ),
-      ),
-      GoRoute(
-        path: '/deals',
-        name: 'deals',
-        pageBuilder: (context, state) =>
-            const NoTransitionPage(child: DealsDashboardScreen()),
       ),
       GoRoute(
         path: '/deals/details/:id',
@@ -854,11 +893,6 @@ GoRouter goRouter(GoRouterRef ref) {
         builder: (context, state) => const SubscriptionTestDemoScreen(),
       ),
       // ─── Reports Feature ─────────────────────────────────────────────
-      GoRoute(
-        path: '/reports',
-        name: 'reports-dashboard',
-        builder: (context, state) => const AnalyticsDashboardScreen(),
-      ),
       GoRoute(
         path: '/reports/sales',
         name: 'reports-sales',

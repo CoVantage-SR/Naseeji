@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
-import 'package:naseeji_supplier/core/widgets/app_bottom_navigation_bar.dart';
 
 import '../providers/deals_providers.dart';
 import '../../domain/entities/deal_model.dart';
@@ -145,6 +144,9 @@ class DealsDashboardScreen extends ConsumerWidget {
                         ),
                 ),
               ],
+            );
+          },
+        ),
       ),
     );
   }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
-import 'package:naseeji_supplier/core/widgets/app_bottom_navigation_bar.dart';
 
 import '../providers/products_providers.dart';
 import '../controllers/products_controller.dart';
@@ -165,6 +164,8 @@ class ProductsModuleScreen extends ConsumerWidget {
           foregroundColor: Colors.white,
           elevation: 2,
           icon: const Icon(Icons.add_rounded, size: 20),
+          label: const Text('إضافة منتج خامة', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+        ),
       ),
     );
   }
