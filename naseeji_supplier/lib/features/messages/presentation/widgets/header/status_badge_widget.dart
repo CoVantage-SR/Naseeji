@@ -13,6 +13,11 @@ class StatusBadgeWidget extends StatelessWidget {
     IconData icon;
 
     switch (status) {
+      case DealStatus.newRfq:
+        bg = Colors.amber.shade50;
+        fg = Colors.amber.shade900;
+        icon = Icons.new_releases_outlined;
+        break;
       case DealStatus.negotiating:
         bg = Colors.orange.shade50;
         fg = Colors.orange.shade900;
@@ -37,6 +42,33 @@ class StatusBadgeWidget extends StatelessWidget {
         bg = Colors.teal.shade50;
         fg = Colors.teal.shade900;
         icon = Icons.local_shipping_outlined;
+        break;
+      case DealStatus.delivering:
+        bg = Colors.indigo.shade50;
+        fg = Colors.indigo.shade900;
+        icon = Icons.drive_eta_outlined;
+        break;
+      case DealStatus.qualityInspection:
+        bg = Colors.yellow.shade100;
+        fg = Colors.yellow.shade900;
+        icon = Icons.biotech_outlined;
+        break;
+      case DealStatus.paymentPending:
+        bg = Colors.lightGreen.shade50;
+        fg = Colors.lightGreen.shade900;
+        icon = Icons.payments_outlined;
+        break;
+      case DealStatus.completed:
+        bg = Colors.green.shade50;
+        fg = Colors.green.shade900;
+        icon = Icons.verified_rounded;
+        break;
+      case DealStatus.cancelled:
+      case DealStatus.rejected:
+      case DealStatus.expired:
+        bg = Colors.red.shade50;
+        fg = Colors.red.shade900;
+        icon = Icons.cancel_outlined;
         break;
     }
 
