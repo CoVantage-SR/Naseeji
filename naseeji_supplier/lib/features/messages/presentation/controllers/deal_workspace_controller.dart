@@ -1,5 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naseeji_supplier/features/messages/domain/entities/deal_workspace_model.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_quotation_model.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_agreement_model.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_file_model.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_timeline_model.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/business_message.dart';
 import 'package:naseeji_supplier/features/messages/domain/services/content_moderation_service.dart';
 import 'package:naseeji_supplier/features/messages/domain/repositories/deal_workspace_repository.dart';
 import 'package:naseeji_supplier/features/messages/data/datasources/deal_workspace_remote_datasource.dart';
@@ -122,7 +127,7 @@ class DealWorkspaceController extends StateNotifier<DealWorkspaceState> {
   }) async {
     if (state.workspace == null) return false;
 
-    // Check notes for external contact
+    // Moderate notes input
     if (notes != null && notes.isNotEmpty) {
       final check = moderationService.moderate(notes);
       if (check.isProhibited) {
@@ -167,11 +172,41 @@ class DealWorkspaceController extends StateNotifier<DealWorkspaceState> {
   }
 }
 
-final dealWorkspaceControllerProvider = StateNotifierProvider.family<DealWorkspaceController, DealWorkspaceState, String>((ref, dealId) {
+// ─── Single Source of Truth Primary Deal Provider ─────────────────────────
+final dealProvider = StateNotifierProvider.family<DealWorkspaceController, DealWorkspaceState, String>((ref, dealId) {
   final repo = ref.watch(dealWorkspaceRepositoryProvider);
   return DealWorkspaceController(
     repository: repo,
     moderationService: ContentModerationService(),
     dealId: dealId,
   );
+});
+
+// Alias for dealWorkspaceControllerProvider to maintain backward compatibility
+final dealWorkspaceControllerProvider = dealProvider;
+
+// ─── Derived Reactive Slice Providers (Zero Duplicate Models) ──────────────
+final dealChatProvider = Provider.family<List<BusinessMessage>, String>((ref, dealId) {
+  final state = ref.watch(dealProvider(dealId));
+  return state.workspace?.messages ?? const [];
+});
+
+final negotiationProvider = Provider.family<List<DealQuotationModel>, String>((ref, dealId) {
+  final state = ref.watch(dealProvider(dealId));
+  return state.workspace?.quotationHistory ?? const [];
+});
+
+final agreementProvider = Provider.family<DealAgreementModel?, String>((ref, dealId) {
+  final state = ref.watch(dealProvider(dealId));
+  return state.workspace?.finalAgreement;
+});
+
+final timelineProvider = Provider.family<DealTimelineModel?, String>((ref, dealId) {
+  final state = ref.watch(dealProvider(dealId));
+  return state.workspace?.timeline;
+});
+
+final filesProvider = Provider.family<List<DealFileModel>, String>((ref, dealId) {
+  final state = ref.watch(dealProvider(dealId));
+  return state.workspace?.files ?? const [];
 });
