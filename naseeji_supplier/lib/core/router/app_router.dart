@@ -569,11 +569,28 @@ GoRouter goRouter(GoRouterRef ref) {
         ),
       ),
       GoRoute(
+        path: '/messages/chat',
+        name: 'messages-business-chat-query',
+        builder: (context, state) {
+          final dealId = state.uri.queryParameters['dealId'] ??
+              state.uri.queryParameters['conversationId'] ??
+              'DEAL-101';
+          return BusinessChatScreen(
+            dealId: dealId,
+            conversationId: dealId,
+          );
+        },
+      ),
+      GoRoute(
         path: '/messages/chat/:id',
         name: 'messages-business-chat',
-        builder: (context, state) => BusinessChatScreen(
-          conversationId: state.pathParameters['id'] ?? '',
-        ),
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? 'DEAL-101';
+          return BusinessChatScreen(
+            dealId: id,
+            conversationId: id,
+          );
+        },
       ),
       GoRoute(
         path: '/messages/chat/:id/settings',

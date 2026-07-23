@@ -55,6 +55,62 @@ class MockDatabase {
     }
   }
 
+  /// Add new product to supplier inventory
+  static ProductMock addNewProduct({
+    required String title,
+    required String category,
+    required double unitPrice,
+    required int minOrderQuantity,
+    required int availableStock,
+    required String description,
+    String? imageUrl,
+  }) {
+    final newId = 'P00${products.length + 1}';
+    final p = ProductMock(
+      id: newId,
+      supplierId: supplier.id,
+      title: title,
+      category: category,
+      unitPrice: unitPrice,
+      minOrderQuantity: minOrderQuantity,
+      availableStock: availableStock,
+      imageUrl: imageUrl ?? 'https://images.unsplash.com/photo-1604754742629-3e5728249d81?auto=format&fit=crop&w=400&q=80',
+      description: description,
+    );
+    products.add(p);
+    return p;
+  }
+
+  /// Update available stock for a product
+  static void updateProductStock(String productId, int newStock) {
+    final idx = products.indexWhere((p) => p.id == productId);
+    if (idx != -1) {
+      final old = products[idx];
+      products[idx] = ProductMock(
+        id: old.id,
+        supplierId: old.supplierId,
+        title: old.title,
+        category: old.category,
+        unitPrice: old.unitPrice,
+        currency: old.currency,
+        minOrderQuantity: old.minOrderQuantity,
+        availableStock: newStock,
+        imageUrl: old.imageUrl,
+        description: old.description,
+        isAvailable: newStock > 0,
+      );
+    }
+  }
+
+  /// Deduct stock upon successful deal delivery
+  static void deductStockOnDelivery(String productId, int quantityDeducted) {
+    final prod = getProductById(productId);
+    if (prod != null) {
+      final updated = (prod.availableStock - quantityDeducted).clamp(0, 999999);
+      updateProductStock(productId, updated);
+    }
+  }
+
   static DealMock? getDealById(String dealId) {
     try {
       return deals.firstWhere((d) => d.dealId == dealId || d.rfqId == dealId || d.orderId == dealId);
