@@ -2,14 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:naseeji_supplier/features/messages/domain/entities/deal_agreement_model.dart';
 
 class AgreementTabWidget extends StatelessWidget {
-  final DealAgreementModel agreement;
+  final DealAgreementModel? agreement;
 
-  const AgreementTabWidget({super.key, required this.agreement});
+  const AgreementTabWidget({super.key, this.agreement});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+
+    if (agreement == null) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.assignment_late_outlined, size: 54, color: colorScheme.outline),
+              const SizedBox(height: 12),
+              Text(
+                'لم يتم إنشاء عقد الاتفاق بعد',
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: colorScheme.onSurface,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                'يتم إنشاء عقد الاتفاق الإلكتروني تلقائياً فور قبول المصنع لأحدث نسخة من عرض السعر داخل قسم التفاوض 🤝.',
+                style: TextStyle(fontSize: 12, color: colorScheme.onSurfaceVariant, height: 1.4),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    final agr = agreement!;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
@@ -31,7 +61,7 @@ class AgreementTabWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    'رقم العقد الموثق: ${agreement.agreementId}',
+                    'رقم العقد الموثق: ${agr.agreementId}',
                     style: TextStyle(fontSize: 11, color: colorScheme.onSurfaceVariant),
                   ),
                 ],
@@ -49,7 +79,7 @@ class AgreementTabWidget extends StatelessWidget {
                     Icon(Icons.verified_rounded, size: 14, color: Colors.green.shade800),
                     const SizedBox(width: 4),
                     Text(
-                      agreement.status,
+                      agr.status,
                       style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.green.shade900),
                     ),
                   ],
@@ -89,15 +119,15 @@ class AgreementTabWidget extends StatelessWidget {
           ),
           const SizedBox(height: 16),
 
-          _buildInfoRow(context, label: 'إجمالي السعر النهائي:', value: '${agreement.finalTotalPrice.toStringAsFixed(0)} ${agreement.currency}'),
+          _buildInfoRow(context, label: 'إجمالي السعر النهائي:', value: '${agr.finalTotalPrice.toStringAsFixed(0)} ${agr.currency}'),
           const SizedBox(height: 8),
-          _buildInfoRow(context, label: 'الكمية النهائية المتفق عليها:', value: '${agreement.finalQuantity} وحدة'),
+          _buildInfoRow(context, label: 'الكمية النهائية المتفق عليها:', value: '${agr.finalQuantity} وحدة'),
           const SizedBox(height: 8),
-          _buildInfoRow(context, label: 'موعد التسليم المقرر:', value: agreement.deliveryDate),
+          _buildInfoRow(context, label: 'موعد التسليم المقرر:', value: agr.deliveryDate),
           const SizedBox(height: 8),
-          _buildInfoRow(context, label: 'مكان الاستلام المحدد:', value: agreement.pickupLocation),
+          _buildInfoRow(context, label: 'مكان الاستلام المحدد:', value: agr.pickupLocation),
           const SizedBox(height: 8),
-          _buildInfoRow(context, label: 'طريقة الدفع والتسديد:', value: agreement.paymentMethod),
+          _buildInfoRow(context, label: 'طريقة الدفع والتسديد:', value: agr.paymentMethod),
           const SizedBox(height: 20),
 
           Row(
@@ -105,14 +135,14 @@ class AgreementTabWidget extends StatelessWidget {
               Expanded(
                 child: _buildApprovalBadge(
                   label: 'اعتماد المورد',
-                  isApproved: agreement.isApprovedBySupplier,
+                  isApproved: agr.isApprovedBySupplier,
                 ),
               ),
               const SizedBox(width: 10),
               Expanded(
                 child: _buildApprovalBadge(
                   label: 'اعتماد المصنع',
-                  isApproved: agreement.isApprovedByFactory,
+                  isApproved: agr.isApprovedByFactory,
                 ),
               ),
             ],

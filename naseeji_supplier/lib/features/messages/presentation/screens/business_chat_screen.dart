@@ -16,12 +16,11 @@ class BusinessChatScreen extends ConsumerStatefulWidget {
   final String dealId;
   final String? conversationId;
 
-  BusinessChatScreen({
+  const BusinessChatScreen({
     super.key,
-    String? dealId,
-    String? conversationId,
-  })  : dealId = dealId ?? conversationId ?? 'deal-101',
-        conversationId = conversationId ?? dealId;
+    this.dealId = 'deal-101',
+    this.conversationId,
+  });
 
   @override
   ConsumerState<BusinessChatScreen> createState() => _BusinessChatScreenState();

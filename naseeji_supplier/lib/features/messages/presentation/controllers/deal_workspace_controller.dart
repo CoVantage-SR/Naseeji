@@ -1,7 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naseeji_supplier/features/messages/domain/entities/deal_workspace_model.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_status_enum.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_quotation_model.dart';
 import 'package:naseeji_supplier/features/messages/domain/services/content_moderation_service.dart';
 import 'package:naseeji_supplier/features/messages/domain/repositories/deal_workspace_repository.dart';
 import 'package:naseeji_supplier/features/messages/data/datasources/deal_workspace_remote_datasource.dart';
