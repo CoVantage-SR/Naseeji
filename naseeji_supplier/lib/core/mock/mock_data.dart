@@ -1,3 +1,4 @@
+import 'subscription_mock.dart';
 import 'supplier_mock.dart';
 import 'product_mock.dart';
 import 'deal_mock.dart';
@@ -44,6 +45,157 @@ class MockDatabase {
 
   // 9. Notifications
   static List<NotificationMock> notifications = List.from(NotificationMock.sampleNotifications);
+
+  // 10. Subscription Data
+  static SubscriptionModel currentSubscription = SubscriptionModel.defaultSubscription;
+  static List<SubscriptionPlanMock> subscriptionPlans = List.from(SubscriptionPlanMock.samplePlans);
+  static List<SubscriptionInvoiceMock> subscriptionInvoices = List.from(SubscriptionInvoiceMock.sampleInvoices);
+  static List<SubscriptionHistoryMock> subscriptionHistory = List.from(SubscriptionHistoryMock.sampleHistory);
+  static List<Map<String, dynamic>> operationsLog = [];
+
+  // ─── Subscription Helpers ──────────────────────────────────────────
+
+  static SubscriptionModel getCurrentSubscription() {
+    return currentSubscription.copyWith(productsUsed: products.length);
+  }
+
+  static void addOperationLog(String action, String details) {
+    operationsLog.add({
+      'id': 'OP-${DateTime.now().millisecondsSinceEpoch}',
+      'action': action,
+      'details': details,
+      'timestamp': DateTime.now(),
+    });
+  }
+
+  static String? validateAddProductLimits() {
+    final sub = getCurrentSubscription();
+    if (sub.isExpired || sub.status == SubscriptionStatus.suspended) {
+      return 'الاشتراك الحالي منتهي أو معلق. يرجى تجديد الاشتراك لإضافة منتجات جديدة.';
+    }
+    if (sub.productsUsed >= sub.productsLimit) {
+      return 'لقد وصلت للحد الأقصى للمنتجات المتاحة في باقتك الحالية (${sub.productsLimit} منتج). يرجى الترقية لإضافة المزيد.';
+    }
+    return null;
+  }
+
+  static String? validateMediaLimits({required String type, required int currentCount}) {
+    final sub = getCurrentSubscription();
+    if (sub.isExpired) {
+      return 'الاشتراك منتهي. لا يمكن رفع وسائط جديدة.';
+    }
+    if (type == 'image' && currentCount >= sub.imagesPerProduct) {
+      return 'تجاوزت حد الصور المسموح به للمنتج الواحد (${sub.imagesPerProduct} صور).';
+    }
+    if (type == 'video' && currentCount >= sub.videosPerProduct) {
+      return 'تجاوزت حد الفيديوهات المسموح به للمنتج الواحد (${sub.videosPerProduct} فيديو).';
+    }
+    if (type == 'pdf' && currentCount >= sub.pdfPerProduct) {
+      return 'تجاوزت حد ملفات PDF المسموح بها للمنتج الواحد (${sub.pdfPerProduct} ملفات).';
+    }
+    return null;
+  }
+
+  static void upgradeSubscriptionPlan(SubscriptionPlanMock newPlan) {
+    final oldName = currentSubscription.planName;
+    currentSubscription = currentSubscription.copyWith(
+      planName: newPlan.name,
+      planType: newPlan.type,
+      status: SubscriptionStatus.active,
+      productsLimit: newPlan.productsLimit,
+      imagesPerProduct: newPlan.imagesPerProduct,
+      videosPerProduct: newPlan.videosPerProduct,
+      pdfPerProduct: newPlan.pdfPerProduct,
+      analyticsEnabled: newPlan.analyticsEnabled,
+      prioritySupport: newPlan.prioritySupport,
+      employeeLimit: newPlan.employeeLimit,
+      canPublishProducts: true,
+      canEditProducts: true,
+      canRepublishProducts: true,
+      endDate: DateTime.now().add(const Duration(days: 30)),
+      renewalDate: DateTime.now().add(const Duration(days: 30)),
+      updatedAt: DateTime.now(),
+    );
+
+    subscriptionInvoices.add(
+      SubscriptionInvoiceMock(
+        invoiceId: 'INV-SUB-${DateTime.now().millisecondsSinceEpoch.toString().substring(7)}',
+        subscriptionId: currentSubscription.subscriptionId,
+        planName: newPlan.name,
+        amount: newPlan.pricePerMonth,
+        invoiceDate: DateTime.now(),
+        paymentMethod: 'بطاقة ائتمانية (فوري / ميزة)',
+        status: 'مدفوع 🟢',
+      ),
+    );
+
+    subscriptionHistory.add(
+      SubscriptionHistoryMock(
+        historyId: 'HIST-${DateTime.now().millisecondsSinceEpoch.toString().substring(7)}',
+        action: 'ترقية الباقة',
+        oldPlanName: oldName,
+        newPlanName: newPlan.name,
+        timestamp: DateTime.now(),
+        notes: 'تمت ترقية الاشتراك إلى ${newPlan.name} بنجاح.',
+      ),
+    );
+
+    notifications.add(
+      NotificationMock(
+        id: 'NOTIF-SUB-${DateTime.now().millisecondsSinceEpoch}',
+        dealId: 'SUB-101',
+        title: 'تمت ترقية الباقة بنجاح 🚀',
+        body: 'تمت الترقية إلى ${newPlan.name} والحد الجديد للمنتجات هو ${newPlan.productsLimit} منتج.',
+        timestamp: DateTime.now(),
+      ),
+    );
+
+    addOperationLog('Upgrade Subscription', 'تمت الترقية إلى ${newPlan.name}');
+  }
+
+  static void renewSubscription() {
+    currentSubscription = currentSubscription.copyWith(
+      status: SubscriptionStatus.active,
+      endDate: DateTime.now().add(const Duration(days: 30)),
+      renewalDate: DateTime.now().add(const Duration(days: 30)),
+      updatedAt: DateTime.now(),
+    );
+
+    subscriptionInvoices.add(
+      SubscriptionInvoiceMock(
+        invoiceId: 'INV-SUB-${DateTime.now().millisecondsSinceEpoch.toString().substring(7)}',
+        subscriptionId: currentSubscription.subscriptionId,
+        planName: currentSubscription.planName,
+        amount: 1299.0,
+        invoiceDate: DateTime.now(),
+        paymentMethod: 'بطاقة ائتمانية (فوري / ميزة)',
+        status: 'تجديد مدفوع 🟢',
+      ),
+    );
+
+    subscriptionHistory.add(
+      SubscriptionHistoryMock(
+        historyId: 'HIST-${DateTime.now().millisecondsSinceEpoch.toString().substring(7)}',
+        action: 'تجديد الاشتراك',
+        oldPlanName: currentSubscription.planName,
+        newPlanName: currentSubscription.planName,
+        timestamp: DateTime.now(),
+        notes: 'تم تجديد الاشتراك لمدة 30 يوماً إضافية.',
+      ),
+    );
+
+    notifications.add(
+      NotificationMock(
+        id: 'NOTIF-SUB-${DateTime.now().millisecondsSinceEpoch}',
+        dealId: 'SUB-101',
+        title: 'تم تجديد الاشتراك 🔄',
+        body: 'تم تجديد باقتك ${currentSubscription.planName} بنجاح لمدة شهر قادم.',
+        timestamp: DateTime.now(),
+      ),
+    );
+
+    addOperationLog('Renew Subscription', 'تم تجديد اشتراك ${currentSubscription.planName}');
+  }
 
   // ─── Query Helper Methods ──────────────────────────────────────────────
 
