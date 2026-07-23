@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/features/deals/domain/entities/deal_model.dart';
 import 'package:naseeji_supplier/features/deals/presentation/controllers/deals_controller.dart';
 
@@ -48,6 +49,49 @@ class _QuotationWidgetState extends ConsumerState<QuotationWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Banner to open direct Deal Chat between both parties
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: const Color(0xFF006B5F).withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFF006B5F).withValues(alpha: 0.3)),
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.chat_rounded, color: Color(0xFF006B5F), size: 24),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'المحادثات والتفاوض المباشر',
+                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF006B5F)),
+                      ),
+                      Text(
+                        'تواصل مباشرة مع المصنع وتابع التعديلات المباشرة داخل الصفقة.',
+                        style: TextStyle(fontSize: 10, color: Colors.grey.shade700),
+                      ),
+                    ],
+                  ),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () => context.push('/messages/chat?dealId=${widget.deal.id}'),
+                  icon: const Icon(Icons.forum_rounded, size: 14),
+                  label: const Text('فتح الشات', style: TextStyle(fontSize: 11)),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF006B5F),
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size(0, 34),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+
           if (quote != null) ...[
             Container(
               padding: const EdgeInsets.all(12),
@@ -201,6 +245,8 @@ class _QuotationWidgetState extends ConsumerState<QuotationWidget> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('تم إرسال عرض السعر بنجاح للمصنع 🚀'), backgroundColor: Colors.green),
         );
+        // Automatically navigate to Deal Chat
+        context.push('/messages/chat?dealId=${widget.deal.id}');
       } else {
         final err = ref.read(dealsControllerProvider).error;
         ScaffoldMessenger.of(context).showSnackBar(

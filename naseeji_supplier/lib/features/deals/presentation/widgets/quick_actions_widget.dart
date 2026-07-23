@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/features/deals/domain/entities/deal_model.dart';
 import 'package:naseeji_supplier/features/deals/presentation/controllers/deals_controller.dart';
 
@@ -31,14 +32,31 @@ class QuickActionsWidget extends ConsumerWidget {
       child: SafeArea(
         child: Row(
           children: [
+            // Direct Button to navigate to Chat between Supplier and Factory
+            IconButton(
+              icon: const Icon(Icons.chat_rounded, color: Color(0xFF006B5F)),
+              tooltip: 'الانتقال إلى المحادثة المباشرة بين الطرفين 💬',
+              onPressed: () => context.push('/messages/chat?dealId=${deal.id}'),
+            ),
+            const SizedBox(width: 6),
             Expanded(
               child: _buildPrimaryActionButton(context, ref),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: 6),
             PopupMenuButton<String>(
               icon: Icon(Icons.more_vert_rounded, color: colorScheme.onSurface),
               onSelected: (action) => _handleAction(context, ref, action),
               itemBuilder: (context) => [
+                const PopupMenuItem(
+                  value: 'open_chat',
+                  child: Row(
+                    children: [
+                      Icon(Icons.chat_rounded, color: Color(0xFF006B5F), size: 18),
+                      SizedBox(width: 8),
+                      Text('الانتقال إلى المحادثة المباشرة 💬'),
+                    ],
+                  ),
+                ),
                 const PopupMenuItem(value: 'contact_support', child: Text('الدعم الفني والنزاعات')),
                 const PopupMenuItem(value: 'download_pdf', child: Text('تحميل العقد PDF')),
                 const PopupMenuItem(value: 'cancel_deal', child: Text('إلغاء الصفقة', style: TextStyle(color: Colors.red))),
@@ -57,7 +75,7 @@ class QuickActionsWidget extends ConsumerWidget {
       case DealStatus.newDeal:
       case DealStatus.waitingSupplierReview:
         return ElevatedButton.icon(
-          onPressed: () {},
+          onPressed: () => context.push('/messages/chat?dealId=${deal.id}'),
           icon: const Icon(Icons.send_rounded, size: 16),
           label: const Text('تقديم عرض السعر الأول (Quotation)'),
           style: ElevatedButton.styleFrom(backgroundColor: colorScheme.primary, foregroundColor: Colors.white),
@@ -65,14 +83,14 @@ class QuickActionsWidget extends ConsumerWidget {
 
       case DealStatus.quotationSent:
         return OutlinedButton.icon(
-          onPressed: () {},
+          onPressed: () => context.push('/messages/chat?dealId=${deal.id}'),
           icon: const Icon(Icons.edit_outlined, size: 16),
           label: const Text('تم إرسال العرض (تعديل العرض الحالي)'),
         );
 
       case DealStatus.negotiation:
         return ElevatedButton.icon(
-          onPressed: () {},
+          onPressed: () => context.push('/messages/chat?dealId=${deal.id}'),
           icon: const Icon(Icons.handshake_outlined, size: 16),
           label: const Text('الرد على عرض التفاوض المقابل'),
           style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF8B5CF6), foregroundColor: Colors.white),
@@ -80,7 +98,10 @@ class QuickActionsWidget extends ConsumerWidget {
 
       case DealStatus.agreementPending:
         return ElevatedButton.icon(
-          onPressed: () => ref.read(dealsControllerProvider.notifier).signAgreement(deal.id),
+          onPressed: () {
+            ref.read(dealsControllerProvider.notifier).signAgreement(deal.id);
+            context.push('/messages/chat?dealId=${deal.id}');
+          },
           icon: const Icon(Icons.draw_rounded, size: 16),
           label: const Text('توقيع العقد الإلكتروني رسمياً ✍️'),
           style: ElevatedButton.styleFrom(backgroundColor: Colors.green.shade700, foregroundColor: Colors.white),
@@ -88,7 +109,10 @@ class QuickActionsWidget extends ConsumerWidget {
 
       case DealStatus.signed:
         return ElevatedButton.icon(
-          onPressed: () => ref.read(dealsControllerProvider.notifier).updateDealStatus(deal.id, DealStatus.production),
+          onPressed: () {
+            ref.read(dealsControllerProvider.notifier).updateDealStatus(deal.id, DealStatus.production);
+            context.push('/messages/chat?dealId=${deal.id}');
+          },
           icon: const Icon(Icons.precision_manufacturing_outlined, size: 16),
           label: const Text('البدء الفعلي لخطوط الإنتاج والتصنيع 🏭'),
           style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF06B6D4), foregroundColor: Colors.white),
@@ -96,7 +120,7 @@ class QuickActionsWidget extends ConsumerWidget {
 
       case DealStatus.production:
         return ElevatedButton.icon(
-          onPressed: () {},
+          onPressed: () => context.push('/messages/chat?dealId=${deal.id}'),
           icon: const Icon(Icons.sync_rounded, size: 16),
           label: const Text('تحديث نسبة الإنجاز والإنتاج'),
           style: ElevatedButton.styleFrom(backgroundColor: colorScheme.primary, foregroundColor: Colors.white),
@@ -104,7 +128,7 @@ class QuickActionsWidget extends ConsumerWidget {
 
       case DealStatus.readyForDelivery:
         return ElevatedButton.icon(
-          onPressed: () {},
+          onPressed: () => context.push('/messages/chat?dealId=${deal.id}'),
           icon: const Icon(Icons.local_shipping_outlined, size: 16),
           label: const Text('تحديد طريقة وتفاصيل التسليم'),
           style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF14B8A6), foregroundColor: Colors.white),
@@ -112,7 +136,10 @@ class QuickActionsWidget extends ConsumerWidget {
 
       case DealStatus.delivering:
         return ElevatedButton.icon(
-          onPressed: () => ref.read(dealsControllerProvider.notifier).updateDealStatus(deal.id, DealStatus.qualityInspection),
+          onPressed: () {
+            ref.read(dealsControllerProvider.notifier).updateDealStatus(deal.id, DealStatus.qualityInspection);
+            context.push('/messages/chat?dealId=${deal.id}');
+          },
           icon: const Icon(Icons.fact_check_outlined, size: 16),
           label: const Text('تأكيد وصول الشحنة وبدء فحص الجودة'),
           style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFEAB308), foregroundColor: Colors.black),
@@ -120,7 +147,7 @@ class QuickActionsWidget extends ConsumerWidget {
 
       case DealStatus.qualityInspection:
         return ElevatedButton.icon(
-          onPressed: () {},
+          onPressed: () => context.push('/messages/chat?dealId=${deal.id}'),
           icon: const Icon(Icons.check_circle_outline, size: 16),
           label: const Text('مراجعة نتيجة الفحص والمعايرة المعملية'),
           style: ElevatedButton.styleFrom(backgroundColor: Colors.green, foregroundColor: Colors.white),
@@ -128,7 +155,10 @@ class QuickActionsWidget extends ConsumerWidget {
 
       case DealStatus.paymentPending:
         return ElevatedButton.icon(
-          onPressed: () => ref.read(dealsControllerProvider.notifier).releasePayment(deal.id),
+          onPressed: () {
+            ref.read(dealsControllerProvider.notifier).releasePayment(deal.id);
+            context.push('/messages/chat?dealId=${deal.id}');
+          },
           icon: const Icon(Icons.account_balance_wallet_outlined, size: 16),
           label: const Text('الإفراج عن الدفعة وتحويلها للمحفظة 💰'),
           style: ElevatedButton.styleFrom(backgroundColor: Colors.green.shade800, foregroundColor: Colors.white),
@@ -136,7 +166,7 @@ class QuickActionsWidget extends ConsumerWidget {
 
       case DealStatus.completed:
         return OutlinedButton.icon(
-          onPressed: () {},
+          onPressed: () => context.push('/messages/chat?dealId=${deal.id}'),
           icon: const Icon(Icons.star_outline_rounded, size: 16),
           label: const Text('تقييم المصنع والمراجعة ⭐'),
         );
@@ -144,7 +174,7 @@ class QuickActionsWidget extends ConsumerWidget {
       case DealStatus.cancelled:
       case DealStatus.dispute:
         return OutlinedButton.icon(
-          onPressed: () {},
+          onPressed: () => context.push('/messages/chat?dealId=${deal.id}'),
           icon: const Icon(Icons.gavel_outlined, size: 16),
           label: const Text('متابعة قسم النزاعات'),
         );
@@ -152,7 +182,9 @@ class QuickActionsWidget extends ConsumerWidget {
   }
 
   void _handleAction(BuildContext context, WidgetRef ref, String action) {
-    if (action == 'cancel_deal') {
+    if (action == 'open_chat') {
+      context.push('/messages/chat?dealId=${deal.id}');
+    } else if (action == 'cancel_deal') {
       ref.read(dealsControllerProvider.notifier).updateDealStatus(deal.id, DealStatus.cancelled);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('تم إلغاء الصفقة'), backgroundColor: Colors.red),
