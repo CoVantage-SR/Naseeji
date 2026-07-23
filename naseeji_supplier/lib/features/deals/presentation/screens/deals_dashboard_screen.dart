@@ -145,13 +145,6 @@ class DealsDashboardScreen extends ConsumerWidget {
                         ),
                 ),
               ],
-            );
-          },
-        ),
-        bottomNavigationBar: const Directionality(
-          textDirection: TextDirection.ltr,
-          child: AppBottomNavigationBar(currentIndex: 2), // Orders/Deals index
-        ),
       ),
     );
   }

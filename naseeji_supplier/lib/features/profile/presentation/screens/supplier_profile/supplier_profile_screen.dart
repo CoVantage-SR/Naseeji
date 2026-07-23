@@ -96,7 +96,6 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
           );
         },
       ),
-      bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 4),
     );
   }
 }

@@ -156,7 +156,6 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
           ),
         ],
       ),
-      bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 3),
     );
   }
 

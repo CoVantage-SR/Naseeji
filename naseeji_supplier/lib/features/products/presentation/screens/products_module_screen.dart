@@ -165,12 +165,6 @@ class ProductsModuleScreen extends ConsumerWidget {
           foregroundColor: Colors.white,
           elevation: 2,
           icon: const Icon(Icons.add_rounded, size: 20),
-          label: const Text('إضافة منتج خامة', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
-        ),
-        bottomNavigationBar: const Directionality(
-          textDirection: TextDirection.ltr,
-          child: AppBottomNavigationBar(currentIndex: 1),
-        ),
       ),
     );
   }

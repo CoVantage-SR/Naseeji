@@ -116,7 +116,6 @@ class SupplierDashboardScreen extends ConsumerWidget {
           },
         ),
       ),
-      bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 0),
     );
   }
 }
