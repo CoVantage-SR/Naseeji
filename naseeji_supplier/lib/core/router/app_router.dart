@@ -266,18 +266,7 @@ GoRouter goRouter(GoRouterRef ref) {
               ),
             ],
           ),
-          // Branch 2: المحادثات (Messages)
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: '/messages',
-                name: 'messages',
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: MessagesScreen()),
-              ),
-            ],
-          ),
-          // Branch 3: الصفقات (Deals)
+          // Branch 2: الصفقات (Deals)
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -285,6 +274,17 @@ GoRouter goRouter(GoRouterRef ref) {
                 name: 'deals',
                 pageBuilder: (context, state) =>
                     const NoTransitionPage(child: DealsDashboardScreen()),
+              ),
+            ],
+          ),
+          // Branch 3: المحادثات (Messages)
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/messages',
+                name: 'messages',
+                pageBuilder: (context, state) =>
+                    const NoTransitionPage(child: MessagesScreen()),
               ),
             ],
           ),

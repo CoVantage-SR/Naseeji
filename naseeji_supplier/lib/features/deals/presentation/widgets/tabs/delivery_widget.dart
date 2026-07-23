@@ -81,13 +81,15 @@ class _DeliveryWidgetState extends ConsumerState<DeliveryWidget> {
           ],
 
           // Form to set delivery method
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: colorScheme.surface,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.5)),
-            ),
+          Material(
+            color: colorScheme.surface,
+            borderRadius: BorderRadius.circular(12),
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.5)),
+              ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -165,7 +167,8 @@ class _DeliveryWidgetState extends ConsumerState<DeliveryWidget> {
               ],
             ),
           ),
-        ],
+        ),
+      ],
       ),
     );
   }
