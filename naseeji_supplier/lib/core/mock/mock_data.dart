@@ -11,6 +11,7 @@ import 'package:naseeji_supplier/features/messages/domain/entities/deal_workspac
 import 'package:naseeji_supplier/features/messages/domain/entities/deal_quotation_model.dart';
 import 'package:naseeji_supplier/features/messages/domain/entities/deal_status_enum.dart';
 import 'package:naseeji_supplier/features/messages/domain/entities/conversation.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_timeline_model.dart';
 
 class MockDatabase {
   MockDatabase._();
@@ -46,16 +47,14 @@ class MockDatabase {
 
   // ─── Query Helper Methods ──────────────────────────────────────────────
 
-  /// Get Product by ID
   static ProductMock? getProductById(String productId) {
     try {
       return products.firstWhere((p) => p.id == productId);
     } catch (_) {
-      return null;
+      return products.first;
     }
   }
 
-  /// Get Deal by ID
   static DealMock? getDealById(String dealId) {
     try {
       return deals.firstWhere((d) => d.dealId == dealId || d.rfqId == dealId || d.orderId == dealId);
@@ -64,12 +63,10 @@ class MockDatabase {
     }
   }
 
-  /// Get all Conversations / Chats as Domain objects
   static List<Conversation> getConversationsDomain() {
     return chats.map((c) => c.toDomain()).toList();
   }
 
-  /// Get unified DealWorkspaceModel for a deal ID
   static DealWorkspaceModel getDealWorkspace(String dealId) {
     final deal = getDealById(dealId) ?? deals.first;
     final dealIdTarget = deal.dealId;
@@ -87,7 +84,86 @@ class MockDatabase {
     );
   }
 
-  /// Add a new message
+  // ─── Interactive Workflow Action Triggers ─────────────────────────────
+
+  /// 1. Create a new Deal from RFQ or Product
+  static String createNewDealFromProduct({required String productId, required String factoryName}) {
+    final newDealId = 'DEAL-${deals.length + 101}';
+    final newRfqId = 'RFQ-${deals.length + 1025}';
+    final newOrderId = 'ORD-${deals.length + 2304}';
+    final prod = getProductById(productId) ?? products.first;
+
+    final newDeal = DealMock(
+      dealId: newDealId,
+      orderId: newOrderId,
+      rfqId: newRfqId,
+      productId: prod.id,
+      supplierId: supplier.id,
+      productName: prod.title,
+      dealValue: prod.unitPrice * prod.minOrderQuantity,
+      totalQuantity: prod.minOrderQuantity,
+      factoryName: factoryName,
+      factoryAvatarUrl: 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=200&q=80',
+      isFactoryOnline: true,
+      isFactoryVerified: true,
+      currentStatus: DealStatus.negotiating,
+      lastUpdated: DateTime.now(),
+    );
+
+    deals.add(newDeal);
+
+    // Create Chat automatically
+    chats.add(
+      ChatMock(
+        id: 'CHAT-${chats.length + 101}',
+        dealId: newDealId,
+        rfqId: newRfqId,
+        companyName: factoryName,
+        companyLogoText: factoryName.isNotEmpty ? factoryName[0] : 'ن',
+        companyLogoBgColorValue: 0xFF006B5F,
+        lastMessage: 'تم إنشاء الصفقة تلقائياً بناءً على طلب عرض السعر $newRfqId',
+        lastTime: 'الآن',
+        unreadCount: 1,
+        currentStatus: 'قيد التفاوض',
+      ),
+    );
+
+    // Initial System Message
+    addMessage(
+      dealId: newDealId,
+      text: 'تم إنشاء الصفقة تلقائياً بناءً على طلب عرض السعر $newRfqId',
+      senderId: 'system',
+      senderName: 'النظام',
+      isMe: false,
+      isSystemNotification: true,
+    );
+
+    // Initial Timeline
+    timelines[newDealId] = TimelineMock(
+      dealId: newDealId,
+      currentStepIndex: 0,
+      steps: [
+        DealTimelineStep(stepIndex: 0, title: 'تم إنشاء الصفقة', subtitle: 'استلام $newRfqId من المصنع', isCompleted: true, isCurrent: true),
+        const DealTimelineStep(stepIndex: 1, title: 'تقديم عرض السعر V1', isCompleted: false, isCurrent: false),
+        const DealTimelineStep(stepIndex: 2, title: 'اعتماد الاتفاق والعقد', isCompleted: false, isCurrent: false),
+      ],
+    );
+
+    // Notification
+    notifications.add(
+      NotificationMock(
+        id: 'NOTIF-${notifications.length + 1}',
+        dealId: newDealId,
+        title: 'صفقة جديدة: $newDealId',
+        body: 'استلمت طلب عرض سعر جديد من $factoryName لمنتج ${prod.title}',
+        timestamp: DateTime.now(),
+      ),
+    );
+
+    return newDealId;
+  }
+
+  /// 2. Add Message
   static void addMessage({
     required String dealId,
     required String text,
@@ -107,9 +183,27 @@ class MockDatabase {
       isSystemNotification: isSystemNotification,
     );
     messages.add(newMsg);
+
+    // Update Chat last message
+    final chatIdx = chats.indexWhere((c) => c.dealId == dealId);
+    if (chatIdx != -1) {
+      final oldChat = chats[chatIdx];
+      chats[chatIdx] = ChatMock(
+        id: oldChat.id,
+        dealId: oldChat.dealId,
+        rfqId: oldChat.rfqId,
+        companyName: oldChat.companyName,
+        companyLogoText: oldChat.companyLogoText,
+        companyLogoBgColorValue: oldChat.companyLogoBgColorValue,
+        lastMessage: text,
+        lastTime: 'الآن',
+        unreadCount: isMe ? oldChat.unreadCount : oldChat.unreadCount + 1,
+        currentStatus: oldChat.currentStatus,
+      );
+    }
   }
 
-  /// Create and submit a new Versioned Offer
+  /// 3. Submit New Versioned Offer
   static void submitNewOfferVersion({
     required String dealId,
     required double unitPrice,
@@ -167,7 +261,6 @@ class MockDatabase {
       );
     }
 
-    // Post automatic System Message
     addMessage(
       dealId: dealId,
       text: 'تم إرسال عرض سعر جديد (الإصدار رقم $nextVersion - Version $nextVersion) بقيمة ${(unitPrice * quantity).toStringAsFixed(0)} ج.م',
@@ -176,9 +269,19 @@ class MockDatabase {
       isMe: false,
       isSystemNotification: true,
     );
+
+    notifications.add(
+      NotificationMock(
+        id: 'NOTIF-${notifications.length + 1}',
+        dealId: dealId,
+        title: 'تم إرسال عرض V$nextVersion للصفقة $dealId',
+        body: 'تم إرسال عرض سعر جديد بقيمة ${(unitPrice * quantity).toStringAsFixed(0)} ج.م وفي انتظار رد المصنع.',
+        timestamp: DateTime.now(),
+      ),
+    );
   }
 
-  /// Accept latest quotation
+  /// 4. Accept Quotation
   static void acceptQuotation(String dealId) {
     final dealIndex = deals.indexWhere((d) => d.dealId == dealId);
     if (dealIndex != -1) {
@@ -201,13 +304,81 @@ class MockDatabase {
       );
     }
 
+    // Generate Agreement automatically
+    agreements.add(
+      AgreementMock(
+        agreementId: 'AGR-${agreements.length + 9921}',
+        dealId: dealId,
+        finalTotalPrice: getDealById(dealId)?.dealValue ?? 430000.0,
+        finalQuantity: getDealById(dealId)?.totalQuantity ?? 10000,
+        deliveryDate: '٢٨ يوليو ٢٠٢٦',
+        pickupLocation: 'مخزن المحلة الكبرى - المنطقة الصناعية الأولى',
+        paymentMethod: 'نظام الدفع الضامن المنفذ عبر المنصة (Escrow)',
+        status: 'معتمد رسمياً وموقع من الطرفين 🟢',
+        isApprovedBySupplier: true,
+        isApprovedByFactory: true,
+        approvedAt: DateTime.now(),
+      ),
+    );
+
     addMessage(
       dealId: dealId,
-      text: 'تم قبول عرض السعر رسمياً وإنشاء العقد الإلكتروني 🟢',
+      text: 'تم قبول عرض السعر رسمياً وإنشاء العقد الإلكتروني الموثق 🟢',
       senderId: 'system',
       senderName: 'النظام',
       isMe: false,
       isSystemNotification: true,
+    );
+
+    notifications.add(
+      NotificationMock(
+        id: 'NOTIF-${notifications.length + 1}',
+        dealId: dealId,
+        title: 'تم قبول العرض وإنشاء الاتفاق!',
+        body: 'تم التوقيع الإلكتروني واعتمدت وثيقة العقد للصفقة $dealId.',
+        timestamp: DateTime.now(),
+      ),
+    );
+  }
+
+  /// 5. Start Production
+  static void startProduction(String dealId) {
+    final dealIndex = deals.indexWhere((d) => d.dealId == dealId);
+    if (dealIndex != -1) {
+      final old = deals[dealIndex];
+      deals[dealIndex] = DealMock(
+        dealId: old.dealId,
+        orderId: old.orderId,
+        rfqId: old.rfqId,
+        productId: old.productId,
+        supplierId: old.supplierId,
+        productName: old.productName,
+        dealValue: old.dealValue,
+        totalQuantity: old.totalQuantity,
+        factoryName: old.factoryName,
+        factoryAvatarUrl: old.factoryAvatarUrl,
+        currentStatus: DealStatus.inProduction,
+        lastUpdated: DateTime.now(),
+      );
+    }
+
+    addMessage(
+      dealId: dealId,
+      text: 'بدأ الإنتاج والتصنيع الفعلي في خطوط مصانع المحلة الكبرى 🏭',
+      senderId: 'system',
+      senderName: 'النظام',
+      isMe: false,
+      isSystemNotification: true,
+    );
+
+    notifications.add(
+      NotificationMock(
+        id: 'NOTIF-${notifications.length + 1}',
+        dealId: dealId,
+        title: 'بدأ الإنتاج والتصنيع 🏭',
+        body: 'تم تفعيل خطوط الإنتاج للصفقة $dealId وجاري رفع نسب الإنجاز والميديا.',
+        timestamp: DateTime.now(),
+      ),
     );
   }
 }
