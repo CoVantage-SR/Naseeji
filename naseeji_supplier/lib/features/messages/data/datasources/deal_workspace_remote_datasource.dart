@@ -294,7 +294,7 @@ class DealWorkspaceRemoteDatasourceImpl implements DealWorkspaceRemoteDatasource
       latestQuotation: acceptedQuotation,
       quotationHistory: history,
       messages: updatedMsgs,
-      currentStatus: DealStatus.agreementSigned,
+      currentStatus: DealStatus.agreed,
       lastUpdated: DateTime.now(),
     );
 

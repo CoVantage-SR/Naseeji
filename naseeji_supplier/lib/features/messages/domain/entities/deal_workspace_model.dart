@@ -26,13 +26,13 @@ class DealWorkspaceModel {
   final List<DealFileModel> files;
   final DealTimelineModel timeline;
 
-  const DealWorkspaceModel({
+  DealWorkspaceModel({
     required this.dealId,
     required this.orderId,
     required this.rfqId,
-    this.productName = 'غزل قطن 100% ممتاز تمشيط عالي',
-    this.dealValue = 215000.0,
-    this.totalQuantity = 5000,
+    this.productName = 'غزل قطن 100% ممتاز تمشيط عالي 30/1',
+    this.dealValue = 430000.0,
+    this.totalQuantity = 10000,
     required this.factoryName,
     required this.factoryAvatarUrl,
     required this.isFactoryOnline,
@@ -46,7 +46,7 @@ class DealWorkspaceModel {
     required this.files,
     required this.timeline,
   })  : lastUpdated = lastUpdated ?? DateTime.now(),
-        quotationHistory = quotationHistory ?? (latestQuotation != null ? [latestQuotation] : const []);
+        quotationHistory = quotationHistory ?? [latestQuotation];
 
   DealWorkspaceModel copyWith({
     String? productName,
