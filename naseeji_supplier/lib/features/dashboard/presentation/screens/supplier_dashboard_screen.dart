@@ -7,6 +7,7 @@ import '../widgets/active_orders/active_orders_widget.dart';
 import '../widgets/rfq/recent_rfq_widget.dart';
 import '../widgets/finance/finance_summary_widget.dart';
 import '../widgets/subscription/subscription_card_widget.dart';
+import '../../subscription/presentation/widgets/subscription_dashboard_widget.dart';
 import '../widgets/notifications/recent_notifications_widget.dart';
 import '../widgets/quick_actions/quick_actions_bottom_sheet.dart';
 import 'drawer/navigation_drawer_view.dart';
@@ -85,7 +86,10 @@ class SupplierDashboardScreen extends ConsumerWidget {
                     SupplierHeaderWidget(
                       onOpenDrawer: () => scaffoldKey.currentState?.openDrawer(),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 10),
+
+                    // Subscription Expired / Expiring Banner
+                    const SubscriptionDashboardBannerWidget(),
 
                     // Section 2: Today's Tasks (🔴 Urgent -> 🟠 Today -> 🟡 Waiting -> 🟢 Informational)
                     const TodayTasksWidget(),
@@ -104,7 +108,7 @@ class SupplierDashboardScreen extends ConsumerWidget {
                     const SizedBox(height: 20),
 
                     // Section 6: Subscription Card (Compact Tier Limits & Expiry)
-                    const SubscriptionCardWidget(),
+                    const SubscriptionDashboardWidget(),
                     const SizedBox(height: 20),
 
                     // Section 7: Notifications (Latest 3 Notifications)

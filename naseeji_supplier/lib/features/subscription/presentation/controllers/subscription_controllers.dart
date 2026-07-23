@@ -3,12 +3,15 @@ import '../../domain/entities/subscription_models.dart';
 import '../../domain/repositories/subscription_repository.dart';
 import '../../domain/services/subscription_service.dart';
 import '../../data/repositories/subscription_repository_impl.dart';
+import '../../data/datasources/subscription_remote_datasource.dart';
 
 part 'subscription_controllers.g.dart';
 
 @riverpod
 SubscriptionRepository subscriptionRepository(SubscriptionRepositoryRef ref) {
-  return SubscriptionRepositoryImpl();
+  return SubscriptionRepositoryImpl(
+    datasource: SubscriptionRemoteDatasourceImpl(),
+  );
 }
 
 @riverpod
@@ -20,7 +23,7 @@ SubscriptionService subscriptionService(SubscriptionServiceRef ref) {
 class ActiveSubscriptionController extends _$ActiveSubscriptionController {
   @override
   FutureOr<SupplierSubscription> build() {
-    return ref.watch(subscriptionRepositoryProvider).getSubscription();
+    return ref.watch(subscriptionRepositoryProvider).getSupplierSubscription();
   }
 
   Future<void> toggleAutoRenew(bool val) async {
@@ -40,7 +43,7 @@ class ActiveSubscriptionController extends _$ActiveSubscriptionController {
 
   Future<void> upgrade(String planId, BillingCycle cycle) async {
     state = const AsyncValue.loading();
-    await ref.read(subscriptionRepositoryProvider).upgradePlan(planId, cycle);
+    await ref.read(subscriptionRepositoryProvider).upgradePlanById(planId, cycle);
     ref.invalidateSelf();
     ref.invalidate(subscriptionUsageControllerProvider);
     ref.invalidate(billingInvoicesControllerProvider);
@@ -66,7 +69,7 @@ FutureOr<SupplierSubscription> subscription(SubscriptionRef ref) {
 class SubscriptionPlansController extends _$SubscriptionPlansController {
   @override
   FutureOr<List<SubscriptionPlan>> build() {
-    return ref.watch(subscriptionRepositoryProvider).getPlans();
+    return ref.watch(subscriptionRepositoryProvider).getSupplierPlans();
   }
 }
 
@@ -79,34 +82,26 @@ class SubscriptionUsageController extends _$SubscriptionUsageController {
 
   void incrementProducts() {
     final repo = ref.read(subscriptionRepositoryProvider);
-    if (repo is SubscriptionRepositoryImpl) {
-      repo.incrementProductsUsed();
-      ref.invalidateSelf();
-    }
+    repo.incrementProductsUsed();
+    ref.invalidateSelf();
   }
 
   void incrementAds() {
     final repo = ref.read(subscriptionRepositoryProvider);
-    if (repo is SubscriptionRepositoryImpl) {
-      repo.incrementAdsUsed();
-      ref.invalidateSelf();
-    }
+    repo.incrementAdsUsed();
+    ref.invalidateSelf();
   }
 
   void incrementFeaturedProducts() {
     final repo = ref.read(subscriptionRepositoryProvider);
-    if (repo is SubscriptionRepositoryImpl) {
-      repo.incrementFeaturedProductsUsed();
-      ref.invalidateSelf();
-    }
+    repo.incrementFeaturedProductsUsed();
+    ref.invalidateSelf();
   }
 
   void incrementRfqs() {
     final repo = ref.read(subscriptionRepositoryProvider);
-    if (repo is SubscriptionRepositoryImpl) {
-      repo.incrementRfqsUsed();
-      ref.invalidateSelf();
-    }
+    repo.incrementRfqsUsed();
+    ref.invalidateSelf();
   }
 
   void updateUsage({
@@ -118,17 +113,15 @@ class SubscriptionUsageController extends _$SubscriptionUsageController {
     int? featured,
   }) {
     final repo = ref.read(subscriptionRepositoryProvider);
-    if (repo is SubscriptionRepositoryImpl) {
-      repo.setUsage(
-        products: products,
-        ads: ads,
-        videos: videos,
-        pdfs: pdfs,
-        rfqs: rfqs,
-        featured: featured,
-      );
-      ref.invalidateSelf();
-    }
+    repo.setUsage(
+      products: products,
+      ads: ads,
+      videos: videos,
+      pdfs: pdfs,
+      rfqs: rfqs,
+      featured: featured,
+    );
+    ref.invalidateSelf();
   }
 }
 
@@ -274,7 +267,7 @@ class SubscriptionHistoryController extends _$SubscriptionHistoryController {
 class BillingInvoicesController extends _$BillingInvoicesController {
   @override
   FutureOr<List<SubscriptionInvoice>> build() {
-    return ref.watch(subscriptionRepositoryProvider).getInvoices();
+    return ref.watch(subscriptionRepositoryProvider).getSubscriptionInvoices();
   }
 }
 

@@ -16,6 +16,8 @@ class ProductSubscriptionLimitModel {
   final int usedRfqs;
   final int remainingRfqs;
 
+  final bool isExpired;
+
   const ProductSubscriptionLimitModel({
     required this.currentPlan,
     required this.maxProducts,
@@ -33,6 +35,7 @@ class ProductSubscriptionLimitModel {
     required this.maxRfqs,
     required this.usedRfqs,
     required this.remainingRfqs,
+    this.isExpired = false,
   });
 
   bool get canAddProduct => remainingProducts > 0;

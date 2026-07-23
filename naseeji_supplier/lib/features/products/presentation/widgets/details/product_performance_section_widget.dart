@@ -85,9 +85,33 @@ class ProductPerformanceSectionWidget extends StatelessWidget {
               Expanded(
                 child: _buildPerfTile(
                   context,
-                  title: 'مرات الحفظ',
-                  value: '${perf.saves}',
-                  icon: Icons.bookmark_border_rounded,
+                  title: 'طلبات RFQ',
+                  value: '${perf.rfqRequests}',
+                  icon: Icons.request_quote_outlined,
+                  color: const Color(0xFF673AB7),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Expanded(
+                child: _buildPerfTile(
+                  context,
+                  title: 'عدد الصفقات',
+                  value: '${perf.quotesSubmitted}',
+                  icon: Icons.handshake_outlined,
+                  color: const Color(0xFF006B5F),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: _buildPerfTile(
+                  context,
+                  title: 'عدد الاتفاقات',
+                  value: '${perf.agreementsCount}',
+                  icon: Icons.description_outlined,
                   color: const Color(0xFFE65100),
                 ),
               ),
@@ -99,44 +123,20 @@ class ProductPerformanceSectionWidget extends StatelessWidget {
               Expanded(
                 child: _buildPerfTile(
                   context,
-                  title: 'تحميل الكتالوج',
-                  value: '${perf.catalogDownloads}',
-                  icon: Icons.file_download_outlined,
-                  color: const Color(0xFF006B5F),
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: _buildPerfTile(
-                  context,
-                  title: 'مشاهدة الفيديو',
-                  value: '${perf.videoViews}',
-                  icon: Icons.play_circle_outline_rounded,
-                  color: Colors.red.shade700,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Row(
-            children: [
-              Expanded(
-                child: _buildPerfTile(
-                  context,
-                  title: 'طلبات RFQ',
-                  value: '${perf.rfqRequests}',
-                  icon: Icons.request_quote_outlined,
-                  color: const Color(0xFF673AB7),
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: _buildPerfTile(
-                  context,
-                  title: 'الطلبات المكتملة',
+                  title: 'عدد المبيعات',
                   value: '${perf.completedOrders}',
                   icon: Icons.check_circle_outline_rounded,
                   color: const Color(0xFF2E7D32),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: _buildPerfTile(
+                  context,
+                  title: 'معدل التحويل',
+                  value: '${perf.conversionRatePercent.toStringAsFixed(1)}%',
+                  icon: Icons.trending_up_rounded,
+                  color: Colors.blue.shade800,
                 ),
               ),
             ],

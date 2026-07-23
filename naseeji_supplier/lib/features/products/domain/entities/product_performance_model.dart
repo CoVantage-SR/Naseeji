@@ -6,6 +6,7 @@ class ProductPerformanceModel {
   final int videoViews;
   final int rfqRequests;
   final int quotesSubmitted;
+  final int agreementsCount;
   final int completedOrders;
   final double conversionRatePercent;
   final List<String> topKeywords;
@@ -20,6 +21,7 @@ class ProductPerformanceModel {
     required this.videoViews,
     required this.rfqRequests,
     required this.quotesSubmitted,
+    this.agreementsCount = 8,
     required this.completedOrders,
     required this.conversionRatePercent,
     required this.topKeywords,

@@ -10,6 +10,8 @@ import 'widgets/payments_tab_view.dart';
 import 'widgets/settings_tab_view.dart';
 import 'widgets/profile_header_card.dart';
 
+import '../../../../subscription/presentation/widgets/subscription_profile_tab_view.dart';
+
 class SupplierProfileScreen extends ConsumerStatefulWidget {
   const SupplierProfileScreen({super.key});
 
@@ -21,6 +23,7 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
   late TabController _tabController;
   final List<String> tabTitles = const [
     'ملخص الأعمال',
+    'الاشتراك والباقات',
     'بيانات الشركة',
     'الشهادات والاعتمادات',
     'طرق السداد',
@@ -86,6 +89,7 @@ class _SupplierProfileScreenState extends ConsumerState<SupplierProfileScreen> w
               controller: _tabController,
               children: [
                 OverviewTabView(profile: profile),
+                const SubscriptionProfileTabView(),
                 CompanyInfoTabView(profile: profile),
                 CertificatesTabView(profile: profile),
                 PaymentsTabView(profile: profile),

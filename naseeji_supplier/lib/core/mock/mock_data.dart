@@ -48,6 +48,7 @@ class MockDatabase {
 
   // 10. Subscription Data
   static SubscriptionModel currentSubscription = SubscriptionModel.defaultSubscription;
+  static List<SubscriptionModel> get subscriptions => [currentSubscription];
   static List<SubscriptionPlanMock> subscriptionPlans = List.from(SubscriptionPlanMock.samplePlans);
   static List<SubscriptionInvoiceMock> subscriptionInvoices = List.from(SubscriptionInvoiceMock.sampleInvoices);
   static List<SubscriptionHistoryMock> subscriptionHistory = List.from(SubscriptionHistoryMock.sampleHistory);

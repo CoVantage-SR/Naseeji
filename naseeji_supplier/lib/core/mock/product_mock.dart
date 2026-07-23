@@ -1,6 +1,7 @@
 class ProductMock {
   final String id;
   final String supplierId;
+  final String subscriptionId;
   final String title;
   final String category;
   final double unitPrice;
@@ -14,6 +15,7 @@ class ProductMock {
   const ProductMock({
     required this.id,
     required this.supplierId,
+    this.subscriptionId = 'SUB-101',
     required this.title,
     required this.category,
     required this.unitPrice,

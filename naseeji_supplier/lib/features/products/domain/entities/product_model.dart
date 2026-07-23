@@ -67,6 +67,8 @@ extension ProductStatusExtension on ProductStatus {
 
 class ProductModel {
   final String id;
+  final String supplierId;
+  final String subscriptionId;
   final String name;
   final String sku;
   final String category;
@@ -122,6 +124,8 @@ class ProductModel {
 
   const ProductModel({
     required this.id,
+    this.supplierId = 'SUP-001',
+    this.subscriptionId = 'SUB-101',
     required this.name,
     required this.sku,
     required this.category,
@@ -183,9 +187,13 @@ class ProductModel {
     int? availableStock,
     double? startingPrice,
     DateTime? updatedAt,
+    String? subscriptionId,
+    String? supplierId,
   }) {
     return ProductModel(
       id: id,
+      supplierId: supplierId ?? this.supplierId,
+      subscriptionId: subscriptionId ?? this.subscriptionId,
       name: name ?? this.name,
       sku: sku,
       category: category,

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../core/mock/mock_data.dart';
+import '../../../../core/mock/product_mock.dart';
+import '../../../../core/mock/notification_mock.dart';
 import '../providers/products_providers.dart';
 
 class AddProductWizardBottomSheet extends ConsumerStatefulWidget {
@@ -323,12 +326,75 @@ class _AddProductWizardBottomSheetState extends ConsumerState<AddProductWizardBo
   }
 
   void _submitProduct() {
+    // 1. Validate Subscription
+    final sub = MockDatabase.getCurrentSubscription();
+    if (sub.isExpired) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('الاشتراك منتهي. لا يمكن نشر المنتج.'), backgroundColor: Colors.red),
+      );
+      return;
+    }
+
+    // 2. Check Limits
+    if (sub.productsUsed >= sub.productsLimit) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('تجاوزت حد المنتجات المتاحة بباقتك.'), backgroundColor: Colors.red),
+      );
+      return;
+    }
+
+    // 3. Run Content Filter (Validation Check)
+    if (_nameController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('يرجى كتابة اسم المنتج بشكل صحيح.'), backgroundColor: Colors.orange),
+      );
+      return;
+    }
+
+    // 4. Save Product
+    final newId = 'P-${DateTime.now().millisecondsSinceEpoch.toString().substring(7)}';
+    final newProd = ProductMock(
+      id: newId,
+      supplierId: sub.supplierId,
+      subscriptionId: sub.subscriptionId,
+      title: _nameController.text.trim(),
+      category: _categoryController.text.trim(),
+      unitPrice: double.tryParse(_priceController.text) ?? 50.0,
+      minOrderQuantity: int.tryParse(_moqController.text) ?? 100,
+      availableStock: int.tryParse(_stockController.text) ?? 1000,
+      imageUrl: 'https://images.unsplash.com/photo-1604754742629-3e5728249d81?auto=format&fit=crop&w=400&q=80',
+      description: '${_specsMaterialController.text} - ${_brandController.text}',
+    );
+    MockDatabase.products.add(newProd);
+
+    // 5. Increase productsUsed
+    MockDatabase.currentSubscription = MockDatabase.currentSubscription.copyWith(
+      productsUsed: MockDatabase.currentSubscription.productsUsed + 1,
+      updatedAt: DateTime.now(),
+    );
+
+    // 6. Create Operation Log
+    MockDatabase.addOperationLog('Publish Product', 'تم نشر المنتج ${_nameController.text.trim()} (${newProd.id})');
+
+    // 7. Create Notification
+    MockDatabase.notifications.add(
+      NotificationMock(
+        id: 'NOTIF-PROD-${DateTime.now().millisecondsSinceEpoch}',
+        dealId: newProd.id,
+        title: 'تم نشر منتج جديد 📦',
+        body: 'تمت إضافة المنتج ${_nameController.text.trim()} إلى قائمة منتجاتك بنجاح.',
+        timestamp: DateTime.now(),
+      ),
+    );
+
+    // 8. Refresh Riverpod Providers
     ref.invalidate(productsProvider);
+
     Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('تم تقديم المنتج بنجاح وهوا دلوقتي "بانتظار المراجعة" 🚀'),
-        backgroundColor: Colors.amber,
+        content: Text('تم نشر المنتج بنجاح وتحديث إحصائيات الاشتراك 🚀'),
+        backgroundColor: Colors.green,
       ),
     );
   }
