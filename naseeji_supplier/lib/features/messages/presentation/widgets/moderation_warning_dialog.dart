@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:naseeji_supplier/features/messages/domain/services/content_moderation_service.dart';
 
 class ModerationWarningDialog extends StatelessWidget {
   final String? matchedReason;
@@ -7,6 +8,9 @@ class ModerationWarningDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: AlertDialog(
@@ -23,7 +27,7 @@ class ModerationWarningDialog extends StatelessWidget {
             ),
             const SizedBox(width: 10),
             Text(
-              'تنبيه أمان التواصل منصة نسيجي',
+              'تنبيه أمان المراسلات',
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.red.shade900),
             ),
           ],
@@ -43,13 +47,8 @@ class ModerationWarningDialog extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'تم اكتشاف وسيلة تواصل خارج منصة نسيجي.',
-                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.red.shade900),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    'يرجى إتمام جميع المحادثات المعاملات والاتفاقات المالية داخل المنصة لحماية حقوقك ومستحقاتك والضمان القانوني.',
-                    style: TextStyle(fontSize: 12, color: Colors.red.shade800, height: 1.4),
+                    ContentModerationService.warningMessage,
+                    style: TextStyle(fontSize: 12, color: Colors.red.shade900, height: 1.4, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -57,8 +56,8 @@ class ModerationWarningDialog extends StatelessWidget {
             if (matchedReason != null) ...[
               const SizedBox(height: 10),
               Text(
-                'سبب التنبيه: $matchedReason',
-                style: const TextStyle(fontSize: 11, color: Colors.black54),
+                'تفاصيل التنبيه: $matchedReason',
+                style: TextStyle(fontSize: 10.5, color: colorScheme.onSurfaceVariant),
               ),
             ],
           ],
@@ -71,7 +70,7 @@ class ModerationWarningDialog extends StatelessWidget {
               foregroundColor: Colors.white,
               minimumSize: const Size(0, 40),
             ),
-            child: const Text('موافق وفهمت ذلك'),
+            child: const Text('فهمت ذلك وتغيير الرسالة'),
           ),
         ],
       ),

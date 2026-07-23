@@ -266,7 +266,18 @@ GoRouter goRouter(GoRouterRef ref) {
               ),
             ],
           ),
-          // Branch 2: الصفقات (Deals)
+          // Branch 2: المحادثات (Messages)
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/messages',
+                name: 'messages',
+                pageBuilder: (context, state) =>
+                    const NoTransitionPage(child: MessagesScreen()),
+              ),
+            ],
+          ),
+          // Branch 3: الصفقات (Deals)
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -274,17 +285,6 @@ GoRouter goRouter(GoRouterRef ref) {
                 name: 'deals',
                 pageBuilder: (context, state) =>
                     const NoTransitionPage(child: DealsDashboardScreen()),
-              ),
-            ],
-          ),
-          // Branch 3: الإحصائيات (Reports)
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: '/reports',
-                name: 'reports-dashboard',
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: AnalyticsDashboardScreen()),
               ),
             ],
           ),
@@ -556,12 +556,6 @@ GoRouter goRouter(GoRouterRef ref) {
         builder: (context, state) => const PublicSupplierProfileScreen(),
       ),
       // ─── Messages Feature ────────────────────────────────────────────
-      GoRoute(
-        path: '/messages',
-        name: 'messages',
-        pageBuilder: (context, state) =>
-            const NoTransitionPage(child: MessagesScreen()),
-      ),
       GoRoute(
         path: '/messages/archived',
         name: 'messages-archived',
@@ -893,6 +887,11 @@ GoRouter goRouter(GoRouterRef ref) {
         builder: (context, state) => const SubscriptionTestDemoScreen(),
       ),
       // ─── Reports Feature ─────────────────────────────────────────────
+      GoRoute(
+        path: '/reports',
+        name: 'reports-dashboard',
+        builder: (context, state) => const AnalyticsDashboardScreen(),
+      ),
       GoRoute(
         path: '/reports/sales',
         name: 'reports-sales',

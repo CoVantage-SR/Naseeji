@@ -14,7 +14,7 @@ class ContentModerationResult {
 
 class ContentModerationService {
   static const String warningMessage =
-      'تم اكتشاف وسيلة تواصل خارج منصة نسيجي.\nيرجى إتمام جميع المحادثات والمعاملات داخل المنصة لحماية حقوقك ومستحقاتك المالية.';
+      'تم اكتشاف وسيلة تواصل خارج المنصة. يرجى إتمام جميع المراسلات داخل منصة نسيجي حفاظًا على حقوق الطرفين.';
 
   // Phone numbers regex (Egyptian 11 digits & international formats)
   static final RegExp _phoneRegex = RegExp(
@@ -28,13 +28,13 @@ class ContentModerationService {
     caseSensitive: false,
   );
 
-  // Web URLs regex
+  // Web URLs & QR links regex
   static final RegExp _urlRegex = RegExp(
     r'(https?:\/\/|www\.)[^\s/$.?#].[^\s]*|\b[a-zA-Z0-9.-]+\.(com|net|org|io|eg|me|app)\b',
     caseSensitive: false,
   );
 
-  // Social App Keywords in Arabic & English
+  // Social App & External Channels Keywords
   static final List<String> _prohibitedKeywords = [
     'واتس',
     'واتساب',
@@ -49,6 +49,12 @@ class ContentModerationService {
     'انستجرام',
     'انستا',
     'instagram',
+    'لينكد ان',
+    'لينكدإن',
+    'linkedin',
+    'تويتر',
+    'twitter',
+    'x.com',
     'فون',
     'موبايل',
     'اتصل بي',
@@ -57,11 +63,16 @@ class ContentModerationService {
     'رقمي هو',
     'ايميلي',
     'gmail',
+    'outlook',
     'yahoo',
     'hotmail',
     'كاش',
     'فودافون كاش',
     'تحويل خارجي',
+    'qr',
+    'qr code',
+    'كود qr',
+    'بار كود',
   ];
 
   ContentModerationResult moderate(String text) {

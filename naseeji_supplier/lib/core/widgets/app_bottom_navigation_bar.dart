@@ -78,10 +78,10 @@ class AppBottomNavigationBar extends StatelessWidget {
                     context.go('/products');
                     break;
                   case 2:
-                    context.go('/deals');
+                    context.go('/messages');
                     break;
                   case 3:
-                    context.go('/reports');
+                    context.go('/deals');
                     break;
                   case 4:
                     context.go('/profile');
@@ -101,14 +101,14 @@ class AppBottomNavigationBar extends StatelessWidget {
                 label: 'المنتجات',
               ),
               NavigationDestination(
+                icon: Icon(Icons.chat_bubble_outline_rounded, color: colorScheme.onSurfaceVariant),
+                selectedIcon: Icon(Icons.chat_bubble_rounded, color: colorScheme.primary),
+                label: 'المحادثات',
+              ),
+              NavigationDestination(
                 icon: Icon(Icons.handshake_outlined, color: colorScheme.onSurfaceVariant),
                 selectedIcon: Icon(Icons.handshake_rounded, color: colorScheme.primary),
                 label: 'الصفقات',
-              ),
-              NavigationDestination(
-                icon: Icon(Icons.analytics_outlined, color: colorScheme.onSurfaceVariant),
-                selectedIcon: Icon(Icons.analytics_rounded, color: colorScheme.primary),
-                label: 'الإحصائيات',
               ),
               NavigationDestination(
                 icon: Icon(Icons.person_outline_rounded, color: colorScheme.onSurfaceVariant),
