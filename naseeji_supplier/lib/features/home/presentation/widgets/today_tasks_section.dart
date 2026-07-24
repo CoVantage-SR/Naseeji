@@ -14,132 +14,147 @@ class TodayTasksSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     final tasksAsync = ref.watch(todayTasksProvider);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // ─── Header Row ──────────────────────────────────────────────────
-          Row(
-            children: [
-              // "عرض الكل" Button (Left)
-              TextButton(
-                onPressed: () => context.push('/deals'),
-                style: TextButton.styleFrom(
-                  padding: EdgeInsets.zero,
-                  minimumSize: const Size(0, 30),
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
-                child: const Text(
-                  'عرض الكل',
-                  style: TextStyle(
-                    fontSize: 12.5,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF2563EB),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: colorScheme.surface,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.3)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.015),
+              blurRadius: 6,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // ─── Outer Container Header Row ─────────────────────────────────
+            Row(
+              children: [
+                // "عرض الكل" Text Button (Left)
+                TextButton(
+                  onPressed: () => context.push('/deals'),
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    minimumSize: const Size(0, 30),
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  child: const Text(
+                    'عرض الكل',
+                    style: TextStyle(
+                      fontSize: 12.5,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF2563EB),
+                    ),
                   ),
                 ),
-              ),
 
-              const Spacer(),
+                const Spacer(),
 
-              // Title & Urgent Badge (Right - RTL)
-              tasksAsync.when(
-                data: (tasks) {
-                  final urgentCount = tasks.where((t) => t.priority == TaskPriority.urgent).length;
-                  return Row(
-                    children: [
-                      if (urgentCount > 0) ...[
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: Colors.red.shade50,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: Colors.red.shade200),
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(4),
-                                decoration: const BoxDecoration(
-                                  color: Colors.red,
-                                  shape: BoxShape.circle,
+                // Title & Urgent Count Badge (Right - RTL)
+                tasksAsync.when(
+                  data: (tasks) {
+                    final urgentCount = tasks.where((t) => t.priority == TaskPriority.urgent).length;
+                    return Row(
+                      children: [
+                        if (urgentCount > 0) ...[
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: Colors.red.shade50,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.red.shade200),
+                            ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(4),
+                                  decoration: const BoxDecoration(
+                                    color: Colors.red,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Text(
+                                    '$urgentCount',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 9,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
-                                child: Text(
-                                  '$urgentCount',
+                                const SizedBox(width: 4),
+                                Text(
+                                  '$urgentCount مهام عاجلة',
                                   style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 9,
+                                    color: Colors.red,
+                                    fontSize: 10.5,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                              ),
-                              const SizedBox(width: 4),
-                              const Text(
-                                'مهام عاجلة',
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 10.5,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                        ],
+                        Text(
+                          'مهام اليوم',
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
                           ),
                         ),
-                        const SizedBox(width: 8),
                       ],
-                      Text(
-                        'مهام اليوم',
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ],
-                  );
-                },
-                loading: () => Text(
-                  'مهام اليوم',
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
+                    );
+                  },
+                  loading: () => Text(
+                    'مهام اليوم',
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                    ),
                   ),
+                  error: (_, __) => const SizedBox.shrink(),
                 ),
-                error: (_, __) => const SizedBox.shrink(),
-              ),
-            ],
-          ),
-
-          const SizedBox(height: 10),
-
-          // ─── Task Cards List ──────────────────────────────────────────────
-          tasksAsync.when(
-            data: (tasks) {
-              if (tasks.isEmpty) {
-                return const HomeEmptyState();
-              }
-
-              // Display only top 3 or 4 tasks to keep the page short
-              final displayTasks = tasks.take(3).toList();
-
-              return Column(
-                children: displayTasks.map((task) {
-                  return TaskCard(
-                    task: task,
-                    onAction: () => _handleTaskAction(context, task.actionRoute),
-                  );
-                }).toList(),
-              );
-            },
-            loading: () => const HomeLoading(),
-            error: (err, stack) => HomeError(
-              errorMessage: 'تعذر تحميل قائمة مهام اليوم',
-              onRetry: () => ref.invalidate(todayTasksProvider),
+              ],
             ),
-          ),
-        ],
+
+            const SizedBox(height: 12),
+
+            // ─── Inner Task Cards List ──────────────────────────────────────
+            tasksAsync.when(
+              data: (tasks) {
+                if (tasks.isEmpty) {
+                  return const HomeEmptyState();
+                }
+
+                final displayTasks = tasks.take(3).toList();
+
+                return Column(
+                  children: displayTasks.map((task) {
+                    return TaskCard(
+                      task: task,
+                      onAction: () => _handleTaskAction(context, task.actionRoute),
+                    );
+                  }).toList(),
+                );
+              },
+              loading: () => const HomeLoading(),
+              error: (err, stack) => HomeError(
+                errorMessage: 'تعذر تحميل قائمة مهام اليوم',
+                onRetry: () => ref.invalidate(todayTasksProvider),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -22,7 +22,9 @@ class QuickMetricsOverviewWidget extends StatelessWidget {
             value: '18',
             subtitle: 'نشط',
             icon: Icons.inventory_2_outlined,
-            iconColor: const Color(0xFFF97316),
+            iconColor: const Color(0xFFEA580C),
+            bgColor: const Color(0xFFFFF7ED),
+            borderColor: const Color(0xFFFFEDD5),
             onTap: () => context.push('/products'),
           ),
 
@@ -33,6 +35,8 @@ class QuickMetricsOverviewWidget extends StatelessWidget {
             subtitle: 'قيد التنفيذ',
             icon: Icons.handshake_outlined,
             iconColor: const Color(0xFF9333EA),
+            bgColor: const Color(0xFFFAF5FF),
+            borderColor: const Color(0xFFF3E8FF),
             onTap: () => context.push('/deals'),
           ),
 
@@ -43,6 +47,8 @@ class QuickMetricsOverviewWidget extends StatelessWidget {
             subtitle: 'جديدة',
             icon: Icons.description_outlined,
             iconColor: const Color(0xFF2563EB),
+            bgColor: const Color(0xFFEFF6FF),
+            borderColor: const Color(0xFFDBEAFE),
             onTap: () => context.push('/orders'),
           ),
 
@@ -54,6 +60,8 @@ class QuickMetricsOverviewWidget extends StatelessWidget {
             isGreenSubtitle: true,
             icon: Icons.attach_money_rounded,
             iconColor: const Color(0xFF16A34A),
+            bgColor: const Color(0xFFF0FDF4),
+            borderColor: const Color(0xFFDCFCE7),
             onTap: () => context.push('/analytics'),
           ),
         ],
@@ -69,6 +77,8 @@ class _MetricCard extends StatelessWidget {
   final bool isGreenSubtitle;
   final IconData icon;
   final Color iconColor;
+  final Color bgColor;
+  final Color borderColor;
   final VoidCallback onTap;
 
   const _MetricCard({
@@ -78,6 +88,8 @@ class _MetricCard extends StatelessWidget {
     this.isGreenSubtitle = false,
     required this.icon,
     required this.iconColor,
+    required this.bgColor,
+    required this.borderColor,
     required this.onTap,
   });
 
@@ -90,32 +102,33 @@ class _MetricCard extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(10),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         decoration: BoxDecoration(
-          color: colorScheme.surface,
+          color: bgColor,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.25)),
+          border: Border.all(color: borderColor),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.01),
-              blurRadius: 3,
-              offset: const Offset(0, 1),
+              color: iconColor.withValues(alpha: 0.04),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
             ),
           ],
         ),
         child: Row(
           children: [
-            // Icon (Left)
+            // Icon Container (Left)
             Container(
               padding: const EdgeInsets.all(5),
               decoration: BoxDecoration(
-                color: iconColor.withValues(alpha: 0.08),
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(6),
+                border: Border.all(color: borderColor),
               ),
               child: Icon(icon, color: iconColor, size: 16),
             ),
 
-            const SizedBox(width: 6),
+            const SizedBox(width: 8),
 
             // Main Details (Right - RTL)
             Expanded(
@@ -129,7 +142,7 @@ class _MetricCard extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF16A34A).withValues(alpha: 0.1),
+                            color: const Color(0xFF16A34A).withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
@@ -146,7 +159,7 @@ class _MetricCard extends StatelessWidget {
                           subtitle,
                           style: TextStyle(
                             fontSize: 8.5,
-                            color: colorScheme.onSurfaceVariant,
+                            color: colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
                           ),
                         ),
                       const Spacer(),
@@ -154,8 +167,8 @@ class _MetricCard extends StatelessWidget {
                         title,
                         style: TextStyle(
                           fontSize: 9.5,
-                          fontWeight: FontWeight.w500,
-                          color: colorScheme.onSurfaceVariant,
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.onSurface,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -165,9 +178,10 @@ class _MetricCard extends StatelessWidget {
                   const SizedBox(height: 1),
                   Text(
                     value,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
+                      color: colorScheme.onSurface,
                       letterSpacing: -0.2,
                     ),
                     textAlign: TextAlign.right,
