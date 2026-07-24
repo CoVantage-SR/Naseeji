@@ -11,10 +11,10 @@ enum DealStatus {
   completed, // مكتملة
   cancelled, // ملغاة
   expired, // منتهية الصلاحية
-  rejected, // مرفوضة
-}
+  rejected; // مرفوضة
 
-extension DealStatusExtension on DealStatus {
+  String get titleAr => arabicLabel;
+
   String get arabicLabel {
     switch (this) {
       case DealStatus.newRfq:

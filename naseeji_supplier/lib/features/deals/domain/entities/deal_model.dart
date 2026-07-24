@@ -14,10 +14,10 @@ enum DealStatus {
   paymentPending,        // بانتظار تحويل المستحقات
   completed,             // مكتمل ومغلق
   cancelled,             // ملغي
-  dispute,               // نزاع معلق
-}
+  dispute;               // نزاع معلق
 
-extension DealStatusExtension on DealStatus {
+  String get arabicLabel => titleAr;
+
   String get titleAr {
     switch (this) {
       case DealStatus.newDeal:
@@ -50,7 +50,9 @@ extension DealStatusExtension on DealStatus {
         return 'نزاع معلق';
     }
   }
+}
 
+extension DealStatusExtension on DealStatus {
   Color getColor(ColorScheme scheme) {
     switch (this) {
       case DealStatus.newDeal:
