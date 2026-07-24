@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:naseeji_supplier/features/messages/domain/entities/deal_status_enum.dart';
 import 'package:naseeji_supplier/features/messages/presentation/controllers/deal_workspace_controller.dart';
 import 'package:naseeji_supplier/features/messages/presentation/widgets/header/conversation_header_widget.dart';
 import 'package:naseeji_supplier/features/messages/presentation/widgets/tabs/messages_tab_widget.dart';
