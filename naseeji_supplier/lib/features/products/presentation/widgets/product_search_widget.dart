@@ -14,37 +14,44 @@ class ProductSearchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Container(
-      height: 38,
+      height: 44,
       margin: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: theme.colorScheme.outlineVariant.withValues(alpha: 0.5),
-        ),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: const Color(0xFFE5E7EB)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.015),
+            blurRadius: 6,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: TextField(
         controller: TextEditingController(text: query)..selection = TextSelection.collapsed(offset: query.length),
         onChanged: onChanged,
-        style: const TextStyle(fontSize: 12),
+        style: const TextStyle(fontSize: 13, color: Color(0xFF111827)),
         decoration: InputDecoration(
-          hintText: 'ابحث باسم المنتج، كود SKU، أو الفئة...',
-          hintStyle: TextStyle(
-            fontSize: 10.5,
-            color: theme.colorScheme.outline,
+          hintText: 'ابحث عن منتج...',
+          hintStyle: const TextStyle(
+            fontSize: 13,
+            color: Color(0xFF9CA3AF),
           ),
-          prefixIcon: Icon(Icons.search, size: 16, color: theme.colorScheme.outline),
-          suffixIcon: query.isNotEmpty
-              ? GestureDetector(
-                  onTap: onClear ?? () => onChanged(''),
-                  child: Icon(Icons.clear, size: 14, color: theme.colorScheme.outline),
+          suffixIcon: const Icon(
+            Icons.search_rounded,
+            size: 20,
+            color: Color(0xFF6B7280),
+          ),
+          prefixIcon: query.isNotEmpty
+              ? IconButton(
+                  icon: const Icon(Icons.clear_rounded, size: 16, color: Color(0xFF9CA3AF)),
+                  onPressed: onClear ?? () => onChanged(''),
                 )
               : null,
           border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(vertical: 8),
+          contentPadding: const EdgeInsets.symmetric(vertical: 11, horizontal: 12),
         ),
       ),
     );

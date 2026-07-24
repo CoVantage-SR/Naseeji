@@ -80,7 +80,9 @@ class ProductModel {
   final ProductStatus status;
   final int viewsCount;
   final int rfqCount;
+  final int dealsCount;
   final int savesCount;
+  final String unit;
 
   // Media
   final String mainImageUrl;
@@ -133,10 +135,12 @@ class ProductModel {
     required this.startingPrice,
     this.currency = 'ج.م',
     required this.moq,
+    this.unit = 'متر',
     required this.availableStock,
     required this.status,
     required this.viewsCount,
     required this.rfqCount,
+    this.dealsCount = 0,
     required this.savesCount,
     required this.mainImageUrl,
     required this.additionalImages,
@@ -189,6 +193,8 @@ class ProductModel {
     DateTime? updatedAt,
     String? subscriptionId,
     String? supplierId,
+    int? dealsCount,
+    String? unit,
   }) {
     return ProductModel(
       id: id,
@@ -201,10 +207,12 @@ class ProductModel {
       startingPrice: startingPrice ?? this.startingPrice,
       currency: currency,
       moq: moq,
+      unit: unit ?? this.unit,
       availableStock: availableStock ?? this.availableStock,
       status: status ?? this.status,
       viewsCount: viewsCount,
       rfqCount: rfqCount,
+      dealsCount: dealsCount ?? this.dealsCount,
       savesCount: savesCount,
       mainImageUrl: mainImageUrl,
       additionalImages: additionalImages,

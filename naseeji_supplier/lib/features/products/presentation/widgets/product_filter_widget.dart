@@ -20,93 +20,94 @@ class ProductFilterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final tabs = [
+      {'key': null, 'label': 'الكل'},
+      {'key': 'منشور', 'label': 'تم النشر'},
+      {'key': 'مسودة', 'label': 'مسودة'},
+      {'key': 'مرفوضة', 'label': 'مرفوضة'},
+    ];
 
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
+    return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         children: [
-          // Sort Dropdown Chip
-          Container(
-            height: 30,
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            decoration: BoxDecoration(
-              color: theme.colorScheme.surface,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: theme.colorScheme.outlineVariant),
-            ),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                value: selectedSort,
-                icon: const Icon(Icons.sort_rounded, size: 14),
-                style: TextStyle(fontSize: 10, color: theme.colorScheme.onSurface, fontWeight: FontWeight.bold),
-                items: const [
-                  DropdownMenuItem(value: 'updated', child: Text('آخر تعديل')),
-                  DropdownMenuItem(value: 'views', child: Text('الأكثر مشاهدة')),
-                  DropdownMenuItem(value: 'stock', child: Text('الأعلى مخزوناً')),
+          // Filter Button ("تصفية") on the Left
+          InkWell(
+            onTap: () {
+              // Open filter modal or reset
+              onStatusChanged(null);
+            },
+            borderRadius: BorderRadius.circular(10),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: const Color(0xFFE5E7EB)),
+              ),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.tune_rounded,
+                    size: 14,
+                    color: Color(0xFF4B5563),
+                  ),
+                  SizedBox(width: 4),
+                  Text(
+                    'تصفية',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF374151),
+                    ),
+                  ),
                 ],
-                onChanged: (val) {
-                  if (val != null) onSortChanged(val);
-                },
               ),
             ),
           ),
           const SizedBox(width: 8),
 
-          // Category Dropdown Chip
-          Container(
-            height: 30,
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            decoration: BoxDecoration(
-              color: selectedCategory != null ? theme.colorScheme.primaryContainer.withValues(alpha: 0.3) : theme.colorScheme.surface,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: selectedCategory != null ? theme.colorScheme.primary : theme.colorScheme.outlineVariant,
-              ),
-            ),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton<String?>(
-                value: selectedCategory,
-                hint: Text('الفئة', style: TextStyle(fontSize: 10, color: theme.colorScheme.onSurfaceVariant)),
-                icon: const Icon(Icons.keyboard_arrow_down_rounded, size: 14),
-                style: TextStyle(fontSize: 10, color: theme.colorScheme.onSurface, fontWeight: FontWeight.bold),
-                items: const [
-                  DropdownMenuItem(value: null, child: Text('جميع الفئات')),
-                  DropdownMenuItem(value: 'خيوط ونُسُج', child: Text('خيوط ونُسُج')),
-                  DropdownMenuItem(value: 'أقمشة ملابس', child: Text('أقمشة ملابس')),
-                  DropdownMenuItem(value: 'أقمشة راقية', child: Text('أقمشة راقية')),
-                ],
-                onChanged: onCategoryChanged,
+          // Status Filter Tabs
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              reverse: true, // RTL alignment
+              child: Row(
+                children: tabs.map((tab) {
+                  final key = tab['key'];
+                  final label = tab['label']!;
+                  final isSelected = selectedStatus == key;
+
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 6),
+                    child: InkWell(
+                      onTap: () => onStatusChanged(key),
+                      borderRadius: BorderRadius.circular(10),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: isSelected ? const Color(0xFFEFF6FF) : const Color(0xFFF3F4F6),
+                          borderRadius: BorderRadius.circular(10),
+                          border: isSelected
+                              ? Border.all(color: const Color(0xFFBFDBFE), width: 1)
+                              : null,
+                        ),
+                        child: Text(
+                          label,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
+                            color: isSelected ? const Color(0xFF2563EB) : const Color(0xFF4B5563),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
               ),
             ),
           ),
-          const SizedBox(width: 8),
-
-          // Status Reset Chip if active
-          if (selectedStatus != null || selectedCategory != null)
-            GestureDetector(
-              onTap: () {
-                onStatusChanged(null);
-                onCategoryChanged(null);
-              },
-              child: Container(
-                height: 30,
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                decoration: BoxDecoration(
-                  color: Colors.red.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.red.withValues(alpha: 0.3)),
-                ),
-                child: const Row(
-                  children: [
-                    Icon(Icons.filter_alt_off_outlined, size: 12, color: Colors.red),
-                    SizedBox(width: 4),
-                    Text('إلغاء الفلاتر', style: TextStyle(fontSize: 9, color: Colors.red, fontWeight: FontWeight.bold)),
-                  ],
-                ),
-              ),
-            ),
         ],
       ),
     );

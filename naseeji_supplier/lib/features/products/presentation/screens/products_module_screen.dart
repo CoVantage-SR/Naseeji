@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
 
 import '../providers/products_providers.dart';
 import '../controllers/products_controller.dart';
 import '../widgets/products_dashboard_widget.dart';
-import '../widgets/subscription_card_widget.dart';
 import '../widgets/product_search_widget.dart';
 import '../widgets/product_filter_widget.dart';
-import '../widgets/performance_suggestion_card.dart';
 import '../widgets/product_card_widget.dart';
 import '../widgets/empty_products_widget.dart';
 import '../widgets/loading_widget.dart';
@@ -21,11 +18,7 @@ class ProductsModuleScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
     final productsAsync = ref.watch(productsProvider);
-    final limitsAsync = ref.watch(subscriptionLimitsProvider);
     final searchQuery = ref.watch(productSearchQueryProvider);
     final statusFilter = ref.watch(productStatusFilterProvider);
     final categoryFilter = ref.watch(productCategoryFilterProvider);
@@ -34,138 +27,247 @@ class ProductsModuleScreen extends ConsumerWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: theme.scaffoldBackgroundColor,
-        appBar: AppBar(
-          backgroundColor: colorScheme.surface,
-          elevation: 0.5,
-          centerTitle: true,
-          title: const Row(
-            mainAxisSize: MainAxisSize.min,
+        backgroundColor: const Color(0xFFF9FAFB),
+        body: SafeArea(
+          child: Column(
             children: [
-              Icon(Icons.inventory_2_rounded, size: 18, color: AppColors.primary),
-              SizedBox(width: 6),
-              Text(
-                'إدارة المنتجات والخامات B2B',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
+              // 1. Custom Top App Bar (Header from design)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // Right Side: Icon + Title & Subtitle
+                    Row(
+                      children: [
+                        Container(
+                          width: 44,
+                          height: 44,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFFEFF6FF),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.local_mall_outlined,
+                            color: Color(0xFF2563EB),
+                            size: 22,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'المنتجات',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF111827),
+                                height: 1.1,
+                              ),
+                            ),
+                            SizedBox(height: 2),
+                            Text(
+                              'إدارة منتجاتك وعروضك',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Color(0xFF6B7280),
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+
+                    // Left Side: Action Icons (Search & Notifications with Badge 3)
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            context.push('/search');
+                          },
+                          icon: const Icon(
+                            Icons.search_rounded,
+                            color: Color(0xFF4B5563),
+                            size: 24,
+                          ),
+                        ),
+                        Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                context.push('/notifications');
+                              },
+                              icon: const Icon(
+                                Icons.notifications_none_rounded,
+                                color: Color(0xFF4B5563),
+                                size: 24,
+                              ),
+                            ),
+                            Positioned(
+                              top: 6,
+                              right: 6,
+                              child: Container(
+                                padding: const EdgeInsets.all(4),
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFFEF4444),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Text(
+                                  '3',
+                                  style: TextStyle(
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    height: 1.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: colorScheme.onSurface),
-            onPressed: () {
-              if (context.canPop()) {
-                context.pop();
-              } else {
-                context.go('/home');
-              }
-            },
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.tune_rounded, size: 20),
-              tooltip: 'الفلاتر السريعة',
-              onPressed: () {
-                ref.read(productStatusFilterProvider.notifier).state = null;
-                ref.read(productCategoryFilterProvider.notifier).state = null;
-                ref.read(productSearchQueryProvider.notifier).state = '';
-              },
-            ),
-          ],
-        ),
-        body: productsAsync.when(
-          loading: () => const LoadingWidget(),
-          error: (err, _) => Center(
-            child: Text('حدث خطأ في تحميل المنتجات: $err', style: const TextStyle(color: Colors.red, fontSize: 11)),
-          ),
-          data: (products) {
-            return Column(
-              children: [
-                const SizedBox(height: 8),
 
-                // 1. Dashboard Mini Cards Header
-                ProductsDashboardWidget(
+              // 2. Search Field
+              ProductSearchWidget(
+                query: searchQuery,
+                onChanged: (val) {
+                  ref.read(productSearchQueryProvider.notifier).state = val;
+                },
+                onClear: () {
+                  ref.read(productSearchQueryProvider.notifier).state = '';
+                },
+              ),
+              const SizedBox(height: 12),
+
+              // 3. Filter Tabs Row (الكل / تم النشر / مسودة / مرفوضة + تصفية)
+              ProductFilterWidget(
+                selectedStatus: statusFilter,
+                selectedCategory: categoryFilter,
+                selectedSort: sortBy,
+                onStatusChanged: (val) {
+                  ref.read(productStatusFilterProvider.notifier).state = val;
+                },
+                onCategoryChanged: (val) {
+                  ref.read(productCategoryFilterProvider.notifier).state = val;
+                },
+                onSortChanged: (val) {
+                  ref.read(productSortByProvider.notifier).state = val;
+                },
+              ),
+              const SizedBox(height: 14),
+
+              // 4. Products Dashboard Summary Cards (128 / 86 / 28 / 14)
+              productsAsync.when(
+                data: (products) => ProductsDashboardWidget(
                   products: products,
                   activeFilter: statusFilter,
                   onSelectFilter: (filterKey) {
                     ref.read(productStatusFilterProvider.notifier).state = filterKey;
                   },
                 ),
-                const SizedBox(height: 8),
+                loading: () => const SizedBox.shrink(),
+                error: (_, __) => const SizedBox.shrink(),
+              ),
+              const SizedBox(height: 16),
 
-                // 2. Subscription Status Card
-                limitsAsync.when(
-                  data: (limits) => SubscriptionCardWidget(
-                    limits: limits,
-                    onUpgrade: () => context.push('/subscription/plans'),
+              // 5. Products List Header (قائمة المنتجات + ترتيب)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'قائمة المنتجات',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF111827),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        final current = ref.read(productSortByProvider);
+                        ref.read(productSortByProvider.notifier).state =
+                            current == 'updated' ? 'views' : 'updated';
+                      },
+                      child: const Row(
+                        children: [
+                          Icon(
+                            Icons.tune_rounded,
+                            size: 16,
+                            color: Color(0xFF6B7280),
+                          ),
+                          SizedBox(width: 4),
+                          Text(
+                            'ترتيب',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF6B7280),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+
+              // 6. Products List
+              Expanded(
+                child: productsAsync.when(
+                  loading: () => const LoadingWidget(),
+                  error: (err, _) => Center(
+                    child: Text(
+                      'حدث خطأ في تحميل المنتجات: $err',
+                      style: const TextStyle(color: Colors.red, fontSize: 12),
+                    ),
                   ),
-                  loading: () => const SizedBox.shrink(),
-                  error: (_, __) => const SizedBox.shrink(),
-                ),
-                const SizedBox(height: 8),
+                  data: (products) {
+                    if (products.isEmpty) {
+                      return EmptyProductsWidget(
+                        onAddProduct: () => _handleAddProduct(context, ref),
+                      );
+                    }
 
-                // 3. Search Bar
-                ProductSearchWidget(
-                  query: searchQuery,
-                  onChanged: (val) {
-                    ref.read(productSearchQueryProvider.notifier).state = val;
-                  },
-                  onClear: () {
-                    ref.read(productSearchQueryProvider.notifier).state = '';
-                  },
-                ),
-                const SizedBox(height: 6),
-
-                // 4. Compact Filter Bar
-                ProductFilterWidget(
-                  selectedStatus: statusFilter,
-                  selectedCategory: categoryFilter,
-                  selectedSort: sortBy,
-                  onStatusChanged: (val) {
-                    ref.read(productStatusFilterProvider.notifier).state = val;
-                  },
-                  onCategoryChanged: (val) {
-                    ref.read(productCategoryFilterProvider.notifier).state = val;
-                  },
-                  onSortChanged: (val) {
-                    ref.read(productSortByProvider.notifier).state = val;
+                    return ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                      itemCount: products.length,
+                      itemBuilder: (context, index) {
+                        return ProductCardWidget(product: products[index]);
+                      },
+                    );
                   },
                 ),
-                const SizedBox(height: 6),
-
-                // 5. Performance Suggestion Card
-                if (products.isNotEmpty) PerformanceSuggestionCard(products: products),
-                const SizedBox(height: 6),
-
-                // 6. Compact Product Cards List
-                Expanded(
-                  child: products.isEmpty
-                      ? EmptyProductsWidget(
-                          onAddProduct: () => _handleAddProduct(context, ref),
-                        )
-                      : ListView.builder(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                          itemCount: products.length,
-                          itemBuilder: (context, index) {
-                            return ProductCardWidget(product: products[index]);
-                          },
-                        ),
-                ),
-              ],
-            );
-          },
+              ),
+            ],
+          ),
         ),
+
+        // Floating Action Button ("إضافة منتج +")
         floatingActionButton: FloatingActionButton.extended(
           heroTag: 'products_add_fab',
           onPressed: () => _handleAddProduct(context, ref),
-          backgroundColor: AppColors.primary,
+          backgroundColor: const Color(0xFF2563EB),
           foregroundColor: Colors.white,
-          elevation: 2,
+          elevation: 4,
+          shape: const StadiumBorder(),
           icon: const Icon(Icons.add_rounded, size: 20),
-          label: const Text('إضافة منتج خامة', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+          label: const Text(
+            'إضافة منتج',
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
       ),
     );
@@ -177,7 +279,10 @@ class ProductsModuleScreen extends ConsumerWidget {
 
     if (!validation.isValid) {
       if (context.mounted) {
-        SubscriptionLimitDialog.show(context, validation.errorMessage ?? 'وصلت للحد الأقصى المسموح بباقتك.');
+        SubscriptionLimitDialog.show(
+          context,
+          validation.errorMessage ?? 'وصلت للحد الأقصى المسموح بباقتك.',
+        );
       }
     } else {
       if (context.mounted) {
