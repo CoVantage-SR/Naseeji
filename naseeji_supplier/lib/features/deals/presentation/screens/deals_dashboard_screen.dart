@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
 
 import '../providers/deals_providers.dart';
-import '../../domain/entities/deal_model.dart';
 import '../widgets/deals_dashboard_widget.dart';
-import '../widgets/action_required_widget.dart';
+import '../widgets/deal_filter_bar_widget.dart';
 import '../widgets/deal_card_widget.dart';
 import '../widgets/empty_state_widget.dart';
 import '../widgets/loading_widget.dart';
@@ -16,75 +14,135 @@ class DealsDashboardScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
     final dealsAsync = ref.watch(dealsProvider);
     final statusFilter = ref.watch(dealStatusFilterProvider);
+    final searchQuery = ref.watch(dealSearchQueryProvider);
     final onlyActionRequired = ref.watch(onlyActionRequiredProvider);
 
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: theme.scaffoldBackgroundColor,
-        appBar: AppBar(
-          backgroundColor: colorScheme.surface,
-          elevation: 0.5,
-          centerTitle: true,
-          title: const Row(
-            mainAxisSize: MainAxisSize.min,
+        backgroundColor: const Color(0xFFF9FAFB),
+        body: SafeArea(
+          child: Column(
             children: [
-              Icon(Icons.handshake_rounded, size: 18, color: AppColors.primary),
-              SizedBox(width: 6),
-              Text(
-                'نظام إدارة الصفقات B2B',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primary,
+              // 1. Top Custom App Bar Header (RTL)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // Right Side: Shopping Bag Icon + Title & Subtitle
+                    Row(
+                      children: [
+                        Container(
+                          width: 44,
+                          height: 44,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFFEFF6FF),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.local_mall_outlined,
+                            color: Color(0xFF2563EB),
+                            size: 22,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'الصفقات',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF111827),
+                                height: 1.1,
+                              ),
+                            ),
+                            SizedBox(height: 2),
+                            Text(
+                              'إدارة جميع صفقاتك ومفاوضاتك',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Color(0xFF6B7280),
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+
+                    // Left Side: Action Icons (Filter & Notifications with Badge 3)
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            ref.read(dealStatusFilterProvider.notifier).state = null;
+                            ref.read(dealSearchQueryProvider.notifier).state = '';
+                            ref.read(onlyActionRequiredProvider.notifier).state = false;
+                          },
+                          icon: const Icon(
+                            Icons.filter_list_rounded,
+                            color: Color(0xFF4B5563),
+                            size: 24,
+                          ),
+                        ),
+                        Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                context.push('/notifications');
+                              },
+                              icon: const Icon(
+                                Icons.notifications_none_rounded,
+                                color: Color(0xFF4B5563),
+                                size: 24,
+                              ),
+                            ),
+                            Positioned(
+                              top: 6,
+                              right: 6,
+                              child: Container(
+                                padding: const EdgeInsets.all(4),
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFFEF4444),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Text(
+                                  '3',
+                                  style: TextStyle(
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    height: 1.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: colorScheme.onSurface),
-            onPressed: () {
-              if (context.canPop()) {
-                context.pop();
-              } else {
-                context.go('/home');
-              }
-            },
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.filter_alt_off_rounded, size: 20),
-              tooltip: 'إلغاء الفلاتر',
-              onPressed: () {
-                ref.read(dealStatusFilterProvider.notifier).state = null;
-                ref.read(dealSearchQueryProvider.notifier).state = '';
-                ref.read(onlyActionRequiredProvider.notifier).state = false;
-              },
-            ),
-          ],
-        ),
-        body: dealsAsync.when(
-          loading: () => const LoadingWidget(),
-          error: (err, _) => Center(
-            child: Text('حدث خطأ أثناء تحميل الصفقات: $err', style: const TextStyle(color: Colors.red, fontSize: 11)),
-          ),
-          data: (deals) {
-            final actionDeals = deals.where((d) => d.status.requiresSupplierAction).toList();
 
-            return Column(
-              children: [
-                const SizedBox(height: 6),
+              // 2. Filter Pills Horizontal Tab Bar
+              DealFilterBarWidget(
+                selectedStatus: statusFilter,
+                onStatusChanged: (val) {
+                  ref.read(dealStatusFilterProvider.notifier).state = val;
+                },
+              ),
+              const SizedBox(height: 12),
 
-                // 1. Action Required Section (العنصر الأهم)
-                ActionRequiredWidget(actionDeals: actionDeals),
-
-                // 2. Dashboard Status Cards (أجهزة القياس المصغرة)
-                DealsDashboardWidget(
+              // 3. 5 Summary Statistics Cards (51 / 8 / 12 / 7 / 24)
+              dealsAsync.when(
+                data: (deals) => DealsDashboardWidget(
                   deals: deals,
                   activeFilter: statusFilter,
                   isOnlyActionRequired: onlyActionRequired,
@@ -95,57 +153,130 @@ class DealsDashboardScreen extends ConsumerWidget {
                     ref.read(onlyActionRequiredProvider.notifier).state = val;
                   },
                 ),
-                const SizedBox(height: 6),
+                loading: () => const SizedBox.shrink(),
+                error: (_, __) => const SizedBox.shrink(),
+              ),
+              const SizedBox(height: 12),
 
-                // 3. Compact Search Bar Input
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 14),
-                  child: TextField(
-                    onChanged: (val) {
-                      ref.read(dealSearchQueryProvider.notifier).state = val;
-                    },
-                    style: const TextStyle(fontSize: 11.5),
-                    decoration: InputDecoration(
-                      hintText: 'ابحث برقم الصفقة، اسم المصنع، أو المنتج...',
-                      hintStyle: TextStyle(fontSize: 11, color: colorScheme.outline),
-                      prefixIcon: Icon(Icons.search_rounded, size: 18, color: colorScheme.primary),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                      filled: true,
-                      fillColor: colorScheme.surface,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.5)),
+              // 4. Search Bar + Sort Dropdown Row
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    // Sort Dropdown Pill ("الأحدث") on Left
+                    Container(
+                      height: 42,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: const Color(0xFFE5E7EB)),
                       ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.5)),
+                      child: const Row(
+                        children: [
+                          Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                            size: 18,
+                            color: Color(0xFF6B7280),
+                          ),
+                          SizedBox(width: 4),
+                          Text(
+                            'الأحدث',
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF374151),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                ),
-                const SizedBox(height: 6),
+                    const SizedBox(width: 8),
 
-                // 4. Deals Cards List
-                Expanded(
-                  child: deals.isEmpty
-                      ? EmptyStateWidget(
-                          onResetFilter: () {
-                            ref.read(dealStatusFilterProvider.notifier).state = null;
-                            ref.read(dealSearchQueryProvider.notifier).state = '';
-                            ref.read(onlyActionRequiredProvider.notifier).state = false;
-                          },
-                        )
-                      : ListView.builder(
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
-                          itemCount: deals.length,
-                          itemBuilder: (context, index) {
-                            return DealCardWidget(deal: deals[index]);
-                          },
+                    // Search Input Field on Right
+                    Expanded(
+                      child: Container(
+                        height: 42,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: const Color(0xFFE5E7EB)),
                         ),
+                        child: TextField(
+                          controller: TextEditingController(text: searchQuery)
+                            ..selection = TextSelection.collapsed(offset: searchQuery.length),
+                          onChanged: (val) {
+                            ref.read(dealSearchQueryProvider.notifier).state = val;
+                          },
+                          style: const TextStyle(fontSize: 12, color: Color(0xFF111827)),
+                          decoration: const InputDecoration(
+                            hintText: 'ابحث برقم الطلب أو اسم المصنع أو المنتج...',
+                            hintStyle: TextStyle(
+                              fontSize: 11.5,
+                              color: Color(0xFF9CA3AF),
+                            ),
+                            suffixIcon: Icon(
+                              Icons.search_rounded,
+                              size: 18,
+                              color: Color(0xFF6B7280),
+                            ),
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            );
+              ),
+              const SizedBox(height: 10),
+
+              // 5. Deals List Items
+              Expanded(
+                child: dealsAsync.when(
+                  loading: () => const LoadingWidget(),
+                  error: (err, _) => Center(
+                    child: Text(
+                      'حدث خطأ أثناء تحميل الصفقات: $err',
+                      style: const TextStyle(color: Colors.red, fontSize: 12),
+                    ),
+                  ),
+                  data: (deals) {
+                    if (deals.isEmpty) {
+                      return EmptyStateWidget(
+                        onResetFilter: () {
+                          ref.read(dealStatusFilterProvider.notifier).state = null;
+                          ref.read(dealSearchQueryProvider.notifier).state = '';
+                          ref.read(onlyActionRequiredProvider.notifier).state = false;
+                        },
+                      );
+                    }
+
+                    return ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                      itemCount: deals.length,
+                      itemBuilder: (context, index) {
+                        return DealCardWidget(deal: deals[index]);
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        // Floating Action Button (+)
+        floatingActionButton: FloatingActionButton(
+          heroTag: 'deals_add_fab',
+          onPressed: () {
+            context.push('/quotations/create');
           },
+          backgroundColor: const Color(0xFF2563EB),
+          foregroundColor: Colors.white,
+          elevation: 4,
+          shape: const CircleBorder(),
+          child: const Icon(Icons.add_rounded, size: 26),
         ),
       ),
     );
