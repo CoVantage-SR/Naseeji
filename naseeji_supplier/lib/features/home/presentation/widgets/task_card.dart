@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../dashboard/domain/entities/task_item_model.dart';
+import 'package:naseeji_supplier/features/dashboard/domain/entities/task_item_model.dart';
 
 enum TaskStatusType {
   urgent,

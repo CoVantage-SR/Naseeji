@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:naseeji_supplier/features/dashboard/presentation/providers/dashboard_providers.dart';
 import '../widgets/supplier_home_header.dart';
 import '../widgets/subscription_banner.dart';
 import '../widgets/quick_metrics_overview.dart';
@@ -7,7 +8,6 @@ import '../widgets/today_tasks_section.dart';
 import '../widgets/quick_shortcuts_and_chart.dart';
 import '../widgets/notifications_bottom_banner.dart';
 import '../widgets/quick_action_fab.dart';
-import '../../dashboard/presentation/providers/dashboard_providers.dart';
 
 class SupplierHomeScreen extends ConsumerWidget {
   const SupplierHomeScreen({super.key});

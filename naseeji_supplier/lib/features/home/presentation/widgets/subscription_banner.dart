@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../dashboard/presentation/providers/dashboard_providers.dart';
+import 'package:naseeji_supplier/features/dashboard/presentation/providers/dashboard_providers.dart';
 
 class SubscriptionBanner extends ConsumerWidget {
   const SubscriptionBanner({super.key});

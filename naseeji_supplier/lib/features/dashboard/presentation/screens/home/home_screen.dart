@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../supplier_dashboard_screen.dart';
+import 'package:naseeji_supplier/features/home/presentation/screens/supplier_home_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const SupplierDashboardScreen();
+    return const SupplierHomeScreen();
   }
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../dashboard/presentation/providers/dashboard_providers.dart';
+import 'package:naseeji_supplier/features/dashboard/domain/entities/task_item_model.dart';
+import 'package:naseeji_supplier/features/dashboard/presentation/providers/dashboard_providers.dart';
 import 'task_card.dart';
 import 'home_loading.dart';
 import 'home_empty_state.dart';
@@ -13,7 +14,6 @@ class TodayTasksSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
 
     final tasksAsync = ref.watch(todayTasksProvider);
 

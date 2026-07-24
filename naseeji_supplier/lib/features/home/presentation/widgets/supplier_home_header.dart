@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../dashboard/presentation/providers/dashboard_providers.dart';
+import 'package:naseeji_supplier/features/dashboard/presentation/providers/dashboard_providers.dart';
 
 class SupplierHomeHeader extends ConsumerWidget {
   const SupplierHomeHeader({super.key});
@@ -273,7 +273,7 @@ class SupplierHomeHeader extends ConsumerWidget {
                                 ),
                               ),
                               const SizedBox(width: 4),
-                              const Icon(Icons.crown, color: Colors.amber, size: 16),
+                              const Icon(Icons.workspace_premium_rounded, color: Colors.amber, size: 18),
                             ],
                           ),
                           const SizedBox(height: 2),
