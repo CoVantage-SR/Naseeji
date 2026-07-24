@@ -29,4 +29,9 @@ class SubscriptionOverviewModel {
   double get advertisementsProgress => advertisementsLimit == 0 ? 0.0 : (advertisementsUsed / advertisementsLimit).clamp(0.0, 1.0);
   double get featuredProductsProgress => featuredProductsLimit == 0 ? 0.0 : (featuredProductsUsed / featuredProductsLimit).clamp(0.0, 1.0);
   double get rfqsProgress => rfqsLimit == 0 ? 0.0 : (rfqsUsed / rfqsLimit).clamp(0.0, 1.0);
+
+  int get daysRemaining => expiryDate.difference(DateTime.now()).inDays.clamp(0, 365);
+  String get expiryDateFormatted => '${expiryDate.day}/${expiryDate.month}/${expiryDate.year}';
+  int get maxProducts => productsLimit;
+  String get planName => currentPlan;
 }

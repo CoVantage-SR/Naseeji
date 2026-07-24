@@ -128,10 +128,10 @@ class SupplierHomeHeader extends ConsumerWidget {
                     CircleAvatar(
                       radius: 22,
                       backgroundColor: colorScheme.primary.withValues(alpha: 0.1),
-                      backgroundImage: header.avatarUrl.startsWith('http')
-                          ? NetworkImage(header.avatarUrl)
+                      backgroundImage: (header.logoUrl != null && header.logoUrl!.startsWith('http'))
+                          ? NetworkImage(header.logoUrl!)
                           : null,
-                      child: !header.avatarUrl.startsWith('http')
+                      child: (header.logoUrl == null || !header.logoUrl!.startsWith('http'))
                           ? Text(
                               header.supplierName.isNotEmpty
                                   ? header.supplierName[0]
