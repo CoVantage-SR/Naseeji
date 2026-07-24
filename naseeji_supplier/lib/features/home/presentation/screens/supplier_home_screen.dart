@@ -94,9 +94,9 @@ class _SupplierHomeScreenState extends ConsumerState<SupplierHomeScreen> {
                   child: NotificationsBottomBannerWidget(),
                 ),
 
-                // 7. Bottom Clearance Padding
+                // 7. Compact Bottom Clearance Padding
                 const SliverPadding(
-                  padding: EdgeInsets.only(bottom: 90),
+                  padding: EdgeInsets.only(bottom: 16),
                 ),
               ],
             ),

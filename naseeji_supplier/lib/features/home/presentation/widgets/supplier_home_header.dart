@@ -6,10 +6,7 @@ import 'package:naseeji_supplier/features/dashboard/presentation/providers/dashb
 class SupplierHomeHeader extends ConsumerWidget {
   final bool showNotificationBubble;
 
-  const SupplierHomeHeader({
-    super.key,
-    this.showNotificationBubble = true,
-  });
+  const SupplierHomeHeader({super.key, this.showNotificationBubble = true});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,7 +26,7 @@ class SupplierHomeHeader extends ConsumerWidget {
       children: [
         // ─── 1. Top Profile Bar & Notification Popover Bubble ────────────────
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 6),
+          padding: const EdgeInsets.fromLTRB(12, 8, 12, 6),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -43,17 +40,28 @@ class SupplierHomeHeader extends ConsumerWidget {
                         Container(
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.4), width: 1.5),
+                            border: Border.all(
+                              color: colorScheme.outlineVariant.withValues(
+                                alpha: 0.4,
+                              ),
+                              width: 2.5,
+                            ),
                           ),
                           child: CircleAvatar(
                             radius: 21,
                             backgroundColor: const Color(0xFFEFF6FF),
-                            backgroundImage: (header.logoUrl != null && header.logoUrl!.startsWith('http'))
+                            backgroundImage:
+                                (header.logoUrl != null &&
+                                    header.logoUrl!.startsWith('http'))
                                 ? NetworkImage(header.logoUrl!)
                                 : null,
-                            child: (header.logoUrl == null || !header.logoUrl!.startsWith('http'))
+                            child:
+                                (header.logoUrl == null ||
+                                    !header.logoUrl!.startsWith('http'))
                                 ? Text(
-                                    header.supplierName.isNotEmpty ? header.supplierName[0] : 'م',
+                                    header.supplierName.isNotEmpty
+                                        ? header.supplierName[0]
+                                        : 'م',
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Color(0xFF2563EB),
@@ -93,7 +101,8 @@ class SupplierHomeHeader extends ConsumerWidget {
                                   header.companyName,
                                   style: TextStyle(
                                     fontSize: 11.5,
-                                    color: colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
+                                    color: colorScheme.onSurfaceVariant
+                                        .withValues(alpha: 0.8),
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -113,9 +122,17 @@ class SupplierHomeHeader extends ConsumerWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(width: 100, height: 14, color: colorScheme.surfaceContainerHighest),
+                            Container(
+                              width: 100,
+                              height: 14,
+                              color: colorScheme.surfaceContainerHighest,
+                            ),
                             const SizedBox(height: 4),
-                            Container(width: 80, height: 10, color: colorScheme.surfaceContainerHighest),
+                            Container(
+                              width: 80,
+                              height: 10,
+                              color: colorScheme.surfaceContainerHighest,
+                            ),
                           ],
                         ),
                       ],
@@ -131,11 +148,14 @@ class SupplierHomeHeader extends ConsumerWidget {
                       // Chat Icon (Far Left - 1)
                       IconButton(
                         onPressed: () => context.push('/messages'),
-                        icon: const Icon(Icons.chat_bubble_outline_rounded, size: 22),
+                        icon: const Icon(
+                          Icons.chat_bubble_outline_rounded,
+                          size: 22,
+                        ),
                         style: IconButton.styleFrom(
                           foregroundColor: colorScheme.onSurface,
                           padding: const EdgeInsets.all(8),
-                          minimumSize: const Size(40, 40),
+                          minimumSize: const Size(20, 20),
                         ),
                       ),
                       const SizedBox(width: 2),
@@ -146,11 +166,14 @@ class SupplierHomeHeader extends ConsumerWidget {
                         children: [
                           IconButton(
                             onPressed: () => context.push('/notifications'),
-                            icon: const Icon(Icons.notifications_none_rounded, size: 24),
+                            icon: const Icon(
+                              Icons.notifications_none_rounded,
+                              size: 24,
+                            ),
                             style: IconButton.styleFrom(
                               foregroundColor: colorScheme.onSurface,
                               padding: const EdgeInsets.all(8),
-                              minimumSize: const Size(40, 40),
+                              minimumSize: const Size(20, 20),
                             ),
                           ),
                           if (unreadNotificationsCount > 0)
@@ -162,7 +185,10 @@ class SupplierHomeHeader extends ConsumerWidget {
                                 decoration: BoxDecoration(
                                   color: const Color(0xFFDC2626), // Vibrant Red
                                   shape: BoxShape.circle,
-                                  border: Border.all(color: Colors.white, width: 1.5),
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 1.5,
+                                  ),
                                 ),
                                 constraints: const BoxConstraints(
                                   minWidth: 17,
@@ -190,7 +216,8 @@ class SupplierHomeHeader extends ConsumerWidget {
               // ─── Notification Speech Bubble Popping From Bell Icon (Left) ──
               AnimatedCrossFade(
                 duration: const Duration(milliseconds: 300),
-                crossFadeState: (unreadNotificationsCount > 0 && showNotificationBubble)
+                crossFadeState:
+                    (unreadNotificationsCount > 0 && showNotificationBubble)
                     ? CrossFadeState.showFirst
                     : CrossFadeState.showSecond,
                 firstChild: Padding(
@@ -214,21 +241,26 @@ class SupplierHomeHeader extends ConsumerWidget {
                         ),
                         // Speech Bubble Glassmorphism Box
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 10,
+                          ),
                           decoration: BoxDecoration(
                             gradient: const LinearGradient(
-                              colors: [
-                                Color(0xFFEFF6FF),
-                                Color(0xFFF0F9FF),
-                              ],
+                              colors: [Color(0xFFEFF6FF), Color(0xFFF0F9FF)],
                               begin: Alignment.topRight,
                               end: Alignment.bottomLeft,
                             ),
                             borderRadius: BorderRadius.circular(14),
-                            border: Border.all(color: const Color(0xFF93C5FD), width: 1),
+                            border: Border.all(
+                              color: const Color(0xFF93C5FD),
+                              width: 1,
+                            ),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(0xFF2563EB).withValues(alpha: 0.12),
+                                color: const Color(
+                                  0xFF2563EB,
+                                ).withValues(alpha: 0.12),
                                 blurRadius: 10,
                                 offset: const Offset(0, 4),
                               ),
@@ -237,7 +269,11 @@ class SupplierHomeHeader extends ConsumerWidget {
                           child: Row(
                             children: [
                               // Left Arrow Chevron
-                              const Icon(Icons.arrow_back_ios_new_rounded, size: 12, color: Color(0xFF2563EB)),
+                              const Icon(
+                                Icons.arrow_back_ios_new_rounded,
+                                size: 16,
+                                color: Color(0xFF2563EB),
+                              ),
                               const Spacer(),
 
                               // Notification Text (Right Aligned RTL)
@@ -256,7 +292,10 @@ class SupplierHomeHeader extends ConsumerWidget {
                                         ),
                                       ),
                                       SizedBox(width: 4),
-                                      Text('🔔', style: TextStyle(fontSize: 12)),
+                                      Text(
+                                        '🔔',
+                                        style: TextStyle(fontSize: 12),
+                                      ),
                                     ],
                                   ),
                                   SizedBox(height: 2),
@@ -296,7 +335,9 @@ class SupplierHomeHeader extends ConsumerWidget {
               decoration: BoxDecoration(
                 color: colorScheme.surface,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.35)),
+                border: Border.all(
+                  color: colorScheme.outlineVariant.withValues(alpha: 0.35),
+                ),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withValues(alpha: 0.015),
@@ -356,7 +397,8 @@ class SupplierHomeHeader extends ConsumerWidget {
                               ),
                               const SizedBox(height: 3),
                               InkWell(
-                                onTap: () => context.push('/profile/subscription'),
+                                onTap: () =>
+                                    context.push('/profile/subscription'),
                                 borderRadius: BorderRadius.circular(4),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
@@ -456,12 +498,18 @@ class SupplierHomeHeader extends ConsumerWidget {
                       children: [
                         // Top Button: ترقية الباقة ↑
                         OutlinedButton(
-                          onPressed: () => context.push('/profile/subscription'),
+                          onPressed: () =>
+                              context.push('/profile/subscription'),
                           style: OutlinedButton.styleFrom(
                             minimumSize: const Size(double.infinity, 26),
                             padding: const EdgeInsets.symmetric(horizontal: 4),
-                            side: const BorderSide(color: Color(0xFFDBEAFE), width: 1.2),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            side: const BorderSide(
+                              color: Color(0xFFDBEAFE),
+                              width: 1.2,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
                             foregroundColor: const Color(0xFF2563EB),
                           ),
                           child: Row(
@@ -469,7 +517,10 @@ class SupplierHomeHeader extends ConsumerWidget {
                             children: const [
                               Text(
                                 'ترقية الباقة',
-                                style: TextStyle(fontSize: 9.5, fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                  fontSize: 9.5,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               SizedBox(width: 3),
                               Icon(Icons.arrow_upward_rounded, size: 11),
@@ -481,13 +532,16 @@ class SupplierHomeHeader extends ConsumerWidget {
 
                         // Bottom Button: تجديد الباقة 🔄
                         ElevatedButton(
-                          onPressed: () => context.push('/profile/subscription'),
+                          onPressed: () =>
+                              context.push('/profile/subscription'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF2563EB),
                             foregroundColor: Colors.white,
                             minimumSize: const Size(double.infinity, 26),
                             padding: const EdgeInsets.symmetric(horizontal: 4),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
                             elevation: 0,
                           ),
                           child: Row(
@@ -495,7 +549,10 @@ class SupplierHomeHeader extends ConsumerWidget {
                             children: const [
                               Text(
                                 'تجديد الباقة',
-                                style: TextStyle(fontSize: 9.5, fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                  fontSize: 9.5,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               SizedBox(width: 3),
                               Icon(Icons.sync_rounded, size: 11),
