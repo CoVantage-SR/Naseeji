@@ -165,146 +165,99 @@ class SupplierHomeHeader extends ConsumerWidget {
 
             return Container(
               margin: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
-              padding: const EdgeInsets.all(14),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               decoration: BoxDecoration(
                 color: colorScheme.surface,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.4)),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.3)),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.02),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
+                    color: Colors.black.withValues(alpha: 0.015),
+                    blurRadius: 4,
+                    offset: const Offset(0, 1),
                   ),
                 ],
               ),
               child: Row(
                 children: [
-                  // Left Buttons Column
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      OutlinedButton.icon(
-                        onPressed: () => context.push('/profile/subscription'),
-                        icon: const Icon(Icons.arrow_upward_rounded, size: 14),
-                        label: const Text('ترقية الباقة', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: const Color(0xFF2563EB),
-                          side: const BorderSide(color: Color(0xFF2563EB)),
-                          minimumSize: const Size(100, 34),
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      ElevatedButton.icon(
-                        onPressed: () => context.push('/profile/subscription'),
-                        icon: const Icon(Icons.sync_rounded, size: 14),
-                        label: const Text('تجديد الباقة', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF2563EB),
-                          foregroundColor: Colors.white,
-                          minimumSize: const Size(100, 34),
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                        ),
-                      ),
-                    ],
+                  // Action Button (Left)
+                  ElevatedButton(
+                    onPressed: () => context.push('/profile/subscription'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF2563EB),
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size(82, 30),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      elevation: 0,
+                    ),
+                    child: const Text('تجديد الباقة', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
                   ),
 
                   const Spacer(),
 
-                  // Center Circular Counter
-                  Column(
-                    children: [
-                      SizedBox(
-                        width: 54,
-                        height: 54,
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            CircularProgressIndicator(
-                              value: ratio,
-                              strokeWidth: 5,
-                              backgroundColor: colorScheme.surfaceContainerHighest,
-                              color: const Color(0xFF2563EB),
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  '$used / $max',
-                                  style: const TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'منتج مستخدم',
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: colorScheme.onSurfaceVariant,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const Spacer(),
-
-                  // Right Plan Info (RTL)
+                  // Progress Ring + Ratio Counter (Center)
                   Row(
                     children: [
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Row(
-                            children: [
-                              Text(
-                                subscription.planName,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(width: 4),
-                              const Icon(Icons.workspace_premium_rounded, color: Colors.amber, size: 18),
-                            ],
-                          ),
-                          const SizedBox(height: 2),
                           Text(
-                            'تنتهي في ${subscription.expiryDateFormatted}',
-                            style: TextStyle(
-                              fontSize: 10.5,
-                              color: colorScheme.onSurfaceVariant,
-                            ),
+                            '$used / $max',
+                            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
                           ),
-                          const SizedBox(height: 6),
-                          InkWell(
-                            onTap: () => context.push('/profile/subscription'),
-                            child: const Row(
-                              children: [
-                                Icon(Icons.arrow_back_ios_new_rounded, size: 10, color: Color(0xFF2563EB)),
-                                SizedBox(width: 4),
-                                Text(
-                                  'عرض التفاصيل',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    color: Color(0xFF2563EB),
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
+                          Text(
+                            'منتج مستخدم',
+                            style: TextStyle(fontSize: 9.5, color: colorScheme.onSurfaceVariant),
                           ),
                         ],
                       ),
+                      const SizedBox(width: 8),
+                      SizedBox(
+                        width: 32,
+                        height: 32,
+                        child: CircularProgressIndicator(
+                          value: ratio,
+                          strokeWidth: 3.5,
+                          backgroundColor: colorScheme.surfaceContainerHighest,
+                          color: const Color(0xFF2563EB),
+                        ),
+                      ),
                     ],
+                  ),
+
+                  const Spacer(),
+
+                  // Plan Info (Right - RTL)
+                  InkWell(
+                    onTap: () => context.push('/profile/subscription'),
+                    borderRadius: BorderRadius.circular(8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              subscription.planName,
+                              style: const TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            const Icon(Icons.workspace_premium_rounded, color: Colors.amber, size: 16),
+                          ],
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          'تنتهي في ${subscription.expiryDateFormatted}',
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: colorScheme.onSurfaceVariant,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

@@ -77,52 +77,51 @@ class TaskCard extends StatelessWidget {
     final statusLabel = _getStatusLabel(type);
 
     return Container(
-      height: 142,
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         border: Border(
-          right: BorderSide(color: accentColor, width: 4), // Right border indicator for RTL
-          top: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.3)),
-          left: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.3)),
-          bottom: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.3)),
+          right: BorderSide(color: accentColor, width: 3.5), // Right border indicator for RTL
+          top: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.25)),
+          left: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.25)),
+          bottom: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.25)),
         ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.02),
-            blurRadius: 6,
+            blurRadius: 4,
             offset: const Offset(0, 2),
           ),
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+        padding: const EdgeInsets.all(12),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Top Row: Status Badge (Left) & Icon + Title (Right)
+            // Top Row: Status Badge (Left) & Title + Icon (Right)
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // Status Badge (Left)
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                   decoration: BoxDecoration(
                     color: accentColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(16),
                   ),
                   child: Text(
                     statusLabel,
                     style: TextStyle(
                       color: accentColor,
-                      fontSize: 10.5,
+                      fontSize: 10,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
 
-                const Spacer(),
+                const SizedBox(width: 8),
 
                 // Title & Icon (Right - RTL)
                 Expanded(
@@ -132,26 +131,27 @@ class TaskCard extends StatelessWidget {
                       Flexible(
                         child: Text(
                           task.title,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
+                            color: colorScheme.onSurface,
                           ),
                           textAlign: TextAlign.right,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: 6),
                       Container(
-                        padding: const EdgeInsets.all(6),
+                        padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
-                          color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.4),
-                          borderRadius: BorderRadius.circular(8),
+                          color: colorScheme.primary.withValues(alpha: 0.08),
+                          borderRadius: BorderRadius.circular(6),
                         ),
                         child: Icon(
-                          Icons.apartment_rounded,
-                          size: 16,
-                          color: colorScheme.onSurfaceVariant,
+                          Icons.assignment_outlined,
+                          size: 15,
+                          color: colorScheme.primary,
                         ),
                       ),
                     ],
@@ -159,6 +159,8 @@ class TaskCard extends StatelessWidget {
                 ),
               ],
             ),
+
+            const SizedBox(height: 8),
 
             // Middle Text Description
             Text(
@@ -169,11 +171,13 @@ class TaskCard extends StatelessWidget {
                 height: 1.3,
               ),
               textAlign: TextAlign.right,
-              maxLines: 1,
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
 
-            // Bottom Row: Time (Right) & Action Button (Left)
+            const SizedBox(height: 10),
+
+            // Bottom Row: Time Indicator (Right) & Action Button (Left)
             Row(
               children: [
                 // Primary Action Button (Left)
@@ -182,9 +186,9 @@ class TaskCard extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: accentColor,
                     foregroundColor: Colors.white,
-                    minimumSize: const Size(90, 34),
+                    minimumSize: const Size(82, 30),
                     padding: const EdgeInsets.symmetric(horizontal: 12),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     elevation: 0,
                   ),
                   child: Text(

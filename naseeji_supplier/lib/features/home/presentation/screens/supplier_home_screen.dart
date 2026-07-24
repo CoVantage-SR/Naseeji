@@ -41,14 +41,14 @@ class SupplierHomeScreen extends ConsumerWidget {
                 child: QuickMetricsOverviewWidget(),
               ),
 
-              // 4. Today Tasks Section (Task Cards)
-              SliverToBoxAdapter(
-                child: TodayTasksSection(),
-              ),
-
-              // 5. Quick Shortcuts Grid & Sales Performance Chart Card
+              // 4. Quick Shortcuts Grid & Sales Performance Chart Card (Placed ABOVE Today Tasks as requested)
               SliverToBoxAdapter(
                 child: QuickShortcutsAndChartWidget(),
+              ),
+
+              // 5. Today Tasks Section (Task Cards)
+              SliverToBoxAdapter(
+                child: TodayTasksSection(),
               ),
 
               // 6. Notifications Bottom Banner
