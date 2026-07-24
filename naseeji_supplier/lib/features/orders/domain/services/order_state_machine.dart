@@ -19,7 +19,7 @@ enum OrderStatus {
 class OrderStateMachine {
   static const Map<OrderStatus, Set<OrderStatus>> _allowedTransitions = {
     OrderStatus.rfqCreated: {OrderStatus.quotationSent, OrderStatus.rejected, OrderStatus.cancelled, OrderStatus.expired},
-    OrderStatus.quotationSent: {OrderStatus.negotiation, OrderStatus.cancelled, OrderStatus.expired},
+    OrderStatus.quotationSent: {OrderStatus.negotiation, OrderStatus.finalAgreement, OrderStatus.cancelled, OrderStatus.expired},
     OrderStatus.negotiation: {OrderStatus.finalAgreement, OrderStatus.cancelled, OrderStatus.dispute},
     OrderStatus.finalAgreement: {OrderStatus.preparing, OrderStatus.cancelled},
     OrderStatus.preparing: {OrderStatus.factoryReview, OrderStatus.dispute, OrderStatus.cancelled},

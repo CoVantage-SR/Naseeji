@@ -3,11 +3,68 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/features/deals/domain/entities/deal_model.dart';
 import 'package:naseeji_supplier/features/deals/presentation/controllers/deals_controller.dart';
+import 'package:naseeji_supplier/features/messages/presentation/controllers/deal_workspace_controller.dart';
 
 class QuickActionsWidget extends ConsumerWidget {
   final DealModel deal;
 
   const QuickActionsWidget({super.key, required this.deal});
+
+  void _showSubmitQuotationSheet(BuildContext context, WidgetRef ref) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) => _SubmitQuotationModal(
+        deal: deal,
+        onSubmit: ({
+          required double unitPrice,
+          required int quantity,
+          required String productionLeadTime,
+          required String validityPeriod,
+          required String paymentTerms,
+          required String deliveryTerms,
+          String? notes,
+        }) async {
+          final controller = ref.read(dealWorkspaceControllerProvider(deal.id).notifier);
+          final success = await controller.submitNewOfferVersion(
+            unitPrice: unitPrice,
+            quantity: quantity,
+            productionLeadTime: productionLeadTime,
+            validityPeriod: validityPeriod,
+            paymentTerms: paymentTerms,
+            deliveryTerms: deliveryTerms,
+            notes: notes,
+          );
+
+          if (context.mounted) {
+            if (success) {
+              ref.read(dealsControllerProvider.notifier).updateDealStatus(deal.id, DealStatus.quotationSent);
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('تم إرسال عرض السعر الأول (V1) بنجاح 🟢 وفي انتظار رد أو طلب تفاوض من المصنع.'),
+                  backgroundColor: Colors.green,
+                  duration: Duration(seconds: 4),
+                ),
+              );
+              // DO NOT NAVIGATE TO CHAT HERE!
+              // The system waits until the Factory initiates negotiation (Counter Offer) before enabling chat/negotiation.
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('حدث خطأ أثناء إرسال عرض السعر'),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+          }
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,45 +79,70 @@ class QuickActionsWidget extends ConsumerWidget {
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
-            offset: const Offset(0, -2),
+            offset: const Offset(0, -3),
           ),
         ],
         border: Border(
-          top: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.5)),
+          top: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.4)),
         ),
       ),
       child: SafeArea(
         child: Row(
           children: [
-            // Direct Button to navigate to Chat between Supplier and Factory
-            IconButton(
-              icon: const Icon(Icons.chat_rounded, color: Color(0xFF006B5F)),
-              tooltip: 'الانتقال إلى المحادثة المباشرة بين الطرفين 💬',
-              onPressed: () => context.push('/messages/chat?dealId=${deal.id}'),
+            // Chat Icon Shortcut Button
+            InkWell(
+              onTap: () => context.push('/messages/chat?dealId=${deal.id}'),
+              borderRadius: BorderRadius.circular(12),
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: colorScheme.primary.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(
+                  Icons.forum_outlined,
+                  color: colorScheme.primary,
+                  size: 22,
+                ),
+              ),
             ),
-            const SizedBox(width: 6),
+            const SizedBox(width: 10),
+
+            // Primary Action Button
             Expanded(
               child: _buildPrimaryActionButton(context, ref),
             ),
-            const SizedBox(width: 6),
-            PopupMenuButton<String>(
-              icon: Icon(Icons.more_vert_rounded, color: colorScheme.onSurface),
-              onSelected: (action) => _handleAction(context, ref, action),
-              itemBuilder: (context) => [
-                const PopupMenuItem(
-                  value: 'open_chat',
-                  child: Row(
-                    children: [
-                      Icon(Icons.chat_rounded, color: Color(0xFF006B5F), size: 18),
-                      SizedBox(width: 8),
-                      Text('الانتقال إلى المحادثة المباشرة 💬'),
-                    ],
+            const SizedBox(width: 10),
+
+            // More Options Popup Menu
+            Container(
+              decoration: BoxDecoration(
+                color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.4),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: PopupMenuButton<String>(
+                icon: Icon(Icons.more_vert_rounded, color: colorScheme.onSurface, size: 22),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                onSelected: (action) => _handleAction(context, ref, action),
+                itemBuilder: (context) => [
+                  const PopupMenuItem(
+                    value: 'open_chat',
+                    child: Row(
+                      children: [
+                        Icon(Icons.chat_rounded, color: Color(0xFF006B5F), size: 18),
+                        SizedBox(width: 8),
+                        Text('الانتقال إلى المحادثة المباشرة 💬'),
+                      ],
+                    ),
                   ),
-                ),
-                const PopupMenuItem(value: 'contact_support', child: Text('الدعم الفني والنزاعات')),
-                const PopupMenuItem(value: 'download_pdf', child: Text('تحميل العقد PDF')),
-                const PopupMenuItem(value: 'cancel_deal', child: Text('إلغاء الصفقة', style: TextStyle(color: Colors.red))),
-              ],
+                  const PopupMenuItem(value: 'contact_support', child: Text('الدعم الفني والنزاعات')),
+                  const PopupMenuItem(value: 'download_pdf', child: Text('تحميل وثيقة الصفقة PDF')),
+                  const PopupMenuItem(
+                    value: 'cancel_deal',
+                    child: Text('إلغاء الصفقة', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -75,25 +157,74 @@ class QuickActionsWidget extends ConsumerWidget {
       case DealStatus.newDeal:
       case DealStatus.waitingSupplierReview:
         return ElevatedButton.icon(
-          onPressed: () => context.push('/messages/chat?dealId=${deal.id}'),
-          icon: const Icon(Icons.send_rounded, size: 16),
-          label: const Text('تقديم عرض السعر الأول (Quotation)'),
-          style: ElevatedButton.styleFrom(backgroundColor: colorScheme.primary, foregroundColor: Colors.white),
+          onPressed: () => _showSubmitQuotationSheet(context, ref),
+          icon: const Icon(Icons.send_rounded, size: 18),
+          label: const Text(
+            'تقديم عرض السعر الأول (V1)',
+            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+          ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: colorScheme.primary,
+            foregroundColor: Colors.white,
+            minimumSize: const Size(0, 48),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            elevation: 1,
+          ),
         );
 
       case DealStatus.quotationSent:
-        return OutlinedButton.icon(
-          onPressed: () => context.push('/messages/chat?dealId=${deal.id}'),
-          icon: const Icon(Icons.edit_outlined, size: 16),
-          label: const Text('تم إرسال العرض (تعديل العرض الحالي)'),
+        return ElevatedButton.icon(
+          onPressed: () async {
+            // Trigger simulation: Factory sends a counter offer to start negotiation
+            final controller = ref.read(dealWorkspaceControllerProvider(deal.id).notifier);
+            await controller.sendFactoryCounterOffer(
+              unitPrice: 42.0,
+              quantity: 10000,
+              productionLeadTime: '٥ أيام عمل',
+              paymentTerms: '٤٠٪ مقدم + ٦٠٪ عند الاستلام بالضمين',
+              deliveryTerms: 'تسليم بمستودع المصنع',
+              notes: 'طلب المصنع تخفيض سعر الكجم إلى 42 ج.م وتقليل مدة التسليم إلى 5 أيام.',
+            );
+            ref.read(dealsControllerProvider.notifier).updateDealStatus(deal.id, DealStatus.negotiation);
+
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('قام المصنع بطلب تعديل العرض! 🔔 تم تفعيل الشات ومركز المفاوضات للمورد.'),
+                  backgroundColor: Colors.purple,
+                  duration: Duration(seconds: 4),
+                ),
+              );
+              context.push('/messages/chat?dealId=${deal.id}');
+            }
+          },
+          icon: const Icon(Icons.hourglass_bottom_rounded, size: 18),
+          label: const Text(
+            'في انتظار طلب تفاوض المصنع ⏳ (انقر للمحاكاة)',
+            style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold),
+          ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.amber.shade800,
+            foregroundColor: Colors.white,
+            minimumSize: const Size(0, 48),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          ),
         );
 
       case DealStatus.negotiation:
         return ElevatedButton.icon(
           onPressed: () => context.push('/messages/chat?dealId=${deal.id}'),
-          icon: const Icon(Icons.handshake_outlined, size: 16),
-          label: const Text('الرد على عرض التفاوض المقابل'),
-          style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF8B5CF6), foregroundColor: Colors.white),
+          icon: const Icon(Icons.rule_folder_outlined, size: 18),
+          label: const Text(
+            'الرد على طلب تعديل المصنع',
+            style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.bold),
+          ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.purple.shade700,
+            foregroundColor: Colors.white,
+            minimumSize: const Size(0, 48),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          ),
         );
 
       case DealStatus.agreementPending:
@@ -102,9 +233,17 @@ class QuickActionsWidget extends ConsumerWidget {
             ref.read(dealsControllerProvider.notifier).signAgreement(deal.id);
             context.push('/messages/chat?dealId=${deal.id}');
           },
-          icon: const Icon(Icons.draw_rounded, size: 16),
-          label: const Text('توقيع العقد الإلكتروني رسمياً ✍️'),
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.green.shade700, foregroundColor: Colors.white),
+          icon: const Icon(Icons.draw_rounded, size: 18),
+          label: const Text(
+            'توقيع العقد الإلكتروني ✍️',
+            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+          ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green.shade700,
+            foregroundColor: Colors.white,
+            minimumSize: const Size(0, 48),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          ),
         );
 
       case DealStatus.signed:
@@ -113,25 +252,49 @@ class QuickActionsWidget extends ConsumerWidget {
             ref.read(dealsControllerProvider.notifier).updateDealStatus(deal.id, DealStatus.production);
             context.push('/messages/chat?dealId=${deal.id}');
           },
-          icon: const Icon(Icons.precision_manufacturing_outlined, size: 16),
-          label: const Text('البدء الفعلي لخطوط الإنتاج والتصنيع 🏭'),
-          style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF06B6D4), foregroundColor: Colors.white),
+          icon: const Icon(Icons.precision_manufacturing_outlined, size: 18),
+          label: const Text(
+            'بدء خطوط الإنتاج 🏭',
+            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+          ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF06B6D4),
+            foregroundColor: Colors.white,
+            minimumSize: const Size(0, 48),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          ),
         );
 
       case DealStatus.production:
         return ElevatedButton.icon(
           onPressed: () => context.push('/messages/chat?dealId=${deal.id}'),
-          icon: const Icon(Icons.sync_rounded, size: 16),
-          label: const Text('تحديث نسبة الإنجاز والإنتاج'),
-          style: ElevatedButton.styleFrom(backgroundColor: colorScheme.primary, foregroundColor: Colors.white),
+          icon: const Icon(Icons.sync_rounded, size: 18),
+          label: const Text(
+            'تحديث نسب الإنتاج والتصنيع',
+            style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.bold),
+          ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: colorScheme.primary,
+            foregroundColor: Colors.white,
+            minimumSize: const Size(0, 48),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          ),
         );
 
       case DealStatus.readyForDelivery:
         return ElevatedButton.icon(
           onPressed: () => context.push('/messages/chat?dealId=${deal.id}'),
-          icon: const Icon(Icons.local_shipping_outlined, size: 16),
-          label: const Text('تحديد طريقة وتفاصيل التسليم'),
-          style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF14B8A6), foregroundColor: Colors.white),
+          icon: const Icon(Icons.local_shipping_outlined, size: 18),
+          label: const Text(
+            'تحديد بيانات وتسليم الشحنة',
+            style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.bold),
+          ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFF14B8A6),
+            foregroundColor: Colors.white,
+            minimumSize: const Size(0, 48),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          ),
         );
 
       case DealStatus.delivering:
@@ -140,17 +303,33 @@ class QuickActionsWidget extends ConsumerWidget {
             ref.read(dealsControllerProvider.notifier).updateDealStatus(deal.id, DealStatus.qualityInspection);
             context.push('/messages/chat?dealId=${deal.id}');
           },
-          icon: const Icon(Icons.fact_check_outlined, size: 16),
-          label: const Text('تأكيد وصول الشحنة وبدء فحص الجودة'),
-          style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFFEAB308), foregroundColor: Colors.black),
+          icon: const Icon(Icons.fact_check_outlined, size: 18),
+          label: const Text(
+            'تأكيد الوصول وبدء الفحص',
+            style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.bold),
+          ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFFEAB308),
+            foregroundColor: Colors.black,
+            minimumSize: const Size(0, 48),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          ),
         );
 
       case DealStatus.qualityInspection:
         return ElevatedButton.icon(
           onPressed: () => context.push('/messages/chat?dealId=${deal.id}'),
-          icon: const Icon(Icons.check_circle_outline, size: 16),
-          label: const Text('مراجعة نتيجة الفحص والمعايرة المعملية'),
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.green, foregroundColor: Colors.white),
+          icon: const Icon(Icons.check_circle_outline, size: 18),
+          label: const Text(
+            'مراجعة نتائج الجودة المعملية',
+            style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.bold),
+          ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.white,
+            minimumSize: const Size(0, 48),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          ),
         );
 
       case DealStatus.paymentPending:
@@ -159,24 +338,40 @@ class QuickActionsWidget extends ConsumerWidget {
             ref.read(dealsControllerProvider.notifier).releasePayment(deal.id);
             context.push('/messages/chat?dealId=${deal.id}');
           },
-          icon: const Icon(Icons.account_balance_wallet_outlined, size: 16),
-          label: const Text('الإفراج عن الدفعة وتحويلها للمحفظة 💰'),
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.green.shade800, foregroundColor: Colors.white),
+          icon: const Icon(Icons.account_balance_wallet_outlined, size: 18),
+          label: const Text(
+            'الإفراج عن الدفعة للمحفظة 💰',
+            style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+          ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green.shade800,
+            foregroundColor: Colors.white,
+            minimumSize: const Size(0, 48),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          ),
         );
 
       case DealStatus.completed:
         return OutlinedButton.icon(
           onPressed: () => context.push('/messages/chat?dealId=${deal.id}'),
-          icon: const Icon(Icons.star_outline_rounded, size: 16),
-          label: const Text('تقييم المصنع والمراجعة ⭐'),
+          icon: const Icon(Icons.star_outline_rounded, size: 18),
+          label: const Text('تقييم المصنع ⭐', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+          style: OutlinedButton.styleFrom(
+            minimumSize: const Size(0, 48),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          ),
         );
 
       case DealStatus.cancelled:
       case DealStatus.dispute:
         return OutlinedButton.icon(
           onPressed: () => context.push('/messages/chat?dealId=${deal.id}'),
-          icon: const Icon(Icons.gavel_outlined, size: 16),
-          label: const Text('متابعة قسم النزاعات'),
+          icon: const Icon(Icons.gavel_outlined, size: 18),
+          label: const Text('متابعة قسم النزاعات', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+          style: OutlinedButton.styleFrom(
+            minimumSize: const Size(0, 48),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          ),
         );
     }
   }
@@ -194,5 +389,223 @@ class QuickActionsWidget extends ConsumerWidget {
         SnackBar(content: Text('تم تنفيذ الإجراء: $action')),
       );
     }
+  }
+}
+
+// ─── Modal Sheet for Submitting Quotation V1 / New Version ─────────────────
+class _SubmitQuotationModal extends StatefulWidget {
+  final DealModel deal;
+  final Function({
+    required double unitPrice,
+    required int quantity,
+    required String productionLeadTime,
+    required String validityPeriod,
+    required String paymentTerms,
+    required String deliveryTerms,
+    String? notes,
+  }) onSubmit;
+
+  const _SubmitQuotationModal({
+    required this.deal,
+    required this.onSubmit,
+  });
+
+  @override
+  State<_SubmitQuotationModal> createState() => _SubmitQuotationModalState();
+}
+
+class _SubmitQuotationModalState extends State<_SubmitQuotationModal> {
+  late final TextEditingController _priceCtrl;
+  late final TextEditingController _qtyCtrl;
+  late final TextEditingController _leadTimeCtrl;
+  late final TextEditingController _validityCtrl;
+  late final TextEditingController _paymentCtrl;
+  late final TextEditingController _deliveryCtrl;
+  late final TextEditingController _notesCtrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _priceCtrl = TextEditingController(text: widget.deal.product.unitPrice.toStringAsFixed(0));
+    _qtyCtrl = TextEditingController(text: widget.deal.product.quantity.toString());
+    _leadTimeCtrl = TextEditingController(text: '٧ أيام عمل');
+    _validityCtrl = TextEditingController(text: '١٥ يوم من تاريخ العرض');
+    _paymentCtrl = TextEditingController(text: '٥٠٪ دفعة مقدمة + ٥٠٪ عند الاستلام بالحساب الضامن');
+    _deliveryCtrl = TextEditingController(text: 'تسليم بمستودع المصنع مباشرة');
+    _notesCtrl = TextEditingController(text: 'العرض شامل التعبئة والتغليف واختبارات الجودة ISO.');
+  }
+
+  @override
+  void dispose() {
+    _priceCtrl.dispose();
+    _qtyCtrl.dispose();
+    _leadTimeCtrl.dispose();
+    _validityCtrl.dispose();
+    _paymentCtrl.dispose();
+    _deliveryCtrl.dispose();
+    _notesCtrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: 16,
+          right: 16,
+          top: 16,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: colorScheme.primary.withValues(alpha: 0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(Icons.request_quote_outlined, color: colorScheme.primary, size: 22),
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    'تقديم عرض السعر الأول (Quotation V1)',
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14.5,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
+              Text(
+                'أدخل بنود عرض السعر لطلب المصنع (${widget.deal.factoryInfo.name}). سيتم إرساله رسمياً وبدء الصفقة.',
+                style: TextStyle(fontSize: 11, color: colorScheme.onSurfaceVariant),
+              ),
+              const SizedBox(height: 16),
+
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _priceCtrl,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: 'سعر الوحدة (ج.م)',
+                        prefixIcon: Icon(Icons.sell_outlined, size: 18),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: TextField(
+                      controller: _qtyCtrl,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: 'الكمية الإجمالية',
+                        prefixIcon: Icon(Icons.shopping_bag_outlined, size: 18),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _leadTimeCtrl,
+                      decoration: const InputDecoration(
+                        labelText: 'مدة الإنتاج والتصنيع',
+                        prefixIcon: Icon(Icons.timer_outlined, size: 18),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: TextField(
+                      controller: _validityCtrl,
+                      decoration: const InputDecoration(
+                        labelText: 'مدة صلاحية العرض',
+                        prefixIcon: Icon(Icons.event_available_outlined, size: 18),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+
+              TextField(
+                controller: _paymentCtrl,
+                decoration: const InputDecoration(
+                  labelText: 'طريقة وشروط الدفع',
+                  prefixIcon: Icon(Icons.payment_outlined, size: 18),
+                ),
+              ),
+              const SizedBox(height: 10),
+
+              TextField(
+                controller: _deliveryCtrl,
+                decoration: const InputDecoration(
+                  labelText: 'طريقة ومكان التسليم',
+                  prefixIcon: Icon(Icons.local_shipping_outlined, size: 18),
+                ),
+              ),
+              const SizedBox(height: 10),
+
+              TextField(
+                controller: _notesCtrl,
+                maxLines: 2,
+                decoration: const InputDecoration(
+                  labelText: 'ملاحظات وشروط إضافية للمصنع',
+                  prefixIcon: Icon(Icons.note_alt_outlined, size: 18),
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    final price = double.tryParse(_priceCtrl.text) ?? widget.deal.product.unitPrice;
+                    final qty = int.tryParse(_qtyCtrl.text) ?? widget.deal.product.quantity;
+
+                    widget.onSubmit(
+                      unitPrice: price,
+                      quantity: qty,
+                      productionLeadTime: _leadTimeCtrl.text.trim(),
+                      validityPeriod: _validityCtrl.text.trim(),
+                      paymentTerms: _paymentCtrl.text.trim(),
+                      deliveryTerms: _deliveryCtrl.text.trim(),
+                      notes: _notesCtrl.text.trim(),
+                    );
+
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(Icons.send_rounded, size: 18),
+                  label: const Text('اعتماد وإرسال عرض السعر الأول (V1)'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: colorScheme.primary,
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size(0, 46),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
