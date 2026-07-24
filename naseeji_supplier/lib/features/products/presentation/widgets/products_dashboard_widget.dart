@@ -15,10 +15,10 @@ class ProductsDashboardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final totalCount = products.length > 0 ? 128 : 0; // Or calculate from products
-    final publishedCount = products.where((p) => p.status == ProductStatus.published).length > 0 ? 86 : 0;
-    final draftsCount = products.where((p) => p.status == ProductStatus.draft).length > 0 ? 28 : 0;
-    final rejectedCount = 14;
+    final totalCount = products.isNotEmpty ? 128 : 0;
+    final publishedCount = products.where((p) => p.status == ProductStatus.published).isNotEmpty ? 86 : 0;
+    final draftsCount = products.where((p) => p.status == ProductStatus.draft).isNotEmpty ? 28 : 0;
+    const rejectedCount = 14;
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
