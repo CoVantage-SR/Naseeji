@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/features/deals/domain/entities/deal_model.dart';
 import 'package:naseeji_supplier/features/deals/presentation/controllers/deals_controller.dart';
+import 'package:naseeji_supplier/features/deals/presentation/providers/deals_providers.dart';
 import 'package:naseeji_supplier/features/messages/presentation/controllers/deal_workspace_controller.dart';
 
 class QuickActionsWidget extends ConsumerWidget {
@@ -28,8 +29,8 @@ class QuickActionsWidget extends ConsumerWidget {
           required String deliveryTerms,
           String? notes,
         }) async {
-          final controller = ref.read(dealWorkspaceControllerProvider(deal.id).notifier);
-          final success = await controller.submitNewOfferVersion(
+          final workspaceController = ref.read(dealWorkspaceControllerProvider(deal.id).notifier);
+          final success = await workspaceController.submitNewOfferVersion(
             unitPrice: unitPrice,
             quantity: quantity,
             productionLeadTime: productionLeadTime,
@@ -39,19 +40,28 @@ class QuickActionsWidget extends ConsumerWidget {
             notes: notes,
           );
 
+          await ref.read(dealsControllerProvider.notifier).sendQuotation(
+            dealId: deal.id,
+            unitPrice: unitPrice,
+            quantity: quantity,
+            productionDays: 7,
+            paymentTerms: paymentTerms,
+            notes: notes,
+          );
+          ref.read(dealsControllerProvider.notifier).updateDealStatus(deal.id, DealStatus.quotationSent);
+          ref.invalidate(dealDetailsProvider(deal.id));
+          ref.invalidate(dealsProvider);
+
           if (context.mounted) {
             if (success) {
-              ref.read(dealsControllerProvider.notifier).updateDealStatus(deal.id, DealStatus.quotationSent);
-
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('تم إرسال عرض السعر الأول (V1) بنجاح 🟢 وفي انتظار رد أو طلب تفاوض من المصنع.'),
-                  backgroundColor: Colors.green,
-                  duration: Duration(seconds: 4),
+              showDialog(
+                context: context,
+                builder: (ctx) => _InAppNotificationDialog(
+                  title: 'إشعار جديد: تم إرسال العرض V1 🔔',
+                  message:
+                      'تم تسجيل وإرسال عرض السعر الأول للمصنع (${deal.factoryInfo.name}) بقيمة ${(unitPrice * quantity).toStringAsFixed(0)} ج.م.\n\nالصفقة الآن في حالة: (في انتظار مراجعة ورد المصنع ⏳). سينفتح مركز التفاوض والشات فور طلب المصنع للتعديل.',
                 ),
               );
-              // DO NOT NAVIGATE TO CHAT HERE!
-              // The system waits until the Factory initiates negotiation (Counter Offer) before enabling chat/negotiation.
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -91,7 +101,23 @@ class QuickActionsWidget extends ConsumerWidget {
           children: [
             // Chat Icon Shortcut Button
             InkWell(
-              onTap: () => context.push('/messages/chat?dealId=${deal.id}'),
+              onTap: () {
+                if (deal.status == DealStatus.newDeal || deal.status == DealStatus.waitingSupplierReview) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('يرجى تقديم عرض السعر الأول (V1) أولاً للبدء في الصفقة 📄'),
+                    ),
+                  );
+                } else if (deal.status == DealStatus.quotationSent) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('عرض السعر مرسل وفي انتظار المصنع ⏳ الشات يتفعل عند طلب المصنع للتعديل.'),
+                    ),
+                  );
+                } else {
+                  context.push('/messages/chat?dealId=${deal.id}');
+                }
+              },
               borderRadius: BorderRadius.circular(12),
               child: Container(
                 padding: const EdgeInsets.all(12),
@@ -186,16 +212,21 @@ class QuickActionsWidget extends ConsumerWidget {
               notes: 'طلب المصنع تخفيض سعر الكجم إلى 42 ج.م وتقليل مدة التسليم إلى 5 أيام.',
             );
             ref.read(dealsControllerProvider.notifier).updateDealStatus(deal.id, DealStatus.negotiation);
+            ref.invalidate(dealDetailsProvider(deal.id));
 
             if (context.mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('قام المصنع بطلب تعديل العرض! 🔔 تم تفعيل الشات ومركز المفاوضات للمورد.'),
-                  backgroundColor: Colors.purple,
-                  duration: Duration(seconds: 4),
+              showDialog(
+                context: context,
+                builder: (ctx) => _InAppNotificationDialog(
+                  title: 'إشعار جديد: طلب تعديل المصنع 💬',
+                  message:
+                      'قام المصنع (${deal.factoryInfo.name}) بطلب تعديل العرض على السعر والكمية والخصم!\n\nتم فتح مركز المفاوضات والشات للمورد بنجاح.',
                 ),
-              );
-              context.push('/messages/chat?dealId=${deal.id}');
+              ).then((_) {
+                if (context.mounted) {
+                  context.push('/messages/chat?dealId=${deal.id}');
+                }
+              });
             }
           },
           icon: const Icon(Icons.hourglass_bottom_rounded, size: 18),
@@ -392,6 +423,71 @@ class QuickActionsWidget extends ConsumerWidget {
   }
 }
 
+// ─── System In-App Notification Alert Dialog ─────────────────────────────────
+class _InAppNotificationDialog extends StatelessWidget {
+  final String title;
+  final String message;
+
+  const _InAppNotificationDialog({
+    required this.title,
+    required this.message,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.green.shade50,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(Icons.notifications_active_rounded, color: Colors.green.shade700, size: 32),
+              ),
+              const SizedBox(height: 14),
+              Text(
+                title,
+                style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 10),
+              Text(
+                message,
+                style: TextStyle(fontSize: 12, color: colorScheme.onSurfaceVariant, height: 1.4),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => Navigator.pop(context),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: colorScheme.primary,
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size(0, 44),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  ),
+                  child: const Text('موافق (إغلاق الإشعار)'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 // ─── Modal Sheet for Submitting Quotation V1 / New Version ─────────────────
 class _SubmitQuotationModal extends StatefulWidget {
   final DealModel deal;
@@ -580,6 +676,8 @@ class _SubmitQuotationModalState extends State<_SubmitQuotationModal> {
                     final price = double.tryParse(_priceCtrl.text) ?? widget.deal.product.unitPrice;
                     final qty = int.tryParse(_qtyCtrl.text) ?? widget.deal.product.quantity;
 
+                    Navigator.pop(context);
+
                     widget.onSubmit(
                       unitPrice: price,
                       quantity: qty,
@@ -589,8 +687,6 @@ class _SubmitQuotationModalState extends State<_SubmitQuotationModal> {
                       deliveryTerms: _deliveryCtrl.text.trim(),
                       notes: _notesCtrl.text.trim(),
                     );
-
-                    Navigator.pop(context);
                   },
                   icon: const Icon(Icons.send_rounded, size: 18),
                   label: const Text('اعتماد وإرسال عرض السعر الأول (V1)'),
