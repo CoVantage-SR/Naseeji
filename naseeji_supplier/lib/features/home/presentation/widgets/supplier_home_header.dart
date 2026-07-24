@@ -445,11 +445,11 @@ class SupplierHomeHeader extends ConsumerWidget {
                           alignment: Alignment.center,
                           children: [
                             SizedBox(
-                              width: 50,
-                              height: 50,
+                              width: 72,
+                              height: 72,
                               child: CircularProgressIndicator(
                                 value: ratio,
-                                strokeWidth: 4.5,
+                                strokeWidth: 5.5,
                                 backgroundColor: const Color(0xFFF1F5F9),
                                 color: const Color(0xFF2563EB),
                                 strokeCap: StrokeCap.round,
@@ -461,16 +461,16 @@ class SupplierHomeHeader extends ConsumerWidget {
                                 Text(
                                   '$used / $max',
                                   style: const TextStyle(
-                                    fontSize: 10.5,
+                                    fontSize: 13,
                                     fontWeight: FontWeight.bold,
                                     height: 1.1,
                                   ),
                                 ),
-                                const SizedBox(height: 1),
+                                const SizedBox(height: 2),
                                 Text(
                                   'منتج مستخدم',
                                   style: TextStyle(
-                                    fontSize: 8,
+                                    fontSize: 9.5,
                                     color: colorScheme.onSurfaceVariant,
                                   ),
                                 ),

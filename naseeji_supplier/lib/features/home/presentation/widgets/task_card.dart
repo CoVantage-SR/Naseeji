@@ -84,9 +84,6 @@ class TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
     final type = _getTaskStatusType();
     final accentColor = _getStatusColor(type);
     final statusBgColor = _getStatusBgColor(type);
@@ -94,153 +91,153 @@ class TaskCard extends StatelessWidget {
 
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: colorScheme.surface,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(14),
         border: Border(
-          right: BorderSide(color: accentColor, width: 4.5), // Right colored accent bar (RTL)
-          top: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.25)),
-          left: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.25)),
-          bottom: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.25)),
+          right: BorderSide(color: accentColor, width: 4.5), // Right accent bar in RTL
+          top: const BorderSide(color: Color(0xFFE2E8F0)),
+          left: const BorderSide(color: Color(0xFFE2E8F0)),
+          bottom: const BorderSide(color: Color(0xFFE2E8F0)),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.015),
+            color: Colors.black.withValues(alpha: 0.02),
             blurRadius: 4,
-            offset: const Offset(0, 1),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // ─── 1. Rightmost Icon (Building Circle in RTL) ────────────────
-            Container(
-              width: 38,
-              height: 38,
-              decoration: const BoxDecoration(
-                color: Color(0xFFEFF6FF),
-                shape: BoxShape.circle,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // ─── 1. Top Header Row: Building Icon + Title + Priority Tag ───────
+          Row(
+            children: [
+              // Building Circle Icon (Far Right in RTL)
+              Container(
+                width: 36,
+                height: 36,
+                decoration: const BoxDecoration(
+                  color: Color(0xFFEFF6FF),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.apartment_rounded,
+                  color: Color(0xFF2563EB),
+                  size: 18,
+                ),
               ),
-              child: const Icon(
-                Icons.apartment_rounded,
-                color: Color(0xFF2563EB),
-                size: 20,
+
+              const SizedBox(width: 8),
+
+              // Task Title
+              Expanded(
+                child: Text(
+                  task.title,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF0F172A),
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
+
+              const SizedBox(width: 6),
+
+              // Status Tag Badge (Far Left in RTL)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  color: statusBgColor,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  statusLabel,
+                  style: TextStyle(
+                    color: accentColor,
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          // ─── 2. Middle Row: Task Description (If present) ─────────────────
+          if (task.description != null && task.description!.isNotEmpty) ...[
+            const SizedBox(height: 6),
+            Text(
+              task.description!,
+              style: const TextStyle(
+                fontSize: 11,
+                color: Color(0xFF475569),
+                height: 1.3,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
+          ],
 
-            const SizedBox(width: 10),
+          const SizedBox(height: 10),
 
-            // ─── 2. Center Content (Status Tag, Title, Subtitle) ────────────
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
+          // ─── 3. Bottom Row: Time Indicator (Right) & Action Button (Left) ─
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Time Indicator (Right in RTL)
+              Row(
                 children: [
-                  // Status Tag
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: statusBgColor,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      statusLabel,
-                      style: TextStyle(
-                        color: accentColor,
-                        fontSize: 9.5,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                  const Icon(
+                    Icons.access_time_rounded,
+                    size: 13,
+                    color: Color(0xFF64748B),
                   ),
-
-                  const SizedBox(height: 4),
-
-                  // Title Text
+                  const SizedBox(width: 4),
                   Text(
-                    task.title,
-                    style: TextStyle(
-                      fontSize: 12.5,
-                      fontWeight: FontWeight.bold,
-                      color: colorScheme.onSurface,
+                    task.deadlineFormatted,
+                    style: const TextStyle(
+                      fontSize: 11,
+                      color: Color(0xFF64748B),
+                      fontWeight: FontWeight.w500,
                     ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-
-                  const SizedBox(height: 2),
-
-                  // Description Text
-                  Text(
-                    task.description ?? '',
-                    style: TextStyle(
-                      fontSize: 10,
-                      color: colorScheme.onSurfaceVariant,
-                      height: 1.3,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
-            ),
 
-            const SizedBox(width: 8),
-
-            // ─── 3. Leftmost Column (Time Indicator & Action Button) ────────
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.access_time_rounded,
-                      size: 12,
-                      color: colorScheme.onSurfaceVariant,
+              // Action Button (Left in RTL)
+              Material(
+                color: accentColor,
+                borderRadius: BorderRadius.circular(8),
+                child: InkWell(
+                  onTap: onAction,
+                  borderRadius: BorderRadius.circular(8),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.arrow_back_ios_new_rounded, size: 10, color: Colors.white),
+                        const SizedBox(width: 4),
+                        Text(
+                          task.actionLabel,
+                          style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 4),
-                    Text(
-                      task.deadlineFormatted,
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 14),
-
-                ElevatedButton(
-                  onPressed: onAction,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: accentColor,
-                    foregroundColor: Colors.white,
-                    minimumSize: const Size(80, 28),
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                    elevation: 0,
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.arrow_back_ios_new_rounded, size: 9, color: Colors.white),
-                      const SizedBox(width: 4),
-                      Text(
-                        task.actionLabel,
-                        style: const TextStyle(fontSize: 10.5, fontWeight: FontWeight.bold),
-                      ),
-                    ],
                   ),
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

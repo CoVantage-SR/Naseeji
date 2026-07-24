@@ -154,8 +154,8 @@ class RouterNotifier extends ChangeNotifier {
   }
 }
 
-@riverpod
-GoRouter goRouter(GoRouterRef ref) {
+@Riverpod(keepAlive: true)
+GoRouter goRouter(Ref ref) {
   final notifier = RouterNotifier(ref);
 
   return GoRouter(
@@ -250,8 +250,7 @@ GoRouter goRouter(GoRouterRef ref) {
               GoRoute(
                 path: '/home',
                 name: 'home',
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: HomeScreen()),
+                builder: (context, state) => const HomeScreen(),
               ),
             ],
           ),
@@ -261,8 +260,7 @@ GoRouter goRouter(GoRouterRef ref) {
               GoRoute(
                 path: '/products',
                 name: 'products',
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: ProductsModuleScreen()),
+                builder: (context, state) => const ProductsModuleScreen(),
               ),
             ],
           ),
@@ -272,8 +270,7 @@ GoRouter goRouter(GoRouterRef ref) {
               GoRoute(
                 path: '/deals',
                 name: 'deals',
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: DealsDashboardScreen()),
+                builder: (context, state) => const DealsDashboardScreen(),
               ),
             ],
           ),
@@ -283,8 +280,7 @@ GoRouter goRouter(GoRouterRef ref) {
               GoRoute(
                 path: '/messages',
                 name: 'messages',
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: MessagesScreen()),
+                builder: (context, state) => const MessagesScreen(),
               ),
             ],
           ),
@@ -294,8 +290,7 @@ GoRouter goRouter(GoRouterRef ref) {
               GoRoute(
                 path: '/profile',
                 name: 'profile',
-                pageBuilder: (context, state) =>
-                    const NoTransitionPage(child: SupplierProfileScreen()),
+                builder: (context, state) => const SupplierProfileScreen(),
               ),
             ],
           ),
@@ -346,8 +341,7 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/shipping',
         name: 'shipping',
-        pageBuilder: (context, state) =>
-            const NoTransitionPage(child: ShippingDashboardScreen()),
+        builder: (context, state) => const ShippingDashboardScreen(),
       ),
       GoRoute(
         path: '/shipping/details/:id',
@@ -386,8 +380,7 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/agreements',
         name: 'agreements',
-        pageBuilder: (context, state) =>
-            const NoTransitionPage(child: AgreementsDashboardScreen()),
+        builder: (context, state) => const AgreementsDashboardScreen(),
       ),
       GoRoute(
         path: '/agreements/details/:id',
@@ -427,8 +420,7 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/orders',
         name: 'orders',
-        pageBuilder: (context, state) =>
-            const NoTransitionPage(child: DealsDashboardScreen()),
+        builder: (context, state) => const DealsDashboardScreen(),
       ),
       GoRoute(
         path: '/rfq-details',
@@ -629,8 +621,7 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/quotations',
         name: 'quotations',
-        pageBuilder: (context, state) =>
-            const NoTransitionPage(child: QuotationsDashboardScreen()),
+        builder: (context, state) => const QuotationsDashboardScreen(),
       ),
       GoRoute(
         path: '/quotations/create',
@@ -669,8 +660,7 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/customers',
         name: 'customers',
-        pageBuilder: (context, state) =>
-            const NoTransitionPage(child: CustomersDashboardScreen()),
+        builder: (context, state) => const CustomersDashboardScreen(),
       ),
       GoRoute(
         path: '/customers/details/:id',
@@ -701,8 +691,7 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/finance',
         name: 'finance-dashboard',
-        pageBuilder: (context, state) =>
-            const NoTransitionPage(child: FinancialDashboardScreen()),
+        builder: (context, state) => const FinancialDashboardScreen(),
       ),
       GoRoute(
         path: '/finance/transactions',
@@ -811,8 +800,7 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/subscription',
         name: 'subscription-dashboard',
-        pageBuilder: (context, state) =>
-            const NoTransitionPage(child: SubscriptionDashboardScreen()),
+        builder: (context, state) => const SubscriptionDashboardScreen(),
       ),
       GoRoute(
         path: '/subscription/plans',

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:naseeji_supplier/features/messages/domain/entities/deal_workspace_model.dart';
 import 'status_badge_widget.dart';
-import 'quick_actions_widget.dart';
 
 class ConversationHeaderWidget extends StatelessWidget {
   final DealWorkspaceModel workspace;
@@ -159,27 +158,7 @@ class ConversationHeaderWidget extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 6),
 
-          // Quick Actions Bar + Last Updated
-          Row(
-            children: [
-              Expanded(
-                child: QuickActionsWidget(
-                  onViewDealDetails: onViewDealDetails ?? () {},
-                  onViewProduct: onViewProduct ?? () {},
-                  onViewAgreement: onViewAgreement ?? () {},
-                  onViewFiles: onViewFiles ?? () {},
-                  onDownloadPdf: onDownloadPdf ?? () {},
-                ),
-              ),
-              const SizedBox(width: 6),
-              Text(
-                'تحديث: $formattedTime',
-                style: TextStyle(fontSize: 9.5, color: colorScheme.outline),
-              ),
-            ],
-          ),
         ],
       ),
     );
