@@ -226,8 +226,22 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> with Si
                   NegotiationTabWidget(
                     latestQuotation: workspace.latestQuotation,
                     quotationHistory: workspace.quotationHistory,
-                    onAccept: () => controller.acceptQuotation(),
-                    onReject: () => controller.rejectQuotation(),
+                    onAccept: () => controller.acceptCounterOffer(),
+                    onReject: () => controller.rejectCounterOffer(),
+                    onAskForClarification: () {
+                      controller.sendMessage('نحتاج للتواصل واستيضاح بعض التفاصيل بخصوص طلب التعديل المقدم من جانبكم قبل اتخاذ القرار النهائي.');
+                      _tabController.animateTo(0);
+                    },
+                    onSimulateFactoryCounterOffer: () {
+                      controller.sendFactoryCounterOffer(
+                        unitPrice: 42.0,
+                        quantity: 10000,
+                        productionLeadTime: '٥ أيام عمل',
+                        paymentTerms: '٤٠٪ مقدم حجز + ٦٠٪ عند استلام البضائع بالحساب الضامن',
+                        deliveryTerms: 'تسليم بمستودع المصنع بمباشرة',
+                        notes: 'يرجى تقديم خصم 4% وإنجاز الطلبية خلال 5 أيام عمل لزيادة حجم التعامل المستقبلي.',
+                      );
+                    },
                     onSubmitNewVersion: ({
                       required double unitPrice,
                       required int quantity,

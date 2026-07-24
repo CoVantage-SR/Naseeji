@@ -157,6 +157,42 @@ class DealWorkspaceController extends StateNotifier<DealWorkspaceState> {
     }
   }
 
+  Future<void> acceptCounterOffer() async {
+    if (state.workspace == null) return;
+    state = state.copyWith(isLoading: true);
+    await repository.acceptCounterOffer(dealId);
+    await loadWorkspace();
+  }
+
+  Future<void> rejectCounterOffer() async {
+    if (state.workspace == null) return;
+    state = state.copyWith(isLoading: true);
+    await repository.rejectCounterOffer(dealId);
+    await loadWorkspace();
+  }
+
+  Future<void> sendFactoryCounterOffer({
+    required double unitPrice,
+    required int quantity,
+    required String productionLeadTime,
+    required String paymentTerms,
+    required String deliveryTerms,
+    String? notes,
+  }) async {
+    if (state.workspace == null) return;
+    state = state.copyWith(isLoading: true);
+    await repository.sendFactoryCounterOffer(
+      dealId: dealId,
+      unitPrice: unitPrice,
+      quantity: quantity,
+      productionLeadTime: productionLeadTime,
+      paymentTerms: paymentTerms,
+      deliveryTerms: deliveryTerms,
+      notes: notes,
+    );
+    await loadWorkspace();
+  }
+
   Future<void> acceptQuotation() async {
     if (state.workspace == null) return;
     state = state.copyWith(isLoading: true);

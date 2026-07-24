@@ -7,7 +7,7 @@ import '../widgets/active_orders/active_orders_widget.dart';
 import '../widgets/rfq/recent_rfq_widget.dart';
 import '../widgets/finance/finance_summary_widget.dart';
 import '../widgets/subscription/subscription_card_widget.dart';
-import '../../subscription/presentation/widgets/subscription_dashboard_widget.dart';
+import 'package:naseeji_supplier/features/subscription/presentation/widgets/subscription_dashboard_widget.dart';
 import '../widgets/notifications/recent_notifications_widget.dart';
 import '../widgets/quick_actions/quick_actions_bottom_sheet.dart';
 import 'drawer/navigation_drawer_view.dart';

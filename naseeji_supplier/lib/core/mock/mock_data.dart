@@ -472,7 +472,7 @@ class MockDatabase {
 
     addMessage(
       dealId: dealId,
-      text: 'تم إرسال عرض سعر جديد (الإصدار رقم $nextVersion - Version $nextVersion) بقيمة ${(unitPrice * quantity).toStringAsFixed(0)} ج.م',
+      text: 'قام المورد بإرسال عرض سعر جديد (V$nextVersion) بقيمة ${(unitPrice * quantity).toStringAsFixed(0)} ج.م',
       senderId: 'system',
       senderName: 'النظام',
       isMe: false,
@@ -488,6 +488,261 @@ class MockDatabase {
         timestamp: DateTime.now(),
       ),
     );
+
+    // Add Timeline Event
+    final timeline = timelines[dealId];
+    if (timeline != null) {
+      final steps = List<DealTimelineStep>.from(timeline.steps);
+      steps.add(
+        DealTimelineStep(
+          stepIndex: steps.length,
+          title: 'قام المورد بإرسال عرض سعر جديد (V$nextVersion)',
+          subtitle: 'عرض سعر بـ ${(unitPrice * quantity).toStringAsFixed(0)} ج.م في انتظار المصنع',
+          isCompleted: true,
+          isCurrent: true,
+        ),
+      );
+      timelines[dealId] = TimelineMock(
+        dealId: dealId,
+        currentStepIndex: steps.length - 1,
+        steps: steps,
+      );
+    }
+  }
+
+  /// 3b. Factory Counter Offer Trigger (Factory Initiated Negotiation)
+  static void submitFactoryCounterOffer({
+    required String dealId,
+    required double unitPrice,
+    required int quantity,
+    required String productionLeadTime,
+    required String paymentTerms,
+    required String deliveryTerms,
+    String? notes,
+  }) {
+    final existingQuos = quotations.where((q) => q.dealId == dealId).toList();
+    final nextVersion = existingQuos.length + 1;
+
+    final counterQuo = QuotationMock(
+      quotationId: 'QUO-8840-V$nextVersion',
+      dealId: dealId,
+      versionNumber: nextVersion,
+      unitPrice: unitPrice,
+      totalPrice: unitPrice * quantity,
+      quantity: quantity,
+      moq: 500,
+      productionLeadTime: productionLeadTime,
+      validityPeriod: '١٠ أيام من طلب التعديل',
+      paymentTerms: paymentTerms,
+      deliveryTerms: deliveryTerms,
+      expectedDeliveryDate: DateTime.now().add(const Duration(days: 7)),
+      notes: notes ?? 'قام المصنع بطلب تعديل العرض على السعر والكمية والشروط.',
+      offerStatus: OfferStatus.counterOffer,
+      createdAt: DateTime.now(),
+      createdByRole: 'المصنع',
+    );
+
+    quotations.add(counterQuo);
+
+    // Update Deal Status to negotiating
+    final dealIndex = deals.indexWhere((d) => d.dealId == dealId);
+    if (dealIndex != -1) {
+      final oldDeal = deals[dealIndex];
+      deals[dealIndex] = DealMock(
+        dealId: oldDeal.dealId,
+        orderId: oldDeal.orderId,
+        rfqId: oldDeal.rfqId,
+        productId: oldDeal.productId,
+        supplierId: oldDeal.supplierId,
+        productName: oldDeal.productName,
+        dealValue: unitPrice * quantity,
+        totalQuantity: quantity,
+        factoryName: oldDeal.factoryName,
+        factoryAvatarUrl: oldDeal.factoryAvatarUrl,
+        isFactoryOnline: oldDeal.isFactoryOnline,
+        isFactoryVerified: oldDeal.isFactoryVerified,
+        currentStatus: DealStatus.negotiating,
+        lastUpdated: DateTime.now(),
+      );
+    }
+
+    addMessage(
+      dealId: dealId,
+      text: 'قام المصنع بطلب تعديل العرض.',
+      senderId: 'system',
+      senderName: 'النظام',
+      isMe: false,
+      isSystemNotification: true,
+    );
+
+    notifications.add(
+      NotificationMock(
+        id: 'NOTIF-${notifications.length + 1}',
+        dealId: dealId,
+        title: 'طلب تعديل جديد من المصنع 💬',
+        body: 'قام المصنع بطلب تعديل العرض للصفقة $dealId.',
+        timestamp: DateTime.now(),
+      ),
+    );
+
+    final timeline = timelines[dealId];
+    if (timeline != null) {
+      final steps = List<DealTimelineStep>.from(timeline.steps);
+      steps.add(
+        const DealTimelineStep(
+          stepIndex: 3,
+          title: 'قام المصنع بطلب تعديل العرض',
+          subtitle: 'طلب المصنع تعديل السعر والكمية وتفاصيل الشروط',
+          isCompleted: true,
+          isCurrent: true,
+        ),
+      );
+      timelines[dealId] = TimelineMock(
+        dealId: dealId,
+        currentStepIndex: steps.length - 1,
+        steps: steps,
+      );
+    }
+  }
+
+  /// 3c. Supplier Accepts Counter Offer
+  static void supplierAcceptCounterOffer(String dealId) {
+    final dealIndex = deals.indexWhere((d) => d.dealId == dealId);
+    if (dealIndex != -1) {
+      final oldDeal = deals[dealIndex];
+      deals[dealIndex] = DealMock(
+        dealId: oldDeal.dealId,
+        orderId: oldDeal.orderId,
+        rfqId: oldDeal.rfqId,
+        productId: oldDeal.productId,
+        supplierId: oldDeal.supplierId,
+        productName: oldDeal.productName,
+        dealValue: oldDeal.dealValue,
+        totalQuantity: oldDeal.totalQuantity,
+        factoryName: oldDeal.factoryName,
+        factoryAvatarUrl: oldDeal.factoryAvatarUrl,
+        isFactoryOnline: oldDeal.isFactoryOnline,
+        isFactoryVerified: oldDeal.isFactoryVerified,
+        currentStatus: DealStatus.agreed,
+        lastUpdated: DateTime.now(),
+      );
+    }
+
+    agreements.add(
+      AgreementMock(
+        agreementId: 'AGR-${agreements.length + 9921}',
+        dealId: dealId,
+        finalTotalPrice: getDealById(dealId)?.dealValue ?? 430000.0,
+        finalQuantity: getDealById(dealId)?.totalQuantity ?? 10000,
+        deliveryDate: '٢٨ يوليو ٢٠٢٦',
+        pickupLocation: 'مخزن المحلة الكبرى - المنطقة الصناعية الأولى',
+        paymentMethod: 'نظام الدفع الضامن المنفذ عبر المنصة (Escrow)',
+        status: 'معتمد رسمياً وموقع من الطرفين 🟢',
+        isApprovedBySupplier: true,
+        isApprovedByFactory: true,
+        approvedAt: DateTime.now(),
+      ),
+    );
+
+    addMessage(
+      dealId: dealId,
+      text: 'وافق المورد على عرض التعديل المقدم من المصنع وتم اعتماد الاتفاق 🟢',
+      senderId: 'system',
+      senderName: 'النظام',
+      isMe: false,
+      isSystemNotification: true,
+    );
+
+    notifications.add(
+      NotificationMock(
+        id: 'NOTIF-${notifications.length + 1}',
+        dealId: dealId,
+        title: 'تم قبول عرض التعديل وسريان الاتفاق!',
+        body: 'وافق المورد على عرض التعديل المقدم من المصنع وتم إنشاء العقد الإلكتروني.',
+        timestamp: DateTime.now(),
+      ),
+    );
+
+    final timeline = timelines[dealId];
+    if (timeline != null) {
+      final steps = List<DealTimelineStep>.from(timeline.steps);
+      steps.add(
+        const DealTimelineStep(
+          stepIndex: 4,
+          title: 'وافق المورد على عرض التعديل المقدم من المصنع',
+          subtitle: 'تم اعتماد العقد الإلكتروني والانتقال للإنتاج',
+          isCompleted: true,
+          isCurrent: true,
+        ),
+      );
+      timelines[dealId] = TimelineMock(
+        dealId: dealId,
+        currentStepIndex: steps.length - 1,
+        steps: steps,
+      );
+    }
+  }
+
+  /// 3d. Supplier Rejects Counter Offer
+  static void supplierRejectCounterOffer(String dealId) {
+    final dealIndex = deals.indexWhere((d) => d.dealId == dealId);
+    if (dealIndex != -1) {
+      final oldDeal = deals[dealIndex];
+      deals[dealIndex] = DealMock(
+        dealId: oldDeal.dealId,
+        orderId: oldDeal.orderId,
+        rfqId: oldDeal.rfqId,
+        productId: oldDeal.productId,
+        supplierId: oldDeal.supplierId,
+        productName: oldDeal.productName,
+        dealValue: oldDeal.dealValue,
+        totalQuantity: oldDeal.totalQuantity,
+        factoryName: oldDeal.factoryName,
+        factoryAvatarUrl: oldDeal.factoryAvatarUrl,
+        isFactoryOnline: oldDeal.isFactoryOnline,
+        isFactoryVerified: oldDeal.isFactoryVerified,
+        currentStatus: DealStatus.cancelled,
+        lastUpdated: DateTime.now(),
+      );
+    }
+
+    addMessage(
+      dealId: dealId,
+      text: 'رفض المورد طلب التعديل المقدم من المصنع 🔴',
+      senderId: 'system',
+      senderName: 'النظام',
+      isMe: false,
+      isSystemNotification: true,
+    );
+
+    notifications.add(
+      NotificationMock(
+        id: 'NOTIF-${notifications.length + 1}',
+        dealId: dealId,
+        title: 'تم رفض طلب التعديل وإغلاق المفاوضات',
+        body: 'رفض المورد طلب التعديل المقدم من المصنع للصفقة $dealId.',
+        timestamp: DateTime.now(),
+      ),
+    );
+
+    final timeline = timelines[dealId];
+    if (timeline != null) {
+      final steps = List<DealTimelineStep>.from(timeline.steps);
+      steps.add(
+        const DealTimelineStep(
+          stepIndex: 4,
+          title: 'رفض المورد طلب التعديل المقدم من المصنع',
+          subtitle: 'تم إغلاق المفاوضات على هذه الصفقة',
+          isCompleted: true,
+          isCurrent: true,
+        ),
+      );
+      timelines[dealId] = TimelineMock(
+        dealId: dealId,
+        currentStepIndex: steps.length - 1,
+        steps: steps,
+      );
+    }
   }
 
   /// 4. Accept Quotation

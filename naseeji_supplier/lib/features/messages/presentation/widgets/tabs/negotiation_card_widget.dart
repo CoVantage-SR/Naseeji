@@ -52,11 +52,13 @@ class NegotiationCardWidget extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: colorScheme.primary,
+                    color: quotation.createdByRole == 'المصنع' ? Colors.purple.shade700 : colorScheme.primary,
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
-                    'الإصدار V${quotation.versionNumber}',
+                    quotation.createdByRole == 'المصنع'
+                        ? 'طلب تعديل المصنع V${quotation.versionNumber}'
+                        : 'عرض المورد V${quotation.versionNumber}',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 11,
@@ -75,13 +77,49 @@ class NegotiationCardWidget extends StatelessWidget {
             ),
             const SizedBox(height: 10),
 
+            // Notice Banner for Counter Offer
+            if (quotation.createdByRole == 'المصنع' || quotation.offerStatus == OfferStatus.counterOffer) ...[
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.purple.shade50,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.purple.shade200),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.edit_note_rounded, color: Colors.purple, size: 18),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        'قام المصنع بطلب تعديل العرض وشروطه كما هو موضح أدناه:',
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.purple.shade900,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 8),
+            ],
+
             // Price & Quantity Hero Box
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: colorScheme.surfaceContainerLow,
+                color: quotation.createdByRole == 'المصنع'
+                    ? Colors.purple.shade50.withValues(alpha: 0.5)
+                    : colorScheme.surfaceContainerLow,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.3)),
+                border: Border.all(
+                  color: quotation.createdByRole == 'المصنع'
+                      ? Colors.purple.shade200
+                      : colorScheme.outlineVariant.withValues(alpha: 0.3),
+                ),
               ),
               child: Row(
                 children: [
@@ -99,7 +137,7 @@ class NegotiationCardWidget extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
-                            color: colorScheme.primary,
+                            color: quotation.createdByRole == 'المصنع' ? Colors.purple.shade800 : colorScheme.primary,
                           ),
                         ),
                       ],
@@ -155,12 +193,19 @@ class NegotiationCardWidget extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.4),
+                  color: quotation.createdByRole == 'المصنع'
+                      ? Colors.purple.shade50
+                      : colorScheme.surfaceContainerHighest.withValues(alpha: 0.4),
                   borderRadius: BorderRadius.circular(6),
                 ),
                 child: Text(
-                  'ملاحظات: ${quotation.notes}',
-                  style: TextStyle(fontSize: 10.5, fontStyle: FontStyle.italic, color: colorScheme.onSurfaceVariant),
+                  'ملاحظات المصنع للتعديل: ${quotation.notes}',
+                  style: TextStyle(
+                    fontSize: 10.5,
+                    fontStyle: FontStyle.italic,
+                    color: quotation.createdByRole == 'المصنع' ? Colors.purple.shade900 : colorScheme.onSurfaceVariant,
+                    fontWeight: quotation.createdByRole == 'المصنع' ? FontWeight.w500 : FontWeight.normal,
+                  ),
                 ),
               ),
             ],

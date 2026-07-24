@@ -63,8 +63,8 @@ class _MessageInputWidgetState extends State<MessageInputWidget> {
             Row(
               children: [
                 ActionChip(
-                  avatar: const Icon(Icons.handshake_outlined, size: 14),
-                  label: const Text('إنشاء عرض مضاد'),
+                  avatar: const Icon(Icons.edit_note_rounded, size: 14),
+                  label: const Text('تعديل عرض السعر (إصدار جديد)'),
                   labelStyle: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: colorScheme.primary),
                   backgroundColor: colorScheme.primary.withValues(alpha: 0.08),
                   onPressed: widget.onCreateCounterOffer,
