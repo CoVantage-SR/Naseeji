@@ -7,7 +7,6 @@ import '../widgets/quick_metrics_overview.dart';
 import '../widgets/today_tasks_section.dart';
 import '../widgets/quick_shortcuts_and_chart.dart';
 import '../widgets/notifications_bottom_banner.dart';
-import '../widgets/quick_action_fab.dart';
 
 class SupplierHomeScreen extends ConsumerWidget {
   const SupplierHomeScreen({super.key});
@@ -15,7 +14,6 @@ class SupplierHomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      floatingActionButton: const QuickActionFab(),
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
@@ -41,12 +39,12 @@ class SupplierHomeScreen extends ConsumerWidget {
                 child: QuickMetricsOverviewWidget(),
               ),
 
-              // 4. Quick Shortcuts Grid & Sales Performance Chart Card (Placed ABOVE Today Tasks as requested)
+              // 4. Quick Shortcuts Grid & Sales Performance Chart Card
               SliverToBoxAdapter(
                 child: QuickShortcutsAndChartWidget(),
               ),
 
-              // 5. Today Tasks Section (Task Cards)
+              // 5. Today Tasks Section (Task Cards matching reference design)
               SliverToBoxAdapter(
                 child: TodayTasksSection(),
               ),

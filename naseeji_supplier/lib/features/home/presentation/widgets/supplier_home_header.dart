@@ -22,136 +22,211 @@ class SupplierHomeHeader extends ConsumerWidget {
 
     return Column(
       children: [
-        // ─── 1. Top Profile Bar ─────────────────────────────────────────────
+        // ─── 1. Top Profile Bar & Notification Popover Bubble ────────────────
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-          child: Row(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 6),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Notification Bell & Messages Icons (Left)
               Row(
                 children: [
-                  // Bell Icon with Red Badge
-                  Stack(
-                    clipBehavior: Clip.none,
+                  // Notification Bell & Messages Icons (Left)
+                  Row(
                     children: [
+                      // Bell Icon with Red Badge
+                      Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          IconButton(
+                            onPressed: () => context.push('/notifications'),
+                            icon: const Icon(Icons.notifications_outlined, size: 24),
+                            style: IconButton.styleFrom(
+                              backgroundColor: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+                              padding: const EdgeInsets.all(8),
+                            ),
+                          ),
+                          if (unreadNotificationsCount > 0)
+                            Positioned(
+                              top: 4,
+                              right: 4,
+                              child: Container(
+                                padding: const EdgeInsets.all(4),
+                                decoration: const BoxDecoration(
+                                  color: Colors.red,
+                                  shape: BoxShape.circle,
+                                ),
+                                constraints: const BoxConstraints(
+                                  minWidth: 16,
+                                  minHeight: 16,
+                                ),
+                                child: Text(
+                                  '$unreadNotificationsCount',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 9,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                      const SizedBox(width: 8),
+
+                      // Chat Icon
                       IconButton(
-                        onPressed: () => context.push('/notifications'),
-                        icon: const Icon(Icons.notifications_outlined, size: 24),
+                        onPressed: () => context.push('/messages'),
+                        icon: const Icon(Icons.chat_bubble_outline_rounded, size: 22),
                         style: IconButton.styleFrom(
                           backgroundColor: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
                           padding: const EdgeInsets.all(8),
                         ),
                       ),
-                      if (unreadNotificationsCount > 0)
-                        Positioned(
-                          top: 4,
-                          right: 4,
-                          child: Container(
-                            padding: const EdgeInsets.all(4),
-                            decoration: const BoxDecoration(
-                              color: Colors.red,
-                              shape: BoxShape.circle,
-                            ),
-                            constraints: const BoxConstraints(
-                              minWidth: 16,
-                              minHeight: 16,
-                            ),
-                            child: Text(
-                              '$unreadNotificationsCount',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 9,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
                     ],
                   ),
-                  const SizedBox(width: 8),
 
-                  // Chat Icon
-                  IconButton(
-                    onPressed: () => context.push('/messages'),
-                    icon: const Icon(Icons.chat_bubble_outline_rounded, size: 22),
-                    style: IconButton.styleFrom(
-                      backgroundColor: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
-                      padding: const EdgeInsets.all(8),
+                  const Spacer(),
+
+                  // Supplier Info & Avatar (Right - RTL)
+                  headerAsync.when(
+                    data: (header) => Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              'مرحبًا، ${header.supplierName}',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 2),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                if (header.isVerified) ...[
+                                  const Icon(
+                                    Icons.verified_rounded,
+                                    color: Color(0xFF2563EB),
+                                    size: 14,
+                                  ),
+                                  const SizedBox(width: 4),
+                                ],
+                                Text(
+                                  header.companyName,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: colorScheme.onSurfaceVariant,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 10),
+
+                        // Avatar Circle
+                        CircleAvatar(
+                          radius: 22,
+                          backgroundColor: colorScheme.primary.withValues(alpha: 0.1),
+                          backgroundImage: (header.logoUrl != null && header.logoUrl!.startsWith('http'))
+                              ? NetworkImage(header.logoUrl!)
+                              : null,
+                          child: (header.logoUrl == null || !header.logoUrl!.startsWith('http'))
+                              ? Text(
+                                  header.supplierName.isNotEmpty
+                                      ? header.supplierName[0]
+                                      : 'م',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: colorScheme.primary,
+                                  ),
+                                )
+                              : null,
+                        ),
+                      ],
                     ),
+                    loading: () => const SizedBox(
+                      width: 120,
+                      height: 40,
+                      child: Center(child: CircularProgressIndicator.adaptive(strokeWidth: 2)),
+                    ),
+                    error: (_, __) => const Text('المورد'),
                   ),
                 ],
               ),
 
-              const Spacer(),
-
-              // Supplier Info & Avatar (Right - RTL)
-              headerAsync.when(
-                data: (header) => Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
+              // ─── Notification Speech Bubble Popping From Bell Icon ─────────
+              if (unreadNotificationsCount > 0)
+                Padding(
+                  padding: const EdgeInsets.only(top: 4, left: 4),
+                  child: InkWell(
+                    onTap: () => context.push('/notifications'),
+                    borderRadius: BorderRadius.circular(12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'مرحبًا، ${header.supplierName}',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                        // Pointer Arrow pointing up to bell icon
+                        Padding(
+                          padding: const EdgeInsets.only(left: 14),
+                          child: CustomPaint(
+                            size: const Size(12, 6),
+                            painter: _BubbleTrianglePainter(
+                              color: const Color(0xFFEFF6FF),
+                              borderColor: const Color(0xFFBFDBFE),
+                            ),
                           ),
                         ),
-                        const SizedBox(height: 2),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            if (header.isVerified) ...[
-                              const Icon(
-                                Icons.verified_rounded,
-                                color: Color(0xFF2563EB),
-                                size: 14,
+                        // Speech Bubble Box
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFEFF6FF),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: const Color(0xFFBFDBFE)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0xFF2563EB).withValues(alpha: 0.1),
+                                blurRadius: 8,
+                                offset: const Offset(0, 3),
                               ),
-                              const SizedBox(width: 4),
                             ],
-                            Text(
-                              header.companyName,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: colorScheme.onSurfaceVariant,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(Icons.arrow_back_ios_new_rounded, size: 11, color: Color(0xFF2563EB)),
+                              const SizedBox(width: 8),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: const [
+                                  Text(
+                                    '🔔 لديك إشعارات جديدة',
+                                    style: TextStyle(
+                                      fontSize: 11.5,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF1E40AF),
+                                    ),
+                                  ),
+                                  SizedBox(height: 1),
+                                  Text(
+                                    'اضغط هنا لعرض كافة الإشعارات والعمليات الحديثة.',
+                                    style: TextStyle(
+                                      fontSize: 9.5,
+                                      color: Color(0xFF3B82F6),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ],
                     ),
-                    const SizedBox(width: 10),
-
-                    // Avatar Circle
-                    CircleAvatar(
-                      radius: 22,
-                      backgroundColor: colorScheme.primary.withValues(alpha: 0.1),
-                      backgroundImage: (header.logoUrl != null && header.logoUrl!.startsWith('http'))
-                          ? NetworkImage(header.logoUrl!)
-                          : null,
-                      child: (header.logoUrl == null || !header.logoUrl!.startsWith('http'))
-                          ? Text(
-                              header.supplierName.isNotEmpty
-                                  ? header.supplierName[0]
-                                  : 'م',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: colorScheme.primary,
-                              ),
-                            )
-                          : null,
-                    ),
-                  ],
+                  ),
                 ),
-                loading: () => const SizedBox(
-                  width: 120,
-                  height: 40,
-                  child: Center(child: CircularProgressIndicator.adaptive(strokeWidth: 2)),
-                ),
-                error: (_, __) => const Text('المورد'),
-              ),
             ],
           ),
         ),
@@ -269,4 +344,35 @@ class SupplierHomeHeader extends ConsumerWidget {
       ],
     );
   }
+}
+
+class _BubbleTrianglePainter extends CustomPainter {
+  final Color color;
+  final Color borderColor;
+
+  _BubbleTrianglePainter({required this.color, required this.borderColor});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final path = Path()
+      ..moveTo(0, size.height)
+      ..lineTo(size.width / 2, 0)
+      ..lineTo(size.width, size.height)
+      ..close();
+
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.fill;
+
+    final borderPaint = Paint()
+      ..color = borderColor
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0;
+
+    canvas.drawPath(path, paint);
+    canvas.drawPath(path, borderPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

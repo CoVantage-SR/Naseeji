@@ -52,14 +52,29 @@ class TaskCard extends StatelessWidget {
     }
   }
 
+  Color _getStatusBgColor(TaskStatusType type) {
+    switch (type) {
+      case TaskStatusType.urgent:
+        return const Color(0xFFFEF2F2);
+      case TaskStatusType.negotiation:
+        return const Color(0xFFFFF7ED);
+      case TaskStatusType.ready:
+        return const Color(0xFFF0FDF4);
+      case TaskStatusType.completed:
+        return const Color(0xFFEFF6FF);
+      case TaskStatusType.waiting:
+        return const Color(0xFFFFFBEB);
+    }
+  }
+
   String _getStatusLabel(TaskStatusType type) {
     switch (type) {
       case TaskStatusType.urgent:
-        return 'عاجل 🚨';
+        return 'عاجل';
       case TaskStatusType.negotiation:
-        return 'يحتاج تفاوض 💬';
+        return 'يحتاج تفاوض';
       case TaskStatusType.ready:
-        return 'جاهز للشحن 🚛';
+        return 'جاهز للشحن 🚚';
       case TaskStatusType.completed:
         return 'مكتمل ✅';
       case TaskStatusType.waiting:
@@ -74,15 +89,16 @@ class TaskCard extends StatelessWidget {
 
     final type = _getTaskStatusType();
     final accentColor = _getStatusColor(type);
+    final statusBgColor = _getStatusBgColor(type);
     final statusLabel = _getStatusLabel(type);
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
         color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16),
         border: Border(
-          right: BorderSide(color: accentColor, width: 3.5), // Right border indicator for RTL
+          right: BorderSide(color: accentColor, width: 4.5), // Right colored accent bar (RTL)
           top: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.25)),
           left: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.25)),
           bottom: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.25)),
@@ -90,118 +106,31 @@ class TaskCard extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.02),
-            blurRadius: 4,
+            blurRadius: 6,
             offset: const Offset(0, 2),
           ),
         ],
       ),
       child: Padding(
         padding: const EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Top Row: Status Badge (Left) & Title + Icon (Right)
-            Row(
+            // ─── Left Side: Time (Top) & Action Button (Bottom) ───────────
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Status Badge (Left)
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                  decoration: BoxDecoration(
-                    color: accentColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Text(
-                    statusLabel,
-                    style: TextStyle(
-                      color: accentColor,
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-
-                const SizedBox(width: 8),
-
-                // Title & Icon (Right - RTL)
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Flexible(
-                        child: Text(
-                          task.title,
-                          style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.bold,
-                            color: colorScheme.onSurface,
-                          ),
-                          textAlign: TextAlign.right,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      const SizedBox(width: 6),
-                      Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          color: colorScheme.primary.withValues(alpha: 0.08),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Icon(
-                          Icons.assignment_outlined,
-                          size: 15,
-                          color: colorScheme.primary,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 8),
-
-            // Middle Text Description
-            Text(
-              task.description ?? '',
-              style: TextStyle(
-                fontSize: 11,
-                color: colorScheme.onSurfaceVariant,
-                height: 1.3,
-              ),
-              textAlign: TextAlign.right,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-
-            const SizedBox(height: 10),
-
-            // Bottom Row: Time Indicator (Right) & Action Button (Left)
-            Row(
-              children: [
-                // Primary Action Button (Left)
-                ElevatedButton(
-                  onPressed: onAction,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: accentColor,
-                    foregroundColor: Colors.white,
-                    minimumSize: const Size(82, 30),
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                    elevation: 0,
-                  ),
-                  child: Text(
-                    task.actionLabel,
-                    style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
-                  ),
-                ),
-
-                const Spacer(),
-
-                // Time Indicator (Right)
+                // Time indicator (Top Left)
                 Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
+                    Icon(
+                      Icons.access_time_rounded,
+                      size: 13,
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                    const SizedBox(width: 4),
                     Text(
                       task.deadlineFormatted,
                       style: TextStyle(
@@ -209,15 +138,109 @@ class TaskCard extends StatelessWidget {
                         color: colorScheme.onSurfaceVariant,
                       ),
                     ),
-                    const SizedBox(width: 4),
-                    Icon(
-                      Icons.access_time_rounded,
-                      size: 13,
-                      color: colorScheme.onSurfaceVariant,
-                    ),
                   ],
                 ),
+
+                const SizedBox(height: 18),
+
+                // Action Button (Bottom Left)
+                ElevatedButton(
+                  onPressed: onAction,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: accentColor,
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size(90, 32),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    elevation: 0,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.arrow_back_ios_new_rounded, size: 10, color: Colors.white),
+                      const SizedBox(width: 4),
+                      Text(
+                        task.actionLabel,
+                        style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
               ],
+            ),
+
+            const SizedBox(width: 12),
+
+            // ─── Center/Right Side: Status Tag, Title, Subtitle (RTL) ────────
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  // Status Pill Tag (Aligned Right)
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: statusBgColor,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      statusLabel,
+                      style: TextStyle(
+                        color: accentColor,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 4),
+
+                  // Title Text
+                  Text(
+                    task.title,
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.onSurface,
+                    ),
+                    textAlign: TextAlign.right,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+
+                  const SizedBox(height: 2),
+
+                  // Description Text
+                  Text(
+                    task.description ?? '',
+                    style: TextStyle(
+                      fontSize: 10.5,
+                      color: colorScheme.onSurfaceVariant,
+                      height: 1.3,
+                    ),
+                    textAlign: TextAlign.right,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(width: 10),
+
+            // ─── Right Far Edge: Building / Department Icon ────────────────
+            Container(
+              width: 40,
+              height: 40,
+              decoration: const BoxDecoration(
+                color: Color(0xFFEFF6FF), // Soft light-blue circle
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.apartment_rounded,
+                color: Color(0xFF2563EB),
+                size: 20,
+              ),
             ),
           ],
         ),
