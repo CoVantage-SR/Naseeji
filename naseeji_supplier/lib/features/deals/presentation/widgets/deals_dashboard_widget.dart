@@ -20,79 +20,67 @@ class DealsDashboardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cardsData = [
-      _DashboardCardItem(
+      const _DashboardCardItem(
         title: 'إجمالي الصفقات',
         count: 51,
-        growthText: '+ 10 هذا الشهر',
+        growthText: '+10 هذا الشهر',
         icon: Icons.local_mall_outlined,
-        iconColor: const Color(0xFF2563EB),
-        bgColor: const Color(0xFFEFF6FF),
-        statusKey: null,
+        iconColor: Color(0xFF2563EB),
+        bgColor: Color(0xFFEFF6FF),
       ),
-      _DashboardCardItem(
+      const _DashboardCardItem(
         title: 'مفاوضات',
         count: 8,
-        growthText: '+ 1 هذا الشهر',
+        growthText: '+1 هذا الشهر',
         icon: Icons.chat_bubble_outline_rounded,
-        iconColor: const Color(0xFFEA580C),
-        bgColor: const Color(0xFFFFF7ED),
-        statusKey: DealStatus.negotiation,
+        iconColor: Color(0xFFEA580C),
+        bgColor: Color(0xFFFFF7ED),
       ),
-      _DashboardCardItem(
+      const _DashboardCardItem(
         title: 'بانتظار رد المصنع',
         count: 12,
-        growthText: '+ 3 هذا الشهر',
+        growthText: '+3 هذا الشهر',
         icon: Icons.access_time_rounded,
-        iconColor: const Color(0xFF2563EB),
-        bgColor: const Color(0xFFEFF6FF),
-        statusKey: DealStatus.waitingSupplierReview,
+        iconColor: Color(0xFF2563EB),
+        bgColor: Color(0xFFEFF6FF),
       ),
-      _DashboardCardItem(
+      const _DashboardCardItem(
         title: 'قيد التنفيذ',
         count: 7,
-        growthText: '+ 2 هذا الشهر',
+        growthText: '+2 هذا الشهر',
         icon: Icons.local_shipping_outlined,
-        iconColor: const Color(0xFF9333EA),
-        bgColor: const Color(0xFFF3E8FF),
-        statusKey: DealStatus.production,
+        iconColor: Color(0xFF9333EA),
+        bgColor: Color(0xFFF3E8FF),
       ),
-      _DashboardCardItem(
+      const _DashboardCardItem(
         title: 'مكتملة',
         count: 24,
-        growthText: '+ 4 هذا الشهر',
+        growthText: '+4 هذا الشهر',
         icon: Icons.check_circle_outline_rounded,
-        iconColor: const Color(0xFF16A34A),
-        bgColor: const Color(0xFFF0FDF4),
-        statusKey: DealStatus.completed,
+        iconColor: Color(0xFF16A34A),
+        bgColor: Color(0xFFF0FDF4),
       ),
     ];
 
-    return SizedBox(
-      height: 124,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        itemCount: cardsData.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 10),
-        itemBuilder: (context, index) {
-          final item = cardsData[index];
-          final isSelected = activeFilter == item.statusKey;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 14),
+      child: Row(
+        children: cardsData.asMap().entries.map((entry) {
+          final index = entry.key;
+          final item = entry.value;
 
-          return InkWell(
-            onTap: () {
-              if (isOnlyActionRequired) onToggleActionRequired(false);
-              onSelectFilter(isSelected ? null : item.statusKey);
-            },
-            borderRadius: BorderRadius.circular(14),
+          return Expanded(
             child: Container(
-              width: 106,
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+              margin: EdgeInsets.only(
+                left: index == cardsData.length - 1 ? 0 : 5,
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 8),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(14),
                 border: Border.all(
-                  color: isSelected ? item.iconColor : const Color(0xFFE5E7EB),
-                  width: isSelected ? 1.5 : 1,
+                  color: const Color(0xFFE5E7EB),
+                  width: 1,
                 ),
                 boxShadow: [
                   BoxShadow(
@@ -108,15 +96,15 @@ class DealsDashboardWidget extends StatelessWidget {
                 children: [
                   // Icon
                   Container(
-                    width: 32,
-                    height: 32,
+                    width: 28,
+                    height: 28,
                     decoration: BoxDecoration(
                       color: item.bgColor,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
                       item.icon,
-                      size: 16,
+                      size: 14,
                       color: item.iconColor,
                     ),
                   ),
@@ -126,54 +114,58 @@ class DealsDashboardWidget extends StatelessWidget {
                   Text(
                     '${item.count}',
                     style: const TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF111827),
                       height: 1.0,
                     ),
                   ),
-                  const SizedBox(height: 2),
+                  const SizedBox(height: 3),
 
-                  // Label
+                  // Label (Title)
                   Text(
                     item.title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
                     style: const TextStyle(
-                      fontSize: 10,
+                      fontSize: 9.2,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF6B7280),
+                      color: Color(0xFF4B5563),
                     ),
                   ),
                   const SizedBox(height: 4),
 
                   // Monthly Growth Text
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        '↑ ',
-                        style: TextStyle(
-                          fontSize: 9,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF16A34A),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          item.growthText,
+                          style: const TextStyle(
+                            fontSize: 8,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF16A34A),
+                          ),
                         ),
-                      ),
-                      Text(
-                        item.growthText,
-                        style: const TextStyle(
-                          fontSize: 8.5,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF16A34A),
+                        const Text(
+                          ' ↑',
+                          style: TextStyle(
+                            fontSize: 8,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF16A34A),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
           );
-        },
+        }).toList(),
       ),
     );
   }
@@ -186,7 +178,6 @@ class _DashboardCardItem {
   final IconData icon;
   final Color iconColor;
   final Color bgColor;
-  final DealStatus? statusKey;
 
   const _DashboardCardItem({
     required this.title,
@@ -195,6 +186,5 @@ class _DashboardCardItem {
     required this.icon,
     required this.iconColor,
     required this.bgColor,
-    this.statusKey,
   });
 }
