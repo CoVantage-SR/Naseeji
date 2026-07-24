@@ -24,7 +24,7 @@ class TaskCard extends StatelessWidget {
       case TaskPriority.urgent:
         return TaskStatusType.urgent;
       case TaskPriority.today:
-        if (task.title.contains('تفاوض') || task.description.contains('مضاد')) {
+        if (task.title.contains('تفاوض') || (task.description?.contains('مضاد') ?? false)) {
           return TaskStatusType.negotiation;
         } else if (task.title.contains('شحن') || task.title.contains('تسليم')) {
           return TaskStatusType.ready;
@@ -162,7 +162,7 @@ class TaskCard extends StatelessWidget {
 
             // Middle Text Description
             Text(
-              task.description,
+              task.description ?? '',
               style: TextStyle(
                 fontSize: 11,
                 color: colorScheme.onSurfaceVariant,
@@ -199,7 +199,7 @@ class TaskCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      task.timeText,
+                      task.deadlineFormatted,
                       style: TextStyle(
                         fontSize: 10.5,
                         color: colorScheme.onSurfaceVariant,
