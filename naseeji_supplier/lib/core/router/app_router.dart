@@ -52,6 +52,7 @@ import '../../features/profile/presentation/screens/supplier_profile/edit_suppli
 import '../../features/profile/presentation/screens/supplier_profile/basic_data_screen.dart';
 import '../../features/team/presentation/screens/team_members_screen.dart';
 import '../../features/team/presentation/screens/team_member_details_screen.dart';
+import '../../features/notifications/presentation/screens/notification_settings_screen.dart';
 import '../../features/messages/presentation/screens/messages_screen.dart';
 import '../../features/messages/presentation/screens/business_chat_screen.dart';
 import '../../features/messages/presentation/screens/support_chat_screen.dart';
@@ -905,6 +906,16 @@ GoRouter goRouter(Ref ref) {
         path: '/subscription/analytics',
         name: 'subscription-analytics',
         builder: (context, state) => const SubscriptionAnalyticsScreen(),
+      ),
+      GoRoute(
+        path: '/notifications',
+        name: 'notifications',
+        builder: (context, state) => const NotificationSettingsScreen(),
+      ),
+      GoRoute(
+        path: '/notifications/settings',
+        name: 'notifications-settings',
+        builder: (context, state) => const NotificationSettingsScreen(),
       ),
       GoRoute(
         path: '/subscription',

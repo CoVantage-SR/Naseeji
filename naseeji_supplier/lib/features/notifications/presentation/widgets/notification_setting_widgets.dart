@@ -92,7 +92,7 @@ class NotificationSwitchTile extends StatelessWidget {
               Switch(
                 value: value,
                 onChanged: enabled ? onChanged : null,
-                activeColor: Colors.white,
+                activeThumbColor: Colors.white,
                 activeTrackColor: const Color(0xFF16A34A), // Green track in screenshot
                 inactiveThumbColor: Colors.white,
                 inactiveTrackColor: const Color(0xFF6B7280),
