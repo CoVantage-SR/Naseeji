@@ -13,6 +13,7 @@ import 'package:naseeji_supplier/features/messages/domain/entities/deal_quotatio
 import 'package:naseeji_supplier/features/messages/domain/entities/deal_status_enum.dart';
 import 'package:naseeji_supplier/features/messages/domain/entities/conversation.dart';
 import 'package:naseeji_supplier/features/messages/domain/entities/deal_timeline_model.dart';
+import 'package:naseeji_supplier/features/notifications/domain/entities/notification_settings_model.dart';
 
 class MockDatabase {
   MockDatabase._();
@@ -45,6 +46,15 @@ class MockDatabase {
 
   // 9. Notifications
   static List<NotificationMock> notifications = List.from(NotificationMock.sampleNotifications);
+  static NotificationSettingsModel notificationSettings = NotificationSettingsModel.defaultSettings;
+
+  static NotificationSettingsModel getNotificationSettings() {
+    return notificationSettings;
+  }
+
+  static void updateNotificationSettings(NotificationSettingsModel newSettings) {
+    notificationSettings = newSettings;
+  }
 
   // 10. Subscription Data
   static SubscriptionModel currentSubscription = SubscriptionModel.defaultSubscription;
