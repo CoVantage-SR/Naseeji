@@ -57,6 +57,11 @@ class MockDatabase {
     notificationSettings = newSettings;
   }
 
+  // 11. Security Data
+  static SecuritySettingsModel securitySettings = SecuritySettingsModel.defaultSettings;
+  static List<DeviceSessionModel> deviceSessions = List.from(DeviceSessionModel.sampleSessions);
+  static List<SecurityActivityModel> securityActivities = List.from(SecurityActivityModel.sampleActivities);
+
   // 10. Subscription Data
   static SubscriptionModel currentSubscription = SubscriptionModel.defaultSubscription;
   static List<SubscriptionModel> get subscriptions => [currentSubscription];

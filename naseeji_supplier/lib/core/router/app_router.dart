@@ -50,6 +50,7 @@ import '../../features/quotations/presentation/screens/create_quotation_wizard_s
 import '../../features/profile/presentation/screens/supplier_profile/public_supplier_profile_screen.dart';
 import '../../features/profile/presentation/screens/supplier_profile/edit_supplier_profile_screen.dart';
 import '../../features/profile/presentation/screens/supplier_profile/basic_data_screen.dart';
+import '../../features/profile/presentation/screens/security_login_screen.dart';
 import '../../features/team/presentation/screens/team_members_screen.dart';
 import '../../features/team/presentation/screens/team_member_details_screen.dart';
 import '../../features/notifications/presentation/screens/notification_settings_screen.dart';
@@ -329,6 +330,16 @@ GoRouter goRouter(Ref ref) {
         path: '/profile/edit-form',
         name: 'profile-edit-form',
         builder: (context, state) => const EditSupplierProfileScreen(),
+      ),
+      GoRoute(
+        path: '/profile/security',
+        name: 'profile-security',
+        builder: (context, state) => const SecurityLoginScreen(),
+      ),
+      GoRoute(
+        path: '/profile/security-login',
+        name: 'profile-security-login',
+        builder: (context, state) => const SecurityLoginScreen(),
       ),
       GoRoute(
         path: '/team',
