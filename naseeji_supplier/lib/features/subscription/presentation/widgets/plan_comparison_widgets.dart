@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 class PlansHeader extends StatelessWidget {
   final VoidCallback onBack;
 
-  const PlansHeader({super.key, required onBack}) : _onBack = onBack;
-
-  final VoidCallback _onBack;
+  const PlansHeader({super.key, required this.onBack});
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +97,7 @@ class PlansHeader extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               IconButton(
-                onPressed: _onBack,
+                onPressed: onBack,
                 icon: const Icon(
                   Icons.arrow_forward_rounded,
                   color: Color(0xFF111827),

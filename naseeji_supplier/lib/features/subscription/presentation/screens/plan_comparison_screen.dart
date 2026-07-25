@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:naseeji_supplier/core/mock/mock_data.dart';
+import 'package:naseeji_supplier/core/mock/subscription_mock.dart';
 import '../controllers/subscription_controllers.dart';
 import '../widgets/plan_comparison_widgets.dart';
 
@@ -88,7 +89,7 @@ class PlanComparisonScreen extends ConsumerWidget {
                             subtitle: 'للمؤسسات الكبيرة',
                             monthlyPrice: '199',
                             yearlyPrice: '1990',
-                            icon: Icons.crown_rounded,
+                            icon: Icons.workspace_premium_rounded,
                             iconColor: const Color(0xFFEA580C),
                             isCurrent: currentPlanName.contains('المؤسسية') || currentPlanName.contains('Enterprise'),
                             buttonText: (currentPlanName.contains('المؤسسية') || currentPlanName.contains('Enterprise'))
@@ -262,9 +263,7 @@ class PlanComparisonScreen extends ConsumerWidget {
                           // Update subscription in MockDatabase
                           MockDatabase.currentSubscription = MockDatabase.currentSubscription.copyWith(
                             planName: planName,
-                            priceMonthly: price,
-                            status: 'active',
-                            isExpired: false,
+                            status: SubscriptionStatus.active,
                           );
                           ref.invalidate(activeSubscriptionControllerProvider);
 

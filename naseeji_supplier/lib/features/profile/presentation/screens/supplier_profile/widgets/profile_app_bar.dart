@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:naseeji_supplier/core/theme/app_colors.dart';
 
 class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -11,7 +12,7 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0.5,
       leading: IconButton(
         icon: Icon(Icons.notifications_none, color: AppColors.onSurfaceVariant),
-        onPressed: () {},
+        onPressed: () => context.push('/notifications'),
       ),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
