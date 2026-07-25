@@ -857,48 +857,54 @@ class SupplierProfileScreen extends ConsumerWidget {
           ),
         ],
       ),
-      child: ListView.separated(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: menuItems.length,
-        separatorBuilder: (_, __) => const Divider(height: 1, color: Color(0xFFF3F4F6)),
-        itemBuilder: (context, index) {
-          final item = menuItems[index];
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(16),
+        clipBehavior: Clip.antiAlias,
+        child: ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          padding: EdgeInsets.zero,
+          itemCount: menuItems.length,
+          separatorBuilder: (_, __) => const Divider(height: 1, color: Color(0xFFF3F4F6)),
+          itemBuilder: (context, index) {
+            final item = menuItems[index];
 
-          return ListTile(
-            onTap: () => context.push(item.route),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
-            leading: Container(
-              width: 36,
-              height: 36,
-              decoration: BoxDecoration(
-                color: item.bgColor,
-                shape: BoxShape.circle,
+            return ListTile(
+              onTap: () => context.push(item.route),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
+              leading: Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: item.bgColor,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(item.icon, size: 18, color: item.iconColor),
               ),
-              child: Icon(item.icon, size: 18, color: item.iconColor),
-            ),
-            title: Text(
-              item.title,
-              style: const TextStyle(
-                fontSize: 13.5,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF111827),
+              title: Text(
+                item.title,
+                style: const TextStyle(
+                  fontSize: 13.5,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF111827),
+                ),
               ),
-            ),
-            subtitle: Text(
-              item.subtitle,
-              style: const TextStyle(
-                fontSize: 11,
-                color: Color(0xFF6B7280),
+              subtitle: Text(
+                item.subtitle,
+                style: const TextStyle(
+                  fontSize: 11,
+                  color: Color(0xFF6B7280),
+                ),
               ),
-            ),
-            trailing: const Icon(
-              Icons.chevron_left_rounded,
-              size: 20,
-              color: Color(0xFF9CA3AF),
-            ),
-          );
-        },
+              trailing: const Icon(
+                Icons.chevron_left_rounded,
+                size: 20,
+                color: Color(0xFF9CA3AF),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

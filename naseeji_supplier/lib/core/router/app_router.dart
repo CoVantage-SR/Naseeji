@@ -49,6 +49,7 @@ import '../../features/orders/presentation/screens/create_quotation_screen.dart'
 import '../../features/quotations/presentation/screens/create_quotation_wizard_screen.dart';
 import '../../features/profile/presentation/screens/supplier_profile/public_supplier_profile_screen.dart';
 import '../../features/profile/presentation/screens/supplier_profile/edit_supplier_profile_screen.dart';
+import '../../features/profile/presentation/screens/supplier_profile/basic_data_screen.dart';
 import '../../features/messages/presentation/screens/messages_screen.dart';
 import '../../features/messages/presentation/screens/business_chat_screen.dart';
 import '../../features/messages/presentation/screens/support_chat_screen.dart';
@@ -319,6 +320,16 @@ GoRouter goRouter(Ref ref) {
       GoRoute(
         path: '/profile/edit',
         name: 'profile-edit',
+        builder: (context, state) => const BasicDataScreen(),
+      ),
+      GoRoute(
+        path: '/profile/basic-data',
+        name: 'profile-basic-data',
+        builder: (context, state) => const BasicDataScreen(),
+      ),
+      GoRoute(
+        path: '/profile/edit-form',
+        name: 'profile-edit-form',
         builder: (context, state) => const EditSupplierProfileScreen(),
       ),
       GoRoute(
