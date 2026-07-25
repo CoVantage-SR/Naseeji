@@ -11,15 +11,17 @@ class TeamMemberCardWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? const Color(0xFF1E293B) : Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
+        border: Border.all(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
+            color: Colors.black.withValues(alpha: isDark ? 0.08 : 0.02),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),
@@ -47,11 +49,11 @@ class TeamMemberCardWidget extends ConsumerWidget {
                     errorBuilder: (_, __, ___) => Container(
                       width: 48,
                       height: 48,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFEFF6FF),
+                      decoration: BoxDecoration(
+                        color: isDark ? const Color(0xFF0F172A) : const Color(0xFFEFF6FF),
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(Icons.person_rounded, color: Color(0xFF2563EB), size: 24),
+                      child: Icon(Icons.person_rounded, color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB), size: 24),
                     ),
                   ),
                 ),
@@ -68,10 +70,10 @@ class TeamMemberCardWidget extends ConsumerWidget {
                           Flexible(
                             child: Text(
                               member.name,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 13.5,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xFF111827),
+                                color: isDark ? Colors.white : const Color(0xFF111827),
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,

@@ -354,6 +354,8 @@ class _ShortcutTileItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
@@ -364,10 +366,10 @@ class _ShortcutTileItem extends StatelessWidget {
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: bgColor,
+              color: isDark ? iconColor.withValues(alpha: 0.2) : bgColor,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(icon, color: iconColor, size: 22),
+            child: Icon(icon, color: isDark ? iconColor.withValues(alpha: 0.9) : iconColor, size: 22),
           ),
           const SizedBox(height: 5),
           Text(

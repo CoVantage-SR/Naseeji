@@ -24,10 +24,13 @@ class _TeamMembersScreenState extends ConsumerState<TeamMembersScreen> {
     final statusFilter = ref.watch(teamStatusFilterProvider);
     final searchQuery = ref.watch(teamSearchQueryProvider);
 
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: const Color(0xFFF9FAFB),
+        backgroundColor: theme.scaffoldBackgroundColor,
         body: SafeArea(
           child: Column(
             children: [
@@ -43,18 +46,18 @@ class _TeamMembersScreenState extends ConsumerState<TeamMembersScreen> {
                         Container(
                           width: 44,
                           height: 44,
-                          decoration: const BoxDecoration(
-                            color: Color(0xFFF3E8FF),
+                          decoration: BoxDecoration(
+                            color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF3E8FF),
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.group_outlined,
-                            color: Color(0xFF9333EA),
+                            color: isDark ? const Color(0xFFC084FC) : const Color(0xFF9333EA),
                             size: 22,
                           ),
                         ),
                         const SizedBox(width: 10),
-                        const Column(
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
@@ -62,16 +65,16 @@ class _TeamMembersScreenState extends ConsumerState<TeamMembersScreen> {
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xFF111827),
+                                color: theme.colorScheme.onSurface,
                                 height: 1.1,
                               ),
                             ),
-                            SizedBox(height: 2),
+                            const SizedBox(height: 2),
                             Text(
                               'إدارة أعضاء فريق المصنع والصلاحيات',
                               style: TextStyle(
                                 fontSize: 12,
-                                color: Color(0xFF6B7280),
+                                color: theme.colorScheme.onSurfaceVariant,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -89,9 +92,9 @@ class _TeamMembersScreenState extends ConsumerState<TeamMembersScreen> {
                           context.go('/profile');
                         }
                       },
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.arrow_forward_rounded,
-                        color: Color(0xFF111827),
+                        color: theme.colorScheme.onSurface,
                         size: 24,
                       ),
                     ),

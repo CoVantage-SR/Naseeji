@@ -129,7 +129,7 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
           centerTitle: true,
           title: Text(
             'لوحة عروض الأسعار والمناقصات',
-            style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 14),
+            style: TextStyle(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.bold, fontSize: 14),
           ),
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
@@ -144,10 +144,10 @@ class _QuotationsDashboardScreenState extends ConsumerState<QuotationsDashboardS
           bottom: TabBar(
             controller: _tabController,
             isScrollable: true,
-            labelColor: const Color(0xFF0040E0),
+            labelColor: Theme.of(context).colorScheme.primary,
             unselectedLabelColor: Theme.of(context).colorScheme.onSurfaceVariant,
-            indicatorColor: const Color(0xFF0040E0),
-            labelStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+            indicatorColor: Theme.of(context).colorScheme.primary,
+            labelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
             tabs: _tabs.map((title) => Tab(text: title)).toList(),
           ),
         ),

@@ -98,18 +98,20 @@ class _MetricCard extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
+    final isDark = theme.brightness == Brightness.dark;
+
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(10),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         decoration: BoxDecoration(
-          color: bgColor,
+          color: isDark ? const Color(0xFF1E293B) : bgColor,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: borderColor),
+          border: Border.all(color: isDark ? const Color(0xFF334155) : borderColor),
           boxShadow: [
             BoxShadow(
-              color: iconColor.withValues(alpha: 0.04),
+              color: iconColor.withValues(alpha: isDark ? 0.1 : 0.04),
               blurRadius: 4,
               offset: const Offset(0, 2),
             ),
@@ -121,11 +123,11 @@ class _MetricCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(5),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: isDark ? const Color(0xFF0F172A) : Colors.white,
                 borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: borderColor),
+                border: Border.all(color: isDark ? const Color(0xFF334155) : borderColor),
               ),
-              child: Icon(icon, color: iconColor, size: 16),
+              child: Icon(icon, color: isDark ? iconColor.withValues(alpha: 0.9) : iconColor, size: 16),
             ),
 
             const SizedBox(width: 8),

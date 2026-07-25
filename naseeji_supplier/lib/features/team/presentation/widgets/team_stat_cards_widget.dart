@@ -46,18 +46,20 @@ class TeamStatCardsWidget extends StatelessWidget {
       ),
     ];
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       children: [
         // Summary Header Row (ملخص الفريق & + دعوة عضو جديد)
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
+            Text(
               'ملخص الفريق',
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF111827),
+                color: isDark ? Colors.white : const Color(0xFF111827),
               ),
             ),
             OutlinedButton.icon(
@@ -71,20 +73,20 @@ class TeamStatCardsWidget extends StatelessWidget {
                   builder: (_) => const AddTeamMemberBottomSheet(),
                 );
               },
-              icon: const Icon(Icons.add_rounded, size: 16, color: Color(0xFF9333EA)),
-              label: const Text(
+              icon: Icon(Icons.add_rounded, size: 16, color: isDark ? const Color(0xFFC084FC) : const Color(0xFF9333EA)),
+              label: Text(
                 'دعوة عضو جديد',
                 style: TextStyle(
                   fontSize: 11.5,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF9333EA),
+                  color: isDark ? const Color(0xFFC084FC) : const Color(0xFF9333EA),
                 ),
               ),
               style: OutlinedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                 minimumSize: Size.zero,
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                side: const BorderSide(color: Color(0xFFD8B4FE), width: 1.2),
+                side: BorderSide(color: isDark ? const Color(0xFF7E22CE) : const Color(0xFFD8B4FE), width: 1.2),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -106,12 +108,12 @@ class TeamStatCardsWidget extends StatelessWidget {
                 margin: EdgeInsets.only(left: index == cards.length - 1 ? 0 : 8),
                 padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: isDark ? const Color(0xFF1E293B) : Colors.white,
                   borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: const Color(0xFFE5E7EB)),
+                  border: Border.all(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.02),
+                      color: Colors.black.withValues(alpha: isDark ? 0.08 : 0.02),
                       blurRadius: 6,
                       offset: const Offset(0, 2),
                     ),
@@ -124,28 +126,28 @@ class TeamStatCardsWidget extends StatelessWidget {
                       width: 32,
                       height: 32,
                       decoration: BoxDecoration(
-                        color: item.bgColor,
+                        color: isDark ? item.iconColor.withValues(alpha: 0.2) : item.bgColor,
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(item.icon, size: 16, color: item.iconColor),
+                      child: Icon(item.icon, size: 16, color: isDark ? item.iconColor.withValues(alpha: 0.9) : item.iconColor),
                     ),
                     const SizedBox(height: 6),
                     Text(
                       '${item.count}',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF111827),
+                        color: isDark ? Colors.white : const Color(0xFF111827),
                         height: 1.0,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       item.title,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 9.5,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFF6B7280),
+                        color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

@@ -195,9 +195,9 @@ class ProductCardWidget extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFF8FAFC), // Slate 50
+                          color: isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC), // Slate 900 / Slate 50
                           borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: const Color(0xFFF1F5F9)),
+                          border: Border.all(color: isDark ? const Color(0xFF334155) : const Color(0xFFF1F5F9)),
                         ),
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
@@ -351,6 +351,8 @@ class ProductCardWidget extends StatelessWidget {
     required String value,
     required String label,
   }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -358,13 +360,13 @@ class ProductCardWidget extends StatelessWidget {
           width: 24,
           height: 24,
           decoration: BoxDecoration(
-            color: bgColor,
+            color: isDark ? iconColor.withValues(alpha: 0.2) : bgColor,
             shape: BoxShape.circle,
           ),
           child: Icon(
             icon,
             size: 12.5,
-            color: iconColor,
+            color: isDark ? iconColor.withValues(alpha: 0.9) : iconColor,
           ),
         ),
         const SizedBox(width: 5),
@@ -374,19 +376,19 @@ class ProductCardWidget extends StatelessWidget {
           children: [
             Text(
               value,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF0F172A),
+                color: isDark ? Colors.white : const Color(0xFF0F172A),
                 height: 1.1,
               ),
             ),
             Text(
               label,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 9,
                 fontWeight: FontWeight.w500,
-                color: Color(0xFF64748B),
+                color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
                 height: 1.1,
               ),
             ),

@@ -51,13 +51,16 @@ class QuotationSummaryCard extends StatelessWidget {
         break;
     }
 
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [BoxShadow(color: Color(0x05000000), blurRadius: 10, offset: Offset(0, 4))],
-        border: Border.all(color: const Color(0xFFE2E1EF), width: 0.5),
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: isDark ? 0.08 : 0.03), blurRadius: 10, offset: const Offset(0, 4))],
+        border: Border.all(color: theme.colorScheme.outline, width: 0.5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -73,24 +76,24 @@ class QuotationSummaryCard extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surfaceContainerLow,
+                        color: theme.colorScheme.primaryContainer,
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
                         quotation.id,
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10, color: AppColors.primary),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10, color: theme.colorScheme.primary),
                       ),
                     ),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     Text(
                       'RFQ: ${quotation.rfqNumber}',
-                      style: TextStyle(fontSize: 9, color: AppColors.outline),
+                      style: TextStyle(fontSize: 9, color: theme.colorScheme.onSurfaceVariant),
                     ),
                     if (quotation.orderNumber != null) ...[
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       Text(
                         'عقد: ${quotation.orderNumber}',
-                        style: TextStyle(fontSize: 9, color: AppColors.outline),
+                        style: TextStyle(fontSize: 9, color: theme.colorScheme.onSurfaceVariant),
                       ),
                     ],
                   ],
@@ -98,18 +101,18 @@ class QuotationSummaryCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: statusColor.withValues(alpha: 0.1),
+                    color: statusColor.withValues(alpha: isDark ? 0.2 : 0.1),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
                     statusText,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 9, color: statusColor),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 9, color: isDark ? statusColor.withValues(alpha: 0.9) : statusColor),
                   ),
                 ),
               ],
             ),
           ),
-          Divider(height: 1, color: AppColors.surfaceContainerLow),
+          Divider(height: 1, color: theme.colorScheme.outlineVariant),
 
           // Factory Info
           Padding(
