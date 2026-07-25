@@ -903,11 +903,6 @@ GoRouter goRouter(Ref ref) {
         builder: (context, state) => const SubscriptionAnalyticsScreen(),
       ),
       GoRoute(
-        path: '/notifications',
-        name: 'notifications',
-        builder: (context, state) => const NotificationSettingsScreen(),
-      ),
-      GoRoute(
         path: '/notifications/settings',
         name: 'notifications-settings',
         builder: (context, state) => const NotificationSettingsScreen(),

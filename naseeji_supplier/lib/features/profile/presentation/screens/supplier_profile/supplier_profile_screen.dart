@@ -824,7 +824,7 @@ class SupplierProfileScreen extends ConsumerWidget {
         icon: Icons.notifications_none_rounded,
         iconColor: const Color(0xFFEA580C),
         bgColor: const Color(0xFFFFF7ED),
-        route: '/notifications',
+        route: '/notifications/settings',
       ),
       _MenuItemData(
         title: 'الأمان وتسجيل الدخول',

@@ -80,14 +80,6 @@ class NotificationSwitchTile extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
           child: Row(
             children: [
-              // Chevron icon on far left in RTL
-              const Icon(
-                Icons.chevron_left_rounded,
-                size: 20,
-                color: Color(0xFF9CA3AF),
-              ),
-              const SizedBox(width: 8),
-
               // Switch
               Switch(
                 value: value,
