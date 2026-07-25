@@ -14,13 +14,15 @@ class ProductSearchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       height: 44,
       margin: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? const Color(0xFF1E293B) : Colors.white,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
+        border: Border.all(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.015),
@@ -32,7 +34,7 @@ class ProductSearchWidget extends StatelessWidget {
       child: TextField(
         controller: TextEditingController(text: query)..selection = TextSelection.collapsed(offset: query.length),
         onChanged: onChanged,
-        style: const TextStyle(fontSize: 13, color: Color(0xFF111827)),
+        style: TextStyle(fontSize: 13, color: isDark ? Colors.white : const Color(0xFF111827)),
         decoration: InputDecoration(
           hintText: 'ابحث عن منتج...',
           hintStyle: const TextStyle(

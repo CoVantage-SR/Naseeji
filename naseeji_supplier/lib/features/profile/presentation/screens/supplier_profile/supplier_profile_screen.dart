@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../controllers/profile_controller.dart';
+import 'package:naseeji_supplier/core/theme/theme_controller.dart';
 
 class SupplierProfileScreen extends ConsumerWidget {
   const SupplierProfileScreen({super.key});
@@ -11,10 +12,12 @@ class SupplierProfileScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final profileAsync = ref.watch(profileControllerProvider);
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: const Color(0xFFF9FAFB),
+        backgroundColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFF9FAFB),
         body: SafeArea(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -30,18 +33,18 @@ class SupplierProfileScreen extends ConsumerWidget {
                         Container(
                           width: 44,
                           height: 44,
-                          decoration: const BoxDecoration(
-                            color: Color(0xFFEFF6FF),
+                          decoration: BoxDecoration(
+                            color: isDark ? const Color(0xFF1E293B) : const Color(0xFFEFF6FF),
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.settings_outlined,
-                            color: Color(0xFF2563EB),
+                            color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB),
                             size: 22,
                           ),
                         ),
                         const SizedBox(width: 10),
-                        const Column(
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
@@ -49,16 +52,16 @@ class SupplierProfileScreen extends ConsumerWidget {
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xFF111827),
+                                color: isDark ? Colors.white : const Color(0xFF111827),
                                 height: 1.1,
                               ),
                             ),
-                            SizedBox(height: 2),
+                            const SizedBox(height: 2),
                             Text(
                               'إدارة بياناتك وإعدادات حسابك',
                               style: TextStyle(
                                 fontSize: 12,
-                                color: Color(0xFF6B7280),
+                                color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -73,9 +76,9 @@ class SupplierProfileScreen extends ConsumerWidget {
                       children: [
                         IconButton(
                           onPressed: () => context.push('/notifications'),
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.notifications_none_rounded,
-                            color: Color(0xFF4B5563),
+                            color: isDark ? Colors.white : const Color(0xFF4B5563),
                             size: 24,
                           ),
                         ),
@@ -148,12 +151,12 @@ class SupplierProfileScreen extends ConsumerWidget {
                 const SizedBox(height: 14),
 
                 // 4. Performance & Metrics Grid (4 Cards Row)
-                _buildMetricsGrid(),
+                _buildMetricsGrid(context),
 
                 const SizedBox(height: 14),
 
                 // 5. Settings Options Menu Card Group
-                _buildSettingsMenuList(context),
+                _buildSettingsMenuList(context, ref),
 
                 const SizedBox(height: 16),
 
@@ -251,11 +254,13 @@ class SupplierProfileScreen extends ConsumerWidget {
     required String phone,
     required String accountType,
   }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? const Color(0xFF1E293B) : Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
+        border: Border.all(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.03),
@@ -517,12 +522,14 @@ class SupplierProfileScreen extends ConsumerWidget {
   // Widget 2: Subscription & Billing Banner Card
   // ---------------------------------------------------------------------------
   Widget _buildSubscriptionCard(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: const Color(0xFFF4F8FF),
+        color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF4F8FF),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFDBEAFE)),
+        border: Border.all(color: isDark ? const Color(0xFF334155) : const Color(0xFFDBEAFE)),
       ),
       child: Column(
         children: [
@@ -687,7 +694,9 @@ class SupplierProfileScreen extends ConsumerWidget {
   // ---------------------------------------------------------------------------
   // Widget 3: Metrics Grid (4 Stat Cards Row)
   // ---------------------------------------------------------------------------
-  Widget _buildMetricsGrid() {
+  Widget _buildMetricsGrid(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     final metrics = [
       const _MetricItem(
         title: 'المنتجات النشطة',
@@ -722,9 +731,9 @@ class SupplierProfileScreen extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? const Color(0xFF1E293B) : Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
+        border: Border.all(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.02),
@@ -743,8 +752,8 @@ class SupplierProfileScreen extends ConsumerWidget {
               decoration: BoxDecoration(
                 border: index == metrics.length - 1
                     ? null
-                    : const Border(
-                        left: BorderSide(color: Color(0xFFF3F4F6), width: 1),
+                    : Border(
+                        left: BorderSide(color: isDark ? const Color(0xFF334155) : const Color(0xFFF3F4F6), width: 1),
                       ),
               ),
               child: Column(
@@ -761,10 +770,10 @@ class SupplierProfileScreen extends ConsumerWidget {
                   const SizedBox(height: 6),
                   Text(
                     item.value,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF111827),
+                      color: isDark ? Colors.white : const Color(0xFF111827),
                       height: 1.0,
                     ),
                   ),
@@ -792,7 +801,11 @@ class SupplierProfileScreen extends ConsumerWidget {
   // ---------------------------------------------------------------------------
   // Widget 4: Settings Menu List Options Card
   // ---------------------------------------------------------------------------
-  Widget _buildSettingsMenuList(BuildContext context) {
+  Widget _buildSettingsMenuList(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeControllerProvider);
+    final isDark = themeMode == ThemeMode.dark ||
+        (themeMode == ThemeMode.system && MediaQuery.of(context).platformBrightness == Brightness.dark);
+
     final menuItems = [
       _MenuItemData(
         title: 'البيانات الأساسية',
@@ -828,19 +841,20 @@ class SupplierProfileScreen extends ConsumerWidget {
       ),
       _MenuItemData(
         title: 'الأمان وتسجيل الدخول',
-        subtitle: 'تغيير كلمة المرور وإعدادات الأمان',
+        subtitle: 'تغيير كلمة المرور وإعدادات الأمان والجلسات',
         icon: Icons.shield_outlined,
         iconColor: const Color(0xFF2563EB),
         bgColor: const Color(0xFFEFF6FF),
-        route: '/profile/edit',
+        route: '/profile/security',
       ),
       _MenuItemData(
         title: 'اللغة والمظهر',
-        subtitle: 'تغيير اللغة والمظهر العام للتطبيق',
-        icon: Icons.dark_mode_outlined,
-        iconColor: const Color(0xFF4B5563),
-        bgColor: const Color(0xFFF3F4F6),
-        route: '/profile/edit',
+        subtitle: isDark ? 'الوضع الداكن مفعل' : 'الوضع الفاتح مفعل',
+        icon: isDark ? Icons.dark_mode_rounded : Icons.light_mode_outlined,
+        iconColor: isDark ? const Color(0xFFFBBF24) : const Color(0xFF4B5563),
+        bgColor: isDark ? const Color(0xFF374151) : const Color(0xFFF3F4F6),
+        route: '',
+        isThemeToggle: true,
       ),
     ];
 
@@ -869,9 +883,16 @@ class SupplierProfileScreen extends ConsumerWidget {
           separatorBuilder: (_, __) => const Divider(height: 1, color: Color(0xFFF3F4F6)),
           itemBuilder: (context, index) {
             final item = menuItems[index];
+            final isThemeItem = item.isThemeToggle;
 
             return ListTile(
-              onTap: () => context.push(item.route),
+              onTap: () {
+                if (isThemeItem) {
+                  ref.read(themeControllerProvider.notifier).setThemeMode(isDark ? ThemeMode.light : ThemeMode.dark);
+                } else {
+                  context.push(item.route);
+                }
+              },
               contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
               leading: Container(
                 width: 36,
@@ -897,11 +918,20 @@ class SupplierProfileScreen extends ConsumerWidget {
                   color: Color(0xFF6B7280),
                 ),
               ),
-              trailing: const Icon(
-                Icons.chevron_left_rounded,
-                size: 20,
-                color: Color(0xFF9CA3AF),
-              ),
+              trailing: isThemeItem
+                  ? Switch(
+                      value: isDark,
+                      activeThumbColor: Colors.white,
+                      activeTrackColor: const Color(0xFF9333EA),
+                      onChanged: (val) {
+                        ref.read(themeControllerProvider.notifier).setThemeMode(val ? ThemeMode.dark : ThemeMode.light);
+                      },
+                    )
+                  : const Icon(
+                      Icons.chevron_left_rounded,
+                      size: 20,
+                      color: Color(0xFF9CA3AF),
+                    ),
             );
           },
         ),
@@ -967,6 +997,7 @@ class _MenuItemData {
   final Color iconColor;
   final Color bgColor;
   final String route;
+  final bool isThemeToggle;
 
   const _MenuItemData({
     required this.title,
@@ -975,6 +1006,7 @@ class _MenuItemData {
     required this.iconColor,
     required this.bgColor,
     required this.route,
+    this.isThemeToggle = false,
   });
 }
 

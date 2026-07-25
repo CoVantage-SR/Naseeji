@@ -20,13 +20,15 @@ class ProductsDashboardWidget extends StatelessWidget {
     final draftsCount = products.where((p) => p.status == ProductStatus.draft).isNotEmpty ? 28 : 0;
     const rejectedCount = 14;
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? const Color(0xFF1E293B) : Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
+        border: Border.all(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.02),
@@ -157,10 +159,10 @@ class ProductsDashboardWidget extends StatelessWidget {
                 // Count
                 Text(
                   '$count',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF111827),
+                    color: Theme.of(context).brightness == Brightness.dark ? Colors.white : const Color(0xFF111827),
                     height: 1.0,
                   ),
                 ),

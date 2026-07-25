@@ -24,10 +24,12 @@ class ProductsModuleScreen extends ConsumerWidget {
     final categoryFilter = ref.watch(productCategoryFilterProvider);
     final sortBy = ref.watch(productSortByProvider);
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: const Color(0xFFF9FAFB),
+        backgroundColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFF9FAFB),
         body: SafeArea(
           child: Column(
             children: [
@@ -43,18 +45,18 @@ class ProductsModuleScreen extends ConsumerWidget {
                         Container(
                           width: 44,
                           height: 44,
-                          decoration: const BoxDecoration(
-                            color: Color(0xFFEFF6FF),
+                          decoration: BoxDecoration(
+                            color: isDark ? const Color(0xFF1E293B) : const Color(0xFFEFF6FF),
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.local_mall_outlined,
-                            color: Color(0xFF2563EB),
+                            color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB),
                             size: 22,
                           ),
                         ),
                         const SizedBox(width: 10),
-                        const Column(
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
@@ -62,16 +64,16 @@ class ProductsModuleScreen extends ConsumerWidget {
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xFF111827),
+                                color: isDark ? Colors.white : const Color(0xFF111827),
                                 height: 1.1,
                               ),
                             ),
-                            SizedBox(height: 2),
+                            const SizedBox(height: 2),
                             Text(
                               'إدارة منتجاتك وعروضك',
                               style: TextStyle(
                                 fontSize: 12,
-                                color: Color(0xFF6B7280),
+                                color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -87,9 +89,9 @@ class ProductsModuleScreen extends ConsumerWidget {
                           onPressed: () {
                             context.push('/search');
                           },
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.search_rounded,
-                            color: Color(0xFF4B5563),
+                            color: isDark ? Colors.white : const Color(0xFF4B5563),
                             size: 24,
                           ),
                         ),

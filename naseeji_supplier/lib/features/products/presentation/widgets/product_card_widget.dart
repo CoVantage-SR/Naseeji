@@ -25,15 +25,15 @@ class ProductCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? const Color(0xFF1E293B) : Colors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: const Color(0xFFF1F5F9), // Slate 100
+          color: isDark ? const Color(0xFF334155) : const Color(0xFFF1F5F9), // Slate 100
           width: 1.2,
         ),
         boxShadow: const [
@@ -142,10 +142,10 @@ class ProductCardWidget extends StatelessWidget {
                               product.name,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 14.5,
                                 fontWeight: FontWeight.w700,
-                                color: Color(0xFF0F172A), // Slate 900
+                                color: isDark ? Colors.white : const Color(0xFF0F172A), // Slate 900
                                 height: 1.2,
                               ),
                             ),
