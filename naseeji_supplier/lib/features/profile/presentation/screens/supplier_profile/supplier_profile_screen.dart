@@ -849,8 +849,12 @@ class SupplierProfileScreen extends ConsumerWidget {
       ),
       _MenuItemData(
         title: 'اللغة والمظهر',
-        subtitle: isDark ? 'الوضع الداكن مفعل' : 'الوضع الفاتح مفعل',
-        icon: isDark ? Icons.dark_mode_rounded : Icons.light_mode_outlined,
+        subtitle: themeMode == ThemeMode.system
+            ? 'حسب إعدادات النظام'
+            : (isDark ? 'الوضع الداكن مفعل' : 'الوضع الفاتح مفعل'),
+        icon: themeMode == ThemeMode.system
+            ? Icons.settings_brightness_rounded
+            : (isDark ? Icons.dark_mode_rounded : Icons.light_mode_outlined),
         iconColor: isDark ? const Color(0xFFFBBF24) : const Color(0xFF4B5563),
         bgColor: isDark ? const Color(0xFF374151) : const Color(0xFFF3F4F6),
         route: '',
@@ -858,14 +862,16 @@ class SupplierProfileScreen extends ConsumerWidget {
       ),
     ];
 
+    final theme = Theme.of(context);
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
+        border: Border.all(color: theme.colorScheme.outline),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
+            color: Colors.black.withValues(alpha: isDark ? 0.08 : 0.02),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),
@@ -880,7 +886,7 @@ class SupplierProfileScreen extends ConsumerWidget {
           physics: const NeverScrollableScrollPhysics(),
           padding: EdgeInsets.zero,
           itemCount: menuItems.length,
-          separatorBuilder: (_, __) => const Divider(height: 1, color: Color(0xFFF3F4F6)),
+          separatorBuilder: (_, __) => Divider(height: 1, color: theme.colorScheme.outlineVariant),
           itemBuilder: (context, index) {
             final item = menuItems[index];
             final isThemeItem = item.isThemeToggle;
@@ -888,7 +894,7 @@ class SupplierProfileScreen extends ConsumerWidget {
             return ListTile(
               onTap: () {
                 if (isThemeItem) {
-                  ref.read(themeControllerProvider.notifier).setThemeMode(isDark ? ThemeMode.light : ThemeMode.dark);
+                  _showThemeSelectionSheet(context, ref);
                 } else {
                   context.push(item.route);
                 }
@@ -905,37 +911,136 @@ class SupplierProfileScreen extends ConsumerWidget {
               ),
               title: Text(
                 item.title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13.5,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF111827),
+                  color: theme.colorScheme.onSurface,
                 ),
               ),
               subtitle: Text(
                 item.subtitle,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 11,
-                  color: Color(0xFF6B7280),
+                  color: theme.colorScheme.onSurfaceVariant,
                 ),
               ),
               trailing: isThemeItem
                   ? Switch(
                       value: isDark,
                       activeThumbColor: Colors.white,
-                      activeTrackColor: const Color(0xFF9333EA),
+                      activeTrackColor: theme.colorScheme.primary,
                       onChanged: (val) {
                         ref.read(themeControllerProvider.notifier).setThemeMode(val ? ThemeMode.dark : ThemeMode.light);
                       },
                     )
-                  : const Icon(
+                  : Icon(
                       Icons.chevron_left_rounded,
                       size: 20,
-                      color: Color(0xFF9CA3AF),
+                      color: theme.colorScheme.onSurfaceVariant,
                     ),
             );
           },
         ),
       ),
+    );
+  }
+
+  void _showThemeSelectionSheet(BuildContext context, WidgetRef ref) {
+    final currentMode = ref.watch(themeControllerProvider);
+    final theme = Theme.of(context);
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: theme.colorScheme.surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'مظهر التطبيق',
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: theme.colorScheme.onSurface,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(Icons.close_rounded, size: 20),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                RadioListTile<ThemeMode>(
+                  value: ThemeMode.light,
+                  groupValue: currentMode,
+                  onChanged: (mode) {
+                    if (mode != null) {
+                      ref.read(themeControllerProvider.notifier).setThemeMode(mode);
+                      Navigator.pop(context);
+                    }
+                  },
+                  title: const Row(
+                    children: [
+                      Text('🌞', style: TextStyle(fontSize: 18)),
+                      SizedBox(width: 10),
+                      Text('فاتح', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+                    ],
+                  ),
+                  activeColor: theme.colorScheme.primary,
+                ),
+                RadioListTile<ThemeMode>(
+                  value: ThemeMode.dark,
+                  groupValue: currentMode,
+                  onChanged: (mode) {
+                    if (mode != null) {
+                      ref.read(themeControllerProvider.notifier).setThemeMode(mode);
+                      Navigator.pop(context);
+                    }
+                  },
+                  title: const Row(
+                    children: [
+                      Text('🌙', style: TextStyle(fontSize: 18)),
+                      SizedBox(width: 10),
+                      Text('داكن', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+                    ],
+                  ),
+                  activeColor: theme.colorScheme.primary,
+                ),
+                RadioListTile<ThemeMode>(
+                  value: ThemeMode.system,
+                  groupValue: currentMode,
+                  onChanged: (mode) {
+                    if (mode != null) {
+                      ref.read(themeControllerProvider.notifier).setThemeMode(mode);
+                      Navigator.pop(context);
+                    }
+                  },
+                  title: const Row(
+                    children: [
+                      Text('⚙️', style: TextStyle(fontSize: 18)),
+                      SizedBox(width: 10),
+                      Text('حسب إعدادات النظام', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+                    ],
+                  ),
+                  activeColor: theme.colorScheme.primary,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
