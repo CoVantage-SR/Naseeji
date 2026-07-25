@@ -8,6 +8,8 @@ class SecurityHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
       child: Row(
@@ -19,18 +21,18 @@ class SecurityHeader extends StatelessWidget {
               Container(
                 width: 44,
                 height: 44,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFF3E8FF),
+                decoration: BoxDecoration(
+                  color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF3E8FF),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.shield_outlined,
-                  color: Color(0xFF9333EA),
+                  color: isDark ? const Color(0xFFC084FC) : const Color(0xFF9333EA),
                   size: 24,
                 ),
               ),
               const SizedBox(width: 10),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -38,16 +40,16 @@ class SecurityHeader extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF111827),
+                      color: isDark ? Colors.white : const Color(0xFF111827),
                       height: 1.1,
                     ),
                   ),
-                  SizedBox(height: 2),
+                  const SizedBox(height: 2),
                   Text(
                     'إدارة أمان حسابك وطرق تسجيل الدخول',
                     style: TextStyle(
                       fontSize: 12,
-                      color: Color(0xFF6B7280),
+                      color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -59,9 +61,9 @@ class SecurityHeader extends StatelessWidget {
           // Left: Back Arrow
           IconButton(
             onPressed: onBack,
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_forward_rounded,
-              color: Color(0xFF111827),
+              color: isDark ? Colors.white : const Color(0xFF111827),
               size: 24,
             ),
           ),
@@ -78,14 +80,16 @@ class SectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.only(right: 4, bottom: 8),
       child: Text(
         title,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 13.5,
           fontWeight: FontWeight.bold,
-          color: Color(0xFF374151),
+          color: isDark ? const Color(0xFFE2E8F0) : const Color(0xFF374151),
         ),
       ),
     );
@@ -108,6 +112,8 @@ class LoginMethodTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       child: Row(
@@ -123,10 +129,10 @@ class LoginMethodTile extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13.5,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF111827),
+                  color: isDark ? Colors.white : const Color(0xFF111827),
                 ),
               ),
               const SizedBox(height: 2),

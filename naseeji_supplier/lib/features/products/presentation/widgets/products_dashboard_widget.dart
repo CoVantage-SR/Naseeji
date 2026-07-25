@@ -41,6 +41,7 @@ class ProductsDashboardWidget extends StatelessWidget {
         children: [
           Expanded(
             child: _buildStatCell(
+              context: context,
               title: 'إجمالي المنتجات',
               count: totalCount > 0 ? totalCount : 128,
               icon: Icons.local_mall_outlined,
@@ -52,6 +53,7 @@ class ProductsDashboardWidget extends StatelessWidget {
           _buildVerticalDivider(),
           Expanded(
             child: _buildStatCell(
+              context: context,
               title: 'تم النشر',
               count: publishedCount > 0 ? publishedCount : 86,
               icon: Icons.check_circle_outline_rounded,
@@ -63,6 +65,7 @@ class ProductsDashboardWidget extends StatelessWidget {
           _buildVerticalDivider(),
           Expanded(
             child: _buildStatCell(
+              context: context,
               title: 'مسودة',
               count: draftsCount > 0 ? draftsCount : 28,
               icon: Icons.edit_outlined,
@@ -74,6 +77,7 @@ class ProductsDashboardWidget extends StatelessWidget {
           _buildVerticalDivider(),
           Expanded(
             child: _buildStatCell(
+              context: context,
               title: 'مرفوضة',
               count: rejectedCount,
               icon: Icons.close_rounded,
@@ -96,6 +100,7 @@ class ProductsDashboardWidget extends StatelessWidget {
   }
 
   Widget _buildStatCell({
+    required BuildContext context,
     required String title,
     required int count,
     required IconData icon,
