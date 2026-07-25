@@ -26,14 +26,15 @@ class ConversationHeaderWidget extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     final formattedValue = '${workspace.dealValue.toStringAsFixed(0)} ج.م';
-    final formattedTime = '${workspace.lastUpdated.hour}:${workspace.lastUpdated.minute.toString().padLeft(2, '0')}';
 
     return Container(
       padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
       decoration: BoxDecoration(
         color: colorScheme.surface,
         border: Border(
-          bottom: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.3)),
+          bottom: BorderSide(
+            color: colorScheme.outlineVariant.withValues(alpha: 0.3),
+          ),
         ),
         boxShadow: [
           BoxShadow(
@@ -92,14 +93,21 @@ class ConversationHeaderWidget extends StatelessWidget {
                         ),
                         if (workspace.isFactoryVerified) ...[
                           const SizedBox(width: 4),
-                          Icon(Icons.verified_rounded, size: 15, color: colorScheme.primary),
+                          Icon(
+                            Icons.verified_rounded,
+                            size: 15,
+                            color: colorScheme.primary,
+                          ),
                         ],
                       ],
                     ),
                     const SizedBox(height: 2),
                     Text(
                       'طلب: ${workspace.orderId} • RFQ: ${workspace.rfqId}',
-                      style: TextStyle(fontSize: 10.5, color: colorScheme.onSurfaceVariant),
+                      style: TextStyle(
+                        fontSize: 10.5,
+                        color: colorScheme.onSurfaceVariant,
+                      ),
                     ),
                   ],
                 ),
@@ -116,11 +124,17 @@ class ConversationHeaderWidget extends StatelessWidget {
             decoration: BoxDecoration(
               color: colorScheme.surfaceContainerLow,
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.25)),
+              border: Border.all(
+                color: colorScheme.outlineVariant.withValues(alpha: 0.25),
+              ),
             ),
             child: Row(
               children: [
-                Icon(Icons.inventory_2_outlined, size: 14, color: colorScheme.primary),
+                Icon(
+                  Icons.inventory_2_outlined,
+                  size: 14,
+                  color: colorScheme.primary,
+                ),
                 const SizedBox(width: 6),
                 Expanded(
                   child: Text(
@@ -136,7 +150,10 @@ class ConversationHeaderWidget extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 6,
+                    vertical: 2,
+                  ),
                   decoration: BoxDecoration(
                     color: colorScheme.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(6),
@@ -153,12 +170,14 @@ class ConversationHeaderWidget extends StatelessWidget {
                 const SizedBox(width: 4),
                 Text(
                   '(${workspace.totalQuantity} كجم)',
-                  style: TextStyle(fontSize: 10, color: colorScheme.onSurfaceVariant),
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
                 ),
               ],
             ),
           ),
-
         ],
       ),
     );

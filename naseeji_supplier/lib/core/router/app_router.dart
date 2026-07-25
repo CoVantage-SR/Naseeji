@@ -50,6 +50,8 @@ import '../../features/quotations/presentation/screens/create_quotation_wizard_s
 import '../../features/profile/presentation/screens/supplier_profile/public_supplier_profile_screen.dart';
 import '../../features/profile/presentation/screens/supplier_profile/edit_supplier_profile_screen.dart';
 import '../../features/profile/presentation/screens/supplier_profile/basic_data_screen.dart';
+import '../../features/team/presentation/screens/team_members_screen.dart';
+import '../../features/team/presentation/screens/team_member_details_screen.dart';
 import '../../features/messages/presentation/screens/messages_screen.dart';
 import '../../features/messages/presentation/screens/business_chat_screen.dart';
 import '../../features/messages/presentation/screens/support_chat_screen.dart';
@@ -331,6 +333,18 @@ GoRouter goRouter(Ref ref) {
         path: '/profile/edit-form',
         name: 'profile-edit-form',
         builder: (context, state) => const EditSupplierProfileScreen(),
+      ),
+      GoRoute(
+        path: '/team',
+        name: 'team',
+        builder: (context, state) => const TeamMembersScreen(),
+      ),
+      GoRoute(
+        path: '/team/details/:id',
+        name: 'team-details',
+        builder: (context, state) => TeamMemberDetailsScreen(
+          memberId: state.pathParameters['id'] ?? '',
+        ),
       ),
       GoRoute(
         path: '/add-product',
@@ -816,7 +830,7 @@ GoRouter goRouter(Ref ref) {
       GoRoute(
         path: '/subscription/plans',
         name: 'subscription-plans',
-        builder: (context, state) => const SubscriptionPlansScreen(),
+        builder: (context, state) => const SubscriptionManagementScreen(),
       ),
       GoRoute(
         path: '/subscription/comparison',
@@ -826,22 +840,22 @@ GoRouter goRouter(Ref ref) {
       GoRoute(
         path: '/subscription/details',
         name: 'subscription-details',
-        builder: (context, state) => const SubscriptionDetailsScreen(),
+        builder: (context, state) => const SubscriptionManagementScreen(),
       ),
       GoRoute(
         path: '/subscription/billing',
         name: 'subscription-billing',
-        builder: (context, state) => const BillingScreen(),
+        builder: (context, state) => const SubscriptionManagementScreen(),
       ),
       GoRoute(
         path: '/subscription/methods',
         name: 'subscription-methods',
-        builder: (context, state) => const SubscriptionPaymentMethodsScreen(),
+        builder: (context, state) => const SubscriptionManagementScreen(),
       ),
       GoRoute(
         path: '/subscription/history',
         name: 'subscription-history',
-        builder: (context, state) => const SubscriptionHistoryScreen(),
+        builder: (context, state) => const SubscriptionManagementScreen(),
       ),
       GoRoute(
         path: '/subscription/usage',
@@ -891,6 +905,16 @@ GoRouter goRouter(Ref ref) {
         path: '/subscription/analytics',
         name: 'subscription-analytics',
         builder: (context, state) => const SubscriptionAnalyticsScreen(),
+      ),
+      GoRoute(
+        path: '/subscription',
+        name: 'subscription',
+        builder: (context, state) => const SubscriptionManagementScreen(),
+      ),
+      GoRoute(
+        path: '/subscription/management',
+        name: 'subscription-management',
+        builder: (context, state) => const SubscriptionManagementScreen(),
       ),
       GoRoute(
         path: '/subscription/manage',

@@ -808,15 +808,15 @@ class SupplierProfileScreen extends ConsumerWidget {
         icon: Icons.group_outlined,
         iconColor: const Color(0xFF16A34A),
         bgColor: const Color(0xFFF0FDF4),
-        route: '/profile/edit',
+        route: '/team',
       ),
       _MenuItemData(
         title: 'طرق الدفع والحسابات البنكية',
-        subtitle: 'إدارة حساباتك البنكية وطرق الدفع',
+        subtitle: 'إدارة حساباتك البنكية وطرق الدفع والاشتراك',
         icon: Icons.credit_card_rounded,
         iconColor: const Color(0xFF9333EA),
         bgColor: const Color(0xFFF3E8FF),
-        route: '/profile/edit',
+        route: '/subscription',
       ),
       _MenuItemData(
         title: 'إعدادات الإشعارات',
