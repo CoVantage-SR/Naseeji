@@ -14,6 +14,7 @@ import 'package:naseeji_supplier/features/messages/domain/entities/deal_status_e
 import 'package:naseeji_supplier/features/messages/domain/entities/conversation.dart';
 import 'package:naseeji_supplier/features/messages/domain/entities/deal_timeline_model.dart';
 import 'package:naseeji_supplier/features/notifications/domain/entities/notification_settings_model.dart';
+import 'package:naseeji_supplier/features/profile/domain/entities/security_models.dart';
 
 class MockDatabase {
   MockDatabase._();
