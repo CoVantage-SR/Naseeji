@@ -1,213 +1,297 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-class PlanComparisonScreen extends StatelessWidget {
+import 'package:naseeji_supplier/core/mock/mock_data.dart';
+import '../controllers/subscription_controllers.dart';
+import '../widgets/plan_comparison_widgets.dart';
+
+class PlanComparisonScreen extends ConsumerWidget {
   const PlanComparisonScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> comparisonData = [
-      {
-        'feature': 'المنتجات المسموحة',
-        'free': '10 منتجات',
-        'starter': '50 منتج',
-        'professional': '200 منتج',
-        'business': '1,000 منتج'
-      },
-      {
-        'feature': 'الإعلانات الممولة النشطة',
-        'free': '1 إعلان نشط',
-        'starter': '5 إعلانات',
-        'professional': '20 إعلان',
-        'business': '100 إعلان'
-      },
-      {
-        'feature': 'المنتجات المتميزة بالمنصة',
-        'free': 'غير متاح',
-        'starter': '3 منتجات',
-        'professional': '10 منتجات',
-        'business': '50 منتج'
-      },
-      {
-        'feature': 'مساحة التخزين المتاحة',
-        'free': '1 جيجابايت',
-        'starter': '5 جيجابايت',
-        'professional': '20 جيجابايت',
-        'business': '100 جيجابايت'
-      },
-      {
-        'feature': 'الموظفون الإضافيون',
-        'free': 'غير متاح',
-        'starter': '5 موظفين',
-        'professional': '20 موظفاً',
-        'business': 'غير محدود'
-      },
-      {
-        'feature': 'عدد الفروع النشطة',
-        'free': 'فرع واحد',
-        'starter': 'فرعين',
-        'professional': '5 فروع',
-        'business': '15 فرع'
-      },
-      {
-        'feature': 'حملات تسويقية شهرياً',
-        'free': '1 حملة',
-        'starter': '10 حملات',
-        'professional': '30 حملة',
-        'business': 'غير محدود'
-      },
-      {
-        'feature': 'كوبونات الخصم الفعالة',
-        'free': '2 كوبون',
-        'starter': '20 كوبون',
-        'professional': '50 كوبون',
-        'business': 'غير محدود'
-      },
-      {
-        'feature': 'تقارير أداء وعائدات',
-        'free': 'ملخص عام',
-        'starter': 'تقارير عادية',
-        'professional': 'تقارير ذكاء اصطناعي',
-        'business': 'لوحة متكاملة'
-      },
-      {
-        'feature': 'الاستيراد بالجملة (Bulk)',
-        'free': 'غير متاح',
-        'starter': 'غير متاح',
-        'professional': 'متاح كامل',
-        'business': 'متاح كامل'
-      },
-      {
-        'feature': 'ربط واجهة الـ API للربط',
-        'free': 'غير متاح',
-        'starter': 'غير متاح',
-        'professional': 'غير متاح',
-        'business': 'متاح بالكامل'
-      },
-      {
-        'feature': 'دعم فني خاص ومخصص',
-        'free': 'تذاكر عادية',
-        'starter': 'دعم سريع',
-        'professional': 'دعم ذو أولوية',
-        'business': 'مدير حساب خاص'
-      },
-    ];
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Watch active subscription state for reactive updates
+    ref.watch(activeSubscriptionControllerProvider);
+
+    final currentSub = MockDatabase.getCurrentSubscription();
+    final currentPlanName = currentSub.planName; // 'الباقة الاحترافية' or 'Starter' etc.
 
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          elevation: 0.5,
-          title: Text(
-            'جدول مقارنة الباقات B2B',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Theme.of(context).colorScheme.onSurface),
-          ),
-          centerTitle: true,
-        ),
-        body: Material(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  'تفاصيل مقارنة الموارد والحدود التقنية للباقات',
-                  style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
-                  textAlign: TextAlign.right,
-                ),
-                SizedBox(height: 16),
+        backgroundColor: const Color(0xFFF9FAFB),
+        body: SafeArea(
+          child: Column(
+            children: [
+              // 1. Header Bar
+              PlansHeader(
+                onBack: () {
+                  if (context.canPop()) {
+                    context.pop();
+                  } else {
+                    context.go('/subscription');
+                  }
+                },
+              ),
 
-                // Interactive Table
-                Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Theme.of(context).colorScheme.outlineVariant.withValues(alpha: 0.3)),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: DataTable(
-                        headingRowColor: WidgetStateProperty.all(
-                          Theme.of(context).brightness == Brightness.dark
-                              ? const Color(0xFF252538)
-                              : const Color(0xFFF1F3FF),
-                        ),
-                        columns: [
-                          DataColumn(
-                            label: Text(
-                              'الميزة / الحد التقني',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 11,
-                                color: Theme.of(context).colorScheme.onSurface,
-                              ),
-                            ),
+              // Main Scrollable Body
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  child: Column(
+                    children: [
+                      // SECTION 1: Top 3 Plan Cards (Starter, Professional, Enterprise)
+                      Row(
+                        children: [
+                          PlanCard(
+                            title: 'الأساسية',
+                            subtitle: 'لبداية أعمالك',
+                            monthlyPrice: '29',
+                            yearlyPrice: '290',
+                            icon: Icons.star_border_rounded,
+                            iconColor: const Color(0xFF16A34A),
+                            isCurrent: currentPlanName.contains('الأساسية') || currentPlanName.contains('Starter'),
+                            buttonText: (currentPlanName.contains('الأساسية') || currentPlanName.contains('Starter'))
+                                ? 'الباقة الحالية'
+                                : 'اختر الباقة',
+                            buttonColor: (currentPlanName.contains('الأساسية') || currentPlanName.contains('Starter'))
+                                ? const Color(0xFFDCFCE7)
+                                : const Color(0xFFF0FDF4),
+                            buttonTextColor: const Color(0xFF16A34A),
+                            onPressed: () => _handlePlanSelect(context, ref, 'الأساسية', 29.0),
                           ),
-                          DataColumn(
-                            label: Text(
-                              'المجانية',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 11,
-                                color: Theme.of(context).colorScheme.onSurface,
-                              ),
-                            ),
+                          const SizedBox(width: 8),
+                          PlanCard(
+                            title: 'الإحترافية',
+                            subtitle: 'لنمو أعمالك',
+                            monthlyPrice: '79',
+                            yearlyPrice: '790',
+                            icon: Icons.workspace_premium_rounded,
+                            iconColor: const Color(0xFF9333EA),
+                            isPopular: true,
+                            isCurrent: currentPlanName.contains('الاحترافية') || currentPlanName.contains('Professional'),
+                            buttonText: (currentPlanName.contains('الاحترافية') || currentPlanName.contains('Professional'))
+                                ? 'الباقة الحالية'
+                                : 'ترقية الباقة',
+                            buttonColor: (currentPlanName.contains('الاحترافية') || currentPlanName.contains('Professional'))
+                                ? const Color(0xFFF3E8FF)
+                                : const Color(0xFF9333EA),
+                            buttonTextColor: (currentPlanName.contains('الاحترافية') || currentPlanName.contains('Professional'))
+                                ? const Color(0xFF9333EA)
+                                : Colors.white,
+                            onPressed: () => _handlePlanSelect(context, ref, 'الباقة الاحترافية', 79.0),
                           ),
-                          DataColumn(
-                            label: Text(
-                              'المبتدئ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 11,
-                                color: Theme.of(context).colorScheme.onSurface,
-                              ),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              'الاحترافية',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 11,
-                                color: Theme.of(context).colorScheme.onSurface,
-                              ),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              'الأعمال',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 11,
-                                color: Theme.of(context).colorScheme.onSurface,
-                              ),
-                            ),
+                          const SizedBox(width: 8),
+                          PlanCard(
+                            title: 'المؤسسية',
+                            subtitle: 'للمؤسسات الكبيرة',
+                            monthlyPrice: '199',
+                            yearlyPrice: '1990',
+                            icon: Icons.crown_rounded,
+                            iconColor: const Color(0xFFEA580C),
+                            isCurrent: currentPlanName.contains('المؤسسية') || currentPlanName.contains('Enterprise'),
+                            buttonText: (currentPlanName.contains('المؤسسية') || currentPlanName.contains('Enterprise'))
+                                ? 'الباقة الحالية'
+                                : 'ترقية الباقة',
+                            buttonColor: const Color(0xFFFFF7ED),
+                            buttonTextColor: const Color(0xFFEA580C),
+                            onPressed: () => _handlePlanSelect(context, ref, 'الباقة المؤسسية', 199.0),
                           ),
                         ],
-                        rows: comparisonData.map((row) {
-                          return DataRow(
-                            cells: [
-                              DataCell(Text(row['feature'] as String, style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold))),
-                              DataCell(Text(row['free'] as String, style: TextStyle(fontSize: 10))),
-                              DataCell(Text(row['starter'] as String, style: TextStyle(fontSize: 10))),
-                              DataCell(Text(row['professional'] as String, style: TextStyle(fontSize: 10))),
-                              DataCell(Text(row['business'] as String, style: TextStyle(fontSize: 10))),
-                            ],
-                          );
-                        }).toList(),
                       ),
-                    ),
+
+                      const SizedBox(height: 20),
+
+                      // SECTION 2: Feature Comparison Table
+                      FeatureComparisonTable(
+                        rows: const [
+                          ComparisonRowData(
+                            title: 'عدد المنتجات',
+                            icon: Icons.inventory_2_outlined,
+                            starterValue: '20 منتج',
+                            professionalValue: '100 منتج',
+                            enterpriseValue: 'غير محدود',
+                          ),
+                          ComparisonRowData(
+                            title: 'عدد الصور لكل منتج',
+                            icon: Icons.image_outlined,
+                            starterValue: '5 صور',
+                            professionalValue: '20 صورة',
+                            enterpriseValue: '50 صورة',
+                          ),
+                          ComparisonRowData(
+                            title: 'عدد الفيديوهات',
+                            icon: Icons.videocam_outlined,
+                            starterValue: '2 فيديو',
+                            professionalValue: '10 فيديو',
+                            enterpriseValue: 'غير محدود',
+                          ),
+                          ComparisonRowData(
+                            title: 'ملفات PDF',
+                            icon: Icons.picture_as_pdf_outlined,
+                            starterValue: '5 ملفات',
+                            professionalValue: '20 ملف',
+                            enterpriseValue: 'غير محدود',
+                          ),
+                          ComparisonRowData(
+                            title: 'أعضاء الفريق',
+                            icon: Icons.people_outline_rounded,
+                            starterValue: '2 عضو',
+                            professionalValue: '10 أعضاء',
+                            enterpriseValue: 'غير محدود',
+                          ),
+                          ComparisonRowData(
+                            title: 'طلبات الأسعار (RFQ)',
+                            icon: Icons.chat_bubble_outline_rounded,
+                            starterValue: '50 طلب / شهر',
+                            professionalValue: '200 طلب / شهر',
+                            enterpriseValue: 'غير محدود',
+                          ),
+                          ComparisonRowData(
+                            title: 'المنتجات المميزة',
+                            icon: Icons.stars_rounded,
+                            starterValue: '1 منتج',
+                            professionalValue: '5 منتجات',
+                            enterpriseValue: 'غير محدود',
+                          ),
+                          ComparisonRowData(
+                            title: 'الإعلانات الممولة',
+                            icon: Icons.campaign_outlined,
+                            starterValue: false,
+                            professionalValue: true,
+                            enterpriseValue: true,
+                          ),
+                          ComparisonRowData(
+                            title: 'التحليلات والتقارير',
+                            icon: Icons.analytics_outlined,
+                            starterValue: true,
+                            professionalValue: true,
+                            enterpriseValue: true,
+                          ),
+                          ComparisonRowData(
+                            title: 'دعم فني',
+                            icon: Icons.headset_mic_outlined,
+                            starterValue: 'عبر البريد الإلكتروني',
+                            professionalValue: 'دعم سريع',
+                            enterpriseValue: 'مدير حساب مخصص',
+                          ),
+                          ComparisonRowData(
+                            title: 'فترة تجربة مجانية',
+                            icon: Icons.calendar_today_rounded,
+                            starterValue: '7 أيام',
+                            professionalValue: '14 يوم',
+                            enterpriseValue: '30 يوم',
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 20),
+
+                      // SECTION 3: Included Features Card ("جميع الباقات تشمل")
+                      const IncludedFeaturesCard(),
+
+                      const SizedBox(height: 24),
+
+                      // SECTION 4: Bottom Action Section ("لست متأكداً؟")
+                      BottomActionSection(
+                        onStartTrial: () => _handlePlanSelect(context, ref, 'الباقة الاحترافية', 79.0),
+                      ),
+
+                      const SizedBox(height: 24),
+                    ],
                   ),
                 ),
-                SizedBox(height: 24),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
+    );
+  }
+
+  void _handlePlanSelect(BuildContext context, WidgetRef ref, String planName, double price) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (context) {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.stars_rounded, color: Color(0xFF9333EA), size: 24),
+                    const SizedBox(width: 8),
+                    Text(
+                      'تأكيد اختيار $planName',
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF111827)),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'قيمة الاشتراك: \$$price شهرياً. سيتم فتح جميع مميزات الباقة فوراً.',
+                  style: const TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () => Navigator.pop(context),
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        ),
+                        child: const Text('إلغاء'),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          // Update subscription in MockDatabase
+                          MockDatabase.currentSubscription = MockDatabase.currentSubscription.copyWith(
+                            planName: planName,
+                            priceMonthly: price,
+                            status: 'active',
+                            isExpired: false,
+                          );
+                          ref.invalidate(activeSubscriptionControllerProvider);
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('تمت الترقية إلى $planName بنجاح! 🎉'),
+                              backgroundColor: const Color(0xFF16A34A),
+                              duration: const Duration(seconds: 3),
+                              behavior: SnackBarBehavior.floating,
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF9333EA),
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        ),
+                        child: const Text('تأكيد واشتراك', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
