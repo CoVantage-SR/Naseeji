@@ -11,7 +11,6 @@ class BasicDataScreen extends ConsumerWidget {
     final profileAsync = ref.watch(profileControllerProvider);
 
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
 
     return Directionality(
       textDirection: TextDirection.rtl,

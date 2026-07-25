@@ -19,6 +19,8 @@ class DealsDashboardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     final cardsData = [
       const _DashboardCardItem(
         title: 'إجمالي الصفقات',
@@ -76,15 +78,15 @@ class DealsDashboardWidget extends StatelessWidget {
               ),
               padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 8),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: isDark ? const Color(0xFF1E293B) : Colors.white,
                 borderRadius: BorderRadius.circular(14),
                 border: Border.all(
-                  color: const Color(0xFFE5E7EB),
+                  color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB),
                   width: 1,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.02),
+                    color: Colors.black.withValues(alpha: isDark ? 0.08 : 0.02),
                     blurRadius: 6,
                     offset: const Offset(0, 2),
                   ),
@@ -99,13 +101,13 @@ class DealsDashboardWidget extends StatelessWidget {
                     width: 28,
                     height: 28,
                     decoration: BoxDecoration(
-                      color: item.bgColor,
+                      color: isDark ? item.iconColor.withValues(alpha: 0.2) : item.bgColor,
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
                       item.icon,
                       size: 14,
-                      color: item.iconColor,
+                      color: isDark ? item.iconColor.withValues(alpha: 0.9) : item.iconColor,
                     ),
                   ),
                   const SizedBox(height: 6),
@@ -113,10 +115,10 @@ class DealsDashboardWidget extends StatelessWidget {
                   // Count
                   Text(
                     '${item.count}',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF111827),
+                      color: isDark ? Colors.white : const Color(0xFF111827),
                       height: 1.0,
                     ),
                   ),
@@ -128,10 +130,10 @@ class DealsDashboardWidget extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 9.2,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF4B5563),
+                      color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF4B5563),
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -144,18 +146,18 @@ class DealsDashboardWidget extends StatelessWidget {
                       children: [
                         Text(
                           item.growthText,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 8,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF16A34A),
+                            color: isDark ? const Color(0xFF4ADE80) : const Color(0xFF16A34A),
                           ),
                         ),
-                        const Text(
+                        Text(
                           ' ↑',
                           style: TextStyle(
                             fontSize: 8,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF16A34A),
+                            color: isDark ? const Color(0xFF4ADE80) : const Color(0xFF16A34A),
                           ),
                         ),
                       ],

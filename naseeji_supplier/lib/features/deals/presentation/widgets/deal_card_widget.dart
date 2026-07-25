@@ -22,15 +22,17 @@ class DealCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? const Color(0xFF1E293B) : Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
+        border: Border.all(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
+            color: Colors.black.withValues(alpha: isDark ? 0.08 : 0.03),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -115,10 +117,10 @@ class DealCardWidget extends StatelessWidget {
                             deal.dealNumber.startsWith('RFQ')
                                 ? 'طلب أسعار رقم ${deal.dealNumber}'
                                 : 'طلب رقم ${deal.dealNumber}',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 13.5,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFF111827),
+                              color: isDark ? Colors.white : const Color(0xFF111827),
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -131,20 +133,20 @@ class DealCardWidget extends StatelessWidget {
                               Flexible(
                                 child: Text(
                                   deal.factoryInfo.name,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 11.5,
                                     fontWeight: FontWeight.w600,
-                                    color: Color(0xFF4B5563),
+                                    color: isDark ? const Color(0xFFE2E8F0) : const Color(0xFF4B5563),
                                   ),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                               const SizedBox(width: 4),
-                              const Icon(
+                              Icon(
                                 Icons.verified_rounded,
                                 size: 14,
-                                color: Color(0xFF2563EB),
+                                color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB),
                               ),
                             ],
                           ),
@@ -163,8 +165,8 @@ class DealCardWidget extends StatelessWidget {
                                   errorBuilder: (_, __, ___) => Container(
                                     width: 26,
                                     height: 26,
-                                    color: const Color(0xFFF3F4F6),
-                                    child: const Icon(Icons.inventory_2_outlined, size: 14, color: Color(0xFF9CA3AF)),
+                                    color: isDark ? const Color(0xFF0F172A) : const Color(0xFFF3F4F6),
+                                    child: Icon(Icons.inventory_2_outlined, size: 14, color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF9CA3AF)),
                                   ),
                                 ),
                               ),
@@ -172,9 +174,9 @@ class DealCardWidget extends StatelessWidget {
                               Expanded(
                                 child: Text(
                                   deal.product.name,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 10.5,
-                                    color: Color(0xFF6B7280),
+                                    color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                                     fontWeight: FontWeight.w500,
                                   ),
                                   maxLines: 1,
@@ -189,12 +191,12 @@ class DealCardWidget extends StatelessWidget {
                     const SizedBox(width: 8),
 
                     // Left (in RTL): Status Badge
-                    _buildStatusBadge(deal.status),
+                    _buildStatusBadge(context, deal.status),
                   ],
                 ),
 
                 const SizedBox(height: 10),
-                const Divider(height: 1, color: Color(0xFFF3F4F6)),
+                Divider(height: 1, color: isDark ? const Color(0xFF334155) : const Color(0xFFF3F4F6)),
                 const SizedBox(height: 10),
 
                 // 2. Middle Stats Grid: الكمية / قيمة الطلب / آخر تحديث
@@ -202,16 +204,16 @@ class DealCardWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     // Quantity
-                    _buildStatColumn('الكمية', '${_formatNumber(deal.product.quantity.toDouble())} ${deal.product.unit}'),
+                    _buildStatColumn(context, 'الكمية', '${_formatNumber(deal.product.quantity.toDouble())} ${deal.product.unit}'),
                     // Order Value
-                    _buildStatColumn('قيمة الطلب', '${_formatNumber(deal.payment?.totalAmount ?? deal.product.totalPrice)} ج.م'),
+                    _buildStatColumn(context, 'قيمة الطلب', '${_formatNumber(deal.payment?.totalAmount ?? deal.product.totalPrice)} ج.م'),
                     // Last Updated
-                    _buildStatColumn('آخر تحديث', deal.formattedLastUpdated),
+                    _buildStatColumn(context, 'آخر تحديث', deal.formattedLastUpdated),
                   ],
                 ),
 
                 const SizedBox(height: 10),
-                const Divider(height: 1, color: Color(0xFFF3F4F6)),
+                Divider(height: 1, color: isDark ? const Color(0xFF334155) : const Color(0xFFF3F4F6)),
                 const SizedBox(height: 8),
 
                 // 3. Bottom Action Bar: "عرض التفاصيل >" & Action Button + 3 dots
@@ -331,35 +333,37 @@ class DealCardWidget extends StatelessWidget {
     }
   }
 
-  Widget _buildStatusBadge(DealStatus status) {
+  Widget _buildStatusBadge(BuildContext context, DealStatus status) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     Color bg;
     Color textColor;
     String label;
 
     switch (status) {
       case DealStatus.negotiation:
-        bg = const Color(0xFFFFF7ED);
-        textColor = const Color(0xFFEA580C);
+        bg = isDark ? const Color(0xFF7C2D12) : const Color(0xFFFFF7ED);
+        textColor = isDark ? const Color(0xFFFB923C) : const Color(0xFFEA580C);
         label = 'مفاوضات';
         break;
       case DealStatus.waitingSupplierReview:
-        bg = const Color(0xFFEFF6FF);
-        textColor = const Color(0xFF2563EB);
+        bg = isDark ? const Color(0xFF1E3A8A) : const Color(0xFFEFF6FF);
+        textColor = isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB);
         label = 'بانتظار رد المصنع';
         break;
       case DealStatus.production:
-        bg = const Color(0xFFF0FDF4);
-        textColor = const Color(0xFF16A34A);
+        bg = isDark ? const Color(0xFF14532D) : const Color(0xFFF0FDF4);
+        textColor = isDark ? const Color(0xFF4ADE80) : const Color(0xFF16A34A);
         label = 'قيد التنفيذ';
         break;
       case DealStatus.completed:
-        bg = const Color(0xFFF3F4F6);
-        textColor = const Color(0xFF4B5563);
+        bg = isDark ? const Color(0xFF374151) : const Color(0xFFF3F4F6);
+        textColor = isDark ? const Color(0xFF9CA3AF) : const Color(0xFF4B5563);
         label = 'مكتملة';
         break;
       default:
-        bg = const Color(0xFFEFF6FF);
-        textColor = const Color(0xFF2563EB);
+        bg = isDark ? const Color(0xFF1E3A8A) : const Color(0xFFEFF6FF);
+        textColor = isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB);
         label = status.titleAr;
         break;
     }
@@ -395,25 +399,27 @@ class DealCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildStatColumn(String label, String value) {
+  Widget _buildStatColumn(BuildContext context, String label, String value) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 10,
-            color: Color(0xFF9CA3AF),
+            color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF9CA3AF),
             fontWeight: FontWeight.w500,
           ),
         ),
         const SizedBox(height: 2),
         Text(
           value,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF111827),
+            color: isDark ? Colors.white : const Color(0xFF111827),
           ),
         ),
       ],

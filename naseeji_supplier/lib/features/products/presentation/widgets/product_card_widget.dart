@@ -206,6 +206,7 @@ class ProductCardWidget extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               _buildMetricItem(
+                                context: context,
                                 icon: Icons.inventory_2_rounded,
                                 iconColor: const Color(0xFFEA580C),
                                 bgColor: const Color(0xFFFFEDD5),
@@ -214,6 +215,7 @@ class ProductCardWidget extends StatelessWidget {
                               ),
                               const SizedBox(width: 10),
                               _buildMetricItem(
+                                context: context,
                                 icon: Icons.handshake_rounded,
                                 iconColor: const Color(0xFF059669),
                                 bgColor: const Color(0xFFD1FAE5),
@@ -222,6 +224,7 @@ class ProductCardWidget extends StatelessWidget {
                               ),
                               const SizedBox(width: 10),
                               _buildMetricItem(
+                                context: context,
                                 icon: Icons.description_rounded,
                                 iconColor: const Color(0xFF7C3AED),
                                 bgColor: const Color(0xFFEDE9FE),
@@ -230,6 +233,7 @@ class ProductCardWidget extends StatelessWidget {
                               ),
                               const SizedBox(width: 10),
                               _buildMetricItem(
+                                context: context,
                                 icon: Icons.visibility_rounded,
                                 iconColor: const Color(0xFF0284C7),
                                 bgColor: const Color(0xFFE0F9FF),
@@ -345,6 +349,7 @@ class ProductCardWidget extends StatelessWidget {
   }
 
   Widget _buildMetricItem({
+    required BuildContext context,
     required IconData icon,
     required Color iconColor,
     required Color bgColor,

@@ -19,10 +19,13 @@ class DealsDashboardScreen extends ConsumerWidget {
     final searchQuery = ref.watch(dealSearchQueryProvider);
     final onlyActionRequired = ref.watch(onlyActionRequiredProvider);
 
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: const Color(0xFFF9FAFB),
+        backgroundColor: theme.scaffoldBackgroundColor,
         body: SafeArea(
           child: Column(
             children: [
@@ -38,18 +41,18 @@ class DealsDashboardScreen extends ConsumerWidget {
                         Container(
                           width: 44,
                           height: 44,
-                          decoration: const BoxDecoration(
-                            color: Color(0xFFEFF6FF),
+                          decoration: BoxDecoration(
+                            color: isDark ? const Color(0xFF1E293B) : const Color(0xFFEFF6FF),
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.local_mall_outlined,
-                            color: Color(0xFF2563EB),
+                            color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB),
                             size: 22,
                           ),
                         ),
                         const SizedBox(width: 10),
-                        const Column(
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
@@ -57,16 +60,16 @@ class DealsDashboardScreen extends ConsumerWidget {
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xFF111827),
+                                color: isDark ? Colors.white : const Color(0xFF111827),
                                 height: 1.1,
                               ),
                             ),
-                            SizedBox(height: 2),
+                            const SizedBox(height: 2),
                             Text(
                               'إدارة جميع صفقاتك ومفاوضاتك',
                               style: TextStyle(
                                 fontSize: 12,
-                                color: Color(0xFF6B7280),
+                                color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -84,9 +87,9 @@ class DealsDashboardScreen extends ConsumerWidget {
                             ref.read(dealSearchQueryProvider.notifier).state = '';
                             ref.read(onlyActionRequiredProvider.notifier).state = false;
                           },
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.filter_list_rounded,
-                            color: Color(0xFF4B5563),
+                            color: isDark ? Colors.white : const Color(0xFF4B5563),
                             size: 24,
                           ),
                         ),
@@ -97,9 +100,9 @@ class DealsDashboardScreen extends ConsumerWidget {
                               onPressed: () {
                                 context.push('/notifications');
                               },
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.notifications_none_rounded,
-                                color: Color(0xFF4B5563),
+                                color: isDark ? Colors.white : const Color(0xFF4B5563),
                                 size: 24,
                               ),
                             ),
