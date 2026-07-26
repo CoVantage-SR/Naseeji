@@ -13,6 +13,10 @@ import '../widgets/details/analytics_card.dart';
 import '../widgets/details/timeline_card.dart';
 import '../widgets/details/related_deals_card.dart';
 import '../widgets/details/bottom_action_bar.dart';
+import '../widgets/details/sheets/share_product_bottom_sheet.dart';
+import '../widgets/details/sheets/manage_inventory_bottom_sheet.dart';
+import '../widgets/details/sheets/store_preview_bottom_sheet.dart';
+import '../widgets/details/sheets/toggle_status_bottom_sheet.dart';
 
 class ProductDetailsScreen extends ConsumerWidget {
   final String productId;
@@ -156,7 +160,7 @@ class ProductDetailsScreen extends ConsumerWidget {
                                       onEdit: () => _handleEditProduct(context, state),
                                       onToggleStatus: () => _handleToggleStatus(context, state, notifier),
                                       onCopy: () => _handleCopyProduct(context, notifier),
-                                      onShare: () => _handleShare(context),
+                                      onShare: () => _handleShare(context, state.product!),
                                     ),
                                     const SizedBox(height: 14),
 
@@ -206,10 +210,10 @@ class ProductDetailsScreen extends ConsumerWidget {
                             BottomActionBar(
                               product: state.product!,
                               onEdit: () => _handleEditProduct(context, state),
-                              onManageInventory: () => _scrollToInventory(context),
+                              onManageInventory: () => _handleManageInventory(context, state, notifier),
                               onToggleHideRepublish: () => _handleToggleStatus(context, state, notifier),
-                              onViewInStore: () => _handleViewInStore(context),
-                              onShare: () => _handleShare(context),
+                              onViewInStore: () => _handleViewInStore(context, state.product!),
+                              onShare: () => _handleShare(context, state.product!),
                             ),
                           ],
                         ),
@@ -431,22 +435,28 @@ class ProductDetailsScreen extends ConsumerWidget {
     BuildContext context,
     ProductDetailsState state,
     ProductDetailsNotifier notifier,
-  ) async {
-    // Business Rule 1: Subscription Expired Check
+  ) {
     if (state.isSubscriptionExpired) {
       _showSubscriptionExpiredDialog(context);
       return;
     }
-
-    final success = await notifier.toggleProductStatus();
-    if (success && context.mounted) {
-      final newStatus = state.product?.status == ProductStatus.published ? 'مخفي' : 'منشور';
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('تم تغيير حالة المنتج إلى: $newStatus'),
-          backgroundColor: const Color(0xFF16A34A),
-          behavior: SnackBarBehavior.floating,
-        ),
+    if (state.product != null) {
+      ToggleStatusBottomSheet.show(
+        context,
+        product: state.product!,
+        onConfirm: () async {
+          final success = await notifier.toggleProductStatus();
+          if (success && context.mounted) {
+            final newStatus = state.product?.status == ProductStatus.published ? 'مخفي' : 'منشور';
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('تم تغيير حالة المنتج إلى: $newStatus'),
+                backgroundColor: const Color(0xFF16A34A),
+                behavior: SnackBarBehavior.floating,
+              ),
+            );
+          }
+        },
       );
     }
   }
@@ -560,30 +570,25 @@ class ProductDetailsScreen extends ConsumerWidget {
     );
   }
 
-  void _scrollToInventory(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('يمكنك تعديل كمية المخزون من بطاقة "إدارة المخزون والتوفر"'),
-        duration: Duration(seconds: 2),
-      ),
-    );
+  void _handleManageInventory(
+    BuildContext context,
+    ProductDetailsState state,
+    ProductDetailsNotifier notifier,
+  ) {
+    if (state.product != null) {
+      ManageInventoryBottomSheet.show(
+        context,
+        product: state.product!,
+        onStockUpdated: (newStock) => notifier.updateStock(newStock),
+      );
+    }
   }
 
-  void _handleViewInStore(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('تم فتح معاينة المنتج في متجر المورد'),
-        duration: Duration(seconds: 2),
-      ),
-    );
+  void _handleViewInStore(BuildContext context, ProductModel product) {
+    StorePreviewBottomSheet.show(context, product);
   }
 
-  void _handleShare(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('تم نسخ رابط المنتج إلى الحافظة لشرائه مباشرة'),
-        duration: Duration(seconds: 2),
-      ),
-    );
+  void _handleShare(BuildContext context, ProductModel product) {
+    ShareProductBottomSheet.show(context, product);
   }
 }

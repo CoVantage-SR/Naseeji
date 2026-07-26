@@ -335,77 +335,106 @@ class _ProductGalleryWidgetState extends State<ProductGalleryWidget> {
           Divider(height: 1, color: isDark ? const Color(0xFF334155) : const Color(0xFFF3F4F6)),
           const SizedBox(height: 12),
 
-          // Quick Action Buttons Row (matching screenshot: تعديل المنتج | تعطيل / إخفاء | نسخ | مشاركة)
+          // Quick Action Buttons Row (matching reference image: تعديل | تفعيل/تعطيل | نسخ | مشاركة)
           Row(
             children: [
               Expanded(
                 child: SizedBox(
-                  height: 38,
+                  height: 36,
                   child: ElevatedButton.icon(
                     onPressed: widget.onEdit,
-                    icon: const Icon(Icons.edit_outlined, size: 15),
-                    label: const Text('تعديل المنتج', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                    icon: const Icon(Icons.edit_outlined, size: 14),
+                    label: const Text(
+                      'تعديل',
+                      style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.bold),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                     style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      minimumSize: Size.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       backgroundColor: isDark ? const Color(0xFF2D1B4E) : const Color(0xFFF3E8FF),
                       foregroundColor: isDark ? const Color(0xFFC084FC) : const Color(0xFF9333EA),
                       elevation: 0,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(width: 6),
+              const SizedBox(width: 4),
               Expanded(
                 child: SizedBox(
-                  height: 38,
+                  height: 36,
                   child: OutlinedButton.icon(
                     onPressed: widget.onToggleStatus,
                     icon: Icon(
                       widget.product.status == ProductStatus.published
                           ? Icons.pause_circle_outline_rounded
                           : Icons.play_circle_outline_rounded,
-                      size: 15,
+                      size: 14,
                     ),
                     label: Text(
                       widget.product.status == ProductStatus.published ? 'تعطيل' : 'تفعيل',
-                      style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontSize: 10.5, fontWeight: FontWeight.bold),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      minimumSize: Size.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       side: BorderSide(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
                       foregroundColor: isDark ? const Color(0xFF94A3B8) : const Color(0xFF374151),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(width: 6),
+              const SizedBox(width: 4),
               Expanded(
                 child: SizedBox(
-                  height: 38,
+                  height: 36,
                   child: OutlinedButton.icon(
                     onPressed: widget.onCopy,
-                    icon: const Icon(Icons.copy_rounded, size: 15),
-                    label: const Text('نسخ', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                    icon: const Icon(Icons.copy_rounded, size: 14),
+                    label: const Text(
+                      'نسخ',
+                      style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.bold),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                     style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      minimumSize: Size.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       side: BorderSide(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
                       foregroundColor: isDark ? const Color(0xFF94A3B8) : const Color(0xFF374151),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(width: 6),
+              const SizedBox(width: 4),
               Expanded(
                 child: SizedBox(
-                  height: 38,
+                  height: 36,
                   child: OutlinedButton.icon(
                     onPressed: widget.onShare,
-                    icon: const Icon(Icons.share_outlined, size: 15),
-                    label: const Text('مشاركة', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
+                    icon: const Icon(Icons.share_outlined, size: 14),
+                    label: const Text(
+                      'مشاركة',
+                      style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.bold),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                     style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      minimumSize: Size.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       side: BorderSide(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
                       foregroundColor: isDark ? const Color(0xFF94A3B8) : const Color(0xFF374151),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     ),
                   ),
                 ),

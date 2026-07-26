@@ -41,46 +41,55 @@ class SubscriptionInfoCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      color: isDark ? const Color(0xFF3B0764) : const Color(0xFFF3E8FF),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.workspace_premium_rounded,
-                      size: 18,
-                      color: isDark ? const Color(0xFFC084FC) : const Color(0xFF9333EA),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'حدود الاشتراك والباقة',
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: isDark ? Colors.white : const Color(0xFF111827),
-                        ),
+              Expanded(
+                child: Row(
+                  children: [
+                    Container(
+                      width: 32,
+                      height: 32,
+                      decoration: BoxDecoration(
+                        color: isDark ? const Color(0xFF3B0764) : const Color(0xFFF3E8FF),
+                        shape: BoxShape.circle,
                       ),
-                      Text(
-                        'الخطة الحالية: $planName',
-                        style: TextStyle(
-                          fontSize: 10.5,
-                          color: isDark ? const Color(0xFFE9D5FF) : const Color(0xFF6B7280),
-                        ),
+                      child: Icon(
+                        Icons.workspace_premium_rounded,
+                        size: 18,
+                        color: isDark ? const Color(0xFFC084FC) : const Color(0xFF9333EA),
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'حدود الاشتراك والباقة',
+                            style: TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              color: isDark ? Colors.white : const Color(0xFF111827),
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            'الخطة الحالية: $planName',
+                            style: TextStyle(
+                              fontSize: 10.5,
+                              color: isDark ? const Color(0xFFE9D5FF) : const Color(0xFF6B7280),
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
 
-              if (isNearLimit)
+              if (isNearLimit) ...[
+                const SizedBox(width: 8),
                 SizedBox(
                   height: 30,
                   child: ElevatedButton(
@@ -89,6 +98,8 @@ class SubscriptionInfoCard extends StatelessWidget {
                       backgroundColor: const Color(0xFF9333EA),
                       elevation: 0,
                       padding: const EdgeInsets.symmetric(horizontal: 10),
+                      minimumSize: Size.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     ),
                     child: const Text(
@@ -97,6 +108,7 @@ class SubscriptionInfoCard extends StatelessWidget {
                     ),
                   ),
                 ),
+              ],
             ],
           ),
 

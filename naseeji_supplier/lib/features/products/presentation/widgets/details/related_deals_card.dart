@@ -165,6 +165,8 @@ class RelatedDealsCard extends StatelessWidget {
                           foregroundColor: isDark ? const Color(0xFFC084FC) : const Color(0xFF9333EA),
                           elevation: 0,
                           padding: const EdgeInsets.symmetric(horizontal: 10),
+                          minimumSize: Size.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         ),
                         child: const Text(

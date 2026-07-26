@@ -57,6 +57,9 @@ class BottomActionBar extends StatelessWidget {
                         style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white),
                       ),
                       style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         backgroundColor: const Color(0xFF4F46E5),
                         elevation: 0,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -81,6 +84,9 @@ class BottomActionBar extends StatelessWidget {
                         ),
                       ),
                       style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 6),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         side: BorderSide(color: isDark ? const Color(0xFF581C87) : const Color(0xFFE9D5FF)),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       ),
@@ -103,7 +109,9 @@ class BottomActionBar extends StatelessWidget {
                       icon: const Icon(Icons.edit_outlined, size: 14),
                       label: const Text('تعديل المنتج', style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.bold)),
                       style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.zero,
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         side: BorderSide(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
                         foregroundColor: isDark ? Colors.white : const Color(0xFF111827),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -120,7 +128,9 @@ class BottomActionBar extends StatelessWidget {
                       icon: const Icon(Icons.inventory_2_outlined, size: 14),
                       label: const Text('إدارة المخزون', style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.bold)),
                       style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.zero,
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         side: BorderSide(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
                         foregroundColor: isDark ? Colors.white : const Color(0xFF111827),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -143,7 +153,9 @@ class BottomActionBar extends StatelessWidget {
                         style: const TextStyle(fontSize: 10.5, fontWeight: FontWeight.bold),
                       ),
                       style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.zero,
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         side: BorderSide(
                           color: isHidden
                               ? (isDark ? const Color(0xFF4ADE80) : const Color(0xFF16A34A))
