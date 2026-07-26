@@ -39,12 +39,28 @@ class _TeamMemberDetailsScreenState extends ConsumerState<TeamMemberDetailsScree
     final member = repo.getMemberById(widget.memberId);
     final activityLogs = ref.watch(teamActivityLogsProvider(widget.memberId));
 
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    final bgColor = isDark ? const Color(0xFF0F172A) : const Color(0xFFF9FAFB);
+    final cardBgColor = isDark ? const Color(0xFF1E293B) : Colors.white;
+    final borderColor = isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB);
+    final primaryTextColor = isDark ? Colors.white : const Color(0xFF111827);
+    final secondaryTextColor = isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280);
+    final mutedTextColor = isDark ? const Color(0xFF64748B) : const Color(0xFF9CA3AF);
+    final activeBlueColor = isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB);
+
     if (member == null) {
       return Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
-          appBar: AppBar(title: const Text('تفاصيل العضو')),
-          body: const Center(child: Text('العضو غير موجود')),
+          backgroundColor: bgColor,
+          appBar: AppBar(
+            backgroundColor: cardBgColor,
+            elevation: 0.5,
+            title: Text('تفاصيل العضو', style: TextStyle(color: primaryTextColor)),
+          ),
+          body: Center(child: Text('العضو غير موجود', style: TextStyle(color: secondaryTextColor))),
         ),
       );
     }
@@ -52,32 +68,42 @@ class _TeamMemberDetailsScreenState extends ConsumerState<TeamMemberDetailsScree
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: const Color(0xFFF9FAFB),
+        backgroundColor: bgColor,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: cardBgColor,
           elevation: 0.5,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_rounded, color: Color(0xFF111827)),
+            icon: Icon(Icons.arrow_back_rounded, color: primaryTextColor),
             onPressed: () => context.pop(),
           ),
           title: Text(
             member.name,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF111827)),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: primaryTextColor),
           ),
           actions: [
             PopupMenuButton<String>(
-              icon: const Icon(Icons.more_vert_rounded, color: Color(0xFF4B5563)),
+              icon: Icon(Icons.more_vert_rounded, color: secondaryTextColor),
+              color: cardBgColor,
               onSelected: (action) => _handleAction(action, member),
               itemBuilder: (context) => [
                 if (!member.isOwner)
                   PopupMenuItem(
                     value: member.status == MemberStatus.active ? 'deactivate' : 'activate',
-                    child: Text(member.status == MemberStatus.active ? 'تعطيل الحساب' : 'تفعيل الحساب'),
+                    child: Text(
+                      member.status == MemberStatus.active ? 'تعطيل الحساب' : 'تفعيل الحساب',
+                      style: TextStyle(color: primaryTextColor),
+                    ),
                   ),
                 if (member.status == MemberStatus.pending)
-                  const PopupMenuItem(value: 'resend', child: Text('إعادة إرسال الدعوة')),
+                  PopupMenuItem(
+                    value: 'resend',
+                    child: Text('إعادة إرسال الدعوة', style: TextStyle(color: primaryTextColor)),
+                  ),
                 if (!member.isOwner)
-                  const PopupMenuItem(value: 'delete', child: Text('حذف العضو', style: TextStyle(color: Colors.red))),
+                  const PopupMenuItem(
+                    value: 'delete',
+                    child: Text('حذف العضو', style: TextStyle(color: Colors.red)),
+                  ),
               ],
             ),
           ],
@@ -86,7 +112,7 @@ class _TeamMemberDetailsScreenState extends ConsumerState<TeamMemberDetailsScree
           children: [
             // 1. Basic Info Header Card
             Container(
-              color: Colors.white,
+              color: cardBgColor,
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
               child: Column(
                 children: [
@@ -102,8 +128,8 @@ class _TeamMemberDetailsScreenState extends ConsumerState<TeamMemberDetailsScree
                           errorBuilder: (_, __, ___) => Container(
                             width: 60,
                             height: 60,
-                            color: const Color(0xFFEFF6FF),
-                            child: const Icon(Icons.person_rounded, color: Color(0xFF2563EB), size: 30),
+                            color: isDark ? const Color(0xFF0F172A) : const Color(0xFFEFF6FF),
+                            child: Icon(Icons.person_rounded, color: activeBlueColor, size: 30),
                           ),
                         ),
                       ),
@@ -116,32 +142,35 @@ class _TeamMemberDetailsScreenState extends ConsumerState<TeamMemberDetailsScree
                               children: [
                                 Text(
                                   member.name,
-                                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF111827)),
+                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: primaryTextColor),
                                 ),
                                 if (member.isOwner) ...[
                                   const SizedBox(width: 6),
                                   Container(
                                     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                                     decoration: BoxDecoration(
-                                      color: const Color(0xFFEFF6FF),
+                                      color: isDark ? const Color(0xFF1E3A8A) : const Color(0xFFEFF6FF),
                                       borderRadius: BorderRadius.circular(6),
                                     ),
-                                    child: const Text('المالك الرئيسي', style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: Color(0xFF2563EB))),
+                                    child: Text(
+                                      'المالك الرئيسي',
+                                      style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: isDark ? const Color(0xFF93C5FD) : const Color(0xFF2563EB)),
+                                    ),
                                   ),
                                 ],
                               ],
                             ),
                             const SizedBox(height: 3),
-                            Text(member.roleTitle, style: const TextStyle(fontSize: 12, color: Color(0xFF6B7280), fontWeight: FontWeight.w500)),
+                            Text(member.roleTitle, style: TextStyle(fontSize: 12, color: secondaryTextColor, fontWeight: FontWeight.w500)),
                             const SizedBox(height: 2),
-                            Text('${member.department} • ${member.email}', style: const TextStyle(fontSize: 11, color: Color(0xFF9CA3AF))),
+                            Text('${member.department} • ${member.email}', style: TextStyle(fontSize: 11, color: mutedTextColor)),
                           ],
                         ),
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
-                          color: member.status.bgColor,
+                          color: isDark ? member.status.color.withValues(alpha: 0.15) : member.status.bgColor,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
@@ -157,12 +186,12 @@ class _TeamMemberDetailsScreenState extends ConsumerState<TeamMemberDetailsScree
 
             // Tab Bar
             Container(
-              color: Colors.white,
+              color: cardBgColor,
               child: TabBar(
                 controller: _tabController,
-                labelColor: const Color(0xFF2563EB),
-                unselectedLabelColor: const Color(0xFF6B7280),
-                indicatorColor: const Color(0xFF2563EB),
+                labelColor: activeBlueColor,
+                unselectedLabelColor: secondaryTextColor,
+                indicatorColor: activeBlueColor,
                 tabs: const [
                   Tab(text: 'مصفوفة الصلاحيات'),
                   Tab(text: 'سجل النشاط'),
@@ -176,9 +205,9 @@ class _TeamMemberDetailsScreenState extends ConsumerState<TeamMemberDetailsScree
                 controller: _tabController,
                 children: [
                   // Tab 1: Permissions Matrix
-                  _buildPermissionsMatrix(member),
+                  _buildPermissionsMatrix(member, isDark, cardBgColor, borderColor, primaryTextColor, secondaryTextColor, activeBlueColor),
                   // Tab 2: Activity Log Timeline
-                  _buildActivityLogsTimeline(activityLogs),
+                  _buildActivityLogsTimeline(activityLogs, isDark, cardBgColor, borderColor, primaryTextColor, secondaryTextColor, mutedTextColor, activeBlueColor),
                 ],
               ),
             ),
@@ -188,7 +217,15 @@ class _TeamMemberDetailsScreenState extends ConsumerState<TeamMemberDetailsScree
     );
   }
 
-  Widget _buildPermissionsMatrix(TeamMemberModel member) {
+  Widget _buildPermissionsMatrix(
+    TeamMemberModel member,
+    bool isDark,
+    Color cardBgColor,
+    Color borderColor,
+    Color primaryTextColor,
+    Color secondaryTextColor,
+    Color activeBlueColor,
+  ) {
     final p = member.permissions;
 
     return SingleChildScrollView(
@@ -201,54 +238,65 @@ class _TeamMemberDetailsScreenState extends ConsumerState<TeamMemberDetailsScree
             _PermissionToggle('تعديل أسعار وبيانات المنتجات', p.editProduct, (v) => _updatePerm(member, p.copyWith(editProduct: v))),
             _PermissionToggle('حذف المنتجات', p.deleteProduct, (v) => _updatePerm(member, p.copyWith(deleteProduct: v))),
             _PermissionToggle('إدارة الكميات والمخزون', p.manageInventory, (v) => _updatePerm(member, p.copyWith(manageInventory: v))),
-          ]),
+          ], isDark, cardBgColor, borderColor, primaryTextColor, secondaryTextColor, activeBlueColor),
           const SizedBox(height: 12),
           _buildPermissionSection(member, 'قسم الصفقات والعروض', Icons.handshake_outlined, [
             _PermissionToggle('عرض كافة الصفقات', p.viewDeals, (v) => _updatePerm(member, p.copyWith(viewDeals: v))),
             _PermissionToggle('استقبال وإرسال عروض السعر (RFQ)', p.manageRfq, (v) => _updatePerm(member, p.copyWith(manageRfq: v))),
             _PermissionToggle('التفاوض المباشر مع المصانع', p.negotiate, (v) => _updatePerm(member, p.copyWith(negotiate: v))),
             _PermissionToggle('توقيع واعتماد العقود والاتفاقيات', p.signAgreement, (v) => _updatePerm(member, p.copyWith(signAgreement: v))),
-          ]),
+          ], isDark, cardBgColor, borderColor, primaryTextColor, secondaryTextColor, activeBlueColor),
           const SizedBox(height: 12),
           _buildPermissionSection(member, 'قسم المحادثات والملفات', Icons.chat_bubble_outline_rounded, [
             _PermissionToggle('قراءة المحادثات والرسائل', p.readMessages, (v) => _updatePerm(member, p.copyWith(readMessages: v))),
             _PermissionToggle('إرسال وتداول الرسائل', p.sendMessages, (v) => _updatePerm(member, p.copyWith(sendMessages: v))),
             _PermissionToggle('تحميل وإرفاق المستندات والملفات', p.manageFiles, (v) => _updatePerm(member, p.copyWith(manageFiles: v))),
-          ]),
+          ], isDark, cardBgColor, borderColor, primaryTextColor, secondaryTextColor, activeBlueColor),
           const SizedBox(height: 12),
           _buildPermissionSection(member, 'قسم الإنتاج والتصنيع', Icons.precision_manufacturing_outlined, [
             _PermissionToggle('بدء عمليات التصنيع', p.startProduction, (v) => _updatePerm(member, p.copyWith(startProduction: v))),
             _PermissionToggle('تحديث نسبة الإنجاز والإنتاج', p.updateProgress, (v) => _updatePerm(member, p.copyWith(updateProgress: v))),
             _PermissionToggle('إنهاء واختبار الجودة', p.finishProduction, (v) => _updatePerm(member, p.copyWith(finishProduction: v))),
-          ]),
+          ], isDark, cardBgColor, borderColor, primaryTextColor, secondaryTextColor, activeBlueColor),
           const SizedBox(height: 12),
           _buildPermissionSection(member, 'قسم الشحن والتسليم', Icons.local_shipping_outlined, [
             _PermissionToggle('إدارة وتجهيز الشحنات', p.manageDelivery, (v) => _updatePerm(member, p.copyWith(manageDelivery: v))),
             _PermissionToggle('تحديث حالة الشحن والتسليم', p.updateDeliveryStatus, (v) => _updatePerm(member, p.copyWith(updateDeliveryStatus: v))),
             _PermissionToggle('تأكيد الاستلام النهائي', p.confirmDelivery, (v) => _updatePerm(member, p.copyWith(confirmDelivery: v))),
-          ]),
+          ], isDark, cardBgColor, borderColor, primaryTextColor, secondaryTextColor, activeBlueColor),
           const SizedBox(height: 12),
           _buildPermissionSection(member, 'قسم المالية والفواتير', Icons.account_balance_wallet_outlined, [
             _PermissionToggle('عرض المدفوعات والمستحقات', p.viewPayments, (v) => _updatePerm(member, p.copyWith(viewPayments: v))),
             _PermissionToggle('إصدار وإدارة الفواتير', p.manageInvoices, (v) => _updatePerm(member, p.copyWith(manageInvoices: v))),
-          ]),
+          ], isDark, cardBgColor, borderColor, primaryTextColor, secondaryTextColor, activeBlueColor),
           const SizedBox(height: 12),
           _buildPermissionSection(member, 'قسم الإدارة والصلاحيات', Icons.admin_panel_settings_outlined, [
             _PermissionToggle('إدارة أعضاء فريق العمل', p.manageEmployees, (v) => _updatePerm(member, p.copyWith(manageEmployees: v))),
             _PermissionToggle('إدارة اشتراك المنشأة والباقات', p.manageSubscription, (v) => _updatePerm(member, p.copyWith(manageSubscription: v))),
             _PermissionToggle('تعديل البيانات الأساسية للشركة', p.manageCompanyData, (v) => _updatePerm(member, p.copyWith(manageCompanyData: v))),
-          ]),
+          ], isDark, cardBgColor, borderColor, primaryTextColor, secondaryTextColor, activeBlueColor),
         ],
       ),
     );
   }
 
-  Widget _buildPermissionSection(TeamMemberModel member, String title, IconData icon, List<_PermissionToggle> toggles) {
+  Widget _buildPermissionSection(
+    TeamMemberModel member,
+    String title,
+    IconData icon,
+    List<_PermissionToggle> toggles,
+    bool isDark,
+    Color cardBgColor,
+    Color borderColor,
+    Color primaryTextColor,
+    Color secondaryTextColor,
+    Color activeBlueColor,
+  ) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: cardBgColor,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
+        border: Border.all(color: borderColor),
       ),
       child: Material(
         color: Colors.transparent,
@@ -261,18 +309,19 @@ class _TeamMemberDetailsScreenState extends ConsumerState<TeamMemberDetailsScree
               padding: const EdgeInsets.all(12),
               child: Row(
                 children: [
-                  Icon(icon, size: 18, color: const Color(0xFF2563EB)),
+                  Icon(icon, size: 18, color: activeBlueColor),
                   const SizedBox(width: 8),
-                  Text(title, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF111827))),
+                  Text(title, style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: primaryTextColor)),
                 ],
               ),
             ),
-            const Divider(height: 1, color: Color(0xFFF3F4F6)),
+            Divider(height: 1, color: isDark ? const Color(0xFF334155) : const Color(0xFFF3F4F6)),
             ...toggles.map((t) => SwitchListTile(
                   value: t.value,
-                  activeTrackColor: const Color(0xFFBFDBFE),
-                  onChanged: member.isOwner ? null : t.onChanged, // Owner permissions locked
-                  title: Text(t.title, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: Color(0xFF374151))),
+                  activeThumbColor: activeBlueColor,
+                  activeTrackColor: isDark ? const Color(0xFF1E3A8A) : const Color(0xFFBFDBFE),
+                  onChanged: member.isOwner ? null : t.onChanged,
+                  title: Text(t.title, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: isDark ? const Color(0xFFE2E8F0) : const Color(0xFF374151))),
                   dense: true,
                 )),
           ],
@@ -281,9 +330,18 @@ class _TeamMemberDetailsScreenState extends ConsumerState<TeamMemberDetailsScree
     );
   }
 
-  Widget _buildActivityLogsTimeline(List<TeamActivityLog> logs) {
+  Widget _buildActivityLogsTimeline(
+    List<TeamActivityLog> logs,
+    bool isDark,
+    Color cardBgColor,
+    Color borderColor,
+    Color primaryTextColor,
+    Color secondaryTextColor,
+    Color mutedTextColor,
+    Color activeBlueColor,
+  ) {
     if (logs.isEmpty) {
-      return const Center(child: Text('لا يوجد سجل نشاط متاح لهذا العضو'));
+      return Center(child: Text('لا يوجد سجل نشاط متاح لهذا العضو', style: TextStyle(color: secondaryTextColor)));
     }
 
     return ListView.builder(
@@ -296,33 +354,33 @@ class _TeamMemberDetailsScreenState extends ConsumerState<TeamMemberDetailsScree
           child: Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: cardBgColor,
               borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: const Color(0xFFE5E7EB)),
+              border: Border.all(color: borderColor),
             ),
             child: Row(
               children: [
                 Container(
                   width: 36,
                   height: 36,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFEFF6FF),
+                  decoration: BoxDecoration(
+                    color: isDark ? const Color(0xFF1E3A8A) : const Color(0xFFEFF6FF),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.history_rounded, size: 18, color: Color(0xFF2563EB)),
+                  child: Icon(Icons.history_rounded, size: 18, color: activeBlueColor),
                 ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(item.action, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF111827))),
+                      Text(item.action, style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: primaryTextColor)),
                       const SizedBox(height: 2),
-                      Text(item.description, style: const TextStyle(fontSize: 11, color: Color(0xFF6B7280))),
+                      Text(item.description, style: TextStyle(fontSize: 11, color: secondaryTextColor)),
                     ],
                   ),
                 ),
-                Text(item.formattedTime, style: const TextStyle(fontSize: 10, color: Color(0xFF9CA3AF))),
+                Text(item.formattedTime, style: TextStyle(fontSize: 10, color: mutedTextColor)),
               ],
             ),
           ),

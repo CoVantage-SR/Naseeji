@@ -20,7 +20,7 @@ class _AddTeamMemberBottomSheetState extends ConsumerState<AddTeamMemberBottomSh
   final _roleTitleCtrl = TextEditingController(text: 'مسؤول المبيعات');
   final _departmentCtrl = TextEditingController(text: 'المبيعات والتسويق');
 
-  MemberRoleCategory _selectedCategory = MemberRoleCategory.employee;
+  final MemberRoleCategory _selectedCategory = MemberRoleCategory.employee;
   String _permissionPreset = 'المبيعات';
 
   @override
@@ -50,6 +50,9 @@ class _AddTeamMemberBottomSheetState extends ConsumerState<AddTeamMemberBottomSh
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
@@ -59,9 +62,9 @@ class _AddTeamMemberBottomSheetState extends ConsumerState<AddTeamMemberBottomSh
           left: 16,
           right: 16,
         ),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        decoration: BoxDecoration(
+          color: isDark ? const Color(0xFF1E293B) : Colors.white,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
         ),
         child: SingleChildScrollView(
           child: Form(
@@ -74,23 +77,23 @@ class _AddTeamMemberBottomSheetState extends ConsumerState<AddTeamMemberBottomSh
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Row(
+                    Row(
                       children: [
-                        Icon(Icons.person_add_alt_1_rounded, color: Color(0xFF2563EB), size: 22),
-                        SizedBox(width: 8),
+                        Icon(Icons.person_add_alt_1_rounded, color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB), size: 22),
+                        const SizedBox(width: 8),
                         Text(
                           'دعوة عضو جديد للفريق',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFF111827)),
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: isDark ? Colors.white : const Color(0xFF111827)),
                         ),
                       ],
                     ),
                     IconButton(
                       onPressed: () => Navigator.pop(context),
-                      icon: const Icon(Icons.close_rounded, color: Color(0xFF9CA3AF)),
+                      icon: Icon(Icons.close_rounded, color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF9CA3AF)),
                     ),
                   ],
                 ),
-                const Divider(height: 1, color: Color(0xFFF3F4F6)),
+                Divider(height: 1, color: isDark ? const Color(0xFF334155) : const Color(0xFFF3F4F6)),
                 const SizedBox(height: 14),
 
                 // Name
@@ -155,7 +158,7 @@ class _AddTeamMemberBottomSheetState extends ConsumerState<AddTeamMemberBottomSh
                 ),
                 const SizedBox(height: 6),
                 DropdownButtonFormField<String>(
-                  value: _permissionPreset,
+                  initialValue: _permissionPreset,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Color(0xFFE5E7EB))),
