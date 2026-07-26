@@ -929,16 +929,6 @@ GoRouter goRouter(Ref ref) {
         builder: (context, state) => const NotificationSettingsScreen(),
       ),
       GoRoute(
-        path: '/subscription',
-        name: 'subscription',
-        builder: (context, state) => const SubscriptionManagementScreen(),
-      ),
-      GoRoute(
-        path: '/subscription/management',
-        name: 'subscription-management',
-        builder: (context, state) => const SubscriptionManagementScreen(),
-      ),
-      GoRoute(
         path: '/subscription/manage',
         name: 'subscription-manage',
         builder: (context, state) => const SubscriptionManagementScreen(),
