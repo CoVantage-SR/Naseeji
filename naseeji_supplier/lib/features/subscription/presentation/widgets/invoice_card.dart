@@ -61,12 +61,12 @@ class InvoiceCard extends StatelessWidget {
             const Divider(color: AppColors.outlineVariant),
             SizedBox(height: 8),
 
-            _buildDetailRow('الباقة / الخدمة المشحونة', invoice.planName),
-            _buildDetailRow('تاريخ الفاتورة', dateStr),
-            _buildDetailRow('الضريبة (15%)', '${invoice.vat.toStringAsFixed(2)} جنيه'),
+            _buildDetailRow(context, 'الباقة / الخدمة المشحونة', invoice.planName),
+            _buildDetailRow(context, 'تاريخ الفاتورة', dateStr),
+            _buildDetailRow(context, 'الضريبة (15%)', '${invoice.vat.toStringAsFixed(2)} جنيه'),
             if (invoice.discount > 0)
-              _buildDetailRow('الخصم المطبق', '-${invoice.discount.toStringAsFixed(0)} جنيه'),
-            _buildDetailRow('المبلغ الإجمالي', '${invoice.amount.toStringAsFixed(0)} جنيه'),
+              _buildDetailRow(context, 'الخصم المطبق', '-${invoice.discount.toStringAsFixed(0)} جنيه'),
+            _buildDetailRow(context, 'المبلغ الإجمالي', '${invoice.amount.toStringAsFixed(0)} جنيه'),
 
             SizedBox(height: 8),
             const Divider(color: AppColors.outlineVariant),
@@ -76,7 +76,7 @@ class InvoiceCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                  icon: Icon(Icons.share_outlined, color: AppColors.onSurfaceVariant, size: 20),
+                  icon: Icon(Icons.share_outlined, color: Theme.of(context).colorScheme.onSurfaceVariant, size: 20),
                   onPressed: onShare,
                 ),
                 SizedBox(width: 8),
@@ -92,7 +92,9 @@ class InvoiceCard extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailRow(String label, String value) {
+  Widget _buildDetailRow(BuildContext context, String label, String value) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 6.0),
       child: Row(
@@ -100,11 +102,18 @@ class InvoiceCard extends StatelessWidget {
         children: [
           Text(
             value,
-            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.bold,
+              color: isDark ? Colors.white : const Color(0xFF111827),
+            ),
           ),
           Text(
             label,
-            style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+            style: TextStyle(
+              fontSize: 11,
+              color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
+            ),
           ),
         ],
       ),

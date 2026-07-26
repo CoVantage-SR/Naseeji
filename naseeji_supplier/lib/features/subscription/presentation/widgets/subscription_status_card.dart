@@ -71,11 +71,11 @@ class SubscriptionStatusCard extends StatelessWidget {
             const Divider(color: AppColors.outlineVariant),
             SizedBox(height: 12),
 
-            _buildDetailRow('تاريخ البدء', startStr),
-            _buildDetailRow('تاريخ الانتهاء', expiryStr),
-            _buildDetailRow('التجديد القادم', expiryStr),
-            _buildDetailRow('قيمة التجديد', '${subscription.price.toStringAsFixed(0)} جنيه / ${subscription.billingCycle == BillingCycle.yearly ? "سنوي" : "شهري"}'),
-            _buildDetailRow('طريقة الدفع للمحاسبة', subscription.paymentMethod),
+            _buildDetailRow(context, 'تاريخ البدء', startStr),
+            _buildDetailRow(context, 'تاريخ الانتهاء', expiryStr),
+            _buildDetailRow(context, 'التجديد القادم', expiryStr),
+            _buildDetailRow(context, 'قيمة التجديد', '${subscription.price.toStringAsFixed(0)} جنيه / ${subscription.billingCycle == BillingCycle.yearly ? "سنوي" : "شهري"}'),
+            _buildDetailRow(context, 'طريقة الدفع للمحاسبة', subscription.paymentMethod),
             
             SizedBox(height: 8),
             const Divider(color: AppColors.outlineVariant),
@@ -107,8 +107,8 @@ class SubscriptionStatusCard extends StatelessWidget {
                   child: OutlinedButton(
                     onPressed: onRenew,
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: const Color(0xFF006B5F),
-                      side: const BorderSide(color: Color(0xFF006B5F)),
+                      foregroundColor: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF2DD4BF) : const Color(0xFF006B5F),
+                      side: BorderSide(color: Theme.of(context).brightness == Brightness.dark ? const Color(0xFF2DD4BF) : const Color(0xFF006B5F)),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     ),
                     child: Text('تجديد مبكر', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
@@ -135,7 +135,9 @@ class SubscriptionStatusCard extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailRow(String label, String value) {
+  Widget _buildDetailRow(BuildContext context, String label, String value) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Row(
@@ -143,11 +145,18 @@ class SubscriptionStatusCard extends StatelessWidget {
         children: [
           Text(
             value,
-            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              color: isDark ? Colors.white : const Color(0xFF111827),
+            ),
           ),
           Text(
             label,
-            style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant),
+            style: TextStyle(
+              fontSize: 12,
+              color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
+            ),
           ),
         ],
       ),

@@ -58,10 +58,10 @@ class SubscriptionDetailsScreen extends ConsumerWidget {
                             style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
                           ),
                           const Divider(height: 24, color: AppColors.outlineVariant),
-                          _buildDetailRow('تاريخ بداية الاشتراك', startStr),
-                          _buildDetailRow('تاريخ الانتهاء والتجديد', expiryStr),
-                          _buildDetailRow('تجديد آلي للمحاسبة', sub.autoRenew ? 'مفعل نشط' : 'غير مفعل موقوف'),
-                          _buildDetailRow('بطاقة الدفع المحددة', sub.paymentMethod),
+                          _buildDetailRow(context, 'تاريخ بداية الاشتراك', startStr),
+                          _buildDetailRow(context, 'تاريخ الانتهاء والتجديد', expiryStr),
+                          _buildDetailRow(context, 'تجديد آلي للمحاسبة', sub.autoRenew ? 'مفعل نشط' : 'غير مفعل موقوف'),
+                          _buildDetailRow(context, 'بطاقة الدفع المحددة', sub.paymentMethod),
                         ],
                       ),
                     ),
@@ -83,12 +83,12 @@ class SubscriptionDetailsScreen extends ConsumerWidget {
                             style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                           ),
                           const Divider(height: 20, color: AppColors.outlineVariant),
-                          _buildBenefitRow('إضافة حتى 50 منتجاً في كتالوج التوريد للمصانع'),
-                          _buildBenefitRow('نشر 5 إعلانات ممولة جارية ومستهدفة للطلبات'),
-                          _buildBenefitRow('رعاية 3 منتجات خامات مميزة للظهور في الصفحة الأولى'),
-                          _buildBenefitRow('توفير مساحة تخزين 5 جيجابايت لتصاميم وشهادات الجودة'),
-                          _buildBenefitRow('صلاحية إضافة 5 موظفين للمخازن والمبيعات'),
-                          _buildBenefitRow('تفعيل فرعين تجاريين منفصلين لحساب المؤسسة'),
+                          _buildBenefitRow(context, 'إضافة حتى 50 منتجاً في كتالوج التوريد للمصانع'),
+                          _buildBenefitRow(context, 'نشر 5 إعلانات ممولة جارية ومستهدفة للطلبات'),
+                          _buildBenefitRow(context, 'رعاية 3 منتجات خامات مميزة للظهور في الصفحة الأولى'),
+                          _buildBenefitRow(context, 'توفير مساحة تخزين 5 جيجابايت لتصاميم وشهادات الجودة'),
+                          _buildBenefitRow(context, 'صلاحية إضافة 5 موظفين للمخازن والمبيعات'),
+                          _buildBenefitRow(context, 'تفعيل فرعين تجاريين منفصلين لحساب المؤسسة'),
                         ],
                       ),
                     ),
@@ -135,30 +135,34 @@ class SubscriptionDetailsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildDetailRow(String label, String value) {
+  Widget _buildDetailRow(BuildContext context, String label, String value) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(value, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.onSurface)),
-          Text(label, style: TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant)),
+          Text(value, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: isDark ? Colors.white : const Color(0xFF111827))),
+          Text(label, style: TextStyle(fontSize: 12, color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280))),
         ],
       ),
     );
   }
 
-  Widget _buildBenefitRow(String text) {
+  Widget _buildBenefitRow(BuildContext context, String text) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Expanded(
-            child: Text(text, style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant), textAlign: TextAlign.right),
+            child: Text(text, style: TextStyle(fontSize: 11, color: isDark ? const Color(0xFFCBD5E1) : const Color(0xFF4B5563)), textAlign: TextAlign.right),
           ),
           SizedBox(width: 8),
-          const Icon(Icons.check, color: Color(0xFF006B5F), size: 16),
+          Icon(Icons.check, color: isDark ? const Color(0xFF2DD4BF) : const Color(0xFF006B5F), size: 16),
         ],
       ),
     );

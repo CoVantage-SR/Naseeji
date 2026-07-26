@@ -19,6 +19,11 @@ class _AddTeamMemberBottomSheetState extends ConsumerState<AddTeamMemberBottomSh
   final _phoneCtrl = TextEditingController();
   final _roleTitleCtrl = TextEditingController(text: 'مسؤول المبيعات');
   final _departmentCtrl = TextEditingController(text: 'المبيعات والتسويق');
+  final _passwordCtrl = TextEditingController();
+  final _confirmPasswordCtrl = TextEditingController();
+
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
 
   final MemberRoleCategory _selectedCategory = MemberRoleCategory.employee;
   String _permissionPreset = 'المبيعات';
@@ -30,6 +35,8 @@ class _AddTeamMemberBottomSheetState extends ConsumerState<AddTeamMemberBottomSh
     _phoneCtrl.dispose();
     _roleTitleCtrl.dispose();
     _departmentCtrl.dispose();
+    _passwordCtrl.dispose();
+    _confirmPasswordCtrl.dispose();
     super.dispose();
   }
 
@@ -82,7 +89,7 @@ class _AddTeamMemberBottomSheetState extends ConsumerState<AddTeamMemberBottomSh
                         Icon(Icons.person_add_alt_1_rounded, color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB), size: 22),
                         const SizedBox(width: 8),
                         Text(
-                          'دعوة عضو جديد للفريق',
+                          'دعوة عضو جديد وإنشاء الحساب',
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: isDark ? Colors.white : const Color(0xFF111827)),
                         ),
                       ],
@@ -103,17 +110,19 @@ class _AddTeamMemberBottomSheetState extends ConsumerState<AddTeamMemberBottomSh
                   hint: 'أدخل اسم الموظف',
                   icon: Icons.person_outline_rounded,
                   validator: (v) => v == null || v.trim().isEmpty ? 'برجاء أدخل الاسم' : null,
+                  isDark: isDark,
                 ),
                 const SizedBox(height: 10),
 
                 // Email
                 _buildTextField(
                   controller: _emailCtrl,
-                  label: 'البريد الإلكتروني',
+                  label: 'البريد الإلكتروني الحساب',
                   hint: 'employee@gulf-factory.com',
                   icon: Icons.mail_outline_rounded,
                   keyboardType: TextInputType.emailAddress,
                   validator: (v) => v == null || !v.contains('@') ? 'برجاء أدخل بريد إلكتروني صحيح' : null,
+                  isDark: isDark,
                 ),
                 const SizedBox(height: 10),
 
@@ -124,6 +133,7 @@ class _AddTeamMemberBottomSheetState extends ConsumerState<AddTeamMemberBottomSh
                   hint: '+20 100 000 0000',
                   icon: Icons.phone_outlined,
                   keyboardType: TextInputType.phone,
+                  isDark: isDark,
                 ),
                 const SizedBox(height: 10),
 
@@ -136,6 +146,7 @@ class _AddTeamMemberBottomSheetState extends ConsumerState<AddTeamMemberBottomSh
                         label: 'المسمى الوظيفي',
                         hint: 'مثال: مشرف إنتاج',
                         icon: Icons.badge_outlined,
+                        isDark: isDark,
                       ),
                     ),
                     const SizedBox(width: 10),
@@ -145,6 +156,60 @@ class _AddTeamMemberBottomSheetState extends ConsumerState<AddTeamMemberBottomSh
                         label: 'القسم',
                         hint: 'مثال: المبيعات',
                         icon: Icons.apartment_rounded,
+                        isDark: isDark,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+
+                // Password & Confirm Password Fields
+                Row(
+                  children: [
+                    Expanded(
+                      child: _buildTextField(
+                        controller: _passwordCtrl,
+                        label: 'كلمة مرور الحساب',
+                        hint: '••••••••',
+                        icon: Icons.lock_outline_rounded,
+                        obscureText: _obscurePassword,
+                        isDark: isDark,
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                            size: 18,
+                            color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
+                          ),
+                          onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                        ),
+                        validator: (v) {
+                          if (v == null || v.trim().isEmpty) return 'أدخل كلمة المرور';
+                          if (v.trim().length < 6) return 'يجب 6 أحرف على الأقل';
+                          return null;
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: _buildTextField(
+                        controller: _confirmPasswordCtrl,
+                        label: 'تأكيد كلمة المرور',
+                        hint: '••••••••',
+                        icon: Icons.lock_clock_outlined,
+                        obscureText: _obscureConfirmPassword,
+                        isDark: isDark,
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscureConfirmPassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+                            size: 18,
+                            color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
+                          ),
+                          onPressed: () => setState(() => _obscureConfirmPassword = !_obscureConfirmPassword),
+                        ),
+                        validator: (v) {
+                          if (v != _passwordCtrl.text) return 'كلمة المرور غير متطابقة';
+                          return null;
+                        },
                       ),
                     ),
                   ],
@@ -152,17 +217,25 @@ class _AddTeamMemberBottomSheetState extends ConsumerState<AddTeamMemberBottomSh
                 const SizedBox(height: 12),
 
                 // Preset Permissions Dropdown
-                const Text(
+                Text(
                   'حزمة الصلاحيات الممنوحة',
-                  style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold, color: Color(0xFF374151)),
+                  style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold, color: isDark ? const Color(0xFFE2E8F0) : const Color(0xFF374151)),
                 ),
                 const SizedBox(height: 6),
                 DropdownButtonFormField<String>(
                   initialValue: _permissionPreset,
+                  style: TextStyle(fontSize: 12, color: isDark ? Colors.white : const Color(0xFF111827)),
+                  dropdownColor: isDark ? const Color(0xFF1E293B) : Colors.white,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Color(0xFFE5E7EB))),
-                    enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Color(0xFFE5E7EB))),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
+                    ),
                   ),
                   items: const [
                     DropdownMenuItem(value: 'المبيعات', child: Text('صلاحيات المبيعات والتفاوض', style: TextStyle(fontSize: 12))),
@@ -183,10 +256,10 @@ class _AddTeamMemberBottomSheetState extends ConsumerState<AddTeamMemberBottomSh
                   width: double.infinity,
                   height: 48,
                   child: ElevatedButton.icon(
-                    onPressed: _submit,
-                    icon: const Icon(Icons.send_rounded, color: Colors.white, size: 18),
+                    onPressed: () => _submit(isDark),
+                    icon: const Icon(Icons.person_add_rounded, color: Colors.white, size: 18),
                     label: const Text(
-                      'إرسال الدعوة',
+                      'إنشاء الحساب ودعوة العضو',
                       style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
                     ),
                     style: ElevatedButton.styleFrom(
@@ -209,35 +282,46 @@ class _AddTeamMemberBottomSheetState extends ConsumerState<AddTeamMemberBottomSh
     required String hint,
     required IconData icon,
     TextInputType? keyboardType,
+    bool obscureText = false,
+    Widget? suffixIcon,
     String? Function(String?)? validator,
+    required bool isDark,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold, color: Color(0xFF374151)),
+          style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold, color: isDark ? const Color(0xFFE2E8F0) : const Color(0xFF374151)),
         ),
         const SizedBox(height: 5),
         TextFormField(
           controller: controller,
           keyboardType: keyboardType,
+          obscureText: obscureText,
           validator: validator,
-          style: const TextStyle(fontSize: 12, color: Color(0xFF111827)),
+          style: TextStyle(fontSize: 12, color: isDark ? Colors.white : const Color(0xFF111827)),
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: const TextStyle(fontSize: 11.5, color: Color(0xFF9CA3AF)),
-            prefixIcon: Icon(icon, size: 18, color: const Color(0xFF6B7280)),
+            hintStyle: TextStyle(fontSize: 11.5, color: isDark ? const Color(0xFF64748B) : const Color(0xFF9CA3AF)),
+            prefixIcon: Icon(icon, size: 18, color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280)),
+            suffixIcon: suffixIcon,
             contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Color(0xFFE5E7EB))),
-            enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: Color(0xFFE5E7EB))),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
+            ),
           ),
         ),
       ],
     );
   }
 
-  void _submit() {
+  void _submit(bool isDark) {
     if (!_formKey.currentState!.validate()) return;
 
     final repo = ref.read(teamRepositoryProvider);
@@ -256,8 +340,8 @@ class _AddTeamMemberBottomSheetState extends ConsumerState<AddTeamMemberBottomSh
       roleTitle: _roleTitleCtrl.text.trim(),
       roleCategory: _selectedCategory,
       department: _departmentCtrl.text.trim(),
-      status: MemberStatus.pending,
-      lastLoginText: 'لم يسجل دخول',
+      status: MemberStatus.active,
+      lastLoginText: 'تم إنشاء الحساب الآن',
       joinedDate: DateTime.now(),
       roleIcon: Icons.badge_outlined,
       roleIconColor: const Color(0xFF2563EB),
@@ -271,7 +355,7 @@ class _AddTeamMemberBottomSheetState extends ConsumerState<AddTeamMemberBottomSh
     Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('تم إرسال دعوة الانضمام بنجاح إلى ${newMember.name}'),
+        content: Text('تم إنشاء حساب ${newMember.name} وتعيين كلمة المرور وإضافته للفريق بنجاح!'),
         backgroundColor: const Color(0xFF16A34A),
       ),
     );

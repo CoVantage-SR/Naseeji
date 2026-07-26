@@ -79,10 +79,10 @@ class SubscriptionHistoryScreen extends ConsumerWidget {
                         const Divider(color: AppColors.outlineVariant),
                         SizedBox(height: 8),
 
-                        _buildInfoRow('مدة الباقة', '${item.billingCycle} | $startStr - $endStr'),
-                        _buildInfoRow('تكلفة الاشتراك المدفوعة', '${item.price.toStringAsFixed(0)} جنيه'),
-                        _buildInfoRow('حالة سداد الدفعة', item.paymentStatus),
-                        _buildInfoRow('رقم الفاتورة المرجعي', item.invoiceNumber),
+                        _buildInfoRow(context, 'مدة الباقة', '${item.billingCycle} | $startStr - $endStr'),
+                        _buildInfoRow(context, 'تكلفة الاشتراك المدفوعة', '${item.price.toStringAsFixed(0)} جنيه'),
+                        _buildInfoRow(context, 'حالة سداد الدفعة', item.paymentStatus),
+                        _buildInfoRow(context, 'رقم الفاتورة المرجعي', item.invoiceNumber),
                       ],
                     ),
                   );
@@ -95,7 +95,9 @@ class SubscriptionHistoryScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildInfoRow(String label, String value) {
+  Widget _buildInfoRow(BuildContext context, String label, String value) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 6.0),
       child: Row(
@@ -103,11 +105,11 @@ class SubscriptionHistoryScreen extends ConsumerWidget {
         children: [
           Text(
             value,
-            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.onSurface),
+            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: isDark ? Colors.white : const Color(0xFF111827)),
           ),
           Text(
             label,
-            style: TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+            style: TextStyle(fontSize: 11, color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280)),
           ),
         ],
       ),
