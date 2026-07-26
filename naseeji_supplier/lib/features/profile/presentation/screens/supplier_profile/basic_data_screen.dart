@@ -12,6 +12,8 @@ class BasicDataScreen extends ConsumerWidget {
 
     final theme = Theme.of(context);
 
+    final isDark = theme.brightness == Brightness.dark;
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -34,19 +36,19 @@ class BasicDataScreen extends ConsumerWidget {
                           child: Container(
                             width: 44,
                             height: 44,
-                            decoration: const BoxDecoration(
-                              color: Color(0xFFEFF6FF),
+                            decoration: BoxDecoration(
+                              color: isDark ? const Color(0xFF1E293B) : const Color(0xFFEFF6FF),
                               shape: BoxShape.circle,
                             ),
-                            child: const Icon(
+                            child: Icon(
                               Icons.arrow_forward_rounded,
-                              color: Color(0xFF2563EB),
+                              color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB),
                               size: 22,
                             ),
                           ),
                         ),
                         const SizedBox(width: 10),
-                        const Column(
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
@@ -54,16 +56,16 @@ class BasicDataScreen extends ConsumerWidget {
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xFF111827),
+                                color: isDark ? Colors.white : const Color(0xFF111827),
                                 height: 1.1,
                               ),
                             ),
-                            SizedBox(height: 2),
+                            const SizedBox(height: 2),
                             Text(
                               'إدارة معلومات المصنع والبيانات الأساسية',
                               style: TextStyle(
                                 fontSize: 12,
-                                color: Color(0xFF6B7280),
+                                color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -78,9 +80,9 @@ class BasicDataScreen extends ConsumerWidget {
                       children: [
                         IconButton(
                           onPressed: () => context.push('/notifications'),
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.notifications_none_rounded,
-                            color: Color(0xFF4B5563),
+                            color: isDark ? Colors.white : const Color(0xFF4B5563),
                             size: 24,
                           ),
                         ),
@@ -198,7 +200,7 @@ class BasicDataScreen extends ConsumerWidget {
                       const SizedBox(height: 16),
 
                       // 4. Section 3: روابط التواصل الاجتماعي (Social Media Links Card Grid)
-                      _buildSocialLinksSection(),
+                      _buildSocialLinksSection(context),
 
                       const SizedBox(height: 24),
                     ],
@@ -212,9 +214,9 @@ class BasicDataScreen extends ConsumerWidget {
         // Bottom Action Button (تعديل البيانات)
         bottomNavigationBar: Container(
           padding: const EdgeInsets.all(16),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            border: Border(top: BorderSide(color: Color(0xFFE5E7EB))),
+          decoration: BoxDecoration(
+            color: isDark ? const Color(0xFF1E293B) : Colors.white,
+            border: Border(top: BorderSide(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB))),
           ),
           child: SafeArea(
             child: SizedBox(
@@ -278,16 +280,16 @@ class BasicDataScreen extends ConsumerWidget {
       child: Column(
         children: [
           // Section Title Row
-          const Row(
+          Row(
             children: [
-              ContainerIconHeader(icon: Icons.apartment_rounded),
-              SizedBox(width: 8),
+              const ContainerIconHeader(icon: Icons.apartment_rounded),
+              const SizedBox(width: 8),
               Text(
                 'معلومات المصنع',
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF111827),
+                  color: isDark ? Colors.white : const Color(0xFF111827),
                 ),
               ),
             ],
@@ -347,10 +349,10 @@ class BasicDataScreen extends ConsumerWidget {
                         Flexible(
                           child: Text(
                             companyName,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFF111827),
+                              color: isDark ? Colors.white : const Color(0xFF111827),
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -367,9 +369,9 @@ class BasicDataScreen extends ConsumerWidget {
                     const SizedBox(height: 3),
                     Text(
                       category,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 11.5,
-                        color: Color(0xFF6B7280),
+                        color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -377,20 +379,20 @@ class BasicDataScreen extends ConsumerWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFDCFCE7),
+                        color: isDark ? const Color(0xFF14532D) : const Color(0xFFDCFCE7),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          ContainerDot(color: Color(0xFF16A34A)),
-                          SizedBox(width: 4),
+                          ContainerDot(color: isDark ? const Color(0xFF4ADE80) : const Color(0xFF16A34A)),
+                          const SizedBox(width: 4),
                           Text(
                             'موثق',
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFF16A34A),
+                              color: isDark ? const Color(0xFF4ADE80) : const Color(0xFF16A34A),
                             ),
                           ),
                         ],
@@ -403,7 +405,7 @@ class BasicDataScreen extends ConsumerWidget {
           ),
 
           const SizedBox(height: 12),
-          const Divider(height: 1, color: Color(0xFFF3F4F6)),
+          Divider(height: 1, color: isDark ? const Color(0xFF334155) : const Color(0xFFF3F4F6)),
           const SizedBox(height: 12),
 
           // Bottom 3 Stats Columns
@@ -414,15 +416,15 @@ class BasicDataScreen extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Row(
+                    Row(
                       children: [
-                        Icon(Icons.calendar_today_outlined, size: 12, color: Color(0xFF2563EB)),
-                        SizedBox(width: 4),
+                        const Icon(Icons.calendar_today_outlined, size: 12, color: Color(0xFF2563EB)),
+                        const SizedBox(width: 4),
                         Text(
                           'تاريخ الانضمام',
                           style: TextStyle(
                             fontSize: 10,
-                            color: Color(0xFF6B7280),
+                            color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -431,10 +433,10 @@ class BasicDataScreen extends ConsumerWidget {
                     const SizedBox(height: 3),
                     Text(
                       joinedDate,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 11.5,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF111827),
+                        color: isDark ? Colors.white : const Color(0xFF111827),
                       ),
                     ),
                   ],
@@ -446,15 +448,15 @@ class BasicDataScreen extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Row(
+                    Row(
                       children: [
-                        Icon(Icons.person_outline_rounded, size: 12, color: Color(0xFF2563EB)),
-                        SizedBox(width: 4),
+                        const Icon(Icons.person_outline_rounded, size: 12, color: Color(0xFF2563EB)),
+                        const SizedBox(width: 4),
                         Text(
                           'نوع الحساب',
                           style: TextStyle(
                             fontSize: 10,
-                            color: Color(0xFF6B7280),
+                            color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -463,10 +465,10 @@ class BasicDataScreen extends ConsumerWidget {
                     const SizedBox(height: 3),
                     Text(
                       accountType,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 11.5,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF111827),
+                        color: isDark ? Colors.white : const Color(0xFF111827),
                       ),
                     ),
                   ],
@@ -478,15 +480,15 @@ class BasicDataScreen extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Row(
+                    Row(
                       children: [
-                        Icon(Icons.workspace_premium_rounded, size: 12, color: Color(0xFF2563EB)),
-                        SizedBox(width: 4),
+                        const Icon(Icons.workspace_premium_rounded, size: 12, color: Color(0xFF2563EB)),
+                        const SizedBox(width: 4),
                         Text(
                           'حالة الاشتراك',
                           style: TextStyle(
                             fontSize: 10,
-                            color: Color(0xFF6B7280),
+                            color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -495,10 +497,10 @@ class BasicDataScreen extends ConsumerWidget {
                     const SizedBox(height: 3),
                     Text(
                       subscriptionPlan,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 11.5,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF2563EB),
+                        color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB),
                       ),
                     ),
                   ],
@@ -560,18 +562,18 @@ class BasicDataScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Section Title Row
-          const Padding(
-            padding: EdgeInsets.fromLTRB(14, 14, 14, 8),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(14, 14, 14, 8),
             child: Row(
               children: [
-                ContainerIconHeader(icon: Icons.article_outlined),
-                SizedBox(width: 8),
+                const ContainerIconHeader(icon: Icons.article_outlined),
+                const SizedBox(width: 8),
                 Text(
                   'البيانات الأساسية',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF111827),
+                    color: isDark ? Colors.white : const Color(0xFF111827),
                   ),
                 ),
               ],
@@ -582,7 +584,7 @@ class BasicDataScreen extends ConsumerWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: items.length,
-            separatorBuilder: (_, __) => const Divider(height: 1, color: Color(0xFFF3F4F6)),
+            separatorBuilder: (_, __) => Divider(height: 1, color: isDark ? const Color(0xFF334155) : const Color(0xFFF3F4F6)),
             itemBuilder: (context, index) {
               final item = items[index];
 
@@ -593,10 +595,10 @@ class BasicDataScreen extends ConsumerWidget {
                     Expanded(
                       child: Text(
                         item.label,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 12.5,
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFF374151),
+                          color: isDark ? const Color(0xFFE2E8F0) : const Color(0xFF374151),
                         ),
                         textDirection: item.isLtr ? TextDirection.ltr : TextDirection.rtl,
                         textAlign: item.isLtr ? TextAlign.right : TextAlign.left,
@@ -606,14 +608,14 @@ class BasicDataScreen extends ConsumerWidget {
                     Container(
                       width: 32,
                       height: 32,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFEFF6FF),
+                      decoration: BoxDecoration(
+                        color: isDark ? const Color(0xFF1E3A8A) : const Color(0xFFEFF6FF),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
                         item.icon,
                         size: 16,
-                        color: const Color(0xFF2563EB),
+                        color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB),
                       ),
                     ),
                   ],
@@ -629,7 +631,9 @@ class BasicDataScreen extends ConsumerWidget {
   // ---------------------------------------------------------------------------
   // Card 3: روابط التواصل الاجتماعي
   // ---------------------------------------------------------------------------
-  Widget _buildSocialLinksSection() {
+  Widget _buildSocialLinksSection(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     final socialItems = [
       const _SocialLinkData(
         title: 'واتساب',
@@ -661,16 +665,16 @@ class BasicDataScreen extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Section Header Row
-        const Row(
+        Row(
           children: [
-            ContainerIconHeader(icon: Icons.share_outlined),
-            SizedBox(width: 8),
+            const ContainerIconHeader(icon: Icons.share_outlined),
+            const SizedBox(width: 8),
             Text(
               'روابط التواصل الاجتماعي',
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF111827),
+                color: isDark ? Colors.white : const Color(0xFF111827),
               ),
             ),
           ],
@@ -688,9 +692,9 @@ class BasicDataScreen extends ConsumerWidget {
                 margin: EdgeInsets.only(left: index == socialItems.length - 1 ? 0 : 8),
                 padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 10),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: isDark ? const Color(0xFF1E293B) : Colors.white,
                   borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: const Color(0xFFE5E7EB)),
+                  border: Border.all(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withValues(alpha: 0.02),
@@ -706,18 +710,18 @@ class BasicDataScreen extends ConsumerWidget {
                     const SizedBox(height: 6),
                     Text(
                       item.title,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF111827),
+                        color: isDark ? Colors.white : const Color(0xFF111827),
                       ),
                     ),
                     const SizedBox(height: 2),
                     Text(
                       item.handle,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 9.5,
-                        color: Color(0xFF6B7280),
+                        color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                         fontWeight: FontWeight.w500,
                       ),
                       maxLines: 1,
@@ -744,14 +748,16 @@ class ContainerIconHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       width: 32,
       height: 32,
-      decoration: const BoxDecoration(
-        color: Color(0xFFEFF6FF),
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF1E3A8A) : const Color(0xFFEFF6FF),
         shape: BoxShape.circle,
       ),
-      child: Icon(icon, size: 16, color: const Color(0xFF2563EB)),
+      child: Icon(icon, size: 16, color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB)),
     );
   }
 }

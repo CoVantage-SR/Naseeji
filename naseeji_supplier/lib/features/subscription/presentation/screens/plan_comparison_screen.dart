@@ -18,10 +18,12 @@ class PlanComparisonScreen extends ConsumerWidget {
     final currentSub = MockDatabase.getCurrentSubscription();
     final currentPlanName = currentSub.planName; // 'الباقة الاحترافية' or 'Starter' etc.
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: const Color(0xFFF9FAFB),
+        backgroundColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFF9FAFB),
         body: SafeArea(
           child: Column(
             children: [

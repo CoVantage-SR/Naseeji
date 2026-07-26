@@ -337,10 +337,10 @@ class SupplierProfileScreen extends ConsumerWidget {
                               Flexible(
                                 child: Text(
                                   companyName,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
-                                    color: Color(0xFF111827),
+                                    color: isDark ? Colors.white : const Color(0xFF111827),
                                   ),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
@@ -359,9 +359,9 @@ class SupplierProfileScreen extends ConsumerWidget {
                           // Category
                           Text(
                             category,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 11.5,
-                              color: Color(0xFF6B7280),
+                              color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -374,9 +374,9 @@ class SupplierProfileScreen extends ConsumerWidget {
                               const SizedBox(width: 2),
                               Text(
                                 location,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 10.5,
-                                  color: Color(0xFF6B7280),
+                                  color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                                 ),
                               ),
                               const SizedBox(width: 10),
@@ -384,9 +384,9 @@ class SupplierProfileScreen extends ConsumerWidget {
                               const SizedBox(width: 3),
                               Text(
                                 joinedDate,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 10.5,
-                                  color: Color(0xFF6B7280),
+                                  color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                                 ),
                               ),
                             ],
@@ -405,7 +405,7 @@ class SupplierProfileScreen extends ConsumerWidget {
                 ),
 
                 const SizedBox(height: 12),
-                const Divider(height: 1, color: Color(0xFFF3F4F6)),
+                Divider(height: 1, color: isDark ? const Color(0xFF334155) : const Color(0xFFF3F4F6)),
                 const SizedBox(height: 12),
 
                 // Bottom Row (3 Columns: Email, Phone, Account Type)
@@ -417,21 +417,21 @@ class SupplierProfileScreen extends ConsumerWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             'البريد الإلكتروني',
                             style: TextStyle(
                               fontSize: 10,
-                              color: Color(0xFF9CA3AF),
+                              color: isDark ? const Color(0xFF64748B) : const Color(0xFF9CA3AF),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           const SizedBox(height: 2),
                           Text(
                             email,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 11,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFF111827),
+                              color: isDark ? Colors.white : const Color(0xFF111827),
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -447,11 +447,11 @@ class SupplierProfileScreen extends ConsumerWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             'رقم الهاتف',
                             style: TextStyle(
                               fontSize: 10,
-                              color: Color(0xFF9CA3AF),
+                              color: isDark ? const Color(0xFF64748B) : const Color(0xFF9CA3AF),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -460,10 +460,10 @@ class SupplierProfileScreen extends ConsumerWidget {
                             textDirection: TextDirection.ltr,
                             child: Text(
                               phone,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xFF111827),
+                                color: isDark ? Colors.white : const Color(0xFF111827),
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -480,11 +480,11 @@ class SupplierProfileScreen extends ConsumerWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             'نوع الحساب',
                             style: TextStyle(
                               fontSize: 10,
-                              color: Color(0xFF9CA3AF),
+                              color: isDark ? const Color(0xFF64748B) : const Color(0xFF9CA3AF),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -492,15 +492,15 @@ class SupplierProfileScreen extends ConsumerWidget {
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFEFF6FF),
+                              color: isDark ? const Color(0xFF1E3A8A) : const Color(0xFFEFF6FF),
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: const Text(
+                            child: Text(
                               'مورد موثق',
                               style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xFF2563EB),
+                                color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB),
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -542,13 +542,13 @@ class SupplierProfileScreen extends ConsumerWidget {
                   Container(
                     width: 42,
                     height: 42,
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFDBEAFE),
+                    decoration: BoxDecoration(
+                      color: isDark ? const Color(0xFF1E3A8A) : const Color(0xFFDBEAFE),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.workspace_premium_rounded,
-                      color: Color(0xFF2563EB),
+                      color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB),
                       size: 22,
                     ),
                   ),
@@ -556,49 +556,49 @@ class SupplierProfileScreen extends ConsumerWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'الباقة الحالية',
                         style: TextStyle(
                           fontSize: 11,
-                          color: Color(0xFF6B7280),
+                          color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                       const SizedBox(height: 2),
                       Row(
                         children: [
-                          const Text(
+                          Text(
                             'باقة احترافية',
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFF111827),
+                              color: isDark ? Colors.white : const Color(0xFF111827),
                             ),
                           ),
                           const SizedBox(width: 6),
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFDBEAFE),
+                              color: isDark ? const Color(0xFF1E3A8A) : const Color(0xFFDBEAFE),
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: const Text(
+                            child: Text(
                               'نشطة',
                               style: TextStyle(
                                 fontSize: 9.5,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xFF2563EB),
+                                color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB),
                               ),
                             ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 2),
-                      const Text(
+                      Text(
                         'تجدد في 23 مايو 2025',
                         style: TextStyle(
                           fontSize: 11,
-                          color: Color(0xFF6B7280),
+                          color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                         ),
                       ),
                     ],
@@ -618,11 +618,11 @@ class SupplierProfileScreen extends ConsumerWidget {
                       painter: _GaugePainter(
                         progress: 0.65,
                         strokeWidth: 4.5,
-                        color: const Color(0xFF2563EB),
-                        backgroundColor: const Color(0xFFDBEAFE),
+                        color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB),
+                        backgroundColor: isDark ? const Color(0xFF334155) : const Color(0xFFDBEAFE),
                       ),
                     ),
-                    const Column(
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
@@ -630,17 +630,17 @@ class SupplierProfileScreen extends ConsumerWidget {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF111827),
+                            color: isDark ? Colors.white : const Color(0xFF111827),
                             height: 1.0,
                           ),
                         ),
-                        SizedBox(height: 1),
+                        const SizedBox(height: 1),
                         Text(
                           'يوماً متبقية',
                           style: TextStyle(
                             fontSize: 7.5,
                             fontWeight: FontWeight.w600,
-                            color: Color(0xFF6B7280),
+                            color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                             height: 1.0,
                           ),
                         ),
@@ -661,27 +661,27 @@ class SupplierProfileScreen extends ConsumerWidget {
             child: OutlinedButton(
               onPressed: () => context.push('/subscription/management'),
               style: OutlinedButton.styleFrom(
-                backgroundColor: Colors.white,
-                side: const BorderSide(color: Color(0xFFBFDBFE), width: 1),
+                backgroundColor: isDark ? const Color(0xFF1E293B) : Colors.white,
+                side: BorderSide(color: isDark ? const Color(0xFF3B82F6) : const Color(0xFFBFDBFE), width: 1),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.chevron_left_rounded, size: 18, color: Color(0xFF2563EB)),
-                  SizedBox(width: 4),
+                  Icon(Icons.chevron_left_rounded, size: 18, color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB)),
+                  const SizedBox(width: 4),
                   Text(
                     'إدارة الاشتراك والفواتير',
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF2563EB),
+                      color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB),
                     ),
                   ),
-                  SizedBox(width: 6),
-                  Icon(Icons.workspace_premium_rounded, size: 16, color: Color(0xFF2563EB)),
+                  const SizedBox(width: 6),
+                  Icon(Icons.workspace_premium_rounded, size: 16, color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB)),
                 ],
               ),
             ),
@@ -780,10 +780,10 @@ class SupplierProfileScreen extends ConsumerWidget {
                   const SizedBox(height: 3),
                   Text(
                     item.title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 9.5,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFF6B7280),
+                      color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

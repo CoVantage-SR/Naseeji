@@ -21,12 +21,14 @@ class SearchProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: isDark ? const Color(0xFF1E293B) : Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
+        border: Border.all(color: isDark ? const Color(0xFF334155) : AppColors.outlineVariant.withValues(alpha: 0.3)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.02),
@@ -47,8 +49,8 @@ class SearchProductCard extends StatelessWidget {
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) => Container(
                 height: 180,
-                color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                child: const Icon(Icons.image, color: AppColors.outline, size: 40),
+                color: isDark ? const Color(0xFF0F172A) : Theme.of(context).colorScheme.surfaceContainerHighest,
+                child: Icon(Icons.image, color: isDark ? const Color(0xFF94A3B8) : AppColors.outline, size: 40),
               ),
             ),
           ),
@@ -65,14 +67,14 @@ class SearchProductCard extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
-                        color: statusBgColor,
+                        color: isDark ? statusColor.withValues(alpha: 0.2) : statusBgColor,
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
                         statusText,
                         style: TextStyle(
                           fontSize: 11,
-                          color: statusColor,
+                          color: isDark ? statusColor : statusColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -82,22 +84,22 @@ class SearchProductCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.onSurface,
+                        color: isDark ? Colors.white : Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 6),
+                const SizedBox(height: 6),
                 
                 // Product code
                 Text(
                   productCode,
                   style: TextStyle(
                     fontSize: 12,
-                    color: AppColors.outline,
+                    color: isDark ? const Color(0xFF94A3B8) : AppColors.outline,
                   ),
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 
                 // View details button
                 SizedBox(
@@ -105,14 +107,14 @@ class SearchProductCard extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFF1F3FD),
-                      foregroundColor: const Color(0xFF0040E0),
+                      backgroundColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFF1F3FD),
+                      foregroundColor: isDark ? const Color(0xFF60A5FA) : const Color(0xFF0040E0),
                       elevation: 0,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       minimumSize: const Size(60, 40),
                     ),
-                    child: Text(
+                    child: const Text(
                       'عرض التفاصيل',
                       style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
                     ),

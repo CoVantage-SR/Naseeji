@@ -138,9 +138,9 @@ class LoginMethodTile extends StatelessWidget {
               const SizedBox(height: 2),
               Text(
                 subtitle,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 11,
-                  color: Color(0xFF6B7280),
+                  color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                 ),
               ),
             ],
@@ -151,11 +151,11 @@ class LoginMethodTile extends StatelessWidget {
           Container(
             width: 40,
             height: 40,
-            decoration: const BoxDecoration(
-              color: Color(0xFFF3E8FF),
+            decoration: BoxDecoration(
+              color: isDark ? const Color(0xFF2D1B4E) : const Color(0xFFF3E8FF),
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, size: 20, color: const Color(0xFF9333EA)),
+            child: Icon(icon, size: 20, color: isDark ? const Color(0xFFC084FC) : const Color(0xFF9333EA)),
           ),
         ],
       ),
@@ -175,6 +175,8 @@ class DeviceSessionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       child: Row(
@@ -186,14 +188,14 @@ class DeviceSessionTile extends StatelessWidget {
               child: OutlinedButton(
                 onPressed: onLogout,
                 style: OutlinedButton.styleFrom(
-                  backgroundColor: const Color(0xFFFEF2F2),
-                  side: const BorderSide(color: Color(0xFFFCA5A5), width: 1),
+                  backgroundColor: isDark ? const Color(0xFF450A0A) : const Color(0xFFFEF2F2),
+                  side: BorderSide(color: isDark ? const Color(0xFF991B1B) : const Color(0xFFFCA5A5), width: 1),
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                 ),
-                child: const Text(
+                child: Text(
                   'تسجيل خروج',
-                  style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFFDC2626)),
+                  style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: isDark ? const Color(0xFFF87171) : const Color(0xFFDC2626)),
                 ),
               ),
             )
@@ -201,12 +203,12 @@ class DeviceSessionTile extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
               decoration: BoxDecoration(
-                color: const Color(0xFFEFF6FF),
+                color: isDark ? const Color(0xFF1E3A8A) : const Color(0xFFEFF6FF),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Text(
+              child: Text(
                 'الجهاز الحالي',
-                style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Color(0xFF2563EB)),
+                style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB)),
               ),
             ),
 
@@ -220,7 +222,7 @@ class DeviceSessionTile extends StatelessWidget {
                 children: [
                   Text(
                     session.deviceName,
-                    style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.bold, color: Color(0xFF111827)),
+                    style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.bold, color: isDark ? Colors.white : const Color(0xFF111827)),
                   ),
                   if (session.isCurrent) const SizedBox(width: 6),
                 ],
@@ -228,7 +230,7 @@ class DeviceSessionTile extends StatelessWidget {
               const SizedBox(height: 2),
               Text(
                 '${session.city}، ${session.country} • ${session.lastActive}',
-                style: const TextStyle(fontSize: 11, color: Color(0xFF6B7280)),
+                style: TextStyle(fontSize: 11, color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280)),
               ),
             ],
           ),
@@ -241,8 +243,8 @@ class DeviceSessionTile extends StatelessWidget {
               Container(
                 width: 40,
                 height: 40,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFF3E8FF),
+                decoration: BoxDecoration(
+                  color: isDark ? const Color(0xFF2D1B4E) : const Color(0xFFF3E8FF),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
@@ -250,7 +252,7 @@ class DeviceSessionTile extends StatelessWidget {
                       ? Icons.desktop_windows_rounded
                       : Icons.smartphone_rounded,
                   size: 20,
-                  color: const Color(0xFF9333EA),
+                  color: isDark ? const Color(0xFFC084FC) : const Color(0xFF9333EA),
                 ),
               ),
               Positioned(
@@ -260,9 +262,9 @@ class DeviceSessionTile extends StatelessWidget {
                   width: 10,
                   height: 10,
                   decoration: BoxDecoration(
-                    color: session.isOnline ? const Color(0xFF16A34A) : const Color(0xFF9CA3AF),
+                    color: session.isOnline ? (isDark ? const Color(0xFF4ADE80) : const Color(0xFF16A34A)) : const Color(0xFF9CA3AF),
                     shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 1.5),
+                    border: Border.all(color: isDark ? const Color(0xFF1E293B) : Colors.white, width: 1.5),
                   ),
                 ),
               ),
@@ -281,6 +283,8 @@ class SecurityActivityItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     IconData iconData;
     Color iconColor;
     Color bgColor;
@@ -288,23 +292,23 @@ class SecurityActivityItem extends StatelessWidget {
     switch (activity.type) {
       case 'password_change':
         iconData = Icons.lock_outline_rounded;
-        iconColor = const Color(0xFF9333EA);
-        bgColor = const Color(0xFFF3E8FF);
+        iconColor = isDark ? const Color(0xFFC084FC) : const Color(0xFF9333EA);
+        bgColor = isDark ? const Color(0xFF2D1B4E) : const Color(0xFFF3E8FF);
         break;
       case '2fa_toggle':
         iconData = Icons.verified_user_outlined;
-        iconColor = const Color(0xFF2563EB);
-        bgColor = const Color(0xFFEFF6FF);
+        iconColor = isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB);
+        bgColor = isDark ? const Color(0xFF1E3A8A) : const Color(0xFFEFF6FF);
         break;
       case 'login':
         iconData = Icons.devices_rounded;
-        iconColor = const Color(0xFF16A34A);
-        bgColor = const Color(0xFFDCFCE7);
+        iconColor = isDark ? const Color(0xFF4ADE80) : const Color(0xFF16A34A);
+        bgColor = isDark ? const Color(0xFF14532D) : const Color(0xFFDCFCE7);
         break;
       default:
         iconData = Icons.security_rounded;
-        iconColor = const Color(0xFFEA580C);
-        bgColor = const Color(0xFFFFF7ED);
+        iconColor = isDark ? const Color(0xFFFB923C) : const Color(0xFFEA580C);
+        bgColor = isDark ? const Color(0xFF7C2D12) : const Color(0xFFFFF7ED);
     }
 
     final formattedDate =
@@ -321,12 +325,12 @@ class SecurityActivityItem extends StatelessWidget {
             children: [
               Text(
                 activity.title,
-                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF111827)),
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: isDark ? Colors.white : const Color(0xFF111827)),
               ),
               const SizedBox(height: 2),
               Text(
                 formattedDate,
-                style: const TextStyle(fontSize: 10.5, color: Color(0xFF6B7280)),
+                style: TextStyle(fontSize: 10.5, color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280)),
               ),
             ],
           ),
@@ -357,6 +361,7 @@ class SecurityTipsSection extends StatelessWidget {
           children: [
             Expanded(
               child: _buildTipCard(
+                context: context,
                 title: 'لا تشارك كلمة المرور',
                 subtitle: 'لا تشارك كلمة المرور مع أي شخص',
                 icon: Icons.shield_outlined,
@@ -365,6 +370,7 @@ class SecurityTipsSection extends StatelessWidget {
             const SizedBox(width: 8),
             Expanded(
               child: _buildTipCard(
+                context: context,
                 title: 'تحقق من بريدك',
                 subtitle: 'تأكد من تحديث بريدك الإلكتروني',
                 icon: Icons.mail_outline_rounded,
@@ -373,6 +379,7 @@ class SecurityTipsSection extends StatelessWidget {
             const SizedBox(width: 8),
             Expanded(
               child: _buildTipCard(
+                context: context,
                 title: 'فعّل الإشعارات',
                 subtitle: 'لتصلك تنبيهات الأمان',
                 icon: Icons.notifications_active_outlined,
@@ -385,32 +392,35 @@ class SecurityTipsSection extends StatelessWidget {
   }
 
   Widget _buildTipCard({
+    required BuildContext context,
     required String title,
     required String subtitle,
     required IconData icon,
   }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? const Color(0xFF1E293B) : Colors.white,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
+        border: Border.all(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
       ),
       child: Column(
         children: [
           Container(
             width: 34,
             height: 34,
-            decoration: const BoxDecoration(
-              color: Color(0xFFDCFCE7),
+            decoration: BoxDecoration(
+              color: isDark ? const Color(0xFF14532D) : const Color(0xFFDCFCE7),
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, size: 18, color: const Color(0xFF16A34A)),
+            child: Icon(icon, size: 18, color: isDark ? const Color(0xFF4ADE80) : const Color(0xFF16A34A)),
           ),
           const SizedBox(height: 6),
           Text(
             title,
-            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF111827)),
+            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: isDark ? Colors.white : const Color(0xFF111827)),
             textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -418,7 +428,7 @@ class SecurityTipsSection extends StatelessWidget {
           const SizedBox(height: 2),
           Text(
             subtitle,
-            style: const TextStyle(fontSize: 9.5, color: Color(0xFF6B7280)),
+            style: TextStyle(fontSize: 9.5, color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280)),
             textAlign: TextAlign.center,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,

@@ -7,6 +7,8 @@ class PlansHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
       child: Row(
@@ -18,18 +20,18 @@ class PlansHeader extends StatelessWidget {
               Container(
                 width: 44,
                 height: 44,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFF3E8FF),
+                decoration: BoxDecoration(
+                  color: isDark ? const Color(0xFF2D1B4E) : const Color(0xFFF3E8FF),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.workspace_premium_rounded,
-                  color: Color(0xFF9333EA),
+                  color: isDark ? const Color(0xFFC084FC) : const Color(0xFF9333EA),
                   size: 24,
                 ),
               ),
               const SizedBox(width: 10),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -37,16 +39,16 @@ class PlansHeader extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF111827),
+                      color: isDark ? Colors.white : const Color(0xFF111827),
                       height: 1.1,
                     ),
                   ),
-                  SizedBox(height: 2),
+                  const SizedBox(height: 2),
                   Text(
                     'اختر الباقة المناسبة لاحتياجات مصنعك',
                     style: TextStyle(
                       fontSize: 12,
-                      color: Color(0xFF6B7280),
+                      color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -65,12 +67,12 @@ class PlansHeader extends StatelessWidget {
                     width: 38,
                     height: 38,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF3F4F6),
+                      color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF3F4F6),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.notifications_none_rounded,
-                      color: Color(0xFF374151),
+                      color: isDark ? const Color(0xFFE2E8F0) : const Color(0xFF374151),
                       size: 20,
                     ),
                   ),
@@ -98,9 +100,9 @@ class PlansHeader extends StatelessWidget {
               const SizedBox(width: 8),
               IconButton(
                 onPressed: onBack,
-                icon: const Icon(
+                icon: Icon(
                   Icons.arrow_forward_rounded,
-                  color: Color(0xFF111827),
+                  color: isDark ? Colors.white : const Color(0xFF111827),
                   size: 24,
                 ),
               ),
@@ -176,14 +178,20 @@ class PlanCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Expanded(
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: isDark
+              ? (isCurrent || isPopular ? const Color(0xFF2D1B4E) : const Color(0xFF1E293B))
+              : Colors.white,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: isPopular ? const Color(0xFF9333EA) : (isCurrent ? const Color(0xFFC084FC) : const Color(0xFFE5E7EB)),
+            color: isPopular
+                ? const Color(0xFF9333EA)
+                : (isCurrent ? const Color(0xFFC084FC) : (isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB))),
             width: isPopular || isCurrent ? 1.5 : 1,
           ),
           boxShadow: isPopular
@@ -222,7 +230,7 @@ class PlanCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: isPopular ? const Color(0xFF9333EA) : const Color(0xFF111827),
+                    color: isPopular ? (isDark ? const Color(0xFFC084FC) : const Color(0xFF9333EA)) : (isDark ? Colors.white : const Color(0xFF111827)),
                   ),
                 ),
               ],
@@ -230,7 +238,7 @@ class PlanCard extends StatelessWidget {
             const SizedBox(height: 2),
             Text(
               subtitle,
-              style: const TextStyle(fontSize: 10, color: Color(0xFF6B7280)),
+              style: TextStyle(fontSize: 10, color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280)),
             ),
             const SizedBox(height: 8),
 
@@ -240,18 +248,18 @@ class PlanCard extends StatelessWidget {
                 children: [
                   TextSpan(
                     text: '\$$monthlyPrice ',
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF111827)),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: isDark ? Colors.white : const Color(0xFF111827)),
                   ),
-                  const TextSpan(
+                  TextSpan(
                     text: '/ شهر',
-                    style: TextStyle(fontSize: 10, color: Color(0xFF6B7280)),
+                    style: TextStyle(fontSize: 10, color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280)),
                   ),
                 ],
               ),
             ),
             Text(
               'أو \$$yearlyPrice سنوياً',
-              style: const TextStyle(fontSize: 9.5, color: Color(0xFF9CA3AF)),
+              style: TextStyle(fontSize: 9.5, color: isDark ? const Color(0xFF64748B) : const Color(0xFF9CA3AF)),
             ),
             const SizedBox(height: 10),
 
@@ -286,11 +294,13 @@ class FeatureComparisonTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? const Color(0xFF1E293B) : Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
+        border: Border.all(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.02),
@@ -304,20 +314,20 @@ class FeatureComparisonTable extends StatelessWidget {
           // Table Header
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-            decoration: const BoxDecoration(
-              color: Color(0xFFF9FAFB),
-              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+            decoration: BoxDecoration(
+              color: isDark ? const Color(0xFF0F172A) : const Color(0xFFF9FAFB),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
             ),
-            child: const Row(
+            child: Row(
               children: [
                 Expanded(
                   flex: 3,
                   child: Text(
                     'المميزات',
-                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF374151)),
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: isDark ? const Color(0xFFE2E8F0) : const Color(0xFF374151)),
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   flex: 2,
                   child: Text(
                     'الأساسية',
@@ -325,7 +335,7 @@ class FeatureComparisonTable extends StatelessWidget {
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF16A34A)),
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   flex: 2,
                   child: Text(
                     'الإحترافية',
@@ -333,7 +343,7 @@ class FeatureComparisonTable extends StatelessWidget {
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF9333EA)),
                   ),
                 ),
-                Expanded(
+                const Expanded(
                   flex: 2,
                   child: Text(
                     'المؤسسية',
@@ -344,14 +354,14 @@ class FeatureComparisonTable extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(height: 1, color: Color(0xFFE5E7EB)),
+          Divider(height: 1, color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
 
           // Table Rows
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: rows.length,
-            separatorBuilder: (context, index) => const Divider(height: 1, color: Color(0xFFF3F4F6)),
+            separatorBuilder: (context, index) => Divider(height: 1, color: isDark ? const Color(0xFF334155) : const Color(0xFFF3F4F6)),
             itemBuilder: (context, index) {
               final row = rows[index];
               return Padding(
@@ -363,12 +373,12 @@ class FeatureComparisonTable extends StatelessWidget {
                       flex: 3,
                       child: Row(
                         children: [
-                          Icon(row.icon, size: 16, color: const Color(0xFF6B7280)),
+                          Icon(row.icon, size: 16, color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280)),
                           const SizedBox(width: 6),
                           Expanded(
                             child: Text(
                               row.title,
-                              style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w600, color: Color(0xFF111827)),
+                              style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w600, color: isDark ? Colors.white : const Color(0xFF111827)),
                             ),
                           ),
                         ],
@@ -443,30 +453,32 @@ class IncludedFeaturesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: const Color(0xFFFBF7FF),
+        color: isDark ? const Color(0xFF2D1B4E) : const Color(0xFFFBF7FF),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE9D5FF)),
+        border: Border.all(color: isDark ? const Color(0xFF581C87) : const Color(0xFFE9D5FF)),
       ),
       child: Row(
         children: [
           Container(
             width: 40,
             height: 40,
-            decoration: const BoxDecoration(
-              color: Color(0xFFF3E8FF),
+            decoration: BoxDecoration(
+              color: isDark ? const Color(0xFF3B0764) : const Color(0xFFF3E8FF),
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.card_giftcard_rounded,
-              color: Color(0xFF9333EA),
+              color: isDark ? const Color(0xFFC084FC) : const Color(0xFF9333EA),
               size: 20,
             ),
           ),
           const SizedBox(width: 12),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -475,15 +487,15 @@ class IncludedFeaturesCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF111827),
+                    color: isDark ? Colors.white : const Color(0xFF111827),
                   ),
                 ),
-                SizedBox(height: 3),
+                const SizedBox(height: 3),
                 Text(
                   'نشر المنتجات - التواصل مع المصانع - إدارة الطلبات - تتبع الشحنات - الفواتير الأساسية',
                   style: TextStyle(
                     fontSize: 11,
-                    color: Color(0xFF6B7280),
+                    color: isDark ? const Color(0xFFE9D5FF) : const Color(0xFF6B7280),
                     height: 1.3,
                   ),
                 ),
@@ -503,16 +515,18 @@ class BottomActionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       children: [
-        const Text(
+        Text(
           'لست متأكداً؟',
-          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Color(0xFF111827)),
+          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: isDark ? Colors.white : const Color(0xFF111827)),
         ),
         const SizedBox(height: 2),
-        const Text(
+        Text(
           'جرب الباقة الإحترافية مجاناً لمدة 14 يوم بدون إحتمالية',
-          style: TextStyle(fontSize: 11, color: Color(0xFF6B7280)),
+          style: TextStyle(fontSize: 11, color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280)),
         ),
         const SizedBox(height: 12),
         SizedBox(

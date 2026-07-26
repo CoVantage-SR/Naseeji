@@ -6,6 +6,8 @@ class RecentSearchesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     final List<String> recentSearches = [
       'نسيج قطني فاخر',
       'طلب #89021',
@@ -22,7 +24,7 @@ class RecentSearchesSection extends StatelessWidget {
               onPressed: () {},
               child: Text(
                 'مسح الكل',
-                style: TextStyle(color: Color(0xFF0040E0), fontSize: 13, fontWeight: FontWeight.bold),
+                style: TextStyle(color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF0040E0), fontSize: 13, fontWeight: FontWeight.bold),
               ),
             ),
             Text(
@@ -30,32 +32,34 @@ class RecentSearchesSection extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.onSurface,
+                color: isDark ? Colors.white : Theme.of(context).colorScheme.onSurface,
               ),
             ),
           ],
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         ...recentSearches.map((search) => _buildRecentSearchItem(context, search)),
       ],
     );
   }
 
   Widget _buildRecentSearchItem(BuildContext context, String text) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF1F3FD),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Icon(Icons.history, color: AppColors.outline, size: 18),
+          Icon(Icons.history, color: isDark ? const Color(0xFF94A3B8) : AppColors.outline, size: 18),
           Text(
             text,
-            style: TextStyle(fontSize: 13, color: Theme.of(context).colorScheme.onSurface),
+            style: TextStyle(fontSize: 13, color: isDark ? Colors.white : Theme.of(context).colorScheme.onSurface),
           ),
         ],
       ),

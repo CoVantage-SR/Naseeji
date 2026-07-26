@@ -47,11 +47,12 @@ class _SubscriptionManagementScreenState
     final sub = MockDatabase.getCurrentSubscription();
     final isExpired = sub.isExpired;
     final isExpiringSoon = sub.remainingDays <= 7 && !isExpired;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: const Color(0xFFF9FAFB),
+        backgroundColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFF9FAFB),
         body: SafeArea(
           child: Column(
             children: [
@@ -103,7 +104,7 @@ class _SubscriptionManagementScreenState
                       const SizedBox(height: 20),
 
                       // SECTION 3: Payment Methods ("طرق الدفع")
-                      _buildPaymentMethodsSection(),
+                      _buildPaymentMethodsSection(context),
 
                       const SizedBox(height: 20),
 
@@ -136,6 +137,8 @@ class _SubscriptionManagementScreenState
   // 1. Top Header Bar
   // ---------------------------------------------------------------------------
   Widget _buildHeaderBar(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
       child: Row(
@@ -147,18 +150,18 @@ class _SubscriptionManagementScreenState
               Container(
                 width: 44,
                 height: 44,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFF3E8FF),
+                decoration: BoxDecoration(
+                  color: isDark ? const Color(0xFF2D1B4E) : const Color(0xFFF3E8FF),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.workspace_premium_rounded,
-                  color: Color(0xFF9333EA),
+                  color: isDark ? const Color(0xFFC084FC) : const Color(0xFF9333EA),
                   size: 22,
                 ),
               ),
               const SizedBox(width: 10),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -166,16 +169,16 @@ class _SubscriptionManagementScreenState
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF111827),
+                      color: isDark ? Colors.white : const Color(0xFF111827),
                       height: 1.1,
                     ),
                   ),
-                  SizedBox(height: 2),
+                  const SizedBox(height: 2),
                   Text(
                     'إدارة باقتك وطرق الدفع',
                     style: TextStyle(
                       fontSize: 12,
-                      color: Color(0xFF6B7280),
+                      color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -193,9 +196,9 @@ class _SubscriptionManagementScreenState
                 context.go('/profile');
               }
             },
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_forward_rounded,
-              color: Color(0xFF111827),
+              color: isDark ? Colors.white : const Color(0xFF111827),
               size: 24,
             ),
           ),
@@ -279,13 +282,14 @@ class _SubscriptionManagementScreenState
   // ---------------------------------------------------------------------------
   Widget _buildSubscriptionSummaryBox(BuildContext context, SubscriptionModel sub) {
     final remainingDays = sub.remainingDays;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? const Color(0xFF1E293B) : Colors.white,
         borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: const Color(0xFFE5E7EB)),
+        border: Border.all(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.02),
@@ -306,17 +310,17 @@ class _SubscriptionManagementScreenState
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     // Circular Gauge
-                    _buildDaysRemainingGauge(remainingDays),
+                    _buildDaysRemainingGauge(context, remainingDays),
                     // Current Plan Box
                     _buildCurrentPlanInfo(context, sub),
                   ],
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12),
-                  child: Divider(height: 1, color: Color(0xFFF3F4F6)),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: Divider(height: 1, color: isDark ? const Color(0xFF334155) : const Color(0xFFF3F4F6)),
                 ),
                 // Usage Limits Progress List
-                _buildUsageProgressList(sub),
+                _buildUsageProgressList(context, sub),
               ],
             );
           }
@@ -324,9 +328,9 @@ class _SubscriptionManagementScreenState
           // Wide / Desktop layout
           return Row(
             children: [
-              _buildDaysRemainingGauge(remainingDays),
+              _buildDaysRemainingGauge(context, remainingDays),
               const SizedBox(width: 16),
-              Expanded(child: _buildUsageProgressList(sub)),
+              Expanded(child: _buildUsageProgressList(context, sub)),
               const SizedBox(width: 16),
               _buildCurrentPlanInfo(context, sub),
             ],
@@ -336,7 +340,9 @@ class _SubscriptionManagementScreenState
     );
   }
 
-  Widget _buildDaysRemainingGauge(int days) {
+  Widget _buildDaysRemainingGauge(BuildContext context, int days) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return SizedBox(
       width: 110,
       height: 110,
@@ -349,8 +355,8 @@ class _SubscriptionManagementScreenState
             child: CircularProgressIndicator(
               value: (days / 30).clamp(0.0, 1.0),
               strokeWidth: 8,
-              backgroundColor: const Color(0xFFF3E8FF),
-              valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF9333EA)),
+              backgroundColor: isDark ? const Color(0xFF334155) : const Color(0xFFF3E8FF),
+              valueColor: AlwaysStoppedAnimation<Color>(isDark ? const Color(0xFFC084FC) : const Color(0xFF9333EA)),
               strokeCap: StrokeCap.round,
             ),
           ),
@@ -359,28 +365,28 @@ class _SubscriptionManagementScreenState
             children: [
               Text(
                 '$days',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF111827),
+                  color: isDark ? Colors.white : const Color(0xFF111827),
                   height: 1.0,
                 ),
               ),
               const SizedBox(height: 2),
-              const Text(
+              Text(
                 'يوماً متبقية',
                 style: TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF6B7280),
+                  color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280),
                 ),
               ),
               const SizedBox(height: 2),
-              const Text(
+              Text(
                 'من أصل 30 يوم',
                 style: TextStyle(
                   fontSize: 8.5,
-                  color: Color(0xFF9CA3AF),
+                  color: isDark ? const Color(0xFF64748B) : const Color(0xFF9CA3AF),
                 ),
               ),
             ],
@@ -390,49 +396,53 @@ class _SubscriptionManagementScreenState
     );
   }
 
-  Widget _buildUsageProgressList(SubscriptionModel sub) {
+  Widget _buildUsageProgressList(BuildContext context, SubscriptionModel sub) {
     return Column(
       children: [
-        _buildUsageMetricRow('عدد أعضاء الفريق', '10 / 10', Icons.group_outlined),
+        _buildUsageMetricRow(context, 'عدد أعضاء الفريق', '10 / 10', Icons.group_outlined),
         const SizedBox(height: 8),
-        _buildUsageMetricRow('عدد المنتجات', '${sub.productsUsed} / ${sub.productsLimit}', Icons.inventory_2_outlined),
+        _buildUsageMetricRow(context, 'عدد المنتجات', '${sub.productsUsed} / ${sub.productsLimit}', Icons.inventory_2_outlined),
         const SizedBox(height: 8),
-        _buildUsageMetricRow('طلبات الأسعار شهرياً', '85 / 100', Icons.request_quote_outlined),
+        _buildUsageMetricRow(context, 'طلبات الأسعار شهرياً', '85 / 100', Icons.request_quote_outlined),
         const SizedBox(height: 8),
-        _buildUsageMetricRow('المساحة التخزينية', '2.4 GB / 5 GB', Icons.cloud_outlined),
+        _buildUsageMetricRow(context, 'المساحة التخزينية', '2.4 GB / 5 GB', Icons.cloud_outlined),
       ],
     );
   }
 
-  Widget _buildUsageMetricRow(String label, String value, IconData icon) {
+  Widget _buildUsageMetricRow(BuildContext context, String label, String value, IconData icon) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Row(
           children: [
-            Icon(icon, size: 14, color: const Color(0xFF6B7280)),
+            Icon(icon, size: 14, color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280)),
             const SizedBox(width: 6),
             Text(
               label,
-              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: Color(0xFF4B5563)),
+              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: isDark ? const Color(0xFFE2E8F0) : const Color(0xFF4B5563)),
             ),
           ],
         ),
         Text(
           value,
-          style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold, color: Color(0xFF111827)),
+          style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold, color: isDark ? Colors.white : const Color(0xFF111827)),
         ),
       ],
     );
   }
 
   Widget _buildCurrentPlanInfo(BuildContext context, SubscriptionModel sub) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        const Text(
+        Text(
           'باقتك الحالية',
-          style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.w600, color: Color(0xFF6B7280)),
+          style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.w600, color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280)),
         ),
         const SizedBox(height: 2),
         Row(
@@ -441,7 +451,7 @@ class _SubscriptionManagementScreenState
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               decoration: BoxDecoration(
-                color: const Color(0xFFDCFCE7),
+                color: isDark ? const Color(0xFF14532D) : const Color(0xFFDCFCE7),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
@@ -449,12 +459,12 @@ class _SubscriptionManagementScreenState
                   Container(
                     width: 5,
                     height: 5,
-                    decoration: const BoxDecoration(color: Color(0xFF16A34A), shape: BoxShape.circle),
+                    decoration: BoxDecoration(color: isDark ? const Color(0xFF4ADE80) : const Color(0xFF16A34A), shape: BoxShape.circle),
                   ),
                   const SizedBox(width: 4),
-                  const Text(
+                  Text(
                     'نشطة',
-                    style: TextStyle(fontSize: 9.5, fontWeight: FontWeight.bold, color: Color(0xFF16A34A)),
+                    style: TextStyle(fontSize: 9.5, fontWeight: FontWeight.bold, color: isDark ? const Color(0xFF4ADE80) : const Color(0xFF16A34A)),
                   ),
                 ],
               ),
@@ -462,18 +472,18 @@ class _SubscriptionManagementScreenState
             const SizedBox(width: 6),
             Text(
               sub.planName.replaceAll(' (Professional)', ''),
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF6D28D9),
+                color: isDark ? const Color(0xFFC084FC) : const Color(0xFF6D28D9),
               ),
             ),
           ],
         ),
         const SizedBox(height: 3),
-        const Text(
+        Text(
           'تجدد في 23 مايو 2025',
-          style: TextStyle(fontSize: 9.5, color: Color(0xFF9CA3AF)),
+          style: TextStyle(fontSize: 9.5, color: isDark ? const Color(0xFF64748B) : const Color(0xFF9CA3AF)),
         ),
         const SizedBox(height: 8),
         // Emblem graphic & Change plan button
@@ -483,11 +493,11 @@ class _SubscriptionManagementScreenState
             Container(
               width: 42,
               height: 42,
-              decoration: const BoxDecoration(
-                color: Color(0xFFF3E8FF),
+              decoration: BoxDecoration(
+                color: isDark ? const Color(0xFF2D1B4E) : const Color(0xFFF3E8FF),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.workspace_premium_rounded, color: Color(0xFF9333EA), size: 22),
+              child: Icon(Icons.workspace_premium_rounded, color: isDark ? const Color(0xFFC084FC) : const Color(0xFF9333EA), size: 22),
             ),
           ],
         ),
@@ -498,12 +508,12 @@ class _SubscriptionManagementScreenState
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
             minimumSize: Size.zero,
             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            side: const BorderSide(color: Color(0xFFD8B4FE), width: 1.2),
+            side: BorderSide(color: isDark ? const Color(0xFFC084FC) : const Color(0xFFD8B4FE), width: 1.2),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           ),
-          child: const Text(
+          child: Text(
             'تغيير الباقة',
-            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF9333EA)),
+            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: isDark ? const Color(0xFFC084FC) : const Color(0xFF9333EA)),
           ),
         ),
       ],
@@ -514,25 +524,27 @@ class _SubscriptionManagementScreenState
   // SECTION 2: Available Plans ("الباقات المتاحة")
   // ---------------------------------------------------------------------------
   Widget _buildAvailablePlansSection(BuildContext context, SubscriptionModel currentSub) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
+            Text(
               'الباقات المتاحة',
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xFF111827)),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: isDark ? Colors.white : const Color(0xFF111827)),
             ),
             Row(
               children: [
-                const Text('شهري', style: TextStyle(fontSize: 11, color: Color(0xFF4B5563))),
+                Text('شهري', style: TextStyle(fontSize: 11, color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF4B5563))),
                 Switch(
                   value: _isYearly,
-                  activeColor: const Color(0xFF9333EA),
+                  activeTrackColor: isDark ? const Color(0xFFC084FC) : const Color(0xFF9333EA),
                   onChanged: (val) => setState(() => _isYearly = val),
                 ),
-                const Text('سنوي (خصم 20%)', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Color(0xFF16A34A))),
+                Text('سنوي (خصم 20%)', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: isDark ? const Color(0xFF4ADE80) : const Color(0xFF16A34A))),
               ],
             ),
           ],
@@ -622,10 +634,10 @@ class _SubscriptionManagementScreenState
         Center(
           child: TextButton.icon(
             onPressed: () => context.push('/subscription/comparison'),
-            icon: const Icon(Icons.scale_rounded, size: 16, color: Color(0xFF2563EB)),
-            label: const Text(
+            icon: Icon(Icons.scale_rounded, size: 16, color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB)),
+            label: Text(
               'مقارنة تفصيلية للمميزات والباقات',
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF2563EB)),
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB)),
             ),
           ),
         ),
@@ -647,12 +659,16 @@ class _SubscriptionManagementScreenState
     bool isCurrent = false,
     VoidCallback? onPressed,
   }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       decoration: BoxDecoration(
-        color: isCurrent ? const Color(0xFFFAF5FF) : Colors.white,
+        color: isCurrent
+            ? (isDark ? const Color(0xFF2D1B4E) : const Color(0xFFFAF5FF))
+            : (isDark ? const Color(0xFF1E293B) : Colors.white),
         borderRadius: BorderRadius.circular(18),
         border: Border.all(
-          color: isCurrent ? const Color(0xFFC084FC) : const Color(0xFFE5E7EB),
+          color: isCurrent ? const Color(0xFFC084FC) : (isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
           width: isCurrent ? 1.5 : 1.0,
         ),
         boxShadow: [
@@ -690,17 +706,17 @@ class _SubscriptionManagementScreenState
                   children: [
                     Icon(icon, size: 18, color: iconColor),
                     const SizedBox(width: 6),
-                    Text(title, style: const TextStyle(fontSize: 13.5, fontWeight: FontWeight.bold, color: Color(0xFF111827))),
+                    Text(title, style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.bold, color: isDark ? Colors.white : const Color(0xFF111827))),
                   ],
                 ),
                 const SizedBox(height: 2),
-                Text(subtitle, style: const TextStyle(fontSize: 10, color: Color(0xFF6B7280))),
+                Text(subtitle, style: TextStyle(fontSize: 10, color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280))),
                 const SizedBox(height: 10),
 
                 // Price
                 Text(
                   price,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF111827)),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: isDark ? Colors.white : const Color(0xFF111827)),
                 ),
                 const SizedBox(height: 12),
 
@@ -708,7 +724,7 @@ class _SubscriptionManagementScreenState
                 SizedBox(
                   width: double.infinity,
                   height: 38,
-                  child: _buildPlanButton(buttonText, buttonStyle, onPressed),
+                  child: _buildPlanButton(context, buttonText, buttonStyle, onPressed),
                 ),
                 const SizedBox(height: 14),
 
@@ -717,12 +733,12 @@ class _SubscriptionManagementScreenState
                       padding: const EdgeInsets.only(bottom: 6),
                       child: Row(
                         children: [
-                          const Icon(Icons.check_circle_rounded, size: 14, color: Color(0xFF16A34A)),
+                          Icon(Icons.check_circle_rounded, size: 14, color: isDark ? const Color(0xFF4ADE80) : const Color(0xFF16A34A)),
                           const SizedBox(width: 6),
                           Expanded(
                             child: Text(
                               f,
-                              style: const TextStyle(fontSize: 10.5, color: Color(0xFF374151), fontWeight: FontWeight.w500),
+                              style: TextStyle(fontSize: 10.5, color: isDark ? const Color(0xFFE2E8F0) : const Color(0xFF374151), fontWeight: FontWeight.w500),
                             ),
                           ),
                         ],
@@ -736,31 +752,33 @@ class _SubscriptionManagementScreenState
     );
   }
 
-  Widget _buildPlanButton(String text, _PlanButtonStyle style, VoidCallback? onPressed) {
+  Widget _buildPlanButton(BuildContext context, String text, _PlanButtonStyle style, VoidCallback? onPressed) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     switch (style) {
       case _PlanButtonStyle.solidCurrent:
         return Container(
-          decoration: BoxDecoration(color: const Color(0xFFDDD6FE), borderRadius: BorderRadius.circular(10)),
+          decoration: BoxDecoration(color: isDark ? const Color(0xFF3B0764) : const Color(0xFFDDD6FE), borderRadius: BorderRadius.circular(10)),
           alignment: Alignment.center,
-          child: Text(text, style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold, color: Color(0xFF6D28D9))),
+          child: Text(text, style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold, color: isDark ? const Color(0xFFF3E8FF) : const Color(0xFF6D28D9))),
         );
       case _PlanButtonStyle.outlineGreen:
         return OutlinedButton(
           onPressed: onPressed,
           style: OutlinedButton.styleFrom(
-            side: const BorderSide(color: Color(0xFF86EFAC), width: 1.2),
+            side: BorderSide(color: isDark ? const Color(0xFF4ADE80) : const Color(0xFF86EFAC), width: 1.2),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           ),
-          child: Text(text, style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold, color: Color(0xFF16A34A))),
+          child: Text(text, style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold, color: isDark ? const Color(0xFF4ADE80) : const Color(0xFF16A34A))),
         );
       case _PlanButtonStyle.outlineOrange:
         return OutlinedButton(
           onPressed: onPressed,
           style: OutlinedButton.styleFrom(
-            side: const BorderSide(color: Color(0xFFFDBA74), width: 1.2),
+            side: BorderSide(color: isDark ? const Color(0xFFFB923C) : const Color(0xFFFDBA74), width: 1.2),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           ),
-          child: Text(text, style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold, color: Color(0xFFEA580C))),
+          child: Text(text, style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold, color: isDark ? const Color(0xFFFB923C) : const Color(0xFFEA580C))),
         );
     }
   }
@@ -768,7 +786,9 @@ class _SubscriptionManagementScreenState
   // ---------------------------------------------------------------------------
   // SECTION 3: Payment Methods ("طرق الدفع")
   // ---------------------------------------------------------------------------
-  Widget _buildPaymentMethodsSection() {
+  Widget _buildPaymentMethodsSection(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     final methods = [
       {
         'id': 'creditCard',
@@ -799,9 +819,9 @@ class _SubscriptionManagementScreenState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'طرق الدفع',
-          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xFF111827)),
+          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: isDark ? Colors.white : const Color(0xFF111827)),
         ),
         const SizedBox(height: 10),
         GridView.builder(
@@ -825,10 +845,12 @@ class _SubscriptionManagementScreenState
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                 decoration: BoxDecoration(
-                  color: isSelected ? const Color(0xFFFAF5FF) : Colors.white,
+                  color: isSelected
+                      ? (isDark ? const Color(0xFF2D1B4E) : const Color(0xFFFAF5FF))
+                      : (isDark ? const Color(0xFF1E293B) : Colors.white),
                   borderRadius: BorderRadius.circular(14),
                   border: Border.all(
-                    color: isSelected ? const Color(0xFF9333EA) : const Color(0xFFE5E7EB),
+                    color: isSelected ? const Color(0xFFC084FC) : (isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
                     width: isSelected ? 1.8 : 1.0,
                   ),
                 ),
@@ -840,7 +862,7 @@ class _SubscriptionManagementScreenState
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: isSelected ? const Color(0xFF9333EA) : Colors.transparent,
-                        border: isSelected ? null : Border.all(color: const Color(0xFF9CA3AF)),
+                        border: isSelected ? null : Border.all(color: isDark ? const Color(0xFF64748B) : const Color(0xFF9CA3AF)),
                       ),
                       child: isSelected ? const Icon(Icons.check_rounded, size: 12, color: Colors.white) : null,
                     ),
@@ -852,18 +874,18 @@ class _SubscriptionManagementScreenState
                         children: [
                           Text(
                             m['title'] as String,
-                            style: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold, color: Color(0xFF111827)),
+                            style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.bold, color: isDark ? Colors.white : const Color(0xFF111827)),
                           ),
                           Text(
                             m['subtitle'] as String,
-                            style: const TextStyle(fontSize: 9.5, color: Color(0xFF6B7280)),
+                            style: TextStyle(fontSize: 9.5, color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280)),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
                     ),
-                    Icon(m['icon'] as IconData, size: 20, color: const Color(0xFF2563EB)),
+                    Icon(m['icon'] as IconData, size: 20, color: isDark ? const Color(0xFF60A5FA) : const Color(0xFF2563EB)),
                   ],
                 ),
               ),
@@ -878,43 +900,45 @@ class _SubscriptionManagementScreenState
   // SECTION 4: Saved Cards ("البطاقات المحفوظة")
   // ---------------------------------------------------------------------------
   Widget _buildSavedCardsSection(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'البطاقات المحفوظة',
-          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xFF111827)),
+          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: isDark ? Colors.white : const Color(0xFF111827)),
         ),
         const SizedBox(height: 10),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: isDark ? const Color(0xFF1E293B) : Colors.white,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: const Color(0xFFE5E7EB)),
+            border: Border.all(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Icon(Icons.chevron_left_rounded, size: 20, color: Color(0xFF9CA3AF)),
+              Icon(Icons.chevron_left_rounded, size: 20, color: isDark ? const Color(0xFF64748B) : const Color(0xFF9CA3AF)),
               Row(
                 children: [
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Row(
                         children: [
-                          Text('•••• •••• •••• 4242', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.bold, color: Color(0xFF111827))),
-                          SizedBox(width: 8),
-                          Icon(Icons.payment_rounded, color: Color(0xFFEA580C), size: 18),
+                          Text('•••• •••• •••• 4242', style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.bold, color: isDark ? Colors.white : const Color(0xFF111827))),
+                          const SizedBox(width: 8),
+                          const Icon(Icons.payment_rounded, color: Color(0xFFEA580C), size: 18),
                         ],
                       ),
-                      SizedBox(height: 2),
+                      const SizedBox(height: 2),
                       Row(
                         children: [
-                          Text('تنتهي في 12 / 26', style: TextStyle(fontSize: 9.5, color: Color(0xFF9CA3AF))),
-                          SizedBox(width: 6),
-                          Text('الافتراضية', style: TextStyle(fontSize: 9.5, fontWeight: FontWeight.bold, color: Color(0xFF16A34A))),
+                          Text('تنتهي في 12 / 26', style: TextStyle(fontSize: 9.5, color: isDark ? const Color(0xFF64748B) : const Color(0xFF9CA3AF))),
+                          const SizedBox(width: 6),
+                          Text('الافتراضية', style: TextStyle(fontSize: 9.5, fontWeight: FontWeight.bold, color: isDark ? const Color(0xFF4ADE80) : const Color(0xFF16A34A))),
                         ],
                       ),
                     ],
@@ -927,10 +951,10 @@ class _SubscriptionManagementScreenState
         const SizedBox(height: 8),
         TextButton.icon(
           onPressed: () => _showAddCardBottomSheet(context),
-          icon: const Icon(Icons.add_rounded, size: 16, color: Color(0xFF9333EA)),
-          label: const Text(
+          icon: Icon(Icons.add_rounded, size: 16, color: isDark ? const Color(0xFFC084FC) : const Color(0xFF9333EA)),
+          label: Text(
             'إضافة بطاقة جديدة',
-            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF9333EA)),
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: isDark ? const Color(0xFFC084FC) : const Color(0xFF9333EA)),
           ),
         ),
       ],
@@ -942,13 +966,14 @@ class _SubscriptionManagementScreenState
   // ---------------------------------------------------------------------------
   Widget _buildBillingHistorySection(BuildContext context) {
     final invoices = MockDatabase.subscriptionInvoices;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'سجل المعاملات',
-          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xFF111827)),
+          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: isDark ? Colors.white : const Color(0xFF111827)),
         ),
         const SizedBox(height: 10),
         ListView.builder(
@@ -961,32 +986,32 @@ class _SubscriptionManagementScreenState
               margin: const EdgeInsets.only(bottom: 8),
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: isDark ? const Color(0xFF1E293B) : Colors.white,
                 borderRadius: BorderRadius.circular(14),
-                border: Border.all(color: const Color(0xFFE5E7EB)),
+                border: Border.all(color: isDark ? const Color(0xFF334155) : const Color(0xFFE5E7EB)),
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.chevron_left_rounded, size: 18, color: Color(0xFF9CA3AF)),
+                  Icon(Icons.chevron_left_rounded, size: 18, color: isDark ? const Color(0xFF64748B) : const Color(0xFF9CA3AF)),
                   const SizedBox(width: 10),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         '${inv.invoiceDate.day}/${inv.invoiceDate.month}/${inv.invoiceDate.year} 10:30 ص',
-                        style: const TextStyle(fontSize: 9.5, color: Color(0xFF9CA3AF)),
+                        style: TextStyle(fontSize: 9.5, color: isDark ? const Color(0xFF64748B) : const Color(0xFF9CA3AF)),
                       ),
                       const SizedBox(height: 2),
                       Row(
                         children: [
-                          const Text(
+                          Text(
                             'تم الدفع بنجاح',
-                            style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: Color(0xFF16A34A)),
+                            style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: isDark ? const Color(0xFF4ADE80) : const Color(0xFF16A34A)),
                           ),
                           const SizedBox(width: 8),
                           Text(
                             '\$${inv.amount.toStringAsFixed(2)}',
-                            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF16A34A)),
+                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: isDark ? const Color(0xFF4ADE80) : const Color(0xFF16A34A)),
                           ),
                         ],
                       ),
@@ -999,14 +1024,14 @@ class _SubscriptionManagementScreenState
                       children: [
                         Text(
                           'تجديد ${inv.planName}',
-                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Color(0xFF111827)),
+                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: isDark ? Colors.white : const Color(0xFF111827)),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 2),
-                        const Text(
+                        Text(
                           'بطاقة ائتمانية • 4242',
-                          style: TextStyle(fontSize: 10, color: Color(0xFF6B7280)),
+                          style: TextStyle(fontSize: 10, color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF6B7280)),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -1017,8 +1042,8 @@ class _SubscriptionManagementScreenState
                   Container(
                     width: 36,
                     height: 36,
-                    decoration: const BoxDecoration(color: Color(0xFFF3F4F6), shape: BoxShape.circle),
-                    child: const Icon(Icons.receipt_long_rounded, size: 18, color: Color(0xFF4B5563)),
+                    decoration: BoxDecoration(color: isDark ? const Color(0xFF334155) : const Color(0xFFF3F4F6), shape: BoxShape.circle),
+                    child: Icon(Icons.receipt_long_rounded, size: 18, color: isDark ? const Color(0xFFE2E8F0) : const Color(0xFF4B5563)),
                   ),
                 ],
               ),
@@ -1033,20 +1058,22 @@ class _SubscriptionManagementScreenState
   // SECTION 6: Support Banner ("تحتاج مساعدة؟")
   // ---------------------------------------------------------------------------
   Widget _buildSupportBanner(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: const Color(0xFFF5F3FF),
+        color: isDark ? const Color(0xFF2D1B4E) : const Color(0xFFF5F3FF),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFDDD6FE)),
+        border: Border.all(color: isDark ? const Color(0xFF581C87) : const Color(0xFFDDD6FE)),
       ),
       child: Row(
         children: [
           Container(
             width: 40,
             height: 40,
-            decoration: const BoxDecoration(color: Color(0xFFF3E8FF), shape: BoxShape.circle),
-            child: const Icon(Icons.headset_mic_rounded, color: Color(0xFF9333EA), size: 20),
+            decoration: BoxDecoration(color: isDark ? const Color(0xFF3B0764) : const Color(0xFFF3E8FF), shape: BoxShape.circle),
+            child: Icon(Icons.headset_mic_rounded, color: isDark ? const Color(0xFFC084FC) : const Color(0xFF9333EA), size: 20),
           ),
           const SizedBox(width: 12),
           const Expanded(
