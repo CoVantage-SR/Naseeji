@@ -981,9 +981,7 @@ class SupplierProfileScreen extends ConsumerWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 12),
-                RadioListTile<ThemeMode>(
-                  value: ThemeMode.light,
+                RadioGroup<ThemeMode>(
                   groupValue: currentMode,
                   onChanged: (mode) {
                     if (mode != null) {
@@ -991,50 +989,43 @@ class SupplierProfileScreen extends ConsumerWidget {
                       Navigator.pop(context);
                     }
                   },
-                  title: const Row(
+                  child: Column(
                     children: [
-                      Text('🌞', style: TextStyle(fontSize: 18)),
-                      SizedBox(width: 10),
-                      Text('فاتح', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+                      RadioListTile<ThemeMode>(
+                        value: ThemeMode.light,
+                        title: const Row(
+                          children: [
+                            Text('🌞', style: TextStyle(fontSize: 18)),
+                            SizedBox(width: 10),
+                            Text('فاتح', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+                          ],
+                        ),
+                        activeColor: theme.colorScheme.primary,
+                      ),
+                      RadioListTile<ThemeMode>(
+                        value: ThemeMode.dark,
+                        title: const Row(
+                          children: [
+                            Text('🌙', style: TextStyle(fontSize: 18)),
+                            SizedBox(width: 10),
+                            Text('داكن', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+                          ],
+                        ),
+                        activeColor: theme.colorScheme.primary,
+                      ),
+                      RadioListTile<ThemeMode>(
+                        value: ThemeMode.system,
+                        title: const Row(
+                          children: [
+                            Text('⚙️', style: TextStyle(fontSize: 18)),
+                            SizedBox(width: 10),
+                            Text('حسب إعدادات النظام', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+                          ],
+                        ),
+                        activeColor: theme.colorScheme.primary,
+                      ),
                     ],
                   ),
-                  activeColor: theme.colorScheme.primary,
-                ),
-                RadioListTile<ThemeMode>(
-                  value: ThemeMode.dark,
-                  groupValue: currentMode,
-                  onChanged: (mode) {
-                    if (mode != null) {
-                      ref.read(themeControllerProvider.notifier).setThemeMode(mode);
-                      Navigator.pop(context);
-                    }
-                  },
-                  title: const Row(
-                    children: [
-                      Text('🌙', style: TextStyle(fontSize: 18)),
-                      SizedBox(width: 10),
-                      Text('داكن', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
-                    ],
-                  ),
-                  activeColor: theme.colorScheme.primary,
-                ),
-                RadioListTile<ThemeMode>(
-                  value: ThemeMode.system,
-                  groupValue: currentMode,
-                  onChanged: (mode) {
-                    if (mode != null) {
-                      ref.read(themeControllerProvider.notifier).setThemeMode(mode);
-                      Navigator.pop(context);
-                    }
-                  },
-                  title: const Row(
-                    children: [
-                      Text('⚙️', style: TextStyle(fontSize: 18)),
-                      SizedBox(width: 10),
-                      Text('حسب إعدادات النظام', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
-                    ],
-                  ),
-                  activeColor: theme.colorScheme.primary,
                 ),
               ],
             ),

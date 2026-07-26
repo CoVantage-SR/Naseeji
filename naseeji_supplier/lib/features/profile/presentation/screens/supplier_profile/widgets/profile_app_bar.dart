@@ -16,7 +16,7 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: const [
           Text(
             'Naseeji',
             style: TextStyle(

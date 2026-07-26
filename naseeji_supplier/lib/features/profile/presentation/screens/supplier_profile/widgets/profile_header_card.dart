@@ -69,7 +69,7 @@ class ProfileHeaderCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Row(
-                      children: [
+                      children: const [
                         Icon(Icons.verified, color: Color(0xFF006B5F), size: 10),
                         SizedBox(width: 4),
                         Text(

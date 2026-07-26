@@ -55,7 +55,7 @@ class _CertificatesTabViewState extends ConsumerState<CertificatesTabView> {
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: [
+                      children: const [
                         Icon(Icons.add_card_outlined, color: Color(0xFF0040E0), size: 16),
                         SizedBox(width: 8),
                         Text(

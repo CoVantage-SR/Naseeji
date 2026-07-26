@@ -76,7 +76,7 @@ class PublicProfileHeaderCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Row(
-                      children: [
+                      children: const [
                         Icon(
                           Icons.verified,
                           color: Color(0xFF006B5F),
