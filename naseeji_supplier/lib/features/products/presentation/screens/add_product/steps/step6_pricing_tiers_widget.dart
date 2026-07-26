@@ -90,23 +90,26 @@ class _Step6PricingTiersWidgetState extends ConsumerState<Step6PricingTiersWidge
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'جدول أسعار الجملة وخصومات الكميات',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: colorScheme.onSurface,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'جدول أسعار الجملة وخصومات الكميات',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onSurface,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    'حدد أسعار التدرج حسب الكميات المطلوبة لتشجيع طلبيات المصانع الكبيرة.',
-                    style: TextStyle(fontSize: 11, color: colorScheme.onSurfaceVariant),
-                  ),
-                ],
+                    const SizedBox(height: 2),
+                    Text(
+                      'حدد أسعار التدرج حسب الكميات المطلوبة لتشجيع طلبيات المصانع الكبيرة.',
+                      style: TextStyle(fontSize: 11, color: colorScheme.onSurfaceVariant),
+                    ),
+                  ],
+                ),
               ),
+              const SizedBox(width: 8),
               ElevatedButton.icon(
                 onPressed: () => _showAddTierDialog(context),
                 icon: const Icon(Icons.add_rounded, size: 16),

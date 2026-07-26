@@ -86,23 +86,26 @@ class _Step2TechSpecsWidgetState extends ConsumerState<Step2TechSpecsWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'المواصفات الفنية للخامة والنسيج',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: colorScheme.onSurface,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'المواصفات الفنية للخامة والنسيج',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onSurface,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    'أضف تفاصيل المواصفات مثل (الخامة، الوزن، السُمك، العرض). يمكنك إضافة عدد غير محدود.',
-                    style: TextStyle(fontSize: 11, color: colorScheme.onSurfaceVariant),
-                  ),
-                ],
+                    const SizedBox(height: 2),
+                    Text(
+                      'أضف تفاصيل المواصفات مثل (الخامة، الوزن، السُمك، العرض). يمكنك إضافة عدد غير محدود.',
+                      style: TextStyle(fontSize: 11, color: colorScheme.onSurfaceVariant),
+                    ),
+                  ],
+                ),
               ),
+              const SizedBox(width: 8),
               ElevatedButton.icon(
                 onPressed: () => _showAddSpecDialog(context),
                 icon: const Icon(Icons.add_rounded, size: 16),

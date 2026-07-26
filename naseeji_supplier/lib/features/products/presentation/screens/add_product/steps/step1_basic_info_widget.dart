@@ -73,10 +73,18 @@ class Step1BasicInfoWidget extends ConsumerWidget {
             children: [
               Expanded(
                 child: DropdownButtonFormField<String>(
+                  isExpanded: true,
                   initialValue: categories.contains(formData.category) ? formData.category : categories.first,
                   onChanged: (val) => controller.updateBasicInfo(category: val),
                   items: categories
-                      .map((c) => DropdownMenuItem(value: c, child: Text(c, style: const TextStyle(fontSize: 13))))
+                      .map((c) => DropdownMenuItem(
+                            value: c,
+                            child: Text(
+                              c,
+                              style: const TextStyle(fontSize: 12.5),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ))
                       .toList(),
                   decoration: const InputDecoration(
                     labelText: 'الفئة الرئيسية *',
@@ -87,10 +95,18 @@ class Step1BasicInfoWidget extends ConsumerWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: DropdownButtonFormField<String>(
+                  isExpanded: true,
                   initialValue: subCategories.contains(formData.subCategory) ? formData.subCategory : subCategories.first,
                   onChanged: (val) => controller.updateBasicInfo(subCategory: val),
                   items: subCategories
-                      .map((c) => DropdownMenuItem(value: c, child: Text(c, style: const TextStyle(fontSize: 13))))
+                      .map((c) => DropdownMenuItem(
+                            value: c,
+                            child: Text(
+                              c,
+                              style: const TextStyle(fontSize: 12.5),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ))
                       .toList(),
                   decoration: const InputDecoration(
                     labelText: 'الفئة الفرعية *',
@@ -107,10 +123,18 @@ class Step1BasicInfoWidget extends ConsumerWidget {
             children: [
               Expanded(
                 child: DropdownButtonFormField<String>(
+                  isExpanded: true,
                   initialValue: countries.contains(formData.countryOfOrigin) ? formData.countryOfOrigin : countries.first,
                   onChanged: (val) => controller.updateBasicInfo(countryOfOrigin: val),
                   items: countries
-                      .map((c) => DropdownMenuItem(value: c, child: Text(c, style: const TextStyle(fontSize: 13))))
+                      .map((c) => DropdownMenuItem(
+                            value: c,
+                            child: Text(
+                              c,
+                              style: const TextStyle(fontSize: 12.5),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ))
                       .toList(),
                   decoration: const InputDecoration(
                     labelText: 'بلد المنشأ *',

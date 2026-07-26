@@ -29,23 +29,26 @@ class Step3ImagesWidget extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'صور المنتج والمعرض البصري',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: colorScheme.onSurface,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'صور المنتج والمعرض البصري',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onSurface,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    'ارفع صورة رئيسية وصور إضافية عالية الجودة للمنتج.',
-                    style: TextStyle(fontSize: 11, color: colorScheme.onSurfaceVariant),
-                  ),
-                ],
+                    const SizedBox(height: 2),
+                    Text(
+                      'ارفع صورة رئيسية وصور إضافية عالية الجودة للمنتج.',
+                      style: TextStyle(fontSize: 11, color: colorScheme.onSurfaceVariant),
+                    ),
+                  ],
+                ),
               ),
+              const SizedBox(width: 8),
               // Subscription Limit Badge
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
