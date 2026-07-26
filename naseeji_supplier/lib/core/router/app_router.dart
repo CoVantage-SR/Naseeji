@@ -319,7 +319,7 @@ GoRouter goRouter(Ref ref) {
       GoRoute(
         path: '/profile/edit',
         name: 'profile-edit',
-        builder: (context, state) => const BasicDataScreen(),
+        builder: (context, state) => const EditSupplierProfileScreen(),
       ),
       GoRoute(
         path: '/profile/basic-data',
@@ -837,6 +837,16 @@ GoRouter goRouter(Ref ref) {
       GoRoute(
         path: '/subscription/plans',
         name: 'subscription-plans',
+        builder: (context, state) => const SubscriptionManagementScreen(),
+      ),
+      GoRoute(
+        path: '/subscription/management',
+        name: 'subscription-management',
+        builder: (context, state) => const SubscriptionManagementScreen(),
+      ),
+      GoRoute(
+        path: '/profile/subscription',
+        name: 'profile-subscription',
         builder: (context, state) => const SubscriptionManagementScreen(),
       ),
       GoRoute(

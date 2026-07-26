@@ -267,19 +267,19 @@ class SupplierHomeHeader extends ConsumerWidget {
                             ],
                           ),
                           child: Row(
-                            children: [
+                            children: const [
                               // Left Arrow Chevron
-                              const Icon(
+                              Icon(
                                 Icons.arrow_back_ios_new_rounded,
                                 size: 16,
                                 color: Color(0xFF2563EB),
                               ),
-                              const Spacer(),
+                              Spacer(),
 
                               // Notification Text (Right Aligned RTL)
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
-                                children: const [
+                                children: [
                                   Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -499,7 +499,7 @@ class SupplierHomeHeader extends ConsumerWidget {
                         // Top Button: ترقية الباقة ↑
                         OutlinedButton(
                           onPressed: () =>
-                              context.push('/profile/subscription'),
+                              context.push('/subscription/comparison'),
                           style: OutlinedButton.styleFrom(
                             minimumSize: const Size(double.infinity, 26),
                             padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -533,7 +533,7 @@ class SupplierHomeHeader extends ConsumerWidget {
                         // Bottom Button: تجديد الباقة 🔄
                         ElevatedButton(
                           onPressed: () =>
-                              context.push('/profile/subscription'),
+                              context.push('/subscription/checkout'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF2563EB),
                             foregroundColor: Colors.white,

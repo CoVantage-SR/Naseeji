@@ -94,7 +94,7 @@ class QuickActionFab extends StatelessWidget {
                     color: Colors.amber.shade800,
                     onTap: () {
                       Navigator.pop(context);
-                      context.push('/profile/subscription');
+                      context.push('/subscription/plans');
                     },
                   ),
                   _QuickOptionTile(

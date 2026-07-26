@@ -35,7 +35,7 @@ class SubscriptionBanner extends ConsumerWidget {
             children: [
               // Renew Button (Left)
               ElevatedButton(
-                onPressed: () => context.push('/profile/subscription'),
+                onPressed: () => context.push('/subscription/checkout'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
                   foregroundColor: const Color(0xFF0F172A),
