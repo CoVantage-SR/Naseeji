@@ -8,10 +8,10 @@ import 'theme_extensions.dart';
 ThemeData buildLightTheme() {
   const colorScheme = ColorScheme(
     brightness: Brightness.light,
-    primary: AppThemeColors.lightPrimary,
+    primary: Color.fromARGB(255, 60, 51, 234),
     onPrimary: AppThemeColors.lightOnPrimary,
     primaryContainer: AppThemeColors.lightPrimaryContainer,
-    onPrimaryContainer: AppThemeColors.lightOnPrimaryContainer,
+    onPrimaryContainer: Color.fromARGB(255, 33, 69, 168),
     secondary: AppThemeColors.lightSecondary,
     onSecondary: AppThemeColors.lightOnSecondary,
     secondaryContainer: AppThemeColors.lightSecondaryContainer,
@@ -80,7 +80,7 @@ ThemeData buildLightTheme() {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppThemeColors.lightPrimary,
+        backgroundColor: const Color.fromARGB(255, 51, 72, 234),
         foregroundColor: AppThemeColors.lightOnPrimary,
         minimumSize: const Size.fromHeight(48),
         shape: RoundedRectangleBorder(
@@ -95,7 +95,7 @@ ThemeData buildLightTheme() {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: AppThemeColors.lightPrimary,
+        foregroundColor: const Color.fromARGB(255, 51, 72, 234),
         side: const BorderSide(color: AppThemeColors.lightBorder, width: 1),
         shape: RoundedRectangleBorder(
           borderRadius: AppRadius.mediumRadius,
@@ -120,7 +120,7 @@ ThemeData buildLightTheme() {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: AppRadius.mediumRadius,
-        borderSide: const BorderSide(color: AppThemeColors.lightPrimary, width: 1.5),
+        borderSide: const BorderSide(color: Color.fromARGB(255, 51, 75, 234), width: 1.5),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: AppRadius.mediumRadius,

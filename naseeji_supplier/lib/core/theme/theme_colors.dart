@@ -6,10 +6,10 @@ class AppThemeColors {
   // ---------------------------------------------------------------------------
   // Light Mode Colors
   // ---------------------------------------------------------------------------
-  static const Color lightPrimary = Color(0xFF9333EA);
+  static const Color lightPrimary = Color.fromARGB(255, 92, 107, 226);
   static const Color lightOnPrimary = Colors.white;
-  static const Color lightPrimaryContainer = Color(0xFFF3E8FF);
-  static const Color lightOnPrimaryContainer = Color(0xFF6B21A8);
+  static const Color lightPrimaryContainer = Color.fromARGB(255, 163, 145, 243);
+  static const Color lightOnPrimaryContainer = Color.fromARGB(255, 58, 33, 168);
 
   static const Color lightSecondary = Color(0xFF2563EB);
   static const Color lightOnSecondary = Colors.white;
@@ -47,9 +47,9 @@ class AppThemeColors {
   // ---------------------------------------------------------------------------
   // Dark Mode Colors
   // ---------------------------------------------------------------------------
-  static const Color darkPrimary = Color(0xFFC084FC);
+  static const Color darkPrimary = Color.fromARGB(255, 75, 119, 241);
   static const Color darkOnPrimary = Color(0xFF3B0764);
-  static const Color darkPrimaryContainer = Color(0xFF581C87);
+  static const Color darkPrimaryContainer = Color.fromARGB(255, 163, 145, 243);
   static const Color darkOnPrimaryContainer = Color(0xFFF3E8FF);
 
   static const Color darkSecondary = Color(0xFF60A5FA);
