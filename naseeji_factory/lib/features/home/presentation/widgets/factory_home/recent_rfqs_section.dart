@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../domain/entities/factory_home_models.dart';
+import '../../../domain/entities/factory_home_models.dart';
 
 class RecentRFQsSection extends StatelessWidget {
   final List<RecentRFQItem> rfqs;

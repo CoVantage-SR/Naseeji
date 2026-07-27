@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../domain/entities/factory_home_models.dart';
+import '../../../domain/entities/factory_home_models.dart';
 
 class TodayTasksSection extends StatelessWidget {
   final List<TodayTaskItem> tasks;
@@ -16,9 +16,7 @@ class TodayTasksSection extends StatelessWidget {
       case 'blue':
         return Colors.blue;
       case 'green':
-        return Colors.emeraldAccent.shade700.withValues(alpha: 0.9) == Colors.emeraldAccent.shade700
-            ? const Color(0xFF10B981)
-            : Colors.green;
+        return const Color(0xFF10B981);
       case 'orange':
         return const Color(0xFFF59E0B);
       case 'red':

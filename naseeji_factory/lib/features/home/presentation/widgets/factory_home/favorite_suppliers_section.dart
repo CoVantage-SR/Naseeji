@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../domain/entities/factory_home_models.dart';
+import '../../../domain/entities/factory_home_models.dart';
 
 class FavoriteSuppliersSection extends StatelessWidget {
   final List<FavoriteSupplierItem> suppliers;
