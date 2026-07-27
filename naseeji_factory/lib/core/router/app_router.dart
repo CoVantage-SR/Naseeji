@@ -19,6 +19,7 @@ import '../../features/chat/presentation/screens/shared_files_screen.dart';
 import '../../features/chat/presentation/screens/chat_settings_screen.dart';
 import '../../features/chat/presentation/screens/archived_conversations_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/home/presentation/widgets/factory_bottom_navigation.dart';
 import '../../features/home/presentation/screens/notifications_screen.dart';
 import '../../features/home/presentation/screens/search_screen.dart';
 import '../../features/home/presentation/screens/quick_statistics_screen.dart';
@@ -78,7 +79,6 @@ import '../../features/account/presentation/screens/notifications_settings_scree
 import '../../features/account/presentation/screens/appearance_screen.dart';
 import '../../features/account/presentation/screens/terms_screen.dart';
 import '../../features/account/presentation/screens/privacy_screen.dart';
-import '../constants/app_icons.dart';
 
 part 'app_router.g.dart';
 
@@ -624,31 +624,9 @@ class ScaffoldWithNestedNavigation extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: navigationShell,
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: FactoryBottomNavigation(
         currentIndex: navigationShell.currentIndex,
         onTap: (index) => _onTap(context, ref, index),
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(AppIcons.home),
-            label: 'الرئيسية',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(AppIcons.products),
-            label: 'المنتجات',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(AppIcons.rfq),
-            label: 'عروض الأسعار',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(AppIcons.orders),
-            label: 'الطلبات',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(AppIcons.profile),
-            label: 'حسابنا',
-          ),
-        ],
       ),
     );
   }

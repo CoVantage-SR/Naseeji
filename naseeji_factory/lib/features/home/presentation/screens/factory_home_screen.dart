@@ -113,7 +113,7 @@ class FactoryHomeScreen extends ConsumerWidget {
         onProfileTap: () => checkGuestAction(context, ref, () => context.push('/account/profile')),
       ),
       loading: () => const LoadingWidget(height: 64),
-      error: (_, __) => const SizedBox.shrink(),
+      error: (err, stack) => const SizedBox.shrink(),
     );
   }
 
@@ -131,7 +131,7 @@ class FactoryHomeScreen extends ConsumerWidget {
         );
       },
       loading: () => const LoadingWidget(height: 100),
-      error: (_, __) => const SizedBox.shrink(),
+      error: (err, stack) => const SizedBox.shrink(),
     );
   }
 
@@ -154,7 +154,7 @@ class FactoryHomeScreen extends ConsumerWidget {
         );
       },
       loading: () => const LoadingWidget(height: 180),
-      error: (_, __) => const SizedBox.shrink(),
+      error: (err, stack) => const SizedBox.shrink(),
     );
   }
 
@@ -177,7 +177,7 @@ class FactoryHomeScreen extends ConsumerWidget {
         );
       },
       loading: () => const LoadingWidget(height: 180),
-      error: (_, __) => const SizedBox.shrink(),
+      error: (err, stack) => const SizedBox.shrink(),
     );
   }
 
@@ -200,7 +200,7 @@ class FactoryHomeScreen extends ConsumerWidget {
         );
       },
       loading: () => const LoadingWidget(height: 180),
-      error: (_, __) => const SizedBox.shrink(),
+      error: (err, stack) => const SizedBox.shrink(),
     );
   }
 
@@ -219,7 +219,7 @@ class FactoryHomeScreen extends ConsumerWidget {
         );
       },
       loading: () => const LoadingWidget(height: 150),
-      error: (_, __) => const SizedBox.shrink(),
+      error: (err, stack) => const SizedBox.shrink(),
     );
   }
 
@@ -238,7 +238,7 @@ class FactoryHomeScreen extends ConsumerWidget {
         );
       },
       loading: () => const LoadingWidget(height: 100),
-      error: (_, __) => const SizedBox.shrink(),
+      error: (err, stack) => const SizedBox.shrink(),
     );
   }
 }
