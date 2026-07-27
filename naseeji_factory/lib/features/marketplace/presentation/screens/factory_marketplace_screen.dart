@@ -162,7 +162,7 @@ class _FactoryMarketplaceScreenState extends ConsumerState<FactoryMarketplaceScr
               return const MarketplaceEmptyWidget(title: 'لا توجد منتجات متاحة');
             }
             return SizedBox(
-              height: 295,
+              height: 275,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
