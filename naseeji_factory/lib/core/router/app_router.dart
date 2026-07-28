@@ -79,7 +79,6 @@ import '../../features/account/presentation/screens/notifications_settings_scree
 import '../../features/account/presentation/screens/appearance_screen.dart';
 import '../../features/account/presentation/screens/terms_screen.dart';
 import '../../features/account/presentation/screens/privacy_screen.dart';
-import '../../features/account/presentation/screens/factory_account_screen.dart';
 import '../../features/account/presentation/screens/security_screen.dart';
 import '../../features/account/presentation/screens/subscription_screen.dart';
 import '../../features/account/presentation/screens/payment_methods_screen.dart';
