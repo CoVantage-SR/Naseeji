@@ -89,9 +89,10 @@ class FactoryProfileModel {
   final String commercialRegNo;
   final String taxCardNo;
   final bool isVerified;
-  final String subscriptionPlan; // 'free', 'basic', 'pro', 'enterprise'
+  final String subscriptionPlan;
   final String subscriptionExpiry;
   final bool isAccountActive;
+  final String memberSince;
 
   const FactoryProfileModel({
     required this.id,
@@ -118,6 +119,7 @@ class FactoryProfileModel {
     required this.subscriptionPlan,
     required this.subscriptionExpiry,
     required this.isAccountActive,
+    this.memberSince = 'يناير 2024',
   });
 
   FactoryProfileModel copyWith({
@@ -140,6 +142,7 @@ class FactoryProfileModel {
     String? address,
     String? commercialRegNo,
     String? taxCardNo,
+    String? memberSince,
   }) {
     return FactoryProfileModel(
       id: id,
@@ -166,6 +169,111 @@ class FactoryProfileModel {
       subscriptionPlan: subscriptionPlan,
       subscriptionExpiry: subscriptionExpiry,
       isAccountActive: isAccountActive,
+      memberSince: memberSince ?? this.memberSince,
+    );
+  }
+}
+
+class SubscriptionModel {
+  final String planName;
+  final String status;
+  final String expiryDate;
+  final int remainingDays;
+  final int productsPurchased;
+  final int productsLimit;
+
+  const SubscriptionModel({
+    required this.planName,
+    required this.status,
+    required this.expiryDate,
+    required this.remainingDays,
+    required this.productsPurchased,
+    required this.productsLimit,
+  });
+}
+
+class WalletModel {
+  final double balance;
+  final String currency;
+  final int invoicesCount;
+
+  const WalletModel({
+    required this.balance,
+    required this.currency,
+    required this.invoicesCount,
+  });
+}
+
+class EmployeesSummaryModel {
+  final int totalEmployees;
+  final int activeEmployees;
+  final int pendingInvitations;
+
+  const EmployeesSummaryModel({
+    required this.totalEmployees,
+    required this.activeEmployees,
+    required this.pendingInvitations,
+  });
+}
+
+class RewardPointsModel {
+  final int points;
+
+  const RewardPointsModel({required this.points});
+}
+
+class SecurityModel {
+  final bool biometricEnabled;
+  final bool twoFactorEnabled;
+  final int trustedDevicesCount;
+  final String lastPasswordChange;
+
+  const SecurityModel({
+    required this.biometricEnabled,
+    required this.twoFactorEnabled,
+    required this.trustedDevicesCount,
+    required this.lastPasswordChange,
+  });
+
+  SecurityModel copyWith({
+    bool? biometricEnabled,
+    bool? twoFactorEnabled,
+    int? trustedDevicesCount,
+    String? lastPasswordChange,
+  }) {
+    return SecurityModel(
+      biometricEnabled: biometricEnabled ?? this.biometricEnabled,
+      twoFactorEnabled: twoFactorEnabled ?? this.twoFactorEnabled,
+      trustedDevicesCount: trustedDevicesCount ?? this.trustedDevicesCount,
+      lastPasswordChange: lastPasswordChange ?? this.lastPasswordChange,
+    );
+  }
+}
+
+class NotificationSettingsModel {
+  final bool pushNotifications;
+  final bool emailNotifications;
+  final bool dealNotifications;
+  final bool rfqNotifications;
+
+  const NotificationSettingsModel({
+    required this.pushNotifications,
+    required this.emailNotifications,
+    required this.dealNotifications,
+    required this.rfqNotifications,
+  });
+
+  NotificationSettingsModel copyWith({
+    bool? pushNotifications,
+    bool? emailNotifications,
+    bool? dealNotifications,
+    bool? rfqNotifications,
+  }) {
+    return NotificationSettingsModel(
+      pushNotifications: pushNotifications ?? this.pushNotifications,
+      emailNotifications: emailNotifications ?? this.emailNotifications,
+      dealNotifications: dealNotifications ?? this.dealNotifications,
+      rfqNotifications: rfqNotifications ?? this.rfqNotifications,
     );
   }
 }
@@ -294,30 +402,31 @@ Map<String, bool> _permissionsForRole(EmployeeRole role) {
 
 const FactoryProfileModel _mockProfile = FactoryProfileModel(
   id: 'FAC-001',
-  name: 'مصنع نسيجي للصناعات النسيجية',
+  name: 'مصانع النسيج الحديثة',
   logoUrl: 'https://images.unsplash.com/photo-1664575198263-269a022d6e14?w=200',
   coverUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800',
   description:
-      'مصنع متخصص في صناعة الغزل والنسيج والخيوط القطنية عالية الجودة. نمتلك أحدث المعدات ونلتزم بأعلى معايير الجودة في منتجاتنا.',
+      'مصنع متخصص في صناعة الملابس الجاهزة والغزل والنسيج عالي الجودة.',
   establishedYear: '١٩٩٥',
   industry: 'الغزل والنسيج',
-  factoryType: 'مصنع متكامل',
+  factoryType: 'مصنع ملابس جاهزة',
   productionCapacity: '٥٠٠ طن / شهرياً',
-  employeeCount: 320,
+  employeeCount: 24,
   minOrderQuantity: 500,
-  marketsServed: ['مصر', 'السعودية', 'الإمارات', 'الكويت', 'أوروبا'],
+  marketsServed: ['مصر', 'السعودية', 'الإمارات'],
   phone: '+20 10 1234 5678',
   email: 'info@naseeji.com',
   website: 'www.naseeji.com',
   country: 'مصر',
   city: 'المحلة الكبرى',
-  address: 'المنطقة الصناعية، شارع المصانع، المحلة الكبرى، الغربية',
+  address: 'المنطقة الصناعية، المحلة الكبرى',
   commercialRegNo: '٤٨٧٢٦١٩',
   taxCardNo: '٣٢١-٩٨٧-٦٥٤',
   isVerified: true,
-  subscriptionPlan: 'pro',
-  subscriptionExpiry: '٢٠٢٧/٠١/٠١',
+  subscriptionPlan: 'بريميوم',
+  subscriptionExpiry: '2025/06/20',
   isAccountActive: true,
+  memberSince: 'يناير 2024',
 );
 
 final List<EmployeeModel> _mockEmployees = [
@@ -344,42 +453,6 @@ final List<EmployeeModel> _mockEmployees = [
     status: EmployeeStatus.active,
     lastLogin: 'منذ ساعتين',
     permissions: _permissionsForRole(EmployeeRole.purchasingManager),
-  ),
-  EmployeeModel(
-    id: 'EMP-003',
-    name: 'محمد عبدالرحمن',
-    jobTitle: 'مدير المخزن',
-    phone: '+20 12 5555 1234',
-    email: 'mohamed@naseeji.com',
-    photoUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100',
-    role: EmployeeRole.warehouseManager,
-    status: EmployeeStatus.active,
-    lastLogin: 'منذ يوم',
-    permissions: _permissionsForRole(EmployeeRole.warehouseManager),
-  ),
-  EmployeeModel(
-    id: 'EMP-004',
-    name: 'فاطمة حسن علي',
-    jobTitle: 'مفتشة الجودة',
-    phone: '+20 10 4444 8888',
-    email: 'fatma@naseeji.com',
-    photoUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100',
-    role: EmployeeRole.qualityInspector,
-    status: EmployeeStatus.active,
-    lastLogin: 'منذ ٣ أيام',
-    permissions: _permissionsForRole(EmployeeRole.qualityInspector),
-  ),
-  EmployeeModel(
-    id: 'EMP-005',
-    name: 'خالد إبراهيم منصور',
-    jobTitle: 'محاسب',
-    phone: '+20 11 3333 7777',
-    email: 'khaled@naseeji.com',
-    photoUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100',
-    role: EmployeeRole.accountant,
-    status: EmployeeStatus.inactive,
-    lastLogin: 'منذ أسبوع',
-    permissions: _permissionsForRole(EmployeeRole.accountant),
   ),
 ];
 
@@ -455,6 +528,114 @@ class AccountNotifier extends _$AccountNotifier {
             e.jobTitle.toLowerCase().contains(q) ||
             e.email.toLowerCase().contains(q))
         .toList();
+  }
+}
+
+// ─── Individual Providers required by Prompt ─────────────────────────────
+
+@riverpod
+FactoryProfileModel factory(FactoryRef ref) {
+  return ref.watch(accountNotifierProvider).profile;
+}
+
+@riverpod
+SubscriptionModel subscription(SubscriptionRef ref) {
+  final profile = ref.watch(factoryProvider);
+  return SubscriptionModel(
+    planName: profile.subscriptionPlan,
+    status: 'نشط',
+    expiryDate: profile.subscriptionExpiry,
+    remainingDays: 326,
+    productsPurchased: 14,
+    productsLimit: 50,
+  );
+}
+
+@riverpod
+WalletModel wallet(WalletRef ref) {
+  return const WalletModel(
+    balance: 125450.0,
+    currency: 'ج.م',
+    invoicesCount: 18,
+  );
+}
+
+@riverpod
+EmployeesSummaryModel employees(EmployeesRef ref) {
+  final list = ref.watch(accountNotifierProvider).employees;
+  final active = list.where((e) => e.status == EmployeeStatus.active).length;
+  final pending = list.where((e) => e.status == EmployeeStatus.pending).length;
+  return EmployeesSummaryModel(
+    totalEmployees: 24,
+    activeEmployees: active > 0 ? active : 22,
+    pendingInvitations: pending > 0 ? pending : 2,
+  );
+}
+
+@riverpod
+RewardPointsModel rewardPoints(RewardPointsRef ref) {
+  return const RewardPointsModel(points: 2340);
+}
+
+@riverpod
+class SecurityNotifier extends _$SecurityNotifier {
+  @override
+  SecurityModel build() {
+    return const SecurityModel(
+      biometricEnabled: true,
+      twoFactorEnabled: true,
+      trustedDevicesCount: 3,
+      lastPasswordChange: 'منذ ٣٠ يوماً',
+    );
+  }
+
+  void toggleBiometric(bool val) {
+    state = state.copyWith(biometricEnabled: val);
+  }
+
+  void toggleTwoFactor(bool val) {
+    state = state.copyWith(twoFactorEnabled: val);
+  }
+}
+
+@riverpod
+class NotificationSettingsNotifier extends _$NotificationSettingsNotifier {
+  @override
+  NotificationSettingsModel build() {
+    return const NotificationSettingsModel(
+      pushNotifications: true,
+      emailNotifications: true,
+      dealNotifications: true,
+      rfqNotifications: true,
+    );
+  }
+
+  void togglePush(bool val) => state = state.copyWith(pushNotifications: val);
+  void toggleEmail(bool val) => state = state.copyWith(emailNotifications: val);
+  void toggleDeal(bool val) => state = state.copyWith(dealNotifications: val);
+  void toggleRfq(bool val) => state = state.copyWith(rfqNotifications: val);
+}
+
+@riverpod
+class PaymentNotifier extends _$PaymentNotifier {
+  @override
+  List<Map<String, String>> build() {
+    return [
+      {
+        'id': 'PM-1',
+        'type': 'بنكي',
+        'title': 'الحساب البنكي (CIB)',
+        'subtitle': '**** **** 8821',
+        'isDefault': 'true',
+      },
+      {
+        'id': 'PM-2',
+        'type': 'بطاقة',
+        'title': 'بطاقة ميزا التجاري',
+        'subtitle': '**** **** 4490',
+        'isDefault': 'false',
+      },
+    ];
   }
 }
 
