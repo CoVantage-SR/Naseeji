@@ -45,7 +45,7 @@ import '../../features/products/presentation/screens/delivery_comparison_screen.
 import '../../features/products/presentation/screens/favorite_suppliers_screen.dart';
 import '../../features/products/presentation/screens/request_product_screen.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
-import '../../features/rfq/presentation/screens/rfq_screen.dart';
+import '../../features/rfq/presentation/screens/factory_orders_screen.dart';
 import '../../features/rfq/presentation/screens/create_rfq_screen.dart';
 import '../../features/rfq/presentation/screens/rfq_details_screen.dart';
 import '../../features/rfq/presentation/screens/received_quotations_screen.dart';
@@ -563,12 +563,12 @@ GoRouter appRouter(AppRouterRef ref) {
               ),
             ],
           ),
-          // Tab 2: RFQ
+          // Tab 2: RFQ (Factory Orders)
           StatefulShellBranch(
             routes: [
               GoRoute(
                 path: '/rfq',
-                builder: (context, state) => const RfqScreen(),
+                builder: (context, state) => const FactoryOrdersScreen(),
               ),
             ],
           ),
