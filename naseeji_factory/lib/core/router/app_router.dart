@@ -79,6 +79,14 @@ import '../../features/account/presentation/screens/notifications_settings_scree
 import '../../features/account/presentation/screens/appearance_screen.dart';
 import '../../features/account/presentation/screens/terms_screen.dart';
 import '../../features/account/presentation/screens/privacy_screen.dart';
+import '../../features/account/presentation/screens/factory_account_screen.dart';
+import '../../features/account/presentation/screens/security_screen.dart';
+import '../../features/account/presentation/screens/subscription_screen.dart';
+import '../../features/account/presentation/screens/payment_methods_screen.dart';
+import '../../features/account/presentation/screens/language_screen.dart';
+import '../../features/account/presentation/screens/help_center_screen.dart';
+import '../../features/account/presentation/screens/support_screen.dart';
+import '../../features/account/presentation/screens/about_screen.dart';
 
 part 'app_router.g.dart';
 
@@ -537,6 +545,34 @@ GoRouter appRouter(AppRouterRef ref) {
       GoRoute(
         path: '/account/privacy',
         builder: (context, state) => const PrivacyScreen(),
+      ),
+      GoRoute(
+        path: '/account/security',
+        builder: (context, state) => const SecurityScreen(),
+      ),
+      GoRoute(
+        path: '/account/subscription',
+        builder: (context, state) => const SubscriptionScreen(),
+      ),
+      GoRoute(
+        path: '/account/payment-methods',
+        builder: (context, state) => const PaymentMethodsScreen(),
+      ),
+      GoRoute(
+        path: '/account/language',
+        builder: (context, state) => const LanguageScreen(),
+      ),
+      GoRoute(
+        path: '/account/help',
+        builder: (context, state) => const HelpCenterScreen(),
+      ),
+      GoRoute(
+        path: '/account/support',
+        builder: (context, state) => const SupportScreen(),
+      ),
+      GoRoute(
+        path: '/account/about',
+        builder: (context, state) => const AboutScreen(),
       ),
 
       // Bottom Navigation Stateful Shell
