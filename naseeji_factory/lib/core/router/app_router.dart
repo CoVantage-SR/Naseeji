@@ -24,7 +24,7 @@ import '../../features/home/presentation/screens/notifications_screen.dart';
 import '../../features/home/presentation/screens/search_screen.dart';
 import '../../features/home/presentation/screens/quick_statistics_screen.dart';
 import '../../features/home/presentation/screens/mini_profile_screen.dart';
-import '../../features/orders/presentation/screens/orders_screen.dart';
+import '../../features/orders/presentation/screens/deals_screen.dart';
 import '../../features/orders/presentation/screens/order_details_screen.dart';
 import '../../features/orders/presentation/screens/order_timeline_screen.dart';
 import '../../features/orders/presentation/screens/production_progress_screen.dart';
@@ -572,12 +572,12 @@ GoRouter appRouter(AppRouterRef ref) {
               ),
             ],
           ),
-          // Tab 3: Orders
+          // Tab 3: Deals (الصفقات)
           StatefulShellBranch(
             routes: [
               GoRoute(
                 path: '/orders',
-                builder: (context, state) => const OrdersScreen(),
+                builder: (context, state) => const DealsScreen(),
               ),
             ],
           ),
