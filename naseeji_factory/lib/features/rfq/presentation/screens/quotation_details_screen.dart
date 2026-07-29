@@ -20,10 +20,12 @@ class QuotationDetailsScreen extends ConsumerStatefulWidget {
   const QuotationDetailsScreen({super.key, required this.quoteId});
 
   @override
-  ConsumerState<QuotationDetailsScreen> createState() => _QuotationDetailsScreenState();
+  ConsumerState<QuotationDetailsScreen> createState() =>
+      _QuotationDetailsScreenState();
 }
 
-class _QuotationDetailsScreenState extends ConsumerState<QuotationDetailsScreen> {
+class _QuotationDetailsScreenState
+    extends ConsumerState<QuotationDetailsScreen> {
   void _showShareModal(BuildContext context, Quotation quotation) {
     showModalBottomSheet(
       context: context,
@@ -41,7 +43,9 @@ class _QuotationDetailsScreenState extends ConsumerState<QuotationDetailsScreen>
         onDownloadPdf: () {
           Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('جاري تحميل كشف عرض السعر التفصيلي (PDF)...')),
+            const SnackBar(
+              content: Text('جاري تحميل كشف عرض السعر التفصيلي (PDF)...'),
+            ),
           );
         },
       ),
@@ -64,7 +68,10 @@ class _QuotationDetailsScreenState extends ConsumerState<QuotationDetailsScreen>
               mainAxisSize: MainAxisSize.min,
               children: [
                 ListTile(
-                  leading: const Icon(Icons.picture_as_pdf_outlined, color: AppColors.primary),
+                  leading: const Icon(
+                    Icons.picture_as_pdf_outlined,
+                    color: AppColors.primary,
+                  ),
                   title: const Text('تنزيل العرض المعتمد (PDF)'),
                   onTap: () {
                     Navigator.pop(context);
@@ -74,7 +81,10 @@ class _QuotationDetailsScreenState extends ConsumerState<QuotationDetailsScreen>
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.archive_outlined, color: Colors.grey),
+                  leading: const Icon(
+                    Icons.archive_outlined,
+                    color: Colors.grey,
+                  ),
                   title: const Text('أرشفة عرض السعر'),
                   onTap: () {
                     Navigator.pop(context);
@@ -84,12 +94,17 @@ class _QuotationDetailsScreenState extends ConsumerState<QuotationDetailsScreen>
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.report_problem_outlined, color: AppColors.error),
+                  leading: const Icon(
+                    Icons.report_problem_outlined,
+                    color: AppColors.error,
+                  ),
                   title: const Text('الإبلاغ عن مخالفة المورد'),
                   onTap: () {
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('تم توجيه بلاغ المخالفة لإدارة المنصة.')),
+                      const SnackBar(
+                        content: Text('تم توجيه بلاغ المخالفة لإدارة المنصة.'),
+                      ),
                     );
                   },
                 ),
@@ -110,17 +125,29 @@ class _QuotationDetailsScreenState extends ConsumerState<QuotationDetailsScreen>
           'هل أنت متأكد من قبول عرض السعر رقم (${quotation.quotationNumber}) من ${quotation.supplierName} بقيمة ${quotation.totalPrice.toStringAsFixed(0)} ج.م؟ سيتم إنشاء اتفاقية الصفقة رسمياً وتوجيهك لصفحة الصفقة.',
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('إلغاء')),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('إلغاء'),
+          ),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
-              ref.read(quotationsNotifierProvider.notifier).acceptQuotation(quotation.id);
+              ref
+                  .read(quotationsNotifierProvider.notifier)
+                  .acceptQuotation(quotation.id);
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('تم قبول عرض السعر وإنشاء الصفقة والاتفاقية بنجاح!')),
+                const SnackBar(
+                  content: Text(
+                    'تم قبول عرض السعر وإنشاء الصفقة والاتفاقية بنجاح!',
+                  ),
+                ),
               );
               context.push('/orders/ORD-201');
             },
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.success, foregroundColor: Colors.white),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.success,
+              foregroundColor: Colors.white,
+            ),
             child: const Text('تأكيد القبول وإنشاء الصفقة'),
           ),
         ],
@@ -137,10 +164,14 @@ class _QuotationDetailsScreenState extends ConsumerState<QuotationDetailsScreen>
     );
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final appBarTextColor = isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight;
+    final appBarTextColor = isDark
+        ? AppColors.textPrimaryDark
+        : AppColors.textPrimaryLight;
 
     return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+      backgroundColor: isDark
+          ? AppColors.backgroundDark
+          : AppColors.backgroundLight,
       appBar: AppBar(
         backgroundColor: isDark ? AppColors.surfaceDark : Colors.white,
         foregroundColor: appBarTextColor,
@@ -188,34 +219,37 @@ class _QuotationDetailsScreenState extends ConsumerState<QuotationDetailsScreen>
       ),
       bottomNavigationBar: QuotationBottomActionBar(
         quotation: quotation,
-        onCompareTap: () => context.push('/rfq/${quotation.rfqId}/compare-quotations'),
-        onRejectTap: () => context.push('/rfq/quotation/${quotation.id}/reject'),
-        onNegotiateTap: () => context.push('/rfq/quotation/${quotation.id}/counter'),
+        onCompareTap: () =>
+            context.push('/rfq/${quotation.rfqId}/compare-quotations'),
+        onRejectTap: () =>
+            context.push('/rfq/quotation/${quotation.id}/reject'),
+        onNegotiateTap: () =>
+            context.push('/rfq/quotation/${quotation.id}/counter'),
         onAcceptTap: () => _handleAcceptQuotation(quotation),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
             // 1. Top Summary Banner Card
             QuotationHeaderCard(quotation: quotation),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
 
             // 2. Supplier Card
             QuotationSupplierCard(quotation: quotation),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
 
             // 3. Offer Score Cards Section ("تقييم العرض")
             QuotationScoreCards(quotation: quotation),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
 
             // 4. Offer Details Grid Section ("تفاصيل العرض")
             QuotationInfoGrid(quotation: quotation),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
 
             // 5. Middle Layout (Attachments + Comparison + Chat)
             QuotationComparisonChatAttachments(quotation: quotation),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
 
             // 6. Timeline Log Section ("سجل الأحداث")
             QuotationTimelineLog(quotation: quotation),

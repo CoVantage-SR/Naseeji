@@ -16,7 +16,7 @@ class DealSummaryCard extends StatelessWidget {
     final primaryColor = Theme.of(context).colorScheme.primary;
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : Colors.white,
         borderRadius: AppRadius.rMD,
@@ -25,7 +25,7 @@ class DealSummaryCard extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.03),
+            color: Colors.black.withValues(alpha: isDark ? 0.02 : 0.03),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -67,25 +67,17 @@ class DealSummaryCard extends StatelessWidget {
                     ),
                     const SizedBox(width: 8),
                     Flexible(
-                      child: Row(
-                        children: [
-                          Text(
-                            'صفقة ',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
-                            ),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          'صفقة ${order.dealNumber}',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                           ),
-                          Text(
-                            order.dealNumber,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                   ],
@@ -96,10 +88,12 @@ class DealSummaryCard extends StatelessWidget {
                 Text(
                   order.productName,
                   style: TextStyle(
-                    fontSize: 13,
+                    fontSize: 12,
                     color: isDark ? Colors.grey.shade300 : Colors.grey.shade700,
                     fontWeight: FontWeight.w500,
                   ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 6),
 
@@ -121,22 +115,18 @@ class DealSummaryCard extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          'RFQ: ',
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: isDark ? Colors.grey.shade400 : Colors.grey.shade600,
+                        Flexible(
+                          child: Text(
+                            'RFQ: ${order.rfqId}',
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: primaryColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        Text(
-                          order.rfqId,
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: primaryColor,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(width: 6),
+                        const SizedBox(width: 4),
                         Icon(Icons.copy_rounded, size: 12, color: primaryColor),
                       ],
                     ),
@@ -150,7 +140,7 @@ class DealSummaryCard extends StatelessWidget {
           Container(
             width: 1,
             height: 85,
-            margin: const EdgeInsets.symmetric(horizontal: 12),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
             color: isDark ? AppColors.borderDark : Colors.grey.shade200,
           ),
 
@@ -163,7 +153,7 @@ class DealSummaryCard extends StatelessWidget {
                 Text(
                   'إجمالي قيمة الصفقة',
                   style: TextStyle(
-                    fontSize: 11,
+                    fontSize: 10,
                     color: isDark ? Colors.grey.shade400 : Colors.grey.shade600,
                   ),
                 ),
@@ -173,15 +163,18 @@ class DealSummaryCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.baseline,
                   textBaseline: TextBaseline.alphabetic,
                   children: [
-                    Text(
-                      order.finalPrice.toStringAsFixed(0).replaceAllMapped(
-                            RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                            (Match m) => '${m[1]},',
-                          ),
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                    Flexible(
+                      child: Text(
+                        order.finalPrice.toStringAsFixed(0).replaceAllMapped(
+                              RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                              (Match m) => '${m[1]},',
+                            ),
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     const SizedBox(width: 4),
