@@ -24,7 +24,7 @@ class _CreateRfqModalState extends ConsumerState<CreateRfqModal> {
   DateTime _expectedDeliveryDate = DateTime.now().add(const Duration(days: 7));
   bool _isSubmitting = false;
 
-  final List<String> _availableUnits = ['متر', 'كيلو جرام', 'طاقية / قطعة', 'طن', 'بكرة'];
+  final List<String> _availableUnits = ['متر', 'كيلو جرام', 'قطعة', 'طن', 'بكرة'];
 
   @override
   void initState() {
@@ -221,6 +221,7 @@ class _CreateRfqModalState extends ConsumerState<CreateRfqModal> {
 
               // Step 1: Quantity & Unit
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
                     flex: 3,
@@ -241,17 +242,26 @@ class _CreateRfqModalState extends ConsumerState<CreateRfqModal> {
                       },
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 10),
                   Expanded(
                     flex: 2,
                     child: DropdownButtonFormField<String>(
+                      isExpanded: true,
                       initialValue: _selectedUnit,
                       decoration: const InputDecoration(
                         labelText: 'الوحدة',
                         border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 14),
                       ),
                       items: _availableUnits
-                          .map((u) => DropdownMenuItem(value: u, child: Text(u)))
+                          .map((u) => DropdownMenuItem(
+                                value: u,
+                                child: Text(
+                                  u,
+                                  style: const TextStyle(fontSize: 13),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ))
                           .toList(),
                       onChanged: (val) {
                         if (val != null) setState(() => _selectedUnit = val);

@@ -89,44 +89,44 @@ class _FactoryProductDetailsScreenState extends ConsumerState<FactoryProductDeta
       backgroundColor: Colors.transparent,
       builder: (context) {
         final isDark = Theme.of(context).brightness == Brightness.dark;
-        return Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: isDark ? AppColors.surfaceDark : Colors.white,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                leading: const Icon(Icons.compare_arrows_rounded, color: AppColors.primary),
-                title: const Text('مقارنة المنتج مع منتجات أخرى'),
-                onTap: () {
-                  Navigator.pop(context);
-                  context.push('/price-comparison');
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.bookmark_border_rounded, color: AppColors.primary),
-                title: const Text('حفظ في قائمة المشتريات'),
-                onTap: () {
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('تم حفظ المنتج في قائمة المشتريات المستقلة.')),
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.report_problem_outlined, color: AppColors.error),
-                title: const Text('الإبلاغ عن عدم تطابق مواصفات'),
-                onTap: () {
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('تم رفع بلاغ لفريق فحص ناصيجي.')),
-                  );
-                },
-              ),
-            ],
+        return Material(
+          color: isDark ? AppColors.surfaceDark : Colors.white,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.compare_arrows_rounded, color: AppColors.primary),
+                  title: const Text('مقارنة المنتج مع منتجات أخرى'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    context.push('/price-comparison');
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.bookmark_border_rounded, color: AppColors.primary),
+                  title: const Text('حفظ في قائمة المشتريات'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('تم حفظ المنتج في قائمة المشتريات المستقلة.')),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.report_problem_outlined, color: AppColors.error),
+                  title: const Text('الإبلاغ عن عدم تطابق مواصفات'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('تم رفع بلاغ لفريق فحص ناصيجي.')),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         );
       },
