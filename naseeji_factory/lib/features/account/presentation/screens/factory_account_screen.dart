@@ -7,7 +7,9 @@ import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/widgets/reusable_widgets.dart';
 import '../../../auth/presentation/providers/auth_provider.dart';
 import '../providers/account_provider.dart';
+import '../widgets/account_dialogs.dart';
 import '../widgets/account_widgets.dart';
+import '../widgets/quick_settings_bottom_sheet.dart';
 
 class FactoryAccountScreen extends ConsumerStatefulWidget {
   const FactoryAccountScreen({super.key});
@@ -29,6 +31,7 @@ class _FactoryAccountScreenState extends ConsumerState<FactoryAccountScreen>
     final wallet = ref.watch(walletProvider);
     final employeesSummary = ref.watch(employeesProvider);
     final rewardPoints = ref.watch(rewardPointsProvider);
+    final unreadNotificationsCount = ref.watch(notificationsProvider).where((n) => !n.isRead).length;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
@@ -38,8 +41,18 @@ class _FactoryAccountScreenState extends ConsumerState<FactoryAccountScreen>
           children: [
             // ── Top Header Bar ─────────────────────────────────
             _AccountScreenHeader(
-              onNotificationTap: () => context.push('/notifications'),
-              onSettingsTap: () => context.push('/account/settings'),
+              unreadCount: unreadNotificationsCount,
+              onNotificationTap: () => context.push('/account/notification-center'),
+              onSettingsTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                  ),
+                  builder: (_) => const QuickSettingsBottomSheet(),
+                );
+              },
             ),
 
             // ── Scrollable Body Content ────────────────────────
@@ -85,7 +98,7 @@ class _FactoryAccountScreenState extends ConsumerState<FactoryAccountScreen>
                         label: 'المحفظة',
                         value:
                             '${_formatCurrency(wallet.balance)} ${wallet.currency}',
-                        actionText: 'طرق الدفع',
+                        actionText: 'المحفظة والسحب',
                         icon: Icons.account_balance_wallet_outlined,
                         iconColor: const Color(0xFF10B981),
                         iconBgColor: const Color(0xFFECFDF5),
@@ -93,7 +106,7 @@ class _FactoryAccountScreenState extends ConsumerState<FactoryAccountScreen>
                         onTap: () => checkGuestAction(
                           context,
                           ref,
-                          () => context.push('/account/payment-methods'),
+                          () => context.push('/account/wallet'),
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -102,7 +115,7 @@ class _FactoryAccountScreenState extends ConsumerState<FactoryAccountScreen>
                       QuickStatCard(
                         label: 'رصيد النقاط',
                         value:
-                            '${_formatCurrency(rewardPoints.points.toDouble())} نقطة',
+                            '${_formatCurrency(rewardPoints.currentPoints.toDouble())} نقطة',
                         actionText: 'عرض المكافآت',
                         icon: Icons.star_outline_rounded,
                         iconColor: const Color(0xFFF59E0B),
@@ -111,7 +124,7 @@ class _FactoryAccountScreenState extends ConsumerState<FactoryAccountScreen>
                         onTap: () => checkGuestAction(
                           context,
                           ref,
-                          () => context.push('/account/subscription'),
+                          () => context.push('/account/rewards'),
                         ),
                       ),
                     ],
@@ -178,35 +191,35 @@ class _FactoryAccountScreenState extends ConsumerState<FactoryAccountScreen>
                     items: [
                       SettingsTile(
                         title: 'اللغة',
-                        subtitle: 'العربية',
+                        subtitle: ref.watch(settingsNotifierProvider).language,
                         icon: Icons.language_rounded,
                         iconColor: const Color(0xFF2563EB),
                         onTap: () => context.push('/account/language'),
                       ),
                       SettingsTile(
                         title: 'المظهر',
-                        subtitle: isDark ? 'الوضع الداكن' : 'الوضع الفاتح',
+                        subtitle: ref.watch(settingsNotifierProvider).themeMode.label,
                         icon: Icons.palette_outlined,
                         iconColor: const Color(0xFF2563EB),
                         onTap: () => context.push('/account/appearance'),
                       ),
                       SettingsTile(
                         title: 'مركز المساعدة',
-                        subtitle: 'الأسئلة الشائعة والدعم',
+                        subtitle: 'الأسئلة الشائعة والدروس والوثائق',
                         icon: Icons.help_outline_rounded,
                         iconColor: const Color(0xFF2563EB),
                         onTap: () => context.push('/account/help'),
                       ),
                       SettingsTile(
                         title: 'الدعم الفني',
-                        subtitle: 'تواصل مع فريق نسيجي',
+                        subtitle: 'تواصل مع فريق نسيجي وتذاكر الدعم',
                         icon: Icons.headset_mic_outlined,
                         iconColor: const Color(0xFF2563EB),
                         onTap: () => context.push('/account/support'),
                       ),
                       SettingsTile(
                         title: 'عن نسيجي',
-                        subtitle: 'نسخة التطبيق 1.2.0',
+                        subtitle: 'نسخة التطبيق 1.2.0 (Build 14)',
                         icon: Icons.info_outline_rounded,
                         iconColor: const Color(0xFF2563EB),
                         onTap: () => context.push('/account/about'),
@@ -219,8 +232,15 @@ class _FactoryAccountScreenState extends ConsumerState<FactoryAccountScreen>
                   // 5. Logout Button
                   LogoutButton(
                     onConfirmLogout: () {
-                      ref.read(authProvider.notifier).logout();
-                      context.go('/login');
+                      showDialog(
+                        context: context,
+                        builder: (_) => LogoutDialog(
+                          onConfirm: () {
+                            ref.read(authProvider.notifier).logout();
+                            context.go('/login');
+                          },
+                        ),
+                      );
                     },
                   ),
 
@@ -245,10 +265,12 @@ class _FactoryAccountScreenState extends ConsumerState<FactoryAccountScreen>
 // ── Top Header Bar Widget ──────────────────────────────────────────────
 
 class _AccountScreenHeader extends StatelessWidget {
+  final int unreadCount;
   final VoidCallback onNotificationTap;
   final VoidCallback onSettingsTap;
 
   const _AccountScreenHeader({
+    required this.unreadCount,
     required this.onNotificationTap,
     required this.onSettingsTap,
   });
@@ -291,28 +313,29 @@ class _AccountScreenHeader extends StatelessWidget {
                   onPressed: onNotificationTap,
                 ),
               ),
-              Positioned(
-                top: -2,
-                right: -2,
-                child: Container(
-                  width: 18,
-                  height: 18,
-                  decoration: const BoxDecoration(
-                    color: AppColors.error,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Center(
-                    child: Text(
-                      '3',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 9,
-                        fontWeight: FontWeight.bold,
+              if (unreadCount > 0)
+                Positioned(
+                  top: -2,
+                  right: -2,
+                  child: Container(
+                    width: 18,
+                    height: 18,
+                    decoration: const BoxDecoration(
+                      color: AppColors.error,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: Text(
+                        '$unreadCount',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 9,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
             ],
           ),
 

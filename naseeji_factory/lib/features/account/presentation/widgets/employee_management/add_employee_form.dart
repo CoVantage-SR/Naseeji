@@ -56,8 +56,9 @@ class _AddEmployeeFormState extends State<AddEmployeeForm> {
                         phone: _phone,
                         email: _email,
                         photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100',
-                        role: _role,
-                        status: EmployeeStatus.pending,
+                        role: _role.name,
+                        status: EmployeeStatus.pending.name,
+                        department: _job.isNotEmpty ? _job : 'الإدارة العامة',
                         lastLogin: 'لم يسجل دخولاً بعد',
                         permissions: {},
                       ))

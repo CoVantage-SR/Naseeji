@@ -10,7 +10,7 @@ String _$factoryHash() => r'91cf9fd28851cd7ff6ca9c6a34c985363a57fe84';
 
 /// See also [factory].
 @ProviderFor(factory)
-final factoryProvider = AutoDisposeProvider<FactoryProfileModel>.internal(
+final factoryProvider = AutoDisposeProvider<FactoryProfileEntity>.internal(
   factory,
   name: r'factoryProvider',
   debugGetCreateSourceHash:
@@ -19,7 +19,7 @@ final factoryProvider = AutoDisposeProvider<FactoryProfileModel>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef FactoryRef = AutoDisposeProviderRef<FactoryProfileModel>;
+typedef FactoryRef = AutoDisposeProviderRef<FactoryProfileEntity>;
 String _$subscriptionHash() => r'1edfdb1a9030a46d8add39996e5f938d18d87ef4';
 
 /// See also [subscription].
@@ -38,7 +38,7 @@ String _$walletHash() => r'7030e41ea6b371f94fcf4ca4558ed2e88e433ad7';
 
 /// See also [wallet].
 @ProviderFor(wallet)
-final walletProvider = AutoDisposeProvider<WalletModel>.internal(
+final walletProvider = AutoDisposeProvider<WalletEntity>.internal(
   wallet,
   name: r'walletProvider',
   debugGetCreateSourceHash:
@@ -47,7 +47,7 @@ final walletProvider = AutoDisposeProvider<WalletModel>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef WalletRef = AutoDisposeProviderRef<WalletModel>;
+typedef WalletRef = AutoDisposeProviderRef<WalletEntity>;
 String _$employeesHash() => r'a596fa5cd017dd6f2571e802618b7f8965d085f9';
 
 /// See also [employees].
@@ -66,7 +66,7 @@ String _$rewardPointsHash() => r'7836a19f601240b46d26223fad96b9d7cc3992da';
 
 /// See also [rewardPoints].
 @ProviderFor(rewardPoints)
-final rewardPointsProvider = AutoDisposeProvider<RewardPointsModel>.internal(
+final rewardPointsProvider = AutoDisposeProvider<RewardStateEntity>.internal(
   rewardPoints,
   name: r'rewardPointsProvider',
   debugGetCreateSourceHash:
@@ -75,7 +75,35 @@ final rewardPointsProvider = AutoDisposeProvider<RewardPointsModel>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef RewardPointsRef = AutoDisposeProviderRef<RewardPointsModel>;
+typedef RewardPointsRef = AutoDisposeProviderRef<RewardStateEntity>;
+String _$notificationsHash() => r'8836a19f601240b46d26223fad96b9d7cc3992da';
+
+/// See also [notifications].
+@ProviderFor(notifications)
+final notificationsProvider = AutoDisposeProvider<List<NotificationItemEntity>>.internal(
+  notifications,
+  name: r'notificationsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$notificationsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef NotificationsRef = AutoDisposeProviderRef<List<NotificationItemEntity>>;
+String _$supportTicketsHash() => r'9936a19f601240b46d26223fad96b9d7cc3992da';
+
+/// See also [supportTickets].
+@ProviderFor(supportTickets)
+final supportTicketsProvider = AutoDisposeProvider<List<SupportTicketEntity>>.internal(
+  supportTickets,
+  name: r'supportTicketsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$supportTicketsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef SupportTicketsRef = AutoDisposeProviderRef<List<SupportTicketEntity>>;
 String _$accountNotifierHash() => r'344bc69597ba2550ef7c92cd382543e7cb2adc84';
 
 /// See also [AccountNotifier].

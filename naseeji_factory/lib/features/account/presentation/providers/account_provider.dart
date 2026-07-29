@@ -1,4 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../../data/datasources/account_mock_database.dart';
+import '../../domain/entities/account_entities.dart';
 
 part 'account_provider.g.dart';
 
@@ -50,7 +52,7 @@ extension EmployeeStatusLabel on EmployeeStatus {
   }
 }
 
-enum AppThemeMode { light, dark, system }
+enum AppThemeMode { light, dark, system, amoled }
 
 extension AppThemeModeLabel on AppThemeMode {
   String get label {
@@ -61,123 +63,21 @@ extension AppThemeModeLabel on AppThemeMode {
         return 'داكن';
       case AppThemeMode.system:
         return 'متابعة الجهاز';
+      case AppThemeMode.amoled:
+        return 'AMOLED داكن';
     }
   }
 }
 
-// ─── Models ────────────────────────────────────────────────────────────────
+// ─── Models & Adapter Wrappers ──────────────────────────────────────────────
 
-class FactoryProfileModel {
-  final String id;
-  final String name;
-  final String logoUrl;
-  final String coverUrl;
-  final String description;
-  final String establishedYear;
-  final String industry;
-  final String factoryType;
-  final String productionCapacity;
-  final int employeeCount;
-  final int minOrderQuantity;
-  final List<String> marketsServed;
-  final String phone;
-  final String email;
-  final String website;
-  final String country;
-  final String city;
-  final String address;
-  final String commercialRegNo;
-  final String taxCardNo;
-  final bool isVerified;
-  final String subscriptionPlan;
-  final String subscriptionExpiry;
-  final bool isAccountActive;
-  final String memberSince;
-
-  const FactoryProfileModel({
-    required this.id,
-    required this.name,
-    required this.logoUrl,
-    required this.coverUrl,
-    required this.description,
-    required this.establishedYear,
-    required this.industry,
-    required this.factoryType,
-    required this.productionCapacity,
-    required this.employeeCount,
-    required this.minOrderQuantity,
-    required this.marketsServed,
-    required this.phone,
-    required this.email,
-    required this.website,
-    required this.country,
-    required this.city,
-    required this.address,
-    required this.commercialRegNo,
-    required this.taxCardNo,
-    required this.isVerified,
-    required this.subscriptionPlan,
-    required this.subscriptionExpiry,
-    required this.isAccountActive,
-    this.memberSince = 'يناير 2024',
-  });
-
-  FactoryProfileModel copyWith({
-    String? name,
-    String? logoUrl,
-    String? coverUrl,
-    String? description,
-    String? establishedYear,
-    String? industry,
-    String? factoryType,
-    String? productionCapacity,
-    int? employeeCount,
-    int? minOrderQuantity,
-    List<String>? marketsServed,
-    String? phone,
-    String? email,
-    String? website,
-    String? country,
-    String? city,
-    String? address,
-    String? commercialRegNo,
-    String? taxCardNo,
-    String? memberSince,
-  }) {
-    return FactoryProfileModel(
-      id: id,
-      name: name ?? this.name,
-      logoUrl: logoUrl ?? this.logoUrl,
-      coverUrl: coverUrl ?? this.coverUrl,
-      description: description ?? this.description,
-      establishedYear: establishedYear ?? this.establishedYear,
-      industry: industry ?? this.industry,
-      factoryType: factoryType ?? this.factoryType,
-      productionCapacity: productionCapacity ?? this.productionCapacity,
-      employeeCount: employeeCount ?? this.employeeCount,
-      minOrderQuantity: minOrderQuantity ?? this.minOrderQuantity,
-      marketsServed: marketsServed ?? this.marketsServed,
-      phone: phone ?? this.phone,
-      email: email ?? this.email,
-      website: website ?? this.website,
-      country: country ?? this.country,
-      city: city ?? this.city,
-      address: address ?? this.address,
-      commercialRegNo: commercialRegNo ?? this.commercialRegNo,
-      taxCardNo: taxCardNo ?? this.taxCardNo,
-      isVerified: isVerified,
-      subscriptionPlan: subscriptionPlan,
-      subscriptionExpiry: subscriptionExpiry,
-      isAccountActive: isAccountActive,
-      memberSince: memberSince ?? this.memberSince,
-    );
-  }
-}
+typedef FactoryProfileModel = FactoryProfileEntity;
 
 class SubscriptionModel {
   final String planName;
   final String status;
   final String expiryDate;
+  final String startDate;
   final int remainingDays;
   final int productsPurchased;
   final int productsLimit;
@@ -186,23 +86,14 @@ class SubscriptionModel {
     required this.planName,
     required this.status,
     required this.expiryDate,
+    required this.startDate,
     required this.remainingDays,
     required this.productsPurchased,
     required this.productsLimit,
   });
 }
 
-class WalletModel {
-  final double balance;
-  final String currency;
-  final int invoicesCount;
-
-  const WalletModel({
-    required this.balance,
-    required this.currency,
-    required this.invoicesCount,
-  });
-}
+typedef WalletModel = WalletEntity;
 
 class EmployeesSummaryModel {
   final int totalEmployees;
@@ -216,11 +107,7 @@ class EmployeesSummaryModel {
   });
 }
 
-class RewardPointsModel {
-  final int points;
-
-  const RewardPointsModel({required this.points});
-}
+typedef RewardPointsModel = RewardStateEntity;
 
 class SecurityModel {
   final bool biometricEnabled;
@@ -278,54 +165,11 @@ class NotificationSettingsModel {
   }
 }
 
-class EmployeeModel {
-  final String id;
-  final String name;
-  final String jobTitle;
-  final String phone;
-  final String email;
-  final String photoUrl;
-  final EmployeeRole role;
-  final EmployeeStatus status;
-  final String lastLogin;
-  final Map<String, bool> permissions;
-
-  const EmployeeModel({
-    required this.id,
-    required this.name,
-    required this.jobTitle,
-    required this.phone,
-    required this.email,
-    required this.photoUrl,
-    required this.role,
-    required this.status,
-    required this.lastLogin,
-    required this.permissions,
-  });
-
-  EmployeeModel copyWith({
-    EmployeeRole? role,
-    EmployeeStatus? status,
-    Map<String, bool>? permissions,
-    String? jobTitle,
-  }) {
-    return EmployeeModel(
-      id: id,
-      name: name,
-      jobTitle: jobTitle ?? this.jobTitle,
-      phone: phone,
-      email: email,
-      photoUrl: photoUrl,
-      role: role ?? this.role,
-      status: status ?? this.status,
-      lastLogin: lastLogin,
-      permissions: permissions ?? this.permissions,
-    );
-  }
-}
+typedef EmployeeModel = EmployeeEntity;
 
 class AppSettingsModel {
   final AppThemeMode themeMode;
+  final String language;
   final String currency;
   final String timeZone;
   final String dateFormat;
@@ -333,6 +177,7 @@ class AppSettingsModel {
 
   const AppSettingsModel({
     required this.themeMode,
+    required this.language,
     required this.currency,
     required this.timeZone,
     required this.dateFormat,
@@ -341,6 +186,7 @@ class AppSettingsModel {
 
   AppSettingsModel copyWith({
     AppThemeMode? themeMode,
+    String? language,
     String? currency,
     String? timeZone,
     String? dateFormat,
@@ -348,6 +194,7 @@ class AppSettingsModel {
   }) {
     return AppSettingsModel(
       themeMode: themeMode ?? this.themeMode,
+      language: language ?? this.language,
       currency: currency ?? this.currency,
       timeZone: timeZone ?? this.timeZone,
       dateFormat: dateFormat ?? this.dateFormat,
@@ -356,170 +203,148 @@ class AppSettingsModel {
   }
 }
 
-// ─── Default Permissions ────────────────────────────────────────────────────
-
-Map<String, bool> _permissionsForRole(EmployeeRole role) {
-  switch (role) {
-    case EmployeeRole.owner:
-      return {
-        'المنتجات': true, 'عروض الأسعار': true, 'الطلبات': true,
-        'المالية': true, 'التقارير': true, 'الموظفون': true, 'الإعدادات': true,
-      };
-    case EmployeeRole.admin:
-      return {
-        'المنتجات': true, 'عروض الأسعار': true, 'الطلبات': true,
-        'المالية': false, 'التقارير': true, 'الموظفون': true, 'الإعدادات': false,
-      };
-    case EmployeeRole.purchasingManager:
-      return {
-        'المنتجات': true, 'عروض الأسعار': true, 'الطلبات': true,
-        'المالية': false, 'التقارير': false, 'الموظفون': false, 'الإعدادات': false,
-      };
-    case EmployeeRole.warehouseManager:
-      return {
-        'المنتجات': false, 'عروض الأسعار': false, 'الطلبات': true,
-        'المالية': false, 'التقارير': false, 'الموظفون': false, 'الإعدادات': false,
-      };
-    case EmployeeRole.qualityInspector:
-      return {
-        'المنتجات': false, 'عروض الأسعار': false, 'الطلبات': true,
-        'المالية': false, 'التقارير': true, 'الموظفون': false, 'الإعدادات': false,
-      };
-    case EmployeeRole.accountant:
-      return {
-        'المنتجات': false, 'عروض الأسعار': false, 'الطلبات': false,
-        'المالية': true, 'التقارير': true, 'الموظفون': false, 'الإعدادات': false,
-      };
-    case EmployeeRole.viewer:
-      return {
-        'المنتجات': false, 'عروض الأسعار': false, 'الطلبات': false,
-        'المالية': false, 'التقارير': false, 'الموظفون': false, 'الإعدادات': false,
-      };
-  }
-}
-
-// ─── Mock Data ──────────────────────────────────────────────────────────────
-
-const FactoryProfileModel _mockProfile = FactoryProfileModel(
-  id: 'FAC-001',
-  name: 'مصانع النسيج الحديثة',
-  logoUrl: 'https://images.unsplash.com/photo-1664575198263-269a022d6e14?w=200',
-  coverUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800',
-  description:
-      'مصنع متخصص في صناعة الملابس الجاهزة والغزل والنسيج عالي الجودة.',
-  establishedYear: '١٩٩٥',
-  industry: 'الغزل والنسيج',
-  factoryType: 'مصنع ملابس جاهزة',
-  productionCapacity: '٥٠٠ طن / شهرياً',
-  employeeCount: 24,
-  minOrderQuantity: 500,
-  marketsServed: ['مصر', 'السعودية', 'الإمارات'],
-  phone: '+20 10 1234 5678',
-  email: 'info@naseeji.com',
-  website: 'www.naseeji.com',
-  country: 'مصر',
-  city: 'المحلة الكبرى',
-  address: 'المنطقة الصناعية، المحلة الكبرى',
-  commercialRegNo: '٤٨٧٢٦١٩',
-  taxCardNo: '٣٢١-٩٨٧-٦٥٤',
-  isVerified: true,
-  subscriptionPlan: 'بريميوم',
-  subscriptionExpiry: '2025/06/20',
-  isAccountActive: true,
-  memberSince: 'يناير 2024',
-);
-
-final List<EmployeeModel> _mockEmployees = [
-  EmployeeModel(
-    id: 'EMP-001',
-    name: 'أحمد محمود السيد',
-    jobTitle: 'مالك المصنع',
-    phone: '+20 10 1234 5678',
-    email: 'ahmed@naseeji.com',
-    photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100',
-    role: EmployeeRole.owner,
-    status: EmployeeStatus.active,
-    lastLogin: 'منذ ٥ دقائق',
-    permissions: _permissionsForRole(EmployeeRole.owner),
-  ),
-  EmployeeModel(
-    id: 'EMP-002',
-    name: 'سارة عبدالله خالد',
-    jobTitle: 'مدير المشتريات',
-    phone: '+20 11 9876 5432',
-    email: 'sara@naseeji.com',
-    photoUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100',
-    role: EmployeeRole.purchasingManager,
-    status: EmployeeStatus.active,
-    lastLogin: 'منذ ساعتين',
-    permissions: _permissionsForRole(EmployeeRole.purchasingManager),
-  ),
-];
-
-Map<String, Map<String, bool>> _defaultNotifications() {
-  const categories = [
-    'عروض الأسعار', 'الطلبات', 'الشحن', 'الرسائل',
-    'الفواتير', 'التقييمات', 'الاشتراك', 'النظام',
-  ];
-  final result = <String, Map<String, bool>>{};
-  for (final c in categories) {
-    result[c] = {'push': true, 'email': true, 'whatsapp': false};
-  }
-  return result;
-}
-
-// ─── Account State ─────────────────────────────────────────────────────────
+// ─── State Definition ───────────────────────────────────────────────────────
 
 class AccountState {
-  final FactoryProfileModel profile;
-  final List<EmployeeModel> employees;
+  final FactoryProfileEntity profile;
+  final List<EmployeeEntity> employees;
+  final WalletEntity wallet;
+  final RewardStateEntity rewards;
+  final List<NotificationItemEntity> notifications;
+  final List<SupportTicketEntity> supportTickets;
 
-  const AccountState({required this.profile, required this.employees});
+  const AccountState({
+    required this.profile,
+    required this.employees,
+    required this.wallet,
+    required this.rewards,
+    required this.notifications,
+    required this.supportTickets,
+  });
 
-  AccountState copyWith({FactoryProfileModel? profile, List<EmployeeModel>? employees}) {
+  AccountState copyWith({
+    FactoryProfileEntity? profile,
+    List<EmployeeEntity>? employees,
+    WalletEntity? wallet,
+    RewardStateEntity? rewards,
+    List<NotificationItemEntity>? notifications,
+    List<SupportTicketEntity>? supportTickets,
+  }) {
     return AccountState(
       profile: profile ?? this.profile,
       employees: employees ?? this.employees,
+      wallet: wallet ?? this.wallet,
+      rewards: rewards ?? this.rewards,
+      notifications: notifications ?? this.notifications,
+      supportTickets: supportTickets ?? this.supportTickets,
     );
   }
 }
+
+// ─── Account Notifier ───────────────────────────────────────────────────────
 
 @riverpod
 class AccountNotifier extends _$AccountNotifier {
   @override
   AccountState build() {
-    return AccountState(profile: _mockProfile, employees: _mockEmployees);
+    final db = AccountMockDatabase.instance;
+    return AccountState(
+      profile: db.factoryProfile,
+      employees: db.employees,
+      wallet: db.wallet,
+      rewards: db.rewards,
+      notifications: db.notifications,
+      supportTickets: db.supportTickets,
+    );
   }
 
-  void updateProfile(FactoryProfileModel updated) {
-    state = state.copyWith(profile: updated);
+  void updateProfile(FactoryProfileEntity updated) {
+    AccountMockDatabase.instance.updateFactoryProfile(updated);
+    state = state.copyWith(
+      profile: AccountMockDatabase.instance.factoryProfile,
+      employees: AccountMockDatabase.instance.employees,
+    );
   }
 
-  void addEmployee(EmployeeModel emp) {
-    state = state.copyWith(employees: [emp, ...state.employees]);
+  void withdrawMoney(double amount, String bankId) {
+    AccountMockDatabase.instance.withdrawMoney(amount, bankId);
+    state = state.copyWith(wallet: AccountMockDatabase.instance.wallet);
   }
 
-  void updateEmployee(EmployeeModel updated) {
-    final list = state.employees.map((e) => e.id == updated.id ? updated : e).toList();
-    state = state.copyWith(employees: list);
+  void depositMoney(double amount) {
+    AccountMockDatabase.instance.depositMoney(amount);
+    state = state.copyWith(wallet: AccountMockDatabase.instance.wallet);
+  }
+
+  void redeemReward(RewardItemEntity reward) {
+    AccountMockDatabase.instance.redeemReward(reward);
+    state = state.copyWith(rewards: AccountMockDatabase.instance.rewards);
+  }
+
+  void addEmployee(EmployeeEntity emp) {
+    AccountMockDatabase.instance.addEmployee(emp);
+    state = state.copyWith(
+      employees: AccountMockDatabase.instance.employees,
+      profile: AccountMockDatabase.instance.factoryProfile,
+    );
+  }
+
+  void updateEmployee(EmployeeEntity updated) {
+    AccountMockDatabase.instance.updateEmployee(updated);
+    state = state.copyWith(employees: AccountMockDatabase.instance.employees);
   }
 
   void removeEmployee(String id) {
-    state = state.copyWith(employees: state.employees.where((e) => e.id != id).toList());
+    AccountMockDatabase.instance.removeEmployee(id);
+    state = state.copyWith(employees: AccountMockDatabase.instance.employees);
   }
 
   void toggleEmployeeStatus(String id) {
-    final list = state.employees.map((e) {
-      if (e.id == id) {
-        final newStatus = e.status == EmployeeStatus.active ? EmployeeStatus.inactive : EmployeeStatus.active;
-        return e.copyWith(status: newStatus);
-      }
-      return e;
-    }).toList();
-    state = state.copyWith(employees: list);
+    final emp = state.employees.firstWhere((e) => e.id == id);
+    final newStatus = emp.status == 'active' ? 'inactive' : 'active';
+    final updated = EmployeeEntity(
+      id: emp.id,
+      name: emp.name,
+      jobTitle: emp.jobTitle,
+      phone: emp.phone,
+      email: emp.email,
+      photoUrl: emp.photoUrl,
+      role: emp.role,
+      status: newStatus,
+      department: emp.department,
+      lastLogin: emp.lastLogin,
+      permissions: emp.permissions,
+    );
+    AccountMockDatabase.instance.updateEmployee(updated);
+    state = state.copyWith(employees: AccountMockDatabase.instance.employees);
   }
 
-  List<EmployeeModel> searchEmployees(String query) {
+  void markNotificationRead(String id) {
+    AccountMockDatabase.instance.markNotificationRead(id);
+    state = state.copyWith(notifications: AccountMockDatabase.instance.notifications);
+  }
+
+  void markAllNotificationsRead() {
+    AccountMockDatabase.instance.markAllNotificationsRead();
+    state = state.copyWith(notifications: AccountMockDatabase.instance.notifications);
+  }
+
+  void deleteNotification(String id) {
+    AccountMockDatabase.instance.deleteNotification(id);
+    state = state.copyWith(notifications: AccountMockDatabase.instance.notifications);
+  }
+
+  void renewSubscription(String planName) {
+    AccountMockDatabase.instance.renewSubscription(planName);
+    state = state.copyWith(profile: AccountMockDatabase.instance.factoryProfile);
+  }
+
+  void createSupportTicket(String subject, String category, String details) {
+    AccountMockDatabase.instance.createSupportTicket(subject, category, details);
+    state = state.copyWith(supportTickets: AccountMockDatabase.instance.supportTickets);
+  }
+
+  List<EmployeeEntity> searchEmployees(String query) {
     if (query.isEmpty) return state.employees;
     final q = query.toLowerCase();
     return state.employees
@@ -531,10 +356,10 @@ class AccountNotifier extends _$AccountNotifier {
   }
 }
 
-// ─── Individual Providers required by Prompt ─────────────────────────────
+// ─── Individual Reactive Providers ──────────────────────────────────────────
 
 @riverpod
-FactoryProfileModel factory(FactoryRef ref) {
+FactoryProfileEntity factory(FactoryRef ref) {
   return ref.watch(accountNotifierProvider).profile;
 }
 
@@ -543,38 +368,45 @@ SubscriptionModel subscription(SubscriptionRef ref) {
   final profile = ref.watch(factoryProvider);
   return SubscriptionModel(
     planName: profile.subscriptionPlan,
-    status: 'نشط',
+    status: profile.subscriptionStatus,
     expiryDate: profile.subscriptionExpiry,
+    startDate: profile.subscriptionStartDate,
     remainingDays: 326,
-    productsPurchased: 14,
-    productsLimit: 50,
+    productsPurchased: profile.productsPurchased,
+    productsLimit: profile.productsLimit,
   );
 }
 
 @riverpod
-WalletModel wallet(WalletRef ref) {
-  return const WalletModel(
-    balance: 125450.0,
-    currency: 'ج.م',
-    invoicesCount: 18,
-  );
+WalletEntity wallet(WalletRef ref) {
+  return ref.watch(accountNotifierProvider).wallet;
 }
 
 @riverpod
 EmployeesSummaryModel employees(EmployeesRef ref) {
   final list = ref.watch(accountNotifierProvider).employees;
-  final active = list.where((e) => e.status == EmployeeStatus.active).length;
-  final pending = list.where((e) => e.status == EmployeeStatus.pending).length;
+  final active = list.where((e) => e.status == 'active').length;
+  final pending = list.where((e) => e.status == 'pending').length;
   return EmployeesSummaryModel(
-    totalEmployees: 24,
-    activeEmployees: active > 0 ? active : 22,
-    pendingInvitations: pending > 0 ? pending : 2,
+    totalEmployees: list.length,
+    activeEmployees: active,
+    pendingInvitations: pending,
   );
 }
 
 @riverpod
-RewardPointsModel rewardPoints(RewardPointsRef ref) {
-  return const RewardPointsModel(points: 2340);
+RewardStateEntity rewardPoints(RewardPointsRef ref) {
+  return ref.watch(accountNotifierProvider).rewards;
+}
+
+@riverpod
+List<NotificationItemEntity> notifications(NotificationsRef ref) {
+  return ref.watch(accountNotifierProvider).notifications;
+}
+
+@riverpod
+List<SupportTicketEntity> supportTickets(SupportTicketsRef ref) {
+  return ref.watch(accountNotifierProvider).supportTickets;
 }
 
 @riverpod
@@ -584,7 +416,7 @@ class SecurityNotifier extends _$SecurityNotifier {
     return const SecurityModel(
       biometricEnabled: true,
       twoFactorEnabled: true,
-      trustedDevicesCount: 3,
+      trustedDevicesCount: 2,
       lastPasswordChange: 'منذ ٣٠ يوماً',
     );
   }
@@ -639,14 +471,13 @@ class PaymentNotifier extends _$PaymentNotifier {
   }
 }
 
-// ─── Settings State ────────────────────────────────────────────────────────
-
 @riverpod
 class SettingsNotifier extends _$SettingsNotifier {
   @override
   AppSettingsModel build() {
     return AppSettingsModel(
       themeMode: AppThemeMode.system,
+      language: 'العربية',
       currency: 'جنيه مصري (EGP)',
       timeZone: 'القاهرة (UTC+3)',
       dateFormat: 'YYYY/MM/DD',
@@ -656,6 +487,10 @@ class SettingsNotifier extends _$SettingsNotifier {
 
   void setThemeMode(AppThemeMode mode) {
     state = state.copyWith(themeMode: mode);
+  }
+
+  void setLanguage(String lang) {
+    state = state.copyWith(language: lang);
   }
 
   void setCurrency(String val) {
@@ -681,4 +516,16 @@ class SettingsNotifier extends _$SettingsNotifier {
   bool getNotification(String category, String type) {
     return state.notificationSettings[category]?[type] ?? false;
   }
+}
+
+Map<String, Map<String, bool>> _defaultNotifications() {
+  const categories = [
+    'الصفقات', 'عروض الأسعار', 'السوق والمنتجات', 'الرسائل والمحادثات',
+    'المدفوعات والمحفظة', 'الاشتراكات والخدمات', 'النظام والأمان',
+  ];
+  final result = <String, Map<String, bool>>{};
+  for (final c in categories) {
+    result[c] = {'push': true, 'email': true, 'sms': false, 'whatsapp': false};
+  }
+  return result;
 }

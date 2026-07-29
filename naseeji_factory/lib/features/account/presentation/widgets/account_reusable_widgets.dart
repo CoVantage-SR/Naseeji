@@ -116,6 +116,8 @@ class ThemeCard extends StatelessWidget {
         icon = Icons.dark_mode_rounded;
       case AppThemeMode.system:
         icon = Icons.brightness_auto_rounded;
+      case AppThemeMode.amoled:
+        icon = Icons.contrast_rounded;
     }
 
     return GestureDetector(
@@ -504,7 +506,7 @@ class EmployeeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = context.theme.brightness == Brightness.dark;
-    final isActive = employee.status == EmployeeStatus.active;
+    final isActive = employee.status == 'active' || employee.status == EmployeeStatus.active.name;
     final statusColor = isActive ? AppColors.success : Colors.grey;
 
     return Card(
@@ -545,9 +547,9 @@ class EmployeeCard extends StatelessWidget {
                       const SizedBox(height: 4),
                       Row(
                         children: [
-                          _roleBadge(employee.role.label),
+                          _roleBadge(_getRoleLabel(employee.role)),
                           const SizedBox(width: 8),
-                          _statusDot(statusColor, employee.status.label),
+                          _statusDot(statusColor, _getStatusLabel(employee.status)),
                         ],
                       ),
                     ],
@@ -716,4 +718,32 @@ class SubscriptionBadge extends StatelessWidget {
       child: Text(label, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.white)),
     );
   }
+}
+
+String _getRoleLabel(dynamic role) {
+  if (role is String) {
+    switch (role) {
+      case 'owner': return 'المالك';
+      case 'admin': return 'مدير';
+      case 'purchasingManager': return 'مدير المشتريات';
+      case 'warehouseManager': return 'مدير المخزن';
+      case 'qualityInspector': return 'مفتش الجودة';
+      case 'accountant': return 'محاسب';
+      case 'viewer': return 'مشاهد فقط';
+      default: return role;
+    }
+  }
+  return role.toString();
+}
+
+String _getStatusLabel(dynamic status) {
+  if (status is String) {
+    switch (status) {
+      case 'active': return 'نشط';
+      case 'inactive': return 'غير نشط';
+      case 'pending': return 'في الانتظار';
+      default: return status;
+    }
+  }
+  return status.toString();
 }

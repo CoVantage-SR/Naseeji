@@ -20,7 +20,10 @@ class _EditPermissionsSheetState extends State<EditPermissionsSheet> {
   @override
   void initState() {
     super.initState();
-    _role = widget.employee.role;
+    _role = EmployeeRole.values.firstWhere(
+      (r) => r.name == widget.employee.role,
+      orElse: () => EmployeeRole.viewer,
+    );
     _permissions = Map.from(widget.employee.permissions);
   }
 
@@ -48,7 +51,7 @@ class _EditPermissionsSheetState extends State<EditPermissionsSheet> {
             PrimaryButton(
               label: 'حفظ التغييرات',
               icon: Icons.save_rounded,
-              onPressed: () => widget.onSave(widget.employee.copyWith(role: _role, permissions: _permissions)),
+              onPressed: () => widget.onSave(widget.employee.copyWith(role: _role.name, permissions: _permissions)),
             ),
           ],
         ),

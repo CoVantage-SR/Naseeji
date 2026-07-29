@@ -86,6 +86,9 @@ import '../../features/account/presentation/screens/language_screen.dart';
 import '../../features/account/presentation/screens/help_center_screen.dart';
 import '../../features/account/presentation/screens/support_screen.dart';
 import '../../features/account/presentation/screens/about_screen.dart';
+import '../../features/account/presentation/screens/wallet_screen.dart';
+import '../../features/account/presentation/screens/rewards_screen.dart';
+import '../../features/account/presentation/screens/notification_center_screen.dart';
 
 part 'app_router.g.dart';
 
@@ -572,6 +575,18 @@ GoRouter appRouter(AppRouterRef ref) {
       GoRoute(
         path: '/account/about',
         builder: (context, state) => const AboutScreen(),
+      ),
+      GoRoute(
+        path: '/account/wallet',
+        builder: (context, state) => const WalletScreen(),
+      ),
+      GoRoute(
+        path: '/account/rewards',
+        builder: (context, state) => const RewardsScreen(),
+      ),
+      GoRoute(
+        path: '/account/notification-center',
+        builder: (context, state) => const NotificationCenterScreen(),
       ),
 
       // Bottom Navigation Stateful Shell

@@ -1,119 +1,142 @@
-// ignore_for_file: unnecessary_underscores
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_radius.dart';
 import '../../../../core/extensions/context_extensions.dart';
 import '../providers/account_provider.dart';
-import '../widgets/account_reusable_widgets.dart';
 
 class NotificationsSettingsScreen extends ConsumerWidget {
   const NotificationsSettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final settings = ref.watch(settingsNotifierProvider);
-    final notifier = ref.read(settingsNotifierProvider.notifier);
+    final notifier = ref.watch(settingsNotifierProvider.notifier);
+
+    final isDark = context.theme.brightness == Brightness.dark;
+    final surface = isDark ? AppColors.surfaceDark : AppColors.surfaceLight;
+    final border = isDark ? AppColors.borderDark : AppColors.borderLight;
+    final textPrimary = isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight;
 
     final categories = [
-      ('عروض الأسعار', Icons.request_quote_rounded, AppColors.primary),
-      ('الطلبات', Icons.shopping_bag_rounded, AppColors.info),
-      ('الشحن', Icons.local_shipping_rounded, AppColors.secondary),
-      ('الرسائل', Icons.chat_rounded, AppColors.success),
-      ('الفواتير', Icons.receipt_long_rounded, AppColors.warning),
-      ('التقييمات', Icons.star_rounded, Colors.amber),
-      ('الاشتراك', Icons.workspace_premium_rounded, const Color(0xFF7C3AED)),
-      ('النظام', Icons.info_rounded, Colors.grey),
+      'الصفقات',
+      'عروض الأسعار',
+      'السوق والمنتجات',
+      'الرسائل والمحادثات',
+      'المدفوعات والمحفظة',
+      'الاشتراكات والخدمات',
+      'النظام والأمان',
     ];
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('إعدادات الإشعارات'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_forward_rounded),
-          onPressed: () => context.pop(),
-        ),
+        title: const Text('تفضيلات الإشعارات والتنبيهات'),
       ),
-      body: SafeArea(
-        child: ListView.separated(
-          padding: const EdgeInsets.all(16),
-          itemCount: categories.length,
-          separatorBuilder: (_, __) => const SizedBox(height: 10),
-          itemBuilder: (_, i) {
-            final cat = categories[i];
-            return _NotificationCategoryCard(
-              icon: cat.$2,
-              title: cat.$1,
-              color: cat.$3,
-              pushEnabled: settings.notificationSettings[cat.$1]?['push'] ?? false,
-              emailEnabled: settings.notificationSettings[cat.$1]?['email'] ?? false,
-              onPushChanged: (v) => notifier.setNotification(cat.$1, 'push', v),
-              onEmailChanged: (v) => notifier.setNotification(cat.$1, 'email', v),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        physics: const BouncingScrollPhysics(),
+        children: [
+          Text(
+            'تخصيص وسائط وقنوات التنبيه لكل قسم من أقسام المنظومة:',
+            style: TextStyle(color: textPrimary, fontSize: 13, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 12),
+
+          ...categories.map((category) {
+            return Container(
+              margin: const EdgeInsets.only(bottom: 12),
+              decoration: BoxDecoration(
+                color: surface,
+                borderRadius: AppRadius.rLG,
+                border: Border.all(color: border),
+              ),
+              child: ExpansionTile(
+                initiallyExpanded: category == 'الصفقات' || category == 'عروض الأسعار',
+                leading: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), shape: BoxShape.circle),
+                  child: Icon(_categoryIcon(category), color: AppColors.primary, size: 20),
+                ),
+                title: Text(category, style: TextStyle(color: textPrimary, fontWeight: FontWeight.bold, fontSize: 14)),
+                children: [
+                  const Divider(height: 1),
+                  _switchTile(
+                    title: 'إشعارات لحظية Push Notifications',
+                    value: notifier.getNotification(category, 'push'),
+                    onChanged: (val) => notifier.setNotification(category, 'push', val),
+                  ),
+                  _switchTile(
+                    title: 'رسائل البريد الإلكتروني Email',
+                    value: notifier.getNotification(category, 'email'),
+                    onChanged: (val) => notifier.setNotification(category, 'email', val),
+                  ),
+                  _switchTile(
+                    title: 'رسائل نصية قصيرة SMS',
+                    value: notifier.getNotification(category, 'sms'),
+                    onChanged: (val) => notifier.setNotification(category, 'sms', val),
+                  ),
+                  _switchTile(
+                    title: 'تنبيهات واتساب WhatsApp',
+                    value: notifier.getNotification(category, 'whatsapp'),
+                    onChanged: (val) => notifier.setNotification(category, 'whatsapp', val),
+                  ),
+                ],
+              ),
             );
-          },
-        ),
+          }),
+
+          const SizedBox(height: 16),
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(borderRadius: AppRadius.rMD),
+              padding: const EdgeInsets.symmetric(vertical: 14),
+            ),
+            icon: const Icon(Icons.save_rounded),
+            label: const Text('حفظ التفضيلات'),
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('تم حفظ تفضيلات الإشعارات بنجاح!')),
+              );
+            },
+          ),
+          const SizedBox(height: 24),
+        ],
       ),
     );
   }
-}
 
-class _NotificationCategoryCard extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final Color color;
-  final bool pushEnabled;
-  final bool emailEnabled;
-  final ValueChanged<bool> onPushChanged;
-  final ValueChanged<bool> onEmailChanged;
-
-  const _NotificationCategoryCard({
-    required this.icon,
-    required this.title,
-    required this.color,
-    required this.pushEnabled,
-    required this.emailEnabled,
-    required this.onPushChanged,
-    required this.onEmailChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final isDark = context.theme.brightness == Brightness.dark;
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadius.rMD,
-        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(14),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: 38, height: 38,
-                  decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: AppRadius.rSM),
-                  child: Icon(icon, color: color, size: 20),
-                ),
-                const SizedBox(width: 12),
-                Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-              ],
-            ),
-            const Divider(height: 16),
-            NotificationTile(label: 'إشعارات الدفع (Push)', value: pushEnabled, onChanged: onPushChanged),
-            NotificationTile(label: 'إشعارات البريد الإلكتروني', value: emailEnabled, onChanged: onEmailChanged),
-            NotificationTile(
-              label: 'إشعارات واتساب',
-              value: false,
-              onChanged: (_) {},
-              enabled: false,
-            ),
-          ],
-        ),
-      ),
+  Widget _switchTile({
+    required String title,
+    required bool value,
+    required ValueChanged<bool> onChanged,
+  }) {
+    return SwitchListTile(
+      dense: true,
+      title: Text(title, style: const TextStyle(fontSize: 12)),
+      value: value,
+      onChanged: onChanged,
     );
+  }
+
+  IconData _categoryIcon(String category) {
+    switch (category) {
+      case 'الصفقات':
+        return Icons.handshake_outlined;
+      case 'عروض الأسعار':
+        return Icons.request_quote_outlined;
+      case 'السوق والمنتجات':
+        return Icons.shopping_bag_outlined;
+      case 'الرسائل والمحادثات':
+        return Icons.chat_bubble_outline_rounded;
+      case 'المدفوعات والمحفظة':
+        return Icons.account_balance_wallet_outlined;
+      case 'الاشتراكات والخدمات':
+        return Icons.card_membership_rounded;
+      case 'النظام والأمان':
+        return Icons.shield_outlined;
+      default:
+        return Icons.notifications_none_rounded;
+    }
   }
 }

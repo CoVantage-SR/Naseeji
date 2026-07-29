@@ -56,14 +56,14 @@ class _EmployeeManagementScreenState extends ConsumerState<EmployeeManagementScr
                   const SizedBox(width: 10),
                   StatisticCard(
                     icon: Icons.check_circle_rounded,
-                    value: '${employees.where((e) => e.status == EmployeeStatus.active).length}',
+                    value: '${employees.where((e) => e.status == 'active' || e.status == EmployeeStatus.active.name).length}',
                     label: 'نشطون',
                     color: AppColors.success,
                   ),
                   const SizedBox(width: 10),
                   StatisticCard(
                     icon: Icons.pause_circle_rounded,
-                    value: '${employees.where((e) => e.status == EmployeeStatus.inactive).length}',
+                    value: '${employees.where((e) => e.status == 'inactive' || e.status == EmployeeStatus.inactive.name).length}',
                     label: 'غير نشطين',
                     color: Colors.grey,
                   ),

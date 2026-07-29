@@ -32,19 +32,58 @@ class AppearanceScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Header
-              const SectionHeader(title: 'اختر ثيم التطبيق'),
+              const SectionHeader(title: 'اختر وضع المظهر المناسب لك'),
               AppSpacing.hSM,
 
-              // Theme Cards Row
-              Row(
+              // Theme Cards Grid
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
                 children: AppThemeMode.values.map((mode) {
-                  return Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: ThemeCard(
-                        mode: mode,
-                        isSelected: currentMode == mode,
-                        onTap: () => notifier.setThemeMode(mode),
+                  final isSelected = currentMode == mode;
+                  return InkWell(
+                    onTap: () {
+                      notifier.setThemeMode(mode);
+                      final themeMode = switch (mode) {
+                        AppThemeMode.light => ThemeMode.light,
+                        AppThemeMode.dark => ThemeMode.dark,
+                        AppThemeMode.system => ThemeMode.system,
+                        AppThemeMode.amoled => ThemeMode.dark,
+                      };
+                      ref.read(themeServiceProvider.notifier).setThemeMode(themeMode);
+                    },
+                    borderRadius: AppRadius.rMD,
+                    child: Container(
+                      width: (MediaQuery.of(context).size.width - 40) / 2,
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: isSelected ? AppColors.primary.withValues(alpha: 0.1) : Colors.transparent,
+                        borderRadius: AppRadius.rMD,
+                        border: Border.all(
+                          color: isSelected ? AppColors.primary : AppColors.borderLight,
+                          width: isSelected ? 1.5 : 1,
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            _modeIcon(mode),
+                            color: isSelected ? AppColors.primary : Colors.grey,
+                            size: 20,
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              mode.label,
+                              style: TextStyle(
+                                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                                color: isSelected ? AppColors.primary : null,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                          if (isSelected) const Icon(Icons.check_circle_rounded, color: AppColors.primary, size: 18),
+                        ],
                       ),
                     ),
                   );
@@ -53,20 +92,23 @@ class AppearanceScreen extends ConsumerWidget {
               AppSpacing.hLG,
 
               // Preview
-              const SectionHeader(title: 'معاينة'),
+              const SectionHeader(title: 'معاينة النمط المختار'),
               AppSpacing.hSM,
               _PreviewWidget(mode: currentMode),
               AppSpacing.hLG,
 
+              const Spacer(),
+
               // Apply Button
               PrimaryButton(
-                label: 'تطبيق الثيم',
+                label: 'تأكيد وحفظ الثيم',
                 icon: Icons.check_rounded,
                 onPressed: () {
                   final themeMode = switch (currentMode) {
                     AppThemeMode.light => ThemeMode.light,
                     AppThemeMode.dark => ThemeMode.dark,
                     AppThemeMode.system => ThemeMode.system,
+                    AppThemeMode.amoled => ThemeMode.dark,
                   };
                   ref.read(themeServiceProvider.notifier).setThemeMode(themeMode);
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -80,6 +122,19 @@ class AppearanceScreen extends ConsumerWidget {
       ),
     );
   }
+
+  IconData _modeIcon(AppThemeMode mode) {
+    switch (mode) {
+      case AppThemeMode.light:
+        return Icons.wb_sunny_outlined;
+      case AppThemeMode.dark:
+        return Icons.nightlight_round_outlined;
+      case AppThemeMode.system:
+        return Icons.brightness_auto_rounded;
+      case AppThemeMode.amoled:
+        return Icons.contrast_rounded;
+    }
+  }
 }
 
 class _PreviewWidget extends StatelessWidget {
@@ -89,9 +144,14 @@ class _PreviewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = mode == AppThemeMode.dark ||
+        mode == AppThemeMode.amoled ||
         (mode == AppThemeMode.system && Theme.of(context).brightness == Brightness.dark);
-    final bg = isDark ? const Color(0xFF0B0F19) : const Color(0xFFF8FAFC);
-    final surface = isDark ? const Color(0xFF151B2C) : Colors.white;
+    final bg = mode == AppThemeMode.amoled
+        ? Colors.black
+        : (isDark ? const Color(0xFF0B0F19) : const Color(0xFFF8FAFC));
+    final surface = mode == AppThemeMode.amoled
+        ? const Color(0xFF121212)
+        : (isDark ? const Color(0xFF151B2C) : Colors.white);
     final textColor = isDark ? Colors.white : const Color(0xFF0F172A);
     final border = isDark ? const Color(0xFF1E293B) : const Color(0xFFE2E8F0);
 
@@ -100,12 +160,12 @@ class _PreviewWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: bg,
         borderRadius: AppRadius.rMD,
-        border: Border.all(color: AppColors.borderLight),
+        border: Border.all(color: border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('معاينة: ${mode.label}', style: TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.bold)),
+          Text('معاينة: ${mode.label}', style: const TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.bold)),
           const SizedBox(height: 12),
           Container(
             padding: const EdgeInsets.all(12),
@@ -113,7 +173,8 @@ class _PreviewWidget extends StatelessWidget {
             child: Row(
               children: [
                 Container(
-                  width: 36, height: 36,
+                  width: 36,
+                  height: 36,
                   decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.15), borderRadius: AppRadius.rSM),
                   child: const Icon(Icons.factory_rounded, color: AppColors.primary, size: 20),
                 ),
@@ -121,8 +182,8 @@ class _PreviewWidget extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('مصنع نسيجي', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: textColor)),
-                    Text('المحلة الكبرى، مصر', style: const TextStyle(fontSize: 10, color: Colors.grey)),
+                    Text('مصنع النسيج الحديث', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: textColor)),
+                    const Text('المحلة الكبرى، مصر', style: TextStyle(fontSize: 10, color: Colors.grey)),
                   ],
                 ),
               ],
@@ -131,9 +192,9 @@ class _PreviewWidget extends StatelessWidget {
           const SizedBox(height: 8),
           Row(
             children: [
-              _previewChip('نشط', AppColors.success, surface, border),
+              _previewChip('حساب موثق', AppColors.success, surface, border),
               const SizedBox(width: 8),
-              _previewChip('PRO', const Color(0xFF7C3AED), surface, border),
+              _previewChip('خطة بريميوم', const Color(0xFF7C3AED), surface, border),
             ],
           ),
         ],
