@@ -147,6 +147,8 @@ class RFQ {
     this.offers = const [],
   });
 
+  String get expiryDate => closingDate;
+
   RFQ copyWith({
     String? status,
     int? receivedQuotesCount,
@@ -245,8 +247,8 @@ class RFQNotifier extends _$RFQNotifier {
     required String city,
     required String address,
     required String deliveryDate,
-    required String paymentTerms,
-    required String currency,
+    String paymentTerms = 'اعتماد مستندي بعد الاستلام',
+    String currency = 'جنيه مصري (EGP)',
     required List<String> attachments,
     required bool sendToRecommended,
     required List<String> selectedSupplierIds,
