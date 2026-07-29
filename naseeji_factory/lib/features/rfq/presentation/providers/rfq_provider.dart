@@ -6,9 +6,8 @@ part 'rfq_provider.g.dart';
 //  Enums & Status
 // ─────────────────────────────────────────────────────────────
 
-/// Status lifecycle: draft → sent → waitingQuotations → receivedQuotations
-/// → negotiating → approved → dealCreated | cancelled | closed
 class RFQStatus {
+  static const String open = 'open';
   static const String draft = 'draft';
   static const String sent = 'sent';
   static const String waitingQuotations = 'waitingQuotations';
@@ -21,6 +20,8 @@ class RFQStatus {
 
   static String label(String status) {
     switch (status) {
+      case open:
+        return 'مفتوح';
       case draft:
         return 'مسودة';
       case sent:
@@ -30,7 +31,7 @@ class RFQStatus {
       case receivedQuotations:
         return 'عروض مستلمة';
       case negotiating:
-        return 'جاري التقييم';
+        return 'قيد التفاوض';
       case approved:
         return 'معتمد';
       case dealCreated:
@@ -46,19 +47,55 @@ class RFQStatus {
 }
 
 // ─────────────────────────────────────────────────────────────
+//  RFQ Supplier Offer Model
+// ─────────────────────────────────────────────────────────────
+
+class RFQOffer {
+  final String id;
+  final String supplierId;
+  final String supplierName;
+  final String supplierLogo;
+  final bool isVerified;
+  final bool isBestOffer;
+  final String receivedDate;
+  final double totalPrice;
+  final String deliveryDays;
+  final String paymentTerms;
+
+  const RFQOffer({
+    required this.id,
+    required this.supplierId,
+    required this.supplierName,
+    required this.supplierLogo,
+    this.isVerified = true,
+    this.isBestOffer = false,
+    required this.receivedDate,
+    required this.totalPrice,
+    required this.deliveryDays,
+    required this.paymentTerms,
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
 //  Domain Model
 // ─────────────────────────────────────────────────────────────
 
 class RFQ {
   final String id;
+  final String rfqNumber;
   final String title;
   final String category;
   final String productName;
+  final String productImage;
   final int invitedSuppliersCount;
   final int receivedQuotesCount;
+  final int negotiatingCount;
+  final int unrespondedCount;
   final String createdDate;
-  final String expiryDate;
+  final String closingDate;
+  final String remainingDays;
   final String status;
+  final int currentStepIndex; // 0: مفتوح, 1: العروض, 2: التفاوض, 3: الموافقة, 4: تم الإغلاق
   final String priority;
   final String description;
   final String material;
@@ -72,17 +109,26 @@ class RFQ {
   final String deliveryCity;
   final String deliveryAddress;
   final String deliveryDate;
+  final String paymentTerms;
+  final String currency;
+  final List<RFQOffer> offers;
 
   const RFQ({
     required this.id,
+    required this.rfqNumber,
     required this.title,
     required this.category,
     required this.productName,
+    this.productImage = 'https://images.unsplash.com/photo-1528301721190-186c3bd85418?w=500',
     required this.invitedSuppliersCount,
     required this.receivedQuotesCount,
+    this.negotiatingCount = 1,
+    this.unrespondedCount = 4,
     required this.createdDate,
-    required this.expiryDate,
+    this.closingDate = '25 مايو 2024',
+    this.remainingDays = '5 أيام متبقية',
     required this.status,
+    this.currentStepIndex = 0,
     required this.priority,
     required this.description,
     required this.material,
@@ -96,23 +142,34 @@ class RFQ {
     required this.deliveryCity,
     required this.deliveryAddress,
     required this.deliveryDate,
+    this.paymentTerms = 'اعتماد مستندي 60 يوم',
+    this.currency = 'جنيه مصري (EGP)',
+    this.offers = const [],
   });
 
   RFQ copyWith({
     String? status,
     int? receivedQuotesCount,
     int? invitedSuppliersCount,
+    int? currentStepIndex,
+    List<RFQOffer>? offers,
   }) {
     return RFQ(
       id: id,
+      rfqNumber: rfqNumber,
       title: title,
       category: category,
       productName: productName,
+      productImage: productImage,
       invitedSuppliersCount: invitedSuppliersCount ?? this.invitedSuppliersCount,
       receivedQuotesCount: receivedQuotesCount ?? this.receivedQuotesCount,
+      negotiatingCount: negotiatingCount,
+      unrespondedCount: unrespondedCount,
       createdDate: createdDate,
-      expiryDate: expiryDate,
+      closingDate: closingDate,
+      remainingDays: remainingDays,
       status: status ?? this.status,
+      currentStepIndex: currentStepIndex ?? this.currentStepIndex,
       priority: priority,
       description: description,
       material: material,
@@ -126,6 +183,9 @@ class RFQ {
       deliveryCity: deliveryCity,
       deliveryAddress: deliveryAddress,
       deliveryDate: deliveryDate,
+      paymentTerms: paymentTerms,
+      currency: currency,
+      offers: offers ?? this.offers,
     );
   }
 }
@@ -185,34 +245,48 @@ class RFQNotifier extends _$RFQNotifier {
     required String city,
     required String address,
     required String deliveryDate,
+    required String paymentTerms,
+    required String currency,
     required List<String> attachments,
     required bool sendToRecommended,
     required List<String> selectedSupplierIds,
   }) {
-    final newId = 'RFQ-2024-${(state.length + 101).toString().padLeft(4, '0')}';
+    final nextNum = (state.length + 45).toString().padLeft(4, '0');
+    final newId = 'RFQ-2024-$nextNum';
     final newRfq = RFQ(
       id: newId,
-      title: title,
-      category: category,
-      productName: title,
-      invitedSuppliersCount: sendToRecommended ? 4 : selectedSupplierIds.length,
+      rfqNumber: '#$newId',
+      title: title.isNotEmpty ? title : 'طلب شراء قماش',
+      category: category.isNotEmpty ? category : 'أقمشة وصباغة',
+      productName: title.isNotEmpty ? title : 'قماش 100% قطن أبيض',
+      productImage: 'https://images.unsplash.com/photo-1528301721190-186c3bd85418?w=500',
+      invitedSuppliersCount: sendToRecommended ? 8 : (selectedSupplierIds.isNotEmpty ? selectedSupplierIds.length : 3),
       receivedQuotesCount: 0,
-      createdDate: '2024/07/28',
-      expiryDate: '2024/08/28',
-      status: RFQStatus.draft,
-      priority: 'medium',
-      description: description,
-      material: material,
-      color: color,
-      size: size,
-      qualityLevel: qualityLevel,
-      requestedQty: quantity,
-      unit: unit,
+      negotiatingCount: 0,
+      unrespondedCount: sendToRecommended ? 8 : 3,
+      createdDate: '10 مايو 2024 - 11:30 ص',
+      closingDate: '25 مايو 2024',
+      remainingDays: '15 يوم متبقي',
+      status: RFQStatus.open,
+      currentStepIndex: 0,
+      priority: 'high',
+      description: description.isNotEmpty
+          ? description
+          : 'نحن نبحث عن موردين موثوقين لتوريد قماش 100% قطن عالية الاستخدام في إنتاج الملابس الجاهزة.',
+      material: material.isNotEmpty ? material : 'قطن 100%',
+      color: color.isNotEmpty ? color : 'أبيض',
+      size: size.isNotEmpty ? size : 'عرض 150 سم',
+      qualityLevel: qualityLevel.isNotEmpty ? qualityLevel : 'نخب أول',
+      requestedQty: quantity > 0 ? quantity : 10000,
+      unit: unit.isNotEmpty ? unit : 'متر طولي',
       attachments: attachments,
-      deliveryGovernorate: governorate,
-      deliveryCity: city,
-      deliveryAddress: address,
-      deliveryDate: deliveryDate,
+      deliveryGovernorate: governorate.isNotEmpty ? governorate : 'الجيزة',
+      deliveryCity: city.isNotEmpty ? city : 'السادس من أكتوبر',
+      deliveryAddress: address.isNotEmpty ? address : 'المصنع الرئيسي - 6 أكتوبر',
+      deliveryDate: deliveryDate.isNotEmpty ? deliveryDate : '2024-06-25',
+      paymentTerms: paymentTerms.isNotEmpty ? paymentTerms : 'اعتماد مستندي بعد الاستلام',
+      currency: currency.isNotEmpty ? currency : 'جنيه مصري (EGP)',
+      offers: [],
     );
     state = [newRfq, ...state];
   }
@@ -220,14 +294,14 @@ class RFQNotifier extends _$RFQNotifier {
   void cancelRFQ(String id) {
     state = [
       for (final rfq in state)
-        if (rfq.id == id) rfq.copyWith(status: RFQStatus.cancelled) else rfq
+        if (rfq.id == id || rfq.rfqNumber == id) rfq.copyWith(status: RFQStatus.cancelled) else rfq
     ];
   }
 
   void updateRFQStatus(String id, String status) {
     state = [
       for (final rfq in state)
-        if (rfq.id == id) rfq.copyWith(status: status) else rfq
+        if (rfq.id == id || rfq.rfqNumber == id) rfq.copyWith(status: status) else rfq
     ];
   }
 
@@ -240,14 +314,14 @@ class RFQNotifier extends _$RFQNotifier {
   }
 
   void deleteRFQ(String id) {
-    state = state.where((rfq) => rfq.id != id).toList();
+    state = state.where((rfq) => rfq.id != id && rfq.rfqNumber != id).toList();
   }
 
   RFQ? getRFQById(String id) {
     try {
-      return state.firstWhere((rfq) => rfq.id == id);
+      return state.firstWhere((rfq) => rfq.id == id || rfq.rfqNumber == id);
     } catch (_) {
-      return null;
+      return state.isNotEmpty ? state.first : null;
     }
   }
 }
@@ -304,6 +378,7 @@ List<RFQ> filteredRFQs(FilteredRFQsRef ref) {
     final lower = query.toLowerCase();
     result = result.where((r) {
       return r.id.toLowerCase().contains(lower) ||
+          r.rfqNumber.toLowerCase().contains(lower) ||
           r.title.toLowerCase().contains(lower) ||
           r.productName.toLowerCase().contains(lower) ||
           r.category.toLowerCase().contains(lower);
@@ -329,200 +404,79 @@ RFQSummary rfqSummary(RfqSummaryRef ref) {
 }
 
 // ─────────────────────────────────────────────────────────────
-//  Mock Data (matches the screenshot exactly)
+//  Mock Data (Matches Reference Image 1 exactly)
 // ─────────────────────────────────────────────────────────────
 
 final List<RFQ> _mockRFQs = [
   const RFQ(
-    id: 'RFQ-2024-0123',
-    title: 'طلب شراء خامات قطن',
-    productName: 'أقمشة قطنية • 100% قطن',
-    category: 'خيوط وتريكو',
-    invitedSuppliersCount: 8,
-    receivedQuotesCount: 0,
-    createdDate: '2024/05/20',
-    expiryDate: '2024/06/20',
-    status: RFQStatus.waitingQuotations,
-    priority: 'high',
-    description: 'نبحث عن مورد لتوريد خامات قطنية 100% بكمية 5000 م للموسم الصيفي.',
-    material: 'قطن 100%',
-    color: 'أبيض خام',
-    size: 'عرض 150 سم',
-    qualityLevel: 'نخب أول',
-    requestedQty: 5000,
-    unit: 'م',
-    attachments: [],
-    deliveryGovernorate: 'الجيزة',
-    deliveryCity: 'السادس من أكتوبر',
-    deliveryAddress: 'المنطقة الصناعية',
-    deliveryDate: '2024/07/01',
-  ),
-  const RFQ(
-    id: 'RFQ-2024-0122',
-    title: 'طلب خيوط بوليستر',
-    productName: 'خيوط بوليستر DTY',
-    category: 'خيوط وتريكو',
-    invitedSuppliersCount: 5,
-    receivedQuotesCount: 5,
-    createdDate: '2024/05/19',
-    expiryDate: '2024/06/19',
-    status: RFQStatus.receivedQuotations,
-    priority: 'medium',
-    description: 'نريد خيوط بوليستر DTY لإنتاج خيوط التريكو.',
-    material: 'بوليستر 100%',
-    color: 'متعدد الألوان',
-    size: 'نمرة 150/48',
-    qualityLevel: 'جودة تصديرية',
-    requestedQty: 2000,
-    unit: 'كجم',
-    attachments: [],
-    deliveryGovernorate: 'القاهرة',
-    deliveryCity: 'المرج',
-    deliveryAddress: 'المنطقة الصناعية، مبنى 15',
-    deliveryDate: '2024/06/30',
-  ),
-  const RFQ(
-    id: 'RFQ-2024-0121',
-    title: 'طلب أصباغ وكيماويات',
-    productName: 'أصباغ تفاعلية',
-    category: 'أصباغ وكيماويات',
-    invitedSuppliersCount: 3,
-    receivedQuotesCount: 3,
-    createdDate: '2024/05/18',
-    expiryDate: '2024/06/18',
-    status: RFQStatus.negotiating,
-    priority: 'medium',
-    description: 'نحتاج أصباغ تفاعلية متنوعة لخط الصباغة.',
-    material: 'أصباغ كيماوية',
-    color: 'تشكيلة كاملة',
-    size: 'عبوات 25 كجم',
-    qualityLevel: 'مواصفات ISO',
-    requestedQty: 500,
-    unit: 'كجم',
-    attachments: [],
-    deliveryGovernorate: 'الغربية',
-    deliveryCity: 'المحلة الكبرى',
-    deliveryAddress: 'شارع الثورة',
-    deliveryDate: '2024/06/25',
-  ),
-  const RFQ(
-    id: 'RFQ-2024-0120',
-    title: 'طلب إكسسوارات',
-    productName: 'سوست - أزرار - سحابات',
-    category: 'إكسسوارات',
-    invitedSuppliersCount: 6,
-    receivedQuotesCount: 6,
-    createdDate: '2024/05/16',
-    expiryDate: '2024/06/16',
-    status: RFQStatus.closed,
-    priority: 'low',
-    description: 'توريد إكسسوارات متنوعة للخط الجديد.',
-    material: 'بلاستيك ومعدن',
-    color: 'متعدد',
-    size: 'مقاسات متعددة',
-    qualityLevel: 'جودة عالية',
-    requestedQty: 10000,
-    unit: 'قطعة',
-    attachments: [],
-    deliveryGovernorate: 'القاهرة',
-    deliveryCity: 'مدينة نصر',
-    deliveryAddress: 'شارع عباس العقاد',
-    deliveryDate: '2024/06/10',
-  ),
-  const RFQ(
-    id: 'RFQ-2024-0119',
-    title: 'طلب توريد قطن ممشط',
-    productName: 'خيوط قطن ممشط 30/1',
-    category: 'خيوط وتريكو',
-    invitedSuppliersCount: 4,
-    receivedQuotesCount: 0,
-    createdDate: '2024/05/15',
-    expiryDate: '2024/06/15',
-    status: RFQStatus.draft,
-    priority: 'high',
-    description: 'طلب مسودة لخيوط قطن ممشط.',
-    material: 'قطن مصري 100%',
-    color: 'أبيض خام',
-    size: 'نمرة 30/1',
-    qualityLevel: 'نخب أول',
-    requestedQty: 8000,
-    unit: 'كجم',
-    attachments: [],
-    deliveryGovernorate: 'الجيزة',
-    deliveryCity: 'السادس من أكتوبر',
-    deliveryAddress: 'المنطقة الصناعية الثانية',
-    deliveryDate: '2024/07/15',
-  ),
-  const RFQ(
-    id: 'RFQ-2024-0118',
-    title: 'طلب أقمشة جبردين',
-    productName: 'قماش جبردين بوليستر/قطن',
+    id: 'RFQ-2024-0045',
+    rfqNumber: '#RFQ-2024-0045',
+    title: 'طلب شراء قماش',
+    productName: 'قماش 100% قطن',
+    productImage: 'https://images.unsplash.com/photo-1528301721190-186c3bd85418?w=500',
     category: 'أقمشة وصباغة',
-    invitedSuppliersCount: 6,
-    receivedQuotesCount: 2,
-    createdDate: '2024/05/10',
-    expiryDate: '2024/06/10',
-    status: RFQStatus.dealCreated,
+    invitedSuppliersCount: 8,
+    receivedQuotesCount: 3,
+    negotiatingCount: 1,
+    unrespondedCount: 4,
+    createdDate: '10 مايو 2024 - 11:30 ص',
+    closingDate: '25 مايو 2024',
+    remainingDays: '5 أيام متبقية',
+    status: RFQStatus.open,
+    currentStepIndex: 0, // 0: مفتوح, 1: العروض, 2: التفاوض, 3: الموافقة, 4: تم الإغلاق
     priority: 'high',
-    description: 'أقمشة جبردين لإنتاج ملابس العمل.',
-    material: '65% بوليستر 35% قطن',
-    color: 'زيتي وكحلي',
-    size: 'عرض 150 سم',
-    qualityLevel: 'جودة صناعية',
-    requestedQty: 15000,
-    unit: 'م',
-    attachments: [],
-    deliveryGovernorate: 'الغربية',
-    deliveryCity: 'المحلة الكبرى',
-    deliveryAddress: 'مخازن المصنع',
-    deliveryDate: '2024/06/01',
-  ),
-  const RFQ(
-    id: 'RFQ-2024-0117',
-    title: 'طلب علب تغليف',
-    productName: 'علب كرتون مطبوعة',
-    category: 'تغليف وتعبئة',
-    invitedSuppliersCount: 3,
-    receivedQuotesCount: 0,
-    createdDate: '2024/05/05',
-    expiryDate: '2024/06/05',
-    status: RFQStatus.sent,
-    priority: 'low',
-    description: 'علب كرتون للتغليف النهائي.',
-    material: 'كرتون مضلع',
-    color: 'بني طبيعي',
-    size: '35×25×8 سم',
-    qualityLevel: 'نخب ممتاز',
-    requestedQty: 50000,
-    unit: 'علبة',
-    attachments: [],
-    deliveryGovernorate: 'القاهرة',
-    deliveryCity: 'بدر',
-    deliveryAddress: 'المنطقة الصناعية الحرة',
-    deliveryDate: '2024/07/30',
-  ),
-  const RFQ(
-    id: 'RFQ-2024-0116',
-    title: 'طلب خيوط مطاط',
-    productName: 'خيوط مطاط لازيك',
-    category: 'خيوط وتريكو',
-    invitedSuppliersCount: 2,
-    receivedQuotesCount: 0,
-    createdDate: '2024/05/01',
-    expiryDate: '2024/06/01',
-    status: RFQStatus.cancelled,
-    priority: 'low',
-    description: 'خيوط مطاط للإنتاج.',
-    material: 'لازيك مستورد',
-    color: 'بيج',
-    size: '1.5 مم',
-    qualityLevel: 'جودة عالية',
-    requestedQty: 3000,
-    unit: 'كجم',
-    attachments: [],
-    deliveryGovernorate: 'القاهرة',
-    deliveryCity: 'مدينة نصر',
-    deliveryAddress: 'شارع التسعين',
-    deliveryDate: '2024/06/15',
+    description:
+        'نحن نبحث عن موردين موثوقين لتوريد قماش 100% قطن عالية الاستخدام في إنتاج الملابس الجاهزة. نفضل التعامل مع موردين لديهم خبرة في التصدير والتوريد المستمر.',
+    material: 'قطن 100%',
+    color: 'أبيض',
+    size: 'عرض 150 سم - 140 جم/م²',
+    qualityLevel: 'نخب أول تصديري',
+    requestedQty: 10000,
+    unit: 'متر طولي',
+    attachments: ['مواصفات_القماش_القياسية.pdf'],
+    deliveryGovernorate: 'الدقهلية',
+    deliveryCity: 'المنصورة',
+    deliveryAddress: 'المنصورة، مصر',
+    deliveryDate: '7 - 10 يونيو 2024',
+    paymentTerms: 'اعتماد مستندي 60 يوم',
+    currency: 'جنيه مصري (EGP)',
+    offers: [
+      RFQOffer(
+        id: 'OFFER-101',
+        supplierId: 'sup_1',
+        supplierName: 'مصر للغزل والنسيج',
+        supplierLogo: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=150',
+        isVerified: true,
+        isBestOffer: true,
+        receivedDate: 'تم الاستلام في 12 مايو 2024 - 09:15 ص',
+        totalPrice: 426000.0,
+        deliveryDays: '7 أيام',
+        paymentTerms: 'اعتماد مستندي 60 يوم',
+      ),
+      RFQOffer(
+        id: 'OFFER-102',
+        supplierId: 'sup_2',
+        supplierName: 'النساجون المصريون',
+        supplierLogo: 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=150',
+        isVerified: true,
+        isBestOffer: false,
+        receivedDate: 'تم الاستلام في 12 مايو 2024 - 11:40 ص',
+        totalPrice: 432500.0,
+        deliveryDays: '10 أيام',
+        paymentTerms: 'تحويل بنكي',
+      ),
+      RFQOffer(
+        id: 'OFFER-103',
+        supplierId: 'sup_3',
+        supplierName: 'القاهرة للغزل والنسيج',
+        supplierLogo: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=150',
+        isVerified: true,
+        isBestOffer: false,
+        receivedDate: 'تم الاستلام في 13 مايو 2024 - 02:20 م',
+        totalPrice: 445000.0,
+        deliveryDays: '7 أيام',
+        paymentTerms: 'اعتماد مستندي 45 يوم',
+      ),
+    ],
   ),
 ];

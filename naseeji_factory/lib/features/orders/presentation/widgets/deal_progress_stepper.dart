@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../../core/constants/app_colors.dart';
@@ -76,7 +78,6 @@ class DealProgressStepper extends StatelessWidget {
                   final item = steps[index];
                   final isCompleted = index < currentIdx;
                   final isActive = index == currentIdx;
-                  final isFuture = index > currentIdx;
 
                   final color = isCompleted
                       ? AppColors.success
