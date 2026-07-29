@@ -18,6 +18,17 @@ class ShareProductBottomSheet extends StatelessWidget {
     required this.onDownloadPdf,
   });
 
+  void _showQrDialog(BuildContext context) {
+    Navigator.of(context).pop();
+    showDialog(
+      context: context,
+      builder: (context) => ProductQrDialog(
+        productName: productName,
+        supplierName: supplierName,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = context.theme.brightness == Brightness.dark;
@@ -49,8 +60,8 @@ class ShareProductBottomSheet extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            'شارك تفاصيل منتج "$productName" مع الآخرين.',
-            style: const TextStyle(color: Colors.grey, fontSize: 11),
+            'شارك تفاصيل منتج "$productName" مع الموردين أو فريق العمل.',
+            style: const TextStyle(color: Colors.grey, fontSize: 12),
           ),
           AppSpacing.hLG,
           // Share Options Grid
@@ -66,25 +77,20 @@ class ShareProductBottomSheet extends StatelessWidget {
               ),
               _buildShareButton(
                 context,
-                Icons.chat_outlined,
-                'واتساب',
-                Colors.green,
-                () {
-                  Navigator.of(context).pop();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('تم فتح الواتساب لمشاركة الرابط')),
-                  );
-                },
+                Icons.qr_code_2_rounded,
+                'رمز QR',
+                Colors.purple,
+                () => _showQrDialog(context),
               ),
               _buildShareButton(
                 context,
-                Icons.mail_outline_rounded,
-                'البريد',
-                Colors.amber.shade700,
+                Icons.send_rounded,
+                'مشاركة داخلية',
+                Colors.blue,
                 () {
                   Navigator.of(context).pop();
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('تم فتح تطبيق البريد لمشاركة الرابط')),
+                    const SnackBar(content: Text('تمت المشاركة مع أعضاء فريق المصنع بنجاح!')),
                   );
                 },
               ),
@@ -98,22 +104,34 @@ class ShareProductBottomSheet extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 24),
-          Row(
-            children: [
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    side: const BorderSide(color: AppColors.primary),
-                    foregroundColor: AppColors.primary,
-                    shape: RoundedRectangleBorder(borderRadius: AppRadius.rMD),
+          // Copyable link field
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              color: isDark ? AppColors.backgroundDark : Colors.grey.shade100,
+              borderRadius: AppRadius.rSM,
+              border: Border.all(color: isDark ? AppColors.borderDark : Colors.grey.shade300),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'https://naseeji.com/products/prod_1',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: isDark ? Colors.grey.shade300 : Colors.grey.shade700,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  child: const Text('إلغاء'),
                 ),
-              ),
-            ],
+                TextButton(
+                  onPressed: onCopyLink,
+                  child: const Text('نسخ'),
+                ),
+              ],
+            ),
           ),
+          const SizedBox(height: 16),
         ],
       ),
     );
@@ -126,31 +144,121 @@ class ShareProductBottomSheet extends StatelessWidget {
     Color color,
     VoidCallback onTap,
   ) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        width: 72,
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.1),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(icon, color: color, size: 24),
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Column(
+      children: [
+        InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(30),
+          child: Container(
+            width: 54,
+            height: 54,
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.12),
+              shape: BoxShape.circle,
             ),
-            const SizedBox(height: 8),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-            ),
-          ],
+            child: Icon(icon, color: color, size: 26),
+          ),
         ),
+        const SizedBox(height: 8),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Dialog showing Product QR Code for easy sharing/scanning
+class ProductQrDialog extends StatelessWidget {
+  final String productName;
+  final String supplierName;
+
+  const ProductQrDialog({
+    super.key,
+    required this.productName,
+    required this.supplierName,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      backgroundColor: isDark ? AppColors.surfaceDark : Colors.white,
+      title: Column(
+        children: [
+          const Icon(Icons.qr_code_2_rounded, size: 48, color: AppColors.primary),
+          const SizedBox(height: 8),
+          Text(
+            productName,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          Text(
+            supplierName,
+            style: const TextStyle(fontSize: 12, color: Colors.grey),
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.grey.shade300),
+            ),
+            child: Image.network(
+              'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://naseeji.com/products/prod_1',
+              width: 180,
+              height: 180,
+              errorBuilder: (context, error, stackTrace) => Container(
+                width: 180,
+                height: 180,
+                color: Colors.grey.shade100,
+                child: const Icon(Icons.qr_code_2_rounded, size: 80, color: Colors.grey),
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          const Text(
+            'امسح رمز QR للوصول السريع إلى تفاصيل المنتج والمواصفات',
+            style: TextStyle(fontSize: 11, color: Colors.grey),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('إغلاق'),
+        ),
+        ElevatedButton.icon(
+          onPressed: () {
+            Navigator.of(context).pop();
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('تم حفظ رمز QR في المعرض بنجاح!')),
+            );
+          },
+          icon: const Icon(Icons.download_rounded, size: 18),
+          label: const Text('تحميل الرمز'),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.primary,
+            foregroundColor: Colors.white,
+          ),
+        ),
+      ],
     );
   }
 }

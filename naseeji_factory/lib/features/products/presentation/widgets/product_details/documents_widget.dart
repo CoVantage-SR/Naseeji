@@ -1,109 +1,370 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../../core/constants/app_colors.dart';
 import '../../../../../../core/constants/app_radius.dart';
-import '../../../../../../core/constants/app_spacing.dart';
-import '../../../../../../core/extensions/context_extensions.dart';
-import '../../../../../../core/widgets/reusable_widgets.dart';
-import '../../providers/documents_provider.dart';
-import '../../../domain/entities/product_detail_entities.dart';
 
-/// Displays downloadable product documents: PDFs, certificates, lab reports.
-/// Reads data from [documentsProvider].
-class DocumentsWidget extends ConsumerWidget {
+/// Available documents section matching reference screenshot:
+/// - Header: "المستندات المتاحة" with "عرض الكل"
+/// - Cards: "تقرير اختبار القماش", "شهادة الجودة", "دليل المواصفات" with PDF icon
+/// - Tap opens interactive PDF Viewer Modal with view, download, share options
+class AvailableDocumentsWidget extends StatelessWidget {
   final String productId;
-  final VoidCallback onDownload;
+  final VoidCallback? onViewAll;
 
-  const DocumentsWidget({super.key, required this.productId, required this.onDownload});
+  const AvailableDocumentsWidget({
+    super.key,
+    required this.productId,
+    this.onViewAll,
+  });
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(documentsProvider(productId: productId));
-
-    return state.when(
-      loading: () => const SizedBox(height: 60, child: Center(child: CircularProgressIndicator())),
-      error: (_, _) => const SizedBox.shrink(),
-      data: (docs) => PrimaryCard(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                const Icon(Icons.folder_open_rounded, color: AppColors.info, size: 18),
-                const SizedBox(width: 8),
-                Text(
-                  'الوثائق والشهادات',
-                  style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            AppSpacing.hMD,
-            ...docs.map((doc) => _DocumentRow(doc: doc, onDownload: onDownload)),
-          ],
-        ),
+  void _openPdfViewer(BuildContext context, String docTitle, String docType) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => PdfViewerModal(
+        docTitle: docTitle,
+        docType: docType,
       ),
     );
-  }
-}
-
-class _DocumentRow extends StatelessWidget {
-  final DocumentItem doc;
-  final VoidCallback onDownload;
-
-  const _DocumentRow({required this.doc, required this.onDownload});
-
-  IconData get _typeIcon {
-    return switch (doc.type) {
-      'certificate' => Icons.workspace_premium_rounded,
-      'lab_report' => Icons.science_rounded,
-      _ => Icons.picture_as_pdf_rounded,
-    };
-  }
-
-  Color get _typeColor {
-    return switch (doc.type) {
-      'certificate' => AppColors.warning,
-      'lab_report' => AppColors.success,
-      _ => AppColors.info,
-    };
   }
 
   @override
   Widget build(BuildContext context) {
-    final isDark = context.theme.brightness == Brightness.dark;
-    final sizeText = doc.fileSizeKb > 999 ? '${(doc.fileSizeKb / 1024).toStringAsFixed(1)} MB' : '${doc.fileSizeKb} KB';
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final primaryColor = Theme.of(context).colorScheme.primary;
 
-    return Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      decoration: BoxDecoration(
-        color: _typeColor.withValues(alpha: isDark ? 0.1 : 0.06),
-        borderRadius: AppRadius.rMD,
-        border: Border.all(color: _typeColor.withValues(alpha: 0.2)),
-      ),
-      child: Row(
-        children: [
-          Icon(_typeIcon, color: _typeColor, size: 22),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(doc.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                Text(sizeText, style: context.textTheme.bodySmall?.copyWith(color: Colors.grey)),
-              ],
+    final docs = [
+      {'title': 'تقرير اختبار القماش', 'type': 'PDF', 'size': '1.2 MB'},
+      {'title': 'شهادة الجودة', 'type': 'PDF', 'size': '850 KB'},
+      {'title': 'دليل المواصفات', 'type': 'PDF', 'size': '2.4 MB'},
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Header
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'المستندات المتاحة',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+              ),
             ),
+            TextButton(
+              onPressed: onViewAll,
+              style: TextButton.styleFrom(
+                visualDensity: VisualDensity.compact,
+                padding: EdgeInsets.zero,
+              ),
+              child: Text(
+                'عرض الكل',
+                style: TextStyle(
+                  color: primaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        // Horizontal Scrollable Cards
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: docs.map((doc) {
+              return GestureDetector(
+                onTap: () => _openPdfViewer(context, doc['title']!, doc['type']!),
+                child: Container(
+                  width: 155,
+                  margin: const EdgeInsets.only(left: 10),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: isDark ? AppColors.surfaceDark : Colors.blue.shade50.withOpacity(0.4),
+                    borderRadius: AppRadius.rSM,
+                    border: Border.all(
+                      color: isDark ? AppColors.borderDark : Colors.blue.shade100,
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              doc['title']!,
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: isDark ? AppColors.textPrimaryDark : Colors.grey.shade900,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              doc['type']!,
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Colors.grey.shade600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.blue.shade100,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const Icon(
+                          Icons.picture_as_pdf_outlined,
+                          color: Colors.blue,
+                          size: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }).toList(),
           ),
-          if (doc.isDownloadable)
-            IconButton(
-              icon: const Icon(Icons.download_rounded),
-              color: _typeColor,
-              onPressed: onDownload,
-              padding: EdgeInsets.zero,
-              constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-            ),
-        ],
-      ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Interactive PDF Viewer Bottom Sheet / Modal with simulated document viewer, download & share
+class PdfViewerModal extends StatelessWidget {
+  final String docTitle;
+  final String docType;
+
+  const PdfViewerModal({
+    super.key,
+    required this.docTitle,
+    required this.docType,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return DraggableScrollableSheet(
+      initialChildSize: 0.85,
+      maxChildSize: 0.95,
+      minChildSize: 0.5,
+      builder: (context, scrollController) {
+        return Container(
+          decoration: BoxDecoration(
+            color: isDark ? AppColors.surfaceDark : Colors.white,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: Column(
+            children: [
+              // Header
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: isDark ? AppColors.borderDark : Colors.grey.shade200,
+                    ),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.picture_as_pdf_rounded, color: Colors.red, size: 24),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            docTitle,
+                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            'وثيقة رسمية معتمدة • PDF',
+                            style: TextStyle(fontSize: 11, color: Colors.grey.shade600),
+                          ),
+                        ],
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.share_outlined),
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('تم تجهيز رابط الوثيقة للمشاركة')),
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.close_rounded),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ],
+                ),
+              ),
+              // Document Simulated Canvas
+              Expanded(
+                child: SingleChildScrollView(
+                  controller: scrollController,
+                  padding: const EdgeInsets.all(16),
+                  child: Container(
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: isDark ? AppColors.backgroundDark : Colors.grey.shade100,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.grey.shade300),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'NASEEJI CERTIFIED DOCUMENT',
+                              style: TextStyle(
+                                letterSpacing: 1.2,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.primary,
+                                fontSize: 11,
+                              ),
+                            ),
+                            Text(
+                              'تاريخ الاصدار: 2026/01/15',
+                              style: TextStyle(fontSize: 11, color: Colors.grey.shade600),
+                            ),
+                          ],
+                        ),
+                        const Divider(height: 24),
+                        Center(
+                          child: Text(
+                            docTitle,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        const Text(
+                          'هذا التقرير الفني المعتمد يوضح نتائج الاختبارات المعملية والفحوصات القياسية للمنتج وفقاً للمواصفات القياسية المصرية والدولية ISO 9001.',
+                          style: TextStyle(fontSize: 13, height: 1.5),
+                        ),
+                        const SizedBox(height: 20),
+                        // Mock Spec Table inside PDF
+                        Table(
+                          border: TableBorder.all(color: Colors.grey.shade300),
+                          children: const [
+                            TableRow(
+                              decoration: BoxDecoration(color: Color(0xFFF1F5F9)),
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text('الاختبار', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text('النتيجة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text('الحالة', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                                ),
+                              ],
+                            ),
+                            TableRow(
+                              children: [
+                                Padding(padding: EdgeInsets.all(8.0), child: Text('ثبات الألوان بعد الغسيل', style: TextStyle(fontSize: 12))),
+                                Padding(padding: EdgeInsets.all(8.0), child: Text('درجة 4-5 (ممتاز)', style: TextStyle(fontSize: 12))),
+                                Padding(padding: EdgeInsets.all(8.0), child: Text('مطابق ✅', style: TextStyle(fontSize: 12, color: Colors.green))),
+                              ],
+                            ),
+                            TableRow(
+                              children: [
+                                Padding(padding: EdgeInsets.all(8.0), child: Text('نسبة التمدد والانكماش', style: TextStyle(fontSize: 12))),
+                                Padding(padding: EdgeInsets.all(8.0), child: Text('< 2.1%', style: TextStyle(fontSize: 12))),
+                                Padding(padding: EdgeInsets.all(8.0), child: Text('مطابق ✅', style: TextStyle(fontSize: 12, color: Colors.green))),
+                              ],
+                            ),
+                            TableRow(
+                              children: [
+                                Padding(padding: EdgeInsets.all(8.0), child: Text('قوة تحمل الشد والتمزق', style: TextStyle(fontSize: 12))),
+                                Padding(padding: EdgeInsets.all(8.0), child: Text('420 Newton', style: TextStyle(fontSize: 12))),
+                                Padding(padding: EdgeInsets.all(8.0), child: Text('مطابق ✅', style: TextStyle(fontSize: 12, color: Colors.green))),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 30),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('توقيع المختبر المعتمد', style: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
+                                const SizedBox(height: 6),
+                                const Text('أ.د/ مدير الجودة والفحص', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
+                              ],
+                            ),
+                            Container(
+                              width: 60,
+                              height: 60,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color: AppColors.primary, width: 2),
+                              ),
+                              child: const Center(
+                                child: Text('خاتم\nالجودة', textAlign: TextAlign.center, style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: AppColors.primary)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              // Bottom Action Button
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 48,
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('جارٍ تحميل ملف $docTitle...')),
+                      );
+                    },
+                    icon: const Icon(Icons.download_rounded),
+                    label: Text('تحميل المستند ($docType)'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

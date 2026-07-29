@@ -21,6 +21,10 @@ class Supplier {
   final bool isFavorite;
   final String? favoriteCategory;
   final String? favoriteNote;
+  final bool isOnline;
+  final int reviewsCount;
+  final String establishedYear;
+  final String avgDeliveryDays;
 
   const Supplier({
     required this.id,
@@ -41,12 +45,18 @@ class Supplier {
     this.isFavorite = false,
     this.favoriteCategory,
     this.favoriteNote,
+    this.isOnline = true,
+    this.reviewsCount = 124,
+    this.establishedYear = '2005',
+    this.avgDeliveryDays = '5 - 7 أيام',
   });
 
   Supplier copyWith({
     bool? isFavorite,
     String? favoriteCategory,
     String? favoriteNote,
+    bool? isOnline,
+    int? reviewsCount,
   }) {
     return Supplier(
       id: id,
@@ -67,6 +77,10 @@ class Supplier {
       isFavorite: isFavorite ?? this.isFavorite,
       favoriteCategory: favoriteCategory ?? this.favoriteCategory,
       favoriteNote: favoriteNote ?? this.favoriteNote,
+      isOnline: isOnline ?? this.isOnline,
+      reviewsCount: reviewsCount ?? this.reviewsCount,
+      establishedYear: establishedYear,
+      avgDeliveryDays: avgDeliveryDays,
     );
   }
 }
@@ -109,7 +123,7 @@ class SuppliersNotifier extends _$SuppliersNotifier {
     try {
       return state.firstWhere((s) => s.id == id);
     } catch (_) {
-      return null;
+      return state.isNotEmpty ? state.first : null;
     }
   }
 }
@@ -117,19 +131,23 @@ class SuppliersNotifier extends _$SuppliersNotifier {
 final List<Supplier> _mockSuppliers = [
   const Supplier(
     id: 'sup_1',
-    name: 'شركة غزل المحلة الكبرى',
-    logoUrl: '',
-    type: 'مصنع غزل ونسيج حكومي',
-    rating: 4.8,
-    productsCount: 154,
+    name: 'مصر للغزل والنسيج',
+    logoUrl: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=150',
+    type: 'مصنع غزل ونسيج قطني',
+    rating: 4.9,
+    reviewsCount: 124,
+    productsCount: 245,
     completedOrders: 1240,
-    city: 'المحلة الكبرى',
-    governorate: 'الغربية',
+    city: 'المنصورة',
+    governorate: 'الدقهلية',
     isVerified: true,
-    description: 'أكبر شركة حكومية للغزل والنسيج في مصر والشرق الأوسط، تأسست عام 1927. متخصصة في الغزل والنسيج القطني بالكامل وصباغة الأقمشة الفاخرة.',
-    experience: 'منذ ٩٩ عاماً',
-    deliveryPerformance: '٩٨%',
-    responseSpeed: 'خلال ساعة واحدة',
+    description: 'أكبر مجمع صناعي للغزل والنسيج والطباعة في مصر والدلتا، يتخصص في إنتاج الأقمشة القطنية 100% والمخلوطة بمواصفات جودة قياسية للتصدير والسوق المحلي.',
+    experience: 'تأسست عام 2005',
+    establishedYear: '2005',
+    deliveryPerformance: '98%',
+    responseSpeed: '98%',
+    avgDeliveryDays: '5 - 7 أيام',
+    isOnline: true,
     certificates: ['ISO 9001', 'Oeko-Tex Standard 100', 'GOTS (عضوي)'],
   ),
   const Supplier(

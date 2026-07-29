@@ -2,70 +2,138 @@ import 'package:flutter/material.dart';
 import '../../../../../../core/constants/app_colors.dart';
 import '../../../../../../core/constants/app_radius.dart';
 
-/// Sticky bottom action bar with two procurement actions.
-/// Replaces the inline action buttons row that was previously in the screen.
+/// Sticky bottom bar matching reference design:
+/// - [...] More options button
+/// - [إرسال RFQ] Outlined button with icon
+/// - [طلب عرض سعر] Primary blue button with paper plane icon
 class ProductBottomActionBarWidget extends StatelessWidget {
-  final VoidCallback onFavoriteSupplier;
+  final VoidCallback onSendRfq;
   final VoidCallback onRequestQuote;
+  final VoidCallback onMoreOptions;
 
   const ProductBottomActionBarWidget({
     super.key,
-    required this.onFavoriteSupplier,
+    required this.onSendRfq,
     required this.onRequestQuote,
+    required this.onMoreOptions,
   });
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final primaryColor = Theme.of(context).colorScheme.primary;
 
     return Container(
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+      padding: const EdgeInsets.fromLTRB(14, 10, 14, 14),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF151B2C) : Colors.white,
+        color: isDark ? AppColors.surfaceDark : Colors.white,
         border: Border(
           top: BorderSide(
-            color: isDark ? AppColors.borderDark : AppColors.borderLight,
+            color: isDark ? AppColors.borderDark : Colors.grey.shade200,
             width: 1,
           ),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.06),
-            blurRadius: 12,
-            offset: const Offset(0, -4),
+            color: Colors.black.withOpacity(isDark ? 0.3 : 0.05),
+            blurRadius: 10,
+            offset: const Offset(0, -3),
           ),
         ],
       ),
-      child: Row(
-        children: [
-          Expanded(
-            child: OutlinedButton.icon(
-              onPressed: onFavoriteSupplier,
-              icon: const Icon(Icons.favorite_border_rounded, size: 18),
-              label: const Text('مفضلة الموردين'),
-              style: OutlinedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                side: const BorderSide(color: AppColors.primary),
-                foregroundColor: AppColors.primary,
-                shape: RoundedRectangleBorder(borderRadius: AppRadius.rMD),
+      child: SafeArea(
+        top: false,
+        child: Row(
+          children: [
+            // More options button (...)
+            InkWell(
+              onTap: onMoreOptions,
+              borderRadius: AppRadius.rSM,
+              child: Container(
+                width: 46,
+                height: 46,
+                decoration: BoxDecoration(
+                  color: isDark ? AppColors.backgroundDark : Colors.grey.shade100,
+                  borderRadius: AppRadius.rSM,
+                  border: Border.all(
+                    color: isDark ? AppColors.borderDark : Colors.grey.shade300,
+                  ),
+                ),
+                child: const Icon(
+                  Icons.more_horiz_rounded,
+                  color: Colors.grey,
+                  size: 22,
+                ),
               ),
             ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: ElevatedButton.icon(
-              onPressed: onRequestQuote,
-              icon: const Icon(Icons.request_quote_rounded, size: 18),
-              label: const Text('طلب عرض سعر'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                shape: RoundedRectangleBorder(borderRadius: AppRadius.rMD),
+            const SizedBox(width: 8),
+
+            // Outlined button: إرسال RFQ
+            Expanded(
+              flex: 5,
+              child: SizedBox(
+                height: 46,
+                child: OutlinedButton.icon(
+                  onPressed: onSendRfq,
+                  icon: Icon(
+                    Icons.chat_bubble_outline_rounded,
+                    size: 18,
+                    color: primaryColor,
+                  ),
+                  label: Text(
+                    'إرسال RFQ',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: primaryColor,
+                    ),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide(color: primaryColor),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadius.rSM,
+                    ),
+                    padding: EdgeInsets.zero,
+                  ),
+                ),
               ),
             ),
-          ),
-        ],
+            const SizedBox(width: 8),
+
+            // Primary Button: طلب عرض سعر
+            Expanded(
+              flex: 6,
+              child: SizedBox(
+                height: 46,
+                child: ElevatedButton.icon(
+                  onPressed: onRequestQuote,
+                  icon: const Icon(
+                    Icons.near_me_rounded,
+                    size: 18,
+                    color: Colors.white,
+                  ),
+                  label: const Text(
+                    'طلب عرض سعر',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: primaryColor,
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadius.rSM,
+                    ),
+                    padding: EdgeInsets.zero,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

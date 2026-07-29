@@ -21,6 +21,20 @@ class Product {
   final int availableQty;
   final Map<String, String> technicalSpecs;
   final bool isFavorite;
+  final String category;
+  final String subCategory;
+  final int reviewCount;
+  final String unit;
+  final String availabilityStatus;
+  final List<String> galleryImages;
+  final String width;
+  final String weight;
+  final String composition;
+  final String finish;
+  final String pattern;
+  final String tolerance;
+  final String shrinkage;
+  final String yarnCount;
 
   const Product({
     required this.id,
@@ -41,28 +55,74 @@ class Product {
     required this.availableQty,
     required this.technicalSpecs,
     this.isFavorite = false,
+    this.category = 'أقمشة',
+    this.subCategory = 'أقمشة قطن',
+    this.reviewCount = 32,
+    this.unit = 'متر',
+    this.availabilityStatus = 'متوفر',
+    this.galleryImages = const [
+      'https://images.unsplash.com/photo-1528301721190-186c3bd85418?w=500',
+      'https://images.unsplash.com/photo-1584290860587-2231ffc3df78?w=500',
+      'https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?w=500',
+      'https://images.unsplash.com/photo-1549490349-8643362247b5?w=500',
+      'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=500',
+      'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=500',
+      'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=500',
+    ],
+    this.width = '150 سم',
+    this.weight = '140 جم/م²',
+    this.composition = '100% قطن',
+    this.finish = 'ناعمة / مغسولة',
+    this.pattern = 'سادة',
+    this.tolerance = '±2%',
+    this.shrinkage = '< 3%',
+    this.yarnCount = '30/1 ممشط',
   });
 
-  Product copyWith({bool? isFavorite}) {
+  Product copyWith({
+    bool? isFavorite,
+    String? name,
+    double? price,
+    int? moq,
+    int? prepTimeDays,
+    double? rating,
+    int? reviewCount,
+    int? availableQty,
+    String? description,
+  }) {
     return Product(
       id: id,
-      name: name,
+      name: name ?? this.name,
       supplierName: supplierName,
       supplierId: supplierId,
-      price: price,
-      moq: moq,
-      prepTimeDays: prepTimeDays,
-      rating: rating,
+      price: price ?? this.price,
+      moq: moq ?? this.moq,
+      prepTimeDays: prepTimeDays ?? this.prepTimeDays,
+      rating: rating ?? this.rating,
       countryOfOrigin: countryOfOrigin,
       isVerifiedSupplier: isVerifiedSupplier,
       imageUrl: imageUrl,
-      description: description,
+      description: description ?? this.description,
       material: material,
       colors: colors,
       sizes: sizes,
-      availableQty: availableQty,
+      availableQty: availableQty ?? this.availableQty,
       technicalSpecs: technicalSpecs,
       isFavorite: isFavorite ?? this.isFavorite,
+      category: category,
+      subCategory: subCategory,
+      reviewCount: reviewCount ?? this.reviewCount,
+      unit: unit,
+      availabilityStatus: availabilityStatus,
+      galleryImages: galleryImages,
+      width: width,
+      weight: weight,
+      composition: composition,
+      finish: finish,
+      pattern: pattern,
+      tolerance: tolerance,
+      shrinkage: shrinkage,
+      yarnCount: yarnCount,
     );
   }
 }
@@ -85,7 +145,7 @@ class ProductsNotifier extends _$ProductsNotifier {
     try {
       return state.firstWhere((p) => p.id == id);
     } catch (_) {
-      return null;
+      return state.isNotEmpty ? state.first : null;
     }
   }
 }
@@ -93,26 +153,40 @@ class ProductsNotifier extends _$ProductsNotifier {
 final List<Product> _mockProducts = [
   const Product(
     id: 'prod_1',
-    name: 'خيوط قطن ممشط 30/1 سوبر',
-    supplierName: 'شركة غزل المحلة الكبرى',
+    name: 'قماش قطن 100% أبيض',
+    supplierName: 'مصر للغزل والنسيج',
     supplierId: 'sup_1',
-    price: 145.0,
+    price: 42.00,
     moq: 500,
     prepTimeDays: 7,
     rating: 4.8,
-    countryOfOrigin: 'مصر',
+    reviewCount: 32,
+    countryOfOrigin: 'مصر 🇪🇬',
     isVerifiedSupplier: true,
     imageUrl: 'https://images.unsplash.com/photo-1528301721190-186c3bd85418?w=500',
-    description: 'خيوط قطن طبيعي 100% ممشط نمرة 30/1 مناسبة لحياكة المنسوجات الفاخرة والملابس الرياضية القطنية الناعمة. تتميز بمقاومة عالية للاهتراء ولمعان طبيعي.',
-    material: 'قطن مصري 100%',
-    colors: ['أبيض ناصع', 'أسود فاحم', 'رمادي فاتح'],
-    sizes: ['نمرة 30/1', 'نمرة 40/1', 'نمرة 24/1'],
+    description: 'قماش قطن 100% عالي الجودة مناسب للملابس الصيفية، يتميز بالنعومة والتهوية الجيدة والثبات في الألوان بعد الغسيل.',
+    material: '100% قطن',
+    colors: ['أبيض', 'سماوي', 'أخضر', 'بيج', 'رمادي'],
+    sizes: ['عرض 150 سم'],
     availableQty: 15000,
+    category: 'أقمشة',
+    subCategory: 'أقمشة قطن',
+    width: '150 سم',
+    weight: '140 جم/م²',
+    composition: '100% قطن',
+    finish: 'ناعم / مغسول',
+    pattern: 'سادة',
+    tolerance: '±2%',
     technicalSpecs: {
-      'قوة الشد': '18.5 RKM',
-      'الانحراف': '1.2%',
-      'نوع التمشيط': 'ممشط بالكامل (Combed)',
-      'الاستخدام': 'حياكة وتريكو دائري',
+      'التركيب': '100% قطن',
+      'العرض': '150 سم',
+      'الوزن': '140 جم/م²',
+      'اللون': 'أبيض',
+      'اللمسة النهائية': 'ناعم / مغسول',
+      'النقشة': 'سادة',
+      'نسبة التفاوت': '±2%',
+      'نسبة الانكماش': '< 3%',
+      'نمرة الخيط': '30/1 ممشط',
     },
   ),
   const Product(
