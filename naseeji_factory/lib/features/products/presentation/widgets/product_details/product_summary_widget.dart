@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../../../core/constants/app_colors.dart';
 import '../../../../../../core/constants/app_radius.dart';
-import '../../../../../../core/constants/app_spacing.dart';
 import '../../../../../../core/extensions/context_extensions.dart';
 import '../../providers/products_provider.dart';
 
@@ -31,7 +30,7 @@ class ProductSummaryWidget extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
             decoration: BoxDecoration(
-              color: primaryColor.withOpacity(0.12),
+              color: primaryColor.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Row(
@@ -178,7 +177,7 @@ class ProductSummaryWidget extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: AppColors.success.withOpacity(0.12),
+                color: AppColors.success.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(6),
               ),
               child: const Row(

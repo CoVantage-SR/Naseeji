@@ -80,14 +80,14 @@ class _ProductGalleryWidgetState extends State<ProductGalleryWidget> {
                   ),
                 ),
               ),
-              // Page Count Badge (Bottom Left in LTR, Bottom Left in RTL overlay)
+              // Page Count Badge (Bottom Left)
               Positioned(
                 bottom: 12,
                 left: 12,
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.65),
+                    color: Colors.black.withValues(alpha: 0.65),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -105,7 +105,7 @@ class _ProductGalleryWidgetState extends State<ProductGalleryWidget> {
                 bottom: 12,
                 right: 12,
                 child: Material(
-                  color: Colors.black.withOpacity(0.65),
+                  color: Colors.black.withValues(alpha: 0.65),
                   shape: const CircleBorder(),
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
@@ -169,7 +169,7 @@ class _ProductGalleryWidgetState extends State<ProductGalleryWidget> {
                               ),
                               if (isLastItem)
                                 Container(
-                                  color: Colors.black.withOpacity(0.65),
+                                  color: Colors.black.withValues(alpha: 0.65),
                                   alignment: Alignment.center,
                                   child: Text(
                                     '+$remainingCount',
@@ -286,7 +286,7 @@ class _FullscreenGalleryDialogState extends State<FullscreenGalleryDialog> {
             Container(
               height: 70,
               padding: const EdgeInsets.symmetric(vertical: 8),
-              color: Colors.black.withOpacity(0.8),
+              color: Colors.black.withValues(alpha: 0.8),
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 16),

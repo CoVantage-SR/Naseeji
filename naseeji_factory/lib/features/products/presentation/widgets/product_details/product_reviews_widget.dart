@@ -160,7 +160,7 @@ class ProductReviewsWidget extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 18,
-                        backgroundColor: primaryColor.withOpacity(0.12),
+                        backgroundColor: primaryColor.withValues(alpha: 0.12),
                         child: Text(
                           (r['name'] as String).substring(3, 4),
                           style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
@@ -219,7 +219,7 @@ class ProductReviewsWidget extends StatelessWidget {
                 ],
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
     );

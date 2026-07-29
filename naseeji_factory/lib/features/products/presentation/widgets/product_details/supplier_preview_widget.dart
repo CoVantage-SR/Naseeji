@@ -99,11 +99,11 @@ class _SupplierCardWidgetState extends State<SupplierCardWidget> {
                           ],
                         ),
                         const SizedBox(height: 2),
-                        Row(
+                        const Row(
                           children: [
-                            const Icon(Icons.circle, size: 7, color: AppColors.success),
-                            const SizedBox(width: 4),
-                            const Text(
+                            Icon(Icons.circle, size: 7, color: AppColors.success),
+                            SizedBox(width: 4),
+                            Text(
                               'متصل الآن',
                               style: TextStyle(
                                 color: AppColors.success,
@@ -244,7 +244,7 @@ class _SupplierCardWidgetState extends State<SupplierCardWidget> {
                   onPressed: widget.onViewAllProducts,
                   style: OutlinedButton.styleFrom(
                     foregroundColor: primaryColor,
-                    side: BorderSide(color: primaryColor.withOpacity(0.5)),
+                    side: BorderSide(color: primaryColor.withValues(alpha: 0.5)),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),

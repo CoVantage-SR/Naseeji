@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../../core/constants/app_colors.dart';
 import '../../../../../../core/constants/app_radius.dart';
 import '../../../../home/presentation/providers/notifications_provider.dart';
-import '../../../rfq/presentation/providers/rfq_provider.dart';
-import '../providers/products_provider.dart';
+import '../../../../rfq/presentation/providers/rfq_provider.dart';
+import '../../providers/products_provider.dart';
 
 /// Modal dialog / bottom sheet for creating and submitting a new Request For Quotation (RFQ)
 class CreateRfqModal extends ConsumerStatefulWidget {
@@ -83,17 +83,16 @@ class _CreateRfqModalState extends ConsumerState<CreateRfqModal> {
         );
 
     // 2. Add reactive notification to user system
-    ref.read(notificationsNotifierProvider.notifier).state = [
-      AppNotification(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        title: 'تم إرسال طلب عرض السعر (RFQ)',
-        description: 'تم إرسال طلبك رقم RFQ إلى ${widget.product.supplierName} بنجاح!',
-        time: 'الآن',
-        category: 'rfqs',
-        isRead: false,
-      ),
-      ...ref.read(notificationsNotifierProvider),
-    ];
+    ref.read(notificationsNotifierProvider.notifier).addNotification(
+          AppNotification(
+            id: DateTime.now().millisecondsSinceEpoch.toString(),
+            title: 'تم إرسال طلب عرض السعر (RFQ)',
+            description: 'تم إرسال طلبك رقم RFQ إلى ${widget.product.supplierName} بنجاح!',
+            time: 'الآن',
+            category: 'rfqs',
+            isRead: false,
+          ),
+        );
 
     await Future.delayed(const Duration(milliseconds: 300));
 
@@ -154,7 +153,7 @@ class _CreateRfqModalState extends ConsumerState<CreateRfqModal> {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: primaryColor.withOpacity(0.12),
+                      color: primaryColor.withValues(alpha: 0.12),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(Icons.request_quote_rounded, color: primaryColor, size: 22),
@@ -189,9 +188,9 @@ class _CreateRfqModalState extends ConsumerState<CreateRfqModal> {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: primaryColor.withOpacity(0.08),
+                  color: primaryColor.withValues(alpha: 0.08),
                   borderRadius: AppRadius.rSM,
-                  border: Border.all(color: primaryColor.withOpacity(0.2)),
+                  border: Border.all(color: primaryColor.withValues(alpha: 0.2)),
                 ),
                 child: Row(
                   children: [
@@ -244,7 +243,7 @@ class _CreateRfqModalState extends ConsumerState<CreateRfqModal> {
                   Expanded(
                     flex: 2,
                     child: DropdownButtonFormField<String>(
-                      value: _selectedUnit,
+                      initialValue: _selectedUnit,
                       decoration: const InputDecoration(
                         labelText: 'الوحدة',
                         border: OutlineInputBorder(),
@@ -348,7 +347,7 @@ class StatusChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.12),
+        color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(

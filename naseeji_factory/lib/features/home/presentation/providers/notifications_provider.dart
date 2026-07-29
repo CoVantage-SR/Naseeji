@@ -111,6 +111,10 @@ class NotificationsNotifier extends _$NotificationsNotifier {
     }).toList();
   }
 
+  void addNotification(AppNotification notification) {
+    state = [notification, ...state];
+  }
+
   void deleteNotification(String id) {
     state = state.where((notification) => notification.id != id).toList();
   }
