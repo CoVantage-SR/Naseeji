@@ -84,7 +84,7 @@ class AvailableDocumentsWidget extends StatelessWidget {
                   margin: const EdgeInsets.only(left: 10),
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: isDark ? AppColors.surfaceDark : Colors.blue.shade50.withOpacity(0.4),
+                    color: isDark ? AppColors.surfaceDark : Colors.blue.shade50.withValues(alpha: 0.4),
                     borderRadius: AppRadius.rSM,
                     border: Border.all(
                       color: isDark ? AppColors.borderDark : Colors.blue.shade100,

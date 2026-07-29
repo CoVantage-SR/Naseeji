@@ -155,7 +155,6 @@ class _FactoryProductDetailsScreenState extends ConsumerState<FactoryProductDeta
     return Scaffold(
       backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
-        scaffoldModeBanner: true,
         title: const Text(
           'تفاصيل المنتج',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),

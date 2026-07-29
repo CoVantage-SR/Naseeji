@@ -64,9 +64,8 @@ class _CreateRfqModalState extends ConsumerState<CreateRfqModal> {
 
     // 1. Create RFQ via Riverpod RFQ Notifier
     ref.read(rFQNotifierProvider.notifier).createRFQ(
-          title: 'طلب عرض سعر - ${widget.product.name}',
+          title: widget.product.name,
           category: widget.product.category,
-          productName: widget.product.name,
           quantity: qty,
           unit: _selectedUnit,
           description: _notesController.text.trim().isNotEmpty
@@ -80,6 +79,9 @@ class _CreateRfqModalState extends ConsumerState<CreateRfqModal> {
           city: 'المنصورة',
           address: 'المنطقة الصناعية',
           deliveryDate: formattedDate,
+          attachments: const [],
+          sendToRecommended: false,
+          selectedSupplierIds: [widget.product.supplierId],
         );
 
     // 2. Add reactive notification to user system
