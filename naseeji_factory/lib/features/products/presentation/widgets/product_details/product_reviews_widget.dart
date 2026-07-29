@@ -19,9 +19,9 @@ class ProductReviewsWidget extends StatelessWidget {
 
     final customerPhotos = [
       'https://images.unsplash.com/photo-1528301721190-186c3bd85418?w=300',
-      'https://images.unsplash.com/photo-1584290860587-2231ffc3df78?w=300',
-      'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=300',
       'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=300',
+      'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=300',
+      'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=300',
     ];
 
     final reviews = [
@@ -131,14 +131,19 @@ class ProductReviewsWidget extends StatelessWidget {
                   width: 70,
                   margin: const EdgeInsets.only(left: 8),
                   decoration: BoxDecoration(
+                    color: isDark ? AppColors.backgroundDark : Colors.grey.shade100,
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.grey.shade300),
+                    border: Border.all(color: isDark ? AppColors.borderDark : Colors.grey.shade300),
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(6),
                     child: Image.network(
                       customerPhotos[index],
                       fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Container(
+                        color: isDark ? AppColors.borderDark : Colors.grey.shade200,
+                        child: Icon(Icons.image_outlined, size: 24, color: Colors.grey.shade500),
+                      ),
                     ),
                   ),
                 );

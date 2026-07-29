@@ -152,16 +152,28 @@ class _FactoryProductDetailsScreenState extends ConsumerState<FactoryProductDeta
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final primaryColor = Theme.of(context).colorScheme.primary;
 
+    final appBarTextColor = isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight;
+
     return Scaffold(
       backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text(
+        backgroundColor: isDark ? AppColors.surfaceDark : Colors.white,
+        foregroundColor: appBarTextColor,
+        surfaceTintColor: Colors.transparent,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        iconTheme: IconThemeData(color: appBarTextColor),
+        title: Text(
           'تفاصيل المنتج',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            color: appBarTextColor,
+          ),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_rounded),
+          icon: Icon(Icons.arrow_back_rounded, color: appBarTextColor),
           onPressed: () {
             if (Navigator.of(context).canPop()) {
               Navigator.of(context).pop();
