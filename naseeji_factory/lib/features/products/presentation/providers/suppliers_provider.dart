@@ -169,7 +169,7 @@ class SuppliersNotifier extends _$SuppliersNotifier {
     try {
       return state.firstWhere((s) => s.id == id);
     } catch (_) {
-      return state.isNotEmpty ? state.first : null;
+      return _mockSuppliers.first;
     }
   }
 }
@@ -177,6 +177,56 @@ class SuppliersNotifier extends _$SuppliersNotifier {
 final List<Supplier> _mockSuppliers = [
   const Supplier(
     id: 'sup_1',
+    name: 'مصر للغزل والنسيج',
+    logoUrl: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=150',
+    type: 'مصنع غزل ونسيج قطني',
+    rating: 4.8,
+    reviewsCount: 128,
+    productsCount: 245,
+    completedOrders: 128,
+    clientsCount: 86,
+    certificatesCount: 6,
+    city: 'القاهرة',
+    governorate: 'مصر',
+    isVerified: true,
+    description:
+        'مصر للغزل والنسيج هي إحدى الشركات الرائدة في مجال الغزل والنسيج في مصر والشرق الأوسط منذ عام 1960. نقدم مجموعة واسعة من الأقمشة عالية الجودة والخيوط والمنتجات النسيجية بخبرات متقدمة ومعايير جودة عالمية.',
+    experience: 'تأسست عام 1960',
+    establishedYear: '1960',
+    deliveryPerformance: '95%',
+    responseSpeed: '95%',
+    avgDeliveryDays: '7 أيام',
+    memberSince: 'يناير 2020',
+    companyType: 'شركة مساهمة مصرية',
+    employeesCount: '350 - 500 موظف',
+    commercialReg: '10294857',
+    taxNumber: '492-104-582',
+    productionCapacity: '40,000 متر / يوم',
+    exportCountries: ['مصر', 'السعودية', 'الأردن', 'تركيا', 'أوروبا'],
+    isOnline: true,
+    certificates: [
+      'ISO 9001:2015 الجودة القياسية',
+      'ISO 14001:2015 الإدارة البيئية',
+      'Oeko-Tex Standard 100 خالي من المواد الضارة',
+      'GOTS الشهادة العالمية للأقمشة العضوية',
+      'REACH مطابقة للمعايير الأوروبية',
+      'شهادة الاعتماد الصناعي الهيئة العامة للتصنيع',
+    ],
+    paymentMethods: [
+      'تحويل بنكي مباشر (Wire Transfer)',
+      'اعتماد مستندي مغطى (L/C)',
+      'دفعة مقدمة 30% والباقي عند التسليم',
+      'شيكات مسبقة المصنع (للمشترين المعتمدين)',
+    ],
+    factoryImages: [
+      'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600',
+      'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=300',
+      'https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=300',
+      'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=300',
+    ],
+  ),
+  const Supplier(
+    id: 'sup_m1',
     name: 'مصر للغزل والنسيج',
     logoUrl: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=150',
     type: 'مصنع غزل ونسيج قطني',

@@ -285,15 +285,24 @@ class _SupplierOverviewTabState extends State<SupplierOverviewTab> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'فئات المنتجات',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              const Expanded(
+                child: Text(
+                  'فئات المنتجات',
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-              TextButton(
-                onPressed: widget.onCategoryTap,
-                child: const Text('عرض الكل', style: TextStyle(fontSize: 11)),
+              InkWell(
+                onTap: widget.onCategoryTap,
+                borderRadius: BorderRadius.circular(4),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                  child: Text(
+                    'عرض الكل',
+                    style: TextStyle(fontSize: 11, color: primaryColor, fontWeight: FontWeight.bold),
+                  ),
+                ),
               ),
             ],
           ),

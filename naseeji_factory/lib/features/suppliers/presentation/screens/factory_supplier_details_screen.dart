@@ -75,9 +75,11 @@ class _FactorySupplierDetailsScreenState extends ConsumerState<FactorySupplierDe
 
   @override
   Widget build(BuildContext context) {
-    final supplierNotifier = ref.watch(suppliersNotifierProvider.notifier);
-    final supplier = supplierNotifier.getSupplierById(widget.supplierId) ??
-        ref.watch(suppliersNotifierProvider).first;
+    final suppliers = ref.watch(suppliersNotifierProvider);
+    final supplier = suppliers.firstWhere(
+      (s) => s.id == widget.supplierId,
+      orElse: () => suppliers.first,
+    );
 
     final allProducts = ref.watch(productsNotifierProvider);
     final supplierProducts = allProducts.where((p) => p.supplierId == supplier.id).toList();
