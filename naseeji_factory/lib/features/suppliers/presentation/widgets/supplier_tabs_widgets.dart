@@ -146,7 +146,7 @@ class SupplierCertificatesTab extends StatelessWidget {
       backgroundColor: Colors.transparent,
       builder: (context) => PdfViewerModal(
         docTitle: docTitle,
-        fileSize: '2.4 MB',
+        docType: 'شهادة معتمدة PDF',
       ),
     );
   }
