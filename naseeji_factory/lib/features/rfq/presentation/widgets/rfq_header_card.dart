@@ -76,16 +76,19 @@ class RFQHeaderCard extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
-                              rfq.rfqNumber,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                            Flexible(
+                              child: Text(
+                                rfq.rfqNumber,
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                                ),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                             const SizedBox(width: 4),
-                            Icon(Icons.copy_rounded, size: 14, color: Colors.grey.shade500),
+                            Icon(Icons.copy_rounded, size: 13, color: Colors.grey.shade500),
                           ],
                         ),
                       ),
