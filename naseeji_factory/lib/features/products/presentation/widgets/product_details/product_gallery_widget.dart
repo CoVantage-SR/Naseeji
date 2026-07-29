@@ -316,6 +316,10 @@ class _FullscreenGalleryDialogState extends State<FullscreenGalleryDialog> {
                         child: Image.network(
                           widget.images[index],
                           fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) => Container(
+                            color: Colors.grey.shade800,
+                            child: const Icon(Icons.image_not_supported_outlined, size: 20, color: Colors.white54),
+                          ),
                         ),
                       ),
                     ),

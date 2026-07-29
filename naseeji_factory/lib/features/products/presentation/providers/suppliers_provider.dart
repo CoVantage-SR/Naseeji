@@ -25,6 +25,18 @@ class Supplier {
   final int reviewsCount;
   final String establishedYear;
   final String avgDeliveryDays;
+  final String memberSince;
+  final int clientsCount;
+  final int certificatesCount;
+  final String companyType;
+  final String employeesCount;
+  final String commercialReg;
+  final String taxNumber;
+  final String productionCapacity;
+  final List<String> exportCountries;
+  final List<String> factoryImages;
+  final List<String> paymentMethods;
+  final List<String> supportedIndustries;
 
   const Supplier({
     required this.id,
@@ -46,9 +58,31 @@ class Supplier {
     this.favoriteCategory,
     this.favoriteNote,
     this.isOnline = true,
-    this.reviewsCount = 124,
-    this.establishedYear = '2005',
-    this.avgDeliveryDays = '5 - 7 أيام',
+    this.reviewsCount = 128,
+    this.establishedYear = '1960',
+    this.avgDeliveryDays = '7 أيام',
+    this.memberSince = 'يناير 2020',
+    this.clientsCount = 86,
+    this.certificatesCount = 6,
+    this.companyType = 'شركة مساهمة مصرية',
+    this.employeesCount = '350 - 500 موظف',
+    this.commercialReg = '10294857',
+    this.taxNumber = '492-104-582',
+    this.productionCapacity = '40,000 متر / يوم',
+    this.exportCountries = const ['مصر', 'السعودية', 'الأردن', 'تركيا', 'أوروبا'],
+    this.factoryImages = const [
+      'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600',
+      'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=300',
+      'https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=300',
+      'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=300',
+    ],
+    this.paymentMethods = const ['تحويل بنكي', 'اعتماد مستندي (LC)', 'دفعة مقدمة + عند الاستلام'],
+    this.supportedIndustries = const [
+      'الملابس الجاهزة والبدل',
+      'المفروشات المنزلية',
+      'الزي الموحد والملابس الطبية',
+      'صناعة التريكو والأنسجة'
+    ],
   });
 
   Supplier copyWith({
@@ -81,6 +115,18 @@ class Supplier {
       reviewsCount: reviewsCount ?? this.reviewsCount,
       establishedYear: establishedYear,
       avgDeliveryDays: avgDeliveryDays,
+      memberSince: memberSince,
+      clientsCount: clientsCount,
+      certificatesCount: certificatesCount,
+      companyType: companyType,
+      employeesCount: employeesCount,
+      commercialReg: commercialReg,
+      taxNumber: taxNumber,
+      productionCapacity: productionCapacity,
+      exportCountries: exportCountries,
+      factoryImages: factoryImages,
+      paymentMethods: paymentMethods,
+      supportedIndustries: supportedIndustries,
     );
   }
 }
@@ -134,21 +180,50 @@ final List<Supplier> _mockSuppliers = [
     name: 'مصر للغزل والنسيج',
     logoUrl: 'https://images.unsplash.com/photo-1560179707-f14e90ef3623?w=150',
     type: 'مصنع غزل ونسيج قطني',
-    rating: 4.9,
-    reviewsCount: 124,
+    rating: 4.8,
+    reviewsCount: 128,
     productsCount: 245,
-    completedOrders: 1240,
-    city: 'المنصورة',
-    governorate: 'الدقهلية',
+    completedOrders: 128,
+    clientsCount: 86,
+    certificatesCount: 6,
+    city: 'القاهرة',
+    governorate: 'مصر',
     isVerified: true,
-    description: 'أكبر مجمع صناعي للغزل والنسيج والطباعة في مصر والدلتا، يتخصص في إنتاج الأقمشة القطنية 100% والمخلوطة بمواصفات جودة قياسية للتصدير والسوق المحلي.',
-    experience: 'تأسست عام 2005',
-    establishedYear: '2005',
-    deliveryPerformance: '98%',
-    responseSpeed: '98%',
-    avgDeliveryDays: '5 - 7 أيام',
+    description:
+        'مصر للغزل والنسيج هي إحدى الشركات الرائدة في مجال الغزل والنسيج في مصر والشرق الأوسط منذ عام 1960. نقدم مجموعة واسعة من الأقمشة عالية الجودة والخيوط والمنتجات النسيجية بخبرات متقدمة ومعايير جودة عالمية.',
+    experience: 'تأسست عام 1960',
+    establishedYear: '1960',
+    deliveryPerformance: '95%',
+    responseSpeed: '95%',
+    avgDeliveryDays: '7 أيام',
+    memberSince: 'يناير 2020',
+    companyType: 'شركة مساهمة مصرية',
+    employeesCount: '350 - 500 موظف',
+    commercialReg: '10294857',
+    taxNumber: '492-104-582',
+    productionCapacity: '40,000 متر / يوم',
+    exportCountries: ['مصر', 'السعودية', 'الأردن', 'تركيا', 'أوروبا'],
     isOnline: true,
-    certificates: ['ISO 9001', 'Oeko-Tex Standard 100', 'GOTS (عضوي)'],
+    certificates: [
+      'ISO 9001:2015 الجودة القياسية',
+      'ISO 14001:2015 الإدارة البيئية',
+      'Oeko-Tex Standard 100 خالي من المواد الضارة',
+      'GOTS الشهادة العالمية للأقمشة العضوية',
+      'REACH مطابقة للمعايير الأوروبية',
+      'شهادة الاعتماد الصناعي الهيئة العامة للتصنيع',
+    ],
+    paymentMethods: [
+      'تحويل بنكي مباشر (Wire Transfer)',
+      'اعتماد مستندي مغطى (L/C)',
+      'دفعة مقدمة 30% والباقي عند التسليم',
+      'شيكات مسبقة المصنع (للمشترين المعتمدين)',
+    ],
+    factoryImages: [
+      'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600',
+      'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=300',
+      'https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=300',
+      'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=300',
+    ],
   ),
   const Supplier(
     id: 'sup_2',
@@ -161,7 +236,8 @@ final List<Supplier> _mockSuppliers = [
     city: 'العاشر من رمضان',
     governorate: 'الشرقية',
     isVerified: true,
-    description: 'مصنع قطاع خاص حديث مجهز بأحدث الأنوال والمصبغات لإنتاج أقمشة الجينز والجبردين والتريكو لمختلف ماركات الملابس الجاهزة المحلية والدولية.',
+    description:
+        'مصنع قطاع خاص حديث مجهز بأحدث الأنوال والمصبغات لإنتاج أقمشة الجينز والجبردين والتريكو لمختلف ماركات الملابس الجاهزة المحلية والدولية.',
     experience: 'أكثر من ١٥ عاماً',
     deliveryPerformance: '٩٤%',
     responseSpeed: 'خلال ساعتين',
@@ -178,7 +254,8 @@ final List<Supplier> _mockSuppliers = [
     city: 'شبرا الخيمة',
     governorate: 'القليوبية',
     isVerified: false,
-    description: 'نستورد أفضل خيوط البوليستر والتطريز وجميع إكسسوارات الملابس ومستلزمات خطوط الإنتاج والتقفيل بأسعار تنافسية.',
+    description:
+        'نستورد أفضل خيوط البوليستر والتطريز وجميع إكسسوارات الملابس ومستلزمات خطوط الإنتاج والتقفيل بأسعار تنافسية.',
     experience: 'منذ ٨ أعوام',
     deliveryPerformance: '٩٠%',
     responseSpeed: 'خلال ٢٤ ساعة',
