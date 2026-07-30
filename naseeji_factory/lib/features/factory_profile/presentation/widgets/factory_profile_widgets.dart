@@ -567,7 +567,7 @@ class DocumentsLicensesCard extends ConsumerWidget {
             alignment: Alignment.center,
             children: [
               SizedBox(
-                height: 110,
+                height: 125,
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
@@ -611,7 +611,7 @@ class DocumentsLicensesCard extends ConsumerWidget {
   }) {
     return Container(
       width: 140,
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       decoration: BoxDecoration(
         color: isDark ? const Color(0xFF1E293B) : const Color(0xFFF8FAFC),
         borderRadius: AppRadius.rMD,

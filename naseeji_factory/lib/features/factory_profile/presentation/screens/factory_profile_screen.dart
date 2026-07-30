@@ -193,8 +193,16 @@ class _FactoryProfileScreenState extends ConsumerState<FactoryProfileScreen>
         Icon(icon, size: 18, color: AppColors.primary),
         const SizedBox(width: 8),
         Text(label, style: TextStyle(fontSize: 11, color: textSecondary)),
-        const Spacer(),
-        Text(val, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: textPrimary)),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            val,
+            textAlign: TextAlign.left,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: textPrimary),
+          ),
+        ),
       ],
     );
   }
