@@ -85,7 +85,7 @@ class EmployeeDetailsScreen extends ConsumerWidget {
                             width: 64,
                             height: 64,
                             fit: BoxFit.cover,
-                            errorBuilder: (_, __, ___) => Container(
+                            errorBuilder: (_, __, _) => Container(
                               width: 64,
                               height: 64,
                               color: AppColors.primary.withValues(alpha: 0.1),

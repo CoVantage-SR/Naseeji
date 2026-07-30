@@ -24,8 +24,8 @@ class _AddEmployeeSheetState extends ConsumerState<AddEmployeeSheet> {
 
   String _selectedDept = 'قسم المشتريات';
   String _selectedRole = 'purchasingOfficer';
-  String _selectedEmploymentType = 'دوام كامل';
-  EmployeeStatus _selectedStatus = EmployeeStatus.active;
+  final String _selectedEmploymentType = 'دوام كامل';
+  final EmployeeStatus _selectedStatus = EmployeeStatus.active;
   final Map<String, bool> _permissions = {
     'المنتجات': true,
     'عروض الأسعار': true,
@@ -38,7 +38,6 @@ class _AddEmployeeSheetState extends ConsumerState<AddEmployeeSheet> {
   @override
   Widget build(BuildContext context) {
     final isDark = context.theme.brightness == Brightness.dark;
-    final surface = isDark ? AppColors.surfaceDark : AppColors.surfaceLight;
     final textPrimary = isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight;
 
     return Padding(
@@ -133,7 +132,7 @@ class _AddEmployeeSheetState extends ConsumerState<AddEmployeeSheet> {
               const SizedBox(height: 10),
 
               DropdownButtonFormField<String>(
-                value: _selectedDept,
+                initialValue: _selectedDept,
                 decoration: const InputDecoration(labelText: 'القسم', border: OutlineInputBorder()),
                 items: const [
                   DropdownMenuItem(value: 'قسم المشتريات', child: Text('قسم المشتريات')),
@@ -149,7 +148,7 @@ class _AddEmployeeSheetState extends ConsumerState<AddEmployeeSheet> {
               const SizedBox(height: 10),
 
               DropdownButtonFormField<String>(
-                value: _selectedRole,
+                initialValue: _selectedRole,
                 decoration: const InputDecoration(labelText: 'الدور الوظيفي', border: OutlineInputBorder()),
                 items: const [
                   DropdownMenuItem(value: 'purchasingOfficer', child: Text('مسؤول مشتريات')),

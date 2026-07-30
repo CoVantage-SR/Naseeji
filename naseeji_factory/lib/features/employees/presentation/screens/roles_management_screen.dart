@@ -31,7 +31,7 @@ class RolesManagementScreen extends ConsumerWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _showAddRoleDialog(context, ref),
         backgroundColor: AppColors.primary,
-        icon: const Icon(Icons.add_shield_outlined, color: Colors.white),
+        icon: const Icon(Icons.security_rounded, color: Colors.white),
         label: const Text('إنشاء دور مخصص', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
       ),
       body: SafeArea(

@@ -1,5 +1,6 @@
 import '../../domain/entities/employee_entities.dart';
 import '../../../../features/account/data/datasources/account_mock_database.dart';
+import '../../../../features/account/domain/entities/account_entities.dart' as acc;
 
 class EmployeesMockDatabase {
   EmployeesMockDatabase._();
@@ -566,9 +567,8 @@ class EmployeesMockDatabase {
 
 /// Mapper to keep AccountMockDatabase in sync
 class EmployeeEntityToAccountMapper {
-  static dynamic toAccountEntity(EmployeeEntity emp) {
-    // Map to old Account module's entity if needed
-    return EmployeeEntity(
+  static acc.EmployeeEntity toAccountEntity(EmployeeEntity emp) {
+    return acc.EmployeeEntity(
       id: emp.id,
       name: emp.name,
       jobTitle: emp.jobTitle,
@@ -579,12 +579,10 @@ class EmployeeEntityToAccountMapper {
       status: emp.status.code,
       department: emp.department,
       lastLogin: emp.lastLogin,
-      permissionsCount: emp.permissionsCount,
-      joiningDate: emp.joiningDate,
-      employmentType: emp.employmentType,
-      lastActivity: emp.lastActivity,
-      permissions: emp.permissions,
-      managerName: emp.managerName,
+      permissions: {
+        for (final entry in emp.permissions.entries)
+          entry.key: entry.value.view,
+      },
     );
   }
 }

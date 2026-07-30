@@ -793,7 +793,7 @@ class EmployeeCardWidget extends StatelessWidget {
                     width: 52,
                     height: 52,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Container(
+                    errorBuilder: (_, __, _) => Container(
                       width: 52,
                       height: 52,
                       color: AppColors.primary.withValues(alpha: 0.1),
