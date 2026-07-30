@@ -15,16 +15,17 @@ class FactoryProfileRepositoryImpl implements FactoryProfileRepository {
   Future<void> updateProfile(FactoryProfileEntity profile) async {
     _db.profile = profile;
     // Sync with AccountMockDatabase
-    final currentAcc = AccountMockDatabase.instance.profile;
-    AccountMockDatabase.instance.profile = currentAcc.copyWith(
-      name: profile.name,
-      factoryType: profile.factoryType,
-      commercialRegister: profile.commercialRegister,
-      taxNumber: profile.taxNumber,
-      vatNumber: profile.vatNumber,
-      establishmentDate: profile.establishmentDate,
-      description: profile.description,
-      logoUrl: profile.logoUrl,
+    final currentAcc = AccountMockDatabase.instance.factoryProfile;
+    AccountMockDatabase.instance.updateFactoryProfile(
+      currentAcc.copyWith(
+        name: profile.name,
+        factoryType: profile.factoryType,
+        commercialRegNo: profile.commercialRegister,
+        taxCardNo: profile.taxNumber,
+        vatNo: profile.vatNumber,
+        description: profile.description,
+        logoUrl: profile.logoUrl,
+      ),
     );
   }
 

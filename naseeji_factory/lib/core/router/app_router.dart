@@ -71,7 +71,7 @@ import '../../features/reviews/presentation/screens/rate_supplier_screen.dart';
 import '../../features/reviews/presentation/screens/write_review_screen.dart';
 import '../../features/reviews/presentation/screens/reviews_screen.dart';
 import '../../features/reviews/presentation/screens/review_details_screen.dart';
-import '../../features/account/presentation/screens/account_profile_screen.dart';
+import '../../features/factory_profile/presentation/screens/factory_profile_screen.dart';
 import '../../features/account/presentation/screens/edit_profile_screen.dart';
 import '../../features/employees/presentation/screens/employee_management_screen.dart';
 import '../../features/employees/presentation/screens/employee_details_screen.dart';
@@ -521,7 +521,7 @@ GoRouter appRouter(AppRouterRef ref) {
       // Account & Settings Routes
       GoRoute(
         path: '/account/profile',
-        builder: (context, state) => const AccountProfileScreen(),
+        builder: (context, state) => const FactoryProfileScreen(),
       ),
       GoRoute(
         path: '/account/profile/edit',
