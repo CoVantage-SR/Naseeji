@@ -306,7 +306,6 @@ class EmployeeStatsCards extends ConsumerWidget {
     return Expanded(
       child: Material(
         color: surface,
-        borderRadius: AppRadius.rLG,
         shape: RoundedRectangleBorder(
           borderRadius: AppRadius.rLG,
           side: BorderSide(color: border),
@@ -472,7 +471,6 @@ class EmployeeSearchAndFilters extends ConsumerWidget {
         // Live Search TextField
         Material(
           color: surface,
-          borderRadius: AppRadius.rMD,
           shape: RoundedRectangleBorder(
             borderRadius: AppRadius.rMD,
             side: BorderSide(color: border),

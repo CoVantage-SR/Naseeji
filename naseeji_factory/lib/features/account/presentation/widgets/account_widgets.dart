@@ -400,7 +400,6 @@ class SettingsGroup extends StatelessWidget {
         ),
         Material(
           color: surface,
-          borderRadius: AppRadius.rLG,
           clipBehavior: Clip.antiAlias,
           shape: RoundedRectangleBorder(
             borderRadius: AppRadius.rLG,

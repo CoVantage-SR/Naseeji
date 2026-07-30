@@ -70,7 +70,6 @@ class EmployeeDetailsScreen extends ConsumerWidget {
             // Header Profile Card
             Material(
               color: surface,
-              borderRadius: AppRadius.rLG,
               shape: RoundedRectangleBorder(
                 borderRadius: AppRadius.rLG,
                 side: BorderSide(color: border),
@@ -178,7 +177,6 @@ class EmployeeDetailsScreen extends ConsumerWidget {
             const SizedBox(height: 8),
             Material(
               color: surface,
-              borderRadius: AppRadius.rLG,
               shape: RoundedRectangleBorder(borderRadius: AppRadius.rLG, side: BorderSide(color: border)),
               child: Padding(
                 padding: const EdgeInsets.all(14),
@@ -208,7 +206,6 @@ class EmployeeDetailsScreen extends ConsumerWidget {
                 final att = snapshot.data;
                 return Material(
                   color: surface,
-                  borderRadius: AppRadius.rLG,
                   shape: RoundedRectangleBorder(borderRadius: AppRadius.rLG, side: BorderSide(color: border)),
                   child: Padding(
                     padding: const EdgeInsets.all(14),
@@ -254,7 +251,6 @@ class EmployeeDetailsScreen extends ConsumerWidget {
                 final work = snapshot.data;
                 return Material(
                   color: surface,
-                  borderRadius: AppRadius.rLG,
                   shape: RoundedRectangleBorder(borderRadius: AppRadius.rLG, side: BorderSide(color: border)),
                   child: Padding(
                     padding: const EdgeInsets.all(14),

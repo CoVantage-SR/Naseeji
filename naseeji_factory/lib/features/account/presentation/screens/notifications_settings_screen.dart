@@ -46,7 +46,6 @@ class NotificationsSettingsScreen extends ConsumerWidget {
               padding: const EdgeInsets.only(bottom: 12),
               child: Material(
                 color: surface,
-                borderRadius: AppRadius.rLG,
                 clipBehavior: Clip.antiAlias,
                 shape: RoundedRectangleBorder(
                   borderRadius: AppRadius.rLG,

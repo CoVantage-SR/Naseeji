@@ -37,7 +37,6 @@ class _SecurityScreenState extends ConsumerState<SecurityScreen> {
           const SizedBox(height: 8),
           Material(
             color: surface,
-            borderRadius: AppRadius.rLG,
             clipBehavior: Clip.antiAlias,
             shape: RoundedRectangleBorder(
               borderRadius: AppRadius.rLG,
@@ -112,7 +111,6 @@ class _SecurityScreenState extends ConsumerState<SecurityScreen> {
           const SizedBox(height: 8),
           Material(
             color: surface,
-            borderRadius: AppRadius.rLG,
             clipBehavior: Clip.antiAlias,
             shape: RoundedRectangleBorder(
               borderRadius: AppRadius.rLG,
@@ -156,7 +154,6 @@ class _SecurityScreenState extends ConsumerState<SecurityScreen> {
           const SizedBox(height: 8),
           Material(
             color: surface,
-            borderRadius: AppRadius.rLG,
             clipBehavior: Clip.antiAlias,
             shape: RoundedRectangleBorder(
               borderRadius: AppRadius.rLG,

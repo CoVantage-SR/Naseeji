@@ -48,59 +48,62 @@ class RolesManagementScreen extends ConsumerWidget {
             ...state.roles.map((role) {
               return Container(
                 margin: const EdgeInsets.only(bottom: 12),
-                decoration: BoxDecoration(
+                child: Material(
                   color: surface,
-                  borderRadius: AppRadius.rLG,
-                  border: Border.all(color: border),
-                ),
-                child: ExpansionTile(
-                  leading: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary.withValues(alpha: 0.1),
-                      shape: BoxShape.circle,
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadius.rLG,
+                    side: BorderSide(color: border),
+                  ),
+                  child: ExpansionTile(
+                    leading: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary.withValues(alpha: 0.1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(Icons.shield_rounded, color: AppColors.primary, size: 20),
                     ),
-                    child: const Icon(Icons.shield_rounded, color: AppColors.primary, size: 20),
-                  ),
-                  title: Row(
-                    children: [
-                      Text(role.name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: textPrimary)),
-                      if (role.isCustom) ...[
-                        const SizedBox(width: 8),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                          decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.1), borderRadius: AppRadius.rRound),
-                          child: const Text('مخصص', style: TextStyle(fontSize: 9, color: AppColors.info, fontWeight: FontWeight.bold)),
-                        ),
-                      ],
-                    ],
-                  ),
-                  subtitle: Text('${role.description} • (${role.assignedUsersCount} موظفين)', style: TextStyle(fontSize: 11, color: textSecondary)),
-                  children: [
-                    const Divider(height: 1),
-                    Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text('مصفوفة الصلاحيات الممنوحة:', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
-                          const SizedBox(height: 8),
-                          Wrap(
-                            spacing: 6,
-                            runSpacing: 6,
-                            children: role.permissions.keys.map((module) {
-                              return Chip(
-                                backgroundColor: AppColors.primary.withValues(alpha: 0.08),
-                                side: BorderSide(color: AppColors.primary.withValues(alpha: 0.2)),
-                                avatar: const Icon(Icons.check_circle_rounded, size: 14, color: AppColors.primary),
-                                label: Text(module, style: const TextStyle(fontSize: 11, color: AppColors.primary)),
-                              );
-                            }).toList(),
+                    title: Row(
+                      children: [
+                        Text(role.name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: textPrimary)),
+                        if (role.isCustom) ...[
+                          const SizedBox(width: 8),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                            decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.1), borderRadius: AppRadius.rRound),
+                            child: const Text('مخصص', style: TextStyle(fontSize: 9, color: AppColors.info, fontWeight: FontWeight.bold)),
                           ),
                         ],
-                      ),
+                      ],
                     ),
-                  ],
+                    subtitle: Text('${role.description} • (${role.assignedUsersCount} موظفين)', style: TextStyle(fontSize: 11, color: textSecondary)),
+                    children: [
+                      const Divider(height: 1),
+                      Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('مصفوفة الصلاحيات الممنوحة:', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                            const SizedBox(height: 8),
+                            Wrap(
+                              spacing: 6,
+                              runSpacing: 6,
+                              children: role.permissions.keys.map((module) {
+                                return Chip(
+                                  backgroundColor: AppColors.primary.withValues(alpha: 0.08),
+                                  side: BorderSide(color: AppColors.primary.withValues(alpha: 0.2)),
+                                  avatar: const Icon(Icons.check_circle_rounded, size: 14, color: AppColors.primary),
+                                  label: Text(module, style: const TextStyle(fontSize: 11, color: AppColors.primary)),
+                                );
+                              }).toList(),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             }),

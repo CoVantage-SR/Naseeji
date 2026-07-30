@@ -17,8 +17,12 @@ class DepartmentsScreen extends ConsumerWidget {
     final isDark = context.theme.brightness == Brightness.dark;
     final surface = isDark ? AppColors.surfaceDark : AppColors.surfaceLight;
     final border = isDark ? AppColors.borderDark : AppColors.borderLight;
-    final textPrimary = isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight;
-    final textSecondary = isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
+    final textPrimary = isDark
+        ? AppColors.textPrimaryDark
+        : AppColors.textPrimaryLight;
+    final textSecondary = isDark
+        ? AppColors.textSecondaryDark
+        : AppColors.textSecondaryLight;
 
     return Scaffold(
       appBar: AppBar(
@@ -32,7 +36,10 @@ class DepartmentsScreen extends ConsumerWidget {
         onPressed: () => _showAddDepartmentDialog(context, ref),
         backgroundColor: AppColors.primary,
         icon: const Icon(Icons.add_business_outlined, color: Colors.white),
-        label: const Text('إضافة قسم جديد', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        label: const Text(
+          'إضافة قسم جديد',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
       ),
       body: SafeArea(
         child: ListView(
@@ -41,33 +48,67 @@ class DepartmentsScreen extends ConsumerWidget {
           children: [
             Text(
               'الهيكل التنظيمي وأقسام المصنع المعتمدة:',
-              style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: textPrimary),
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
+                color: textPrimary,
+              ),
             ),
             const SizedBox(height: 12),
 
             ...state.departments.map((dept) {
               return Container(
                 margin: const EdgeInsets.only(bottom: 10),
-                decoration: BoxDecoration(
+                child: Material(
                   color: surface,
-                  borderRadius: AppRadius.rLG,
-                  border: Border.all(color: border),
-                ),
-                child: ListTile(
-                  leading: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary.withValues(alpha: 0.1),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(Icons.business_rounded, color: AppColors.primary, size: 22),
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadius.rLG,
+                    side: BorderSide(color: border),
                   ),
-                  title: Text(dept.name, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: textPrimary)),
-                  subtitle: Text('${dept.description}\nرئيس القسم: ${dept.headName}', style: TextStyle(fontSize: 11, color: textSecondary)),
-                  trailing: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: AppRadius.rRound),
-                    child: Text('${dept.employeeCount} موظف', style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.primary)),
+                  child: ListTile(
+                    leading: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary.withValues(alpha: 0.1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.business_rounded,
+                        color: AppColors.primary,
+                        size: 22,
+                      ),
+                    ),
+                    title: Text(
+                      dept.name,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                        color: textPrimary,
+                      ),
+                    ),
+                    subtitle: Text(
+                      '${dept.description}\nرئيس القسم: ${dept.headName}',
+                      style: TextStyle(fontSize: 11, color: textSecondary),
+                    ),
+                    trailing: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary.withValues(alpha: 0.1),
+                        borderRadius: AppRadius.rRound,
+                      ),
+                      child: Text(
+                        '${dept.employeeCount} موظف',
+                        style: const TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               );
@@ -90,13 +131,24 @@ class DepartmentsScreen extends ConsumerWidget {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextField(controller: nameController, decoration: const InputDecoration(labelText: 'اسم القسم (مثال: قسم التعبئة والتغليف)')),
+            TextField(
+              controller: nameController,
+              decoration: const InputDecoration(
+                labelText: 'اسم القسم (مثال: قسم التعبئة والتغليف)',
+              ),
+            ),
             const SizedBox(height: 10),
-            TextField(controller: descController, decoration: const InputDecoration(labelText: 'الوصف والمهام')),
+            TextField(
+              controller: descController,
+              decoration: const InputDecoration(labelText: 'الوصف والمهام'),
+            ),
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('إلغاء')),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('إلغاء'),
+          ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
             onPressed: () {
@@ -112,11 +164,16 @@ class DepartmentsScreen extends ConsumerWidget {
                 ref.read(employeesProvider.notifier).addDepartment(newDept);
                 Navigator.pop(ctx);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('تم إضافة القسم "${newDept.name}" بنجاح!')),
+                  SnackBar(
+                    content: Text('تم إضافة القسم "${newDept.name}" بنجاح!'),
+                  ),
                 );
               }
             },
-            child: const Text('إضافة القسم', style: TextStyle(color: Colors.white)),
+            child: const Text(
+              'إضافة القسم',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
         ],
       ),
