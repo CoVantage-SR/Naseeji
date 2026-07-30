@@ -113,7 +113,7 @@ class FactoryProfileHeaderCard extends ConsumerWidget {
                   child: Image.network(
                     p.logoUrl,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, _) => Container(
+                    errorBuilder: (context, error, stackTrace) => Container(
                       color: AppColors.primary.withValues(alpha: 0.1),
                       child: const Icon(Icons.factory_rounded, color: AppColors.primary, size: 36),
                     ),
