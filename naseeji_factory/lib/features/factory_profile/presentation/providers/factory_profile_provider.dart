@@ -3,7 +3,6 @@ import '../../data/repositories/factory_profile_repository_impl.dart';
 import '../../domain/entities/factory_profile_entities.dart';
 import '../../domain/repositories/factory_profile_repository.dart';
 import '../../../../features/account/presentation/providers/account_provider.dart';
-import '../../../../features/auth/presentation/providers/auth_provider.dart';
 
 final factoryProfileRepositoryProvider = Provider<FactoryProfileRepository>((ref) {
   return FactoryProfileRepositoryImpl();
@@ -160,11 +159,6 @@ class FactoryProfileNotifier extends StateNotifier<FactoryProfileState> {
 
     // Sync with global providers
     _ref.read(accountNotifierProvider.notifier);
-    _ref.read(factoryProvider.notifier).updateProfile(
-          name: profile.name,
-          factoryType: profile.factoryType,
-          description: profile.description,
-        );
   }
 
   Future<void> updateLocation(FactoryLocationEntity location) async {

@@ -22,7 +22,6 @@ class FactoryProfileRepositoryImpl implements FactoryProfileRepository {
         factoryType: profile.factoryType,
         commercialRegNo: profile.commercialRegister,
         taxCardNo: profile.taxNumber,
-        vatNo: profile.vatNumber,
         description: profile.description,
         logoUrl: profile.logoUrl,
       ),

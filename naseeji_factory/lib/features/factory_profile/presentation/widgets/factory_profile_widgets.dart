@@ -113,7 +113,7 @@ class FactoryProfileHeaderCard extends ConsumerWidget {
                   child: Image.network(
                     p.logoUrl,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) => Container(
+                    errorBuilder: (_, __, _) => Container(
                       color: AppColors.primary.withValues(alpha: 0.1),
                       child: const Icon(Icons.factory_rounded, color: AppColors.primary, size: 36),
                     ),
@@ -461,7 +461,7 @@ class BasicInformationCard extends ConsumerWidget {
     bool isMultiLine = false,
   }) {
     return Row(
-      crossAxisAlignment: isMultiLine ? CrossAlignment.start : CrossAxisAlignment.center,
+      crossAxisAlignment: isMultiLine ? CrossAxisAlignment.start : CrossAxisAlignment.center,
       children: [
         // Left (RTL): Edit button
         InkWell(
@@ -572,7 +572,7 @@ class DocumentsLicensesCard extends ConsumerWidget {
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
                   itemCount: docs.length,
-                  separatorBuilder: (_, __) => const SizedBox(width: 10),
+                  separatorBuilder: (_, _) => const SizedBox(width: 10),
                   itemBuilder: (context, index) {
                     final doc = docs[index];
                     return _docItemCard(context, doc: doc, isDark: isDark, surface: surface, border: border, textPrimary: textPrimary);
@@ -734,7 +734,7 @@ class FactoryGalleryCard extends ConsumerWidget {
                       child: Image.network(
                         item.imageUrl,
                         fit: BoxFit.cover,
-                        errorBuilder: (_, __, _) => Container(
+                        errorBuilder: (context, error, stackTrace) => Container(
                           color: Colors.grey.shade300,
                           child: const Icon(Icons.image_not_supported_outlined, color: Colors.grey),
                         ),
