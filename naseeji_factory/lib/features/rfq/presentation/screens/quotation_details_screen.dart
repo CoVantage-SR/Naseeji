@@ -6,26 +6,26 @@ import '../../../products/presentation/widgets/share_widgets.dart';
 import '../providers/quotations_provider.dart';
 
 import '../widgets/quotation_bottom_action_bar.dart';
+import '../widgets/quotation_chat_section.dart';
 import '../widgets/quotation_comparison_chat_attachments.dart';
 import '../widgets/quotation_header_card.dart';
 import '../widgets/quotation_info_grid.dart';
+import '../widgets/quotation_negotiation_card.dart';
 import '../widgets/quotation_score_cards.dart';
 import '../widgets/quotation_supplier_card.dart';
 import '../widgets/quotation_timeline_log.dart';
 
-/// Full Production-Ready Quotation Details Screen matching Reference Image
+/// Production-Ready Enterprise RFQ Negotiation & Quotation Details Screen matching SAP Ariba / Oracle Procurement
 class QuotationDetailsScreen extends ConsumerStatefulWidget {
   final String quoteId;
 
   const QuotationDetailsScreen({super.key, required this.quoteId});
 
   @override
-  ConsumerState<QuotationDetailsScreen> createState() =>
-      _QuotationDetailsScreenState();
+  ConsumerState<QuotationDetailsScreen> createState() => _QuotationDetailsScreenState();
 }
 
-class _QuotationDetailsScreenState
-    extends ConsumerState<QuotationDetailsScreen> {
+class _QuotationDetailsScreenState extends ConsumerState<QuotationDetailsScreen> {
   void _showShareModal(BuildContext context, Quotation quotation) {
     showModalBottomSheet(
       context: context,
@@ -68,10 +68,7 @@ class _QuotationDetailsScreenState
               mainAxisSize: MainAxisSize.min,
               children: [
                 ListTile(
-                  leading: const Icon(
-                    Icons.picture_as_pdf_outlined,
-                    color: AppColors.primary,
-                  ),
+                  leading: const Icon(Icons.picture_as_pdf_outlined, color: AppColors.primary),
                   title: const Text('تنزيل العرض المعتمد (PDF)'),
                   onTap: () {
                     Navigator.pop(context);
@@ -81,10 +78,15 @@ class _QuotationDetailsScreenState
                   },
                 ),
                 ListTile(
-                  leading: const Icon(
-                    Icons.archive_outlined,
-                    color: Colors.grey,
-                  ),
+                  leading: const Icon(Icons.compare_arrows_rounded, color: AppColors.primary),
+                  title: const Text('مقارنة بالعروض الأخرى'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    context.push('/rfq/${quotation.rfqId}/compare-quotations');
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.archive_outlined, color: Colors.grey),
                   title: const Text('أرشفة عرض السعر'),
                   onTap: () {
                     Navigator.pop(context);
@@ -94,17 +96,12 @@ class _QuotationDetailsScreenState
                   },
                 ),
                 ListTile(
-                  leading: const Icon(
-                    Icons.report_problem_outlined,
-                    color: AppColors.error,
-                  ),
+                  leading: const Icon(Icons.report_problem_outlined, color: AppColors.error),
                   title: const Text('الإبلاغ عن مخالفة المورد'),
                   onTap: () {
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('تم توجيه بلاغ المخالفة لإدارة المنصة.'),
-                      ),
+                      const SnackBar(content: Text('تم توجيه بلاغ المخالفة لإدارة المنصة.')),
                     );
                   },
                 ),
@@ -132,14 +129,10 @@ class _QuotationDetailsScreenState
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
-              ref
-                  .read(quotationsNotifierProvider.notifier)
-                  .acceptQuotation(quotation.id);
+              ref.read(quotationsNotifierProvider.notifier).acceptQuotation(quotation.id);
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text(
-                    'تم قبول عرض السعر وإنشاء الصفقة والاتفاقية بنجاح!',
-                  ),
+                  content: Text('تم قبول عرض السعر وإنشاء الصفقة والاتفاقية بنجاح!'),
                 ),
               );
               context.push('/orders/ORD-201');
@@ -155,6 +148,89 @@ class _QuotationDetailsScreenState
     );
   }
 
+  void _showCounterOfferSheet(Quotation quotation) {
+    final priceController = TextEditingController(text: (quotation.quotedPricePerUnit * 0.95).toStringAsFixed(2));
+    final notesController = TextEditingController();
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        final isDark = Theme.of(context).brightness == Brightness.dark;
+        return Padding(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Material(
+            color: isDark ? AppColors.surfaceDark : Colors.white,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('تقديم عرض مقابل (تفاوض جديد)', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                      IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.pop(context)),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+
+                  TextField(
+                    controller: priceController,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      labelText: 'السعر المستهدف للوحدة (ج.م)',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+
+                  TextField(
+                    controller: notesController,
+                    maxLines: 3,
+                    decoration: const InputDecoration(
+                      labelText: 'ملاحظات وتفاصيل طلب التخفيض',
+                      hintText: 'اكتب الشروط أو حجم الدفعات المقترح...',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orange.shade800,
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size(double.infinity, 44),
+                    ),
+                    onPressed: () {
+                      final newPrice = double.tryParse(priceController.text) ?? quotation.quotedPricePerUnit;
+                      ref.read(quotationsNotifierProvider.notifier).sendCounterOffer(
+                            quotation.id,
+                            price: newPrice,
+                            quantity: quotation.requestedQuantity,
+                            deliveryDate: quotation.validUntil,
+                            paymentTerms: quotation.paymentMethod,
+                            notes: notesController.text.trim(),
+                          );
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('تم إرسال العرض المقابل للمورد بنجاح!')),
+                      );
+                    },
+                    child: const Text('إرسال العرض المقابل', style: TextStyle(fontWeight: FontWeight.bold)),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final quotations = ref.watch(quotationsNotifierProvider);
@@ -164,14 +240,10 @@ class _QuotationDetailsScreenState
     );
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final appBarTextColor = isDark
-        ? AppColors.textPrimaryDark
-        : AppColors.textPrimaryLight;
+    final appBarTextColor = isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight;
 
     return Scaffold(
-      backgroundColor: isDark
-          ? AppColors.backgroundDark
-          : AppColors.backgroundLight,
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
         backgroundColor: isDark ? AppColors.surfaceDark : Colors.white,
         foregroundColor: appBarTextColor,
@@ -180,10 +252,10 @@ class _QuotationDetailsScreenState
         scrolledUnderElevation: 0,
         iconTheme: IconThemeData(color: appBarTextColor),
         title: Text(
-          'تفاصيل عرض السعر',
+          'تفاصيل وتفاوض عرض السعر',
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 18,
+            fontSize: 17,
             color: appBarTextColor,
           ),
         ),
@@ -219,40 +291,49 @@ class _QuotationDetailsScreenState
       ),
       bottomNavigationBar: QuotationBottomActionBar(
         quotation: quotation,
-        onCompareTap: () =>
-            context.push('/rfq/${quotation.rfqId}/compare-quotations'),
-        onRejectTap: () =>
-            context.push('/rfq/quotation/${quotation.id}/reject'),
-        onNegotiateTap: () =>
-            context.push('/rfq/quotation/${quotation.id}/counter'),
+        onCompareTap: () => context.push('/rfq/${quotation.rfqId}/compare-quotations'),
+        onRejectTap: () => context.push('/rfq/quotation/${quotation.id}/reject'),
+        onNegotiateTap: () => _showCounterOfferSheet(quotation),
         onAcceptTap: () => _handleAcceptQuotation(quotation),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(12.0),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             // 1. Top Summary Banner Card
             QuotationHeaderCard(quotation: quotation),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
 
             // 2. Supplier Card
             QuotationSupplierCard(quotation: quotation),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
 
             // 3. Offer Score Cards Section ("تقييم العرض")
             QuotationScoreCards(quotation: quotation),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
 
             // 4. Offer Details Grid Section ("تفاصيل العرض")
             QuotationInfoGrid(quotation: quotation),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
 
-            // 5. Middle Layout (Attachments + Comparison + Chat)
+            // 5. Dedicated B2B Negotiation Card ("تفاصيل وسجل التفاوض B2B")
+            QuotationNegotiationCard(
+              quotation: quotation,
+              onNewCounterOffer: () => _showCounterOfferSheet(quotation),
+            ),
+            const SizedBox(height: 10),
+
+            // 6. Attachments Card Section
             QuotationComparisonChatAttachments(quotation: quotation),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
 
-            // 6. Timeline Log Section ("سجل الأحداث")
+            // 7. Timeline Log Section ("سجل الأحداث")
             QuotationTimelineLog(quotation: quotation),
+            const SizedBox(height: 10),
+
+            // 8. Direct B2B Business Chat Section
+            QuotationChatSection(quotation: quotation),
             const SizedBox(height: 24),
           ],
         ),
