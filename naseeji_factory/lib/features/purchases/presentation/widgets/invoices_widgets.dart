@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_colors.dart';
+import '../../../../../core/constants/app_colors.dart';
 import '../providers/purchases_provider.dart';
 import 'purchases_reusable_widgets.dart';
 

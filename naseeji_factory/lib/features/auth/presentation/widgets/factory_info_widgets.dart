@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_spacing.dart';
-import '../../../../core/extensions/context_extensions.dart';
+import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/constants/app_spacing.dart';
+import '../../../../../core/extensions/context_extensions.dart';
 
 class FactoryInfoHeaderWidget extends StatelessWidget {
   final bool compact;

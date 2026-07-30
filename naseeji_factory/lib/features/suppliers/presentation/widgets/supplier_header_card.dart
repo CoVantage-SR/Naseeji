@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_radius.dart';
+import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/constants/app_radius.dart';
 import '../../../products/presentation/providers/suppliers_provider.dart';
 
 /// Header Card displaying Supplier Logo, Name, Verified Badge, Rating, Location, Response Rate, Delivery Time

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_spacing.dart';
+import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/constants/app_spacing.dart';
 import '../providers/quotations_provider.dart';
 import '../widgets/received_quotations_widgets.dart';
 

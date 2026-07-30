@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_radius.dart';
+import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/constants/app_radius.dart';
 import '../providers/quotations_provider.dart';
 
 /// Offer Details Grid ("تفاصيل العرض") Section matching Reference Image

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../../../core/constants/app_colors.dart';
-import '../../../../../../core/constants/app_radius.dart';
-import '../../../../../../core/extensions/context_extensions.dart';
+import '../../../../../../../core/constants/app_colors.dart';
+import '../../../../../../../core/constants/app_radius.dart';
+import '../../../../../../../core/extensions/context_extensions.dart';
 import '../../providers/products_provider.dart';
 
 /// Renders the top product metadata matching reference screenshot:

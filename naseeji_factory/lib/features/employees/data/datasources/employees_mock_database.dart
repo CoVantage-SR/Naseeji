@@ -1,6 +1,6 @@
 import '../../domain/entities/employee_entities.dart';
-import '../../../../features/account/data/datasources/account_mock_database.dart';
-import '../../../../features/account/domain/entities/account_entities.dart' as acc;
+import '../../../account/data/datasources/account_mock_database.dart';
+import '../../../account/domain/entities/account_entities.dart' as acc;
 
 class EmployeesMockDatabase {
   EmployeesMockDatabase._();

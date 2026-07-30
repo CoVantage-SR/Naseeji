@@ -6,7 +6,7 @@ import 'package:naseeji_factory/core/constants/app_radius.dart';
 import 'package:naseeji_factory/core/constants/app_spacing.dart';
 import '../../providers/orders_provider.dart';
 import '../delivery_confirmation_widgets.dart';
-import './delivery_rating_dialog.dart';
+import 'delivery_rating_dialog.dart';
 
 class DeliveryConfirmationBody extends ConsumerStatefulWidget {
   final OrderModel order;

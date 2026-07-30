@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/constants/app_radius.dart';
+import '../../../../../core/constants/app_radius.dart';
 import '../../../products/presentation/providers/products_provider.dart';
 import '../../../products/presentation/providers/suppliers_provider.dart';
 import '../../../products/presentation/widgets/product_details/create_rfq_modal.dart';

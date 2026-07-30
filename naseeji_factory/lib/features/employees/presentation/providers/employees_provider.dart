@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/repositories/employees_repository_impl.dart';
 import '../../domain/entities/employee_entities.dart';
 import '../../domain/repositories/employees_repository.dart';
-import '../../../../features/account/presentation/providers/account_provider.dart' hide EmployeeStatus;
+import '../../../account/presentation/providers/account_provider.dart' hide EmployeeStatus;
 
 final employeesRepositoryProvider = Provider<EmployeesRepository>((ref) {
   return EmployeesRepositoryImpl();

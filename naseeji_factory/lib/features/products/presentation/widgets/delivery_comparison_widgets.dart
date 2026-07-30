@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_spacing.dart';
-import '../../../../core/widgets/reusable_widgets.dart';
+import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/constants/app_spacing.dart';
+import '../../../../../core/widgets/reusable_widgets.dart';
 import '../providers/comparison_provider.dart';
 
 /// 1. DeliveryCardWidget

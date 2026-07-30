@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/extensions/context_extensions.dart';
-import '../../../../core/widgets/reusable_widgets.dart';
+import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/extensions/context_extensions.dart';
+import '../../../../../core/widgets/reusable_widgets.dart';
 
 /// 1. OriginalOfferWidget
 class OriginalOfferWidget extends StatelessWidget {

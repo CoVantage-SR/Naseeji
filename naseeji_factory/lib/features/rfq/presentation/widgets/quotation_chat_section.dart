@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_radius.dart';
+import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/constants/app_radius.dart';
 import '../providers/quotations_provider.dart';
 
 /// Direct B2B Negotiation Chat Section positioned below business & ERP information

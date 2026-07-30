@@ -1,7 +1,7 @@
 import '../../domain/entities/factory_profile_entities.dart';
 import '../../domain/repositories/factory_profile_repository.dart';
 import '../datasources/factory_profile_mock_database.dart';
-import '../../../../features/account/data/datasources/account_mock_database.dart';
+import '../../../account/data/datasources/account_mock_database.dart';
 
 class FactoryProfileRepositoryImpl implements FactoryProfileRepository {
   final FactoryProfileMockDatabase _db = FactoryProfileMockDatabase.instance;

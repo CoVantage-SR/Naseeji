@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_radius.dart';
-import '../../../../core/widgets/reusable_widgets.dart';
+import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/constants/app_radius.dart';
+import '../../../../../core/widgets/reusable_widgets.dart';
 import '../providers/chat_provider.dart';
 import '../widgets/chat_detail/attachment_menu_widget.dart';
 import '../widgets/chat_detail/chat_messages_widget.dart';

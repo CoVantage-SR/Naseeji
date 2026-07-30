@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../../../core/widgets/reusable_widgets.dart';
+import '../../../../../../../core/widgets/reusable_widgets.dart';
 
 class StatisticCardWidget extends StatelessWidget {
   final String label;

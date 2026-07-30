@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/repositories/factory_profile_repository_impl.dart';
 import '../../domain/entities/factory_profile_entities.dart';
 import '../../domain/repositories/factory_profile_repository.dart';
-import '../../../../features/account/presentation/providers/account_provider.dart';
+import '../../../account/presentation/providers/account_provider.dart';
 
 final factoryProfileRepositoryProvider = Provider<FactoryProfileRepository>((ref) {
   return FactoryProfileRepositoryImpl();

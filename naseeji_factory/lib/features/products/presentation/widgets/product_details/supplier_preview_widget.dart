@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../../../core/constants/app_colors.dart';
-import '../../../../../../core/constants/app_radius.dart';
+import '../../../../../../../core/constants/app_colors.dart';
+import '../../../../../../../core/constants/app_radius.dart';
 
 /// Supplier card widget matching reference screenshot:
 /// - Supplier logo, verified badge checkmark, online status dot ('متصل الآن')

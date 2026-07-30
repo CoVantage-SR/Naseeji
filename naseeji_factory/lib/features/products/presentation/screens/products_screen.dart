@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../features/marketplace/presentation/screens/factory_marketplace_screen.dart';
+import '../../../marketplace/presentation/screens/factory_marketplace_screen.dart';
 
 class ProductsScreen extends StatelessWidget {
   const ProductsScreen({super.key});

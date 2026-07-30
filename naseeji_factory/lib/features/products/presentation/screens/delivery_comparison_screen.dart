@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../core/constants/app_spacing.dart';
-import '../../../../core/extensions/context_extensions.dart';
+import '../../../../../core/constants/app_spacing.dart';
+import '../../../../../core/extensions/context_extensions.dart';
 import '../providers/comparison_provider.dart';
 import '../widgets/delivery_comparison_widgets.dart';
 

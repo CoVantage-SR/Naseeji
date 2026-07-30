@@ -4,7 +4,7 @@ import '../constants/app_colors.dart';
 import '../constants/app_radius.dart';
 import '../constants/app_spacing.dart';
 import '../extensions/context_extensions.dart';
-import '../../features/auth/presentation/providers/auth_provider.dart';
+import '../../factory/features/auth/presentation/providers/auth_provider.dart';
 
 /// 1. PrimaryCard - Elevated styled card
 class PrimaryCard extends StatelessWidget {

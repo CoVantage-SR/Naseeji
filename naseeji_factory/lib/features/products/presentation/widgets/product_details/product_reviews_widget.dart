@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../../../core/constants/app_colors.dart';
-import '../../../../../../core/constants/app_radius.dart';
+import '../../../../../../../core/constants/app_colors.dart';
+import '../../../../../../../core/constants/app_radius.dart';
 
 /// Reviews Tab content displaying:
 /// - Overall rating score (4.8 / 5.0)

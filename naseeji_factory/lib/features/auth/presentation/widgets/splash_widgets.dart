@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_spacing.dart';
-import '../../../../core/widgets/app_logo.dart';
+import '../../../../../core/constants/app_spacing.dart';
+import '../../../../../core/widgets/app_logo.dart';
 
 class SplashLogoWidget extends StatelessWidget {
   final double size;

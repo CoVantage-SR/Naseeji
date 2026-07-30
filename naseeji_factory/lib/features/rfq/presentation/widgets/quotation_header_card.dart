@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_radius.dart';
+import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/constants/app_radius.dart';
 import '../providers/quotations_provider.dart';
 
 /// Top Summary Card Banner for Quotation Details:

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_radius.dart';
-import '../../../../core/constants/app_spacing.dart';
-import '../../../../core/extensions/context_extensions.dart';
-import '../../../../core/utils/validation.dart';
+import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/constants/app_radius.dart';
+import '../../../../../core/constants/app_spacing.dart';
+import '../../../../../core/extensions/context_extensions.dart';
+import '../../../../../core/utils/validation.dart';
 import '../providers/auth_provider.dart';
 
 class GoogleUserCardWidget extends ConsumerWidget {

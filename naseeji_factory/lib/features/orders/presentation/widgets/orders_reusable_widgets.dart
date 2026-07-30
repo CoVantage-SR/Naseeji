@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_radius.dart';
-import '../../../../core/widgets/reusable_widgets.dart';
+import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/constants/app_radius.dart';
+import '../../../../../core/widgets/reusable_widgets.dart';
 
 class PrimaryButton extends StatelessWidget {
   final String label;

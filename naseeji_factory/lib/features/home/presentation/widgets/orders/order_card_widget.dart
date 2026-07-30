@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../../../core/constants/app_colors.dart';
-import '../../../../../../core/widgets/reusable_widgets.dart';
+import '../../../../../../../core/constants/app_colors.dart';
+import '../../../../../../../core/widgets/reusable_widgets.dart';
 import '../../../domain/entities/home_entities.dart';
 
 class OrderCardWidget extends StatelessWidget {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/widgets/reusable_widgets.dart' show checkGuestAction;
+import '../../../../../core/widgets/reusable_widgets.dart' show checkGuestAction;
 import '../providers/marketplace_providers.dart';
 import '../widgets/active_filters_bar.dart';
 import '../widgets/category_chips.dart';

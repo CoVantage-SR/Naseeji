@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_radius.dart';
+import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/constants/app_radius.dart';
 import '../providers/orders_provider.dart';
 
 /// Top Summary Card Banner displaying Status Badge, Deal Number, Subtitle, RFQ Link, and Total Amount

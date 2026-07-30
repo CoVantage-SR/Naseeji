@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/extensions/context_extensions.dart';
+import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/extensions/context_extensions.dart';
 
 /// 1. RejectionHeaderWidget
 class RejectionHeaderWidget extends StatelessWidget {

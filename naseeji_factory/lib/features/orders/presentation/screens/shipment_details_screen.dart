@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../core/constants/app_spacing.dart';
+import '../../../../../core/constants/app_spacing.dart';
 import '../providers/orders_provider.dart';
 import '../widgets/shipment_details_widgets.dart';
 

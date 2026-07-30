@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../../../core/widgets/reusable_widgets.dart' as core;
+import '../../../../../../../core/widgets/reusable_widgets.dart' as core;
 
 class LoadingWidget extends StatelessWidget {
   final String message;

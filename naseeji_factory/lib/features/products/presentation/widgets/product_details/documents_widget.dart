@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../../../core/constants/app_colors.dart';
-import '../../../../../../core/constants/app_radius.dart';
+import '../../../../../../../core/constants/app_colors.dart';
+import '../../../../../../../core/constants/app_radius.dart';
 
 /// Available documents section matching reference screenshot:
 /// - Header: "المستندات المتاحة" with "عرض الكل"

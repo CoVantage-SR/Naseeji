@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/constants/app_spacing.dart';
+import '../../../../../core/constants/app_spacing.dart';
 import '../providers/reviews_provider.dart';
 import '../widgets/review_details_widgets.dart';
 import '../widgets/reviews_reusable_widgets.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/constants/app_colors.dart';
-import '../../../../core/widgets/reusable_widgets.dart';
+import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/widgets/reusable_widgets.dart';
 import '../../../products/presentation/providers/products_provider.dart';
 import '../../../products/presentation/providers/suppliers_provider.dart';
 import '../../../products/presentation/widgets/share_widgets.dart';
