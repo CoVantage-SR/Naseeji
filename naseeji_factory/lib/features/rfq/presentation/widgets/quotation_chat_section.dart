@@ -167,7 +167,7 @@ class _QuotationChatSectionState extends State<QuotationChatSection> {
                 return Align(
                   alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
                   child: Container(
-                    maxWidth: 260,
+                    width: 260,
                     margin: const EdgeInsets.only(bottom: 10),
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
