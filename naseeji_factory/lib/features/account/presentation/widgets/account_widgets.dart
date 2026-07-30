@@ -398,18 +398,13 @@ class SettingsGroup extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          decoration: BoxDecoration(
-            color: surface,
+        Material(
+          color: surface,
+          borderRadius: AppRadius.rLG,
+          clipBehavior: Clip.antiAlias,
+          shape: RoundedRectangleBorder(
             borderRadius: AppRadius.rLG,
-            border: Border.all(color: border, width: 1),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: isDark ? 0.15 : 0.03),
-                blurRadius: 6,
-                offset: const Offset(0, 2),
-              ),
-            ],
+            side: BorderSide(color: border, width: 1),
           ),
           child: ListView.separated(
             shrinkWrap: true,

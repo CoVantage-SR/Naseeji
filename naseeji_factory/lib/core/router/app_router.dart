@@ -73,7 +73,10 @@ import '../../features/reviews/presentation/screens/reviews_screen.dart';
 import '../../features/reviews/presentation/screens/review_details_screen.dart';
 import '../../features/account/presentation/screens/account_profile_screen.dart';
 import '../../features/account/presentation/screens/edit_profile_screen.dart';
-import '../../features/account/presentation/screens/employee_management_screen.dart';
+import '../../features/employees/presentation/screens/employee_management_screen.dart';
+import '../../features/employees/presentation/screens/employee_details_screen.dart';
+import '../../features/employees/presentation/screens/roles_management_screen.dart';
+import '../../features/employees/presentation/screens/departments_screen.dart';
 import '../../features/account/presentation/screens/general_settings_screen.dart';
 import '../../features/account/presentation/screens/notifications_settings_screen.dart';
 import '../../features/account/presentation/screens/appearance_screen.dart';
@@ -527,6 +530,21 @@ GoRouter appRouter(AppRouterRef ref) {
       GoRoute(
         path: '/account/employees',
         builder: (context, state) => const EmployeeManagementScreen(),
+      ),
+      GoRoute(
+        path: '/account/employees/roles',
+        builder: (context, state) => const RolesManagementScreen(),
+      ),
+      GoRoute(
+        path: '/account/employees/departments',
+        builder: (context, state) => const DepartmentsScreen(),
+      ),
+      GoRoute(
+        path: '/account/employees/:id',
+        builder: (context, state) {
+          final id = state.pathParameters['id'] ?? '';
+          return EmployeeDetailsScreen(employeeId: id);
+        },
       ),
       GoRoute(
         path: '/account/settings',

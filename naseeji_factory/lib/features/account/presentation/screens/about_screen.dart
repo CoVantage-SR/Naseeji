@@ -68,8 +68,14 @@ class AboutScreen extends StatelessWidget {
             // Links List
             Text('الروائح القانونية والتراخيص', style: TextStyle(color: textPrimary, fontWeight: FontWeight.bold, fontSize: 15)),
             const SizedBox(height: 8),
-            Container(
-              decoration: BoxDecoration(color: surface, borderRadius: AppRadius.rLG, border: Border.all(color: border)),
+            Material(
+              color: surface,
+              borderRadius: AppRadius.rLG,
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(
+                borderRadius: AppRadius.rLG,
+                side: BorderSide(color: border),
+              ),
               child: Column(
                 children: [
                   ListTile(

@@ -42,44 +42,48 @@ class NotificationsSettingsScreen extends ConsumerWidget {
           const SizedBox(height: 12),
 
           ...categories.map((category) {
-            return Container(
-              margin: const EdgeInsets.only(bottom: 12),
-              decoration: BoxDecoration(
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: Material(
                 color: surface,
                 borderRadius: AppRadius.rLG,
-                border: Border.all(color: border),
-              ),
-              child: ExpansionTile(
-                initiallyExpanded: category == 'الصفقات' || category == 'عروض الأسعار',
-                leading: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), shape: BoxShape.circle),
-                  child: Icon(_categoryIcon(category), color: AppColors.primary, size: 20),
+                clipBehavior: Clip.antiAlias,
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadius.rLG,
+                  side: BorderSide(color: border),
                 ),
-                title: Text(category, style: TextStyle(color: textPrimary, fontWeight: FontWeight.bold, fontSize: 14)),
-                children: [
-                  const Divider(height: 1),
-                  _switchTile(
-                    title: 'إشعارات لحظية Push Notifications',
-                    value: notifier.getNotification(category, 'push'),
-                    onChanged: (val) => notifier.setNotification(category, 'push', val),
+                child: ExpansionTile(
+                  initiallyExpanded: category == 'الصفقات' || category == 'عروض الأسعار',
+                  leading: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), shape: BoxShape.circle),
+                    child: Icon(_categoryIcon(category), color: AppColors.primary, size: 20),
                   ),
-                  _switchTile(
-                    title: 'رسائل البريد الإلكتروني Email',
-                    value: notifier.getNotification(category, 'email'),
-                    onChanged: (val) => notifier.setNotification(category, 'email', val),
-                  ),
-                  _switchTile(
-                    title: 'رسائل نصية قصيرة SMS',
-                    value: notifier.getNotification(category, 'sms'),
-                    onChanged: (val) => notifier.setNotification(category, 'sms', val),
-                  ),
-                  _switchTile(
-                    title: 'تنبيهات واتساب WhatsApp',
-                    value: notifier.getNotification(category, 'whatsapp'),
-                    onChanged: (val) => notifier.setNotification(category, 'whatsapp', val),
-                  ),
-                ],
+                  title: Text(category, style: TextStyle(color: textPrimary, fontWeight: FontWeight.bold, fontSize: 14)),
+                  children: [
+                    const Divider(height: 1),
+                    _switchTile(
+                      title: 'إشعارات لحظية Push Notifications',
+                      value: notifier.getNotification(category, 'push'),
+                      onChanged: (val) => notifier.setNotification(category, 'push', val),
+                    ),
+                    _switchTile(
+                      title: 'رسائل البريد الإلكتروني Email',
+                      value: notifier.getNotification(category, 'email'),
+                      onChanged: (val) => notifier.setNotification(category, 'email', val),
+                    ),
+                    _switchTile(
+                      title: 'رسائل نصية قصيرة SMS',
+                      value: notifier.getNotification(category, 'sms'),
+                      onChanged: (val) => notifier.setNotification(category, 'sms', val),
+                    ),
+                    _switchTile(
+                      title: 'تنبيهات واتساب WhatsApp',
+                      value: notifier.getNotification(category, 'whatsapp'),
+                      onChanged: (val) => notifier.setNotification(category, 'whatsapp', val),
+                    ),
+                  ],
+                ),
               ),
             );
           }),

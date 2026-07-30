@@ -14,13 +14,13 @@ class QuickSettingsBottomSheet extends StatelessWidget {
     final border = isDark ? AppColors.borderDark : AppColors.borderLight;
     final textPrimary = isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight;
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-      decoration: BoxDecoration(
-        color: surface,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      child: Column(
+    return Material(
+      color: surface,
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+      clipBehavior: Clip.antiAlias,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -138,7 +138,8 @@ class QuickSettingsBottomSheet extends StatelessWidget {
           const SizedBox(height: 16),
         ],
       ),
-    );
+    ),
+  );
   }
 
   Widget _itemTile(
