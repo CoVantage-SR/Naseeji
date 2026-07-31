@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_underscores
+
 import 'package:flutter/material.dart';
 import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
 import '../../domain/entities/customer_model.dart';

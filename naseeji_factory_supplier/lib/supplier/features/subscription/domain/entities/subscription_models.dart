@@ -208,6 +208,9 @@ class SupplierSubscription {
       limits: limits ?? this.limits,
     );
   }
+
+  bool get isExpiringSoon => remainingDays <= 7;
+  int get daysRemaining => remainingDays;
 }
 
 class SubscriptionUsage {

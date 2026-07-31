@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_underscores
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:naseeji_factory/supplier/features/products/domain/entities/product_model.dart';
