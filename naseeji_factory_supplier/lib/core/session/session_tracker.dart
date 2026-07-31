@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 import 'dart:io';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../storage/secure_storage_service.dart';
 
 part 'session_tracker.g.dart';
 
@@ -86,8 +85,7 @@ class SessionTracker extends _$SessionTracker {
       'timestamp': timestamp,
       'sessionId': sessId,
       'userId': usrId,
-      'action': actionName,
-      if (metadata != null) 'metadata': metadata,
+      'metadata': ?metadata,
     };
 
     developer.log(

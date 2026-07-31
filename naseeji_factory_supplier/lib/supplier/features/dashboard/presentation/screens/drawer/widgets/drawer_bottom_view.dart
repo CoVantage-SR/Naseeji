@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:naseeji_factory/core/session/session_tracker.dart';
 import 'package:naseeji_factory/core/theme/app_colors.dart';
 import 'package:naseeji_factory/core/theme/theme_controller.dart';
-import 'package:naseeji_factory/authentication/presentation/controllers/auth_controller.dart';
+import 'package:naseeji_factory/authentication/presentation/providers/auth_providers.dart';
 
 class DrawerBottomView extends ConsumerWidget {
   const DrawerBottomView({super.key});

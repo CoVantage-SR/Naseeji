@@ -5,7 +5,7 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/widgets/reusable_widgets.dart';
-import '../../../auth/presentation/providers/auth_provider.dart';
+import 'package:naseeji_factory/authentication/presentation/providers/auth_providers.dart';
 import '../providers/account_provider.dart';
 import '../widgets/account_dialogs.dart';
 import '../widgets/account_widgets.dart';
@@ -236,8 +236,8 @@ class _FactoryAccountScreenState extends ConsumerState<FactoryAccountScreen>
                         context: context,
                         builder: (_) => LogoutDialog(
                           onConfirm: () {
-                            ref.read(authProvider.notifier).logout();
-                            context.go('/login');
+                            ref.read(authControllerProvider.notifier).logout();
+                            context.go('/auth/login');
                           },
                         ),
                       );

@@ -42,3 +42,4 @@ class ImageOcrAnalyzer implements ContentAnalyzer {
 
 
 
+
