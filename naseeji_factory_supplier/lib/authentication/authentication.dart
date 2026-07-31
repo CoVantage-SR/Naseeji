@@ -1,5 +1,3 @@
-library authentication;
-
 export 'data/datasources/auth_local_datasource.dart';
 export 'data/datasources/auth_remote_datasource.dart';
 export 'data/models/register_request_model.dart';

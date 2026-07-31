@@ -47,6 +47,32 @@ class UserEntity {
       hasCompletedRegistration: hasCompletedRegistration ?? this.hasCompletedRegistration,
     );
   }
+
+  factory UserEntity.fromJson(Map<String, dynamic> json) {
+    return UserEntity(
+      id: json['id'] as String? ?? '',
+      name: json['name'] as String? ?? '',
+      email: json['email'] as String? ?? '',
+      phone: json['phone'] as String? ?? '',
+      role: json['role'] == 'supplier' ? UserRole.supplier : UserRole.factory,
+      mode: json['mode'] == 'demo' ? AccountMode.demo : AccountMode.real,
+      avatarUrl: json['avatarUrl'] as String?,
+      isVerified: json['isVerified'] as bool? ?? false,
+      hasCompletedRegistration: json['hasCompletedRegistration'] as bool? ?? false,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'email': email,
+      'phone': phone,
+      'role': role.name,
+      'mode': mode.name,
+      'avatarUrl': avatarUrl,
+      'isVerified': isVerified,
+      'hasCompletedRegistration': hasCompletedRegistration,
+    };
+  }
 }
-
-

@@ -18,17 +18,17 @@ class AuthLocalDatasourceImpl implements AuthLocalDatasource {
 
   @override
   Future<void> saveAuthToken(String token) async {
-    await secureStorage.write(key: 'access_token', value: token);
+    await secureStorage.write('access_token', token);
   }
 
   @override
   Future<String?> getAuthToken() async {
-    return await secureStorage.read(key: 'access_token');
+    return await secureStorage.read('access_token');
   }
 
   @override
   Future<void> clearAuthSession() async {
-    await secureStorage.delete(key: 'access_token');
+    await secureStorage.delete('access_token');
     await sharedPreferences.clear();
   }
 }
