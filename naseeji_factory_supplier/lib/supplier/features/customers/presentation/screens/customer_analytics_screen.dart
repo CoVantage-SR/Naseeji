@@ -289,3 +289,4 @@ class CustomerAnalyticsScreen extends ConsumerWidget {
   }
 }
 
+

@@ -120,3 +120,4 @@ final productDetailsNotifierProvider = StateNotifierProvider.family<ProductDetai
 });
 
 
+

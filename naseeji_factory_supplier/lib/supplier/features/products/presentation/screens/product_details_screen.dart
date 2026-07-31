@@ -594,3 +594,4 @@ class ProductDetailsScreen extends ConsumerWidget {
 }
 
 
+

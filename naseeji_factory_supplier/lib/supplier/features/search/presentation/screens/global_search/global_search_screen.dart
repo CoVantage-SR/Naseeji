@@ -162,3 +162,4 @@ class GlobalSearchScreen extends ConsumerWidget {
   }
 }
 
+

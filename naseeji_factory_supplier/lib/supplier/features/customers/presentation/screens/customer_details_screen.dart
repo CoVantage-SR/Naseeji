@@ -669,3 +669,4 @@ class _CustomerDetailsScreenState extends ConsumerState<CustomerDetailsScreen>
   }
 }
 
+

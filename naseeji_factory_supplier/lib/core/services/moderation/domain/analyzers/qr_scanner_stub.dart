@@ -41,3 +41,4 @@ class QrCodeAnalyzer implements ContentAnalyzer {
 }
 
 
+

@@ -489,3 +489,4 @@ class RfqDetailsBottomBar extends StatelessWidget {
   }
 }
 
+

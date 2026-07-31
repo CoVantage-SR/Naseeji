@@ -518,3 +518,4 @@ class _TimelineEventBubble extends StatelessWidget {
   }
 }
 
+

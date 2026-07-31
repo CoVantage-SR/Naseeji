@@ -248,3 +248,4 @@ final filesProvider = Provider.family<List<DealFileModel>, String>((ref, dealId)
 });
 
 
+

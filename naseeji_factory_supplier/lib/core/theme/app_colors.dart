@@ -59,3 +59,4 @@ class AppColors {
   static const Color transparent = Colors.transparent;
 }
 
+

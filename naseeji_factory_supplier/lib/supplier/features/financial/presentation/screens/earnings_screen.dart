@@ -180,3 +180,4 @@ class EarningsScreen extends ConsumerWidget {
   }
 }
 
+

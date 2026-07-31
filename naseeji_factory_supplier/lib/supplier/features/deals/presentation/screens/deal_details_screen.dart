@@ -84,3 +84,4 @@ class DealDetailsScreen extends ConsumerWidget {
 }
 
 
+

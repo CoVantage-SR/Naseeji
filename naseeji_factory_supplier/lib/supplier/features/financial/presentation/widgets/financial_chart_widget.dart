@@ -248,3 +248,4 @@ class FinancialChartWidget extends StatelessWidget {
   }
 }
 
+

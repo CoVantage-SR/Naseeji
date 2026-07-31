@@ -172,3 +172,4 @@ abstract class _OtpState implements OtpState {
   _$$OtpStateImplCopyWith<_$OtpStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+

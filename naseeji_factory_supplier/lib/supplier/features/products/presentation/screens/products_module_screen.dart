@@ -296,3 +296,4 @@ class ProductsModuleScreen extends ConsumerWidget {
   }
 }
 
+

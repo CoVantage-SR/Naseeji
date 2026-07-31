@@ -179,3 +179,4 @@ class AddonDetailsScreen extends StatelessWidget {
   }
 }
 
+

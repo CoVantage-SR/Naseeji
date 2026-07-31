@@ -22,3 +22,4 @@ class ThemeControllerNotifier extends Notifier<ThemeMode> {
     state = state == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
   }
 }
+

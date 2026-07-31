@@ -14,3 +14,4 @@ class FactoryDealDetailsScreenExport extends StatelessWidget {
 }
 
 
+

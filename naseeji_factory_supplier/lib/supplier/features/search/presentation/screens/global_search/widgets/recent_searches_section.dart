@@ -68,3 +68,4 @@ class RecentSearchesSection extends StatelessWidget {
 }
 
 
+

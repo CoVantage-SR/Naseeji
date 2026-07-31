@@ -6,3 +6,4 @@ enum AccountMode {
   bool get isReal => this == AccountMode.real;
 }
 
+

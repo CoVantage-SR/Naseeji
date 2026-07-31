@@ -238,3 +238,4 @@ class _NegotiationWidgetState extends ConsumerState<NegotiationWidget> {
 }
 
 
+

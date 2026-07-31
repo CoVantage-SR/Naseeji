@@ -104,3 +104,4 @@ class SearchItemCard extends StatelessWidget {
 }
 
 
+

@@ -10,3 +10,4 @@ class AddNewProductScreen extends StatelessWidget {
   }
 }
 
+

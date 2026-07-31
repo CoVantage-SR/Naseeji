@@ -402,3 +402,4 @@ abstract class _RegistrationFormState implements RegistrationFormState {
   _$$RegistrationFormStateImplCopyWith<_$RegistrationFormStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
+

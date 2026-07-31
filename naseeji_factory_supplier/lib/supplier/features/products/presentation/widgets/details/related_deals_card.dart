@@ -191,3 +191,4 @@ class RelatedDealsCard extends StatelessWidget {
 }
 
 
+
