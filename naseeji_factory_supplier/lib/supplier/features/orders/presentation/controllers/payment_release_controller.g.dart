@@ -34,7 +34,9 @@ abstract class _$PaymentReleaseController
     extends BuildlessAutoDisposeAsyncNotifier<PaymentRelease> {
   late final String rfqId;
 
-  FutureOr<PaymentRelease> build(String rfqId);
+  FutureOr<PaymentRelease> build(
+    String rfqId,
+  );
 }
 
 /// See also [PaymentReleaseController].
@@ -48,15 +50,21 @@ class PaymentReleaseControllerFamily
   const PaymentReleaseControllerFamily();
 
   /// See also [PaymentReleaseController].
-  PaymentReleaseControllerProvider call(String rfqId) {
-    return PaymentReleaseControllerProvider(rfqId);
+  PaymentReleaseControllerProvider call(
+    String rfqId,
+  ) {
+    return PaymentReleaseControllerProvider(
+      rfqId,
+    );
   }
 
   @override
   PaymentReleaseControllerProvider getProviderOverride(
     covariant PaymentReleaseControllerProvider provider,
   ) {
-    return call(provider.rfqId);
+    return call(
+      provider.rfqId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -76,25 +84,24 @@ class PaymentReleaseControllerFamily
 
 /// See also [PaymentReleaseController].
 class PaymentReleaseControllerProvider
-    extends
-        AutoDisposeAsyncNotifierProviderImpl<
-          PaymentReleaseController,
-          PaymentRelease
-        > {
+    extends AutoDisposeAsyncNotifierProviderImpl<PaymentReleaseController,
+        PaymentRelease> {
   /// See also [PaymentReleaseController].
-  PaymentReleaseControllerProvider(String rfqId)
-    : this._internal(
-        () => PaymentReleaseController()..rfqId = rfqId,
-        from: paymentReleaseControllerProvider,
-        name: r'paymentReleaseControllerProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$paymentReleaseControllerHash,
-        dependencies: PaymentReleaseControllerFamily._dependencies,
-        allTransitiveDependencies:
-            PaymentReleaseControllerFamily._allTransitiveDependencies,
-        rfqId: rfqId,
-      );
+  PaymentReleaseControllerProvider(
+    String rfqId,
+  ) : this._internal(
+          () => PaymentReleaseController()..rfqId = rfqId,
+          from: paymentReleaseControllerProvider,
+          name: r'paymentReleaseControllerProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$paymentReleaseControllerHash,
+          dependencies: PaymentReleaseControllerFamily._dependencies,
+          allTransitiveDependencies:
+              PaymentReleaseControllerFamily._allTransitiveDependencies,
+          rfqId: rfqId,
+        );
 
   PaymentReleaseControllerProvider._internal(
     super._createNotifier, {
@@ -112,7 +119,9 @@ class PaymentReleaseControllerProvider
   FutureOr<PaymentRelease> runNotifierBuild(
     covariant PaymentReleaseController notifier,
   ) {
-    return notifier.build(rfqId);
+    return notifier.build(
+      rfqId,
+    );
   }
 
   @override
@@ -132,11 +141,8 @@ class PaymentReleaseControllerProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<
-    PaymentReleaseController,
-    PaymentRelease
-  >
-  createElement() {
+  AutoDisposeAsyncNotifierProviderElement<PaymentReleaseController,
+      PaymentRelease> createElement() {
     return _PaymentReleaseControllerProviderElement(this);
   }
 
@@ -154,8 +160,6 @@ class PaymentReleaseControllerProvider
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 mixin PaymentReleaseControllerRef
     on AutoDisposeAsyncNotifierProviderRef<PaymentRelease> {
   /// The parameter `rfqId` of this provider.
@@ -163,18 +167,12 @@ mixin PaymentReleaseControllerRef
 }
 
 class _PaymentReleaseControllerProviderElement
-    extends
-        AutoDisposeAsyncNotifierProviderElement<
-          PaymentReleaseController,
-          PaymentRelease
-        >
-    with PaymentReleaseControllerRef {
+    extends AutoDisposeAsyncNotifierProviderElement<PaymentReleaseController,
+        PaymentRelease> with PaymentReleaseControllerRef {
   _PaymentReleaseControllerProviderElement(super.provider);
 
   @override
   String get rfqId => (origin as PaymentReleaseControllerProvider).rfqId;
 }
-
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
-
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

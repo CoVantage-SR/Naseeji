@@ -41,15 +41,21 @@ class ConversationTimelineFamily
   const ConversationTimelineFamily();
 
   /// See also [conversationTimeline].
-  ConversationTimelineProvider call(String conversationId) {
-    return ConversationTimelineProvider(conversationId);
+  ConversationTimelineProvider call(
+    String conversationId,
+  ) {
+    return ConversationTimelineProvider(
+      conversationId,
+    );
   }
 
   @override
   ConversationTimelineProvider getProviderOverride(
     covariant ConversationTimelineProvider provider,
   ) {
-    return call(provider.conversationId);
+    return call(
+      provider.conversationId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -71,22 +77,24 @@ class ConversationTimelineFamily
 class ConversationTimelineProvider
     extends AutoDisposeFutureProvider<List<TimelineStage>> {
   /// See also [conversationTimeline].
-  ConversationTimelineProvider(String conversationId)
-    : this._internal(
-        (ref) => conversationTimeline(
-          ref as ConversationTimelineRef,
-          conversationId,
-        ),
-        from: conversationTimelineProvider,
-        name: r'conversationTimelineProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$conversationTimelineHash,
-        dependencies: ConversationTimelineFamily._dependencies,
-        allTransitiveDependencies:
-            ConversationTimelineFamily._allTransitiveDependencies,
-        conversationId: conversationId,
-      );
+  ConversationTimelineProvider(
+    String conversationId,
+  ) : this._internal(
+          (ref) => conversationTimeline(
+            ref as ConversationTimelineRef,
+            conversationId,
+          ),
+          from: conversationTimelineProvider,
+          name: r'conversationTimelineProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$conversationTimelineHash,
+          dependencies: ConversationTimelineFamily._dependencies,
+          allTransitiveDependencies:
+              ConversationTimelineFamily._allTransitiveDependencies,
+          conversationId: conversationId,
+        );
 
   ConversationTimelineProvider._internal(
     super._createNotifier, {
@@ -103,7 +111,7 @@ class ConversationTimelineProvider
   @override
   Override overrideWith(
     FutureOr<List<TimelineStage>> Function(ConversationTimelineRef provider)
-    create,
+        create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -139,8 +147,6 @@ class ConversationTimelineProvider
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 mixin ConversationTimelineRef
     on AutoDisposeFutureProviderRef<List<TimelineStage>> {
   /// The parameter `conversationId` of this provider.
@@ -156,7 +162,5 @@ class _ConversationTimelineProviderElement
   String get conversationId =>
       (origin as ConversationTimelineProvider).conversationId;
 }
-
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
-
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

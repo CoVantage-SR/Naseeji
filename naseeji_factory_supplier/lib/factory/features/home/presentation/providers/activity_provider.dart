@@ -9,3 +9,4 @@ Future<List<RecentActivity>> activity(ActivityRef ref) {
   return ref.watch(homeRepositoryProvider).getRecentActivities();
 }
 
+

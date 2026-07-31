@@ -7,7 +7,7 @@ part of 'quotations_provider.dart';
 // **************************************************************************
 
 String _$quotationsNotifierHash() =>
-    r'ca632b29461352eef78c30c70fca603d704e70ad';
+    r'00677f605593257af85c8e2ffd1c7e08254ef895';
 
 /// See also [QuotationsNotifier].
 @ProviderFor(QuotationsNotifier)
@@ -42,4 +42,3 @@ final selectedQuotesComparisonProvider = AutoDisposeNotifierProvider<
 typedef _$SelectedQuotesComparison = AutoDisposeNotifier<List<String>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
-

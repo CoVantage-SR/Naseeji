@@ -26,3 +26,4 @@ final notificationsProvider = FutureProvider<List<NotificationPreviewItem>>((ref
   return await MockDatabase.getNotifications();
 });
 
+

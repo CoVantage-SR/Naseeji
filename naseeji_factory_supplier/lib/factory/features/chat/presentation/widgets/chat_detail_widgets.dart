@@ -347,3 +347,4 @@ class MessageBubbleWidget extends StatelessWidget {
   }
 }
 
+

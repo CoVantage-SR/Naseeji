@@ -36,3 +36,4 @@ class DeleteFactoryDocumentUseCase {
   Future<void> call(String id) => repository.deleteDocument(id);
 }
 
+

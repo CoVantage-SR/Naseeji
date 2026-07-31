@@ -33,7 +33,9 @@ abstract class _$RfqChatController
     extends BuildlessAutoDisposeAsyncNotifier<List<ChatMessage>> {
   late final String rfqId;
 
-  FutureOr<List<ChatMessage>> build(String rfqId);
+  FutureOr<List<ChatMessage>> build(
+    String rfqId,
+  );
 }
 
 /// See also [RfqChatController].
@@ -46,15 +48,21 @@ class RfqChatControllerFamily extends Family<AsyncValue<List<ChatMessage>>> {
   const RfqChatControllerFamily();
 
   /// See also [RfqChatController].
-  RfqChatControllerProvider call(String rfqId) {
-    return RfqChatControllerProvider(rfqId);
+  RfqChatControllerProvider call(
+    String rfqId,
+  ) {
+    return RfqChatControllerProvider(
+      rfqId,
+    );
   }
 
   @override
   RfqChatControllerProvider getProviderOverride(
     covariant RfqChatControllerProvider provider,
   ) {
-    return call(provider.rfqId);
+    return call(
+      provider.rfqId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -73,26 +81,24 @@ class RfqChatControllerFamily extends Family<AsyncValue<List<ChatMessage>>> {
 }
 
 /// See also [RfqChatController].
-class RfqChatControllerProvider
-    extends
-        AutoDisposeAsyncNotifierProviderImpl<
-          RfqChatController,
-          List<ChatMessage>
-        > {
+class RfqChatControllerProvider extends AutoDisposeAsyncNotifierProviderImpl<
+    RfqChatController, List<ChatMessage>> {
   /// See also [RfqChatController].
-  RfqChatControllerProvider(String rfqId)
-    : this._internal(
-        () => RfqChatController()..rfqId = rfqId,
-        from: rfqChatControllerProvider,
-        name: r'rfqChatControllerProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$rfqChatControllerHash,
-        dependencies: RfqChatControllerFamily._dependencies,
-        allTransitiveDependencies:
-            RfqChatControllerFamily._allTransitiveDependencies,
-        rfqId: rfqId,
-      );
+  RfqChatControllerProvider(
+    String rfqId,
+  ) : this._internal(
+          () => RfqChatController()..rfqId = rfqId,
+          from: rfqChatControllerProvider,
+          name: r'rfqChatControllerProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$rfqChatControllerHash,
+          dependencies: RfqChatControllerFamily._dependencies,
+          allTransitiveDependencies:
+              RfqChatControllerFamily._allTransitiveDependencies,
+          rfqId: rfqId,
+        );
 
   RfqChatControllerProvider._internal(
     super._createNotifier, {
@@ -110,7 +116,9 @@ class RfqChatControllerProvider
   FutureOr<List<ChatMessage>> runNotifierBuild(
     covariant RfqChatController notifier,
   ) {
-    return notifier.build(rfqId);
+    return notifier.build(
+      rfqId,
+    );
   }
 
   @override
@@ -131,7 +139,7 @@ class RfqChatControllerProvider
 
   @override
   AutoDisposeAsyncNotifierProviderElement<RfqChatController, List<ChatMessage>>
-  createElement() {
+      createElement() {
     return _RfqChatControllerProviderElement(this);
   }
 
@@ -149,8 +157,6 @@ class RfqChatControllerProvider
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 mixin RfqChatControllerRef
     on AutoDisposeAsyncNotifierProviderRef<List<ChatMessage>> {
   /// The parameter `rfqId` of this provider.
@@ -158,18 +164,12 @@ mixin RfqChatControllerRef
 }
 
 class _RfqChatControllerProviderElement
-    extends
-        AutoDisposeAsyncNotifierProviderElement<
-          RfqChatController,
-          List<ChatMessage>
-        >
-    with RfqChatControllerRef {
+    extends AutoDisposeAsyncNotifierProviderElement<RfqChatController,
+        List<ChatMessage>> with RfqChatControllerRef {
   _RfqChatControllerProviderElement(super.provider);
 
   @override
   String get rfqId => (origin as RfqChatControllerProvider).rfqId;
 }
-
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
-
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

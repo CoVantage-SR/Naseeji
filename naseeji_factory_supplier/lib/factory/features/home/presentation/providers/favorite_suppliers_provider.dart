@@ -9,3 +9,4 @@ Future<List<FavoriteSupplier>> favoriteSuppliers(FavoriteSuppliersRef ref) {
   return ref.watch(homeRepositoryProvider).getFavoriteSuppliers();
 }
 
+

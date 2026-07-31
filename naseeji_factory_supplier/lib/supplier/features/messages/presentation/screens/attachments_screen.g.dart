@@ -41,15 +41,21 @@ class ConversationAttachmentsFamily
   const ConversationAttachmentsFamily();
 
   /// See also [conversationAttachments].
-  ConversationAttachmentsProvider call(String conversationId) {
-    return ConversationAttachmentsProvider(conversationId);
+  ConversationAttachmentsProvider call(
+    String conversationId,
+  ) {
+    return ConversationAttachmentsProvider(
+      conversationId,
+    );
   }
 
   @override
   ConversationAttachmentsProvider getProviderOverride(
     covariant ConversationAttachmentsProvider provider,
   ) {
-    return call(provider.conversationId);
+    return call(
+      provider.conversationId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -71,22 +77,24 @@ class ConversationAttachmentsFamily
 class ConversationAttachmentsProvider
     extends AutoDisposeFutureProvider<List<MessageAttachment>> {
   /// See also [conversationAttachments].
-  ConversationAttachmentsProvider(String conversationId)
-    : this._internal(
-        (ref) => conversationAttachments(
-          ref as ConversationAttachmentsRef,
-          conversationId,
-        ),
-        from: conversationAttachmentsProvider,
-        name: r'conversationAttachmentsProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$conversationAttachmentsHash,
-        dependencies: ConversationAttachmentsFamily._dependencies,
-        allTransitiveDependencies:
-            ConversationAttachmentsFamily._allTransitiveDependencies,
-        conversationId: conversationId,
-      );
+  ConversationAttachmentsProvider(
+    String conversationId,
+  ) : this._internal(
+          (ref) => conversationAttachments(
+            ref as ConversationAttachmentsRef,
+            conversationId,
+          ),
+          from: conversationAttachmentsProvider,
+          name: r'conversationAttachmentsProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$conversationAttachmentsHash,
+          dependencies: ConversationAttachmentsFamily._dependencies,
+          allTransitiveDependencies:
+              ConversationAttachmentsFamily._allTransitiveDependencies,
+          conversationId: conversationId,
+        );
 
   ConversationAttachmentsProvider._internal(
     super._createNotifier, {
@@ -103,9 +111,8 @@ class ConversationAttachmentsProvider
   @override
   Override overrideWith(
     FutureOr<List<MessageAttachment>> Function(
-      ConversationAttachmentsRef provider,
-    )
-    create,
+            ConversationAttachmentsRef provider)
+        create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -141,8 +148,6 @@ class ConversationAttachmentsProvider
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 mixin ConversationAttachmentsRef
     on AutoDisposeFutureProviderRef<List<MessageAttachment>> {
   /// The parameter `conversationId` of this provider.
@@ -158,7 +163,5 @@ class _ConversationAttachmentsProviderElement
   String get conversationId =>
       (origin as ConversationAttachmentsProvider).conversationId;
 }
-
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
-
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

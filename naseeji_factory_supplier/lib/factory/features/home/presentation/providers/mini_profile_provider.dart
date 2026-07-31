@@ -62,3 +62,4 @@ class MiniProfileNotifier extends _$MiniProfileNotifier {
   }
 }
 
+

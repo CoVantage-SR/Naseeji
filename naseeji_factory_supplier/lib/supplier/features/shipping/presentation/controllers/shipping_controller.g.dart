@@ -11,21 +11,17 @@ String _$shippingControllerHash() =>
 
 /// See also [ShippingController].
 @ProviderFor(ShippingController)
-final shippingControllerProvider =
-    AutoDisposeAsyncNotifierProvider<
-      ShippingController,
-      List<Shipment>
-    >.internal(
-      ShippingController.new,
-      name: r'shippingControllerProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$shippingControllerHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+final shippingControllerProvider = AutoDisposeAsyncNotifierProvider<
+    ShippingController, List<Shipment>>.internal(
+  ShippingController.new,
+  name: r'shippingControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$shippingControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$ShippingController = AutoDisposeAsyncNotifier<List<Shipment>>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
-
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

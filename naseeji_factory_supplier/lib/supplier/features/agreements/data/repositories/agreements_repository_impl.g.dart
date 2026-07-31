@@ -13,18 +13,15 @@ String _$agreementsRepositoryHash() =>
 @ProviderFor(agreementsRepository)
 final agreementsRepositoryProvider =
     AutoDisposeProvider<AgreementsRepository>.internal(
-      agreementsRepository,
-      name: r'agreementsRepositoryProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$agreementsRepositoryHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  agreementsRepository,
+  name: r'agreementsRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$agreementsRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef AgreementsRepositoryRef = AutoDisposeProviderRef<AgreementsRepository>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
-
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

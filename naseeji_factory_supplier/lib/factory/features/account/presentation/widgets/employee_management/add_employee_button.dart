@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_factory/factory/core/constants/app_colors.dart';
+import 'package:naseeji_factory/core/constants/app_colors.dart';
 
 class AddEmployeeButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -17,4 +17,5 @@ class AddEmployeeButton extends StatelessWidget {
     );
   }
 }
+
 

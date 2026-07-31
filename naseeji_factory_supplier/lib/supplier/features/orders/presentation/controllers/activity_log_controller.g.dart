@@ -34,7 +34,9 @@ abstract class _$ActivityLogController
     extends BuildlessAutoDisposeAsyncNotifier<List<ActivityLogItem>> {
   late final String rfqId;
 
-  FutureOr<List<ActivityLogItem>> build(String rfqId);
+  FutureOr<List<ActivityLogItem>> build(
+    String rfqId,
+  );
 }
 
 /// See also [ActivityLogController].
@@ -48,15 +50,21 @@ class ActivityLogControllerFamily
   const ActivityLogControllerFamily();
 
   /// See also [ActivityLogController].
-  ActivityLogControllerProvider call(String rfqId) {
-    return ActivityLogControllerProvider(rfqId);
+  ActivityLogControllerProvider call(
+    String rfqId,
+  ) {
+    return ActivityLogControllerProvider(
+      rfqId,
+    );
   }
 
   @override
   ActivityLogControllerProvider getProviderOverride(
     covariant ActivityLogControllerProvider provider,
   ) {
-    return call(provider.rfqId);
+    return call(
+      provider.rfqId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -76,25 +84,24 @@ class ActivityLogControllerFamily
 
 /// See also [ActivityLogController].
 class ActivityLogControllerProvider
-    extends
-        AutoDisposeAsyncNotifierProviderImpl<
-          ActivityLogController,
-          List<ActivityLogItem>
-        > {
+    extends AutoDisposeAsyncNotifierProviderImpl<ActivityLogController,
+        List<ActivityLogItem>> {
   /// See also [ActivityLogController].
-  ActivityLogControllerProvider(String rfqId)
-    : this._internal(
-        () => ActivityLogController()..rfqId = rfqId,
-        from: activityLogControllerProvider,
-        name: r'activityLogControllerProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$activityLogControllerHash,
-        dependencies: ActivityLogControllerFamily._dependencies,
-        allTransitiveDependencies:
-            ActivityLogControllerFamily._allTransitiveDependencies,
-        rfqId: rfqId,
-      );
+  ActivityLogControllerProvider(
+    String rfqId,
+  ) : this._internal(
+          () => ActivityLogController()..rfqId = rfqId,
+          from: activityLogControllerProvider,
+          name: r'activityLogControllerProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$activityLogControllerHash,
+          dependencies: ActivityLogControllerFamily._dependencies,
+          allTransitiveDependencies:
+              ActivityLogControllerFamily._allTransitiveDependencies,
+          rfqId: rfqId,
+        );
 
   ActivityLogControllerProvider._internal(
     super._createNotifier, {
@@ -112,7 +119,9 @@ class ActivityLogControllerProvider
   FutureOr<List<ActivityLogItem>> runNotifierBuild(
     covariant ActivityLogController notifier,
   ) {
-    return notifier.build(rfqId);
+    return notifier.build(
+      rfqId,
+    );
   }
 
   @override
@@ -132,11 +141,8 @@ class ActivityLogControllerProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<
-    ActivityLogController,
-    List<ActivityLogItem>
-  >
-  createElement() {
+  AutoDisposeAsyncNotifierProviderElement<ActivityLogController,
+      List<ActivityLogItem>> createElement() {
     return _ActivityLogControllerProviderElement(this);
   }
 
@@ -154,8 +160,6 @@ class ActivityLogControllerProvider
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 mixin ActivityLogControllerRef
     on AutoDisposeAsyncNotifierProviderRef<List<ActivityLogItem>> {
   /// The parameter `rfqId` of this provider.
@@ -163,18 +167,12 @@ mixin ActivityLogControllerRef
 }
 
 class _ActivityLogControllerProviderElement
-    extends
-        AutoDisposeAsyncNotifierProviderElement<
-          ActivityLogController,
-          List<ActivityLogItem>
-        >
-    with ActivityLogControllerRef {
+    extends AutoDisposeAsyncNotifierProviderElement<ActivityLogController,
+        List<ActivityLogItem>> with ActivityLogControllerRef {
   _ActivityLogControllerProviderElement(super.provider);
 
   @override
   String get rfqId => (origin as ActivityLogControllerProvider).rfqId;
 }
-
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
-
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

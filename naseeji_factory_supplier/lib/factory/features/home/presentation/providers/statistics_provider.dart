@@ -60,3 +60,4 @@ class StatisticsNotifier extends _$StatisticsNotifier {
   }
 }
 
+

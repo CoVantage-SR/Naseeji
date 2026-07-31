@@ -39,15 +39,21 @@ class QuotationHistoryFamily extends Family<AsyncValue<List<BusinessMessage>>> {
   const QuotationHistoryFamily();
 
   /// See also [quotationHistory].
-  QuotationHistoryProvider call(String conversationId) {
-    return QuotationHistoryProvider(conversationId);
+  QuotationHistoryProvider call(
+    String conversationId,
+  ) {
+    return QuotationHistoryProvider(
+      conversationId,
+    );
   }
 
   @override
   QuotationHistoryProvider getProviderOverride(
     covariant QuotationHistoryProvider provider,
   ) {
-    return call(provider.conversationId);
+    return call(
+      provider.conversationId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -69,19 +75,24 @@ class QuotationHistoryFamily extends Family<AsyncValue<List<BusinessMessage>>> {
 class QuotationHistoryProvider
     extends AutoDisposeFutureProvider<List<BusinessMessage>> {
   /// See also [quotationHistory].
-  QuotationHistoryProvider(String conversationId)
-    : this._internal(
-        (ref) => quotationHistory(ref as QuotationHistoryRef, conversationId),
-        from: quotationHistoryProvider,
-        name: r'quotationHistoryProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$quotationHistoryHash,
-        dependencies: QuotationHistoryFamily._dependencies,
-        allTransitiveDependencies:
-            QuotationHistoryFamily._allTransitiveDependencies,
-        conversationId: conversationId,
-      );
+  QuotationHistoryProvider(
+    String conversationId,
+  ) : this._internal(
+          (ref) => quotationHistory(
+            ref as QuotationHistoryRef,
+            conversationId,
+          ),
+          from: quotationHistoryProvider,
+          name: r'quotationHistoryProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$quotationHistoryHash,
+          dependencies: QuotationHistoryFamily._dependencies,
+          allTransitiveDependencies:
+              QuotationHistoryFamily._allTransitiveDependencies,
+          conversationId: conversationId,
+        );
 
   QuotationHistoryProvider._internal(
     super._createNotifier, {
@@ -98,7 +109,7 @@ class QuotationHistoryProvider
   @override
   Override overrideWith(
     FutureOr<List<BusinessMessage>> Function(QuotationHistoryRef provider)
-    create,
+        create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -134,8 +145,6 @@ class QuotationHistoryProvider
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 mixin QuotationHistoryRef
     on AutoDisposeFutureProviderRef<List<BusinessMessage>> {
   /// The parameter `conversationId` of this provider.
@@ -151,7 +160,5 @@ class _QuotationHistoryProviderElement
   String get conversationId =>
       (origin as QuotationHistoryProvider).conversationId;
 }
-
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
-
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

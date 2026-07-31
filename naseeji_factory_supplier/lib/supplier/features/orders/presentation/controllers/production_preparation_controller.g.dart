@@ -34,7 +34,9 @@ abstract class _$ProductionPreparationController
     extends BuildlessAutoDisposeAsyncNotifier<ProductionPreparation> {
   late final String rfqId;
 
-  FutureOr<ProductionPreparation> build(String rfqId);
+  FutureOr<ProductionPreparation> build(
+    String rfqId,
+  );
 }
 
 /// See also [ProductionPreparationController].
@@ -49,15 +51,21 @@ class ProductionPreparationControllerFamily
   const ProductionPreparationControllerFamily();
 
   /// See also [ProductionPreparationController].
-  ProductionPreparationControllerProvider call(String rfqId) {
-    return ProductionPreparationControllerProvider(rfqId);
+  ProductionPreparationControllerProvider call(
+    String rfqId,
+  ) {
+    return ProductionPreparationControllerProvider(
+      rfqId,
+    );
   }
 
   @override
   ProductionPreparationControllerProvider getProviderOverride(
     covariant ProductionPreparationControllerProvider provider,
   ) {
-    return call(provider.rfqId);
+    return call(
+      provider.rfqId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -77,25 +85,24 @@ class ProductionPreparationControllerFamily
 
 /// See also [ProductionPreparationController].
 class ProductionPreparationControllerProvider
-    extends
-        AutoDisposeAsyncNotifierProviderImpl<
-          ProductionPreparationController,
-          ProductionPreparation
-        > {
+    extends AutoDisposeAsyncNotifierProviderImpl<
+        ProductionPreparationController, ProductionPreparation> {
   /// See also [ProductionPreparationController].
-  ProductionPreparationControllerProvider(String rfqId)
-    : this._internal(
-        () => ProductionPreparationController()..rfqId = rfqId,
-        from: productionPreparationControllerProvider,
-        name: r'productionPreparationControllerProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$productionPreparationControllerHash,
-        dependencies: ProductionPreparationControllerFamily._dependencies,
-        allTransitiveDependencies:
-            ProductionPreparationControllerFamily._allTransitiveDependencies,
-        rfqId: rfqId,
-      );
+  ProductionPreparationControllerProvider(
+    String rfqId,
+  ) : this._internal(
+          () => ProductionPreparationController()..rfqId = rfqId,
+          from: productionPreparationControllerProvider,
+          name: r'productionPreparationControllerProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$productionPreparationControllerHash,
+          dependencies: ProductionPreparationControllerFamily._dependencies,
+          allTransitiveDependencies:
+              ProductionPreparationControllerFamily._allTransitiveDependencies,
+          rfqId: rfqId,
+        );
 
   ProductionPreparationControllerProvider._internal(
     super._createNotifier, {
@@ -113,7 +120,9 @@ class ProductionPreparationControllerProvider
   FutureOr<ProductionPreparation> runNotifierBuild(
     covariant ProductionPreparationController notifier,
   ) {
-    return notifier.build(rfqId);
+    return notifier.build(
+      rfqId,
+    );
   }
 
   @override
@@ -133,11 +142,8 @@ class ProductionPreparationControllerProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<
-    ProductionPreparationController,
-    ProductionPreparation
-  >
-  createElement() {
+  AutoDisposeAsyncNotifierProviderElement<ProductionPreparationController,
+      ProductionPreparation> createElement() {
     return _ProductionPreparationControllerProviderElement(this);
   }
 
@@ -156,8 +162,6 @@ class ProductionPreparationControllerProvider
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 mixin ProductionPreparationControllerRef
     on AutoDisposeAsyncNotifierProviderRef<ProductionPreparation> {
   /// The parameter `rfqId` of this provider.
@@ -165,18 +169,13 @@ mixin ProductionPreparationControllerRef
 }
 
 class _ProductionPreparationControllerProviderElement
-    extends
-        AutoDisposeAsyncNotifierProviderElement<
-          ProductionPreparationController,
-          ProductionPreparation
-        >
-    with ProductionPreparationControllerRef {
+    extends AutoDisposeAsyncNotifierProviderElement<
+        ProductionPreparationController,
+        ProductionPreparation> with ProductionPreparationControllerRef {
   _ProductionPreparationControllerProviderElement(super.provider);
 
   @override
   String get rfqId => (origin as ProductionPreparationControllerProvider).rfqId;
 }
-
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
-
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

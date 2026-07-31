@@ -6,7 +6,7 @@ part of 'suppliers_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$suppliersNotifierHash() => r'0ff5c2c9b4adf7f11944c142f07cc423778671bf';
+String _$suppliersNotifierHash() => r'f1c814894a0f01f56636e9bb2ff79d43119bda8b';
 
 /// See also [SuppliersNotifier].
 @ProviderFor(SuppliersNotifier)
@@ -24,4 +24,3 @@ final suppliersNotifierProvider =
 typedef _$SuppliersNotifier = AutoDisposeNotifier<List<Supplier>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
-

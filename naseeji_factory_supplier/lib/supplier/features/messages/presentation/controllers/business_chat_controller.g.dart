@@ -34,7 +34,9 @@ abstract class _$BusinessChatController
     extends BuildlessAutoDisposeAsyncNotifier<List<BusinessMessage>> {
   late final String conversationId;
 
-  FutureOr<List<BusinessMessage>> build(String conversationId);
+  FutureOr<List<BusinessMessage>> build(
+    String conversationId,
+  );
 }
 
 /// See also [BusinessChatController].
@@ -48,15 +50,21 @@ class BusinessChatControllerFamily
   const BusinessChatControllerFamily();
 
   /// See also [BusinessChatController].
-  BusinessChatControllerProvider call(String conversationId) {
-    return BusinessChatControllerProvider(conversationId);
+  BusinessChatControllerProvider call(
+    String conversationId,
+  ) {
+    return BusinessChatControllerProvider(
+      conversationId,
+    );
   }
 
   @override
   BusinessChatControllerProvider getProviderOverride(
     covariant BusinessChatControllerProvider provider,
   ) {
-    return call(provider.conversationId);
+    return call(
+      provider.conversationId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -76,25 +84,24 @@ class BusinessChatControllerFamily
 
 /// See also [BusinessChatController].
 class BusinessChatControllerProvider
-    extends
-        AutoDisposeAsyncNotifierProviderImpl<
-          BusinessChatController,
-          List<BusinessMessage>
-        > {
+    extends AutoDisposeAsyncNotifierProviderImpl<BusinessChatController,
+        List<BusinessMessage>> {
   /// See also [BusinessChatController].
-  BusinessChatControllerProvider(String conversationId)
-    : this._internal(
-        () => BusinessChatController()..conversationId = conversationId,
-        from: businessChatControllerProvider,
-        name: r'businessChatControllerProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$businessChatControllerHash,
-        dependencies: BusinessChatControllerFamily._dependencies,
-        allTransitiveDependencies:
-            BusinessChatControllerFamily._allTransitiveDependencies,
-        conversationId: conversationId,
-      );
+  BusinessChatControllerProvider(
+    String conversationId,
+  ) : this._internal(
+          () => BusinessChatController()..conversationId = conversationId,
+          from: businessChatControllerProvider,
+          name: r'businessChatControllerProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$businessChatControllerHash,
+          dependencies: BusinessChatControllerFamily._dependencies,
+          allTransitiveDependencies:
+              BusinessChatControllerFamily._allTransitiveDependencies,
+          conversationId: conversationId,
+        );
 
   BusinessChatControllerProvider._internal(
     super._createNotifier, {
@@ -112,7 +119,9 @@ class BusinessChatControllerProvider
   FutureOr<List<BusinessMessage>> runNotifierBuild(
     covariant BusinessChatController notifier,
   ) {
-    return notifier.build(conversationId);
+    return notifier.build(
+      conversationId,
+    );
   }
 
   @override
@@ -132,11 +141,8 @@ class BusinessChatControllerProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<
-    BusinessChatController,
-    List<BusinessMessage>
-  >
-  createElement() {
+  AutoDisposeAsyncNotifierProviderElement<BusinessChatController,
+      List<BusinessMessage>> createElement() {
     return _BusinessChatControllerProviderElement(this);
   }
 
@@ -155,8 +161,6 @@ class BusinessChatControllerProvider
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 mixin BusinessChatControllerRef
     on AutoDisposeAsyncNotifierProviderRef<List<BusinessMessage>> {
   /// The parameter `conversationId` of this provider.
@@ -164,19 +168,13 @@ mixin BusinessChatControllerRef
 }
 
 class _BusinessChatControllerProviderElement
-    extends
-        AutoDisposeAsyncNotifierProviderElement<
-          BusinessChatController,
-          List<BusinessMessage>
-        >
-    with BusinessChatControllerRef {
+    extends AutoDisposeAsyncNotifierProviderElement<BusinessChatController,
+        List<BusinessMessage>> with BusinessChatControllerRef {
   _BusinessChatControllerProviderElement(super.provider);
 
   @override
   String get conversationId =>
       (origin as BusinessChatControllerProvider).conversationId;
 }
-
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
-
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

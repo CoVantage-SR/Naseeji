@@ -224,3 +224,4 @@ class _SplashFooterWidgetState extends State<SplashFooterWidget>
   }
 }
 
+

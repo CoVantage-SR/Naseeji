@@ -1,9 +1,9 @@
 // ignore_for_file: unnecessary_underscores
 
 import 'package:flutter/material.dart';
-import 'package:naseeji_factory/factory/core/constants/app_colors.dart';
-import 'package:naseeji_factory/factory/core/constants/app_radius.dart';
-import 'package:naseeji_factory/factory/core/extensions/context_extensions.dart';
+import 'package:naseeji_factory/core/constants/app_colors.dart';
+import 'package:naseeji_factory/core/constants/app_radius.dart';
+import 'package:naseeji_factory/core/extensions/context_extensions.dart';
 
 import '../providers/account_provider.dart';
 import 'account_reusable_widgets.dart';
@@ -408,4 +408,5 @@ class QuickActionsWidget extends StatelessWidget {
     );
   }
 }
+
 

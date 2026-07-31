@@ -6,7 +6,7 @@ part of 'account_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$factoryHash() => r'91cf9fd28851cd7ff6ca9c6a34c985363a57fe84';
+String _$factoryHash() => r'b974b5961b93dddc59ce630f3a7e7e0b3ae6a913';
 
 /// See also [factory].
 @ProviderFor(factory)
@@ -20,7 +20,7 @@ final factoryProvider = AutoDisposeProvider<FactoryProfileEntity>.internal(
 );
 
 typedef FactoryRef = AutoDisposeProviderRef<FactoryProfileEntity>;
-String _$subscriptionHash() => r'1edfdb1a9030a46d8add39996e5f938d18d87ef4';
+String _$subscriptionHash() => r'3d56ec3f440130440b979d07410e001e98b3849d';
 
 /// See also [subscription].
 @ProviderFor(subscription)
@@ -34,7 +34,7 @@ final subscriptionProvider = AutoDisposeProvider<SubscriptionModel>.internal(
 );
 
 typedef SubscriptionRef = AutoDisposeProviderRef<SubscriptionModel>;
-String _$walletHash() => r'7030e41ea6b371f94fcf4ca4558ed2e88e433ad7';
+String _$walletHash() => r'26f41c3cddf1b8b897d86ccd951ed0978754a578';
 
 /// See also [wallet].
 @ProviderFor(wallet)
@@ -48,7 +48,7 @@ final walletProvider = AutoDisposeProvider<WalletEntity>.internal(
 );
 
 typedef WalletRef = AutoDisposeProviderRef<WalletEntity>;
-String _$employeesHash() => r'a596fa5cd017dd6f2571e802618b7f8965d085f9';
+String _$employeesHash() => r'9f67f0e3670cb22795d410c34d5ca956e0b4e659';
 
 /// See also [employees].
 @ProviderFor(employees)
@@ -62,7 +62,7 @@ final employeesProvider = AutoDisposeProvider<EmployeesSummaryModel>.internal(
 );
 
 typedef EmployeesRef = AutoDisposeProviderRef<EmployeesSummaryModel>;
-String _$rewardPointsHash() => r'7836a19f601240b46d26223fad96b9d7cc3992da';
+String _$rewardPointsHash() => r'71434fdac40a6e12275781a52bbd322f313f7237';
 
 /// See also [rewardPoints].
 @ProviderFor(rewardPoints)
@@ -76,35 +76,39 @@ final rewardPointsProvider = AutoDisposeProvider<RewardStateEntity>.internal(
 );
 
 typedef RewardPointsRef = AutoDisposeProviderRef<RewardStateEntity>;
-String _$notificationsHash() => r'8836a19f601240b46d26223fad96b9d7cc3992da';
+String _$notificationsHash() => r'e409752365ec298f81a0a3f2e1fc14e1980366c4';
 
 /// See also [notifications].
 @ProviderFor(notifications)
-final notificationsProvider = AutoDisposeProvider<List<NotificationItemEntity>>.internal(
+final notificationsProvider =
+    AutoDisposeProvider<List<NotificationItemEntity>>.internal(
   notifications,
   name: r'notificationsProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$notificationsHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$notificationsHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
 typedef NotificationsRef = AutoDisposeProviderRef<List<NotificationItemEntity>>;
-String _$supportTicketsHash() => r'9936a19f601240b46d26223fad96b9d7cc3992da';
+String _$supportTicketsHash() => r'b940c1c05c55b5f3e90418b303c624b4dea03ab9';
 
 /// See also [supportTickets].
 @ProviderFor(supportTickets)
-final supportTicketsProvider = AutoDisposeProvider<List<SupportTicketEntity>>.internal(
+final supportTicketsProvider =
+    AutoDisposeProvider<List<SupportTicketEntity>>.internal(
   supportTickets,
   name: r'supportTicketsProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$supportTicketsHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$supportTicketsHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
 typedef SupportTicketsRef = AutoDisposeProviderRef<List<SupportTicketEntity>>;
-String _$accountNotifierHash() => r'344bc69597ba2550ef7c92cd382543e7cb2adc84';
+String _$accountNotifierHash() => r'd9fb9013a638d2488f7126d026a4b68a03c029e6';
 
 /// See also [AccountNotifier].
 @ProviderFor(AccountNotifier)
@@ -120,7 +124,7 @@ final accountNotifierProvider =
 );
 
 typedef _$AccountNotifier = AutoDisposeNotifier<AccountState>;
-String _$securityNotifierHash() => r'267a98bc9142f722b2b026b389afd65dca18f852';
+String _$securityNotifierHash() => r'4e360a01033d8c3184b326cbfc7125f1efb39541';
 
 /// See also [SecurityNotifier].
 @ProviderFor(SecurityNotifier)
@@ -170,7 +174,7 @@ final paymentNotifierProvider = AutoDisposeNotifierProvider<PaymentNotifier,
 );
 
 typedef _$PaymentNotifier = AutoDisposeNotifier<List<Map<String, String>>>;
-String _$settingsNotifierHash() => r'41c8e4b1b5251b635db6b7c26ddc8c64930b4b66';
+String _$settingsNotifierHash() => r'301d891d19fb51c1f1978932fcc78eb9c8ca6bb8';
 
 /// See also [SettingsNotifier].
 @ProviderFor(SettingsNotifier)

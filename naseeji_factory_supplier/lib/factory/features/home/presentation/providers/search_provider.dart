@@ -270,3 +270,4 @@ class SearchNotifier extends _$SearchNotifier {
   }
 }
 
+

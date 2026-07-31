@@ -57,3 +57,4 @@ class AssignDepartmentUseCase {
   Future<void> call(String id, String deptName) => repository.assignDepartment(id, deptName);
 }
 
+

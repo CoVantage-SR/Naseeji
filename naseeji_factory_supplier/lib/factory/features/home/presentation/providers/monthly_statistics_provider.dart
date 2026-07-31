@@ -9,3 +9,4 @@ Future<MonthlyStatistics> monthlyStatistics(MonthlyStatisticsRef ref) {
   return ref.watch(homeRepositoryProvider).getMonthlyStatistics();
 }
 
+

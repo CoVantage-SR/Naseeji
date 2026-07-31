@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'factory/core/router/app_router.dart';
-import 'factory/core/theme/app_theme.dart';
-import 'factory/core/services/storage/shared_preferences_service.dart';
-import 'factory/core/services/database/isar_service.dart';
-import 'factory/core/services/theme_service.dart';
+import 'core/router/app_router.dart';
+import 'core/theme/app_theme.dart';
+import 'core/storage/shared_preferences_service.dart';
+import 'core/services/database/isar_service.dart';
+import 'core/services/theme_service.dart';
+import 'core/session/session_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +23,7 @@ void main() async {
   runApp(
     ProviderScope(
       overrides: [
+        sharedPreferencesProvider.overrideWithValue(sharedPrefs),
         sharedPreferencesServiceProvider.overrideWithValue(
           SharedPreferencesService(sharedPrefs),
         ),
@@ -41,17 +43,14 @@ class MyApp extends ConsumerWidget {
     final themeMode = ref.watch(themeServiceProvider);
 
     return MaterialApp.router(
-      title: 'مصنع نسيجي',
+      title: 'منصة نسيجي الصناعية',
       debugShowCheckedModeBanner: false,
-      // Theme Configuration (Material 3 enabled, light/dark modes, system mode default)
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: themeMode,
 
-      // Router Config (GoRouter)
       routerConfig: router,
 
-      // RTL Arabic Egyptian Localization Settings
       locale: const Locale('ar'),
       supportedLocales: const [Locale('ar'), Locale('ar', 'EG')],
       localizationsDelegates: const [
@@ -63,7 +62,6 @@ class MyApp extends ConsumerWidget {
         return const Locale('ar');
       },
 
-      // Force RTL layout throughout the app
       builder: (context, child) {
         return Directionality(
           textDirection: TextDirection.rtl,

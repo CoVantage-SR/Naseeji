@@ -11,21 +11,17 @@ String _$analyticsControllerHash() =>
 
 /// See also [AnalyticsController].
 @ProviderFor(AnalyticsController)
-final analyticsControllerProvider =
-    AutoDisposeAsyncNotifierProvider<
-      AnalyticsController,
-      AnalyticsData
-    >.internal(
-      AnalyticsController.new,
-      name: r'analyticsControllerProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$analyticsControllerHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+final analyticsControllerProvider = AutoDisposeAsyncNotifierProvider<
+    AnalyticsController, AnalyticsData>.internal(
+  AnalyticsController.new,
+  name: r'analyticsControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$analyticsControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$AnalyticsController = AutoDisposeAsyncNotifier<AnalyticsData>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
-
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

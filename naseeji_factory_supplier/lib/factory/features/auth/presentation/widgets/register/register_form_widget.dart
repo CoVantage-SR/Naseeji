@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_factory/factory/core/constants/app_colors.dart';
-import 'package:naseeji_factory/factory/core/constants/app_radius.dart';
-import 'package:naseeji_factory/factory/core/constants/app_spacing.dart';
-import 'package:naseeji_factory/factory/core/widgets/app_buttons.dart';
-import 'package:naseeji_factory/factory/core/widgets/app_text_fields.dart';
+import 'package:naseeji_factory/core/constants/app_colors.dart';
+import 'package:naseeji_factory/core/constants/app_radius.dart';
+import 'package:naseeji_factory/core/constants/app_spacing.dart';
+import 'package:naseeji_factory/core/widgets/app_buttons.dart';
+import 'package:naseeji_factory/core/widgets/app_text_fields.dart';
 import '../../providers/registration_provider.dart';
 import '../../providers/otp_provider.dart';
 import '../register_widgets.dart';
@@ -255,4 +255,5 @@ class _RegisterFormWidgetState extends ConsumerState<RegisterFormWidget> {
     );
   }
 }
+
 

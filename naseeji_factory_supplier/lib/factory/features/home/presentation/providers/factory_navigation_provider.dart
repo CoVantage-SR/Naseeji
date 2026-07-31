@@ -44,3 +44,4 @@ final factoryNavigationProvider = StateNotifierProvider<FactoryNavigationNotifie
   return FactoryNavigationNotifier();
 });
 
+

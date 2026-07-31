@@ -156,3 +156,4 @@ class NegotiationSummaryScreen extends ConsumerWidget {
   }
 }
 
+

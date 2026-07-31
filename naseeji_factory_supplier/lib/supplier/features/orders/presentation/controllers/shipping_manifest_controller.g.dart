@@ -34,7 +34,9 @@ abstract class _$ShippingManifestController
     extends BuildlessAutoDisposeAsyncNotifier<ShippingManifest> {
   late final String rfqId;
 
-  FutureOr<ShippingManifest> build(String rfqId);
+  FutureOr<ShippingManifest> build(
+    String rfqId,
+  );
 }
 
 /// See also [ShippingManifestController].
@@ -48,15 +50,21 @@ class ShippingManifestControllerFamily
   const ShippingManifestControllerFamily();
 
   /// See also [ShippingManifestController].
-  ShippingManifestControllerProvider call(String rfqId) {
-    return ShippingManifestControllerProvider(rfqId);
+  ShippingManifestControllerProvider call(
+    String rfqId,
+  ) {
+    return ShippingManifestControllerProvider(
+      rfqId,
+    );
   }
 
   @override
   ShippingManifestControllerProvider getProviderOverride(
     covariant ShippingManifestControllerProvider provider,
   ) {
-    return call(provider.rfqId);
+    return call(
+      provider.rfqId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -76,25 +84,24 @@ class ShippingManifestControllerFamily
 
 /// See also [ShippingManifestController].
 class ShippingManifestControllerProvider
-    extends
-        AutoDisposeAsyncNotifierProviderImpl<
-          ShippingManifestController,
-          ShippingManifest
-        > {
+    extends AutoDisposeAsyncNotifierProviderImpl<ShippingManifestController,
+        ShippingManifest> {
   /// See also [ShippingManifestController].
-  ShippingManifestControllerProvider(String rfqId)
-    : this._internal(
-        () => ShippingManifestController()..rfqId = rfqId,
-        from: shippingManifestControllerProvider,
-        name: r'shippingManifestControllerProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$shippingManifestControllerHash,
-        dependencies: ShippingManifestControllerFamily._dependencies,
-        allTransitiveDependencies:
-            ShippingManifestControllerFamily._allTransitiveDependencies,
-        rfqId: rfqId,
-      );
+  ShippingManifestControllerProvider(
+    String rfqId,
+  ) : this._internal(
+          () => ShippingManifestController()..rfqId = rfqId,
+          from: shippingManifestControllerProvider,
+          name: r'shippingManifestControllerProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$shippingManifestControllerHash,
+          dependencies: ShippingManifestControllerFamily._dependencies,
+          allTransitiveDependencies:
+              ShippingManifestControllerFamily._allTransitiveDependencies,
+          rfqId: rfqId,
+        );
 
   ShippingManifestControllerProvider._internal(
     super._createNotifier, {
@@ -112,7 +119,9 @@ class ShippingManifestControllerProvider
   FutureOr<ShippingManifest> runNotifierBuild(
     covariant ShippingManifestController notifier,
   ) {
-    return notifier.build(rfqId);
+    return notifier.build(
+      rfqId,
+    );
   }
 
   @override
@@ -132,11 +141,8 @@ class ShippingManifestControllerProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<
-    ShippingManifestController,
-    ShippingManifest
-  >
-  createElement() {
+  AutoDisposeAsyncNotifierProviderElement<ShippingManifestController,
+      ShippingManifest> createElement() {
     return _ShippingManifestControllerProviderElement(this);
   }
 
@@ -154,8 +160,6 @@ class ShippingManifestControllerProvider
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 mixin ShippingManifestControllerRef
     on AutoDisposeAsyncNotifierProviderRef<ShippingManifest> {
   /// The parameter `rfqId` of this provider.
@@ -163,18 +167,12 @@ mixin ShippingManifestControllerRef
 }
 
 class _ShippingManifestControllerProviderElement
-    extends
-        AutoDisposeAsyncNotifierProviderElement<
-          ShippingManifestController,
-          ShippingManifest
-        >
-    with ShippingManifestControllerRef {
+    extends AutoDisposeAsyncNotifierProviderElement<ShippingManifestController,
+        ShippingManifest> with ShippingManifestControllerRef {
   _ShippingManifestControllerProviderElement(super.provider);
 
   @override
   String get rfqId => (origin as ShippingManifestControllerProvider).rfqId;
 }
-
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
-
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

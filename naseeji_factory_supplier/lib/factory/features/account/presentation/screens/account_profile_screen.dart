@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_factory/factory/core/constants/app_spacing.dart';
+import 'package:naseeji_factory/core/constants/app_spacing.dart';
 import '../providers/account_provider.dart';
 import '../widgets/account_reusable_widgets.dart';
 import '../widgets/profile_widgets.dart';
@@ -120,4 +120,5 @@ class AccountProfileScreen extends ConsumerWidget {
     return SettingTile(icon: icon, title: title, onTap: onTap);
   }
 }
+
 

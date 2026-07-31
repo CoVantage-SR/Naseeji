@@ -132,3 +132,4 @@ class BusinessCategoriesScreen extends ConsumerWidget {
   }
 }
 
+

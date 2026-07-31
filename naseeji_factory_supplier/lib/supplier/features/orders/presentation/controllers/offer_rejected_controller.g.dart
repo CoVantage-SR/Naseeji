@@ -34,7 +34,9 @@ abstract class _$OfferRejectedController
     extends BuildlessAutoDisposeAsyncNotifier<OfferRejected> {
   late final String rfqId;
 
-  FutureOr<OfferRejected> build(String rfqId);
+  FutureOr<OfferRejected> build(
+    String rfqId,
+  );
 }
 
 /// See also [OfferRejectedController].
@@ -47,15 +49,21 @@ class OfferRejectedControllerFamily extends Family<AsyncValue<OfferRejected>> {
   const OfferRejectedControllerFamily();
 
   /// See also [OfferRejectedController].
-  OfferRejectedControllerProvider call(String rfqId) {
-    return OfferRejectedControllerProvider(rfqId);
+  OfferRejectedControllerProvider call(
+    String rfqId,
+  ) {
+    return OfferRejectedControllerProvider(
+      rfqId,
+    );
   }
 
   @override
   OfferRejectedControllerProvider getProviderOverride(
     covariant OfferRejectedControllerProvider provider,
   ) {
-    return call(provider.rfqId);
+    return call(
+      provider.rfqId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -75,25 +83,24 @@ class OfferRejectedControllerFamily extends Family<AsyncValue<OfferRejected>> {
 
 /// See also [OfferRejectedController].
 class OfferRejectedControllerProvider
-    extends
-        AutoDisposeAsyncNotifierProviderImpl<
-          OfferRejectedController,
-          OfferRejected
-        > {
+    extends AutoDisposeAsyncNotifierProviderImpl<OfferRejectedController,
+        OfferRejected> {
   /// See also [OfferRejectedController].
-  OfferRejectedControllerProvider(String rfqId)
-    : this._internal(
-        () => OfferRejectedController()..rfqId = rfqId,
-        from: offerRejectedControllerProvider,
-        name: r'offerRejectedControllerProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$offerRejectedControllerHash,
-        dependencies: OfferRejectedControllerFamily._dependencies,
-        allTransitiveDependencies:
-            OfferRejectedControllerFamily._allTransitiveDependencies,
-        rfqId: rfqId,
-      );
+  OfferRejectedControllerProvider(
+    String rfqId,
+  ) : this._internal(
+          () => OfferRejectedController()..rfqId = rfqId,
+          from: offerRejectedControllerProvider,
+          name: r'offerRejectedControllerProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$offerRejectedControllerHash,
+          dependencies: OfferRejectedControllerFamily._dependencies,
+          allTransitiveDependencies:
+              OfferRejectedControllerFamily._allTransitiveDependencies,
+          rfqId: rfqId,
+        );
 
   OfferRejectedControllerProvider._internal(
     super._createNotifier, {
@@ -111,7 +118,9 @@ class OfferRejectedControllerProvider
   FutureOr<OfferRejected> runNotifierBuild(
     covariant OfferRejectedController notifier,
   ) {
-    return notifier.build(rfqId);
+    return notifier.build(
+      rfqId,
+    );
   }
 
   @override
@@ -131,11 +140,8 @@ class OfferRejectedControllerProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<
-    OfferRejectedController,
-    OfferRejected
-  >
-  createElement() {
+  AutoDisposeAsyncNotifierProviderElement<OfferRejectedController,
+      OfferRejected> createElement() {
     return _OfferRejectedControllerProviderElement(this);
   }
 
@@ -153,8 +159,6 @@ class OfferRejectedControllerProvider
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 mixin OfferRejectedControllerRef
     on AutoDisposeAsyncNotifierProviderRef<OfferRejected> {
   /// The parameter `rfqId` of this provider.
@@ -162,18 +166,12 @@ mixin OfferRejectedControllerRef
 }
 
 class _OfferRejectedControllerProviderElement
-    extends
-        AutoDisposeAsyncNotifierProviderElement<
-          OfferRejectedController,
-          OfferRejected
-        >
-    with OfferRejectedControllerRef {
+    extends AutoDisposeAsyncNotifierProviderElement<OfferRejectedController,
+        OfferRejected> with OfferRejectedControllerRef {
   _OfferRejectedControllerProviderElement(super.provider);
 
   @override
   String get rfqId => (origin as OfferRejectedControllerProvider).rfqId;
 }
-
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
-
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

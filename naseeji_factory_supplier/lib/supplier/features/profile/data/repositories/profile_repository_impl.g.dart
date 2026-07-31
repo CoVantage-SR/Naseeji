@@ -12,18 +12,15 @@ String _$profileRepositoryHash() => r'6876d72928f10c5a81e22a3c8aac07ace4b46b21';
 @ProviderFor(profileRepository)
 final profileRepositoryProvider =
     AutoDisposeProvider<ProfileRepository>.internal(
-      profileRepository,
-      name: r'profileRepositoryProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$profileRepositoryHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  profileRepository,
+  name: r'profileRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$profileRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef ProfileRepositoryRef = AutoDisposeProviderRef<ProfileRepository>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
-
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -34,7 +34,9 @@ abstract class _$OfferDetailsController
     extends BuildlessAutoDisposeAsyncNotifier<OfferDetails> {
   late final String rfqId;
 
-  FutureOr<OfferDetails> build(String rfqId);
+  FutureOr<OfferDetails> build(
+    String rfqId,
+  );
 }
 
 /// See also [OfferDetailsController].
@@ -47,15 +49,21 @@ class OfferDetailsControllerFamily extends Family<AsyncValue<OfferDetails>> {
   const OfferDetailsControllerFamily();
 
   /// See also [OfferDetailsController].
-  OfferDetailsControllerProvider call(String rfqId) {
-    return OfferDetailsControllerProvider(rfqId);
+  OfferDetailsControllerProvider call(
+    String rfqId,
+  ) {
+    return OfferDetailsControllerProvider(
+      rfqId,
+    );
   }
 
   @override
   OfferDetailsControllerProvider getProviderOverride(
     covariant OfferDetailsControllerProvider provider,
   ) {
-    return call(provider.rfqId);
+    return call(
+      provider.rfqId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -75,25 +83,24 @@ class OfferDetailsControllerFamily extends Family<AsyncValue<OfferDetails>> {
 
 /// See also [OfferDetailsController].
 class OfferDetailsControllerProvider
-    extends
-        AutoDisposeAsyncNotifierProviderImpl<
-          OfferDetailsController,
-          OfferDetails
-        > {
+    extends AutoDisposeAsyncNotifierProviderImpl<OfferDetailsController,
+        OfferDetails> {
   /// See also [OfferDetailsController].
-  OfferDetailsControllerProvider(String rfqId)
-    : this._internal(
-        () => OfferDetailsController()..rfqId = rfqId,
-        from: offerDetailsControllerProvider,
-        name: r'offerDetailsControllerProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$offerDetailsControllerHash,
-        dependencies: OfferDetailsControllerFamily._dependencies,
-        allTransitiveDependencies:
-            OfferDetailsControllerFamily._allTransitiveDependencies,
-        rfqId: rfqId,
-      );
+  OfferDetailsControllerProvider(
+    String rfqId,
+  ) : this._internal(
+          () => OfferDetailsController()..rfqId = rfqId,
+          from: offerDetailsControllerProvider,
+          name: r'offerDetailsControllerProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$offerDetailsControllerHash,
+          dependencies: OfferDetailsControllerFamily._dependencies,
+          allTransitiveDependencies:
+              OfferDetailsControllerFamily._allTransitiveDependencies,
+          rfqId: rfqId,
+        );
 
   OfferDetailsControllerProvider._internal(
     super._createNotifier, {
@@ -111,7 +118,9 @@ class OfferDetailsControllerProvider
   FutureOr<OfferDetails> runNotifierBuild(
     covariant OfferDetailsController notifier,
   ) {
-    return notifier.build(rfqId);
+    return notifier.build(
+      rfqId,
+    );
   }
 
   @override
@@ -132,7 +141,7 @@ class OfferDetailsControllerProvider
 
   @override
   AutoDisposeAsyncNotifierProviderElement<OfferDetailsController, OfferDetails>
-  createElement() {
+      createElement() {
     return _OfferDetailsControllerProviderElement(this);
   }
 
@@ -150,8 +159,6 @@ class OfferDetailsControllerProvider
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 mixin OfferDetailsControllerRef
     on AutoDisposeAsyncNotifierProviderRef<OfferDetails> {
   /// The parameter `rfqId` of this provider.
@@ -159,18 +166,12 @@ mixin OfferDetailsControllerRef
 }
 
 class _OfferDetailsControllerProviderElement
-    extends
-        AutoDisposeAsyncNotifierProviderElement<
-          OfferDetailsController,
-          OfferDetails
-        >
-    with OfferDetailsControllerRef {
+    extends AutoDisposeAsyncNotifierProviderElement<OfferDetailsController,
+        OfferDetails> with OfferDetailsControllerRef {
   _OfferDetailsControllerProviderElement(super.provider);
 
   @override
   String get rfqId => (origin as OfferDetailsControllerProvider).rfqId;
 }
-
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
-
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

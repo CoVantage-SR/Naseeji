@@ -24,7 +24,7 @@ final selectedNotificationCategoryProvider =
 
 typedef SelectedNotificationCategoryRef = AutoDisposeProviderRef<String>;
 String _$notificationsNotifierHash() =>
-    r'932d8d23f07245d43e6906f6a39d1bcf92f99e9a';
+    r'4212c58833915ce375e2790cd77910ace7a0ae8e';
 
 /// See also [NotificationsNotifier].
 @ProviderFor(NotificationsNotifier)

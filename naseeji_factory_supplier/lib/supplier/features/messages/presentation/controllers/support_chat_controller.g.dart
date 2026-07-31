@@ -34,7 +34,9 @@ abstract class _$SupportChatController
     extends BuildlessAutoDisposeAsyncNotifier<SupportTicket?> {
   late final String ticketId;
 
-  FutureOr<SupportTicket?> build(String ticketId);
+  FutureOr<SupportTicket?> build(
+    String ticketId,
+  );
 }
 
 /// See also [SupportChatController].
@@ -47,15 +49,21 @@ class SupportChatControllerFamily extends Family<AsyncValue<SupportTicket?>> {
   const SupportChatControllerFamily();
 
   /// See also [SupportChatController].
-  SupportChatControllerProvider call(String ticketId) {
-    return SupportChatControllerProvider(ticketId);
+  SupportChatControllerProvider call(
+    String ticketId,
+  ) {
+    return SupportChatControllerProvider(
+      ticketId,
+    );
   }
 
   @override
   SupportChatControllerProvider getProviderOverride(
     covariant SupportChatControllerProvider provider,
   ) {
-    return call(provider.ticketId);
+    return call(
+      provider.ticketId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -75,25 +83,24 @@ class SupportChatControllerFamily extends Family<AsyncValue<SupportTicket?>> {
 
 /// See also [SupportChatController].
 class SupportChatControllerProvider
-    extends
-        AutoDisposeAsyncNotifierProviderImpl<
-          SupportChatController,
-          SupportTicket?
-        > {
+    extends AutoDisposeAsyncNotifierProviderImpl<SupportChatController,
+        SupportTicket?> {
   /// See also [SupportChatController].
-  SupportChatControllerProvider(String ticketId)
-    : this._internal(
-        () => SupportChatController()..ticketId = ticketId,
-        from: supportChatControllerProvider,
-        name: r'supportChatControllerProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$supportChatControllerHash,
-        dependencies: SupportChatControllerFamily._dependencies,
-        allTransitiveDependencies:
-            SupportChatControllerFamily._allTransitiveDependencies,
-        ticketId: ticketId,
-      );
+  SupportChatControllerProvider(
+    String ticketId,
+  ) : this._internal(
+          () => SupportChatController()..ticketId = ticketId,
+          from: supportChatControllerProvider,
+          name: r'supportChatControllerProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$supportChatControllerHash,
+          dependencies: SupportChatControllerFamily._dependencies,
+          allTransitiveDependencies:
+              SupportChatControllerFamily._allTransitiveDependencies,
+          ticketId: ticketId,
+        );
 
   SupportChatControllerProvider._internal(
     super._createNotifier, {
@@ -111,7 +118,9 @@ class SupportChatControllerProvider
   FutureOr<SupportTicket?> runNotifierBuild(
     covariant SupportChatController notifier,
   ) {
-    return notifier.build(ticketId);
+    return notifier.build(
+      ticketId,
+    );
   }
 
   @override
@@ -132,7 +141,7 @@ class SupportChatControllerProvider
 
   @override
   AutoDisposeAsyncNotifierProviderElement<SupportChatController, SupportTicket?>
-  createElement() {
+      createElement() {
     return _SupportChatControllerProviderElement(this);
   }
 
@@ -150,8 +159,6 @@ class SupportChatControllerProvider
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 mixin SupportChatControllerRef
     on AutoDisposeAsyncNotifierProviderRef<SupportTicket?> {
   /// The parameter `ticketId` of this provider.
@@ -159,18 +166,12 @@ mixin SupportChatControllerRef
 }
 
 class _SupportChatControllerProviderElement
-    extends
-        AutoDisposeAsyncNotifierProviderElement<
-          SupportChatController,
-          SupportTicket?
-        >
-    with SupportChatControllerRef {
+    extends AutoDisposeAsyncNotifierProviderElement<SupportChatController,
+        SupportTicket?> with SupportChatControllerRef {
   _SupportChatControllerProviderElement(super.provider);
 
   @override
   String get ticketId => (origin as SupportChatControllerProvider).ticketId;
 }
-
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
-
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

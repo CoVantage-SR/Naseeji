@@ -6,7 +6,7 @@ part of 'products_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$productsNotifierHash() => r'a1c1f4c458d2feccf7404167387bf517911117c9';
+String _$productsNotifierHash() => r'a948748330b5b9ae76b6ebad5ce7b67c56197dc1';
 
 /// See also [ProductsNotifier].
 @ProviderFor(ProductsNotifier)
@@ -24,4 +24,3 @@ final productsNotifierProvider =
 typedef _$ProductsNotifier = AutoDisposeNotifier<List<Product>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
-

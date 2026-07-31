@@ -34,7 +34,9 @@ abstract class _$FinalAgreementController
     extends BuildlessAutoDisposeAsyncNotifier<FinalAgreement> {
   late final String rfqId;
 
-  FutureOr<FinalAgreement> build(String rfqId);
+  FutureOr<FinalAgreement> build(
+    String rfqId,
+  );
 }
 
 /// See also [FinalAgreementController].
@@ -48,15 +50,21 @@ class FinalAgreementControllerFamily
   const FinalAgreementControllerFamily();
 
   /// See also [FinalAgreementController].
-  FinalAgreementControllerProvider call(String rfqId) {
-    return FinalAgreementControllerProvider(rfqId);
+  FinalAgreementControllerProvider call(
+    String rfqId,
+  ) {
+    return FinalAgreementControllerProvider(
+      rfqId,
+    );
   }
 
   @override
   FinalAgreementControllerProvider getProviderOverride(
     covariant FinalAgreementControllerProvider provider,
   ) {
-    return call(provider.rfqId);
+    return call(
+      provider.rfqId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -76,25 +84,24 @@ class FinalAgreementControllerFamily
 
 /// See also [FinalAgreementController].
 class FinalAgreementControllerProvider
-    extends
-        AutoDisposeAsyncNotifierProviderImpl<
-          FinalAgreementController,
-          FinalAgreement
-        > {
+    extends AutoDisposeAsyncNotifierProviderImpl<FinalAgreementController,
+        FinalAgreement> {
   /// See also [FinalAgreementController].
-  FinalAgreementControllerProvider(String rfqId)
-    : this._internal(
-        () => FinalAgreementController()..rfqId = rfqId,
-        from: finalAgreementControllerProvider,
-        name: r'finalAgreementControllerProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$finalAgreementControllerHash,
-        dependencies: FinalAgreementControllerFamily._dependencies,
-        allTransitiveDependencies:
-            FinalAgreementControllerFamily._allTransitiveDependencies,
-        rfqId: rfqId,
-      );
+  FinalAgreementControllerProvider(
+    String rfqId,
+  ) : this._internal(
+          () => FinalAgreementController()..rfqId = rfqId,
+          from: finalAgreementControllerProvider,
+          name: r'finalAgreementControllerProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$finalAgreementControllerHash,
+          dependencies: FinalAgreementControllerFamily._dependencies,
+          allTransitiveDependencies:
+              FinalAgreementControllerFamily._allTransitiveDependencies,
+          rfqId: rfqId,
+        );
 
   FinalAgreementControllerProvider._internal(
     super._createNotifier, {
@@ -112,7 +119,9 @@ class FinalAgreementControllerProvider
   FutureOr<FinalAgreement> runNotifierBuild(
     covariant FinalAgreementController notifier,
   ) {
-    return notifier.build(rfqId);
+    return notifier.build(
+      rfqId,
+    );
   }
 
   @override
@@ -132,11 +141,8 @@ class FinalAgreementControllerProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<
-    FinalAgreementController,
-    FinalAgreement
-  >
-  createElement() {
+  AutoDisposeAsyncNotifierProviderElement<FinalAgreementController,
+      FinalAgreement> createElement() {
     return _FinalAgreementControllerProviderElement(this);
   }
 
@@ -154,8 +160,6 @@ class FinalAgreementControllerProvider
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 mixin FinalAgreementControllerRef
     on AutoDisposeAsyncNotifierProviderRef<FinalAgreement> {
   /// The parameter `rfqId` of this provider.
@@ -163,18 +167,12 @@ mixin FinalAgreementControllerRef
 }
 
 class _FinalAgreementControllerProviderElement
-    extends
-        AutoDisposeAsyncNotifierProviderElement<
-          FinalAgreementController,
-          FinalAgreement
-        >
-    with FinalAgreementControllerRef {
+    extends AutoDisposeAsyncNotifierProviderElement<FinalAgreementController,
+        FinalAgreement> with FinalAgreementControllerRef {
   _FinalAgreementControllerProviderElement(super.provider);
 
   @override
   String get rfqId => (origin as FinalAgreementControllerProvider).rfqId;
 }
-
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
-
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

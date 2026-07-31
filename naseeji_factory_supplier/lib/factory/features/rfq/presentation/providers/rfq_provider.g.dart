@@ -6,7 +6,7 @@ part of 'rfq_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$filteredRFQsHash() => r'a82e40e932938c14f802185b70fb68bcf7710637';
+String _$filteredRFQsHash() => r'3e91d1c759c6abdc02c48887b4962e126d65d213';
 
 /// See also [filteredRFQs].
 @ProviderFor(filteredRFQs)
@@ -34,7 +34,7 @@ final rfqSummaryProvider = AutoDisposeProvider<RFQSummary>.internal(
 );
 
 typedef RfqSummaryRef = AutoDisposeProviderRef<RFQSummary>;
-String _$rFQNotifierHash() => r'dd4ee4f4343dab0b72d4aa9c73309752ba782e65';
+String _$rFQNotifierHash() => r'ca277758eaa024c317489f03ca04a02bcd38b37e';
 
 /// See also [RFQNotifier].
 @ProviderFor(RFQNotifier)
@@ -83,4 +83,3 @@ final rFQSearchNotifierProvider =
 typedef _$RFQSearchNotifier = AutoDisposeNotifier<String>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
-

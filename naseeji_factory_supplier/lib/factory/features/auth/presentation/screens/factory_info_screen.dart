@@ -145,3 +145,4 @@ class _FactoryInfoScreenState extends ConsumerState<FactoryInfoScreen> {
   }
 }
 
+

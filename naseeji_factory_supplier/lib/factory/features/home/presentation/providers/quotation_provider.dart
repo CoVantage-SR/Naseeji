@@ -9,3 +9,4 @@ Future<List<LatestQuotation>> quotation(QuotationRef ref) {
   return ref.watch(homeRepositoryProvider).getLatestQuotations();
 }
 
+

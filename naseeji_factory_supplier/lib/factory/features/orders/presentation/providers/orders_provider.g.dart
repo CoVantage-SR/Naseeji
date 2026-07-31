@@ -6,7 +6,7 @@ part of 'orders_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$ordersNotifierHash() => r'a9a457fdbeb74aaa3d3b5fa9c790f81c941d8f1f';
+String _$ordersNotifierHash() => r'35e3daa9f04a10ae59bf1d45fce09c49c6b6bad9';
 
 /// See also [OrdersNotifier].
 @ProviderFor(OrdersNotifier)
@@ -41,4 +41,3 @@ typedef _$TimelineNotifier
     = AutoDisposeNotifier<Map<String, List<OrderTimelineItem>>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
-

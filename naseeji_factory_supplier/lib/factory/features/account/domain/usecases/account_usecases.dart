@@ -44,3 +44,4 @@ class ManageNotificationsUseCase {
   Future<void> delete(String id) => repository.deleteNotification(id);
 }
 
+

@@ -1,9 +1,9 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:naseeji_factory/factory/core/constants/app_colors.dart';
-import 'package:naseeji_factory/factory/core/constants/app_radius.dart';
-import 'package:naseeji_factory/factory/core/extensions/context_extensions.dart';
+import 'package:naseeji_factory/core/constants/app_colors.dart';
+import 'package:naseeji_factory/core/constants/app_radius.dart';
+import 'package:naseeji_factory/core/extensions/context_extensions.dart';
 
 import '../../providers/account_provider.dart';
 
@@ -43,4 +43,5 @@ class RoleWidget extends StatelessWidget {
     );
   }
 }
+
 

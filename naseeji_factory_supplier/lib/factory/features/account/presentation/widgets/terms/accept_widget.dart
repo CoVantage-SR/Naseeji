@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_factory/factory/core/constants/app_colors.dart';
+import 'package:naseeji_factory/core/constants/app_colors.dart';
 import '../account_reusable_widgets.dart';
 
 class AcceptWidget extends StatelessWidget {
@@ -23,4 +23,5 @@ class AcceptWidget extends StatelessWidget {
     );
   }
 }
+
 

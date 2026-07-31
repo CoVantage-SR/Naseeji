@@ -34,7 +34,9 @@ abstract class _$QuotationHistoryController
     extends BuildlessAutoDisposeAsyncNotifier<List<QuotationRevision>> {
   late final String rfqId;
 
-  FutureOr<List<QuotationRevision>> build(String rfqId);
+  FutureOr<List<QuotationRevision>> build(
+    String rfqId,
+  );
 }
 
 /// See also [QuotationHistoryController].
@@ -48,15 +50,21 @@ class QuotationHistoryControllerFamily
   const QuotationHistoryControllerFamily();
 
   /// See also [QuotationHistoryController].
-  QuotationHistoryControllerProvider call(String rfqId) {
-    return QuotationHistoryControllerProvider(rfqId);
+  QuotationHistoryControllerProvider call(
+    String rfqId,
+  ) {
+    return QuotationHistoryControllerProvider(
+      rfqId,
+    );
   }
 
   @override
   QuotationHistoryControllerProvider getProviderOverride(
     covariant QuotationHistoryControllerProvider provider,
   ) {
-    return call(provider.rfqId);
+    return call(
+      provider.rfqId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -76,25 +84,24 @@ class QuotationHistoryControllerFamily
 
 /// See also [QuotationHistoryController].
 class QuotationHistoryControllerProvider
-    extends
-        AutoDisposeAsyncNotifierProviderImpl<
-          QuotationHistoryController,
-          List<QuotationRevision>
-        > {
+    extends AutoDisposeAsyncNotifierProviderImpl<QuotationHistoryController,
+        List<QuotationRevision>> {
   /// See also [QuotationHistoryController].
-  QuotationHistoryControllerProvider(String rfqId)
-    : this._internal(
-        () => QuotationHistoryController()..rfqId = rfqId,
-        from: quotationHistoryControllerProvider,
-        name: r'quotationHistoryControllerProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$quotationHistoryControllerHash,
-        dependencies: QuotationHistoryControllerFamily._dependencies,
-        allTransitiveDependencies:
-            QuotationHistoryControllerFamily._allTransitiveDependencies,
-        rfqId: rfqId,
-      );
+  QuotationHistoryControllerProvider(
+    String rfqId,
+  ) : this._internal(
+          () => QuotationHistoryController()..rfqId = rfqId,
+          from: quotationHistoryControllerProvider,
+          name: r'quotationHistoryControllerProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$quotationHistoryControllerHash,
+          dependencies: QuotationHistoryControllerFamily._dependencies,
+          allTransitiveDependencies:
+              QuotationHistoryControllerFamily._allTransitiveDependencies,
+          rfqId: rfqId,
+        );
 
   QuotationHistoryControllerProvider._internal(
     super._createNotifier, {
@@ -112,7 +119,9 @@ class QuotationHistoryControllerProvider
   FutureOr<List<QuotationRevision>> runNotifierBuild(
     covariant QuotationHistoryController notifier,
   ) {
-    return notifier.build(rfqId);
+    return notifier.build(
+      rfqId,
+    );
   }
 
   @override
@@ -132,11 +141,8 @@ class QuotationHistoryControllerProvider
   }
 
   @override
-  AutoDisposeAsyncNotifierProviderElement<
-    QuotationHistoryController,
-    List<QuotationRevision>
-  >
-  createElement() {
+  AutoDisposeAsyncNotifierProviderElement<QuotationHistoryController,
+      List<QuotationRevision>> createElement() {
     return _QuotationHistoryControllerProviderElement(this);
   }
 
@@ -154,8 +160,6 @@ class QuotationHistoryControllerProvider
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 mixin QuotationHistoryControllerRef
     on AutoDisposeAsyncNotifierProviderRef<List<QuotationRevision>> {
   /// The parameter `rfqId` of this provider.
@@ -163,18 +167,12 @@ mixin QuotationHistoryControllerRef
 }
 
 class _QuotationHistoryControllerProviderElement
-    extends
-        AutoDisposeAsyncNotifierProviderElement<
-          QuotationHistoryController,
-          List<QuotationRevision>
-        >
-    with QuotationHistoryControllerRef {
+    extends AutoDisposeAsyncNotifierProviderElement<QuotationHistoryController,
+        List<QuotationRevision>> with QuotationHistoryControllerRef {
   _QuotationHistoryControllerProviderElement(super.provider);
 
   @override
   String get rfqId => (origin as QuotationHistoryControllerProvider).rfqId;
 }
-
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
-
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

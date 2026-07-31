@@ -34,7 +34,9 @@ abstract class _$RfqDetailsController
     extends BuildlessAutoDisposeAsyncNotifier<RfqDetails> {
   late final String rfqId;
 
-  FutureOr<RfqDetails> build(String rfqId);
+  FutureOr<RfqDetails> build(
+    String rfqId,
+  );
 }
 
 /// See also [RfqDetailsController].
@@ -47,15 +49,21 @@ class RfqDetailsControllerFamily extends Family<AsyncValue<RfqDetails>> {
   const RfqDetailsControllerFamily();
 
   /// See also [RfqDetailsController].
-  RfqDetailsControllerProvider call(String rfqId) {
-    return RfqDetailsControllerProvider(rfqId);
+  RfqDetailsControllerProvider call(
+    String rfqId,
+  ) {
+    return RfqDetailsControllerProvider(
+      rfqId,
+    );
   }
 
   @override
   RfqDetailsControllerProvider getProviderOverride(
     covariant RfqDetailsControllerProvider provider,
   ) {
-    return call(provider.rfqId);
+    return call(
+      provider.rfqId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -74,23 +82,24 @@ class RfqDetailsControllerFamily extends Family<AsyncValue<RfqDetails>> {
 }
 
 /// See also [RfqDetailsController].
-class RfqDetailsControllerProvider
-    extends
-        AutoDisposeAsyncNotifierProviderImpl<RfqDetailsController, RfqDetails> {
+class RfqDetailsControllerProvider extends AutoDisposeAsyncNotifierProviderImpl<
+    RfqDetailsController, RfqDetails> {
   /// See also [RfqDetailsController].
-  RfqDetailsControllerProvider(String rfqId)
-    : this._internal(
-        () => RfqDetailsController()..rfqId = rfqId,
-        from: rfqDetailsControllerProvider,
-        name: r'rfqDetailsControllerProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$rfqDetailsControllerHash,
-        dependencies: RfqDetailsControllerFamily._dependencies,
-        allTransitiveDependencies:
-            RfqDetailsControllerFamily._allTransitiveDependencies,
-        rfqId: rfqId,
-      );
+  RfqDetailsControllerProvider(
+    String rfqId,
+  ) : this._internal(
+          () => RfqDetailsController()..rfqId = rfqId,
+          from: rfqDetailsControllerProvider,
+          name: r'rfqDetailsControllerProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$rfqDetailsControllerHash,
+          dependencies: RfqDetailsControllerFamily._dependencies,
+          allTransitiveDependencies:
+              RfqDetailsControllerFamily._allTransitiveDependencies,
+          rfqId: rfqId,
+        );
 
   RfqDetailsControllerProvider._internal(
     super._createNotifier, {
@@ -108,7 +117,9 @@ class RfqDetailsControllerProvider
   FutureOr<RfqDetails> runNotifierBuild(
     covariant RfqDetailsController notifier,
   ) {
-    return notifier.build(rfqId);
+    return notifier.build(
+      rfqId,
+    );
   }
 
   @override
@@ -129,7 +140,7 @@ class RfqDetailsControllerProvider
 
   @override
   AutoDisposeAsyncNotifierProviderElement<RfqDetailsController, RfqDetails>
-  createElement() {
+      createElement() {
     return _RfqDetailsControllerProviderElement(this);
   }
 
@@ -147,8 +158,6 @@ class RfqDetailsControllerProvider
   }
 }
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 mixin RfqDetailsControllerRef
     on AutoDisposeAsyncNotifierProviderRef<RfqDetails> {
   /// The parameter `rfqId` of this provider.
@@ -156,18 +165,12 @@ mixin RfqDetailsControllerRef
 }
 
 class _RfqDetailsControllerProviderElement
-    extends
-        AutoDisposeAsyncNotifierProviderElement<
-          RfqDetailsController,
-          RfqDetails
-        >
-    with RfqDetailsControllerRef {
+    extends AutoDisposeAsyncNotifierProviderElement<RfqDetailsController,
+        RfqDetails> with RfqDetailsControllerRef {
   _RfqDetailsControllerProviderElement(super.provider);
 
   @override
   String get rfqId => (origin as RfqDetailsControllerProvider).rfqId;
 }
-
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
-
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
