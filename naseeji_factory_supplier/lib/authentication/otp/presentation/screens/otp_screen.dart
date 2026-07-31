@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:naseeji_factory/authentication/presentation/widgets/register_header.dart';
+import 'package:naseeji_factory/authentication/presentation/widgets/register_logo.dart';
 import '../../../../core/constants/app_radius.dart';
 import '../../../../core/constants/app_spacing.dart';
-import '../../presentation/widgets/register_header.dart';
-import '../../presentation/widgets/register_logo.dart';
 import '../providers/otp_provider.dart';
 import '../widgets/countdown_timer.dart';
 import '../widgets/otp_boxes.dart';
@@ -124,10 +124,10 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
                 Text(
                   widget.phone,
                   textAlign: TextAlign.center,
+                  textDirection: TextDirection.ltr,
                   style: theme.textTheme.bodyLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: colorScheme.primary,
-                    direction: TextDirection.ltr,
                   ),
                 ),
 
