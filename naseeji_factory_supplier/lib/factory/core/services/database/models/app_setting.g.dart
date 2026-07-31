@@ -741,4 +741,3 @@ extension AppSettingQueryProperty
     });
   }
 }
-
