@@ -13,3 +13,4 @@ class ValidateProductLimitsUseCase {
     return repository.validateMediaUpload(type: type, currentCount: currentCount);
   }
 }
+

@@ -353,3 +353,4 @@ class AgreementsRepositoryImpl implements AgreementsRepository {
 AgreementsRepository agreementsRepository(AgreementsRepositoryRef ref) {
   return AgreementsRepositoryImpl();
 }
+

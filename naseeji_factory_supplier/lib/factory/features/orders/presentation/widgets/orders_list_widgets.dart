@@ -268,3 +268,4 @@ class FloatingSearchButtonWidget extends StatelessWidget {
     );
   }
 }
+

@@ -19,3 +19,4 @@ class ErrorWidget extends StatelessWidget {
     );
   }
 }
+

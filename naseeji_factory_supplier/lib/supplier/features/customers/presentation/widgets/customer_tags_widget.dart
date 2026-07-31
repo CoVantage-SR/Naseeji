@@ -73,3 +73,4 @@ class CustomerTagsWidget extends StatelessWidget {
     );
   }
 }
+

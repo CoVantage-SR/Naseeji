@@ -268,3 +268,4 @@ class DeleteFactoryDialog extends StatelessWidget {
     );
   }
 }
+

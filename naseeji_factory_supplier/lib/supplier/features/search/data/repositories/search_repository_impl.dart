@@ -57,3 +57,4 @@ class SearchRepositoryImpl implements SearchRepository {
 SearchRepository searchRepository(SearchRepositoryRef ref) {
   return SearchRepositoryImpl();
 }
+

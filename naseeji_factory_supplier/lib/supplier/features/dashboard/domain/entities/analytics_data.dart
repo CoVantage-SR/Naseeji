@@ -42,3 +42,4 @@ class AnalyticsData {
     required this.syntheticOrders,
   });
 }
+

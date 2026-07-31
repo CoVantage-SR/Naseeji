@@ -11,3 +11,4 @@ abstract class QuotationsRepository {
   Future<void> rejectQuotation(String id, String reason);
   Future<void> updateQuotationStatus(String id, QuotationStatus status);
 }
+

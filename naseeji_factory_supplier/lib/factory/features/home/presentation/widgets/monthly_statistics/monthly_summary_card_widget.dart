@@ -71,3 +71,4 @@ class MonthlySummaryCardWidget extends StatelessWidget {
     );
   }
 }
+

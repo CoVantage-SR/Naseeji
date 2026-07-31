@@ -15,3 +15,4 @@ class SearchItem {
     required this.imageUrl,
   });
 }
+

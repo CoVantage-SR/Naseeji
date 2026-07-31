@@ -31,3 +31,4 @@ abstract class FactoryProfileRepository {
   Future<void> updateCover(String coverUrl);
   Future<void> requestVerification();
 }
+

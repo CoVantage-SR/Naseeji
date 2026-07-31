@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/features/products/domain/entities/product_subscription_limit_model.dart';
+import 'package:naseeji_factory/supplier/features/products/domain/entities/product_subscription_limit_model.dart';
 
 class SubscriptionInfoCard extends StatelessWidget {
   final ProductSubscriptionLimitModel? limits;
@@ -202,3 +202,4 @@ class SubscriptionInfoCard extends StatelessWidget {
     );
   }
 }
+

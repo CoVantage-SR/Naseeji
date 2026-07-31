@@ -271,3 +271,4 @@ class WalletScreen extends ConsumerWidget {
         );
   }
 }
+

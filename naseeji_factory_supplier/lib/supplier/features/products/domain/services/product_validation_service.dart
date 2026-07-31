@@ -123,3 +123,4 @@ class ProductValidationService {
     return ValidationResult.valid();
   }
 }
+

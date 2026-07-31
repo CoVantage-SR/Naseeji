@@ -40,3 +40,4 @@ class AppLogo extends StatelessWidget {
     );
   }
 }
+

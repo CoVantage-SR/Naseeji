@@ -85,3 +85,4 @@ class AppThemeColors {
   static const Color darkOnInfo = Color(0xFF082F49);
   static const Color darkInfoContainer = Color(0xFF075985);
 }
+

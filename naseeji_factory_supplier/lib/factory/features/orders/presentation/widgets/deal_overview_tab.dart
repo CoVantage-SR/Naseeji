@@ -408,3 +408,4 @@ class DealOverviewTab extends StatelessWidget {
     );
   }
 }
+

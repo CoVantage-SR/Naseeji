@@ -432,3 +432,4 @@ class FinancialReport {
     required this.size,
   });
 }
+

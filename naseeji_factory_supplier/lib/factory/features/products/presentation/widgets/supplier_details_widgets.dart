@@ -242,3 +242,4 @@ class CertificatesWidget extends StatelessWidget {
     );
   }
 }
+

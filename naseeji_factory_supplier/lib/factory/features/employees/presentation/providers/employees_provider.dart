@@ -246,3 +246,4 @@ final employeesProvider =
   final repo = ref.watch(employeesRepositoryProvider);
   return EmployeesNotifier(repo, ref);
 });
+

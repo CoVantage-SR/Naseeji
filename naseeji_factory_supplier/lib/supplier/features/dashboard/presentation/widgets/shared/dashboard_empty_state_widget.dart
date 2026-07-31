@@ -82,3 +82,4 @@ class DashboardEmptyStateWidget extends StatelessWidget {
     );
   }
 }
+

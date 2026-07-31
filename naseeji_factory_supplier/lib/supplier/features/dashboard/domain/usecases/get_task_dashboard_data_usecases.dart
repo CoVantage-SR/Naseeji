@@ -64,3 +64,4 @@ class GetRecentNotificationsUseCase {
     return notifs.take(3).toList();
   }
 }
+

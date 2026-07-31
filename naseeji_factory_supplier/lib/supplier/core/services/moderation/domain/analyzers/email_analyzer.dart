@@ -26,3 +26,4 @@ class EmailAnalyzer implements ContentAnalyzer {
     return null;
   }
 }
+

@@ -7,3 +7,4 @@ abstract class AuthRepository {
   Future<UserModel> verifyOtp(String phone, String code);
   Future<void> registerSupplier(SupplierRegistrationData data);
 }
+

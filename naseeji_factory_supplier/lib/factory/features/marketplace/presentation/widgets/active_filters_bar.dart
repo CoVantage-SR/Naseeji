@@ -74,3 +74,4 @@ class ActiveFiltersBar extends StatelessWidget {
     );
   }
 }
+

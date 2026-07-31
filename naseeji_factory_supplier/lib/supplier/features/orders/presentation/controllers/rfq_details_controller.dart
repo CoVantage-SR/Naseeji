@@ -12,3 +12,4 @@ class RfqDetailsController extends _$RfqDetailsController {
     return repo.getRfqDetails(rfqId);
   }
 }
+

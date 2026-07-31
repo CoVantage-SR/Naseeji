@@ -77,3 +77,4 @@ final teamActivityLogsProvider = Provider.family<List<TeamActivityLog>, String?>
   ref.watch(teamMembersNotifierProvider);
   return repo.getActivityLogs(memberId: memberId);
 });
+

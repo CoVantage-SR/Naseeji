@@ -56,3 +56,4 @@ class LatestQuotationWidget extends StatelessWidget {
     );
   }
 }
+

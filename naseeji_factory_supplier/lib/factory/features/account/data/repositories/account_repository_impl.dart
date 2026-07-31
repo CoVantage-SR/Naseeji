@@ -105,3 +105,4 @@ class AccountRepositoryImpl implements AccountRepository {
     _db.logoutAllSessions();
   }
 }
+

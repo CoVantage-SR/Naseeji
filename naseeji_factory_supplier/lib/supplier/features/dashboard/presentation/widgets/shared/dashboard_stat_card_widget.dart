@@ -127,3 +127,4 @@ class DashboardStatCardWidget extends StatelessWidget {
     );
   }
 }
+

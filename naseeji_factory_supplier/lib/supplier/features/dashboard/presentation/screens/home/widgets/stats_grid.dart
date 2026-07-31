@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
-import 'package:naseeji_supplier/features/dashboard/domain/entities/sales_stats.dart';
+import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/supplier/features/dashboard/domain/entities/sales_stats.dart';
 import 'stat_card.dart';
 
 class StatsGrid extends StatelessWidget {
@@ -51,3 +51,4 @@ class StatsGrid extends StatelessWidget {
     );
   }
 }
+

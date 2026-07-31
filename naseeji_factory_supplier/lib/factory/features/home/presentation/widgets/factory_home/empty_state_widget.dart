@@ -73,3 +73,4 @@ class EmptyStateWidget extends StatelessWidget {
     );
   }
 }
+

@@ -92,3 +92,4 @@ class ReviewDetailsScreen extends ConsumerWidget {
     );
   }
 }
+

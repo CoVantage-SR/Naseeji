@@ -328,3 +328,4 @@ class BusinessChatController extends _$BusinessChatController {
     return 'RFQ-8820';
   }
 }
+

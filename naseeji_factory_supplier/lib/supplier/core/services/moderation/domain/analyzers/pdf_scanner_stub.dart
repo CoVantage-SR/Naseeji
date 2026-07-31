@@ -39,3 +39,4 @@ class PdfContentAnalyzer implements ContentAnalyzer {
     return null;
   }
 }
+

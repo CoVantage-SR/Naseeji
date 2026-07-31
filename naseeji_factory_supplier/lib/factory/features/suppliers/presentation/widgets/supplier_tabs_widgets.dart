@@ -506,3 +506,4 @@ class SupplierCompletedDealsTab extends StatelessWidget {
     );
   }
 }
+

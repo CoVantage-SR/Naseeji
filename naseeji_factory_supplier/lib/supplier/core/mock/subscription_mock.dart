@@ -296,3 +296,4 @@ class SubscriptionModel {
     updatedAt: DateTime.now().subtract(const Duration(days: 1)),
   );
 }
+

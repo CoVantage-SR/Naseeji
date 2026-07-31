@@ -135,3 +135,4 @@ class WithdrawalCard extends StatelessWidget {
     );
   }
 }
+

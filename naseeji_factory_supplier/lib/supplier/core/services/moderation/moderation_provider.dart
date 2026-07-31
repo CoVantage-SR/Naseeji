@@ -4,3 +4,4 @@ import 'package:naseeji_factory/supplier/core/services/moderation/content_modera
 final contentModerationServiceProvider = Provider<ContentModerationService>((ref) {
   return ContentModerationService();
 });
+

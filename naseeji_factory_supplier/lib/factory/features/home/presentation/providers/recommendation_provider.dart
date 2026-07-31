@@ -8,3 +8,4 @@ part 'recommendation_provider.g.dart';
 Future<List<SmartRecommendation>> recommendation(RecommendationRef ref) {
   return ref.watch(homeRepositoryProvider).getSmartRecommendations();
 }
+

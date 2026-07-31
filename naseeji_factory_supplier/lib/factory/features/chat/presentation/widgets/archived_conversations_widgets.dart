@@ -54,3 +54,4 @@ class ArchivedConversationCardWidget extends StatelessWidget {
     );
   }
 }
+

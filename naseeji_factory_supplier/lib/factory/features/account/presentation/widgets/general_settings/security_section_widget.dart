@@ -48,3 +48,4 @@ class SecuritySectionWidget extends StatelessWidget {
     );
   }
 }
+

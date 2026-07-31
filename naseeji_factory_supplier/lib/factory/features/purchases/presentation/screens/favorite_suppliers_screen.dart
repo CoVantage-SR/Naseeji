@@ -71,3 +71,4 @@ class _FavoriteSuppliersScreenState extends ConsumerState<FavoriteSuppliersScree
     );
   }
 }
+

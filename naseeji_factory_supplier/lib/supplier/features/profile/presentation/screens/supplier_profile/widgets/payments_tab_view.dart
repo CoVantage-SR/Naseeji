@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
-import 'package:naseeji_supplier/features/profile/domain/entities/supplier_profile.dart';
+import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/supplier/features/profile/domain/entities/supplier_profile.dart';
 
 class PaymentsTabView extends StatelessWidget {
   final SupplierProfile profile;
@@ -47,3 +47,4 @@ class PaymentsTabView extends StatelessWidget {
     );
   }
 }
+

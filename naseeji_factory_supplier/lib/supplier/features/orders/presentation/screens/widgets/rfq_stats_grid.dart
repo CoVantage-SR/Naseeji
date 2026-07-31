@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/features/orders/domain/entities/rfq_stats.dart';
+import 'package:naseeji_factory/supplier/features/orders/domain/entities/rfq_stats.dart';
 import 'rfq_stat_card.dart';
 
 class RfqStatsGrid extends StatelessWidget {
@@ -64,3 +64,4 @@ class RfqStatsGrid extends StatelessWidget {
     );
   }
 }
+

@@ -92,3 +92,4 @@ class UsageProgressWidget extends StatelessWidget {
     );
   }
 }
+

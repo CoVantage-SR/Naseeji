@@ -46,3 +46,4 @@ class MarketplaceErrorWidget extends StatelessWidget {
     );
   }
 }
+

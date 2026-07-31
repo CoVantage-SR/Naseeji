@@ -359,3 +359,4 @@ class LoginSessionEntity {
     required this.lastActive,
   });
 }
+

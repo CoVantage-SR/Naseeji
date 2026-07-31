@@ -8,3 +8,4 @@ part 'home_statistics_provider.g.dart';
 Future<HomeStatistics> homeStatistics(HomeStatisticsRef ref) {
   return ref.watch(homeRepositoryProvider).getHomeStatistics();
 }
+

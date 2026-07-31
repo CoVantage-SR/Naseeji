@@ -19,3 +19,4 @@ class StatusChipWidget extends StatelessWidget {
     );
   }
 }
+

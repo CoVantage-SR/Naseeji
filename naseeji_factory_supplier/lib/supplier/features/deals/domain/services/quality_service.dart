@@ -22,3 +22,4 @@ class QualityService {
     return _repository.updateQuality(dealId, quality);
   }
 }
+

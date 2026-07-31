@@ -8,3 +8,4 @@ part 'monthly_statistics_provider.g.dart';
 Future<MonthlyStatistics> monthlyStatistics(MonthlyStatisticsRef ref) {
   return ref.watch(homeRepositoryProvider).getMonthlyStatistics();
 }
+

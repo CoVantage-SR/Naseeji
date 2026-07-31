@@ -76,3 +76,4 @@ class RecentSearches extends StatelessWidget {
     );
   }
 }
+

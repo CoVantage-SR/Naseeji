@@ -419,3 +419,4 @@ class _PermissionToggle {
 
   const _PermissionToggle(this.title, this.value, this.onChanged);
 }
+

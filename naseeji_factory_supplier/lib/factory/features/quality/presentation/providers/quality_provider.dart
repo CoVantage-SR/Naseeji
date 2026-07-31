@@ -311,3 +311,4 @@ class QualityNotifier extends _$QualityNotifier {
         );
   }
 }
+

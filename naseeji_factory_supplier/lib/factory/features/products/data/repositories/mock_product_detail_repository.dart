@@ -196,3 +196,4 @@ class MockProductDetailRepository implements ProductDetailRepository {
     });
   }
 }
+

@@ -21,3 +21,4 @@ abstract class EmployeesRepository {
   Future<AttendanceEntity?> getEmployeeAttendance(String employeeId);
   Future<AssignedWorkEntity?> getEmployeeAssignedWork(String employeeId);
 }
+

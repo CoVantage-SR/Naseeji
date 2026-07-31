@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/features/home/presentation/screens/supplier_home_screen.dart';
+import 'package:naseeji_factory/supplier/features/home/presentation/screens/supplier_home_screen.dart';
 
 class SupplierDashboardScreen extends StatelessWidget {
   const SupplierDashboardScreen({super.key});
@@ -9,3 +9,4 @@ class SupplierDashboardScreen extends StatelessWidget {
     return const SupplierHomeScreen();
   }
 }
+

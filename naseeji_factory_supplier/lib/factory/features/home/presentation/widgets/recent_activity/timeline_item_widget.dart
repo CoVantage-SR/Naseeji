@@ -31,3 +31,4 @@ class TimelineItemWidget extends StatelessWidget {
     );
   }
 }
+

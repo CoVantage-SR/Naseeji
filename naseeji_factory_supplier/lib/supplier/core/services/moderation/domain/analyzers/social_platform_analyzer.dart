@@ -64,3 +64,4 @@ class SocialPlatformAnalyzer implements ContentAnalyzer {
     return null;
   }
 }
+

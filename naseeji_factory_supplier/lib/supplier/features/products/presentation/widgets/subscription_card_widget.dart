@@ -167,3 +167,4 @@ class SubscriptionCardWidget extends StatelessWidget {
     );
   }
 }
+

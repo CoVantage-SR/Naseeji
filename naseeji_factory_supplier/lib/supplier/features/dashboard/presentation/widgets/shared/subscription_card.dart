@@ -149,3 +149,4 @@ class SubscriptionCard extends StatelessWidget {
     return months[(month - 1).clamp(0, 11)];
   }
 }
+

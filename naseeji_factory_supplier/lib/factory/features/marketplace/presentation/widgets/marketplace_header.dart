@@ -94,3 +94,4 @@ class MarketplaceHeader extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 }
+

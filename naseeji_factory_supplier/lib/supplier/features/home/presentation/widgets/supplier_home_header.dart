@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_factory/factory/features/account/presentation/providers/account_provider.dart';
 import 'package:naseeji_factory/supplier/features/dashboard/presentation/providers/dashboard_providers.dart';
 
 class SupplierHomeHeader extends ConsumerWidget {
@@ -605,3 +604,4 @@ class _BubbleTrianglePainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
+

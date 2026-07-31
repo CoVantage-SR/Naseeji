@@ -24,3 +24,4 @@ class RfqChatController extends _$RfqChatController {
     state = AsyncValue.data([...currentVal, newMessage]);
   }
 }
+

@@ -53,3 +53,4 @@ class LatestRFQsWidget extends StatelessWidget {
     );
   }
 }
+

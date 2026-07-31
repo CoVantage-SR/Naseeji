@@ -11,3 +11,4 @@ Future<SampleInfo> sampleInfo(
 }) {
   return ref.watch(productDetailRepositoryProvider).getSampleInfo(productId);
 }
+

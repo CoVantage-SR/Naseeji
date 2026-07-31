@@ -120,3 +120,4 @@ class UpgradeDialog extends StatelessWidget {
     );
   }
 }
+

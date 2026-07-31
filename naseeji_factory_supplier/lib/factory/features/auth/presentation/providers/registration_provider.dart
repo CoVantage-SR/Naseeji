@@ -65,3 +65,4 @@ class Registration extends _$Registration {
     state = state.copyWith(isLoading: false);
   }
 }
+

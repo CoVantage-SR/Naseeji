@@ -11,3 +11,4 @@ class AnalyticsService {
     return product.performance;
   }
 }
+

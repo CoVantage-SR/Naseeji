@@ -51,3 +51,4 @@ class ErrorStateWidget extends StatelessWidget {
     );
   }
 }
+

@@ -60,3 +60,4 @@ class EmptyProductsWidget extends StatelessWidget {
     );
   }
 }
+

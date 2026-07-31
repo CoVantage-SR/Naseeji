@@ -107,3 +107,4 @@ class SupplierCardWidget extends StatelessWidget {
     );
   }
 }
+

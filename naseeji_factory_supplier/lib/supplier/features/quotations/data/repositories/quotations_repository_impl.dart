@@ -603,3 +603,4 @@ class QuotationsRepositoryImpl implements QuotationsRepository {
 QuotationsRepository quotationsRepository(QuotationsRepositoryRef ref) {
   return QuotationsRepositoryImpl();
 }
+

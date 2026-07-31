@@ -694,3 +694,4 @@ class FinancialRepositoryImpl implements FinancialRepository {
 FinancialRepository financialRepository(FinancialRepositoryRef ref) {
   return FinancialRepositoryImpl();
 }
+

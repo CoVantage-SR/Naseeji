@@ -32,3 +32,4 @@ class CategorySelector extends StatelessWidget {
     );
   }
 }
+

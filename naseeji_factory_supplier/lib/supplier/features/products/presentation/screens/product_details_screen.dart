@@ -592,3 +592,4 @@ class ProductDetailsScreen extends ConsumerWidget {
     ShareProductBottomSheet.show(context, product);
   }
 }
+

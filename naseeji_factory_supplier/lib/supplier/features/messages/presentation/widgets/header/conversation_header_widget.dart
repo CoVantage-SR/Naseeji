@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_workspace_model.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/deal_workspace_model.dart';
 import 'status_badge_widget.dart';
 
 class ConversationHeaderWidget extends StatelessWidget {
@@ -183,3 +183,4 @@ class ConversationHeaderWidget extends StatelessWidget {
     );
   }
 }
+

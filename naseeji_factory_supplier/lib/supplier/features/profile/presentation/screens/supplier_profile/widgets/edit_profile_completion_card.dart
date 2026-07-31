@@ -55,3 +55,4 @@ class EditProfileCompletionCard extends StatelessWidget {
     );
   }
 }
+

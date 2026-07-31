@@ -111,3 +111,4 @@ class Auth extends _$Auth {
     state = const AuthState.unauthenticated();
   }
 }
+

@@ -277,3 +277,4 @@ class AgreementHeaderWidget extends StatelessWidget {
     );
   }
 }
+

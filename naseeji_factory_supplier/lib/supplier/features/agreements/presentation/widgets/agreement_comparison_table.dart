@@ -91,3 +91,4 @@ class AgreementComparisonTable extends StatelessWidget {
     );
   }
 }
+

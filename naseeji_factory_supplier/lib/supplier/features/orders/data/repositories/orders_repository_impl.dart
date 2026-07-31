@@ -474,3 +474,4 @@ class OrdersRepositoryImpl implements OrdersRepository {
 OrdersRepository ordersRepository(OrdersRepositoryRef ref) {
   return OrdersRepositoryImpl();
 }
+

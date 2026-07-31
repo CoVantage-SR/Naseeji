@@ -20,3 +20,4 @@ abstract class FinancialRepository {
   Future<void> verifyPaymentMethod(String id);
   Future<List<FinancialReport>> getReports();
 }
+

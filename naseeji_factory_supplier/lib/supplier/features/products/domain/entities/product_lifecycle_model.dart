@@ -27,3 +27,4 @@ class ProductLifecycleModel {
 
   double get progressPercentage => steps.isEmpty ? 0.0 : ((currentStepIndex + 1) / steps.length).clamp(0.0, 1.0);
 }
+

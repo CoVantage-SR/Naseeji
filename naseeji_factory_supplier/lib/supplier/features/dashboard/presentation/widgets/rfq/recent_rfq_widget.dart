@@ -198,3 +198,4 @@ class RecentRFQsWidget extends ConsumerWidget {
     );
   }
 }
+

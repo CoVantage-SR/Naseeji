@@ -31,3 +31,4 @@ class AppIcons {
   static const IconData gallery = Icons.photo_library_rounded;
   static const IconData attachment = Icons.attach_file_rounded;
 }
+

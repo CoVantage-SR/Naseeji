@@ -290,3 +290,4 @@ class EscrowTrackingController extends _$EscrowTrackingController {
     });
   }
 }
+

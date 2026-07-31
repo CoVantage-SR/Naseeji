@@ -200,3 +200,4 @@ class ChooseSupplierTypeScreen extends ConsumerWidget {
     );
   }
 }
+

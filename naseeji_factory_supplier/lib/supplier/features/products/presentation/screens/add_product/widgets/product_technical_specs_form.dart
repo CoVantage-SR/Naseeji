@@ -12,3 +12,4 @@ class ProductTechnicalSpecsForm extends ConsumerWidget {
     return Step2TechSpecsWidget(formData: formData);
   }
 }
+

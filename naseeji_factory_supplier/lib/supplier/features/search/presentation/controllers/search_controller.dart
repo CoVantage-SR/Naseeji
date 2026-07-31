@@ -20,3 +20,4 @@ class SearchController extends _$SearchController {
     });
   }
 }
+

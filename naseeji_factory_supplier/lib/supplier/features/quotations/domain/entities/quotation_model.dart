@@ -256,3 +256,4 @@ class QuotationTimelineStep {
     this.notes = '',
   });
 }
+

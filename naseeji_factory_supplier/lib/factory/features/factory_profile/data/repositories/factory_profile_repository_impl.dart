@@ -133,3 +133,4 @@ class FactoryProfileRepositoryImpl implements FactoryProfileRepository {
     _db.profile = _db.profile.copyWith(verificationStatus: 'pending');
   }
 }
+

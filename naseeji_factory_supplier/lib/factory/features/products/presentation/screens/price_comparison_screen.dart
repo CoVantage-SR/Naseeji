@@ -80,3 +80,4 @@ class PriceComparisonScreen extends ConsumerWidget {
     );
   }
 }
+

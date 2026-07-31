@@ -44,3 +44,4 @@ class PermissionWidget extends StatelessWidget {
     );
   }
 }
+

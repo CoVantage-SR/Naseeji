@@ -23,3 +23,4 @@ class OfferRejected {
     required this.standardsLabel,
   });
 }
+

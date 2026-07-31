@@ -206,3 +206,4 @@ class DealSummaryWidget extends StatelessWidget {
     );
   }
 }
+

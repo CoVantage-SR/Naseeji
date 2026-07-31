@@ -100,3 +100,4 @@ class SuppliersComparisonScreen extends ConsumerWidget {
     );
   }
 }
+

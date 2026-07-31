@@ -15,3 +15,4 @@ class AppRadius {
   static final BorderRadius xlRadius = BorderRadius.circular(xl);
   static final BorderRadius circularRadius = BorderRadius.circular(circle);
 }
+

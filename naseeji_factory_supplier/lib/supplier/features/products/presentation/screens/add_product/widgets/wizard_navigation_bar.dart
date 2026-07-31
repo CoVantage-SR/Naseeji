@@ -95,3 +95,4 @@ class WizardNavigationBar extends ConsumerWidget {
     );
   }
 }
+

@@ -26,3 +26,4 @@ class ShortLinkAnalyzer implements ContentAnalyzer {
     return null;
   }
 }
+

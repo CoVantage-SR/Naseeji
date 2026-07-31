@@ -12,3 +12,4 @@ class FactoryDealDetailsScreenExport extends StatelessWidget {
     return FactoryDealDetailsScreen(dealId: dealId);
   }
 }
+

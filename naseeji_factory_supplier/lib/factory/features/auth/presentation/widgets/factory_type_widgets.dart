@@ -168,3 +168,4 @@ class SelectedIndicatorWidget extends StatelessWidget {
     );
   }
 }
+

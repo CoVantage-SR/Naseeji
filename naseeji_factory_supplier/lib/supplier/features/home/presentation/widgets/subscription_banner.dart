@@ -105,3 +105,4 @@ class SubscriptionBanner extends ConsumerWidget {
     );
   }
 }
+

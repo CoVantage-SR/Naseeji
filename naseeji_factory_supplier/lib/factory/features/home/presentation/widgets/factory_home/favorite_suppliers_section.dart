@@ -172,3 +172,4 @@ class FavoriteSuppliersSection extends StatelessWidget {
     );
   }
 }
+

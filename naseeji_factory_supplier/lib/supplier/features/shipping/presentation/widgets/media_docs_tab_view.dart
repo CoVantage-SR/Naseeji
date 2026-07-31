@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
 import '../../domain/entities/shipment.dart';
 import '../controllers/shipping_controller.dart';
 import 'document_item_card.dart';
@@ -212,3 +212,4 @@ class MediaDocsTabView extends ConsumerWidget {
     );
   }
 }
+

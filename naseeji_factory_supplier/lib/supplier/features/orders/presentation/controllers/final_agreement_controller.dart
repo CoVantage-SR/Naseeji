@@ -12,3 +12,4 @@ class FinalAgreementController extends _$FinalAgreementController {
     return repo.getFinalAgreement(rfqId);
   }
 }
+

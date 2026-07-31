@@ -25,3 +25,4 @@ class DealTimelineModel {
     required this.steps,
   });
 }
+

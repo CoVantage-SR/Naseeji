@@ -43,3 +43,4 @@ class FactoryNavigationNotifier extends StateNotifier<NavigationState> {
 final factoryNavigationProvider = StateNotifierProvider<FactoryNavigationNotifier, NavigationState>((ref) {
   return FactoryNavigationNotifier();
 });
+

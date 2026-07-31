@@ -120,3 +120,4 @@ class _ProductionProgressScreenState extends ConsumerState<ProductionProgressScr
     );
   }
 }
+

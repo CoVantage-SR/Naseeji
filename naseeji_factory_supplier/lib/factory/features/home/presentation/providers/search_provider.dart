@@ -269,3 +269,4 @@ class SearchNotifier extends _$SearchNotifier {
     state = state.copyWith(results: filtered);
   }
 }
+

@@ -329,3 +329,4 @@ class _SupplierRegistrationScreenState extends ConsumerState<SupplierRegistratio
     );
   }
 }
+

@@ -122,3 +122,4 @@ class AppBottomNavigationBar extends StatelessWidget {
     );
   }
 }
+

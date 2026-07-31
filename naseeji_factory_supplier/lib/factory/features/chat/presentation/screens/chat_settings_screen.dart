@@ -148,3 +148,4 @@ class ChatSettingsScreen extends ConsumerWidget {
     );
   }
 }
+

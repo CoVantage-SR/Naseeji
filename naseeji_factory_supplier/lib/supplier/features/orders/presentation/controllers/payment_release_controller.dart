@@ -12,3 +12,4 @@ class PaymentReleaseController extends _$PaymentReleaseController {
     return repo.getPaymentRelease(rfqId);
   }
 }
+

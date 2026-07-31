@@ -11,3 +11,4 @@ Future<LogisticsInfo> logisticsInfo(
 }) {
   return ref.watch(productDetailRepositoryProvider).getLogisticsInfo(productId);
 }
+

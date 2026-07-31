@@ -227,3 +227,4 @@ class FinanceOverviewWidget extends ConsumerWidget {
     );
   }
 }
+

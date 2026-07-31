@@ -93,3 +93,4 @@ class TermsWidget extends StatelessWidget {
     );
   }
 }
+

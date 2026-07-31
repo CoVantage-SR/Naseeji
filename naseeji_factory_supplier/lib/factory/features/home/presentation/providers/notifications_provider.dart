@@ -124,3 +124,4 @@ class NotificationsNotifier extends _$NotificationsNotifier {
 String selectedNotificationCategory(SelectedNotificationCategoryRef ref) {
   return 'all';
 }
+

@@ -21,3 +21,4 @@ class ProductionPreparation {
     required this.preparationNotes,
   });
 }
+

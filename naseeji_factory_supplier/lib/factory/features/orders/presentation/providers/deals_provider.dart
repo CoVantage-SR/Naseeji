@@ -441,3 +441,4 @@ final List<DealModel> _mockDeals = [
     workflowSteps: _buildWorkflow(DealStatus.inShipping),
   ),
 ];
+

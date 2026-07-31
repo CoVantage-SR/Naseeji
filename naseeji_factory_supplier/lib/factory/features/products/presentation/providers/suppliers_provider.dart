@@ -312,3 +312,4 @@ final List<Supplier> _mockSuppliers = [
     certificates: ['شهادة الجودة الصينية CCC'],
   ),
 ];
+

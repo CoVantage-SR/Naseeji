@@ -70,3 +70,4 @@ final supplierDashboardControllerProvider =
     StateNotifierProvider.autoDispose<SupplierDashboardController, SupplierDashboardState>((ref) {
   return SupplierDashboardController(ref);
 });
+

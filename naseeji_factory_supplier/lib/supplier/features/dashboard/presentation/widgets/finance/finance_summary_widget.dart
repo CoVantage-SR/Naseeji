@@ -38,3 +38,4 @@ class FinanceSummaryWidget extends ConsumerWidget {
     );
   }
 }
+

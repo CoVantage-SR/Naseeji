@@ -51,3 +51,4 @@ class SubscriptionCardWidget extends ConsumerWidget {
     );
   }
 }
+

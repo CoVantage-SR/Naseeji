@@ -91,3 +91,4 @@ class _CompleteRegistrationScreenState extends ConsumerState<CompleteRegistratio
     );
   }
 }
+

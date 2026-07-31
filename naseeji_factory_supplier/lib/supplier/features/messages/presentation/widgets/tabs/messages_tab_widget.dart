@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/business_message.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/business_message.dart';
 
 class MessagesTabWidget extends StatelessWidget {
   final List<BusinessMessage> messages;
@@ -111,3 +111,4 @@ class MessagesTabWidget extends StatelessWidget {
     );
   }
 }
+

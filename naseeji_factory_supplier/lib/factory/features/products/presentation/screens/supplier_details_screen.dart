@@ -11,3 +11,4 @@ class SupplierDetailsScreen extends StatelessWidget {
     return FactorySupplierDetailsScreen(supplierId: supplierId);
   }
 }
+

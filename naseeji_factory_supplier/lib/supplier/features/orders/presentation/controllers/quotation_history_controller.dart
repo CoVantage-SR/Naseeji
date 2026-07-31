@@ -12,3 +12,4 @@ class QuotationHistoryController extends _$QuotationHistoryController {
     return repo.getQuotationHistory(rfqId);
   }
 }
+

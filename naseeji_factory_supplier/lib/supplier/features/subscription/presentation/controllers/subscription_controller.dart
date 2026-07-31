@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:naseeji_supplier/core/mock/subscription_mock.dart';
+import 'package:naseeji_factory/supplier/core/mock/subscription_mock.dart';
 import '../../domain/repositories/subscription_repository.dart';
 import '../../data/datasources/subscription_remote_datasource.dart';
 import '../../data/repositories/subscription_repository_impl.dart';
@@ -114,3 +114,4 @@ final subscriptionPlansProvider = Provider<List<SubscriptionPlanMock>>((ref) {
   final state = ref.watch(subscriptionControllerProvider);
   return state.plans;
 });
+

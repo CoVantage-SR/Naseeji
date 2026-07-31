@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/features/messages/domain/services/content_moderation_service.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/services/content_moderation_service.dart';
 
 class ModerationWarningDialog extends StatelessWidget {
   final String? matchedReason;
@@ -77,3 +77,4 @@ class ModerationWarningDialog extends StatelessWidget {
     );
   }
 }
+

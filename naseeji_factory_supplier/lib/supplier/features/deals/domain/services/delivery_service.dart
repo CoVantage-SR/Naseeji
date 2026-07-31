@@ -25,3 +25,4 @@ class DeliveryService {
     return _repository.updateDelivery(dealId, delivery);
   }
 }
+

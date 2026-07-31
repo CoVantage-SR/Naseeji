@@ -47,3 +47,4 @@ class SupplierTipCard extends StatelessWidget {
     );
   }
 }
+

@@ -154,3 +154,4 @@ class SecurityNotifier extends StateNotifier<SecurityState> {
 final securityProvider = StateNotifierProvider<SecurityNotifier, SecurityState>((ref) {
   return SecurityNotifier();
 });
+

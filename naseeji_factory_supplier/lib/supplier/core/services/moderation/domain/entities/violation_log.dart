@@ -17,3 +17,4 @@ class ViolationLog {
     required this.timestamp,
   });
 }
+

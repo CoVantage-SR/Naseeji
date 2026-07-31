@@ -174,3 +174,4 @@ class EstimatedArrivalWidget extends StatelessWidget {
     );
   }
 }
+

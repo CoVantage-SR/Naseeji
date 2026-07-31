@@ -173,3 +173,4 @@ class SubscriptionOverviewWidget extends ConsumerWidget {
     );
   }
 }
+

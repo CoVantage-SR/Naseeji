@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_supplier/features/messages/presentation/controllers/deal_workspace_controller.dart';
-import 'package:naseeji_supplier/features/messages/presentation/widgets/header/conversation_header_widget.dart';
-import 'package:naseeji_supplier/features/messages/presentation/widgets/tabs/messages_tab_widget.dart';
-import 'package:naseeji_supplier/features/messages/presentation/widgets/tabs/negotiation_tab_widget.dart';
-import 'package:naseeji_supplier/features/messages/presentation/widgets/tabs/agreement_tab_widget.dart';
-import 'package:naseeji_supplier/features/messages/presentation/widgets/tabs/files_tab_widget.dart';
-import 'package:naseeji_supplier/features/messages/presentation/widgets/tabs/timeline_tab_widget.dart';
-import 'package:naseeji_supplier/features/messages/presentation/widgets/tabs/request_modification_bottom_sheet.dart';
-import 'package:naseeji_supplier/features/messages/presentation/widgets/input/message_input_widget.dart';
-import 'package:naseeji_supplier/features/messages/presentation/widgets/moderation_warning_dialog.dart';
+import 'package:naseeji_factory/supplier/features/messages/presentation/controllers/deal_workspace_controller.dart';
+import 'package:naseeji_factory/supplier/features/messages/presentation/widgets/header/conversation_header_widget.dart';
+import 'package:naseeji_factory/supplier/features/messages/presentation/widgets/tabs/messages_tab_widget.dart';
+import 'package:naseeji_factory/supplier/features/messages/presentation/widgets/tabs/negotiation_tab_widget.dart';
+import 'package:naseeji_factory/supplier/features/messages/presentation/widgets/tabs/agreement_tab_widget.dart';
+import 'package:naseeji_factory/supplier/features/messages/presentation/widgets/tabs/files_tab_widget.dart';
+import 'package:naseeji_factory/supplier/features/messages/presentation/widgets/tabs/timeline_tab_widget.dart';
+import 'package:naseeji_factory/supplier/features/messages/presentation/widgets/tabs/request_modification_bottom_sheet.dart';
+import 'package:naseeji_factory/supplier/features/messages/presentation/widgets/input/message_input_widget.dart';
+import 'package:naseeji_factory/supplier/features/messages/presentation/widgets/moderation_warning_dialog.dart';
 
 class BusinessChatScreen extends ConsumerStatefulWidget {
   final String dealId;

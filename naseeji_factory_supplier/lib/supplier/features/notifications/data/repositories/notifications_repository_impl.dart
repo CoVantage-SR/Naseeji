@@ -69,3 +69,4 @@ class NotificationsRepositoryImpl implements NotificationsRepository {
 NotificationsRepository notificationsRepository(NotificationsRepositoryRef ref) {
   return NotificationsRepositoryImpl();
 }
+

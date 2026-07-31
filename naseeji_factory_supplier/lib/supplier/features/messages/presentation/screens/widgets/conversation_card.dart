@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../domain/entities/conversation.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
 
 class ConversationCard extends StatelessWidget {
   final Conversation conversation;
@@ -310,3 +310,4 @@ class _StatusBadge extends StatelessWidget {
     );
   }
 }
+

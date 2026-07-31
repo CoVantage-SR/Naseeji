@@ -237,3 +237,4 @@ class ApprovalWidget extends StatelessWidget {
     );
   }
 }
+

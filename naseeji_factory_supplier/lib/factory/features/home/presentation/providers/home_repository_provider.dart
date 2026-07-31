@@ -8,3 +8,4 @@ part 'home_repository_provider.g.dart';
 HomeRepository homeRepository(HomeRepositoryRef ref) {
   return MockHomeRepository();
 }
+

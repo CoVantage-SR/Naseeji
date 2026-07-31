@@ -242,3 +242,4 @@ class FactoryHomeScreen extends ConsumerWidget {
     );
   }
 }
+

@@ -229,3 +229,4 @@ class RateSubmitWidget extends StatelessWidget {
     );
   }
 }
+

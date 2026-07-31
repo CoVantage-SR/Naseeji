@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_agreement_model.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/deal_agreement_model.dart';
 
 class AgreementTabWidget extends StatelessWidget {
   final DealAgreementModel? agreement;
@@ -208,3 +208,4 @@ class AgreementTabWidget extends StatelessWidget {
     );
   }
 }
+

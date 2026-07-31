@@ -94,3 +94,4 @@ final notificationsProvider = FutureProvider.autoDispose<List<NotificationItemMo
   final useCase = ref.watch(getRecentNotificationsUseCaseProvider);
   return useCase();
 });
+

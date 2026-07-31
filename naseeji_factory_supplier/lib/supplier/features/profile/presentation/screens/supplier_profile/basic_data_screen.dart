@@ -805,3 +805,4 @@ class _SocialLinkData {
     required this.iconColor,
   });
 }
+

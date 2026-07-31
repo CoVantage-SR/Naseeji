@@ -5,3 +5,4 @@ abstract class ProfileRepository {
   Future<void> updateProfile(SupplierProfile profile);
   Future<void> addCertificate(CompanyCertificate cert);
 }
+

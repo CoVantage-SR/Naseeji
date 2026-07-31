@@ -23,3 +23,4 @@ abstract class ProductDetailRepository {
   /// Returns the full 24-step procurement timeline for a specific order/product.
   Future<List<ProcurementStage>> getProcurementTimeline(String productId);
 }
+

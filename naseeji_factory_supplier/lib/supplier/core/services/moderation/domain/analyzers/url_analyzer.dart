@@ -26,3 +26,4 @@ class UrlAnalyzer implements ContentAnalyzer {
     return null;
   }
 }
+

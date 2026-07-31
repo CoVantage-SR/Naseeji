@@ -12,3 +12,4 @@ class ProductPricingForm extends ConsumerWidget {
     return Step6PricingTiersWidget(formData: formData);
   }
 }
+

@@ -179,3 +179,4 @@ class ProductsDashboardWidget extends StatelessWidget {
     );
   }
 }
+

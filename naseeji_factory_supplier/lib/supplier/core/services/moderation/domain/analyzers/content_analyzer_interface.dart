@@ -7,3 +7,4 @@ abstract class ContentAnalyzer {
     required ModerationTarget target,
   });
 }
+

@@ -107,3 +107,4 @@ class QualityInspectionScreen extends ConsumerWidget {
     );
   }
 }
+

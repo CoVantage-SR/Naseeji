@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
-import 'package:naseeji_supplier/features/dashboard/presentation/screens/drawer/navigation_drawer_view.dart';
+import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/supplier/features/dashboard/presentation/screens/drawer/navigation_drawer_view.dart';
 import '../controllers/orders_controller.dart';
 import 'widgets/rfq_stats_grid.dart';
 import 'widgets/orders_screen_widgets.dart';
@@ -204,3 +204,4 @@ class _OrdersScreenState extends ConsumerState<OrdersScreen> {
     );
   }
 }
+

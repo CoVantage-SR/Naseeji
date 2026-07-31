@@ -23,3 +23,4 @@ final dashboardControllerProvider =
     AsyncNotifierProvider.autoDispose<DashboardController, SalesStats>(
   DashboardController.new,
 );
+

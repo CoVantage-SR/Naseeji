@@ -25,3 +25,4 @@ class DealAgreementModel {
     required this.approvedAt,
   });
 }
+

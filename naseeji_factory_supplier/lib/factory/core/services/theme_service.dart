@@ -24,3 +24,4 @@ class ThemeService extends _$ThemeService {
     await prefs.setString(_themeModeKey, mode.name);
   }
 }
+

@@ -127,3 +127,4 @@ class NotificationSettingsModel {
         updatedAt: DateTime.now(),
       );
 }
+

@@ -89,3 +89,4 @@ class DashboardRepositoryImpl implements DashboardRepository {
 DashboardRepository dashboardRepository(DashboardRepositoryRef ref) {
   return DashboardRepositoryImpl();
 }
+

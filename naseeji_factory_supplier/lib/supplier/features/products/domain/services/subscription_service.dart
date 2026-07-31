@@ -10,3 +10,4 @@ class SubscriptionService {
     return _repository.getSubscriptionLimits();
   }
 }
+

@@ -91,3 +91,4 @@ class ApplicationSectionWidget extends StatelessWidget {
     );
   }
 }
+

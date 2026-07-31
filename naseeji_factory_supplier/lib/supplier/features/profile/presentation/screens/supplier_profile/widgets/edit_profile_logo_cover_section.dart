@@ -160,3 +160,4 @@ class EditProfileLogoCoverSection extends StatelessWidget {
     );
   }
 }
+

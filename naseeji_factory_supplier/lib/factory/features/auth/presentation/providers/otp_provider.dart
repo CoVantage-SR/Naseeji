@@ -69,3 +69,4 @@ class OtpVerification extends _$OtpVerification {
     startCountdown();
   }
 }
+

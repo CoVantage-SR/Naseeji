@@ -132,3 +132,4 @@ class NotificationPreviewItem {
     required this.type,
   });
 }
+

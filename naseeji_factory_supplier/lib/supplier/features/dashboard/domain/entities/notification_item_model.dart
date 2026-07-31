@@ -27,3 +27,4 @@ class NotificationItemModel {
     this.targetRoute,
   });
 }
+

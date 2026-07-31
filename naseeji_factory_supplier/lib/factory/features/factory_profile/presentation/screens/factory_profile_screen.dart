@@ -308,3 +308,4 @@ class _FactoryProfileScreenState extends ConsumerState<FactoryProfileScreen>
     );
   }
 }
+

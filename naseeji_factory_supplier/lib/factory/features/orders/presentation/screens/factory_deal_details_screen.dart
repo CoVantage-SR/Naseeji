@@ -323,3 +323,4 @@ class _SliverTabBarDelegate extends SliverPersistentHeaderDelegate {
     return tabBar != oldDelegate.tabBar || backgroundColor != oldDelegate.backgroundColor;
   }
 }
+

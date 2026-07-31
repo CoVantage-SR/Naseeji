@@ -1,7 +1,7 @@
-import 'package:naseeji_supplier/core/mock/mock_data.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_workspace_model.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_status_enum.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/business_message.dart';
+import 'package:naseeji_factory/supplier/core/mock/mock_data.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/deal_workspace_model.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/deal_status_enum.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/business_message.dart';
 
 abstract class DealWorkspaceRemoteDatasource {
   Future<DealWorkspaceModel> fetchDealWorkspace(String dealId);
@@ -142,3 +142,4 @@ class DealWorkspaceRemoteDatasourceImpl implements DealWorkspaceRemoteDatasource
     return true;
   }
 }
+

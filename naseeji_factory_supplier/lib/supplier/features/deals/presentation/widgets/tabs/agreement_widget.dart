@@ -164,3 +164,4 @@ class AgreementWidget extends ConsumerWidget {
     }
   }
 }
+

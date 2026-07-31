@@ -74,3 +74,4 @@ class Step6TermsSectionWidget extends ConsumerWidget {
     );
   }
 }
+

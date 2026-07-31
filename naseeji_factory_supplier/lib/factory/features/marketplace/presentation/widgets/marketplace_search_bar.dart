@@ -100,3 +100,4 @@ class MarketplaceSearchBar extends StatelessWidget {
     );
   }
 }
+

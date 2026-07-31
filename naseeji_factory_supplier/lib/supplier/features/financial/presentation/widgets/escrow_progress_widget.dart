@@ -114,3 +114,4 @@ class _EscrowStep {
 
   const _EscrowStep(this.stage, this.title, this.description);
 }
+

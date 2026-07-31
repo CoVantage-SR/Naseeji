@@ -42,3 +42,4 @@ class MarketplaceLoadingWidget extends StatelessWidget {
     );
   }
 }
+

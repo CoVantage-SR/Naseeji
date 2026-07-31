@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
-import 'package:naseeji_supplier/features/dashboard/presentation/screens/drawer/navigation_drawer_view.dart';
+import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/supplier/features/dashboard/presentation/screens/drawer/navigation_drawer_view.dart';
 import '../../domain/entities/shipment.dart';
 import '../controllers/shipping_controller.dart';
 import '../widgets/shipping_summary_grid.dart';

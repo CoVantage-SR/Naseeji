@@ -51,3 +51,4 @@ class ProfileRepositoryImpl implements ProfileRepository {
 ProfileRepository profileRepository(ProfileRepositoryRef ref) {
   return ProfileRepositoryImpl();
 }
+

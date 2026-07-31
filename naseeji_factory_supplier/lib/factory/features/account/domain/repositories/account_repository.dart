@@ -22,3 +22,4 @@ abstract class AccountRepository {
   Future<List<LoginSessionEntity>> getLoginSessions();
   Future<void> logoutAllSessions();
 }
+

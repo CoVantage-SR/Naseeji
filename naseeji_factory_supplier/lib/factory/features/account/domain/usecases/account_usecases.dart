@@ -43,3 +43,4 @@ class ManageNotificationsUseCase {
   Future<void> markAllRead() => repository.markAllNotificationsRead();
   Future<void> delete(String id) => repository.deleteNotification(id);
 }
+

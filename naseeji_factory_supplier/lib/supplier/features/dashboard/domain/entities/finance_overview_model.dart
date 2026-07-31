@@ -15,3 +15,4 @@ class FinanceOverviewModel {
     this.currency = 'ج.م',
   });
 }
+

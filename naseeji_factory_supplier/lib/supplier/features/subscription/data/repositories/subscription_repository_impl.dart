@@ -1,4 +1,4 @@
-import 'package:naseeji_supplier/core/mock/subscription_mock.dart';
+import 'package:naseeji_factory/supplier/core/mock/subscription_mock.dart';
 import '../../domain/entities/subscription_models.dart';
 import '../../domain/repositories/subscription_repository.dart';
 import '../datasources/subscription_remote_datasource.dart';
@@ -121,3 +121,4 @@ class SubscriptionRepositoryImpl implements SubscriptionRepository {
         featured: featured,
       );
 }
+

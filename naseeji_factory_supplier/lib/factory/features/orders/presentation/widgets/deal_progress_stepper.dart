@@ -261,3 +261,4 @@ class DealProgressStepper extends StatelessWidget {
     );
   }
 }
+

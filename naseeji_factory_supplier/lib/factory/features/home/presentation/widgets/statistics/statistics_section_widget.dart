@@ -49,3 +49,4 @@ class StatisticsSectionWidget extends StatelessWidget {
     );
   }
 }
+

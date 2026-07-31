@@ -35,3 +35,4 @@ class ProductStatusBadgeWidget extends StatelessWidget {
     );
   }
 }
+

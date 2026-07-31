@@ -223,3 +223,4 @@ final factoryProfileProvider =
   final repo = ref.watch(factoryProfileRepositoryProvider);
   return FactoryProfileNotifier(repo, ref);
 });
+

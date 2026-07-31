@@ -522,3 +522,4 @@ class ShippingRepositoryImpl implements ShippingRepository {
 ShippingRepository shippingRepository(ShippingRepositoryRef ref) {
   return ShippingRepositoryImpl();
 }
+

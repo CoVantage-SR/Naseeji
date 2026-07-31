@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:naseeji_supplier/core/mock/mock_data.dart';
+import 'package:naseeji_factory/supplier/core/mock/mock_data.dart';
 import '../../domain/entities/notification_settings_model.dart';
 
 class NotificationSettingsNotifier extends StateNotifier<NotificationSettingsModel> {
@@ -105,3 +105,4 @@ final notificationSettingsProvider =
     StateNotifierProvider<NotificationSettingsNotifier, NotificationSettingsModel>((ref) {
   return NotificationSettingsNotifier();
 });
+

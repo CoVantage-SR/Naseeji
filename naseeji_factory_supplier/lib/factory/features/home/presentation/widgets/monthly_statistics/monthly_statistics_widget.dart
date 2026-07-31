@@ -28,3 +28,4 @@ class MonthlyStatisticsWidget extends StatelessWidget {
     );
   }
 }
+

@@ -37,3 +37,4 @@ class SupplierMock {
 extension SupplierMockExt on SupplierMock {
   static const String phoneEmailHidden = 'محمية بمحرك أمان نسيجي';
 }
+

@@ -8,3 +8,4 @@ part 'product_detail_repository_provider.g.dart';
 ProductDetailRepository productDetailRepository(ProductDetailRepositoryRef ref) {
   return const MockProductDetailRepository();
 }
+

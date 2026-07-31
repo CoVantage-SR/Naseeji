@@ -296,3 +296,4 @@ class _GoogleCompleteRegistrationScreenState extends ConsumerState<GoogleComplet
     );
   }
 }
+

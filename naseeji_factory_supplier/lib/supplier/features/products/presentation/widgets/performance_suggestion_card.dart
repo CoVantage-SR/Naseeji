@@ -103,3 +103,4 @@ class PerformanceSuggestionCard extends StatelessWidget {
     );
   }
 }
+

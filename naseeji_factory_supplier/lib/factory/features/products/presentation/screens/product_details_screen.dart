@@ -14,3 +14,4 @@ class ProductDetailsScreen extends StatelessWidget {
     return FactoryProductDetailsScreen(productId: productId);
   }
 }
+

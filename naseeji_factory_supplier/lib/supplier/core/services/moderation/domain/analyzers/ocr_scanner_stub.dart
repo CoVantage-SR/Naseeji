@@ -39,3 +39,4 @@ class ImageOcrAnalyzer implements ContentAnalyzer {
     return null;
   }
 }
+

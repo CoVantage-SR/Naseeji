@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
 import '../widgets/vip_feature_guard.dart';
 
 class MarketingTab extends StatelessWidget {
@@ -435,3 +435,4 @@ class MarketingTab extends StatelessWidget {
     );
   }
 }
+

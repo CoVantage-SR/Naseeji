@@ -347,3 +347,4 @@ class FactoryGalleryItemEntity {
     required this.type,
   });
 }
+

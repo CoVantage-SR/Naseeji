@@ -356,3 +356,4 @@ class NotificationSettingsScreen extends ConsumerWidget {
     );
   }
 }
+

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:naseeji_supplier/features/products/presentation/providers/products_providers.dart';
+import 'package:naseeji_factory/supplier/features/products/presentation/providers/products_providers.dart';
 
 class ProductFilterBar extends ConsumerWidget {
   const ProductFilterBar({super.key});
@@ -80,3 +80,4 @@ class ProductFilterBar extends ConsumerWidget {
     );
   }
 }
+

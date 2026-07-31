@@ -33,3 +33,4 @@ class CounterOfferScreen extends ConsumerWidget {
     );
   }
 }
+

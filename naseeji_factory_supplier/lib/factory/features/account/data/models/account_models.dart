@@ -5,3 +5,4 @@ typedef FactoryProfileModelData = FactoryProfileEntity;
 typedef WalletModelData = WalletEntity;
 typedef RewardStateModelData = RewardStateEntity;
 typedef EmployeeModelData = EmployeeEntity;
+

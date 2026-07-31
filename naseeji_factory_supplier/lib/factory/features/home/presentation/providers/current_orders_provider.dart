@@ -8,3 +8,4 @@ part 'current_orders_provider.g.dart';
 Future<List<CurrentOrder>> currentOrders(CurrentOrdersRef ref) {
   return ref.watch(homeRepositoryProvider).getCurrentOrders();
 }
+

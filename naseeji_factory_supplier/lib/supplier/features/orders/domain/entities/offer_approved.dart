@@ -19,3 +19,4 @@ class OfferApproved {
     required this.fabricTextureLabel,
   });
 }
+

@@ -53,3 +53,4 @@ class FavoriteSuppliersScreen extends ConsumerWidget {
     );
   }
 }
+

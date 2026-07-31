@@ -26,3 +26,4 @@ class DealService {
     return _repository.updateDealStatus(dealId, newStatus);
   }
 }
+

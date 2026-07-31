@@ -1,5 +1,5 @@
-import 'package:naseeji_supplier/core/mock/mock_data.dart';
-import 'package:naseeji_supplier/core/mock/subscription_mock.dart' hide SubscriptionStatus;
+import 'package:naseeji_factory/supplier/core/mock/mock_data.dart';
+import 'package:naseeji_factory/supplier/core/mock/subscription_mock.dart' hide SubscriptionStatus;
 import '../../domain/entities/subscription_models.dart';
 
 abstract class SubscriptionRemoteDatasource {
@@ -337,3 +337,4 @@ class SubscriptionRemoteDatasourceImpl implements SubscriptionRemoteDatasource {
   @override
   void setUsage({int? products, int? ads, int? videos, int? pdfs, int? rfqs, int? featured}) {}
 }
+

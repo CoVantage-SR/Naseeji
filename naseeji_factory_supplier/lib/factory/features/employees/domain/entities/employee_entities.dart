@@ -273,3 +273,4 @@ class AssignedWorkEntity {
     required this.assignedTasks,
   });
 }
+

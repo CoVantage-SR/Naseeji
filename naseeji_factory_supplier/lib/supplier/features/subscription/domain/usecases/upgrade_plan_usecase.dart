@@ -1,4 +1,4 @@
-import 'package:naseeji_supplier/core/mock/subscription_mock.dart';
+import 'package:naseeji_factory/supplier/core/mock/subscription_mock.dart';
 import '../repositories/subscription_repository.dart';
 
 class UpgradePlanUseCase {
@@ -10,3 +10,4 @@ class UpgradePlanUseCase {
     return repository.upgradePlan(plan);
   }
 }
+

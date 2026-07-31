@@ -137,3 +137,4 @@ class NotificationCard extends StatelessWidget {
     }
   }
 }
+

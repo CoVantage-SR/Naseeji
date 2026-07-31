@@ -136,3 +136,4 @@ class VideoPlayerWidget extends StatelessWidget {
     );
   }
 }
+

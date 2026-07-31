@@ -17,3 +17,4 @@ class DeliveryConfirmation {
     required this.deliveryImages,
   });
 }
+

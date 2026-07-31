@@ -121,3 +121,4 @@ class FavoriteSupplierCardWidget extends StatelessWidget {
     );
   }
 }
+

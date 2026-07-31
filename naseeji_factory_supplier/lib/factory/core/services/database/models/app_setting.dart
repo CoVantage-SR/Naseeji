@@ -11,3 +11,4 @@ class AppSetting {
 
   String? value;
 }
+

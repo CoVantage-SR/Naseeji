@@ -179,3 +179,4 @@ class _StatCardData {
     required this.bgColor,
   });
 }
+

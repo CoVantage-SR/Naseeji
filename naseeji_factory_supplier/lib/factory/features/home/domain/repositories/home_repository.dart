@@ -12,3 +12,4 @@ abstract class HomeRepository {
   Future<List<SmartRecommendation>> getSmartRecommendations();
   Future<List<ActionCenterAlert>> getActionCenterAlerts();
 }
+

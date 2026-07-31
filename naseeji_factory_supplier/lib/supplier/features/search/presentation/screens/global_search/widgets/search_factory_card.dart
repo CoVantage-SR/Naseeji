@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
 
 class SearchFactoryCard extends StatelessWidget {
   final String title;
@@ -139,3 +139,4 @@ class SearchFactoryCard extends StatelessWidget {
     );
   }
 }
+

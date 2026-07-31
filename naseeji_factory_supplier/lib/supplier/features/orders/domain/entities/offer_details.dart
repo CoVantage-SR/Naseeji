@@ -41,3 +41,4 @@ class OfferDetails {
     required this.factoryLabel,
   });
 }
+

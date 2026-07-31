@@ -161,3 +161,4 @@ class _NavItemData {
     this.badgeCount,
   });
 }
+

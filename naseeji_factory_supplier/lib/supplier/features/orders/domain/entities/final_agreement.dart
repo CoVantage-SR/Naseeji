@@ -35,3 +35,4 @@ class FinalAgreement {
     required this.version,
   });
 }
+

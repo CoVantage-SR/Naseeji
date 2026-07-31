@@ -124,3 +124,4 @@ class QuotationCardWidget extends StatelessWidget {
     );
   }
 }
+

@@ -169,3 +169,4 @@ class RFQDetailsBody extends ConsumerWidget {
     );
   }
 }
+

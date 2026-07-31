@@ -108,3 +108,4 @@ class _MiniChartPainter extends CustomPainter {
     return oldDelegate.dataPoints != dataPoints;
   }
 }
+

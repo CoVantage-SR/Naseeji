@@ -84,3 +84,4 @@ class DashboardLoadingWidget extends StatelessWidget {
     );
   }
 }
+

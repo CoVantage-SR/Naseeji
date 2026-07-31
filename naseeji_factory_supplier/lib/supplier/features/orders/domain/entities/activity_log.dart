@@ -19,3 +19,4 @@ class ActivityLogItem {
     required this.status,
   });
 }
+

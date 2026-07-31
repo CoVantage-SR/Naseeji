@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/features/products/domain/entities/product_model.dart';
+import 'package:naseeji_factory/supplier/features/products/domain/entities/product_model.dart';
 
 class ProductLifecycleTimelineWidget extends StatelessWidget {
   final ProductModel product;
@@ -192,3 +192,4 @@ class ProductLifecycleTimelineWidget extends StatelessWidget {
     );
   }
 }
+

@@ -167,3 +167,4 @@ class RegistrationController extends _$RegistrationController {
     state = state.copyWith(isSuccess: false);
   }
 }
+

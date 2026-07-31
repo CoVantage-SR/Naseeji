@@ -10,3 +10,4 @@ abstract class ShippingRepository {
   Future<void> uploadDocument(String id, String type, String name, String url);
   Future<void> reportIssue(String id, {required String category, required String description, required String priority, List<String> attachments});
 }
+

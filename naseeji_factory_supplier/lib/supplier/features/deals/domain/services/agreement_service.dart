@@ -13,3 +13,4 @@ class AgreementService {
     return _repository.signAgreement(dealId, false);
   }
 }
+

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
 
 class OrderStatusBanner extends StatelessWidget {
   final String currentStage;
@@ -133,3 +133,4 @@ class _Stage {
   final IconData icon;
   const _Stage({required this.label, required this.icon});
 }
+

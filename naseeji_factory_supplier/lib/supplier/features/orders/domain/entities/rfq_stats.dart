@@ -11,3 +11,4 @@ class RfqStats {
     required this.approvedToday,
   });
 }
+

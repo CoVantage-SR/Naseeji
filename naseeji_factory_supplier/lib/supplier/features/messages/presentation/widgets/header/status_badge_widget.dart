@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_status_enum.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/deal_status_enum.dart';
 
 class StatusBadgeWidget extends StatelessWidget {
   final DealStatus status;
@@ -93,3 +93,4 @@ class StatusBadgeWidget extends StatelessWidget {
     );
   }
 }
+

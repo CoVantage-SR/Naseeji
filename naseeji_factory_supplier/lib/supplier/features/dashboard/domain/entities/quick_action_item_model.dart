@@ -19,3 +19,4 @@ class QuickActionItemModel {
     this.badgeCount,
   });
 }
+

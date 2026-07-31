@@ -12,3 +12,4 @@ class ActivityLogController extends _$ActivityLogController {
     return repo.getActivityLog(rfqId);
   }
 }
+

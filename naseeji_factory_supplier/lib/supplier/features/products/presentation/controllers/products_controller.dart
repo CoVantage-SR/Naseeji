@@ -55,3 +55,4 @@ class ProductsController extends StateNotifier<AsyncValue<void>> {
 final productsControllerProvider = StateNotifierProvider<ProductsController, AsyncValue<void>>((ref) {
   return ProductsController(ref);
 });
+

@@ -52,3 +52,4 @@ class SuppliersScreen extends ConsumerWidget {
     );
   }
 }
+

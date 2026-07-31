@@ -37,3 +37,4 @@ IsarService isarService(IsarServiceRef ref) {
   // This will be overridden in main.dart with an initialized instance.
   throw UnimplementedError('Override isarServiceProvider in main.dart');
 }
+

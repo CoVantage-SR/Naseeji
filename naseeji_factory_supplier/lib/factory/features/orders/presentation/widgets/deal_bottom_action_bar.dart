@@ -111,3 +111,4 @@ class DealBottomActionBar extends StatelessWidget {
     );
   }
 }
+

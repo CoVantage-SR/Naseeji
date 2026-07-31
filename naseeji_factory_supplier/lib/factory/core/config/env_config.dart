@@ -29,3 +29,4 @@ class EnvConfig {
   bool get isDevelopment => environment == AppEnv.development;
   bool get isProduction => environment == AppEnv.production;
 }
+

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
 import '../../../dashboard/presentation/controllers/analytics_report_controller.dart';
 import '../widgets/report_filter_bar.dart';
 import '../widgets/report_section_header.dart';
@@ -130,3 +130,4 @@ class ProductPerformanceScreen extends ConsumerWidget {
     );
   }
 }
+

@@ -327,3 +327,4 @@ class EmployeeDetailsScreen extends ConsumerWidget {
     );
   }
 }
+

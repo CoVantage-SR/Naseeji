@@ -26,3 +26,4 @@ class PhoneNumberAnalyzer implements ContentAnalyzer {
     return null;
   }
 }
+

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:naseeji_supplier/features/deals/domain/entities/deal_model.dart';
-import 'package:naseeji_supplier/features/deals/presentation/controllers/deals_controller.dart';
+import 'package:naseeji_factory/supplier/features/deals/domain/entities/deal_model.dart';
+import 'package:naseeji_factory/supplier/features/deals/presentation/controllers/deals_controller.dart';
 
 class ProductionWidget extends ConsumerStatefulWidget {
   final DealModel deal;
@@ -183,3 +183,4 @@ class _ProductionWidgetState extends ConsumerState<ProductionWidget> {
     }
   }
 }
+

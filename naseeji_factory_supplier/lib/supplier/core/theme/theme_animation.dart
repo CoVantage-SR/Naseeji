@@ -11,3 +11,4 @@ class AppThemeAnimation {
   static const Curve curveNormal = Curves.easeInOut;
   static const Curve curveSlow = Curves.fastOutSlowIn;
 }
+

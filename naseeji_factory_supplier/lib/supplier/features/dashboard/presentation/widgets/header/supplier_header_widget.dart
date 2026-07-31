@@ -203,3 +203,4 @@ class SupplierHeaderWidget extends ConsumerWidget {
     );
   }
 }
+

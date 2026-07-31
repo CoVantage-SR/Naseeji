@@ -43,3 +43,4 @@ class ProductSubscriptionLimitModel {
   bool get canAddVideo => remainingVideos > 0;
   bool get canAddPdf => remainingPdfs > 0;
 }
+

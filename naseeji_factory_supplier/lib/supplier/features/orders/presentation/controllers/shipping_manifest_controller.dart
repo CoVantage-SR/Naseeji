@@ -12,3 +12,4 @@ class ShippingManifestController extends _$ShippingManifestController {
     return repo.getShippingManifest(rfqId);
   }
 }
+

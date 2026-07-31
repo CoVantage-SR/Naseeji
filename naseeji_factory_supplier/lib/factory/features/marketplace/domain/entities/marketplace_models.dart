@@ -144,3 +144,4 @@ class ActiveFilterItem {
     required this.label,
   });
 }
+

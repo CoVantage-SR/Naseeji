@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
 import '../../../domain/entities/supplier_profile.dart';
 import '../../controllers/profile_controller.dart';
 import 'widgets/edit_profile_completion_card.dart';
@@ -565,3 +565,4 @@ class _EditSupplierProfileScreenState extends ConsumerState<EditSupplierProfileS
     );
   }
 }
+

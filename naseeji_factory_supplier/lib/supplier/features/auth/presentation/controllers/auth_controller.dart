@@ -37,3 +37,4 @@ class AuthController extends _$AuthController {
     SecureStorageService.clearAll();
   }
 }
+

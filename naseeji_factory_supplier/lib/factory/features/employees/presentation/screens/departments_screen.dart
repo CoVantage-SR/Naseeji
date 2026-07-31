@@ -180,3 +180,4 @@ class DepartmentsScreen extends ConsumerWidget {
     );
   }
 }
+

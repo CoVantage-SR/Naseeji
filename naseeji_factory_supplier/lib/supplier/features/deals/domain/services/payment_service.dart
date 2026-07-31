@@ -10,3 +10,4 @@ class PaymentService {
     return _repository.updateDealStatus(dealId, DealStatus.completed);
   }
 }
+

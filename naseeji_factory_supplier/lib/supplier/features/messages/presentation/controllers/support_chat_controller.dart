@@ -56,3 +56,4 @@ class SupportChatController extends _$SupportChatController {
     return '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
   }
 }
+

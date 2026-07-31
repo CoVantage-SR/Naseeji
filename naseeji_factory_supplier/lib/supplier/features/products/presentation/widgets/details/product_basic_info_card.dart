@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/features/products/domain/entities/product_model.dart';
+import 'package:naseeji_factory/supplier/features/products/domain/entities/product_model.dart';
 
 class ProductBasicInfoCard extends StatefulWidget {
   final ProductModel product;
@@ -189,3 +189,4 @@ class _ProductBasicInfoCardState extends State<ProductBasicInfoCard> {
     );
   }
 }
+

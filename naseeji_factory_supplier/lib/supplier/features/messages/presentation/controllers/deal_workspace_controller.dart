@@ -1,14 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_workspace_model.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_quotation_model.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_agreement_model.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_file_model.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_timeline_model.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/business_message.dart';
-import 'package:naseeji_supplier/features/messages/domain/services/content_moderation_service.dart';
-import 'package:naseeji_supplier/features/messages/domain/repositories/deal_workspace_repository.dart';
-import 'package:naseeji_supplier/features/messages/data/datasources/deal_workspace_remote_datasource.dart';
-import 'package:naseeji_supplier/features/messages/data/repositories/deal_workspace_repository_impl.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/deal_workspace_model.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/deal_quotation_model.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/deal_agreement_model.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/deal_file_model.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/deal_timeline_model.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/business_message.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/services/content_moderation_service.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/repositories/deal_workspace_repository.dart';
+import 'package:naseeji_factory/supplier/features/messages/data/datasources/deal_workspace_remote_datasource.dart';
+import 'package:naseeji_factory/supplier/features/messages/data/repositories/deal_workspace_repository_impl.dart';
 
 final dealWorkspaceRepositoryProvider = Provider<DealWorkspaceRepository>((ref) {
   return DealWorkspaceRepositoryImpl(
@@ -246,3 +246,4 @@ final filesProvider = Provider.family<List<DealFileModel>, String>((ref, dealId)
   final state = ref.watch(dealProvider(dealId));
   return state.workspace?.files ?? const [];
 });
+

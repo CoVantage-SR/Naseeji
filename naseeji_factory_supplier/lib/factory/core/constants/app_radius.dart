@@ -18,3 +18,4 @@ class AppRadius {
   static const BorderRadius rXL = BorderRadius.all(Radius.circular(xl));
   static const BorderRadius rRound = BorderRadius.all(Radius.circular(round));
 }
+

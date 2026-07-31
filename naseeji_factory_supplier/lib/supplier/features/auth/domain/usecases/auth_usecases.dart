@@ -31,3 +31,4 @@ class RegisterSupplierUseCase {
     return _repository.registerSupplier(data);
   }
 }
+

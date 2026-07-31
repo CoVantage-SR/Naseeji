@@ -303,3 +303,4 @@ class LoadingOverlayWidget extends ConsumerWidget {
     );
   }
 }
+

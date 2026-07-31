@@ -35,3 +35,4 @@ class SubscriptionOverviewModel {
   int get maxProducts => productsLimit;
   String get planName => currentPlan;
 }
+

@@ -30,3 +30,4 @@ abstract class OrdersRepository {
   Future<List<ActivityLogItem>> getActivityLog(String rfqId);
   Future<void> addActivityLogItem(String rfqId, ActivityLogItem item);
 }
+

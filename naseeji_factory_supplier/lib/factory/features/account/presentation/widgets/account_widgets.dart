@@ -605,3 +605,4 @@ class LogoutButton extends StatelessWidget {
     );
   }
 }
+

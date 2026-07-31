@@ -128,3 +128,4 @@ class FactoryTypeScreen extends ConsumerWidget {
     );
   }
 }
+

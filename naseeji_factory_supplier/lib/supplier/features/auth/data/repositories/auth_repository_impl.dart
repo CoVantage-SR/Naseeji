@@ -61,3 +61,4 @@ AuthRepository authRepository(AuthRepositoryRef ref) {
   final dioClient = ref.watch(dioProvider);
   return AuthRepositoryImpl(dioClient);
 }
+

@@ -1070,3 +1070,4 @@ class EmployeePaginationBar extends ConsumerWidget {
     );
   }
 }
+

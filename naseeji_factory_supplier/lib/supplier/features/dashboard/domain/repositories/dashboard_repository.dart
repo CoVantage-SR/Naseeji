@@ -21,3 +21,4 @@ abstract class DashboardRepository {
   Future<SalesStats> getSalesStats();
   Future<AnalyticsData> getAnalyticsData();
 }
+

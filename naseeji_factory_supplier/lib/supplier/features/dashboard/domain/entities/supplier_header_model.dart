@@ -19,3 +19,4 @@ class SupplierHeaderModel {
     this.logoUrl,
   });
 }
+

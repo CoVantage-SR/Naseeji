@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_quotation_model.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/deal_quotation_model.dart';
 import 'offer_status_badge_widget.dart';
 
 class NegotiationCardWidget extends StatelessWidget {
@@ -286,3 +286,4 @@ class NegotiationCardWidget extends StatelessWidget {
     );
   }
 }
+

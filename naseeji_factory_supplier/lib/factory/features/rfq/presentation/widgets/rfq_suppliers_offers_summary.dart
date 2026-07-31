@@ -282,3 +282,4 @@ class RFQSuppliersOffersSummary extends StatelessWidget {
     );
   }
 }
+

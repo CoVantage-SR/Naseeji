@@ -8,3 +8,4 @@ part 'quotation_provider.g.dart';
 Future<List<LatestQuotation>> quotation(QuotationRef ref) {
   return ref.watch(homeRepositoryProvider).getLatestQuotations();
 }
+

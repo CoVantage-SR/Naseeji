@@ -266,3 +266,4 @@ class SupplierInformationWidget extends StatelessWidget {
     );
   }
 }
+

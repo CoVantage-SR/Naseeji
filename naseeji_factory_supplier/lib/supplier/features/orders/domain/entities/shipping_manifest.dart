@@ -29,3 +29,4 @@ class ShippingManifest {
     this.shipmentVideoUrl,
   });
 }
+

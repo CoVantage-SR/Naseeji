@@ -17,3 +17,4 @@ class QuotationRevision {
     required this.status,
   });
 }
+

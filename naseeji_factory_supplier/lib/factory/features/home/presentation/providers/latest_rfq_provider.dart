@@ -8,3 +8,4 @@ part 'latest_rfq_provider.g.dart';
 Future<List<LatestRFQ>> latestRfq(LatestRfqRef ref) {
   return ref.watch(homeRepositoryProvider).getLatestRFQs();
 }
+

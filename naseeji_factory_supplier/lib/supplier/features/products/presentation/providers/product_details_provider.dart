@@ -2,8 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/product_model.dart';
 import '../../domain/entities/product_subscription_limit_model.dart';
 import 'products_providers.dart';
-import 'package:naseeji_supplier/core/mock/mock_data.dart';
-import 'package:naseeji_supplier/core/mock/deal_mock.dart';
+import 'package:naseeji_factory/supplier/core/mock/mock_data.dart';
+import 'package:naseeji_factory/supplier/core/mock/deal_mock.dart';
 
 class ProductDetailsState {
   final ProductModel? product;
@@ -118,3 +118,4 @@ class ProductDetailsNotifier extends StateNotifier<ProductDetailsState> {
 final productDetailsNotifierProvider = StateNotifierProvider.family<ProductDetailsNotifier, ProductDetailsState, String>((ref, productId) {
   return ProductDetailsNotifier(ref, productId);
 });
+

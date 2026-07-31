@@ -23,3 +23,4 @@ abstract class CustomersRepository {
   Future<void> unblockCustomer(String customerId);
   Future<void> archiveCustomer(String customerId);
 }
+

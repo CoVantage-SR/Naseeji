@@ -25,3 +25,4 @@ final suppliersProvider = FutureProvider<List<FavoriteSupplierItem>>((ref) async
 final notificationsProvider = FutureProvider<List<NotificationPreviewItem>>((ref) async {
   return await MockDatabase.getNotifications();
 });
+

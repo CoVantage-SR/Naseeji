@@ -28,3 +28,4 @@ class NotificationsController extends _$NotificationsController {
     }
   }
 }
+

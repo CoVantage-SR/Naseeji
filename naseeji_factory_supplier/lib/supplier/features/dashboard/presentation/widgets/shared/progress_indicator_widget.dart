@@ -72,3 +72,4 @@ class ProgressIndicatorWidget extends StatelessWidget {
     );
   }
 }
+

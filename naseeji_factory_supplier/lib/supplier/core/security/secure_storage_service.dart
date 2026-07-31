@@ -61,3 +61,4 @@ class SecureStorageService {
     _saveToFile();
   }
 }
+

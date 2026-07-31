@@ -104,3 +104,4 @@ class FactorySearchBar extends StatelessWidget {
     );
   }
 }
+

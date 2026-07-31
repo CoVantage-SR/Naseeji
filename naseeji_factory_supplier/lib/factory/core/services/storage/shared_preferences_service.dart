@@ -50,3 +50,4 @@ SharedPreferencesService sharedPreferencesService(SharedPreferencesServiceRef re
   // This will be overridden in main.dart with an initialized instance.
   throw UnimplementedError('Override sharedPreferencesServiceProvider in main.dart');
 }
+

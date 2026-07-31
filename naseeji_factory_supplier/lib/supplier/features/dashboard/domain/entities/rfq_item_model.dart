@@ -27,3 +27,4 @@ class RfqItemModel {
     required this.createdAt,
   });
 }
+

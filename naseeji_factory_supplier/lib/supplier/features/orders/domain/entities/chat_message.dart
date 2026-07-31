@@ -27,3 +27,4 @@ class ChatMessage {
     this.isTypingIndicator = false,
   });
 }
+

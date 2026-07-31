@@ -263,3 +263,4 @@ class SupplierHeaderCard extends StatelessWidget {
     );
   }
 }
+

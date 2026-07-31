@@ -42,3 +42,4 @@ class HomeError extends StatelessWidget {
     );
   }
 }
+

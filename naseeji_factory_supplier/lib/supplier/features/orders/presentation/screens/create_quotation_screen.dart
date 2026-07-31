@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
 import '../../domain/services/quotation_pricing_calculator.dart';
 import '../../domain/services/quotation_validator.dart';
-import 'package:naseeji_supplier/features/messages/presentation/controllers/business_chat_controller.dart';
+import 'package:naseeji_factory/supplier/features/messages/presentation/controllers/business_chat_controller.dart';
 
 class CreateQuotationScreen extends ConsumerStatefulWidget {
   final String rfqId;

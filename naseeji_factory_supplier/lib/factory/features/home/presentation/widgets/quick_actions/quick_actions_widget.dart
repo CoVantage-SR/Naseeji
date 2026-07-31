@@ -81,3 +81,4 @@ class QuickActionsWidget extends StatelessWidget {
     );
   }
 }
+

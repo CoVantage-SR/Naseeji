@@ -50,3 +50,4 @@ class ProductsRepositoryImpl implements ProductsRepository {
 ProductsRepository productsRepository(ProductsRepositoryRef ref) {
   return ProductsRepositoryImpl();
 }
+

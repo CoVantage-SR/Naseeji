@@ -12,3 +12,4 @@ class OfferDetailsController extends _$OfferDetailsController {
     return repo.getOfferDetails(rfqId);
   }
 }
+

@@ -40,3 +40,4 @@ class LoadingWidget extends StatelessWidget {
     );
   }
 }
+

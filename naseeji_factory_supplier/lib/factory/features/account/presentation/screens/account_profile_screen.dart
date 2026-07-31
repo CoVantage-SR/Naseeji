@@ -120,3 +120,4 @@ class AccountProfileScreen extends ConsumerWidget {
     return SettingTile(icon: icon, title: title, onTap: onTap);
   }
 }
+

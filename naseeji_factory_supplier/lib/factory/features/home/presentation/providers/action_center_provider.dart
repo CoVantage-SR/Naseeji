@@ -8,3 +8,4 @@ part 'action_center_provider.g.dart';
 Future<List<ActionCenterAlert>> actionCenter(ActionCenterRef ref) {
   return ref.watch(homeRepositoryProvider).getActionCenterAlerts();
 }
+

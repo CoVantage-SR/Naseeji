@@ -81,3 +81,4 @@ class SubscriptionBadge extends StatelessWidget {
     );
   }
 }
+

@@ -259,3 +259,4 @@ final addProductControllerProvider =
     StateNotifierProvider.autoDispose<AddProductWizardController, ProductFormData>((ref) {
   return AddProductWizardController();
 });
+

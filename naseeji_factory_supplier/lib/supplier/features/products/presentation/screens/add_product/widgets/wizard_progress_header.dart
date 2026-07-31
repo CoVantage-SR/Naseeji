@@ -142,3 +142,4 @@ class WizardProgressHeader extends StatelessWidget {
     );
   }
 }
+

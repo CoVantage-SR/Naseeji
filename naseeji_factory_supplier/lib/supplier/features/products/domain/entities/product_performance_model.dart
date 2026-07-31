@@ -29,3 +29,4 @@ class ProductPerformanceModel {
     required this.totalRevenue,
   });
 }
+

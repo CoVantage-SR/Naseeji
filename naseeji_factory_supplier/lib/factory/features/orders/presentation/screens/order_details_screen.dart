@@ -11,3 +11,4 @@ class OrderDetailsScreen extends StatelessWidget {
     return FactoryDealDetailsScreen(dealId: orderId);
   }
 }
+

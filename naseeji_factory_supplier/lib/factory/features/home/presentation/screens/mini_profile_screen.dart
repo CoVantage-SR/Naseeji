@@ -66,3 +66,4 @@ class MiniProfileScreen extends ConsumerWidget {
     );
   }
 }
+

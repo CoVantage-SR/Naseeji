@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_quotation_model.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/deal_quotation_model.dart';
 
 class OfferStatusBadgeWidget extends StatelessWidget {
   final OfferStatus status;
@@ -33,3 +33,4 @@ class OfferStatusBadgeWidget extends StatelessWidget {
     );
   }
 }
+

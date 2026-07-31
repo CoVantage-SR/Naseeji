@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_supplier/features/products/domain/entities/product_model.dart';
+import 'package:naseeji_factory/supplier/features/products/domain/entities/product_model.dart';
 import 'product_status_badge.dart';
 
 class ProductCardWidget extends StatelessWidget {
@@ -184,3 +184,4 @@ class ProductCardWidget extends StatelessWidget {
     );
   }
 }
+

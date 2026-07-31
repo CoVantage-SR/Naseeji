@@ -279,3 +279,4 @@ class TeamMemberCardWidget extends ConsumerWidget {
     }
   }
 }
+

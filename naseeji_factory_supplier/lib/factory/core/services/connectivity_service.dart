@@ -57,3 +57,4 @@ Stream<ConnectionStatus> connectivityStatus(ConnectivityStatusRef ref) {
   final service = ref.watch(connectivityServiceProvider);
   return service.statusStream;
 }
+

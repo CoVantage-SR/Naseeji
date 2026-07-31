@@ -81,3 +81,4 @@ class AgreementValidationService {
     return !agreement.isQuotationLocked;
   }
 }
+

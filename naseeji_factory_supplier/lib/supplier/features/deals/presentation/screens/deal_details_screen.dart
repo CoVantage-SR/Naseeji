@@ -82,3 +82,4 @@ class DealDetailsScreen extends ConsumerWidget {
     );
   }
 }
+

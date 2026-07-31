@@ -9,3 +9,4 @@ class NotificationsBottomBannerWidget extends StatelessWidget {
     return const SizedBox.shrink();
   }
 }
+

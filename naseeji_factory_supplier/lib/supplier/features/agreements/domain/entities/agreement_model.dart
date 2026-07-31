@@ -490,3 +490,4 @@ class B2BAgreement {
     );
   }
 }
+

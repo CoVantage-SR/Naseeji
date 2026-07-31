@@ -211,3 +211,4 @@ class DealSummaryCard extends StatelessWidget {
     );
   }
 }
+

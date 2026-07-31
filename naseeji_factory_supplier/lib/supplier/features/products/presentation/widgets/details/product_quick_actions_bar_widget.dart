@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_supplier/features/products/domain/entities/product_model.dart';
-import 'package:naseeji_supplier/features/products/presentation/controllers/products_controller.dart';
+import 'package:naseeji_factory/supplier/features/products/domain/entities/product_model.dart';
+import 'package:naseeji_factory/supplier/features/products/presentation/controllers/products_controller.dart';
 
 class ProductQuickActionsBarWidget extends ConsumerWidget {
   final ProductModel product;
@@ -178,3 +178,4 @@ class ProductQuickActionsBarWidget extends ConsumerWidget {
     );
   }
 }
+

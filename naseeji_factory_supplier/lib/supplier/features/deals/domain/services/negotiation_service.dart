@@ -47,3 +47,4 @@ class NegotiationService {
     return false;
   }
 }
+

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:naseeji_supplier/features/products/domain/entities/product_form_data.dart';
-import 'package:naseeji_supplier/features/products/presentation/controllers/add_product_controller.dart';
+import 'package:naseeji_factory/supplier/features/products/domain/entities/product_form_data.dart';
+import 'package:naseeji_factory/supplier/features/products/presentation/controllers/add_product_controller.dart';
 
 class Step5DocumentsWidget extends ConsumerWidget {
   final ProductFormData formData;
@@ -158,3 +158,4 @@ class Step5DocumentsWidget extends ConsumerWidget {
     );
   }
 }
+

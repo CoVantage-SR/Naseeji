@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/features/deals/domain/entities/deal_model.dart';
+import 'package:naseeji_factory/supplier/features/deals/domain/entities/deal_model.dart';
 
 class DealInfoWidget extends StatelessWidget {
   final DealModel deal;
@@ -219,3 +219,4 @@ class DealInfoWidget extends StatelessWidget {
     );
   }
 }
+

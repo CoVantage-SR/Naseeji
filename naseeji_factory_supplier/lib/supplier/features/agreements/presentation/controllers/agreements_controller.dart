@@ -91,3 +91,4 @@ final agreementTimelineProvider = FutureProvider.family<List<AgreementTimelineSt
   final agreement = await service.getAgreementById(id);
   return agreement?.timeline ?? [];
 });
+

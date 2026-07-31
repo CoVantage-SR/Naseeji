@@ -24,3 +24,4 @@ class QuotationPricingCalculator {
     return val < 0 ? 0.0 : val;
   }
 }
+

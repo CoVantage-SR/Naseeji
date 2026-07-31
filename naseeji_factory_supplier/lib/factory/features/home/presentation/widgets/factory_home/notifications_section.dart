@@ -162,3 +162,4 @@ class NotificationsSection extends StatelessWidget {
     );
   }
 }
+

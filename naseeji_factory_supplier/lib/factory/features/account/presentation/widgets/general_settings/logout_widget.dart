@@ -24,3 +24,4 @@ class LogoutWidget extends StatelessWidget {
     );
   }
 }
+

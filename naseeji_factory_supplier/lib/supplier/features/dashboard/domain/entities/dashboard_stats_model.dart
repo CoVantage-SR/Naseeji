@@ -19,3 +19,4 @@ class DashboardStatsModel {
     required this.monthlyRevenue,
   });
 }
+

@@ -9,3 +9,4 @@ class ProductTierPrice {
     required this.formattedLabel,
   });
 }
+

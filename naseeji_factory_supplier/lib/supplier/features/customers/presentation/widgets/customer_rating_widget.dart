@@ -151,3 +151,4 @@ class _CustomerRatingWidgetState extends State<CustomerRatingWidget> {
     return AppColors.error;
   }
 }
+

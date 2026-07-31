@@ -11,3 +11,4 @@ Future<ProductionCapacity> productionCapacity(
 }) {
   return ref.watch(productDetailRepositoryProvider).getProductionCapacity(productId);
 }
+

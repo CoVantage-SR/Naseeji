@@ -12,3 +12,4 @@ class OfferRejectedController extends _$OfferRejectedController {
     return repo.getOfferRejected(rfqId);
   }
 }
+

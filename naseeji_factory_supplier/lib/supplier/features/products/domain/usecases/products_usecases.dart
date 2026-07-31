@@ -54,3 +54,4 @@ class GetSubscriptionLimitsUseCase {
     return _repository.getSubscriptionLimits();
   }
 }
+

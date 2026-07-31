@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/features/dashboard/domain/entities/task_item_model.dart';
+import 'package:naseeji_factory/supplier/features/dashboard/domain/entities/task_item_model.dart';
 
 enum TaskStatusType {
   urgent,
@@ -242,3 +242,4 @@ class TaskCard extends StatelessWidget {
     );
   }
 }
+

@@ -508,3 +508,4 @@ class AccountMockDatabase {
     _loginSessions = _loginSessions.where((s) => s.isCurrentDevice).toList();
   }
 }
+

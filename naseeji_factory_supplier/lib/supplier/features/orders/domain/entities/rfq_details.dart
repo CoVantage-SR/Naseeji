@@ -27,3 +27,4 @@ class RfqDetails {
     required this.notes,
   });
 }
+

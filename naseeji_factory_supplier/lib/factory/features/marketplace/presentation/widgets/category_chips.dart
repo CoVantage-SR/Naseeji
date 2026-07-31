@@ -76,3 +76,4 @@ class CategoryChips extends StatelessWidget {
     );
   }
 }
+

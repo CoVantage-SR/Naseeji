@@ -40,3 +40,4 @@ class ThemeController extends _$ThemeController {
     }
   }
 }
+

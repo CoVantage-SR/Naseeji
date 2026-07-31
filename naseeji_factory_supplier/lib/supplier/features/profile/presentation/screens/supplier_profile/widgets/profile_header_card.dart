@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
-import 'package:naseeji_supplier/features/profile/domain/entities/supplier_profile.dart';
+import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/supplier/features/profile/domain/entities/supplier_profile.dart';
 
 class ProfileHeaderCard extends StatelessWidget {
   final SupplierProfile profile;
@@ -227,3 +227,4 @@ class ProfileHeaderCard extends StatelessWidget {
     );
   }
 }
+

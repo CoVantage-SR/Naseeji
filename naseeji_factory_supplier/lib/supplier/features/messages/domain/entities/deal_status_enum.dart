@@ -46,3 +46,4 @@ enum DealStatus {
     }
   }
 }
+

@@ -39,3 +39,4 @@ class QrCodeAnalyzer implements ContentAnalyzer {
     return null;
   }
 }
+

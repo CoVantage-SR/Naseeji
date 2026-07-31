@@ -130,3 +130,4 @@ class ProductSubscriptionBannerWidget extends ConsumerWidget {
     );
   }
 }
+

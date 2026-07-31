@@ -286,3 +286,4 @@ class SubscriptionAnalyticsController extends _$SubscriptionAnalyticsController 
     return ref.watch(subscriptionRepositoryProvider).getAnalytics();
   }
 }
+

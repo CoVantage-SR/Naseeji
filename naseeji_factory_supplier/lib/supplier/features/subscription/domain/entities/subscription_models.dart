@@ -490,3 +490,4 @@ class SubscriptionNotification {
     required this.type,
   });
 }
+

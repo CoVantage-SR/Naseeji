@@ -59,3 +59,4 @@ class ProductSearchWidget extends StatelessWidget {
     );
   }
 }
+

@@ -164,3 +164,4 @@ class SupplierTypeCard extends StatelessWidget {
     );
   }
 }
+

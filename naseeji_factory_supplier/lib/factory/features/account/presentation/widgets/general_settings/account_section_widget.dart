@@ -65,3 +65,4 @@ class AccountSectionWidget extends StatelessWidget {
     );
   }
 }
+

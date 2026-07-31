@@ -113,3 +113,4 @@ class RecommendedProducts extends StatelessWidget {
     );
   }
 }
+

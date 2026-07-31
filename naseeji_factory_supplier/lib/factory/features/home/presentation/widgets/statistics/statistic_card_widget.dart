@@ -34,3 +34,4 @@ class StatisticCardWidget extends StatelessWidget {
     );
   }
 }
+

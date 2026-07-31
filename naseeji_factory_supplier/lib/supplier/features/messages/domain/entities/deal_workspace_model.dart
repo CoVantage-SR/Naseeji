@@ -1,9 +1,9 @@
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_status_enum.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_quotation_model.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_agreement_model.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_file_model.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_timeline_model.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/business_message.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/deal_status_enum.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/deal_quotation_model.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/deal_agreement_model.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/deal_file_model.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/deal_timeline_model.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/business_message.dart';
 
 class DealWorkspaceModel {
   final String dealId;
@@ -83,3 +83,4 @@ class DealWorkspaceModel {
     );
   }
 }
+

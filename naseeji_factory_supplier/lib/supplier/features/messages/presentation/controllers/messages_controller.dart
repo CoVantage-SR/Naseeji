@@ -137,3 +137,4 @@ class MessagesController extends _$MessagesController {
     // Do not invalidate immediately, to let the UI settle
   }
 }
+

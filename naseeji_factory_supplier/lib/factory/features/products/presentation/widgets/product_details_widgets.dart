@@ -381,3 +381,4 @@ class SupplierPreviewWidget extends StatelessWidget {
 class ActionButtonsWidget {
   // We'll write this buttons builder directly in the screen or combine inside product_details_screen.dart to save layout space and retain clean action wires!
 }
+

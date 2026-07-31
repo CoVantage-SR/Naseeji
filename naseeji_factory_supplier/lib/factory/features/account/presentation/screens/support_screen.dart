@@ -325,3 +325,4 @@ class SupportScreen extends ConsumerWidget {
     );
   }
 }
+

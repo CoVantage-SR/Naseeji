@@ -96,3 +96,4 @@ class SubscriptionUsageCard extends StatelessWidget {
     );
   }
 }
+

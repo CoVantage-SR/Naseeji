@@ -37,3 +37,4 @@ class AppColors {
   static const Color shadow = Color(0x0A000000);
   static const Color transparent = Colors.transparent;
 }
+

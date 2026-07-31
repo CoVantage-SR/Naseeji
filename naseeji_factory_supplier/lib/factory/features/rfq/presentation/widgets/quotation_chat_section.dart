@@ -276,3 +276,4 @@ class _QuotationChatSectionState extends State<QuotationChatSection> {
     );
   }
 }
+

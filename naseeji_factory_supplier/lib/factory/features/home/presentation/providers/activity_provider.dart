@@ -8,3 +8,4 @@ part 'activity_provider.g.dart';
 Future<List<RecentActivity>> activity(ActivityRef ref) {
   return ref.watch(homeRepositoryProvider).getRecentActivities();
 }
+

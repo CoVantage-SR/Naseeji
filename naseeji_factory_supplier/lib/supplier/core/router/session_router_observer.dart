@@ -41,3 +41,4 @@ class SessionRouterObserver extends NavigatorObserver {
     }
   }
 }
+

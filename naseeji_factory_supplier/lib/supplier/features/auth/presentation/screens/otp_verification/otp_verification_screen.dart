@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_factory/factory/core/constants/app_colors.dart';
-import 'package:naseeji_factory/factory/core/theme/app_theme.dart';
-import 'package:naseeji_factory/factory/features/account/presentation/widgets/account_reusable_widgets.dart';
+import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/supplier/core/theme/app_theme.dart';
 import 'package:naseeji_factory/supplier/core/session/session_tracker.dart';
 import 'package:naseeji_factory/supplier/core/widgets/general_widgets.dart';
 import 'package:naseeji_factory/supplier/features/auth/presentation/controllers/auth_controller.dart';
@@ -158,3 +157,4 @@ class _OtpVerificationScreenState extends ConsumerState<OtpVerificationScreen> {
     );
   }
 }
+

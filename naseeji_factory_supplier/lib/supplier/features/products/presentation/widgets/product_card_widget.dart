@@ -403,3 +403,4 @@ class ProductCardWidget extends StatelessWidget {
     );
   }
 }
+

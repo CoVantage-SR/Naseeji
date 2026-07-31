@@ -100,3 +100,4 @@ class _ProgressStep {
 
   const _ProgressStep({required this.title, required this.completed});
 }
+

@@ -379,3 +379,4 @@ class DealsRepositoryImpl implements DealsRepository {
     return false;
   }
 }
+

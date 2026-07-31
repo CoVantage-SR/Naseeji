@@ -19,3 +19,4 @@ class PaymentRelease {
     required this.releaseTimeline,
   });
 }
+

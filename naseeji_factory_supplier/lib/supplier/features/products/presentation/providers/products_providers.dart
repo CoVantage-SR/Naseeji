@@ -70,3 +70,4 @@ final productAnalyticsProvider = FutureProvider.family<ProductPerformanceModel, 
   final service = ref.watch(analyticsServiceProvider);
   return service.getProductAnalytics(productId);
 });
+

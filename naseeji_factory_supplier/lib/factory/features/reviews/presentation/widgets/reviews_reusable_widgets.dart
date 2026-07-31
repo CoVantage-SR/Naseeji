@@ -490,3 +490,4 @@ class MediaGalleryWidget extends StatelessWidget {
     );
   }
 }
+

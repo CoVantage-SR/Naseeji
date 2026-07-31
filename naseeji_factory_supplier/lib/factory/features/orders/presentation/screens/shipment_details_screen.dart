@@ -59,3 +59,4 @@ class ShipmentDetailsScreen extends ConsumerWidget {
     );
   }
 }
+

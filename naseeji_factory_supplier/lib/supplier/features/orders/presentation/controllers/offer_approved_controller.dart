@@ -12,3 +12,4 @@ class OfferApprovedController extends _$OfferApprovedController {
     return repo.getOfferApproved(rfqId);
   }
 }
+

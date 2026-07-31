@@ -185,3 +185,4 @@ class QuotationsComparisonScreen extends ConsumerWidget {
     );
   }
 }
+

@@ -1,4 +1,4 @@
-import 'package:naseeji_supplier/core/mock/subscription_mock.dart';
+import 'package:naseeji_factory/supplier/core/mock/subscription_mock.dart';
 import '../entities/subscription_models.dart';
 
 abstract class SubscriptionRepository {
@@ -49,3 +49,4 @@ abstract class SubscriptionRepository {
     int? featured,
   });
 }
+

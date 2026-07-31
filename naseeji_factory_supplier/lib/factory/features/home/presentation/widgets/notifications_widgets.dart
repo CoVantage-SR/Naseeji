@@ -266,3 +266,4 @@ class EmptyNotificationWidget extends StatelessWidget {
     );
   }
 }
+

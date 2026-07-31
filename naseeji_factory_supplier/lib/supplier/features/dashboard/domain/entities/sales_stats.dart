@@ -13,3 +13,4 @@ class SalesStats {
     required this.weeklySales,
   });
 }
+
