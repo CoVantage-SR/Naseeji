@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../../../../../core/constants/app_colors.dart';
-import '../../../../../../../../core/constants/app_radius.dart';
+import 'package:naseeji_factory/factory/core/constants/app_colors.dart';
+import 'package:naseeji_factory/factory/core/constants/app_radius.dart';
+
 
 class SecondaryButtonWidget extends StatelessWidget {
   final String label;

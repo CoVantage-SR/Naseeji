@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:naseeji_factory/core/config/env_config.dart';
-import 'package:naseeji_factory/core/network/error_handler.dart';
+import 'package:naseeji_factory/factory/core/config/env_config.dart';
+import 'package:naseeji_factory/factory/core/network/error_handler.dart';
+
 
 void main() {
   group('Architecture Foundational Tests', () {

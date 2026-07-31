@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../../../core/constants/app_colors.dart';
-import '../../../../../../core/constants/app_radius.dart';
-import '../../../../../../core/widgets/reusable_widgets.dart';
+import 'package:naseeji_factory/factory/core/constants/app_colors.dart';
+import 'package:naseeji_factory/factory/core/constants/app_radius.dart';
+import 'package:naseeji_factory/factory/core/widgets/reusable_widgets.dart';
+
 import '../providers/orders_provider.dart';
 import 'orders_reusable_widgets.dart';
 

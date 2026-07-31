@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../../../core/widgets/reusable_widgets.dart';
+import 'package:naseeji_factory/factory/core/widgets/reusable_widgets.dart';
 import '../providers/mini_profile_provider.dart';
 import 'drawer_widgets.dart';
 

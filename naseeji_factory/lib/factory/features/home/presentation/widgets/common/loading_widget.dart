@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../../../../../core/widgets/reusable_widgets.dart' as core;
 
 class LoadingWidget extends StatelessWidget {
   final String message;
@@ -11,6 +10,17 @@ class LoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return core.LoadingWidget(message: message);
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const CircularProgressIndicator(),
+          if (message.isNotEmpty) ...[
+            const SizedBox(height: 16),
+            Text(message),
+          ],
+        ],
+      ),
+    );
   }
 }

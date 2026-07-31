@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../../../../../core/constants/app_colors.dart';
-import '../../../../../../../../core/extensions/context_extensions.dart';
-import '../../../../../../../../core/widgets/reusable_widgets.dart';
+import 'package:naseeji_factory/factory/core/constants/app_colors.dart';
+import 'package:naseeji_factory/factory/core/extensions/context_extensions.dart';
+import 'package:naseeji_factory/factory/core/widgets/reusable_widgets.dart';
 
 /// Displays a video preview row card for the product.
 /// Migrated from VideoPreviewWidget in product_details_widgets.dart.

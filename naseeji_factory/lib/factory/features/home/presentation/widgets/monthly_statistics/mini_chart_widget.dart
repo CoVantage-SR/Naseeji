@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../../../../../core/constants/app_colors.dart';
+import 'package:naseeji_factory/factory/core/constants/app_colors.dart';
 
 class MiniChartWidget extends StatelessWidget {
   final List<double> dataPoints;

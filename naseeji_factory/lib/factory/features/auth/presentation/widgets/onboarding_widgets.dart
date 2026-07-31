@@ -1,8 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import '../../../../../../core/constants/app_colors.dart';
-import '../../../../../../core/constants/app_radius.dart';
-import '../../../../../../core/extensions/context_extensions.dart';
+import 'package:naseeji_factory/factory/core/constants/app_colors.dart';
+import 'package:naseeji_factory/factory/core/constants/app_radius.dart';
+import 'package:naseeji_factory/factory/core/extensions/context_extensions.dart';
+
 
 class OnboardingImageWidget extends StatelessWidget {
   final String? imageUrl;
