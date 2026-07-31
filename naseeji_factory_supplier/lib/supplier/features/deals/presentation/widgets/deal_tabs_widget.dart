@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/features/deals/domain/entities/deal_model.dart';
+import 'package:naseeji_factory/supplier/features/deals/domain/entities/deal_model.dart';
 import 'tabs/deal_info_widget.dart';
 import 'tabs/quotation_widget.dart';
 import 'tabs/negotiation_widget.dart';

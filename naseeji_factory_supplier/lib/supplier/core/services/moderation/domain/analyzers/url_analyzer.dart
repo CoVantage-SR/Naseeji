@@ -1,6 +1,6 @@
-import 'package:naseeji_supplier/core/services/moderation/domain/analyzers/content_analyzer_interface.dart';
-import 'package:naseeji_supplier/core/services/moderation/domain/entities/moderation_enums.dart';
-import 'package:naseeji_supplier/core/services/moderation/domain/entities/moderation_result.dart';
+import 'package:naseeji_factory/supplier/core/services/moderation/domain/analyzers/content_analyzer_interface.dart';
+import 'package:naseeji_factory/supplier/core/services/moderation/domain/entities/moderation_enums.dart';
+import 'package:naseeji_factory/supplier/core/services/moderation/domain/entities/moderation_result.dart';
 
 class UrlAnalyzer implements ContentAnalyzer {
   static final RegExp _urlRegex = RegExp(

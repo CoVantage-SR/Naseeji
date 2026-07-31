@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:naseeji_supplier/features/profile/presentation/controllers/profile_controller.dart';
+import 'package:naseeji_factory/supplier/features/profile/presentation/controllers/profile_controller.dart';
 import 'premium_lock_overlay.dart';
 import 'vip_bottom_sheet.dart';
 

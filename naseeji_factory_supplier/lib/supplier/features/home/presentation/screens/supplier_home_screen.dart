@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:naseeji_supplier/features/dashboard/presentation/providers/dashboard_providers.dart';
+import 'package:naseeji_factory/supplier/features/dashboard/presentation/providers/dashboard_providers.dart';
 import '../widgets/supplier_home_header.dart';
 import '../widgets/subscription_banner.dart';
 import '../widgets/quick_metrics_overview.dart';

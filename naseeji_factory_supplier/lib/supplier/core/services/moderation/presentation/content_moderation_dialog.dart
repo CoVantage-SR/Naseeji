@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/core/services/moderation/domain/entities/moderation_result.dart';
+import 'package:naseeji_factory/supplier/core/services/moderation/domain/entities/moderation_result.dart';
 
 class ContentModerationDialog extends StatelessWidget {
   final ContentModerationResult result;

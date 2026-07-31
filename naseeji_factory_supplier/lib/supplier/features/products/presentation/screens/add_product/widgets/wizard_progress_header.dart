@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/features/products/domain/entities/product_form_data.dart';
+import 'package:naseeji_factory/supplier/features/products/domain/entities/product_form_data.dart';
 
 class WizardProgressHeader extends StatelessWidget {
   final ProductFormData formData;

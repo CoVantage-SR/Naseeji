@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
 import '../../domain/entities/customer_model.dart';
 
 class CustomerTagsWidget extends StatelessWidget {
