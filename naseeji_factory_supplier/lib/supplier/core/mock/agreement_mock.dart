@@ -1,4 +1,3 @@
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_agreement_model.dart';
 
 class AgreementMock {
   final String agreementId;
