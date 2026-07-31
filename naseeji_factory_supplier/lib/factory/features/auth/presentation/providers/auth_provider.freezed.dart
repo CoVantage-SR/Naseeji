@@ -1290,4 +1290,3 @@ abstract class _Error implements AuthState {
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
-

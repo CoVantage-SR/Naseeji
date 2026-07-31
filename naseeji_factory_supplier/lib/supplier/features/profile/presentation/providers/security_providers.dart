@@ -125,7 +125,7 @@ class SecurityNotifier extends StateNotifier<SecurityState> {
   }
 
   void logoutDevice(String deviceId) {
-    MockDatabase.deviceSessions.removeWhere((s) => s.deviceId == deviceId);
+    MockDatabase.deviceSessions.removeWhere((s) => s?.deviceId == deviceId);
 
     final newActivity = SecurityActivityModel(
       activityId: 'ACT-${DateTime.now().millisecondsSinceEpoch}',
