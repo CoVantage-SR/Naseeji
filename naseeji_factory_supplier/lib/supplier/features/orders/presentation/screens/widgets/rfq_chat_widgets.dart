@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/core/theme/app_colors.dart';
 import '../../../domain/entities/chat_message.dart';
 
 class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -600,3 +600,4 @@ class ChatInputField extends StatelessWidget {
     );
   }
 }
+

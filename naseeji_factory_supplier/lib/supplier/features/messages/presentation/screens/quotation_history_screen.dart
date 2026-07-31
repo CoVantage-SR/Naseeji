@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/core/theme/app_colors.dart';
 import '../../domain/entities/business_message.dart';
 import '../../data/repositories/messages_repository_impl.dart';
 
@@ -361,4 +361,5 @@ class _ComparisonSheet extends StatelessWidget {
     );
   }
 }
+
 

@@ -442,3 +442,4 @@ final List<DealModel> _mockDeals = [
   ),
 ];
 
+

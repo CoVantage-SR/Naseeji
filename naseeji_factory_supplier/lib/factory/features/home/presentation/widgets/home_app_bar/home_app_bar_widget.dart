@@ -83,3 +83,4 @@ class HomeAppBarWidget extends ConsumerWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
+

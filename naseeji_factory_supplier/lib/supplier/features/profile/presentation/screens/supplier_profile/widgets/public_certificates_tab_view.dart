@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/core/theme/app_colors.dart';
 import 'package:naseeji_factory/supplier/features/profile/domain/entities/supplier_profile.dart';
 
 class PublicCertificatesTabView extends StatelessWidget {
@@ -85,4 +85,5 @@ class PublicCertificatesTabView extends StatelessWidget {
     );
   }
 }
+
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_factory/supplier/features/auth/domain/entities/supplier_registration_data.dart';
+import 'package:naseeji_factory/authentication/domain/entities/supplier_registration_data.dart';
 
 class SupplierTypeCard extends StatelessWidget {
   final SupplierType type;
@@ -164,4 +164,5 @@ class SupplierTypeCard extends StatelessWidget {
     );
   }
 }
+
 

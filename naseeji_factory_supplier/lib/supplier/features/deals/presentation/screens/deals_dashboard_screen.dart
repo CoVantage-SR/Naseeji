@@ -288,3 +288,4 @@ class DealsDashboardScreen extends ConsumerWidget {
   }
 }
 
+

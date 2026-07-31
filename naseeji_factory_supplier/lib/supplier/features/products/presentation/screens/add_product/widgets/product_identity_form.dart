@@ -12,3 +12,4 @@ class ProductIdentityForm extends ConsumerWidget {
     return Step1BasicInfoWidget(formData: formData);
   }
 }
+

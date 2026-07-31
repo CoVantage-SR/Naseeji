@@ -12,3 +12,4 @@ class SupplierDetailsScreen extends StatelessWidget {
   }
 }
 
+

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:naseeji_factory/supplier/core/mock/mock_data.dart';
+import 'package:naseeji_factory/core/mock/mock_data.dart';
 import '../../domain/entities/conversation.dart';
 import '../../domain/entities/business_message.dart';
 import '../../domain/entities/support_ticket.dart';
@@ -127,4 +127,5 @@ class MessagesRepositoryImpl implements MessagesRepository {
     bool? isCompleted,
   }) async {}
 }
+
 

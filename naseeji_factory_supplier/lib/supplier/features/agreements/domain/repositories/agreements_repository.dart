@@ -10,3 +10,4 @@ abstract class AgreementsRepository {
   Future<void> uploadContractDocument(String id, String type, String name, String url);
 }
 
+

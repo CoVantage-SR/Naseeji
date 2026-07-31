@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_factory/supplier/core/mock/deal_mock.dart';
+import 'package:naseeji_factory/core/mock/deal_mock.dart';
 import 'package:naseeji_factory/supplier/features/messages/domain/entities/deal_status_enum.dart';
 
 class RelatedDealsCard extends StatelessWidget {
@@ -189,4 +189,5 @@ class RelatedDealsCard extends StatelessWidget {
     return status.arabicLabel;
   }
 }
+
 

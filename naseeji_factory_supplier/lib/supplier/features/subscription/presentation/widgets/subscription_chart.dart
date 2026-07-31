@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/core/theme/app_colors.dart';
 
 class SubscriptionChart extends StatelessWidget {
   final String title;
@@ -227,3 +227,4 @@ class _DonutChartPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
+

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/core/theme/app_colors.dart';
 
 // Import all widgets
 import 'widgets/complete_timeline_widget.dart';
@@ -332,3 +332,4 @@ class _OrderCenterScreenState extends ConsumerState<OrderCenterScreen> with Sing
     );
   }
 }
+

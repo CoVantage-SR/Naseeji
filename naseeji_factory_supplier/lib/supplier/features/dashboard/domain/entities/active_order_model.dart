@@ -20,3 +20,4 @@ class ActiveOrderModel {
   int get progressPercentInt => (progressPercentage * 100).round().clamp(0, 100);
 }
 
+

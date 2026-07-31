@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/core/theme/app_colors.dart';
 import 'premium_badge.dart';
 
 class VipBottomSheet extends StatefulWidget {
@@ -298,4 +298,5 @@ class _VipBottomSheetState extends State<VipBottomSheet> {
     );
   }
 }
+
 

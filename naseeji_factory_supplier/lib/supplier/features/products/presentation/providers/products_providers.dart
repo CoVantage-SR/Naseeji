@@ -71,3 +71,4 @@ final productAnalyticsProvider = FutureProvider.family<ProductPerformanceModel, 
   return service.getProductAnalytics(productId);
 });
 
+

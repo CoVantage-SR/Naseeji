@@ -1,6 +1,6 @@
-import 'package:naseeji_factory/supplier/core/services/moderation/domain/analyzers/content_analyzer_interface.dart';
-import 'package:naseeji_factory/supplier/core/services/moderation/domain/entities/moderation_enums.dart';
-import 'package:naseeji_factory/supplier/core/services/moderation/domain/entities/moderation_result.dart';
+import 'package:naseeji_factory/core/services/moderation/domain/analyzers/content_analyzer_interface.dart';
+import 'package:naseeji_factory/core/services/moderation/domain/entities/moderation_enums.dart';
+import 'package:naseeji_factory/core/services/moderation/domain/entities/moderation_result.dart';
 
 abstract class PdfScanner {
   Future<String?> extractTextFromPdf(String pdfPathOrUrl);
@@ -39,4 +39,5 @@ class PdfContentAnalyzer implements ContentAnalyzer {
     return null;
   }
 }
+
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_factory/factory/core/extensions/context_extensions.dart';
+import 'package:naseeji_factory/core/extensions/context_extensions.dart';
 
 class RecentSearchesWidget extends StatelessWidget {
   final List<String> recentQueries;
@@ -49,4 +49,5 @@ class RecentSearchesWidget extends StatelessWidget {
     );
   }
 }
+
 

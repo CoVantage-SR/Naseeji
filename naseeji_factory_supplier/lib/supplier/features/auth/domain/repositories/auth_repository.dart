@@ -8,3 +8,4 @@ abstract class AuthRepository {
   Future<void> registerSupplier(SupplierRegistrationData data);
 }
 
+

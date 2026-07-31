@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/core/theme/app_colors.dart';
 import 'package:naseeji_factory/supplier/features/notifications/domain/entities/app_notification.dart';
 import 'package:naseeji_factory/supplier/features/notifications/presentation/controllers/notifications_controller.dart';
 import 'notification_tile.dart';
@@ -134,4 +134,5 @@ class NotificationsList extends ConsumerWidget {
     );
   }
 }
+
 

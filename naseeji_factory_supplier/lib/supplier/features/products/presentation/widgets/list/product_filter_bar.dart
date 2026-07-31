@@ -81,3 +81,4 @@ class ProductFilterBar extends ConsumerWidget {
   }
 }
 
+

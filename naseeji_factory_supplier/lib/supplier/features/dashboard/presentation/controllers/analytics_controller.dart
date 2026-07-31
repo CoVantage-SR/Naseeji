@@ -21,3 +21,4 @@ class AnalyticsController extends _$AnalyticsController {
   }
 }
 
+

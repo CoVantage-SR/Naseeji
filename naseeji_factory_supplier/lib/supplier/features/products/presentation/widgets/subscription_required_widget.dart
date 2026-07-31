@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_factory/supplier/core/widgets/general_widgets.dart';
+import 'package:naseeji_factory/core/widgets/general_widgets.dart';
 
 class SubscriptionRequiredWidget extends StatelessWidget {
   final String title;
@@ -90,4 +90,5 @@ class SubscriptionRequiredWidget extends StatelessWidget {
     );
   }
 }
+
 

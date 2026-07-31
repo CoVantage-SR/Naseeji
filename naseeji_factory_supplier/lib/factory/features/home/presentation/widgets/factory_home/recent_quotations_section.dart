@@ -224,3 +224,4 @@ class RecentQuotationsSection extends StatelessWidget {
   }
 }
 
+

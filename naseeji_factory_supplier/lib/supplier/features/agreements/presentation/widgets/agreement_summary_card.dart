@@ -196,3 +196,4 @@ class AgreementSummaryCard extends StatelessWidget {
     );
   }
 }
+

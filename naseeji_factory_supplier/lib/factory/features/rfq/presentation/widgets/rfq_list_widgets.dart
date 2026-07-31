@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_factory/factory/core/constants/app_colors.dart';
-import 'package:naseeji_factory/factory/core/constants/app_radius.dart';
-import 'package:naseeji_factory/factory/core/constants/app_spacing.dart';
-import 'package:naseeji_factory/factory/core/extensions/context_extensions.dart';
-import 'package:naseeji_factory/factory/core/widgets/reusable_widgets.dart';
+import 'package:naseeji_factory/core/constants/app_colors.dart';
+import 'package:naseeji_factory/core/constants/app_radius.dart';
+import 'package:naseeji_factory/core/constants/app_spacing.dart';
+import 'package:naseeji_factory/core/extensions/context_extensions.dart';
+import 'package:naseeji_factory/core/widgets/reusable_widgets.dart';
 
 import '../providers/rfq_provider.dart';
 
@@ -164,4 +164,5 @@ class FloatingCreateRFQButton extends StatelessWidget {
     );
   }
 }
+
 

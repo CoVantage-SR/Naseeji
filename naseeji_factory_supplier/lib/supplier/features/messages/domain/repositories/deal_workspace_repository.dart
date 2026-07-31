@@ -40,3 +40,4 @@ abstract class DealWorkspaceRepository {
   Future<bool> rejectQuotation(String dealId);
 }
 
+

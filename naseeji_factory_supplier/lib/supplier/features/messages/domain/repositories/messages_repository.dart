@@ -26,3 +26,4 @@ abstract class MessagesRepository {
   Future<void> updateTimelineStage(String conversationId, String stageLabel, {required String timestamp, required String user, String? notes, bool? isActive, bool? isCompleted});
 }
 
+

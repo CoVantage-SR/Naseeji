@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/core/theme/app_colors.dart';
 import '../../../domain/entities/offer_details.dart';
 
 class OfferDetailsHeader extends StatelessWidget {
@@ -339,3 +339,4 @@ class TimelineActionButtonBar extends StatelessWidget {
     );
   }
 }
+

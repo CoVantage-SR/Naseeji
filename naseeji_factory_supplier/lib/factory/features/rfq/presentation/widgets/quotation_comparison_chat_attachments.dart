@@ -257,3 +257,4 @@ class QuotationComparisonChatAttachments extends StatelessWidget {
   }
 }
 
+

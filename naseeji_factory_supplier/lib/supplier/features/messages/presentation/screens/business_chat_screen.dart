@@ -288,3 +288,4 @@ class _BusinessChatScreenState extends ConsumerState<BusinessChatScreen> with Si
     );
   }
 }
+

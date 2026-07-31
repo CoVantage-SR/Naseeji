@@ -4,3 +4,4 @@ abstract class SearchRepository {
   Future<List<SearchItem>> searchItems(String query);
 }
 
+

@@ -44,3 +44,4 @@ class SmartRecommendationsWidget extends StatelessWidget {
   }
 }
 
+

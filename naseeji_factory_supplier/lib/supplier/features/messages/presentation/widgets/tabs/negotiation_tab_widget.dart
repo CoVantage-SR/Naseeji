@@ -237,3 +237,4 @@ class NegotiationTabWidget extends StatelessWidget {
   }
 }
 
+

@@ -12,3 +12,4 @@ Future<List<BulkPricingTier>> bulkPricing(
   return ref.watch(productDetailRepositoryProvider).getBulkPricingTiers(productId);
 }
 
+

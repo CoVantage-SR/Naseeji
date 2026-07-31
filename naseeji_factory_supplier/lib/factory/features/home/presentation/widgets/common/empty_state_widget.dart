@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_factory/factory/core/widgets/reusable_widgets.dart' as core;
+import 'package:naseeji_factory/core/widgets/reusable_widgets.dart' as core;
 
 class EmptyStateWidget extends StatelessWidget {
   final IconData icon;
@@ -28,4 +28,5 @@ class EmptyStateWidget extends StatelessWidget {
     );
   }
 }
+
 

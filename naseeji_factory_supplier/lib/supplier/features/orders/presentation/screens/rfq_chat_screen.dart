@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/core/theme/app_colors.dart';
 import '../controllers/rfq_chat_controller.dart';
 import 'widgets/rfq_chat_widgets.dart';
 
@@ -74,4 +74,5 @@ class _RfqChatScreenState extends ConsumerState<RfqChatScreen> {
     );
   }
 }
+
 

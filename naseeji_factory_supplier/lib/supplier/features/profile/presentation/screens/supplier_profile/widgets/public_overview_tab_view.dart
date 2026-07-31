@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/core/theme/app_colors.dart';
 import 'package:naseeji_factory/supplier/features/profile/domain/entities/supplier_profile.dart';
 
 class PublicOverviewTabView extends StatelessWidget {
@@ -219,3 +219,4 @@ class PublicOverviewTabView extends StatelessWidget {
     );
   }
 }
+

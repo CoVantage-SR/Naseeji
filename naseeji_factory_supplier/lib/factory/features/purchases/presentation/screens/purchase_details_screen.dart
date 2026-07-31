@@ -97,3 +97,4 @@ class PurchaseDetailsScreen extends ConsumerWidget {
   }
 }
 
+

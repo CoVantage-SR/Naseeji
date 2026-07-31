@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_factory/supplier/core/session/session_tracker.dart';
-import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
-import 'package:naseeji_factory/supplier/core/theme/app_theme.dart';
-import 'package:naseeji_factory/supplier/core/widgets/general_widgets.dart';
-import 'package:naseeji_factory/supplier/features/auth/presentation/controllers/auth_controller.dart';
+import 'package:naseeji_factory/core/session/session_tracker.dart';
+import 'package:naseeji_factory/core/theme/app_colors.dart';
+import 'package:naseeji_factory/core/theme/app_theme.dart';
+import 'package:naseeji_factory/core/widgets/general_widgets.dart';
+import 'package:naseeji_factory/authentication/presentation/controllers/auth_controller.dart';
 import 'widgets/login_form.dart';
 
 class LoginScreen extends ConsumerWidget {
@@ -243,4 +243,5 @@ class LoginScreen extends ConsumerWidget {
     );
   }
 }
+
 

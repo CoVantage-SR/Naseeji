@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_factory/factory/core/constants/app_spacing.dart';
-import 'package:naseeji_factory/factory/core/widgets/reusable_widgets.dart';
+import 'package:naseeji_factory/core/constants/app_spacing.dart';
+import 'package:naseeji_factory/core/widgets/reusable_widgets.dart';
 import '../../providers/comparison_provider.dart';
 import '../../providers/suppliers_provider.dart';
 import '../favorites_widgets.dart';
@@ -146,4 +146,5 @@ class _SuppliersBodyState extends ConsumerState<SuppliersBody> {
     );
   }
 }
+
 

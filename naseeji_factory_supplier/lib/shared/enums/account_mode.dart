@@ -5,3 +5,4 @@ enum AccountMode {
   bool get isDemo => this == AccountMode.demo;
   bool get isReal => this == AccountMode.real;
 }
+

@@ -247,3 +247,4 @@ final filesProvider = Provider.family<List<DealFileModel>, String>((ref, dealId)
   return state.workspace?.files ?? const [];
 });
 
+

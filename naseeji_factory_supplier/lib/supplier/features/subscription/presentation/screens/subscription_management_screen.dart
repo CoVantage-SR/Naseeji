@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:naseeji_factory/supplier/core/mock/mock_data.dart';
-import 'package:naseeji_factory/supplier/core/mock/subscription_mock.dart';
+import 'package:naseeji_factory/core/mock/mock_data.dart';
+import 'package:naseeji_factory/core/mock/subscription_mock.dart';
 import '../controllers/subscription_controllers.dart';
 
 class SubscriptionManagementScreen extends ConsumerStatefulWidget {
@@ -1267,4 +1267,5 @@ enum _PlanButtonStyle {
   outlineGreen,
   outlineOrange,
 }
+
 

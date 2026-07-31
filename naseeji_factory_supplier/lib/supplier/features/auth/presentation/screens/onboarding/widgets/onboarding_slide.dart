@@ -78,3 +78,4 @@ class OnboardingSlide extends StatelessWidget {
   }
 }
 
+

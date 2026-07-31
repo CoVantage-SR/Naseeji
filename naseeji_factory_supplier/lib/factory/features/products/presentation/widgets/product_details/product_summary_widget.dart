@@ -300,3 +300,4 @@ class ProductSummaryWidget extends StatelessWidget {
   }
 }
 
+

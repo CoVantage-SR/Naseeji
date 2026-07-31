@@ -12,3 +12,4 @@ abstract class QuotationsRepository {
   Future<void> updateQuotationStatus(String id, QuotationStatus status);
 }
 
+

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/core/theme/app_colors.dart';
 
 class ProfileHeroBanner extends StatelessWidget {
   final String bannerUrl;
@@ -64,4 +64,5 @@ class ProfileHeroBanner extends StatelessWidget {
     );
   }
 }
+
 

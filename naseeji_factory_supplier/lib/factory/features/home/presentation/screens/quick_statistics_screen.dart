@@ -81,3 +81,4 @@ class QuickStatisticsScreen extends ConsumerWidget {
   }
 }
 
+

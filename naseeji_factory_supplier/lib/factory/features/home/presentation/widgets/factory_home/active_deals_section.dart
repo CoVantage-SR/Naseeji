@@ -251,3 +251,4 @@ class ActiveDealsSection extends StatelessWidget {
   }
 }
 
+

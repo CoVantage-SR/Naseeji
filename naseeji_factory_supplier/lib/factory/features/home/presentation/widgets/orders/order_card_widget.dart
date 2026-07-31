@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_factory/factory/core/constants/app_colors.dart';
-import 'package:naseeji_factory/factory/core/widgets/reusable_widgets.dart';
+import 'package:naseeji_factory/core/constants/app_colors.dart';
+import 'package:naseeji_factory/core/widgets/reusable_widgets.dart';
 
 import '../../../domain/entities/home_entities.dart';
 
@@ -32,4 +32,5 @@ class OrderCardWidget extends StatelessWidget {
     );
   }
 }
+
 

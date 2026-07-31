@@ -9,3 +9,4 @@ class AddNewProductScreen extends StatelessWidget {
     return const AddProductWizardScreen();
   }
 }
+

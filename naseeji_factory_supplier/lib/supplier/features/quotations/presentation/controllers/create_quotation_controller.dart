@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:naseeji_factory/supplier/core/services/moderation/content_moderation_service.dart';
-import 'package:naseeji_factory/supplier/core/services/moderation/domain/entities/moderation_enums.dart';
-import 'package:naseeji_factory/supplier/core/services/moderation/presentation/content_moderation_dialog.dart';
+import 'package:naseeji_factory/core/services/moderation/content_moderation_service.dart';
+import 'package:naseeji_factory/core/services/moderation/domain/entities/moderation_enums.dart';
+import 'package:naseeji_factory/core/services/moderation/presentation/content_moderation_dialog.dart';
 import 'package:naseeji_factory/supplier/features/quotations/domain/entities/create_quotation_form_data.dart';
 import 'package:naseeji_factory/supplier/features/quotations/domain/services/quotation_pdf_generator_service.dart';
 
@@ -263,4 +263,5 @@ final createQuotationControllerProvider =
     pdfGeneratorService: QuotationPdfGeneratorService(),
   );
 });
+
 

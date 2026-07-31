@@ -190,3 +190,4 @@ class _ProductBasicInfoCardState extends State<ProductBasicInfoCard> {
   }
 }
 
+

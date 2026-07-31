@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_factory/factory/core/widgets/reusable_widgets.dart';
+import 'package:naseeji_factory/core/widgets/reusable_widgets.dart';
 
 class TimelineItemWidget extends StatelessWidget {
   final String title;
@@ -31,4 +31,5 @@ class TimelineItemWidget extends StatelessWidget {
     );
   }
 }
+
 

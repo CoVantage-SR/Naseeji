@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart' hide ErrorWidget;
-import 'package:naseeji_factory/factory/core/widgets/reusable_widgets.dart' as core;
+import 'package:naseeji_factory/core/widgets/reusable_widgets.dart' as core;
 
 class ErrorWidget extends StatelessWidget {
   final String message;
@@ -19,4 +19,5 @@ class ErrorWidget extends StatelessWidget {
     );
   }
 }
+
 

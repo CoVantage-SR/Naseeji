@@ -164,3 +164,4 @@ extension AppThemeContextExtension on BuildContext {
       Theme.of(this).extension<AppStatusColors>() ?? (isDarkMode ? AppStatusColors.dark : AppStatusColors.light);
 }
 
+

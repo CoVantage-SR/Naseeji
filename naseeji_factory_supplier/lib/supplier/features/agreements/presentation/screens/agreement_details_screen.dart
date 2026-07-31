@@ -146,3 +146,4 @@ class AgreementDetailsScreen extends ConsumerWidget {
     );
   }
 }
+

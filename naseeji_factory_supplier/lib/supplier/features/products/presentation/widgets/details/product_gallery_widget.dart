@@ -447,3 +447,4 @@ class _ProductGalleryWidgetState extends State<ProductGalleryWidget> {
   }
 }
 
+

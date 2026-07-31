@@ -37,3 +37,4 @@ class DealStatusBadgeWidget extends StatelessWidget {
   }
 }
 
+

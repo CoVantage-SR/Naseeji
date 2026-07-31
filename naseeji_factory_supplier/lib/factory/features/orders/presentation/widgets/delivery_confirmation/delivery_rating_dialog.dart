@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_factory/factory/core/constants/app_colors.dart';
+import 'package:naseeji_factory/core/constants/app_colors.dart';
 
 class DeliveryRatingDialog extends StatefulWidget {
   final Function(double, String) onConfirm;
@@ -81,4 +81,5 @@ class _DeliveryRatingDialogState extends State<DeliveryRatingDialog> {
     );
   }
 }
+
 

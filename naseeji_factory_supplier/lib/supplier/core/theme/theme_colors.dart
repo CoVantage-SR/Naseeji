@@ -86,3 +86,4 @@ class AppThemeColors {
   static const Color darkInfoContainer = Color(0xFF075985);
 }
 
+

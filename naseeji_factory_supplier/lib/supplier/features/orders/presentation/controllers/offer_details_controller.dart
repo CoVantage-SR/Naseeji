@@ -13,3 +13,4 @@ class OfferDetailsController extends _$OfferDetailsController {
   }
 }
 
+

@@ -62,3 +62,4 @@ class FavoriteSuppliersWidget extends StatelessWidget {
   }
 }
 
+

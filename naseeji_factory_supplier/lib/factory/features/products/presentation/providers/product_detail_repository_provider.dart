@@ -9,3 +9,4 @@ ProductDetailRepository productDetailRepository(ProductDetailRepositoryRef ref) 
   return const MockProductDetailRepository();
 }
 
+

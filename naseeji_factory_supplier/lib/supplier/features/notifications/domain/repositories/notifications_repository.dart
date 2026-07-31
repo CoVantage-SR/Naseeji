@@ -5,3 +5,4 @@ abstract class NotificationsRepository {
   Future<void> markAsRead(String id);
 }
 
+

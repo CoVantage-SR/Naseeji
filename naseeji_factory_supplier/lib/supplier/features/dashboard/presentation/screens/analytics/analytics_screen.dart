@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/core/theme/app_colors.dart';
 import '../../controllers/analytics_controller.dart';
 import 'widgets/analytics_filter_row.dart';
 import 'widgets/orders_distribution_card.dart';
@@ -133,3 +133,4 @@ class AnalyticsScreen extends ConsumerWidget {
     );
   }
 }
+

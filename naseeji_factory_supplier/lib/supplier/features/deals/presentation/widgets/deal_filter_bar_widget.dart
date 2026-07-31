@@ -97,3 +97,4 @@ class DealFilterBarWidget extends StatelessWidget {
   }
 }
 
+

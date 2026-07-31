@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/core/theme/app_colors.dart';
 import '../../domain/entities/agreement_model.dart';
 
 class AgreementProgressWidget extends StatelessWidget {
@@ -100,4 +100,5 @@ class _ProgressStep {
 
   const _ProgressStep({required this.title, required this.completed});
 }
+
 

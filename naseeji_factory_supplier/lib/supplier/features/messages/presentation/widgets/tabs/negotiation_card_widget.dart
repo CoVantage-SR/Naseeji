@@ -287,3 +287,4 @@ class NegotiationCardWidget extends StatelessWidget {
   }
 }
 
+

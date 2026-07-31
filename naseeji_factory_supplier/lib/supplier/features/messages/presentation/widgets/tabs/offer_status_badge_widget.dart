@@ -34,3 +34,4 @@ class OfferStatusBadgeWidget extends StatelessWidget {
   }
 }
 
+

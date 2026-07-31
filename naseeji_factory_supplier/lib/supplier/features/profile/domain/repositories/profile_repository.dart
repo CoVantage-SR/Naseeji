@@ -6,3 +6,4 @@ abstract class ProfileRepository {
   Future<void> addCertificate(CompanyCertificate cert);
 }
 
+

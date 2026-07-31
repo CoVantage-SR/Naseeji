@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_factory/factory/core/constants/app_colors.dart';
-import 'package:naseeji_factory/factory/core/constants/app_radius.dart';
+import 'package:naseeji_factory/core/constants/app_colors.dart';
+import 'package:naseeji_factory/core/constants/app_radius.dart';
 
 class PrimaryButtonWidget extends StatelessWidget {
   final String label;
@@ -59,4 +59,5 @@ class PrimaryButtonWidget extends StatelessWidget {
     );
   }
 }
+
 

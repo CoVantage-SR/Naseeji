@@ -222,3 +222,4 @@ class DealInfoWidget extends StatelessWidget {
   }
 }
 
+

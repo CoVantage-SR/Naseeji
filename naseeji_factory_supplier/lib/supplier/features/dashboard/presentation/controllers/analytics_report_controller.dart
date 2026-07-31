@@ -399,3 +399,4 @@ class AnalyticsReportData extends _$AnalyticsReportData {
   }
 }
 
+

@@ -316,3 +316,4 @@ class _ManageInventoryBottomSheetState extends State<ManageInventoryBottomSheet>
   }
 }
 
+

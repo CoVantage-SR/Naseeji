@@ -27,3 +27,4 @@ class AppColors {
   
   static const tertiary = Color(0xFF993100);
 }
+

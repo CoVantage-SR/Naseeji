@@ -263,3 +263,4 @@ class ProductQrDialog extends StatelessWidget {
   }
 }
 
+

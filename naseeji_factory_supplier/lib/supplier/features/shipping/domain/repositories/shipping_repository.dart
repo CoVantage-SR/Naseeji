@@ -11,3 +11,4 @@ abstract class ShippingRepository {
   Future<void> reportIssue(String id, {required String category, required String description, required String priority, List<String> attachments});
 }
 
+

@@ -352,3 +352,4 @@ class InformationCard extends StatelessWidget {
   }
 }
 
+

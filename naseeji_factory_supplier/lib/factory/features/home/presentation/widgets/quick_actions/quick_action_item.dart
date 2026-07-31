@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_factory/factory/core/constants/app_radius.dart';
-import 'package:naseeji_factory/factory/core/extensions/context_extensions.dart';
+import 'package:naseeji_factory/core/constants/app_radius.dart';
+import 'package:naseeji_factory/core/extensions/context_extensions.dart';
 
 import '../common/card_container_widget.dart';
 
@@ -53,4 +53,5 @@ class QuickActionItemWidget extends StatelessWidget {
     );
   }
 }
+
 

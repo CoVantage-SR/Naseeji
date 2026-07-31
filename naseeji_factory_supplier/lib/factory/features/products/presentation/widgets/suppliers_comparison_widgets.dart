@@ -163,3 +163,4 @@ class ComparisonRowWidget extends StatelessWidget {
   }
 }
 
+

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/core/theme/app_colors.dart';
 
 class RfqItemCard extends StatelessWidget {
   final String companyName;
@@ -304,4 +304,5 @@ class RfqItemCard extends StatelessWidget {
     );
   }
 }
+
 

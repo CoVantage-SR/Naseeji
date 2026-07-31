@@ -1,6 +1,6 @@
-import 'package:naseeji_factory/supplier/core/services/moderation/domain/analyzers/content_analyzer_interface.dart';
-import 'package:naseeji_factory/supplier/core/services/moderation/domain/entities/moderation_enums.dart';
-import 'package:naseeji_factory/supplier/core/services/moderation/domain/entities/moderation_result.dart';
+import 'package:naseeji_factory/core/services/moderation/domain/analyzers/content_analyzer_interface.dart';
+import 'package:naseeji_factory/core/services/moderation/domain/entities/moderation_enums.dart';
+import 'package:naseeji_factory/core/services/moderation/domain/entities/moderation_result.dart';
 
 class EmailAnalyzer implements ContentAnalyzer {
   static final RegExp _emailRegex = RegExp(
@@ -26,4 +26,5 @@ class EmailAnalyzer implements ContentAnalyzer {
     return null;
   }
 }
+
 

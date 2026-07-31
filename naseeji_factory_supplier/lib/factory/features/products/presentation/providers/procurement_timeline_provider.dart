@@ -12,3 +12,4 @@ Future<List<ProcurementStage>> procurementTimeline(
   return ref.watch(productDetailRepositoryProvider).getProcurementTimeline(productId);
 }
 
+

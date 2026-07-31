@@ -604,3 +604,4 @@ QuotationsRepository quotationsRepository(QuotationsRepositoryRef ref) {
   return QuotationsRepositoryImpl();
 }
 
+

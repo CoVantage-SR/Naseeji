@@ -118,3 +118,4 @@ class Step1ProductHeaderWidget extends ConsumerWidget {
   }
 }
 
+

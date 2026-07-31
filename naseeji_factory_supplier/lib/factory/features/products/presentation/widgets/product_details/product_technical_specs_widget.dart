@@ -269,3 +269,4 @@ class ProductTechnicalSpecsWidget extends StatelessWidget {
   }
 }
 
+

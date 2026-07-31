@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../controllers/business_chat_controller.dart';
 import '../../../domain/entities/business_message.dart';
-import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/core/theme/app_colors.dart';
 import 'quotation_card.dart';
 import 'counter_offer_card.dart';
 import 'agreement_card.dart';
@@ -517,3 +517,4 @@ class _TimelineEventBubble extends StatelessWidget {
     );
   }
 }
+

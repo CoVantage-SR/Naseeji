@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/core/theme/app_colors.dart';
 import '../../../dashboard/presentation/controllers/analytics_report_controller.dart';
 import '../../../financial/presentation/widgets/financial_chart_widget.dart';
 import '../../../financial/presentation/widgets/financial_summary_card.dart';
@@ -236,4 +236,5 @@ class _NavItem {
   final String route;
   const _NavItem(this.title, this.subtitle, this.icon, this.color, this.value, this.route);
 }
+
 

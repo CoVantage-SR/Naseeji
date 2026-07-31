@@ -186,3 +186,4 @@ class QuotationsComparisonScreen extends ConsumerWidget {
   }
 }
 
+

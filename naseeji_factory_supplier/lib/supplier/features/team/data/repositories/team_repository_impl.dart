@@ -96,3 +96,4 @@ class TeamRepositoryImpl implements TeamRepository {
   bool get canAddMember => _db.teamMembers.length < _db.planMemberLimit;
 }
 
+

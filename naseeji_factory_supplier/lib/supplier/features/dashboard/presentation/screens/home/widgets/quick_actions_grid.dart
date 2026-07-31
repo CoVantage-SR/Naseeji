@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
+import 'package:naseeji_factory/core/theme/app_colors.dart';
 import 'quick_action_card.dart';
 
 class QuickActionsGrid extends StatelessWidget {
@@ -81,4 +81,5 @@ class QuickActionsGrid extends StatelessWidget {
     );
   }
 }
+
 
