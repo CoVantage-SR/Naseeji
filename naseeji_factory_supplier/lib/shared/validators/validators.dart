@@ -30,6 +30,22 @@ class Validators {
     return null;
   }
 
+  static String? emailOrPhone(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'أدخل بريدك الإلكتروني أو رقم هاتفك';
+    }
+    final input = value.trim();
+    if (input.contains('@')) {
+      return email(input);
+    } else {
+      final clean = input.replaceAll(RegExp(r'[\s\-\+]+'), '');
+      if (clean.length < 8) {
+        return 'يرجى إدخال بريد إلكتروني أو رقم هاتف صحيح';
+      }
+    }
+    return null;
+  }
+
   static String? password(String? value) {
     if (value == null || value.isEmpty) {
       return 'يرجى إدخال كلمة المرور';
@@ -40,5 +56,3 @@ class Validators {
     return null;
   }
 }
-
-

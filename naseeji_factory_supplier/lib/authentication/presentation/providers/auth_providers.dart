@@ -64,12 +64,13 @@ class AuthController extends StateNotifier<AuthState> {
 
   AuthController(this._repo, this._sessionNotifier) : super(const AuthState());
 
-  Future<bool> login(String phoneOrEmail, String password) async {
+  Future<bool> login(String phoneOrEmail, String password, {bool rememberMe = true}) async {
     state = state.copyWith(isLoading: true, errorMessage: null);
     try {
       final user = await _repo.login(
         phoneOrEmail: phoneOrEmail,
         password: password,
+        rememberMe: rememberMe,
       );
       state = state.copyWith(isLoading: false, user: user);
       return true;
@@ -77,6 +78,46 @@ class AuthController extends StateNotifier<AuthState> {
       state = state.copyWith(isLoading: false, errorMessage: e.toString());
       return false;
     }
+  }
+
+  Future<bool> loginWithGoogle() async {
+    state = state.copyWith(isLoading: true, errorMessage: null);
+    try {
+      await Future.delayed(const Duration(milliseconds: 700));
+      const googleUser = UserEntity(
+        id: 'USR-GOOGLE-001',
+        name: 'مستخدم جوجل',
+        email: 'google.user@naseeji.com',
+        phone: '01011112222',
+        role: UserRole.factory,
+        mode: AccountMode.real,
+        isVerified: true,
+        hasCompletedRegistration: true,
+      );
+      state = state.copyWith(isLoading: false, user: googleUser);
+      return true;
+    } catch (e) {
+      state = state.copyWith(isLoading: false, errorMessage: e.toString());
+      return false;
+    }
+  }
+
+  Future<void> loginDemo(UserRole role) async {
+    state = state.copyWith(isLoading: true, errorMessage: null);
+    await Future.delayed(const Duration(milliseconds: 400));
+    final demoUser = UserEntity(
+      id: 'USR-DEMO-${role.name.toUpperCase()}',
+      name: role == UserRole.factory ? 'مصنع نسيجي التجريبي' : 'مورد نسيجي التجريبي',
+      email: 'demo@naseeji.com',
+      phone: '01000000000',
+      role: role,
+      mode: AccountMode.demo,
+      isVerified: true,
+      hasCompletedRegistration: true,
+    );
+    await _sessionNotifier.switchRole(role);
+    await _sessionNotifier.switchMode(AccountMode.demo);
+    state = state.copyWith(isLoading: false, user: demoUser);
   }
 
   Future<bool> register({
@@ -132,5 +173,3 @@ class AuthController extends StateNotifier<AuthState> {
     state = const AuthState();
   }
 }
-
-
