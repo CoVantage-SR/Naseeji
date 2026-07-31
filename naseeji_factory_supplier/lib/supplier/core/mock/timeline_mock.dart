@@ -1,4 +1,4 @@
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_timeline_model.dart';
+import '../../features/messages/domain/entities/deal_timeline_model.dart';
 
 class TimelineMock {
   final String dealId;

@@ -1,4 +1,4 @@
-import 'package:naseeji_supplier/features/messages/domain/entities/business_message.dart';
+import '../../features/messages/domain/entities/business_message.dart';
 
 class MessageMock {
   final String id;

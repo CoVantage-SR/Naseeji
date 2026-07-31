@@ -1,15 +1,15 @@
-import 'package:naseeji_supplier/core/services/moderation/domain/entities/moderation_enums.dart';
-import 'package:naseeji_supplier/core/services/moderation/domain/entities/moderation_result.dart';
-import 'package:naseeji_supplier/core/services/moderation/domain/entities/violation_log.dart';
-import 'package:naseeji_supplier/core/services/moderation/domain/analyzers/content_analyzer_interface.dart';
-import 'package:naseeji_supplier/core/services/moderation/domain/analyzers/phone_number_analyzer.dart';
-import 'package:naseeji_supplier/core/services/moderation/domain/analyzers/email_analyzer.dart';
-import 'package:naseeji_supplier/core/services/moderation/domain/analyzers/url_analyzer.dart';
-import 'package:naseeji_supplier/core/services/moderation/domain/analyzers/short_link_analyzer.dart';
-import 'package:naseeji_supplier/core/services/moderation/domain/analyzers/social_platform_analyzer.dart';
-import 'package:naseeji_supplier/core/services/moderation/domain/analyzers/ocr_scanner_stub.dart';
-import 'package:naseeji_supplier/core/services/moderation/domain/analyzers/pdf_scanner_stub.dart';
-import 'package:naseeji_supplier/core/services/moderation/domain/analyzers/qr_scanner_stub.dart';
+import 'domain/entities/moderation_enums.dart';
+import 'domain/entities/moderation_result.dart';
+import 'domain/entities/violation_log.dart';
+import 'domain/analyzers/content_analyzer_interface.dart';
+import 'domain/analyzers/phone_number_analyzer.dart';
+import 'domain/analyzers/email_analyzer.dart';
+import 'domain/analyzers/url_analyzer.dart';
+import 'domain/analyzers/short_link_analyzer.dart';
+import 'domain/analyzers/social_platform_analyzer.dart';
+import 'domain/analyzers/ocr_scanner_stub.dart';
+import 'domain/analyzers/pdf_scanner_stub.dart';
+import 'domain/analyzers/qr_scanner_stub.dart';
 
 class ContentModerationService {
   final List<ContentAnalyzer> _analyzers;

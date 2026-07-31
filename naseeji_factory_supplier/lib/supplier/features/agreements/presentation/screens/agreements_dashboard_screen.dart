@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_supplier/core/theme/app_colors.dart';
-import 'package:naseeji_supplier/features/dashboard/presentation/screens/drawer/navigation_drawer_view.dart';
+import 'package:naseeji_factory/supplier/core/theme/app_colors.dart';
 import '../../domain/entities/agreement_model.dart';
 import '../controllers/agreements_controller.dart';
 import '../widgets/agreement_summary_card.dart';
+import 'package:naseeji_factory/supplier/features/dashboard/presentation/screens/drawer/navigation_drawer_view.dart';
 
 class AgreementsDashboardScreen extends ConsumerStatefulWidget {
   const AgreementsDashboardScreen({super.key});

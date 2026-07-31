@@ -1,3 +1,4 @@
+import '../../features/messages/domain/entities/deal_agreement_model.dart';
 
 class AgreementMock {
   final String agreementId;

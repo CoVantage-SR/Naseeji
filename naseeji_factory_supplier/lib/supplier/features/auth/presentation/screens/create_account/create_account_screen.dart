@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naseeji_supplier/core/theme/app_theme.dart';
-import 'package:naseeji_supplier/core/widgets/general_widgets.dart';
-import 'package:naseeji_supplier/features/auth/presentation/controllers/registration_controller.dart';
+import 'package:naseeji_factory/supplier/core/theme/app_theme.dart';
+import 'package:naseeji_factory/supplier/core/widgets/general_widgets.dart';
+import 'package:naseeji_factory/supplier/features/auth/presentation/controllers/registration_controller.dart';
 import 'widgets/create_account_form.dart';
 
 class CreateAccountScreen extends ConsumerWidget {

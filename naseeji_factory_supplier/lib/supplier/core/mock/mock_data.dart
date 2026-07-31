@@ -8,13 +8,13 @@ import 'message_mock.dart';
 import 'agreement_mock.dart';
 import 'timeline_mock.dart';
 import 'notification_mock.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_workspace_model.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_quotation_model.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_status_enum.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/conversation.dart';
-import 'package:naseeji_supplier/features/messages/domain/entities/deal_timeline_model.dart';
-import 'package:naseeji_supplier/features/notifications/domain/entities/notification_settings_model.dart';
-import 'package:naseeji_supplier/features/profile/domain/entities/security_models.dart';
+import '../../features/messages/domain/entities/deal_workspace_model.dart';
+import '../../features/messages/domain/entities/deal_quotation_model.dart';
+import '../../features/messages/domain/entities/deal_status_enum.dart';
+import '../../features/messages/domain/entities/conversation.dart';
+import '../../features/messages/domain/entities/deal_timeline_model.dart';
+import '../../features/notifications/domain/entities/notification_settings_model.dart';
+import '../../features/profile/domain/entities/security_models.dart';
 
 class MockDatabase {
   MockDatabase._();
