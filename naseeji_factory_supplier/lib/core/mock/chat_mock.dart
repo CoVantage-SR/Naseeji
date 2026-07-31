@@ -1,4 +1,4 @@
-import '../../features/messages/domain/entities/conversation.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/conversation.dart';
 
 class ChatMock {
   final String id;

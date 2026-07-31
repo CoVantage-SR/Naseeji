@@ -1,6 +1,6 @@
-import '../../features/messages/domain/entities/deal_status_enum.dart';
-import '../../features/messages/domain/entities/deal_workspace_model.dart';
-import '../../features/messages/domain/entities/deal_file_model.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/deal_status_enum.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/deal_workspace_model.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/deal_file_model.dart';
 import 'quotation_mock.dart';
 import 'message_mock.dart';
 import 'agreement_mock.dart';

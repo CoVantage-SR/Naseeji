@@ -1,4 +1,4 @@
-import '../../features/messages/domain/entities/deal_quotation_model.dart';
+import 'package:naseeji_factory/supplier/features/messages/domain/entities/deal_quotation_model.dart';
 
 class QuotationMock {
   final String quotationId;

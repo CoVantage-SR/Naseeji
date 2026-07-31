@@ -1,5 +1,4 @@
 import '../../../core/session/session_manager.dart';
-
 import '../../../shared/enums/account_mode.dart';
 import '../../../shared/enums/user_role.dart';
 import '../../domain/entities/auth_token.dart';
@@ -8,14 +7,13 @@ import '../../domain/repositories/authentication_repository.dart';
 import '../datasources/auth_remote_datasource.dart';
 
 class AuthenticationRepositoryImpl implements AuthenticationRepository {
-  final AuthRemoteDatasource _remoteDatasource;
-  final SessionManager _sessionManager;
+  final AuthRemoteDatasource remoteDatasource;
+  final SessionManager sessionManager;
 
   AuthenticationRepositoryImpl({
-    required AuthRemoteDatasource remoteDatasource,
-    required SessionManager sessionManager,
-  })  : _remoteDatasource = remoteDatasource,
-        _sessionManager = sessionManager;
+    required this.remoteDatasource,
+    required this.sessionManager,
+  });
 
   @override
   Future<UserEntity> login({
@@ -23,12 +21,12 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     required String password,
     bool rememberMe = true,
   }) async {
-    final user = await _remoteDatasource.login(
+    final user = await remoteDatasource.login(
       phoneOrEmail: phoneOrEmail,
       password: password,
     );
 
-    await _sessionManager.saveSession(
+    await sessionManager.saveSession(
       accessToken: 'token_${user.id}',
       role: user.role,
       mode: user.mode,
@@ -45,7 +43,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     required String email,
     required String password,
   }) async {
-    return await _remoteDatasource.register(
+    return await remoteDatasource.register(
       name: name,
       phone: phone,
       email: email,
@@ -58,12 +56,12 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     required String phone,
     required String code,
   }) async {
-    return await _remoteDatasource.verifyOtp(phone: phone, code: code);
+    return await remoteDatasource.verifyOtp(phone: phone, code: code);
   }
 
   @override
   Future<void> sendForgotPasswordCode(String phoneOrEmail) async {
-    await _remoteDatasource.sendForgotPasswordCode(phoneOrEmail);
+    await remoteDatasource.sendForgotPasswordCode(phoneOrEmail);
   }
 
   @override
@@ -72,7 +70,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     required String code,
     required String newPassword,
   }) async {
-    await _remoteDatasource.resetPassword(
+    await remoteDatasource.resetPassword(
       phoneOrEmail: phoneOrEmail,
       code: code,
       newPassword: newPassword,
@@ -81,17 +79,17 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
   @override
   Future<AuthToken> refreshToken(String refreshToken) async {
-    return await _remoteDatasource.refreshToken(refreshToken);
+    return await remoteDatasource.refreshToken(refreshToken);
   }
 
   @override
   Future<void> logout() async {
-    await _sessionManager.clearSession();
+    await sessionManager.clearSession();
   }
 
   @override
   Future<UserEntity?> getCurrentUser() async {
-    final session = _sessionManager.currentSession;
+    final session = sessionManager.currentSession;
     if (!session.isLoggedIn || session.profileId == null) return null;
     return UserEntity(
       id: session.profileId!,
@@ -110,9 +108,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     required UserRole role,
     AccountMode mode = AccountMode.real,
   }) async {
-    await _sessionManager.switchRole(role);
-    await _sessionManager.switchMode(mode);
+    await sessionManager.switchRole(role);
+    await sessionManager.switchMode(mode);
   }
 }
-
-
