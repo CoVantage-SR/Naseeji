@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'core/router/app_router.dart';
-import 'core/theme/app_theme.dart';
-import 'core/services/storage/shared_preferences_service.dart';
-import 'core/services/database/isar_service.dart';
-import 'core/services/theme_service.dart';
+import 'factory/core/router/app_router.dart';
+import 'factory/core/theme/app_theme.dart';
+import 'factory/core/services/storage/shared_preferences_service.dart';
+import 'factory/core/services/database/isar_service.dart';
+import 'factory/core/services/theme_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
