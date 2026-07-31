@@ -1,7 +1,3 @@
-// ignore_for_file: unnecessary_underscores
-
-// ignore_for_file: unnecessary_underscores
-
 import 'package:flutter/material.dart';
 import 'package:naseeji_factory/core/constants/app_colors.dart';
 import 'package:naseeji_factory/core/constants/app_radius.dart';
@@ -28,7 +24,7 @@ class ProfileHeaderWidget extends StatelessWidget {
           child: Image.network(
             profile.coverUrl,
             height: 180,
-            width: double.infi_y_
+            width: double.infinity,
             fit: BoxFit.cover,
             errorBuilder: (_, __, ___) => Container(
               height: 180,
@@ -95,7 +91,7 @@ class ProfileHeaderWidget extends StatelessWidget {
                     ),
                     child: ClipOval(
                       child: Image.network(
-                        profile.logoUrl,__
+                        profile.logoUrl,
                         fit: BoxFit.cover,
                         errorBuilder: (_, __, ___) => Container(
                           color: AppColors.primary.withValues(alpha: 0.1),
