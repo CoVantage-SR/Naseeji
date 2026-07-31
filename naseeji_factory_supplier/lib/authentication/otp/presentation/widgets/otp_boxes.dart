@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -55,22 +53,17 @@ class _OtpBoxesState extends State<OtpBoxes> {
       } else {
         _focusNodes[index].unfocus();
       }
+    } else {
+      // Backspace or empty
+      if (index > 0) {
+        _focusNodes[index - 1].requestFocus();
+      }
     }
 
     final code = _controllers.map((c) => c.text).join();
     widget.onChanged(code);
     if (code.length == 6) {
       widget.onCompleted(code);
-    }
-  }
-
-  void _onKeyDown(int index, RawKeyEvent event) {
-    if (event is RawKeyDownEvent &&
-        event.logicalKey == LogicalKeyboardKey.backspace) {
-      if (_controllers[index].text.isEmpty && index > 0) {
-        _focusNodes[index - 1].requestFocus();
-        _controllers[index - 1].clear();
-      }
     }
   }
 
@@ -86,48 +79,44 @@ class _OtpBoxesState extends State<OtpBoxes> {
         return SizedBox(
           width: 44,
           height: 54,
-          child: RawKeyboardListener(
-            focusNode: FocusNode(),
-            onKey: (event) => _onKeyDown(index, event),
-            child: TextFormField(
-              controller: _controllers[index],
-              focusNode: _focusNodes[index],
-              keyboardType: TextInputType.number,
-              textAlign: TextAlign.center,
-              maxLength: 1,
-              style: theme.textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: isDark ? colorScheme.onSurface : const Color(0xFF1E293B),
-              ),
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
-              ],
-              decoration: InputDecoration(
-                counterText: '',
-                filled: true,
-                fillColor: isDark
-                    ? colorScheme.surfaceContainerHighest.withValues(alpha: 0.5)
-                    : Colors.white,
-                contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color: isDark
-                        ? colorScheme.outline.withValues(alpha: 0.4)
-                        : const Color(0xFFE2E8F0),
-                    width: 1.5,
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(
-                    color: colorScheme.primary,
-                    width: 2,
-                  ),
-                ),
-              ),
-              onChanged: (v) => _onFieldChanged(index, v),
+          child: TextFormField(
+            controller: _controllers[index],
+            focusNode: _focusNodes[index],
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+            maxLength: 1,
+            style: theme.textTheme.headlineSmall?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: isDark ? colorScheme.onSurface : const Color(0xFF1E293B),
             ),
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+            ],
+            decoration: InputDecoration(
+              counterText: '',
+              filled: true,
+              fillColor: isDark
+                  ? colorScheme.surfaceContainerHighest.withValues(alpha: 0.5)
+                  : Colors.white,
+              contentPadding: const EdgeInsets.symmetric(vertical: 10),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                  color: isDark
+                      ? colorScheme.outline.withValues(alpha: 0.4)
+                      : const Color(0xFFE2E8F0),
+                  width: 1.5,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                  color: colorScheme.primary,
+                  width: 2,
+                ),
+              ),
+            ),
+            onChanged: (v) => _onFieldChanged(index, v),
           ),
         );
       }),
