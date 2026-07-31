@@ -16,6 +16,8 @@ import '../../supplier/features/messages/presentation/screens/messages_screen.da
 import '../../supplier/features/products/presentation/screens/products_module_screen.dart';
 import '../../supplier/features/profile/presentation/screens/supplier_profile/supplier_profile_screen.dart';
 
+import '../../authentication/reset_password/reset_password_screen.dart';
+
 part 'app_router.g.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'rootNav');
@@ -49,6 +51,13 @@ GoRouter appRouter(AppRouterRef ref) {
       GoRoute(
         path: '/auth/forgot-password',
         builder: (context, state) => const ForgotPasswordScreen(),
+      ),
+      GoRoute(
+        path: '/auth/reset-password',
+        builder: (context, state) {
+          final phone = state.extra as String? ?? '01000000000';
+          return ResetPasswordScreen(phone: phone);
+        },
       ),
       GoRoute(
         path: '/auth/choose-account-type',

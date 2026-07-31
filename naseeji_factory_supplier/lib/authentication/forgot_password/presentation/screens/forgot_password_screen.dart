@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:naseeji_factory/authentication/presentation/widgets/register_logo.dart';
 import '../../../../core/constants/app_radius.dart';
 import '../../../../core/constants/app_spacing.dart';
-import '../../presentation/widgets/register_logo.dart';
 import '../providers/forgot_password_provider.dart';
 import '../widgets/forgot_header.dart';
 import '../widgets/phone_field.dart';

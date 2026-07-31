@@ -1,4 +1,4 @@
-import '../../../core/storage/shared_preferences_service.dart';
+import 'package:naseeji_factory/core/storage/shared_preferences_service.dart';
 
 abstract class OtpLocalDatasource {
   Future<void> saveLastVerifiedPhone(String phone);

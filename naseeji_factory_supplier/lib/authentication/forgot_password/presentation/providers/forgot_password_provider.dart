@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/storage/shared_preferences_service.dart';
+import 'package:naseeji_factory/core/storage/shared_preferences_service.dart';
 import '../../data/datasource/forgot_password_local_datasource.dart';
 import '../../data/datasource/forgot_password_remote_datasource.dart';
 import '../../data/repositories/forgot_password_repository_impl.dart';
