@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../di/injector.dart';
 import '../services/database/isar_service.dart';
 import 'bootstrap_dependencies.dart';
 import 'bootstrap_exception_handler.dart';
@@ -21,6 +22,9 @@ class BootstrapInitializer {
 
     final prefs = results[0] as SharedPreferences;
     final isar = results[1] as IsarService;
+
+    BootstrapLogger.info('Initializing Dependency Injection Registry...');
+    Injector.init();
 
     BootstrapLogger.info('Bootstrap Services Initialized Successfully!');
 
