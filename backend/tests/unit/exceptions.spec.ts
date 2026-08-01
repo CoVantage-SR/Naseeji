@@ -5,7 +5,9 @@ import { ErrorCodes } from '../../src/core/constants/error-codes.constant';
 
 describe('Custom Exception Hierarchy Unit Tests', () => {
   it('ValidationException should have BAD_REQUEST status and VALIDATION_ERROR code', () => {
-    const err = new ValidationException('Invalid payload', [{ field: 'name', message: 'Required' }]);
+    const err = new ValidationException('Invalid payload', [
+      { field: 'name', message: 'Required' },
+    ]);
     expect(err.statusCode).toBe(HttpStatus.BAD_REQUEST);
     expect(err.errorCode).toBe(ErrorCodes.VALIDATION_ERROR);
     expect(err.errors.length).toBe(1);
