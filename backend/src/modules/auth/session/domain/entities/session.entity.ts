@@ -1,5 +1,5 @@
 import { SessionId } from '../value-objects/session-id.vo.js';
-import { DeviceId } from '../../security/domain/value-objects/device-id.vo.js';
+import { DeviceId } from '../../../security/domain/value-objects/device-id.vo.js';
 
 export enum SessionStatus {
   ACTIVE = 'Active',

@@ -1,7 +1,7 @@
 import { JwtService, IssuedTokens } from '../../services/jwt.service.js';
 import { IRefreshTokenRepository } from '../../domain/repositories/refresh-token.repository.interface.js';
 import { RefreshTokenEntity } from '../../domain/entities/refresh-token.entity.js';
-import { UuidUtil } from '../../../../../core/utils/uuid.util.js';
+import { UuidUtil } from '@core/utils/uuid.util.js';
 
 export interface IssueTokensCommand {
   userId: string;
@@ -30,7 +30,7 @@ export class IssueAccessTokenUseCase {
       tokens.refreshToken,
       command.sessionId,
       command.userId,
-      UuidUtil.generate(), // New token family ID
+      UuidUtil.generate(),
     );
 
     await this.refreshTokenRepo.save(refreshTokenEntity);

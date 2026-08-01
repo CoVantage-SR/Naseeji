@@ -1,4 +1,4 @@
-import { OtpInvalidException } from '../../domain/errors/auth-domain.exceptions.js';
+import { OtpInvalidException } from '../../../domain/errors/auth-domain.exceptions.js';
 
 export class OtpCode {
   private readonly _value: string;

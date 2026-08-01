@@ -1,4 +1,4 @@
-import { InvalidPhoneException } from '../../errors/auth-domain.exceptions.js';
+import { InvalidPhoneException } from '../../../domain/errors/auth-domain.exceptions.js';
 
 export class Phone {
   private readonly _value: string;
@@ -13,7 +13,6 @@ export class Phone {
     }
 
     const trimmed = value.trim();
-    // E.164 regex format: + followed by 7 to 15 digits
     const e164Regex = /^\+[1-9]\d{6,14}$/;
     if (!e164Regex.test(trimmed)) {
       throw new InvalidPhoneException(

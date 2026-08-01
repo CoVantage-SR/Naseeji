@@ -1,4 +1,4 @@
-import { WeakPasswordException } from '../../errors/auth-domain.exceptions.js';
+import { WeakPasswordException } from '../../../domain/errors/auth-domain.exceptions.js';
 
 export class Password {
   private readonly _value: string;

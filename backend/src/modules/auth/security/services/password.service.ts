@@ -1,4 +1,4 @@
-import { BcryptService } from '../../../../infrastructure/encryption/bcrypt.service.js';
+import { BcryptService } from '@infrastructure/encryption/bcrypt.service.js';
 import { Password } from '../../identity/domain/value-objects/password.vo.js';
 
 export class PasswordService {

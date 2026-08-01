@@ -1,18 +1,18 @@
-import { Schema, SchemaOptions } from 'mongoose';
+import { Schema } from 'mongoose';
 
-export const baseSchemaOptions: SchemaOptions = {
+export const baseSchemaOptions = {
   timestamps: true,
   toJSON: {
     virtuals: true,
-    transform: (_doc, ret) => {
-      delete (ret as Record<string, unknown>).__v;
+    transform: (_doc: unknown, ret: Record<string, unknown>) => {
+      delete ret.__v;
       return ret;
     },
   },
   toObject: {
     virtuals: true,
-    transform: (_doc, ret) => {
-      delete (ret as Record<string, unknown>).__v;
+    transform: (_doc: unknown, ret: Record<string, unknown>) => {
+      delete ret.__v;
       return ret;
     },
   },

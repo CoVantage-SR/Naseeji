@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
-import { UuidUtil } from '../../../../core/utils/uuid.util.js';
+import { UuidUtil } from '@core/utils/uuid.util.js';
 
 export interface TokenPayload {
-  sub: string; // User ID
+  sub: string;
   sessionId: string;
   accountType: string;
   roles: string[];
@@ -24,8 +24,8 @@ export class JwtService {
 
   constructor(
     secret = process.env.JWT_SECRET || 'naseeji-super-secret-jwt-key-2026',
-    accessTokenExpirySeconds = 900, // 15 mins
-    refreshTokenExpirySeconds = 2592000, // 30 days
+    accessTokenExpirySeconds = 900,
+    refreshTokenExpirySeconds = 2592000,
   ) {
     this.secret = secret;
     this.accessTokenExpirySeconds = accessTokenExpirySeconds;

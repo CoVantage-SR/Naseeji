@@ -1,4 +1,4 @@
-import { DeviceFingerprint } from '../value-objects/device-fingerprint.vo.js';
+import { DeviceFingerprint } from '../domain/value-objects/device-fingerprint.vo.js';
 
 export class FingerprintService {
   public generateFingerprint(

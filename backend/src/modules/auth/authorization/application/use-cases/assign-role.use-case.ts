@@ -1,7 +1,7 @@
 import { IUserRepository } from '../../../identity/domain/repositories/user.repository.interface.js';
 import { IRoleRepository } from '../../domain/repositories/role.repository.interface.js';
 import { RoleNotFoundException } from '../../../domain/errors/auth-domain.exceptions.js';
-import { NotFoundException } from '../../../../core/errors/not-found.exception.js';
+import { NotFoundException } from '@core/errors/not-found.exception.js';
 
 export interface AssignRoleCommand {
   userId: string;

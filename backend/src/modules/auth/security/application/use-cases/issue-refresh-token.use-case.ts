@@ -2,7 +2,7 @@ import { JwtService, IssuedTokens } from '../../services/jwt.service.js';
 import { IRefreshTokenRepository } from '../../domain/repositories/refresh-token.repository.interface.js';
 import { RefreshTokenEntity } from '../../domain/entities/refresh-token.entity.js';
 import { SessionExpiredException } from '../../../domain/errors/auth-domain.exceptions.js';
-import { UuidUtil } from '../../../../../core/utils/uuid.util.js';
+import { UuidUtil } from '@core/utils/uuid.util.js';
 
 export interface RotateTokenCommand {
   refreshToken: string;
@@ -24,17 +24,14 @@ export class IssueRefreshTokenUseCase {
 
     if (!existingToken || !existingToken.isValid()) {
       if (existingToken && existingToken.isUsed) {
-        // Reuse detection! Revoke the entire token family!
         await this.refreshTokenRepo.revokeFamily(existingToken.tokenFamilyId);
       }
       throw new SessionExpiredException('Refresh token is invalid, used, or expired');
     }
 
-    // Mark current token as used
     existingToken.markUsed();
     await this.refreshTokenRepo.save(existingToken);
 
-    // Issue new pair
     const newTokens = this.jwtService.issueTokens(
       payload.sub,
       payload.sessionId,
@@ -48,7 +45,7 @@ export class IssueRefreshTokenUseCase {
       newTokens.refreshToken,
       payload.sessionId,
       payload.sub,
-      existingToken.tokenFamilyId, // Preserve token family ID
+      existingToken.tokenFamilyId,
     );
 
     await this.refreshTokenRepo.save(newTokenEntity);
