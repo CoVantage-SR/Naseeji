@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../authentication/presentation/choose_account_type/choose_account_type_screen.dart';
+import '../../authentication/choose_account_type/choose_account_type.dart';
 import '../../authentication/presentation/forgot_password/forgot_password_screen.dart';
 import '../../authentication/presentation/login/login_screen.dart';
 import '../../authentication/presentation/otp/otp_screen.dart';
@@ -61,7 +61,7 @@ GoRouter appRouter(AppRouterRef ref) {
       ),
       GoRoute(
         path: '/auth/choose-account-type',
-        builder: (context, state) => const ChooseAccountTypeScreen(),
+        builder: (context, state) => const ChooseAccountScreen(),
       ),
 
       // Factory main routes

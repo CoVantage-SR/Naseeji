@@ -1,4 +1,5 @@
-import '../../../shared/enums/user_role.dart';
+import 'package:naseeji_factory/shared/enums/user_role.dart';
+
 import '../../domain/repositories/choose_account_repository.dart';
 import '../datasource/choose_account_local_datasource.dart';
 import '../datasource/choose_account_remote_datasource.dart';

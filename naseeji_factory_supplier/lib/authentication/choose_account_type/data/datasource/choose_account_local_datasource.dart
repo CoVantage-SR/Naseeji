@@ -1,5 +1,5 @@
 import 'package:naseeji_factory/core/storage/shared_preferences_service.dart';
-import '../../../shared/enums/user_role.dart';
+import 'package:naseeji_factory/shared/enums/user_role.dart';
 
 abstract class ChooseAccountLocalDatasource {
   Future<void> saveAccountType(UserRole role);

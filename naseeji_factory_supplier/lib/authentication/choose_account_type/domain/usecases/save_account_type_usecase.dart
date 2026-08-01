@@ -1,4 +1,5 @@
-import '../../../shared/enums/user_role.dart';
+import 'package:naseeji_factory/shared/enums/user_role.dart';
+
 import '../repositories/choose_account_repository.dart';
 
 class SaveAccountTypeUseCase {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../presentation/login/widgets/naseeji_logo_painters.dart';
+import 'package:naseeji_factory/authentication/presentation/login/widgets/naseeji_logo_painters.dart';
 
 class LogoSection extends StatelessWidget {
   const LogoSection({super.key});

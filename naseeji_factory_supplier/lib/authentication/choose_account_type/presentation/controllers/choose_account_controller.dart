@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../shared/enums/user_role.dart';
+import 'package:naseeji_factory/shared/enums/user_role.dart';
 import '../../domain/usecases/save_account_type_usecase.dart';
 import '../providers/choose_account_state.dart';
 

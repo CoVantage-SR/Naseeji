@@ -1,4 +1,4 @@
-import '../../../shared/enums/user_role.dart';
+import 'package:naseeji_factory/shared/enums/user_role.dart';
 
 class ChooseAccountState {
   final UserRole? selectedAccountType;
