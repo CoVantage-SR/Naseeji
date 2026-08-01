@@ -1,7 +1,7 @@
-import { Schema, model, Document } from 'mongoose';
-import { baseSchemaOptions } from '../../../../database/mongo/base.schema.js';
+import { Schema, model } from 'mongoose';
+import { baseSchemaOptions } from '@database/mongo/base.schema.js';
 
-export interface IRoleDocument extends Document {
+export interface IRoleDocument {
   _id: string;
   code: string;
   name: string;

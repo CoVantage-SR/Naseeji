@@ -4,7 +4,7 @@ import { AccountStatus } from '../value-objects/account-status.enum.js';
 import { AccountType } from '../value-objects/account-type.enum.js';
 import { CompanyReference } from '../value-objects/company-reference.vo.js';
 import { UserProfile } from './user-profile.entity.js';
-import { UuidUtil } from '../../../../core/utils/uuid.util.js';
+import { UuidUtil } from '@core/utils/uuid.util.js';
 
 export interface UserProps {
   id: string;
@@ -87,7 +87,6 @@ export class User {
     return this.props.updatedAt;
   }
 
-  // Domain Rules & Status Transitions
   public verifyPhone(): void {
     if (this.props.status === AccountStatus.PENDING) {
       this.props.status = AccountStatus.PROFILE_INCOMPLETE;

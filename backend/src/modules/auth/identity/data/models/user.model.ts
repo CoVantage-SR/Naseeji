@@ -1,7 +1,7 @@
-import { Schema, model, Document } from 'mongoose';
-import { baseSchemaOptions } from '../../../../database/mongo/base.schema.js';
+import { Schema, model } from 'mongoose';
+import { baseSchemaOptions } from '@database/mongo/base.schema.js';
 
-export interface IUserDocument extends Document {
+export interface IUserDocument {
   _id: string;
   phone: string;
   email?: string;

@@ -1,7 +1,7 @@
-import { Schema, model, Document } from 'mongoose';
-import { baseSchemaOptions } from '../../../../database/mongo/base.schema.js';
+import { Schema, model } from 'mongoose';
+import { baseSchemaOptions } from '@database/mongo/base.schema.js';
 
-export interface ISessionDocument extends Document {
+export interface ISessionDocument {
   _id: string;
   userId: string;
   deviceId: string;
@@ -24,7 +24,7 @@ const sessionSchema = new Schema<ISessionDocument>(
     isRememberMe: { type: Boolean, default: false },
     ipAddress: { type: String, required: true },
     userAgent: { type: String, required: true },
-    expiresAt: { type: Date, required: true, index: { expires: 0 } }, // MongoDB TTL Index
+    expiresAt: { type: Date, required: true, index: { expires: 0 } },
     lastActiveAt: { type: Date, required: true },
   },
   baseSchemaOptions,

@@ -1,7 +1,7 @@
-import { Schema, model, Document } from 'mongoose';
-import { baseSchemaOptions } from '../../../../database/mongo/base.schema.js';
+import { Schema, model } from 'mongoose';
+import { baseSchemaOptions } from '@database/mongo/base.schema.js';
 
-export interface IOtpDocument extends Document {
+export interface IOtpDocument {
   _id: string;
   phone: string;
   code: string;
@@ -20,7 +20,7 @@ const otpSchema = new Schema<IOtpDocument>(
     attempts: { type: Number, default: 0 },
     maxAttempts: { type: Number, default: 3 },
     isUsed: { type: Boolean, default: false, index: true },
-    expiresAt: { type: Date, required: true, index: { expires: 0 } }, // TTL Index
+    expiresAt: { type: Date, required: true, index: { expires: 0 } },
   },
   baseSchemaOptions,
 );

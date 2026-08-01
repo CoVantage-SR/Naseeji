@@ -1,6 +1,6 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
-export interface IRefreshTokenDocument extends Document {
+export interface IRefreshTokenDocument {
   _id: string;
   jti: string;
   token: string;
@@ -23,7 +23,7 @@ const refreshTokenSchema = new Schema<IRefreshTokenDocument>(
     tokenFamilyId: { type: String, required: true, index: true },
     isUsed: { type: Boolean, default: false },
     isRevoked: { type: Boolean, default: false, index: true },
-    expiresAt: { type: Date, required: true, index: { expires: 0 } }, // TTL Index
+    expiresAt: { type: Date, required: true, index: { expires: 0 } },
   },
   { timestamps: true },
 );

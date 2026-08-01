@@ -1,6 +1,6 @@
 import { IUserDocument } from '../models/user.model.js';
-import { User } from '../../domain/entities/user.entity.ts';
-import { UserProfile } from '../../domain/entities/user-profile.entity.ts';
+import { User } from '../../domain/entities/user.entity.js';
+import { UserProfile } from '../../domain/entities/user-profile.entity.js';
 import { Phone } from '../../domain/value-objects/phone.vo.js';
 import { Password } from '../../domain/value-objects/password.vo.js';
 import { AccountStatus } from '../../domain/value-objects/account-status.enum.js';

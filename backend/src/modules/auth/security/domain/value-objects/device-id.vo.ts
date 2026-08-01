@@ -1,4 +1,4 @@
-import { UuidUtil } from '../../../../core/utils/uuid.util.js';
+import { UuidUtil } from '@core/utils/uuid.util.js';
 
 export class DeviceId {
   private readonly _value: string;

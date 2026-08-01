@@ -1,6 +1,9 @@
 import { OtpCode } from '../value-objects/otp-code.vo.js';
-import { OtpExpiredException, OtpInvalidException } from '../domain/errors/auth-domain.exceptions.js';
-import { UuidUtil } from '../../../../core/utils/uuid.util.js';
+import {
+  OtpExpiredException,
+  OtpInvalidException,
+} from '../../domain/errors/auth-domain.exceptions.js';
+import { UuidUtil } from '@core/utils/uuid.util.js';
 
 export interface OtpProps {
   id: string;

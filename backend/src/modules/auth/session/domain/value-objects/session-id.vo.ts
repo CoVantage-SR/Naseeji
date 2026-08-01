@@ -1,4 +1,4 @@
-import { UuidUtil } from '../../../../core/utils/uuid.util.js';
+import { UuidUtil } from '@core/utils/uuid.util.js';
 
 export class SessionId {
   private readonly _value: string;
