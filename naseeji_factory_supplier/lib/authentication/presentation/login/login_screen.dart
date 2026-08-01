@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_radius.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../shared/enums/user_role.dart';
+import '../../../../core/session/session_provider.dart';
 import '../providers/auth_providers.dart';
 import 'widgets/account_registration_section.dart';
 import 'widgets/demo_explore_banner.dart';
