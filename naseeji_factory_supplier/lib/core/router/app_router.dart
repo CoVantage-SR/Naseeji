@@ -3,7 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../authentication/choose_account_type/choose_account_type.dart';
+import '../../authentication/complete_profile/complete_profile.dart';
 import '../../authentication/presentation/forgot_password/forgot_password_screen.dart';
+import '../../shared/enums/user_role.dart';
 import '../../authentication/presentation/login/login_screen.dart';
 import '../../authentication/presentation/otp/otp_screen.dart';
 import '../../authentication/presentation/register/register_screen.dart';
@@ -62,6 +64,13 @@ GoRouter appRouter(AppRouterRef ref) {
       GoRoute(
         path: '/auth/choose-account-type',
         builder: (context, state) => const ChooseAccountScreen(),
+      ),
+      GoRoute(
+        path: '/auth/complete-profile',
+        builder: (context, state) {
+          final role = state.extra as UserRole?;
+          return CompleteProfileScreen(initialRole: role);
+        },
       ),
 
       // Factory main routes
