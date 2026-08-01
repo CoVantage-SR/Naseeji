@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../authentication/choose_account_type/choose_account_type.dart';
 import '../../authentication/complete_profile/complete_profile.dart';
+import '../../authentication/terms_acceptance/terms_acceptance_screen.dart';
 import '../../authentication/presentation/forgot_password/forgot_password_screen.dart';
 import '../../shared/enums/user_role.dart';
 import '../../authentication/presentation/login/login_screen.dart';
@@ -70,6 +71,13 @@ GoRouter appRouter(AppRouterRef ref) {
         builder: (context, state) {
           final role = state.extra as UserRole?;
           return CompleteProfileScreen(initialRole: role);
+        },
+      ),
+      GoRoute(
+        path: '/auth/terms-acceptance',
+        builder: (context, state) {
+          final role = state.extra as UserRole? ?? UserRole.factory;
+          return TermsAcceptanceScreen(role: role);
         },
       ),
 

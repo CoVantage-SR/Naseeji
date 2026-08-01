@@ -72,18 +72,7 @@ class _CompleteProfileScreenState
     final success = await controller.submitProfile();
 
     if (success && mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('تم استكمال بيانات الحساب بنجاح!'),
-          backgroundColor: Colors.green,
-        ),
-      );
-
-      if (state.selectedRole == UserRole.supplier) {
-        context.go('/supplier/dashboard');
-      } else {
-        context.go('/factory/home');
-      }
+      context.push('/auth/terms-acceptance', extra: state.selectedRole);
     } else if (mounted) {
       final err = ref.read(completeProfileControllerProvider).errorMessage;
       if (err != null && err.isNotEmpty) {
