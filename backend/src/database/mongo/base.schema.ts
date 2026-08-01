@@ -4,14 +4,14 @@ export const baseSchemaOptions = {
   timestamps: true,
   toJSON: {
     virtuals: true,
-    transform: (_doc: unknown, ret: Record<string, unknown>) => {
+    transform: (_doc: unknown, ret: Record<string, unknown>): Record<string, unknown> => {
       delete ret.__v;
       return ret;
     },
   },
   toObject: {
     virtuals: true,
-    transform: (_doc: unknown, ret: Record<string, unknown>) => {
+    transform: (_doc: unknown, ret: Record<string, unknown>): Record<string, unknown> => {
       delete ret.__v;
       return ret;
     },
