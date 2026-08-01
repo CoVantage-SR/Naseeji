@@ -9,6 +9,11 @@ class RegisterRepositories {
       ServiceLocator.register<ChooseAccountRepository>(
         ChooseAccountRepositoryImpl(
           remoteDatasource: remote,
+          localDatasource: ChooseAccountLocalDatasourceImpl(
+            SharedPreferencesService(
+              ServiceLocator.get<StorageService>().rawPrefs!,
+            ),
+          ),
         ),
       );
     }

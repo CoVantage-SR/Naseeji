@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../services/database/isar_service.dart';
+import '../session/session_provider.dart';
 import '../storage/shared_preferences_service.dart';
 import 'bootstrap_initializer.dart';
 
