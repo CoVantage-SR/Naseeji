@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../session/session_provider.dart';
 import '../../authentication/choose_account_type/choose_account_type.dart';
 import '../../authentication/complete_profile/complete_profile.dart';
 import '../../authentication/terms_acceptance/terms_acceptance_screen.dart';
@@ -27,9 +28,39 @@ final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'rootNav');
 
 @riverpod
 GoRouter appRouter(AppRouterRef ref) {
+  final session = ref.watch(sessionNotifierProvider);
+
   return GoRouter(
     navigatorKey: rootNavigatorKey,
     initialLocation: '/',
+    redirect: (context, state) {
+      final isFactoryRoute = state.matchedLocation.startsWith('/factory');
+      final isSupplierRoute = state.matchedLocation.startsWith('/supplier');
+
+      if (!session.isLoggedIn) {
+        if (isFactoryRoute || isSupplierRoute) {
+          return '/auth/login';
+        }
+      } else {
+        final defaultDashboard = session.role == UserRole.supplier
+            ? '/supplier/dashboard'
+            : '/factory/home';
+
+        if (state.matchedLocation == '/auth/login' ||
+            state.matchedLocation == '/auth/register') {
+          return defaultDashboard;
+        }
+
+        if (session.role == UserRole.factory && isSupplierRoute) {
+          return '/factory/home';
+        }
+
+        if (session.role == UserRole.supplier && isFactoryRoute) {
+          return '/supplier/dashboard';
+        }
+      }
+      return null;
+    },
     routes: [
       // Auth routes
       GoRoute(

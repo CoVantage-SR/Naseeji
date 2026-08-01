@@ -67,9 +67,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   void _navigateByUserRole(UserRole? role) {
-    if (role == UserRole.factory) {
+    final effectiveRole = role ?? UserRole.factory;
+    ref.read(sessionNotifierProvider.notifier).saveSession(
+      accessToken: 'jwt_token_${DateTime.now().millisecondsSinceEpoch}',
+      refreshToken: 'jwt_refresh_token',
+      role: effectiveRole,
+    );
+    if (effectiveRole == UserRole.factory) {
       context.go('/factory/home');
-    } else if (role == UserRole.supplier) {
+    } else if (effectiveRole == UserRole.supplier) {
       context.go('/supplier/dashboard');
     } else {
       context.go('/auth/choose-account-type');

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/session/session_provider.dart';
 import '../../../core/constants/app_routes.dart';
 import '../../../core/widgets/general_widgets.dart';
 import '../../../shared/enums/user_role.dart';
@@ -28,7 +29,11 @@ class _TermsAcceptanceScreenState extends ConsumerState<TermsAcceptanceScreen> {
       _isLoading = true;
     });
 
-    await Future.delayed(const Duration(milliseconds: 800));
+    await ref.read(sessionNotifierProvider.notifier).saveSession(
+      accessToken: 'jwt_token_${DateTime.now().millisecondsSinceEpoch}',
+      refreshToken: 'jwt_refresh_token',
+      role: widget.role,
+    );
 
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(

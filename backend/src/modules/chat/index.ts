@@ -1,0 +1,1 @@
+export const chatModuleConfig = { name: 'chat', version: '1.0.0' };
