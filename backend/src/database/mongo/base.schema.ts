@@ -5,14 +5,14 @@ export const baseSchemaOptions: SchemaOptions = {
   toJSON: {
     virtuals: true,
     transform: (_doc, ret) => {
-      delete ret.__v;
+      delete (ret as Record<string, unknown>).__v;
       return ret;
     },
   },
   toObject: {
     virtuals: true,
     transform: (_doc, ret) => {
-      delete ret.__v;
+      delete (ret as Record<string, unknown>).__v;
       return ret;
     },
   },

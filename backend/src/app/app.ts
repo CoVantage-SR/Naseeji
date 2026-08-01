@@ -5,4 +5,4 @@ export const createApplication = async (): Promise<BootstrapResult> => {
   return MasterBootstrapper.bootstrap();
 };
 
-export { Express };
+export type { Express };

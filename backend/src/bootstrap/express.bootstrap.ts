@@ -4,7 +4,6 @@ import cors from 'cors';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import swaggerUi from 'swagger-ui-express';
-import { SecurityConfig } from '../config/security.config.js';
 import { getSwaggerConfig } from '../config/swagger.config.js';
 import { AppConfig } from '../config/index.js';
 import { requestIdMiddleware } from '../middleware/request-id.middleware.js';

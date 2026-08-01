@@ -1,6 +1,6 @@
 import { EnvConfig } from './env.config.js';
 
-export const getSwaggerConfig = (env: EnvConfig) => ({
+export const getSwaggerConfig = (env: EnvConfig): Record<string, unknown> => ({
   openapi: '3.0.0',
   info: {
     title: 'NASEEJI B2B SaaS Enterprise Backend API',

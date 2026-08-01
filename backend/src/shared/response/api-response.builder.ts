@@ -10,10 +10,7 @@ export interface ApiResponse<T = unknown> {
 }
 
 export class ApiResponseBuilder {
-  public static success<T>(
-    data: T,
-    message = 'Operation completed successfully',
-  ): ApiResponse<T> {
+  public static success<T>(data: T, message = 'Operation completed successfully'): ApiResponse<T> {
     return {
       success: true,
       message,

@@ -1,11 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { WinstonLogger } from '../core/logger/winston.logger.js';
 
-export const requestLoggerMiddleware = (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-): void => {
+export const requestLoggerMiddleware = (req: Request, res: Response, next: NextFunction): void => {
   const logger = WinstonLogger.getInstance();
   const { method, originalUrl, ip } = req;
 

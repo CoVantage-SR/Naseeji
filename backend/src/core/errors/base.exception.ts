@@ -1,5 +1,5 @@
-import { HttpStatusCode, HttpStatus } from '../constants/http-status.constant.js';
-import { ErrorCode, ErrorCodes } from '../constants/error-codes.constant.js';
+import { HttpStatusCode } from '../constants/http-status.constant.js';
+import { ErrorCode } from '../constants/error-codes.constant.js';
 
 export abstract class BaseException extends Error {
   public abstract readonly statusCode: HttpStatusCode;

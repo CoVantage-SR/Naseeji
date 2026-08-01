@@ -13,6 +13,7 @@ export const responseFormatterMiddleware = (
   next();
 };
 
+/* eslint-disable @typescript-eslint/no-namespace */
 declare global {
   namespace Express {
     interface Response {

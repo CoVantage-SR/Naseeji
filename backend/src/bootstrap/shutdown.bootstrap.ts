@@ -5,7 +5,7 @@ import { WinstonLogger } from '../core/logger/winston.logger.js';
 export const setupGracefulShutdown = (server: Server): void => {
   const logger = WinstonLogger.getInstance();
 
-  const shutdown = async (signal: string) => {
+  const shutdown = async (signal: string): Promise<void> => {
     logger.info(`Received ${signal}. Starting Graceful Shutdown...`);
 
     server.close(async () => {
