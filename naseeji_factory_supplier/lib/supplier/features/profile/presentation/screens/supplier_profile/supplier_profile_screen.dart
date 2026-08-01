@@ -207,7 +207,7 @@ class SupplierProfileScreen extends ConsumerWidget {
                   height: 48,
                   child: ElevatedButton(
                     onPressed: () {
-                      _showLogoutDialog(context);
+                      _showLogoutDialog(context, ref);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFFEF2F2),
@@ -1038,7 +1038,7 @@ class SupplierProfileScreen extends ConsumerWidget {
     );
   }
 
-  void _showLogoutDialog(BuildContext context) {
+  void _showLogoutDialog(BuildContext context, WidgetRef ref) {
     showDialog(
       context: context,
       builder: (context) => Directionality(
@@ -1053,9 +1053,12 @@ class SupplierProfileScreen extends ConsumerWidget {
               child: const Text('إلغاء'),
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 Navigator.pop(context);
-                context.go('/login');
+                await ref.read(sessionNotifierProvider.notifier).logout();
+                if (context.mounted) {
+                  context.go('/auth/login');
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFFEF4444),
