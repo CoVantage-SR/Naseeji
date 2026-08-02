@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/app_radius.dart';
 import 'naseeji_logo_painters.dart';
 
 class HeaderBrandSection extends StatelessWidget {
@@ -8,14 +8,14 @@ class HeaderBrandSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
+    final colorScheme = theme.colorScheme;
 
     return SizedBox(
       height: 120,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Left side (RTL right): Logo & Titles
+          // Directional Lead (RTL Right / LTR Left): Logo & Brand Names
           Expanded(
             flex: 6,
             child: Column(
@@ -25,26 +25,26 @@ class HeaderBrandSection extends StatelessWidget {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const NaseejiInfinityLogo(size: 42),
+                    const RepaintBoundary(
+                      child: NaseejiInfinityLogo(size: 42),
+                    ),
                     const SizedBox(width: 10),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'NASEEJI',
-                          style: TextStyle(
-                            fontSize: 16,
+                          style: theme.textTheme.titleMedium?.copyWith(
                             fontWeight: FontWeight.w900,
                             letterSpacing: 1.2,
-                            color: isDark ? Colors.white : const Color(0xFF0F172A),
+                            color: colorScheme.onSurface,
                           ),
                         ),
                         Text(
                           'نســيــجــي',
-                          style: TextStyle(
-                            fontSize: 18,
+                          style: theme.textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
-                            color: theme.colorScheme.primary,
+                            color: colorScheme.primary,
                             height: 1.0,
                           ),
                         ),
@@ -56,7 +56,7 @@ class HeaderBrandSection extends StatelessWidget {
                 Text(
                   'منصة النسيج الرقمي للمصانع والموردين',
                   style: theme.textTheme.bodySmall?.copyWith(
-                    color: isDark ? theme.colorScheme.onSurfaceVariant : const Color(0xFF64748B),
+                    color: colorScheme.onSurfaceVariant,
                     fontWeight: FontWeight.w600,
                     fontSize: 11.5,
                   ),
@@ -65,32 +65,32 @@ class HeaderBrandSection extends StatelessWidget {
             ),
           ),
 
-          // Right side (RTL left): Industrial Factory Backdrop Painting
+          // Directional Trail: Industrial Factory Backdrop Illustration
           Expanded(
             flex: 5,
             child: Container(
               height: 110,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: AppRadius.rLG,
                 gradient: LinearGradient(
-                  colors: isDark
-                      ? [
-                          theme.colorScheme.surface,
-                          theme.colorScheme.primary.withValues(alpha: 0.15),
-                        ]
-                      : [
-                          const Color(0xFFFAFCFF),
-                          AppColors.primary.withValues(alpha: 0.08),
-                        ],
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
+                  colors: [
+                    colorScheme.surface,
+                    colorScheme.primary.withValues(alpha: 0.15),
+                  ],
+                  begin: AlignmentDirectional.centerStart,
+                  end: AlignmentDirectional.centerEnd,
                 ),
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: CustomPaint(
-                  painter: FactoryIllustrationPainter(isDark: isDark),
-                  child: Container(),
+                borderRadius: AppRadius.rLG,
+                child: RepaintBoundary(
+                  child: CustomPaint(
+                    painter: FactoryIllustrationPainter(
+                      isDark: theme.brightness == Brightness.dark,
+                      colorScheme: colorScheme,
+                    ),
+                    child: const SizedBox.expand(),
+                  ),
                 ),
               ),
             ),

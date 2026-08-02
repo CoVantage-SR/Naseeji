@@ -22,10 +22,17 @@ class LoginScreen extends ConsumerStatefulWidget {
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _phoneOrEmailController = TextEditingController(text: '01000000000');
-  final _passwordController = TextEditingController(text: '123456');
+  late final TextEditingController _phoneOrEmailController;
+  late final TextEditingController _passwordController;
   bool _rememberMe = true;
   String _currentLanguage = 'العربية';
+
+  @override
+  void initState() {
+    super.initState();
+    _phoneOrEmailController = TextEditingController();
+    _passwordController = TextEditingController();
+  }
 
   @override
   void dispose() {
@@ -40,7 +47,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     FocusScope.of(context).unfocus();
     final success = await ref.read(authControllerProvider.notifier).login(
           _phoneOrEmailController.text.trim(),
-          _passwordController.text,
+          _passwordController.text.trim(),
           rememberMe: _rememberMe,
         );
 
@@ -87,155 +94,162 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final isDark = theme.brightness == Brightness.dark;
     final authState = ref.watch(authControllerProvider);
 
     return Scaffold(
-      backgroundColor: isDark ? colorScheme.surface : const Color(0xFFFAFCFF),
+      backgroundColor: colorScheme.surface,
       body: SafeArea(
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
-          child: AbsorbPointer(
-            absorbing: authState.isLoading,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // 1. Language Dropdown Bar
-                Align(
-                  alignment: AlignmentDirectional.topEnd,
-                  child: LanguageDropdownBadge(
-                    currentLanguage: _currentLanguage,
-                    onLanguageChanged: (lang) {
-                      setState(() {
-                        _currentLanguage = lang;
-                      });
-                    },
-                  ),
-                ),
-                AppSpacing.hSM,
-
-                // 2. Brand Identity & Illustration Header
-                const HeaderBrandSection(),
-
-                AppSpacing.hMD,
-
-                // 3. Welcome Title & Subtitle
-                Text(
-                  'تسجيل الدخول',
-                  textAlign: TextAlign.center,
-                  style: theme.textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: isDark ? colorScheme.onSurface : const Color(0xFF1E293B),
-                    fontSize: 24,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  'مرحباً بعودتك! سجّل دخولك للوصول إلى حسابك',
-                  textAlign: TextAlign.center,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: isDark ? colorScheme.onSurfaceVariant : const Color(0xFF64748B),
-                    fontSize: 14,
-                  ),
-                ),
-
-                AppSpacing.hLG,
-
-                // 4. Main Login Form Widget
-                LoginForm(
-                  formKey: _formKey,
-                  phoneOrEmailController: _phoneOrEmailController,
-                  passwordController: _passwordController,
-                  rememberMe: _rememberMe,
-                  onRememberMeChanged: (val) {
-                    setState(() {
-                      _rememberMe = val;
-                    });
-                  },
-                  onForgotPassword: () => context.push('/auth/forgot-password'),
-                  onLogin: _handleLogin,
-                  isLoading: authState.isLoading,
-                ),
-
-                if (authState.errorMessage != null) ...[
-                  const SizedBox(height: 12),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: colorScheme.errorContainer.withValues(alpha: 0.3),
-                      borderRadius: AppRadius.rSM,
-                    ),
-                    child: Text(
-                      authState.errorMessage!,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: colorScheme.error,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-
-                AppSpacing.hLG,
-
-                // 5. Divider "أو"
-                Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        color: isDark ? colorScheme.outlineVariant : const Color(0xFFE2E8F0),
-                        thickness: 1,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                      child: Text(
-                        'أو',
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: isDark ? colorScheme.onSurfaceVariant : const Color(0xFF94A3B8),
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          behavior: HitTestBehavior.opaque,
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 480),
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                child: AbsorbPointer(
+                  absorbing: authState.isLoading,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // 1. Language Dropdown Bar
+                      Align(
+                        alignment: AlignmentDirectional.topEnd,
+                        child: LanguageDropdownBadge(
+                          currentLanguage: _currentLanguage,
+                          onLanguageChanged: (lang) {
+                            setState(() {
+                              _currentLanguage = lang;
+                            });
+                          },
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        color: isDark ? colorScheme.outlineVariant : const Color(0xFFE2E8F0),
-                        thickness: 1,
+                      AppSpacing.hSM,
+
+                      // 2. Brand Identity & Illustration Header
+                      const HeaderBrandSection(),
+
+                      AppSpacing.hMD,
+
+                      // 3. Welcome Title & Subtitle
+                      Text(
+                        'تسجيل الدخول',
+                        textAlign: TextAlign.center,
+                        style: theme.textTheme.headlineMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.onSurface,
+                          fontSize: 24,
+                        ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 6),
+                      Text(
+                        'مرحباً بعودتك! سجّل دخولك للوصول إلى حسابك',
+                        textAlign: TextAlign.center,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                          fontSize: 14,
+                        ),
+                      ),
+
+                      AppSpacing.hLG,
+
+                      // 4. Main Login Form Widget
+                      LoginForm(
+                        formKey: _formKey,
+                        phoneOrEmailController: _phoneOrEmailController,
+                        passwordController: _passwordController,
+                        rememberMe: _rememberMe,
+                        onRememberMeChanged: (val) {
+                          setState(() {
+                            _rememberMe = val;
+                          });
+                        },
+                        onForgotPassword: () => context.push('/auth/forgot-password'),
+                        onLogin: _handleLogin,
+                        isLoading: authState.isLoading,
+                      ),
+
+                      if (authState.errorMessage != null) ...[
+                        const SizedBox(height: 12),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                          decoration: BoxDecoration(
+                            color: colorScheme.errorContainer,
+                            borderRadius: AppRadius.rSM,
+                          ),
+                          child: Text(
+                            authState.errorMessage!,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: colorScheme.onErrorContainer,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
+
+                      AppSpacing.hLG,
+
+                      // 5. Divider "أو"
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Divider(
+                              color: colorScheme.outlineVariant,
+                              thickness: 1,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                            child: Text(
+                              'أو',
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Divider(
+                              color: colorScheme.outlineVariant,
+                              thickness: 1,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      AppSpacing.hLG,
+
+                      // 6. Google Sign In Button
+                      GoogleSignInButton(
+                        onPressed: _handleGoogleLogin,
+                        isLoading: authState.isLoading,
+                      ),
+
+                      AppSpacing.hXL,
+
+                      // 7. Account Registration Options Section
+                      AccountRegistrationSection(
+                        onRegisterFactory: () {
+                          context.push('/auth/register', extra: UserRole.factory);
+                        },
+                        onRegisterSupplier: () {
+                          context.push('/auth/register', extra: UserRole.supplier);
+                        },
+                      ),
+
+                      AppSpacing.hLG,
+
+                      // 8. Bottom Demo Banner
+                      DemoExploreBanner(
+                        onDemoFactory: () => _handleDemoLogin(UserRole.factory),
+                        onDemoSupplier: () => _handleDemoLogin(UserRole.supplier),
+                      ),
+                      AppSpacing.hLG,
+                    ],
+                  ),
                 ),
-
-                AppSpacing.hLG,
-
-                // 6. Google Sign In Button
-                GoogleSignInButton(
-                  onPressed: _handleGoogleLogin,
-                  isLoading: authState.isLoading,
-                ),
-
-                AppSpacing.hXL,
-
-                // 7. Account Registration Options Section
-                AccountRegistrationSection(
-                  onRegisterFactory: () {
-                    context.push('/auth/register', extra: UserRole.factory);
-                  },
-                  onRegisterSupplier: () {
-                    context.push('/auth/register', extra: UserRole.supplier);
-                  },
-                ),
-
-                AppSpacing.hLG,
-
-                // 8. Bottom Demo Banner
-                DemoExploreBanner(
-                  onDemoFactory: () => _handleDemoLogin(UserRole.factory),
-                  onDemoSupplier: () => _handleDemoLogin(UserRole.supplier),
-                ),
-                                AppSpacing.hLG,
-
-              ],
+              ),
             ),
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/constants/app_radius.dart';
 
 class AccountRegistrationSection extends StatelessWidget {
   final VoidCallback onRegisterFactory;
@@ -14,13 +15,12 @@ class AccountRegistrationSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final isDark = theme.brightness == Brightness.dark;
 
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: isDark ? colorScheme.surfaceContainerHighest : const Color(0xFFF1F5F9),
-        borderRadius: BorderRadius.circular(16),
+        color: colorScheme.surfaceContainerHighest,
+        borderRadius: AppRadius.rLG,
       ),
       child: Column(
         children: [
@@ -28,14 +28,14 @@ class AccountRegistrationSection extends StatelessWidget {
             'ليس لديك حساب؟',
             style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
-              color: isDark ? colorScheme.onSurface : const Color(0xFF0F172A),
+              color: colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 4),
           Text(
             'اختر نوع الحساب الذي يناسبك للانضمام إلى نسيجي',
             style: theme.textTheme.bodySmall?.copyWith(
-              color: isDark ? colorScheme.onSurfaceVariant : const Color(0xFF64748B),
+              color: colorScheme.onSurfaceVariant,
               fontSize: 12,
             ),
             textAlign: TextAlign.center,
@@ -49,7 +49,7 @@ class AccountRegistrationSection extends StatelessWidget {
                   title: 'مورد',
                   subtitle: 'أبيع منتجاتي وأستقبل طلبات المصانع وتفاوض على الأسعار',
                   buttonText: 'إنشاء حساب كمورد',
-                  accentColor: const Color(0xFF2563EB),
+                  accentColor: colorScheme.primary,
                   icon: Icons.inventory_2_outlined,
                   onPressed: onRegisterSupplier,
                 ),
@@ -61,7 +61,7 @@ class AccountRegistrationSection extends StatelessWidget {
                   title: 'مصنع',
                   subtitle: 'أشتري الخامات والمنتجات وأرسل طلبات الشراء',
                   buttonText: 'إنشاء حساب كمصنع',
-                  accentColor: const Color(0xFF10B981),
+                  accentColor: colorScheme.tertiary,
                   icon: Icons.factory_outlined,
                   onPressed: onRegisterFactory,
                 ),
@@ -94,80 +94,92 @@ class _RoleCardItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
+    final colorScheme = theme.colorScheme;
 
-    return Container(
-      padding: const EdgeInsets.all(12.0),
-      decoration: BoxDecoration(
-        color: isDark ? theme.colorScheme.surface : Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.02),
-            blurRadius: 6,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: accentColor.withValues(alpha: 0.1),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              icon,
-              color: accentColor,
-              size: 24,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            title,
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: accentColor,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            subtitle,
-            textAlign: TextAlign.center,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: theme.textTheme.bodySmall?.copyWith(
-              fontSize: 10.5,
-              color: isDark ? theme.colorScheme.onSurfaceVariant : const Color(0xFF64748B),
-              height: 1.3,
-            ),
-          ),
-          const SizedBox(height: 12),
-          SizedBox(
-            width: double.infinity,
-            height: 34,
-            child: OutlinedButton(
-              onPressed: onPressed,
-              style: OutlinedButton.styleFrom(
-                side: BorderSide(color: accentColor, width: 1),
-                foregroundColor: accentColor,
-                padding: EdgeInsets.zero,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+    return Semantics(
+      button: true,
+      label: '$title - $buttonText',
+      hint: subtitle,
+      child: Card(
+        elevation: 0,
+        color: colorScheme.surface,
+        shape: const RoundedRectangleBorder(
+          borderRadius: AppRadius.rMD,
+        ),
+        margin: EdgeInsets.zero,
+        child: InkWell(
+          onTap: onPressed,
+          borderRadius: AppRadius.rMD,
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: accentColor.withValues(alpha: 0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    icon,
+                    color: accentColor,
+                    size: 24,
+                  ),
                 ),
-              ),
-              child: Text(
-                buttonText,
-                style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                  color: accentColor,
+                const SizedBox(height: 8),
+                Text(
+                  title,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: accentColor,
+                  ),
                 ),
-              ),
+                const SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    fontSize: 11,
+                    color: colorScheme.onSurfaceVariant,
+                    height: 1.3,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  height: 38,
+                  child: OutlinedButton(
+                    onPressed: onPressed,
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: accentColor, width: 1.2),
+                      foregroundColor: accentColor,
+                      padding: EdgeInsets.zero,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: AppRadius.rSM,
+                      ),
+                    ),
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: Text(
+                          buttonText,
+                          style: TextStyle(
+                            fontSize: 11.5,
+                            fontWeight: FontWeight.bold,
+                            color: accentColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

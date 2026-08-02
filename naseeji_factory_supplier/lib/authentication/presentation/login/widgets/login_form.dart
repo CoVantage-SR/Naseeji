@@ -30,13 +30,28 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  late final FocusNode _phoneOrEmailFocusNode;
+  late final FocusNode _passwordFocusNode;
   bool _obscurePassword = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _phoneOrEmailFocusNode = FocusNode();
+    _passwordFocusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _phoneOrEmailFocusNode.dispose();
+    _passwordFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final isDark = theme.brightness == Brightness.dark;
 
     return Form(
       key: widget.formKey,
@@ -44,22 +59,30 @@ class _LoginFormState extends State<LoginForm> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Field 1: Email or Phone
-          _FormInputLabel(label: 'البريد الإلكتروني أو رقم الهاتف'),
+          const _FormInputLabel(label: 'البريد الإلكتروني أو رقم الهاتف'),
           const SizedBox(height: 6),
           TextFormField(
             controller: widget.phoneOrEmailController,
+            focusNode: _phoneOrEmailFocusNode,
             keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
+            onFieldSubmitted: (_) {
+              FocusScope.of(context).requestFocus(_passwordFocusNode);
+            },
             autofillHints: const [
               AutofillHints.email,
               AutofillHints.telephoneNumber,
               AutofillHints.username,
             ],
-            textDirection: TextDirection.rtl,
             style: theme.textTheme.bodyLarge,
             decoration: _buildInputDecoration(
               context: context,
               hintText: 'أدخل بريدك الإلكتروني أو رقم هاتفك',
-              suffixIcon: Icons.person_outline_rounded,
+              prefixIcon: Icon(
+                Icons.person_outline_rounded,
+                color: colorScheme.onSurfaceVariant,
+                size: 20,
+              ),
             ),
             validator: Validators.emailOrPhone,
           ),
@@ -67,25 +90,40 @@ class _LoginFormState extends State<LoginForm> {
           AppSpacing.hMD,
 
           // Field 2: Password
-          _FormInputLabel(label: 'كلمة المرور'),
+          const _FormInputLabel(label: 'كلمة المرور'),
           const SizedBox(height: 6),
           TextFormField(
             controller: widget.passwordController,
+            focusNode: _passwordFocusNode,
             obscureText: _obscurePassword,
+            textInputAction: TextInputAction.done,
+            onFieldSubmitted: (_) {
+              if (!widget.isLoading) {
+                widget.onLogin();
+              }
+            },
             autofillHints: const [AutofillHints.password],
-            textDirection: TextDirection.rtl,
             style: theme.textTheme.bodyLarge,
             decoration: _buildInputDecoration(
               context: context,
               hintText: 'أدخل كلمة المرور',
-              suffixIcon: Icons.lock_outline_rounded,
-              prefixIcon: IconButton(
-                icon: Icon(
-                  _obscurePassword
-                      ? Icons.visibility_off_outlined
-                      : Icons.visibility_outlined,
-                  color: colorScheme.outline,
-                  size: 20,
+              prefixIcon: Icon(
+                Icons.lock_outline_rounded,
+                color: colorScheme.onSurfaceVariant,
+                size: 20,
+              ),
+              suffixIcon: IconButton(
+                icon: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 200),
+                  transitionBuilder: (child, anim) => ScaleTransition(scale: anim, child: child),
+                  child: Icon(
+                    _obscurePassword
+                        ? Icons.visibility_off_outlined
+                        : Icons.visibility_outlined,
+                    key: ValueKey<bool>(_obscurePassword),
+                    color: colorScheme.onSurfaceVariant,
+                    size: 20,
+                  ),
                 ),
                 onPressed: () {
                   setState(() {
@@ -103,53 +141,64 @@ class _LoginFormState extends State<LoginForm> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Remember me (RTL Right side)
-              InkWell(
-                onTap: () => widget.onRememberMeChanged(!widget.rememberMe),
-                borderRadius: AppRadius.rSM,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: Checkbox(
-                          value: widget.rememberMe,
-                          onChanged: (val) => widget.onRememberMeChanged(val ?? false),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4),
+              // Remember me
+              Semantics(
+                button: true,
+                checked: widget.rememberMe,
+                label: 'تذكر بيانات تسجيل الدخول',
+                child: InkWell(
+                  onTap: () => widget.onRememberMeChanged(!widget.rememberMe),
+                  borderRadius: AppRadius.rSM,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(
+                          height: 24,
+                          width: 24,
+                          child: Checkbox(
+                            value: widget.rememberMe,
+                            onChanged: (val) => widget.onRememberMeChanged(val ?? false),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            activeColor: colorScheme.primary,
                           ),
-                          activeColor: colorScheme.primary,
                         ),
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        'تذكرني',
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: isDark ? colorScheme.onSurface : const Color(0xFF334155),
+                        const SizedBox(width: 8),
+                        Text(
+                          'تذكرني',
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            color: colorScheme.onSurface,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
 
-              // Forgot password button (RTL Left side)
-              TextButton(
-                onPressed: widget.onForgotPassword,
-                style: TextButton.styleFrom(
-                  padding: EdgeInsets.zero,
-                  minimumSize: Size.zero,
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
-                child: Text(
-                  'نسيت كلمة المرور؟',
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: colorScheme.primary,
-                    fontWeight: FontWeight.bold,
+              // Forgot password button
+              Semantics(
+                button: true,
+                label: 'استعادة كلمة المرور المفقودة',
+                child: SizedBox(
+                  height: 48,
+                  child: TextButton(
+                    onPressed: widget.onForgotPassword,
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      minimumSize: const Size(48, 48),
+                    ),
+                    child: Text(
+                      'نسيت كلمة المرور؟',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.primary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -159,34 +208,39 @@ class _LoginFormState extends State<LoginForm> {
           AppSpacing.hLG,
 
           // Primary Login Button
-          SizedBox(
-            height: 50,
-            child: ElevatedButton(
-              onPressed: widget.isLoading ? null : widget.onLogin,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: colorScheme.primary,
-                foregroundColor: Colors.white,
-                elevation: 1,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+          Semantics(
+            button: true,
+            enabled: !widget.isLoading,
+            label: 'تسجيل الدخول إلى حسابك',
+            child: SizedBox(
+              height: 50,
+              child: ElevatedButton(
+                onPressed: widget.isLoading ? null : widget.onLogin,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: colorScheme.primary,
+                  foregroundColor: colorScheme.onPrimary,
+                  elevation: 1,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: AppRadius.rMD,
+                  ),
                 ),
+                child: widget.isLoading
+                    ? SizedBox(
+                        height: 22,
+                        width: 22,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.5,
+                          color: colorScheme.onPrimary,
+                        ),
+                      )
+                    : const Text(
+                        'تسجيل الدخول',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
               ),
-              child: widget.isLoading
-                  ? const SizedBox(
-                      height: 22,
-                      width: 22,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2.5,
-                        color: Colors.white,
-                      ),
-                    )
-                  : const Text(
-                      'تسجيل الدخول',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
             ),
           ),
         ],
@@ -197,53 +251,46 @@ class _LoginFormState extends State<LoginForm> {
   InputDecoration _buildInputDecoration({
     required BuildContext context,
     required String hintText,
-    IconData? suffixIcon,
     Widget? prefixIcon,
+    Widget? suffixIcon,
   }) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final isDark = theme.brightness == Brightness.dark;
 
     return InputDecoration(
       hintText: hintText,
       hintStyle: theme.textTheme.bodyMedium?.copyWith(
-        color: isDark ? colorScheme.onSurfaceVariant.withValues(alpha: 0.6) : const Color(0xFF94A3B8),
+        color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
         fontSize: 13,
       ),
       filled: true,
-      fillColor: isDark ? colorScheme.surfaceContainerHighest.withValues(alpha: 0.5) : Colors.white,
+      fillColor: colorScheme.surfaceContainerHighest,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      suffixIcon: suffixIcon != null
-          ? Icon(
-              suffixIcon,
-              color: isDark ? colorScheme.onSurfaceVariant : const Color(0xFF64748B),
-              size: 20,
-            )
-          : null,
       prefixIcon: prefixIcon,
+      suffixIcon: suffixIcon,
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.rMD,
         borderSide: BorderSide(
-          color: isDark ? colorScheme.outline.withValues(alpha: 0.4) : const Color(0xFFE2E8F0),
+          color: colorScheme.outlineVariant,
           width: 1,
         ),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.rMD,
         borderSide: BorderSide(
           color: colorScheme.primary,
           width: 1.5,
         ),
       ),
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.rMD,
         borderSide: BorderSide(
           color: colorScheme.error,
           width: 1,
         ),
       ),
       focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.rMD,
         borderSide: BorderSide(
           color: colorScheme.error,
           width: 1.5,
@@ -261,13 +308,13 @@ class _FormInputLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
+    final colorScheme = theme.colorScheme;
 
     return Text(
       label,
       style: theme.textTheme.bodyMedium?.copyWith(
         fontWeight: FontWeight.bold,
-        color: isDark ? theme.colorScheme.onSurface : const Color(0xFF1E293B),
+        color: colorScheme.onSurface,
         fontSize: 13.5,
       ),
     );

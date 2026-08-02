@@ -12,13 +12,15 @@ class NaseejiInfinityLogo extends StatelessWidget {
       width: size,
       height: size,
       child: CustomPaint(
-        painter: _InfinityLogoPainter(),
+        painter: const _InfinityLogoPainter(),
       ),
     );
   }
 }
 
 class _InfinityLogoPainter extends CustomPainter {
+  const _InfinityLogoPainter();
+
   @override
   void paint(Canvas canvas, Size size) {
     final w = size.width;
@@ -60,30 +62,41 @@ class _InfinityLogoPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant _InfinityLogoPainter oldDelegate) => false;
 }
 
 // Factory Illustration Custom Painter
 class FactoryIllustrationPainter extends CustomPainter {
   final bool isDark;
+  final ColorScheme? colorScheme;
 
-  FactoryIllustrationPainter({required this.isDark});
+  const FactoryIllustrationPainter({
+    required this.isDark,
+    this.colorScheme,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
     final w = size.width;
     final h = size.height;
 
+    final buildingColor = colorScheme?.surfaceContainerHighest ??
+        (isDark ? const Color(0xFF334155) : const Color(0xFFCBD5E1));
+    final roofColor = colorScheme?.outlineVariant ??
+        (isDark ? const Color(0xFF475569) : const Color(0xFF94A3B8));
+    final accentColor = colorScheme?.primary ??
+        (isDark ? const Color(0xFF3B82F6) : const Color(0xFF2563EB));
+
     final buildingPaint = Paint()
-      ..color = isDark ? const Color(0xFF334155) : const Color(0xFFCBD5E1)
+      ..color = buildingColor
       ..style = PaintingStyle.fill;
 
     final roofPaint = Paint()
-      ..color = isDark ? const Color(0xFF475569) : const Color(0xFF94A3B8)
+      ..color = roofColor
       ..style = PaintingStyle.fill;
 
     final accentPaint = Paint()
-      ..color = isDark ? const Color(0xFF3B82F6) : const Color(0xFF2563EB)
+      ..color = accentColor
       ..style = PaintingStyle.fill;
 
     // Factory main building body
@@ -123,7 +136,9 @@ class FactoryIllustrationPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant FactoryIllustrationPainter oldDelegate) {
+    return oldDelegate.isDark != isDark || oldDelegate.colorScheme != colorScheme;
+  }
 }
 
 // Google Multi-color Logo Custom Painter
@@ -138,13 +153,15 @@ class GoogleLogoPainterWidget extends StatelessWidget {
       width: size,
       height: size,
       child: CustomPaint(
-        painter: _GoogleLogoPainter(),
+        painter: const _GoogleLogoPainter(),
       ),
     );
   }
 }
 
 class _GoogleLogoPainter extends CustomPainter {
+  const _GoogleLogoPainter();
+
   @override
   void paint(Canvas canvas, Size size) {
     final w = size.width;
@@ -199,5 +216,5 @@ class _GoogleLogoPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant _GoogleLogoPainter oldDelegate) => false;
 }
