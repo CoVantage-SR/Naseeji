@@ -233,8 +233,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   onDemoFactory: () => _handleDemoLogin(UserRole.factory),
                   onDemoSupplier: () => _handleDemoLogin(UserRole.supplier),
                 ),
+                                AppSpacing.hLG,
 
-                const SizedBox(height: 16),
               ],
             ),
           ),
