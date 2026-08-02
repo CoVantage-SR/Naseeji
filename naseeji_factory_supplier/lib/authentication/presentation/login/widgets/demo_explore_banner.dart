@@ -47,20 +47,32 @@ class DemoExploreBanner extends StatelessWidget {
               PopupMenuItem(
                 value: 'factory',
                 child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(Icons.factory_outlined, color: roleTheme.factoryPrimary, size: 20),
                     const SizedBox(width: 8),
-                    Text(l10n.demoAsFactory),
+                    Flexible(
+                      child: Text(
+                        l10n.demoAsFactory,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ],
                 ),
               ),
               PopupMenuItem(
                 value: 'supplier',
                 child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(Icons.inventory_2_outlined, color: roleTheme.supplierPrimary, size: 20),
                     const SizedBox(width: 8),
-                    Text(l10n.demoAsSupplier),
+                    Flexible(
+                      child: Text(
+                        l10n.demoAsSupplier,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   ],
                 ),
               ),
