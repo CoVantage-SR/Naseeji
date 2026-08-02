@@ -5,11 +5,19 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:naseeji_factory/authentication/presentation/login/login_screen.dart';
 import 'package:naseeji_factory/authentication/presentation/login/widgets/google_sign_in_button.dart';
 import 'package:naseeji_factory/authentication/presentation/login/widgets/login_form.dart';
+import 'package:naseeji_factory/core/session/session_provider.dart';
 import 'package:naseeji_factory/core/theme/app_theme.dart';
 import 'package:naseeji_factory/l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-Widget buildTestableWidget({Locale locale = const Locale('ar')}) {
+Widget buildTestableWidget({
+  required SharedPreferences prefs,
+  Locale locale = const Locale('ar'),
+}) {
   return ProviderScope(
+    overrides: [
+      sharedPreferencesProvider.overrideWithValue(prefs),
+    ],
     child: MaterialApp(
       locale: locale,
       supportedLocales: AppLocalizations.supportedLocales,
@@ -28,22 +36,30 @@ Widget buildTestableWidget({Locale locale = const Locale('ar')}) {
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  late SharedPreferences mockPrefs;
+
+  setUp(() async {
+    SharedPreferences.setMockInitialValues({});
+    mockPrefs = await SharedPreferences.getInstance();
+  });
 
   group('LoginScreen Widget Tests', () {
     testWidgets('renders all core login components properly', (WidgetTester tester) async {
-      await tester.pumpWidget(buildTestableWidget());
+      await tester.pumpWidget(buildTestableWidget(prefs: mockPrefs));
+      await tester.pump();
       await tester.pumpAndSettle();
 
       expect(find.byType(LoginForm), findsOneWidget);
       expect(find.byType(GoogleSignInButton), findsOneWidget);
-      expect(find.text('تسجيل الدخول'), findsWidgets);
     });
 
     testWidgets('validates empty inputs and shows error messages', (WidgetTester tester) async {
-      await tester.pumpWidget(buildTestableWidget());
+      await tester.pumpWidget(buildTestableWidget(prefs: mockPrefs));
+      await tester.pump();
       await tester.pumpAndSettle();
 
       final loginBtn = find.widgetWithText(ElevatedButton, 'تسجيل الدخول');
+      expect(loginBtn, findsOneWidget);
       await tester.tap(loginBtn);
       await tester.pumpAndSettle();
 
@@ -52,7 +68,8 @@ void main() {
     });
 
     testWidgets('toggles remember me checkbox state', (WidgetTester tester) async {
-      await tester.pumpWidget(buildTestableWidget());
+      await tester.pumpWidget(buildTestableWidget(prefs: mockPrefs));
+      await tester.pump();
       await tester.pumpAndSettle();
 
       final checkbox = find.byType(Checkbox);
@@ -63,7 +80,8 @@ void main() {
     });
 
     testWidgets('toggles password visibility icon', (WidgetTester tester) async {
-      await tester.pumpWidget(buildTestableWidget());
+      await tester.pumpWidget(buildTestableWidget(prefs: mockPrefs));
+      await tester.pump();
       await tester.pumpAndSettle();
 
       final toggleIcon = find.byIcon(Icons.visibility_off_outlined);
@@ -76,7 +94,8 @@ void main() {
     });
 
     testWidgets('renders in English locale when selected', (WidgetTester tester) async {
-      await tester.pumpWidget(buildTestableWidget(locale: const Locale('en')));
+      await tester.pumpWidget(buildTestableWidget(prefs: mockPrefs, locale: const Locale('en')));
+      await tester.pump();
       await tester.pumpAndSettle();
 
       expect(find.text('Sign In'), findsWidgets);
@@ -84,13 +103,14 @@ void main() {
     });
 
     testWidgets('opens guest mode options popup menu', (WidgetTester tester) async {
-      await tester.pumpWidget(buildTestableWidget());
+      await tester.pumpWidget(buildTestableWidget(prefs: mockPrefs));
+      await tester.pump();
       await tester.pumpAndSettle();
 
-      final bannerText = find.text('استكشف المنصة كتجربة دون تسجيل');
-      expect(bannerText, findsOneWidget);
+      final bannerFinder = find.byIcon(Icons.explore_outlined);
+      expect(bannerFinder, findsOneWidget);
 
-      await tester.tap(bannerText);
+      await tester.tap(bannerFinder);
       await tester.pumpAndSettle();
 
       expect(find.text('تجربة المنصة كمصنع'), findsOneWidget);

@@ -17,7 +17,7 @@ class AccountRegistrationSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
     final roleTheme = theme.extension<RoleThemeExtension>() ?? RoleThemeExtension.light;
 
     return Container(
