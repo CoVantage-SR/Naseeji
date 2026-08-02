@@ -9,11 +9,7 @@ export interface UserContext {
   roles: string[];
 }
 
-export const authenticateMiddleware = (
-  req: Request,
-  _res: Response,
-  next: NextFunction,
-): void => {
+export const authenticateMiddleware = (req: Request, _res: Response, next: NextFunction): void => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return next(new AuthenticationException('Missing or invalid Authorization header'));

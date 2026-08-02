@@ -14,6 +14,15 @@ import '../../authentication/presentation/register/register_screen.dart';
 import '../../authentication/presentation/splash/splash_screen.dart';
 
 import '../../factory/features/home/presentation/screens/home_screen.dart' as factory_home;
+import '../../factory/features/account/presentation/screens/account_profile_screen.dart';
+import '../../factory/features/account/presentation/screens/edit_profile_screen.dart';
+import '../../factory/features/account/presentation/screens/factory_account_screen.dart';
+import '../../factory/features/account/presentation/screens/general_settings_screen.dart';
+import '../../factory/features/account/presentation/screens/notifications_settings_screen.dart';
+import '../../factory/features/account/presentation/screens/appearance_screen.dart';
+import '../../factory/features/account/presentation/screens/terms_screen.dart';
+import '../../factory/features/account/presentation/screens/privacy_screen.dart';
+
 import '../../supplier/features/dashboard/presentation/screens/home/home_screen.dart' as supplier_home;
 import '../../supplier/features/deals/presentation/screens/deals_dashboard_screen.dart';
 import '../../supplier/features/messages/presentation/screens/messages_screen.dart';
@@ -34,7 +43,8 @@ GoRouter appRouter(AppRouterRef ref) {
     navigatorKey: rootNavigatorKey,
     initialLocation: '/',
     redirect: (context, state) {
-      final isFactoryRoute = state.matchedLocation.startsWith('/factory');
+      final isFactoryRoute = state.matchedLocation.startsWith('/factory') ||
+          state.matchedLocation.startsWith('/account');
       final isSupplierRoute = state.matchedLocation.startsWith('/supplier');
 
       if (!session.isLoggedIn) {
@@ -116,6 +126,38 @@ GoRouter appRouter(AppRouterRef ref) {
       GoRoute(
         path: '/factory/home',
         builder: (context, state) => const factory_home.HomeScreen(),
+      ),
+      GoRoute(
+        path: '/factory/account',
+        builder: (context, state) => const FactoryAccountScreen(),
+      ),
+      GoRoute(
+        path: '/account/profile',
+        builder: (context, state) => const AccountProfileScreen(),
+      ),
+      GoRoute(
+        path: '/account/profile/edit',
+        builder: (context, state) => const EditProfileScreen(),
+      ),
+      GoRoute(
+        path: '/account/settings',
+        builder: (context, state) => const GeneralSettingsScreen(),
+      ),
+      GoRoute(
+        path: '/account/notifications',
+        builder: (context, state) => const NotificationsSettingsScreen(),
+      ),
+      GoRoute(
+        path: '/account/appearance',
+        builder: (context, state) => const AppearanceScreen(),
+      ),
+      GoRoute(
+        path: '/account/terms',
+        builder: (context, state) => const TermsScreen(),
+      ),
+      GoRoute(
+        path: '/account/privacy',
+        builder: (context, state) => const PrivacyScreen(),
       ),
 
       // Supplier main routes

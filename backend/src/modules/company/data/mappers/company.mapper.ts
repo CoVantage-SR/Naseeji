@@ -1,6 +1,6 @@
 import { ICompanyDocument } from '../models/company.model.js';
 import { Company } from '../../domain/entities/company.entity.js';
-import { AccountType } from '../../auth/identity/domain/value-objects/account-type.enum.js';
+import { AccountType } from '../../../auth/identity/domain/value-objects/account-type.enum.js';
 
 export class CompanyMapper {
   public static toDomain(doc: ICompanyDocument): Company {

@@ -1,11 +1,11 @@
-import { AccountType } from '../../auth/identity/domain/value-objects/account-type.enum.js';
+import { AccountType } from '../../../auth/identity/domain/value-objects/account-type.enum.js';
 import { UuidUtil } from '@core/utils/uuid.util.js';
 
 export interface CompanyProps {
   id: string;
   name: string;
   type: AccountType;
-  registrationNumber: string; // CR Number / Tax Number
+  registrationNumber: string;
   ownerUserId: string;
   address?: string;
   city?: string;

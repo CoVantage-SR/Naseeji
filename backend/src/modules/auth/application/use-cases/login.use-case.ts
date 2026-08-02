@@ -12,7 +12,6 @@ import { Phone } from '../../identity/domain/value-objects/phone.vo.js';
 import { Password } from '../../identity/domain/value-objects/password.vo.js';
 import { AccountStatus } from '../../identity/domain/value-objects/account-status.enum.js';
 import { Session } from '../../session/domain/entities/session.entity.js';
-import { Device } from '../../security/domain/entities/device.entity.js';
 import { RefreshTokenEntity } from '../../security/domain/entities/refresh-token.entity.js';
 import { Otp } from '../../otp/domain/entities/otp.entity.js';
 import { User } from '../../identity/domain/entities/user.entity.js';
@@ -68,7 +67,6 @@ export class LoginUseCase {
       throw new AuthenticationException('Invalid phone number or password');
     }
 
-    // 1. Check Password if set on account
     if (user.password && command.password) {
       const inputPwd = Password.createPlain(command.password);
       const isMatch = await this.passwordService.verifyPassword(inputPwd, user.password);
@@ -84,7 +82,6 @@ export class LoginUseCase {
       }
     }
 
-    // 2. Check Account Status
     if (user.status === AccountStatus.BLOCKED || user.status === AccountStatus.SUSPENDED) {
       await this.auditLogService.log(
         AuditAction.LOGIN_FAILED,
@@ -98,7 +95,6 @@ export class LoginUseCase {
       );
     }
 
-    // 3. Device Check & Fingerprint Validation
     const currentFingerprint = this.fingerprintService.generateFingerprint(
       command.platform,
       command.osVersion,
@@ -106,12 +102,11 @@ export class LoginUseCase {
       command.appVersion,
     );
 
-    let device = await this.deviceRepo.findByUserIdAndFingerprint(
+    const device = await this.deviceRepo.findByUserIdAndFingerprint(
       user.id,
       currentFingerprint.hash,
     );
 
-    // If New / Untrusted Device -> Require OTP challenge before issuing session tokens
     if (!device || !device.isTrusted) {
       const otp = Otp.create(user.phone.value);
       await this.otpRepo.save(otp);
@@ -131,7 +126,6 @@ export class LoginUseCase {
       };
     }
 
-    // 4. Update Device & Create Active Session
     device.updateLastLogin(command.ipAddress);
     await this.deviceRepo.save(device);
 

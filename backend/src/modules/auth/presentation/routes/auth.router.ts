@@ -21,20 +21,19 @@ import { FingerprintService } from '../../security/services/fingerprint.service.
 import { AuditLogService } from '../../../audit/services/audit-log.service.js';
 
 // Use cases instantiation
-import { RegisterUserUseCase } from '../application/use-cases/register-user.use-case.js';
-import { LoginUseCase } from '../application/use-cases/login.use-case.js';
-import { VerifyDeviceLoginUseCase } from '../application/use-cases/verify-device-login.use-case.js';
-import { GenerateOtpUseCase } from '../application/use-cases/generate-otp.use-case.js';
-import { VerifyOtpUseCase } from '../application/use-cases/verify-otp.use-case.js';
-import { ForgotPasswordUseCase } from '../application/use-cases/forgot-password.use-case.js';
-import { ResetPasswordUseCase } from '../application/use-cases/reset-password.use-case.js';
+import { RegisterUserUseCase } from '../../application/use-cases/register-user.use-case.js';
+import { LoginUseCase } from '../../application/use-cases/login.use-case.js';
+import { VerifyDeviceLoginUseCase } from '../../application/use-cases/verify-device-login.use-case.js';
+import { GenerateOtpUseCase } from '../../otp/application/use-cases/generate-otp.use-case.js';
+import { VerifyOtpUseCase } from '../../otp/application/use-cases/verify-otp.use-case.js';
+import { ForgotPasswordUseCase } from '../../application/use-cases/forgot-password.use-case.js';
+import { ResetPasswordUseCase } from '../../application/use-cases/reset-password.use-case.js';
 import { IssueRefreshTokenUseCase } from '../../security/application/use-cases/issue-refresh-token.use-case.js';
-import { LogoutUseCase } from '../application/use-cases/logout.use-case.js';
-import { LogoutAllDevicesUseCase } from '../application/use-cases/logout-all-devices.use-case.js';
+import { LogoutUseCase } from '../../application/use-cases/logout.use-case.js';
+import { LogoutAllDevicesUseCase } from '../../application/use-cases/logout-all-devices.use-case.js';
 
 const router = Router();
 
-// Instantiate Dependency Graph for Auth Routes
 const userRepo = new MongoUserRepository();
 const companyRepo = new MongoCompanyRepository();
 const deviceRepo = new MongoDeviceRepository();
@@ -56,7 +55,6 @@ const registerUserUseCase = new RegisterUserUseCase(
   refreshTokenRepo,
   passwordService,
   jwtService,
-  fingerprintService,
   auditLogService,
 );
 const loginUseCase = new LoginUseCase(
@@ -111,7 +109,6 @@ const controller = new AuthController(
   logoutAllDevicesUseCase,
 );
 
-// Auth Endpoint Routes
 router.post('/register', validateRequest(registerUserSchema), controller.register);
 router.post('/login', validateRequest(loginSchema), controller.login);
 router.post(
@@ -125,7 +122,6 @@ router.post('/forgot-password', validateRequest(forgotPasswordSchema), controlle
 router.post('/reset-password', validateRequest(resetPasswordSchema), controller.resetPassword);
 router.post('/refresh-token', controller.refreshToken);
 
-// Protected Auth Routes
 router.post('/logout', authenticateMiddleware, controller.logout);
 router.post('/logout-all', authenticateMiddleware, controller.logoutAll);
 

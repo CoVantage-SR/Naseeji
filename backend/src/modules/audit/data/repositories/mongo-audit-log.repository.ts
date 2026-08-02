@@ -15,10 +15,7 @@ export class MongoAuditLogRepository implements IAuditLogRepository {
   }
 
   public async findAll(limit = 100, offset = 0): Promise<AuditLog[]> {
-    const docs = await AuditLogModel.find()
-      .sort({ createdAt: -1 })
-      .skip(offset)
-      .limit(limit);
+    const docs = await AuditLogModel.find().sort({ createdAt: -1 }).skip(offset).limit(limit);
     return docs.map((doc) => AuditLogMapper.toDomain(doc));
   }
 }

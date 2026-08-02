@@ -5,7 +5,6 @@ import { ISessionRepository } from '../../session/domain/repositories/session.re
 import { IRefreshTokenRepository } from '../../security/domain/repositories/refresh-token.repository.interface.js';
 import { PasswordService } from '../../security/services/password.service.js';
 import { JwtService, IssuedTokens } from '../../security/services/jwt.service.js';
-import { FingerprintService } from '../../security/services/fingerprint.service.js';
 import { AuditLogService } from '../../../audit/services/audit-log.service.js';
 import { AuditAction } from '../../../audit/domain/value-objects/audit-action.enum.js';
 import { User } from '../../identity/domain/entities/user.entity.js';
@@ -30,7 +29,7 @@ export interface RegisterUserCommand {
   firstName: string;
   lastName: string;
   companyName: string;
-  registrationNumber: string; // CR number / Tax ID
+  registrationNumber: string;
   platform: string;
   deviceName: string;
   osVersion: string;
@@ -56,14 +55,12 @@ export class RegisterUserUseCase {
     private refreshTokenRepo: IRefreshTokenRepository,
     private passwordService: PasswordService,
     private jwtService: JwtService,
-    private fingerprintService: FingerprintService,
     private auditLogService: AuditLogService,
   ) {}
 
   public async execute(command: RegisterUserCommand): Promise<RegisterUserResponse> {
     const phone = Phone.create(command.phone);
 
-    // 1. Validate uniqueness
     const existingPhone = await this.userRepo.findByPhone(phone.value);
     if (existingPhone) {
       throw new BusinessException('Phone number is already registered');
@@ -83,14 +80,12 @@ export class RegisterUserUseCase {
       throw new BusinessException('Company registration number is already registered');
     }
 
-    // 2. Hash password if provided
     let hashedPassword: Password | undefined;
     if (command.password) {
       const plainPassword = Password.createPlain(command.password);
       hashedPassword = await this.passwordService.hashPassword(plainPassword);
     }
 
-    // 3. Prepare Entities
     const user = User.createNew(phone, command.accountType, command.email, hashedPassword);
     user.updateProfile(
       new UserProfile({
@@ -108,12 +103,12 @@ export class RegisterUserUseCase {
       command.registrationNumber,
       user.id,
     );
-    user.activate(); // Activate user upon registration
+    user.activate();
 
-    // 4. Bind company reference to user entity
     const companyRef = new CompanyReference(company.id, command.accountType);
     user.updateProfile(user.profile!);
-    (user as unknown as { props: { companyReference: CompanyReference } }).props.companyReference = companyRef;
+    (user as unknown as { props: { companyReference: CompanyReference } }).props.companyReference =
+      companyRef;
 
     const device = Device.create(
       user.id,
@@ -144,7 +139,6 @@ export class RegisterUserUseCase {
       UuidUtil.generate(),
     );
 
-    // 5. Execute Atomic MongoDB Transaction
     await MongoTransactionManager.runInTransaction(async (dbSession) => {
       await this.userRepo.save(user);
       await this.companyRepo.save(company, dbSession);
@@ -153,7 +147,6 @@ export class RegisterUserUseCase {
       await this.refreshTokenRepo.save(refreshTokenEntity);
     });
 
-    // 6. Log Audit Trail
     await this.auditLogService.log(
       AuditAction.USER_REGISTERED,
       command.ipAddress,

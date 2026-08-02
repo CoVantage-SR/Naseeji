@@ -26,7 +26,9 @@ export class MongoTransactionManager {
       });
 
       // Fallback execution without session for standalone dev MongoDB instances
-      if ((error as Error).message.includes('Transaction numbers are only allowed on a replica set')) {
+      if (
+        (error as Error).message.includes('Transaction numbers are only allowed on a replica set')
+      ) {
         return await work(null);
       }
 

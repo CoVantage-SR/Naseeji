@@ -16,13 +16,13 @@ import { JwtService } from '../../security/services/jwt.service.js';
 import { AuditLogService } from '../../../audit/services/audit-log.service.js';
 
 // Use cases instantiation
-import { AdminLoginUseCase } from '../application/use-cases/admin-login.use-case.js';
-import { ForceLogoutUserUseCase } from '../application/use-cases/force-logout-user.use-case.js';
-import { BlockUserUseCase } from '../application/use-cases/block-user.use-case.js';
-import { SuspendUserUseCase } from '../application/use-cases/suspend-user.use-case.js';
-import { ActivateUserUseCase } from '../application/use-cases/activate-user.use-case.js';
-import { AdminResetPasswordUseCase } from '../application/use-cases/admin-reset-password.use-case.js';
-import { GetAuditLogsUseCase } from '../application/use-cases/get-audit-logs.use-case.js';
+import { AdminLoginUseCase } from '../../application/use-cases/admin-login.use-case.js';
+import { ForceLogoutUserUseCase } from '../../application/use-cases/force-logout-user.use-case.js';
+import { BlockUserUseCase } from '../../application/use-cases/block-user.use-case.js';
+import { SuspendUserUseCase } from '../../application/use-cases/suspend-user.use-case.js';
+import { ActivateUserUseCase } from '../../application/use-cases/activate-user.use-case.js';
+import { AdminResetPasswordUseCase } from '../../application/use-cases/admin-reset-password.use-case.js';
+import { GetAuditLogsUseCase } from '../../application/use-cases/get-audit-logs.use-case.js';
 
 const router = Router();
 
@@ -82,17 +82,11 @@ const controller = new AdminAuthController(
   getAuditLogsUseCase,
 );
 
-// Public Admin Login
 router.post('/login', validateRequest(loginSchema), controller.login);
 
-// Protected Admin Dashboard Operations
 router.use(authenticateMiddleware);
 
-router.post(
-  '/sessions/force-logout',
-  authorize('session:force_logout'),
-  controller.forceLogout,
-);
+router.post('/sessions/force-logout', authorize('session:force_logout'), controller.forceLogout);
 
 router.patch('/users/:id/block', authorize('user:manage_status'), controller.blockUser);
 router.patch('/users/:id/suspend', authorize('user:manage_status'), controller.suspendUser);

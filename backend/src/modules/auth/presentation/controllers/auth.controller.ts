@@ -1,14 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
-import { RegisterUserUseCase } from '../application/use-cases/register-user.use-case.js';
-import { LoginUseCase } from '../application/use-cases/login.use-case.js';
-import { VerifyDeviceLoginUseCase } from '../application/use-cases/verify-device-login.use-case.js';
-import { GenerateOtpUseCase } from '../application/use-cases/generate-otp.use-case.js';
-import { VerifyOtpUseCase } from '../application/use-cases/verify-otp.use-case.js';
-import { ForgotPasswordUseCase } from '../application/use-cases/forgot-password.use-case.js';
-import { ResetPasswordUseCase } from '../application/use-cases/reset-password.use-case.js';
-import { IssueRefreshTokenUseCase } from '../security/application/use-cases/issue-refresh-token.use-case.js';
-import { LogoutUseCase } from '../application/use-cases/logout.use-case.js';
-import { LogoutAllDevicesUseCase } from '../application/use-cases/logout-all-devices.use-case.js';
+import { RegisterUserUseCase } from '../../application/use-cases/register-user.use-case.js';
+import { LoginUseCase } from '../../application/use-cases/login.use-case.js';
+import { VerifyDeviceLoginUseCase } from '../../application/use-cases/verify-device-login.use-case.js';
+import { GenerateOtpUseCase } from '../../otp/application/use-cases/generate-otp.use-case.js';
+import { VerifyOtpUseCase } from '../../otp/application/use-cases/verify-otp.use-case.js';
+import { ForgotPasswordUseCase } from '../../application/use-cases/forgot-password.use-case.js';
+import { ResetPasswordUseCase } from '../../application/use-cases/reset-password.use-case.js';
+import { IssueRefreshTokenUseCase } from '../../security/application/use-cases/issue-refresh-token.use-case.js';
+import { LogoutUseCase } from '../../application/use-cases/logout.use-case.js';
+import { LogoutAllDevicesUseCase } from '../../application/use-cases/logout-all-devices.use-case.js';
 import { HttpStatus } from '@core/constants/http-status.constant.js';
 
 export class AuthController {
@@ -191,11 +191,7 @@ export class AuthController {
     }
   };
 
-  public resetPassword = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ): Promise<void> => {
+  public resetPassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const ipAddress = req.ip || '127.0.0.1';
       const userAgent = req.headers['user-agent'] || 'Unknown';

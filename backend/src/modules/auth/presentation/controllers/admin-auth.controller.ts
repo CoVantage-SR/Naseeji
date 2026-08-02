@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
-import { AdminLoginUseCase } from '../application/use-cases/admin-login.use-case.js';
-import { ForceLogoutUserUseCase } from '../application/use-cases/force-logout-user.use-case.js';
-import { BlockUserUseCase } from '../application/use-cases/block-user.use-case.js';
-import { SuspendUserUseCase } from '../application/use-cases/suspend-user.use-case.js';
-import { ActivateUserUseCase } from '../application/use-cases/activate-user.use-case.js';
-import { AdminResetPasswordUseCase } from '../application/use-cases/admin-reset-password.use-case.js';
-import { GetAuditLogsUseCase } from '../application/use-cases/get-audit-logs.use-case.js';
+import { AdminLoginUseCase } from '../../application/use-cases/admin-login.use-case.js';
+import { ForceLogoutUserUseCase } from '../../application/use-cases/force-logout-user.use-case.js';
+import { BlockUserUseCase } from '../../application/use-cases/block-user.use-case.js';
+import { SuspendUserUseCase } from '../../application/use-cases/suspend-user.use-case.js';
+import { ActivateUserUseCase } from '../../application/use-cases/activate-user.use-case.js';
+import { AdminResetPasswordUseCase } from '../../application/use-cases/admin-reset-password.use-case.js';
+import { GetAuditLogsUseCase } from '../../application/use-cases/get-audit-logs.use-case.js';
 import { HttpStatus } from '@core/constants/http-status.constant.js';
 
 export class AdminAuthController {
