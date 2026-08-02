@@ -3,16 +3,27 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:naseeji_factory/authentication/presentation/login/login_screen.dart';
+import 'package:naseeji_factory/core/session/session_provider.dart';
 import 'package:naseeji_factory/l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  late SharedPreferences mockPrefs;
+
+  setUp(() async {
+    SharedPreferences.setMockInitialValues({});
+    mockPrefs = await SharedPreferences.getInstance();
+  });
 
   testWidgets('E2E Integration Test - Complete Login User Journey Flow', (WidgetTester tester) async {
     // 1. Open App
     await tester.pumpWidget(
-      const ProviderScope(
-        child: MaterialApp(
+      ProviderScope(
+        overrides: [
+          sharedPreferencesProvider.overrideWithValue(mockPrefs),
+        ],
+        child: const MaterialApp(
           locale: Locale('ar'),
           supportedLocales: AppLocalizations.supportedLocales,
           localizationsDelegates: [

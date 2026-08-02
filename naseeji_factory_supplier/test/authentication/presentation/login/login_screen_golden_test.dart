@@ -3,15 +3,21 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:naseeji_factory/authentication/presentation/login/login_screen.dart';
+import 'package:naseeji_factory/core/session/session_provider.dart';
 import 'package:naseeji_factory/core/theme/app_theme.dart';
 import 'package:naseeji_factory/l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Widget buildGoldenWidget({
+  required SharedPreferences prefs,
   required ThemeMode themeMode,
   required Locale locale,
   required Size size,
 }) {
   return ProviderScope(
+    overrides: [
+      sharedPreferencesProvider.overrideWithValue(prefs),
+    ],
     child: MaterialApp(
       debugShowCheckedModeBanner: false,
       locale: locale,
@@ -39,6 +45,12 @@ Widget buildGoldenWidget({
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  late SharedPreferences mockPrefs;
+
+  setUp(() async {
+    SharedPreferences.setMockInitialValues({});
+    mockPrefs = await SharedPreferences.getInstance();
+  });
 
   group('LoginScreen Golden Visual Tests', () {
     testWidgets('Golden Test - Light Theme Arabic (360dp Mobile)', (WidgetTester tester) async {
@@ -47,6 +59,7 @@ void main() {
       addTearDown(tester.view.resetPhysicalSize);
 
       await tester.pumpWidget(buildGoldenWidget(
+        prefs: mockPrefs,
         themeMode: ThemeMode.light,
         locale: const Locale('ar'),
         size: const Size(360, 800),
@@ -65,6 +78,7 @@ void main() {
       addTearDown(tester.view.resetPhysicalSize);
 
       await tester.pumpWidget(buildGoldenWidget(
+        prefs: mockPrefs,
         themeMode: ThemeMode.dark,
         locale: const Locale('en'),
         size: const Size(480, 900),
@@ -83,6 +97,7 @@ void main() {
       addTearDown(tester.view.resetPhysicalSize);
 
       await tester.pumpWidget(buildGoldenWidget(
+        prefs: mockPrefs,
         themeMode: ThemeMode.light,
         locale: const Locale('ar'),
         size: const Size(320, 640),
@@ -101,6 +116,7 @@ void main() {
       addTearDown(tester.view.resetPhysicalSize);
 
       await tester.pumpWidget(buildGoldenWidget(
+        prefs: mockPrefs,
         themeMode: ThemeMode.light,
         locale: const Locale('ar'),
         size: const Size(800, 400),
