@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:naseeji_factory/authentication/presentation/login/login_screen.dart';
+import 'package:naseeji_factory/authentication/presentation/login/widgets/demo_explore_banner.dart';
 import 'package:naseeji_factory/authentication/presentation/login/widgets/google_sign_in_button.dart';
 import 'package:naseeji_factory/authentication/presentation/login/widgets/login_form.dart';
 import 'package:naseeji_factory/core/session/session_provider.dart';
@@ -46,7 +47,6 @@ void main() {
   group('LoginScreen Widget Tests', () {
     testWidgets('renders all core login components properly', (WidgetTester tester) async {
       await tester.pumpWidget(buildTestableWidget(prefs: mockPrefs));
-      await tester.pump();
       await tester.pumpAndSettle();
 
       expect(find.byType(LoginForm), findsOneWidget);
@@ -55,7 +55,6 @@ void main() {
 
     testWidgets('validates empty inputs and shows error messages', (WidgetTester tester) async {
       await tester.pumpWidget(buildTestableWidget(prefs: mockPrefs));
-      await tester.pump();
       await tester.pumpAndSettle();
 
       final loginBtn = find.widgetWithText(ElevatedButton, 'تسجيل الدخول');
@@ -63,13 +62,12 @@ void main() {
       await tester.tap(loginBtn);
       await tester.pumpAndSettle();
 
-      expect(find.text('أدخل بريدك الإلكتروني أو رقم هاتفك'), findsOneWidget);
+      expect(find.text('أدخل بريدك الإلكتروني أو رقم هاتفك'), findsNWidgets(2));
       expect(find.text('يرجى إدخال كلمة المرور'), findsOneWidget);
     });
 
     testWidgets('toggles remember me checkbox state', (WidgetTester tester) async {
       await tester.pumpWidget(buildTestableWidget(prefs: mockPrefs));
-      await tester.pump();
       await tester.pumpAndSettle();
 
       final checkbox = find.byType(Checkbox);
@@ -81,7 +79,6 @@ void main() {
 
     testWidgets('toggles password visibility icon', (WidgetTester tester) async {
       await tester.pumpWidget(buildTestableWidget(prefs: mockPrefs));
-      await tester.pump();
       await tester.pumpAndSettle();
 
       final toggleIcon = find.byIcon(Icons.visibility_off_outlined);
@@ -95,7 +92,6 @@ void main() {
 
     testWidgets('renders in English locale when selected', (WidgetTester tester) async {
       await tester.pumpWidget(buildTestableWidget(prefs: mockPrefs, locale: const Locale('en')));
-      await tester.pump();
       await tester.pumpAndSettle();
 
       expect(find.text('Sign In'), findsWidgets);
@@ -104,11 +100,11 @@ void main() {
 
     testWidgets('opens guest mode options popup menu', (WidgetTester tester) async {
       await tester.pumpWidget(buildTestableWidget(prefs: mockPrefs));
-      await tester.pump();
       await tester.pumpAndSettle();
 
-      final bannerFinder = find.byIcon(Icons.explore_outlined);
-      expect(bannerFinder, findsOneWidget);
+      final bannerFinder = find.byType(DemoExploreBanner);
+      await tester.ensureVisible(bannerFinder);
+      await tester.pumpAndSettle();
 
       await tester.tap(bannerFinder);
       await tester.pumpAndSettle();

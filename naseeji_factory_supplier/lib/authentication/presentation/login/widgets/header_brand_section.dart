@@ -24,39 +24,45 @@ class HeaderBrandSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const RepaintBoundary(
-                      child: NaseejiInfinityLogo(size: 42),
-                    ),
-                    const SizedBox(width: 10),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'NASEEJI',
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w900,
-                            letterSpacing: 1.2,
-                            color: colorScheme.onSurface,
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: AlignmentDirectional.centerStart,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const RepaintBoundary(
+                        child: NaseejiInfinityLogo(size: 42),
+                      ),
+                      const SizedBox(width: 10),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'NASEEJI',
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.w900,
+                              letterSpacing: 1.2,
+                              color: colorScheme.onSurface,
+                            ),
                           ),
-                        ),
-                        Text(
-                          'نســيــجــي',
-                          style: theme.textTheme.titleLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: colorScheme.primary,
-                            height: 1.0,
+                          Text(
+                            'نســيــجــي',
+                            style: theme.textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: colorScheme.primary,
+                              height: 1.0,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   l10n.brandTagline,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: colorScheme.onSurfaceVariant,
                     fontWeight: FontWeight.w600,
@@ -66,6 +72,8 @@ class HeaderBrandSection extends StatelessWidget {
               ],
             ),
           ),
+
+          const SizedBox(width: 8),
 
           // Directional Trail: Industrial Factory Backdrop Illustration
           Expanded(

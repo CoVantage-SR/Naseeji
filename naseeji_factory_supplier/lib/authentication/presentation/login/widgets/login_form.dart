@@ -144,61 +144,71 @@ class _LoginFormState extends State<LoginForm> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               // Remember me
-              Semantics(
-                button: true,
-                checked: widget.rememberMe,
-                label: l10n.rememberMe,
-                child: InkWell(
-                  onTap: () => widget.onRememberMeChanged(!widget.rememberMe),
-                  borderRadius: AppRadius.rSM,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: Checkbox(
-                            value: widget.rememberMe,
-                            onChanged: (val) => widget.onRememberMeChanged(val ?? false),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(4),
+              Flexible(
+                child: Semantics(
+                  button: true,
+                  checked: widget.rememberMe,
+                  label: l10n.rememberMe,
+                  child: InkWell(
+                    onTap: () => widget.onRememberMeChanged(!widget.rememberMe),
+                    borderRadius: AppRadius.rSM,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(
+                            height: 24,
+                            width: 24,
+                            child: Checkbox(
+                              value: widget.rememberMe,
+                              onChanged: (val) => widget.onRememberMeChanged(val ?? false),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              activeColor: colorScheme.primary,
                             ),
-                            activeColor: colorScheme.primary,
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          l10n.rememberMe,
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: colorScheme.onSurface,
+                          const SizedBox(width: 8),
+                          Flexible(
+                            child: Text(
+                              l10n.rememberMe,
+                              overflow: TextOverflow.ellipsis,
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: colorScheme.onSurface,
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
 
+              const SizedBox(width: 8),
+
               // Forgot password button
-              Semantics(
-                button: true,
-                label: l10n.forgotPassword,
-                child: SizedBox(
-                  height: 48,
-                  child: TextButton(
-                    onPressed: widget.onForgotPassword,
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      minimumSize: const Size(48, 48),
-                    ),
-                    child: Text(
-                      l10n.forgotPassword,
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.primary,
-                        fontWeight: FontWeight.bold,
+              Flexible(
+                child: Semantics(
+                  button: true,
+                  label: l10n.forgotPassword,
+                  child: SizedBox(
+                    height: 48,
+                    child: TextButton(
+                      onPressed: widget.onForgotPassword,
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        minimumSize: const Size(48, 48),
+                      ),
+                      child: Text(
+                        l10n.forgotPassword,
+                        overflow: TextOverflow.ellipsis,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
