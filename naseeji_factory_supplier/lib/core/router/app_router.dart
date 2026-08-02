@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -35,14 +36,25 @@ part 'app_router.g.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'rootNav');
 
+class RouterNotifier extends ChangeNotifier {
+  RouterNotifier(Ref ref) {
+    ref.listen(sessionNotifierProvider, (_, __) {
+      notifyListeners();
+    });
+  }
+}
+
 @riverpod
 GoRouter appRouter(AppRouterRef ref) {
-  final session = ref.watch(sessionNotifierProvider);
+  final routerNotifier = RouterNotifier(ref);
 
   return GoRouter(
     navigatorKey: rootNavigatorKey,
     initialLocation: '/',
+    refreshListenable: routerNotifier,
+    errorBuilder: (context, state) => const LoginScreen(),
     redirect: (context, state) {
+      final session = ref.read(sessionNotifierProvider);
       final isFactoryRoute = state.matchedLocation.startsWith('/factory') ||
           state.matchedLocation.startsWith('/account');
       final isSupplierRoute = state.matchedLocation.startsWith('/supplier');
@@ -83,7 +95,10 @@ GoRouter appRouter(AppRouterRef ref) {
       ),
       GoRoute(
         path: '/auth/register',
-        builder: (context, state) => const RegisterScreen(),
+        builder: (context, state) {
+          final role = state.extra as UserRole?;
+          return RegisterScreen(initialRole: role);
+        },
       ),
       GoRoute(
         path: '/auth/otp',

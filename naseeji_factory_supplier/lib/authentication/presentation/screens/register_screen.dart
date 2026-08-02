@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../shared/enums/user_role.dart';
 import '../../../core/constants/app_radius.dart';
 import '../../../core/constants/app_spacing.dart';
 import '../providers/register_provider.dart';
@@ -13,7 +14,8 @@ import '../widgets/register_textfields.dart';
 import '../widgets/terms_checkbox.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
-  const RegisterScreen({super.key});
+  final UserRole? initialRole;
+  const RegisterScreen({super.key, this.initialRole});
 
   @override
   ConsumerState<RegisterScreen> createState() => _RegisterScreenState();
@@ -115,7 +117,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
                 // 3. Welcome Title & Subtitle
                 Text(
-                  'إنشاء حساب جديد',
+                  widget.initialRole == UserRole.supplier
+                      ? 'إنشاء حساب كمورد'
+                      : widget.initialRole == UserRole.factory
+                          ? 'إنشاء حساب كمصنع'
+                          : 'إنشاء حساب جديد',
                   textAlign: TextAlign.center,
                   style: theme.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
