@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_radius.dart';
+import '../../../../core/theme/role_theme_extension.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class DemoExploreBanner extends StatelessWidget {
   final VoidCallback onDemoFactory;
@@ -15,12 +17,14 @@ class DemoExploreBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
+    final roleTheme = theme.extension<RoleThemeExtension>() ?? RoleThemeExtension.light;
     final isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Semantics(
       button: true,
-      label: 'استكشف المنصة كتجربة بدون تسجيل',
-      hint: 'اضغط لاختيار تجربة المنصة كمصنع أو كمورد',
+      label: l10n.exploreDemoText,
+      hint: l10n.noAccountSubtitle,
       child: Container(
         decoration: BoxDecoration(
           color: colorScheme.surfaceContainerHighest,
@@ -44,9 +48,9 @@ class DemoExploreBanner extends StatelessWidget {
                 value: 'factory',
                 child: Row(
                   children: [
-                    Icon(Icons.factory_outlined, color: colorScheme.tertiary, size: 20),
+                    Icon(Icons.factory_outlined, color: roleTheme.factoryPrimary, size: 20),
                     const SizedBox(width: 8),
-                    const Text('تجربة المنصة كمصنع'),
+                    Text(l10n.demoAsFactory),
                   ],
                 ),
               ),
@@ -54,9 +58,9 @@ class DemoExploreBanner extends StatelessWidget {
                 value: 'supplier',
                 child: Row(
                   children: [
-                    Icon(Icons.inventory_2_outlined, color: colorScheme.primary, size: 20),
+                    Icon(Icons.inventory_2_outlined, color: roleTheme.supplierPrimary, size: 20),
                     const SizedBox(width: 8),
-                    const Text('تجربة المنصة كمورد'),
+                    Text(l10n.demoAsSupplier),
                   ],
                 ),
               ),
@@ -75,7 +79,7 @@ class DemoExploreBanner extends StatelessWidget {
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
-                        'استكشف المنصة كتجربة دون تسجيل',
+                        l10n.exploreDemoText,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           fontWeight: FontWeight.w600,
                           color: colorScheme.onSurface,
@@ -87,7 +91,7 @@ class DemoExploreBanner extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          'تجربة المنصة',
+                          l10n.exploreDemoButton,
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: colorScheme.primary,
                             fontWeight: FontWeight.bold,

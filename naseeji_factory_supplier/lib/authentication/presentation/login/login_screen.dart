@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_radius.dart';
 import '../../../../core/constants/app_spacing.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../../shared/enums/user_role.dart';
 import '../../../../core/session/session_provider.dart';
 import '../providers/auth_providers.dart';
@@ -45,9 +46,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (!(_formKey.currentState?.validate() ?? false)) return;
 
     FocusScope.of(context).unfocus();
-    final success = await ref
-        .read(authControllerProvider.notifier)
-        .login(
+    final success = await ref.read(authControllerProvider.notifier).login(
           _phoneOrEmailController.text.trim(),
           _passwordController.text.trim(),
           rememberMe: _rememberMe,
@@ -61,9 +60,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future<void> _handleGoogleLogin() async {
     FocusScope.of(context).unfocus();
-    final success = await ref
-        .read(authControllerProvider.notifier)
-        .loginWithGoogle();
+    final success = await ref.read(authControllerProvider.notifier).loginWithGoogle();
     if (success && mounted) {
       final user = ref.read(authControllerProvider).user;
       _navigateByUserRole(user?.role);
@@ -80,13 +77,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   void _navigateByUserRole(UserRole? role) {
     final effectiveRole = role ?? UserRole.factory;
-    ref
-        .read(sessionNotifierProvider.notifier)
-        .saveSession(
-          accessToken: 'jwt_token_${DateTime.now().millisecondsSinceEpoch}',
-          refreshToken: 'jwt_refresh_token',
-          role: effectiveRole,
-        );
+    ref.read(sessionNotifierProvider.notifier).saveSession(
+      accessToken: 'jwt_token_${DateTime.now().millisecondsSinceEpoch}',
+      refreshToken: 'jwt_refresh_token',
+      role: effectiveRole,
+    );
     if (effectiveRole == UserRole.factory) {
       context.go('/factory/home');
     } else if (effectiveRole == UserRole.supplier) {
@@ -100,6 +95,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
     final authState = ref.watch(authControllerProvider);
 
     return Scaffold(
@@ -113,10 +109,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               constraints: const BoxConstraints(maxWidth: 480),
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 15.0,
-                  vertical: 12.0,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
                 child: AbsorbPointer(
                   absorbing: authState.isLoading,
                   child: Column(
@@ -143,7 +136,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                       // 3. Welcome Title & Subtitle
                       Text(
-                        'تسجيل الدخول',
+                        l10n.loginTitle,
                         textAlign: TextAlign.center,
                         style: theme.textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.bold,
@@ -153,7 +146,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        'مرحباً بعودتك! سجّل دخولك للوصول إلى حسابك',
+                        l10n.loginSubtitle,
                         textAlign: TextAlign.center,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           color: colorScheme.onSurfaceVariant,
@@ -174,8 +167,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             _rememberMe = val;
                           });
                         },
-                        onForgotPassword: () =>
-                            context.push('/auth/forgot-password'),
+                        onForgotPassword: () => context.push('/auth/forgot-password'),
                         onLogin: _handleLogin,
                         isLoading: authState.isLoading,
                       ),
@@ -183,10 +175,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       if (authState.errorMessage != null) ...[
                         const SizedBox(height: 12),
                         Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 10,
-                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                           decoration: BoxDecoration(
                             color: colorScheme.errorContainer,
                             borderRadius: AppRadius.rSM,
@@ -214,11 +203,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12.0,
-                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 12.0),
                             child: Text(
-                              'أو',
+                              l10n.orDivider,
                               style: theme.textTheme.bodySmall?.copyWith(
                                 color: colorScheme.onSurfaceVariant,
                               ),
@@ -246,16 +233,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       // 7. Account Registration Options Section
                       AccountRegistrationSection(
                         onRegisterFactory: () {
-                          context.push(
-                            '/auth/register',
-                            extra: UserRole.factory,
-                          );
+                          context.push('/auth/register', extra: UserRole.factory);
                         },
                         onRegisterSupplier: () {
-                          context.push(
-                            '/auth/register',
-                            extra: UserRole.supplier,
-                          );
+                          context.push('/auth/register', extra: UserRole.supplier);
                         },
                       ),
 
@@ -264,8 +245,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       // 8. Bottom Demo Banner
                       DemoExploreBanner(
                         onDemoFactory: () => _handleDemoLogin(UserRole.factory),
-                        onDemoSupplier: () =>
-                            _handleDemoLogin(UserRole.supplier),
+                        onDemoSupplier: () => _handleDemoLogin(UserRole.supplier),
                       ),
                       AppSpacing.hLG,
                     ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'app_colors.dart';
+import 'role_theme_extension.dart';
 import '../constants/app_typography.dart';
 import '../constants/app_radius.dart';
 
@@ -12,6 +13,9 @@ class AppTheme {
       brightness: Brightness.light,
       primaryColor: AppColors.primary,
       scaffoldBackgroundColor: AppColors.backgroundLight,
+      extensions: const [
+        RoleThemeExtension.light,
+      ],
       colorScheme: const ColorScheme.light(
         primary: AppColors.primary,
         secondary: AppColors.secondary,
@@ -88,6 +92,9 @@ class AppTheme {
       brightness: Brightness.dark,
       primaryColor: AppColors.primaryLight,
       scaffoldBackgroundColor: AppColors.backgroundDark,
+      extensions: const [
+        RoleThemeExtension.dark,
+      ],
       colorScheme: const ColorScheme.dark(
         primary: AppColors.primaryLight,
         secondary: AppColors.secondaryLight,
@@ -162,5 +169,3 @@ class AppTheme {
   static ThemeData get lightTheme => light;
   static ThemeData get darkTheme => dark;
 }
-
-

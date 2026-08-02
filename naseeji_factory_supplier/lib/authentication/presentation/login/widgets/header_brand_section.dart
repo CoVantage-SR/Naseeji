@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_radius.dart';
+import '../../../../l10n/app_localizations.dart';
 import 'naseeji_logo_painters.dart';
 
 class HeaderBrandSection extends StatelessWidget {
@@ -9,13 +10,14 @@ class HeaderBrandSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return SizedBox(
       height: 120,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Directional Lead (RTL Right / LTR Left): Logo & Brand Names
+          // Directional Lead: Logo & Brand Names
           Expanded(
             flex: 6,
             child: Column(
@@ -54,7 +56,7 @@ class HeaderBrandSection extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'منصة النسيج الرقمي للمصانع والموردين',
+                  l10n.brandTagline,
                   style: theme.textTheme.bodySmall?.copyWith(
                     color: colorScheme.onSurfaceVariant,
                     fontWeight: FontWeight.w600,

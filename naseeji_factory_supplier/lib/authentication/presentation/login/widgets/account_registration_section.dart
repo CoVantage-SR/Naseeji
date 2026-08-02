@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_radius.dart';
+import '../../../../core/theme/role_theme_extension.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class AccountRegistrationSection extends StatelessWidget {
   final VoidCallback onRegisterFactory;
@@ -15,6 +17,8 @@ class AccountRegistrationSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
+    final roleTheme = theme.extension<RoleThemeExtension>() ?? RoleThemeExtension.light;
 
     return Container(
       padding: const EdgeInsets.all(16.0),
@@ -25,7 +29,7 @@ class AccountRegistrationSection extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            'ليس لديك حساب؟',
+            l10n.noAccountTitle,
             style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
               color: colorScheme.onSurface,
@@ -33,7 +37,7 @@ class AccountRegistrationSection extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            'اختر نوع الحساب الذي يناسبك للانضمام إلى نسيجي',
+            l10n.noAccountSubtitle,
             style: theme.textTheme.bodySmall?.copyWith(
               color: colorScheme.onSurfaceVariant,
               fontSize: 12,
@@ -43,25 +47,25 @@ class AccountRegistrationSection extends StatelessWidget {
           const SizedBox(height: 16),
           Row(
             children: [
-              // Supplier Option Card (مورد)
+              // Supplier Option Card
               Expanded(
                 child: _RoleCardItem(
-                  title: 'مورد',
-                  subtitle: 'أبيع منتجاتي وأستقبل طلبات المصانع وتفاوض على الأسعار',
-                  buttonText: 'إنشاء حساب كمورد',
-                  accentColor: colorScheme.primary,
+                  title: l10n.supplierRoleTitle,
+                  subtitle: l10n.supplierRoleSubtitle,
+                  buttonText: l10n.supplierRegisterButton,
+                  accentColor: roleTheme.supplierPrimary,
                   icon: Icons.inventory_2_outlined,
                   onPressed: onRegisterSupplier,
                 ),
               ),
               const SizedBox(width: 12),
-              // Factory Option Card (مصنع)
+              // Factory Option Card
               Expanded(
                 child: _RoleCardItem(
-                  title: 'مصنع',
-                  subtitle: 'أشتري الخامات والمنتجات وأرسل طلبات الشراء',
-                  buttonText: 'إنشاء حساب كمصنع',
-                  accentColor: colorScheme.tertiary,
+                  title: l10n.factoryRoleTitle,
+                  subtitle: l10n.factoryRoleSubtitle,
+                  buttonText: l10n.factoryRegisterButton,
+                  accentColor: roleTheme.factoryPrimary,
                   icon: Icons.factory_outlined,
                   onPressed: onRegisterFactory,
                 ),

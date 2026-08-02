@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_radius.dart';
 import '../../../../core/constants/app_spacing.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../../shared/validators/validators.dart';
 
 class LoginForm extends StatefulWidget {
@@ -52,6 +53,7 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Form(
       key: widget.formKey,
@@ -59,7 +61,7 @@ class _LoginFormState extends State<LoginForm> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Field 1: Email or Phone
-          const _FormInputLabel(label: 'البريد الإلكتروني أو رقم الهاتف'),
+          _FormInputLabel(label: l10n.emailOrPhoneLabel),
           const SizedBox(height: 6),
           TextFormField(
             controller: widget.phoneOrEmailController,
@@ -77,7 +79,7 @@ class _LoginFormState extends State<LoginForm> {
             style: theme.textTheme.bodyLarge,
             decoration: _buildInputDecoration(
               context: context,
-              hintText: 'أدخل بريدك الإلكتروني أو رقم هاتفك',
+              hintText: l10n.emailOrPhoneHint,
               prefixIcon: Icon(
                 Icons.person_outline_rounded,
                 color: colorScheme.onSurfaceVariant,
@@ -90,7 +92,7 @@ class _LoginFormState extends State<LoginForm> {
           AppSpacing.hMD,
 
           // Field 2: Password
-          const _FormInputLabel(label: 'كلمة المرور'),
+          _FormInputLabel(label: l10n.passwordLabel),
           const SizedBox(height: 6),
           TextFormField(
             controller: widget.passwordController,
@@ -106,7 +108,7 @@ class _LoginFormState extends State<LoginForm> {
             style: theme.textTheme.bodyLarge,
             decoration: _buildInputDecoration(
               context: context,
-              hintText: 'أدخل كلمة المرور',
+              hintText: l10n.passwordHint,
               prefixIcon: Icon(
                 Icons.lock_outline_rounded,
                 color: colorScheme.onSurfaceVariant,
@@ -145,7 +147,7 @@ class _LoginFormState extends State<LoginForm> {
               Semantics(
                 button: true,
                 checked: widget.rememberMe,
-                label: 'تذكر بيانات تسجيل الدخول',
+                label: l10n.rememberMe,
                 child: InkWell(
                   onTap: () => widget.onRememberMeChanged(!widget.rememberMe),
                   borderRadius: AppRadius.rSM,
@@ -168,7 +170,7 @@ class _LoginFormState extends State<LoginForm> {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          'تذكرني',
+                          l10n.rememberMe,
                           style: theme.textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.w600,
                             color: colorScheme.onSurface,
@@ -183,7 +185,7 @@ class _LoginFormState extends State<LoginForm> {
               // Forgot password button
               Semantics(
                 button: true,
-                label: 'استعادة كلمة المرور المفقودة',
+                label: l10n.forgotPassword,
                 child: SizedBox(
                   height: 48,
                   child: TextButton(
@@ -193,7 +195,7 @@ class _LoginFormState extends State<LoginForm> {
                       minimumSize: const Size(48, 48),
                     ),
                     child: Text(
-                      'نسيت كلمة المرور؟',
+                      l10n.forgotPassword,
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: colorScheme.primary,
                         fontWeight: FontWeight.bold,
@@ -211,7 +213,7 @@ class _LoginFormState extends State<LoginForm> {
           Semantics(
             button: true,
             enabled: !widget.isLoading,
-            label: 'تسجيل الدخول إلى حسابك',
+            label: l10n.loginButton,
             child: SizedBox(
               height: 50,
               child: ElevatedButton(
@@ -233,9 +235,9 @@ class _LoginFormState extends State<LoginForm> {
                           color: colorScheme.onPrimary,
                         ),
                       )
-                    : const Text(
-                        'تسجيل الدخول',
-                        style: TextStyle(
+                    : Text(
+                        l10n.loginButton,
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
