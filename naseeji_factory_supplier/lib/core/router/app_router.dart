@@ -35,14 +35,25 @@ part 'app_router.g.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'rootNav');
 
+class RouterNotifier extends ChangeNotifier {
+  RouterNotifier(Ref ref) {
+    ref.listen(sessionNotifierProvider, (_, __) {
+      notifyListeners();
+    });
+  }
+}
+
 @riverpod
 GoRouter appRouter(AppRouterRef ref) {
-  final session = ref.watch(sessionNotifierProvider);
+  final routerNotifier = RouterNotifier(ref);
 
   return GoRouter(
     navigatorKey: rootNavigatorKey,
     initialLocation: '/',
+    refreshListenable: routerNotifier,
+    errorBuilder: (context, state) => const LoginScreen(),
     redirect: (context, state) {
+      final session = ref.read(sessionNotifierProvider);
       final isFactoryRoute = state.matchedLocation.startsWith('/factory') ||
           state.matchedLocation.startsWith('/account');
       final isSupplierRoute = state.matchedLocation.startsWith('/supplier');
