@@ -41,9 +41,9 @@ class Validators {
       return 'يرجى إدخال البريد الإلكتروني';
     }
     final trimmed = value.trim();
-    final regex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    final regex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
     if (!regex.hasMatch(trimmed)) {
-      return 'يرجى إدخال بريد إلكتروني صحيح';
+      return 'يرجى إدخال بريد إلكتروني صحيح (مثال: example@domain.com)';
     }
     return null;
   }
@@ -54,7 +54,7 @@ class Validators {
       return 'يرجى إدخال رقم الهاتف المصري';
     }
     if (!isEgyptianPhone(value)) {
-      return 'رقم هاتف مصري غير صحيح (يجب أن يبدأ بـ 010 أو 011 أو 012 أو 015 ويكون 11 رقم)';
+      return 'يرجى إدخال رقم هاتف مصري صحيح (11 رقماً يبدأ بـ 010 أو 011 أو 012 أو 015)';
     }
     return null;
   }

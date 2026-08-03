@@ -48,16 +48,16 @@ class _RegisterTextFieldsState extends State<RegisterTextFields> {
         const SizedBox(height: 16),
 
         // 2. Email
-        _InputLabel(label: 'البريد الإلكتروني'),
+        _InputLabel(label: 'البريد الإلكتروني *'),
         const SizedBox(height: 6),
         TextFormField(
           controller: widget.emailController,
           keyboardType: TextInputType.emailAddress,
-          textDirection: TextDirection.rtl,
+          textDirection: TextDirection.ltr,
           textInputAction: TextInputAction.next,
           decoration: _buildDecoration(
             context: context,
-            hintText: 'أدخل بريدك الإلكتروني',
+            hintText: 'name@example.com',
             suffixIcon: Icons.email_outlined,
           ),
           validator: Validators.email,

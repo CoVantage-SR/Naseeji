@@ -134,7 +134,9 @@ class _CompleteProfileScreenState
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  'استكمال بيانات الحساب',
+                  state.selectedRole == UserRole.factory
+                      ? 'استكمال بيانات المصنع'
+                      : 'استكمال بيانات المورد',
                   textAlign: TextAlign.center,
                   style: theme.textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
@@ -143,7 +145,9 @@ class _CompleteProfileScreenState
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  'أكمل بيانات شركتك للبدء في استخدام منصة نسيجي',
+                  state.selectedRole == UserRole.factory
+                      ? 'أكمل بيانات مصنعك للبدء في تصفح وطلب خامات النسيج'
+                      : 'أكمل بيانات شركتك الموردة للبدء في عرض وعرض منتجاتك للمصانع',
                   textAlign: TextAlign.center,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: colorScheme.onSurfaceVariant,
