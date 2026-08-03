@@ -46,7 +46,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (!(_formKey.currentState?.validate() ?? false)) return;
 
     FocusScope.of(context).unfocus();
-    final success = await ref.read(authControllerProvider.notifier).login(
+    final success = await ref
+        .read(authControllerProvider.notifier)
+        .login(
           _phoneOrEmailController.text.trim(),
           _passwordController.text.trim(),
           rememberMe: _rememberMe,
@@ -60,7 +62,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future<void> _handleGoogleLogin() async {
     FocusScope.of(context).unfocus();
-    final success = await ref.read(authControllerProvider.notifier).loginWithGoogle();
+    final success = await ref
+        .read(authControllerProvider.notifier)
+        .loginWithGoogle();
     if (success && mounted) {
       final user = ref.read(authControllerProvider).user;
       _navigateByUserRole(user?.role);
@@ -77,11 +81,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   void _navigateByUserRole(UserRole? role) {
     final effectiveRole = role ?? UserRole.factory;
-    ref.read(sessionNotifierProvider.notifier).saveSession(
-      accessToken: 'jwt_token_${DateTime.now().millisecondsSinceEpoch}',
-      refreshToken: 'jwt_refresh_token',
-      role: effectiveRole,
-    );
+    ref
+        .read(sessionNotifierProvider.notifier)
+        .saveSession(
+          accessToken: 'jwt_token_${DateTime.now().millisecondsSinceEpoch}',
+          refreshToken: 'jwt_refresh_token',
+          role: effectiveRole,
+        );
     if (effectiveRole == UserRole.factory) {
       context.go('/factory/home');
     } else if (effectiveRole == UserRole.supplier) {
@@ -104,16 +110,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           behavior: HitTestBehavior.opaque,
-          child: Center(
+          child: Align(
+            alignment: Alignment.topCenter,
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 480),
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 12.0,
+                ),
                 child: AbsorbPointer(
                   absorbing: authState.isLoading,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // 1. Language Dropdown Bar
                       Align(
@@ -167,7 +177,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             _rememberMe = val;
                           });
                         },
-                        onForgotPassword: () => context.push('/auth/forgot-password'),
+                        onForgotPassword: () =>
+                            context.push('/auth/forgot-password'),
                         onLogin: _handleLogin,
                         isLoading: authState.isLoading,
                       ),
@@ -175,7 +186,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       if (authState.errorMessage != null) ...[
                         const SizedBox(height: 12),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 10,
+                          ),
                           decoration: BoxDecoration(
                             color: colorScheme.errorContainer,
                             borderRadius: AppRadius.rSM,
@@ -203,7 +217,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12.0,
+                            ),
                             child: Text(
                               l10n.orDivider,
                               style: theme.textTheme.bodySmall?.copyWith(
@@ -233,10 +249,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       // 7. Account Registration Options Section
                       AccountRegistrationSection(
                         onRegisterFactory: () {
-                          context.push('/auth/register', extra: UserRole.factory);
+                          context.push(
+                            '/auth/register',
+                            extra: UserRole.factory,
+                          );
                         },
                         onRegisterSupplier: () {
-                          context.push('/auth/register', extra: UserRole.supplier);
+                          context.push(
+                            '/auth/register',
+                            extra: UserRole.supplier,
+                          );
                         },
                       ),
 
@@ -245,7 +267,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       // 8. Bottom Demo Banner
                       DemoExploreBanner(
                         onDemoFactory: () => _handleDemoLogin(UserRole.factory),
-                        onDemoSupplier: () => _handleDemoLogin(UserRole.supplier),
+                        onDemoSupplier: () =>
+                            _handleDemoLogin(UserRole.supplier),
                       ),
                       AppSpacing.hLG,
                     ],

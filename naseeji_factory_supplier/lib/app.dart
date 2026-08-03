@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/router/app_router.dart';
 
 import 'core/services/theme_service.dart';
 
 import 'core/theme/app_theme.dart';
+import 'l10n/app_localizations.dart';
 
 class NaseejiApp extends ConsumerWidget {
   const NaseejiApp({super.key});
@@ -23,12 +23,8 @@ class NaseejiApp extends ConsumerWidget {
       themeMode: themeMode,
       routerConfig: router,
       locale: const Locale('ar'),
-      supportedLocales: const [Locale('ar'), Locale('ar', 'EG')],
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
       localeResolutionCallback: (locale, supportedLocales) {
         return const Locale('ar');
       },
