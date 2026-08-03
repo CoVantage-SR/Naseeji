@@ -66,6 +66,24 @@ class CompleteProfileController extends StateNotifier<CompleteProfileState> {
     state = state.copyWith(address: address, validationErrors: errors);
   }
 
+  Future<bool> detectLocation() async {
+    final errors = Map<String, String>.from(state.validationErrors);
+    errors.remove('governorate');
+    errors.remove('city');
+    errors.remove('address');
+
+    state = state.copyWith(
+      isLoading: true,
+      selectedGovernorate: 'القاهرة',
+      selectedCity: 'مدينة نصر - المنطقة الصناعية',
+      address: 'امتداد شارع الطيران - المربع الصناعي',
+      validationErrors: errors,
+    );
+    await Future.delayed(const Duration(milliseconds: 500));
+    state = state.copyWith(isLoading: false);
+    return true;
+  }
+
   void setCommercialRegister(String cr) {
     final errors = Map<String, String>.from(state.validationErrors);
     errors.remove('commercialRegister');

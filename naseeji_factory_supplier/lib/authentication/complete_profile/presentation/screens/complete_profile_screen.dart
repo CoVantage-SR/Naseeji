@@ -36,6 +36,7 @@ class _CompleteProfileScreenState
     extends ConsumerState<CompleteProfileScreen> {
   late final TextEditingController _nameController;
   late final TextEditingController _emailController;
+  late final TextEditingController _cityController;
   late final TextEditingController _addressController;
   late final TextEditingController _crController;
   late final TextEditingController _taxController;
@@ -46,6 +47,7 @@ class _CompleteProfileScreenState
     final authUser = ref.read(authControllerProvider).user;
     _nameController = TextEditingController(text: authUser?.name ?? '');
     _emailController = TextEditingController(text: authUser?.email ?? '');
+    _cityController = TextEditingController();
     _addressController = TextEditingController();
     _crController = TextEditingController();
     _taxController = TextEditingController();
@@ -63,10 +65,31 @@ class _CompleteProfileScreenState
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
+    _cityController.dispose();
     _addressController.dispose();
     _crController.dispose();
     _taxController.dispose();
     super.dispose();
+  }
+
+  Future<void> _handleDetectLocation() async {
+    final controller = ref.read(completeProfileControllerProvider.notifier);
+    final success = await controller.detectLocation();
+    if (success && mounted) {
+      final state = ref.read(completeProfileControllerProvider);
+      if (state.selectedCity != null) {
+        _cityController.text = state.selectedCity!;
+      }
+      if (state.address.isNotEmpty) {
+        _addressController.text = state.address;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('تم تحديد موقع المنشأة تلقائياً بواسطة الـ GPS 📍'),
+          backgroundColor: Colors.teal,
+        ),
+      );
+    }
   }
 
   Future<void> _handleSubmit() async {
@@ -211,9 +234,26 @@ class _CompleteProfileScreenState
                   },
                 ),
                 const SizedBox(height: 24),
-                const SectionTitle(
-                  title: 'الموقع والعنوان',
-                  icon: Icons.location_on_outlined,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const SectionTitle(
+                      title: 'الموقع والعنوان',
+                      icon: Icons.location_on_outlined,
+                    ),
+                    TextButton.icon(
+                      onPressed: _handleDetectLocation,
+                      icon: const Icon(Icons.my_location_rounded, size: 16),
+                      label: const Text('تحديد موفعي (GPS)'),
+                      style: TextButton.styleFrom(
+                        foregroundColor: colorScheme.primary,
+                        textStyle: const TextStyle(
+                          fontSize: 12.5,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 12),
                 GovernorateDropdown(
@@ -224,13 +264,10 @@ class _CompleteProfileScreenState
                   },
                 ),
                 const SizedBox(height: 16),
-                CityDropdown(
-                  selectedGovernorate: state.selectedGovernorate,
-                  selectedCity: state.selectedCity,
+                CityField(
+                  controller: _cityController,
                   errorText: state.validationErrors['city'],
-                  onChanged: (val) {
-                    if (val != null) controller.setCity(val);
-                  },
+                  onChanged: controller.setCity,
                 ),
                 const SizedBox(height: 16),
                 AddressField(
