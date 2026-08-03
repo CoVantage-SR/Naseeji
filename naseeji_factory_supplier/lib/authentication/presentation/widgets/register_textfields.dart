@@ -66,17 +66,27 @@ class _RegisterTextFieldsState extends State<RegisterTextFields> {
         const SizedBox(height: 16),
 
         // 3. Phone Number
-        _InputLabel(label: 'رقم الهاتف'),
+        _InputLabel(label: 'رقم الهاتف المصري'),
         const SizedBox(height: 6),
         TextFormField(
           controller: widget.phoneController,
           keyboardType: TextInputType.phone,
-          textDirection: TextDirection.rtl,
+          textDirection: TextDirection.ltr,
           textInputAction: TextInputAction.next,
           decoration: _buildDecoration(
             context: context,
-            hintText: 'أدخل رقم هاتفك',
+            hintText: '01012345678',
             suffixIcon: Icons.phone_outlined,
+            prefixIcon: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+              child: const Text(
+                '🇪🇬 +20',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13.5,
+                ),
+              ),
+            ),
           ),
           validator: Validators.phone,
         ),
@@ -84,7 +94,7 @@ class _RegisterTextFieldsState extends State<RegisterTextFields> {
         const SizedBox(height: 16),
 
         // 4. Password
-        _InputLabel(label: 'كلمة المرور'),
+        _InputLabel(label: 'كلمة المرور (كلمة مرور قوية)'),
         const SizedBox(height: 6),
         TextFormField(
           controller: widget.passwordController,
@@ -93,7 +103,7 @@ class _RegisterTextFieldsState extends State<RegisterTextFields> {
           textInputAction: TextInputAction.next,
           decoration: _buildDecoration(
             context: context,
-            hintText: 'أدخل كلمة المرور',
+            hintText: 'أدخل كلمة المرور (أحرف وأرقام لا تقل عن 8)',
             suffixIcon: Icons.lock_outline_rounded,
             prefixIcon: IconButton(
               icon: Icon(
@@ -107,7 +117,7 @@ class _RegisterTextFieldsState extends State<RegisterTextFields> {
               },
             ),
           ),
-          validator: Validators.password,
+          validator: Validators.strongPassword,
         ),
 
         const SizedBox(height: 16),

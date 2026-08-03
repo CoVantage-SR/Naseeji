@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/session/session_provider.dart';
+import '../../../presentation/providers/auth_providers.dart';
 import '../../../../core/constants/app_radius.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../shared/enums/user_role.dart';
@@ -33,6 +35,24 @@ class _ChooseAccountScreenState extends ConsumerState<ChooseAccountScreen> {
 
     if (success && mounted) {
       final role = state.selectedAccountType;
+      final authState = ref.read(authControllerProvider);
+
+      if (authState.user != null && role != null) {
+        await ref.read(sessionNotifierProvider.notifier).saveSession(
+          accessToken: 'jwt_token_${DateTime.now().millisecondsSinceEpoch}',
+          refreshToken: 'jwt_refresh_token',
+          role: role,
+        );
+        if (mounted) {
+          if (role == UserRole.supplier) {
+            context.go('/supplier/dashboard');
+          } else {
+            context.go('/factory/home');
+          }
+        }
+        return;
+      }
+
       if (role == UserRole.supplier) {
         context.push('/auth/register', extra: UserRole.supplier);
       } else {

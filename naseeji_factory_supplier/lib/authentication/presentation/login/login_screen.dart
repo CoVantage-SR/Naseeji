@@ -66,8 +66,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         .read(authControllerProvider.notifier)
         .loginWithGoogle();
     if (success && mounted) {
-      final user = ref.read(authControllerProvider).user;
-      _navigateByUserRole(user?.role);
+      context.push('/auth/choose-account-type');
     }
   }
 
