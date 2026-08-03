@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../presentation/providers/auth_providers.dart';
 import '../../../../core/widgets/general_widgets.dart';
 import '../../../../shared/enums/user_role.dart';
 import '../providers/complete_profile_provider.dart';
@@ -34,6 +35,7 @@ class CompleteProfileScreen extends ConsumerStatefulWidget {
 class _CompleteProfileScreenState
     extends ConsumerState<CompleteProfileScreen> {
   late final TextEditingController _nameController;
+  late final TextEditingController _emailController;
   late final TextEditingController _addressController;
   late final TextEditingController _crController;
   late final TextEditingController _taxController;
@@ -41,7 +43,9 @@ class _CompleteProfileScreenState
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController();
+    final authUser = ref.read(authControllerProvider).user;
+    _nameController = TextEditingController(text: authUser?.name ?? '');
+    _emailController = TextEditingController(text: authUser?.email ?? '');
     _addressController = TextEditingController();
     _crController = TextEditingController();
     _taxController = TextEditingController();
@@ -58,6 +62,7 @@ class _CompleteProfileScreenState
   @override
   void dispose() {
     _nameController.dispose();
+    _emailController.dispose();
     _addressController.dispose();
     _crController.dispose();
     _taxController.dispose();
@@ -169,6 +174,33 @@ class _CompleteProfileScreenState
                   errorText: state.validationErrors['name'],
                   onChanged: controller.setCompanyName,
                 ),
+                if (_emailController.text.isNotEmpty) ...[
+                  const SizedBox(height: 16),
+                  Text(
+                    'البريد الإلكتروني الحساب *',
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextFormField(
+                    controller: _emailController,
+                    readOnly: true,
+                    enabled: false,
+                    textDirection: TextDirection.ltr,
+                    decoration: InputDecoration(
+                      hintText: 'email@domain.com',
+                      prefixIcon: Icon(
+                        Icons.lock_outline_rounded,
+                        color: colorScheme.outline,
+                      ),
+                      filled: true,
+                      fillColor: isDark
+                          ? colorScheme.surfaceContainerHighest.withValues(alpha: 0.3)
+                          : const Color(0xFFF8FAFC),
+                    ),
+                  ),
+                ],
                 const SizedBox(height: 16),
                 TextileCategoryDropdown(
                   role: state.selectedRole,
