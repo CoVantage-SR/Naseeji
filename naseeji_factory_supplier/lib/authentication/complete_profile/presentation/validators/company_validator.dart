@@ -42,7 +42,7 @@ class CompanyValidator {
 
   static String? validateCommercialRegister(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'رقم السجل التجاري مطلوب';
+      return null; // Optional
     }
     final cleanVal = value.trim();
     if (!RegExp(r'^[0-9A-Za-z\s\-]{4,20}$').hasMatch(cleanVal)) {

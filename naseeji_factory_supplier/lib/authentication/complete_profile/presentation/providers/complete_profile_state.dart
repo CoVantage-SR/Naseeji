@@ -74,6 +74,19 @@ class CompleteProfileState extends Equatable {
     );
   }
 
+  int get completionPercentage {
+    int percentage = 0;
+    if (companyName.trim().isNotEmpty) percentage += 20;
+    if (selectedCategory != null && selectedCategory!.isNotEmpty) percentage += 20;
+    if (selectedGovernorate != null && selectedGovernorate!.isNotEmpty) percentage += 15;
+    if (selectedCity != null && selectedCity!.isNotEmpty) percentage += 15;
+    if (address.trim().isNotEmpty) percentage += 10;
+    if (selectedLogo != null || (logoUrl != null && logoUrl!.isNotEmpty)) percentage += 10;
+    if (commercialRegister.trim().isNotEmpty) percentage += 5;
+    if (taxNumber != null && taxNumber!.trim().isNotEmpty) percentage += 5;
+    return percentage > 100 ? 100 : percentage;
+  }
+
   @override
   List<Object?> get props => [
         isLoading,

@@ -155,7 +155,63 @@ class _CompleteProfileScreenState
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const CompleteProfileProgressIndicator(currentStep: 3),
-                const SizedBox(height: 24),
+                const SizedBox(height: 16),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: isDark
+                        ? colorScheme.surfaceContainerHighest.withValues(alpha: 0.4)
+                        : colorScheme.primaryContainer.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: colorScheme.primary.withValues(alpha: 0.3),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.verified_user_rounded,
+                                size: 18,
+                                color: colorScheme.primary,
+                              ),
+                              const SizedBox(width: 6),
+                              Text(
+                                'نسبة اكتمال ملف الشركة',
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            '${state.completionPercentage}%',
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: colorScheme.primary,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: LinearProgressIndicator(
+                          value: state.completionPercentage / 100.0,
+                          minHeight: 6,
+                          backgroundColor:
+                              colorScheme.outlineVariant.withValues(alpha: 0.3),
+                          color: colorScheme.primary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
                 LogoPicker(
                   selectedLogo: state.selectedLogo,
                   logoUrl: state.logoUrl,

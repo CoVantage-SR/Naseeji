@@ -21,7 +21,7 @@ class CommercialRegisterField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'رقم السجل التجاري *',
+          'رقم السجل التجاري (اختياري)',
           style: theme.textTheme.bodyMedium?.copyWith(
             fontWeight: FontWeight.w600,
           ),
