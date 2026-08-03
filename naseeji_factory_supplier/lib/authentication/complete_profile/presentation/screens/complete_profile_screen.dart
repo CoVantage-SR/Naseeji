@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../presentation/providers/auth_providers.dart';
+import '../../../presentation/providers/auth_providers.dart';
 import '../../../../core/widgets/general_widgets.dart';
 import '../../../../shared/enums/user_role.dart';
 import '../providers/complete_profile_provider.dart';

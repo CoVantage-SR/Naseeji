@@ -97,11 +97,18 @@ class AccountTypeCard extends StatelessWidget {
                           fontSize: 17,
                         ),
                       ),
-                      Radio<AccountType>(
-                        value: type,
-                        groupValue: isSelected ? type : null,
-                        onChanged: (_) => onTap(),
-                        activeColor: activeColor,
+                      Container(
+                        width: 22,
+                        height: 22,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: isSelected
+                                ? activeColor
+                                : (isDark ? colorScheme.outline : const Color(0xFFCBD5E1)),
+                            width: isSelected ? 6 : 2,
+                          ),
+                        ),
                       ),
                     ],
                   ),

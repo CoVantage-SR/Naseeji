@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../session/session_provider.dart';
-import '../../authentication/choose_account_type/choose_account_type.dart';
+import '../../authentication/presentation/screens/account_type_screen.dart';
 import '../../authentication/complete_profile/complete_profile.dart';
 import '../../authentication/terms_acceptance/terms_acceptance_screen.dart';
 import '../../authentication/presentation/forgot_password/forgot_password_screen.dart';
@@ -130,8 +130,12 @@ GoRouter appRouter(AppRouterRef ref) {
         },
       ),
       GoRoute(
+        path: '/auth/account-type',
+        builder: (context, state) => const AccountTypeScreen(),
+      ),
+      GoRoute(
         path: '/auth/choose-account-type',
-        builder: (context, state) => const ChooseAccountScreen(),
+        builder: (context, state) => const AccountTypeScreen(),
       ),
       GoRoute(
         path: '/auth/complete-profile',
