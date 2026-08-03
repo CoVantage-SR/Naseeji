@@ -34,23 +34,25 @@ class CompleteProfileScreen extends ConsumerStatefulWidget {
 
 class _CompleteProfileScreenState
     extends ConsumerState<CompleteProfileScreen> {
-  late final TextEditingController _nameController;
-  late final TextEditingController _emailController;
-  late final TextEditingController _cityController;
-  late final TextEditingController _addressController;
-  late final TextEditingController _crController;
-  late final TextEditingController _taxController;
+  late final TextEditingController _nameController = TextEditingController();
+  late final TextEditingController _emailController = TextEditingController();
+  late final TextEditingController _cityController = TextEditingController();
+  late final TextEditingController _addressController = TextEditingController();
+  late final TextEditingController _crController = TextEditingController();
+  late final TextEditingController _taxController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     final authUser = ref.read(authControllerProvider).user;
-    _nameController = TextEditingController(text: authUser?.name ?? '');
-    _emailController = TextEditingController(text: authUser?.email ?? '');
-    _cityController = TextEditingController();
-    _addressController = TextEditingController();
-    _crController = TextEditingController();
-    _taxController = TextEditingController();
+    if (authUser != null) {
+      if (authUser.name.isNotEmpty) {
+        _nameController.text = authUser.name;
+      }
+      if (authUser.email.isNotEmpty) {
+        _emailController.text = authUser.email;
+      }
+    }
 
     if (widget.initialRole != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -237,10 +239,13 @@ class _CompleteProfileScreenState
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const SectionTitle(
-                      title: 'الموقع والعنوان',
-                      icon: Icons.location_on_outlined,
+                    const Expanded(
+                      child: SectionTitle(
+                        title: 'الموقع والعنوان',
+                        icon: Icons.location_on_outlined,
+                      ),
                     ),
+                    const SizedBox(width: 8),
                     TextButton.icon(
                       onPressed: _handleDetectLocation,
                       icon: const Icon(Icons.my_location_rounded, size: 16),
