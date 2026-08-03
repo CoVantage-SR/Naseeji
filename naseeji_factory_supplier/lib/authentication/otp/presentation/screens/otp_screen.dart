@@ -11,10 +11,19 @@ import '../widgets/otp_boxes.dart';
 import '../widgets/resend_button.dart';
 import '../widgets/verify_button.dart';
 
+import '../../../../shared/enums/user_role.dart';
+
 class OtpScreen extends ConsumerStatefulWidget {
   final String phone;
+  final bool isForgotPassword;
+  final UserRole? userRole;
 
-  const OtpScreen({super.key, required this.phone});
+  const OtpScreen({
+    super.key,
+    required this.phone,
+    this.isForgotPassword = false,
+    this.userRole,
+  });
 
   @override
   ConsumerState<OtpScreen> createState() => _OtpScreenState();
@@ -36,7 +45,11 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
           backgroundColor: Colors.green,
         ),
       );
-      context.push('/auth/reset-password', extra: widget.phone);
+      if (widget.isForgotPassword) {
+        context.push('/auth/reset-password', extra: widget.phone);
+      } else {
+        context.push('/auth/complete-profile', extra: widget.userRole);
+      }
     } else if (mounted) {
       final err = ref.read(otpControllerProvider).errorMessage;
       if (err != null) {

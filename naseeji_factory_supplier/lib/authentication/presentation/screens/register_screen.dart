@@ -65,7 +65,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         );
 
     if (success && mounted) {
-      context.push('/auth/otp', extra: _phoneController.text.trim());
+      context.push('/auth/otp', extra: {
+        'phone': _phoneController.text.trim(),
+        'isForgotPassword': false,
+        'role': widget.initialRole,
+      });
     } else if (mounted) {
       final err = ref.read(registerControllerProvider).errorMessage;
       if (err != null) {

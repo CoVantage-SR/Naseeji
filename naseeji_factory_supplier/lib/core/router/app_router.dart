@@ -103,6 +103,17 @@ GoRouter appRouter(AppRouterRef ref) {
       GoRoute(
         path: '/auth/otp',
         builder: (context, state) {
+          if (state.extra is Map<String, dynamic>) {
+            final map = state.extra as Map<String, dynamic>;
+            final phone = map['phone'] as String? ?? '01000000000';
+            final isForgotPassword = map['isForgotPassword'] as bool? ?? false;
+            final role = map['role'] as UserRole?;
+            return OtpScreen(
+              phone: phone,
+              isForgotPassword: isForgotPassword,
+              userRole: role,
+            );
+          }
           final phone = state.extra as String? ?? '01000000000';
           return OtpScreen(phone: phone);
         },

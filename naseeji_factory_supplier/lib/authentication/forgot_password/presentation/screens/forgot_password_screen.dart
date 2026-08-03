@@ -39,7 +39,10 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
         .sendResetCode(phoneOrEmail);
 
     if (success && mounted) {
-      context.push('/auth/otp', extra: phoneOrEmail);
+      context.push('/auth/otp', extra: {
+        'phone': phoneOrEmail,
+        'isForgotPassword': true,
+      });
     } else if (mounted) {
       final err = ref.read(forgotPasswordControllerProvider).errorMessage;
       if (err != null) {
