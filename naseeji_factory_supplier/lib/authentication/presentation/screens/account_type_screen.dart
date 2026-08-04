@@ -146,10 +146,9 @@ class _AccountTypeScreenState extends ConsumerState<AccountTypeScreen> {
                     'تصفح المنتجات والمصانع مباشرة بدون إدخال بيانات شركة (خصائص محدودة)',
                     style: TextStyle(fontSize: 11.5),
                   ),
-                  trailing: Radio<bool>(
-                    value: true,
-                    groupValue: _isGuestModeSelected ? true : null,
-                    onChanged: (v) => setState(() => _isGuestModeSelected = true),
+                  trailing: Icon(
+                    _isGuestModeSelected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+                    color: _isGuestModeSelected ? colorScheme.primary : colorScheme.outline,
                   ),
                 ),
               ),
