@@ -19,6 +19,18 @@ class CompleteProfileState extends Equatable {
   final XFile? selectedLogo;
   final String? logoUrl;
 
+  // New Verification & Identity fields
+  final String verificationMethod; // 'company' | 'identity'
+  final XFile? crDocumentFile;
+  final XFile? taxDocumentFile;
+  final XFile? idFrontFile;
+  final XFile? idBackFile;
+  final XFile? selfieFile;
+  final String businessName;
+  final String? businessType;
+  final String businessAddress;
+  final String? bankAccount;
+
   const CompleteProfileState({
     this.isLoading = false,
     this.isSuccess = false,
@@ -35,6 +47,16 @@ class CompleteProfileState extends Equatable {
     this.website,
     this.selectedLogo,
     this.logoUrl,
+    this.verificationMethod = 'company',
+    this.crDocumentFile,
+    this.taxDocumentFile,
+    this.idFrontFile,
+    this.idBackFile,
+    this.selfieFile,
+    this.businessName = '',
+    this.businessType,
+    this.businessAddress = '',
+    this.bankAccount,
   });
 
   CompleteProfileState copyWith({
@@ -54,6 +76,21 @@ class CompleteProfileState extends Equatable {
     XFile? selectedLogo,
     bool clearLogo = false,
     String? logoUrl,
+    String? verificationMethod,
+    XFile? crDocumentFile,
+    bool clearCrDocument = false,
+    XFile? taxDocumentFile,
+    bool clearTaxDocument = false,
+    XFile? idFrontFile,
+    bool clearIdFront = false,
+    XFile? idBackFile,
+    bool clearIdBack = false,
+    XFile? selfieFile,
+    bool clearSelfie = false,
+    String? businessName,
+    String? businessType,
+    String? businessAddress,
+    String? bankAccount,
   }) {
     return CompleteProfileState(
       isLoading: isLoading ?? this.isLoading,
@@ -71,19 +108,86 @@ class CompleteProfileState extends Equatable {
       website: website ?? this.website,
       selectedLogo: clearLogo ? null : (selectedLogo ?? this.selectedLogo),
       logoUrl: logoUrl ?? this.logoUrl,
+      verificationMethod: verificationMethod ?? this.verificationMethod,
+      crDocumentFile: clearCrDocument ? null : (crDocumentFile ?? this.crDocumentFile),
+      taxDocumentFile: clearTaxDocument ? null : (taxDocumentFile ?? this.taxDocumentFile),
+      idFrontFile: clearIdFront ? null : (idFrontFile ?? this.idFrontFile),
+      idBackFile: clearIdBack ? null : (idBackFile ?? this.idBackFile),
+      selfieFile: clearSelfie ? null : (selfieFile ?? this.selfieFile),
+      businessName: businessName ?? this.businessName,
+      businessType: businessType ?? this.businessType,
+      businessAddress: businessAddress ?? this.businessAddress,
+      bankAccount: bankAccount ?? this.bankAccount,
     );
   }
 
+  /// Modular completion system as requested:
+  /// Basic Information: 20%
+  /// Phone Verified: 10%
+  /// Logo: 5%
+  /// Address: 10%
+  /// Business Category: 10%
+  /// Verification Documents: 25%
+  /// Bank Information: 10%
+  /// Website: 5%
+  /// Profile Photo: 5%
+  /// Total: 100%
   int get completionPercentage {
     int percentage = 0;
-    if (companyName.trim().isNotEmpty) percentage += 20;
-    if (selectedCategory != null && selectedCategory!.isNotEmpty) percentage += 20;
-    if (selectedGovernorate != null && selectedGovernorate!.isNotEmpty) percentage += 15;
-    if (selectedCity != null && selectedCity!.isNotEmpty) percentage += 15;
-    if (address.trim().isNotEmpty) percentage += 10;
-    if (selectedLogo != null || (logoUrl != null && logoUrl!.isNotEmpty)) percentage += 10;
-    if (commercialRegister.trim().isNotEmpty) percentage += 5;
-    if (taxNumber != null && taxNumber!.trim().isNotEmpty) percentage += 5;
+
+    // Basic Info (Company Name or Business Name): 20%
+    if (companyName.trim().isNotEmpty || businessName.trim().isNotEmpty) {
+      percentage += 20;
+    }
+
+    // Phone Verified (always 10% for authenticated users)
+    percentage += 10;
+
+    // Logo: 5%
+    if (selectedLogo != null || (logoUrl != null && logoUrl!.isNotEmpty)) {
+      percentage += 5;
+    }
+
+    // Address (Address or Business Address): 10%
+    if (address.trim().isNotEmpty || businessAddress.trim().isNotEmpty) {
+      percentage += 10;
+    }
+
+    // Business Category: 10%
+    if ((selectedCategory != null && selectedCategory!.isNotEmpty) || (businessType != null && businessType!.isNotEmpty)) {
+      percentage += 10;
+    }
+
+    // Verification Documents: 25%
+    if (verificationMethod == 'company') {
+      if (crDocumentFile != null && taxDocumentFile != null) {
+        percentage += 25;
+      } else if (crDocumentFile != null || taxDocumentFile != null || commercialRegister.trim().isNotEmpty) {
+        percentage += 12;
+      }
+    } else {
+      if (idFrontFile != null && idBackFile != null && selfieFile != null) {
+        percentage += 25;
+      } else if (idFrontFile != null || idBackFile != null || selfieFile != null) {
+        percentage += 12;
+      }
+    }
+
+    // Bank Information: 10%
+    if (bankAccount != null && bankAccount!.trim().isNotEmpty) {
+      percentage += 10;
+    }
+
+    // Website: 5%
+    if (website != null && website!.trim().isNotEmpty) {
+      percentage += 5;
+    }
+
+    // Profile Photo: 5%
+    if (selectedLogo != null || (logoUrl != null && logoUrl!.isNotEmpty)) {
+      percentage += 5;
+    }
+
     return percentage > 100 ? 100 : percentage;
   }
 
@@ -104,5 +208,15 @@ class CompleteProfileState extends Equatable {
         website,
         selectedLogo,
         logoUrl,
+        verificationMethod,
+        crDocumentFile,
+        taxDocumentFile,
+        idFrontFile,
+        idBackFile,
+        selfieFile,
+        businessName,
+        businessType,
+        businessAddress,
+        bankAccount,
       ];
 }

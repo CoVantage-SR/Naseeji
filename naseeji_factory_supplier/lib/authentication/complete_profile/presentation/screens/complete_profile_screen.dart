@@ -9,16 +9,17 @@ import '../../../../shared/enums/user_role.dart';
 import '../providers/complete_profile_provider.dart';
 import '../widgets/address_field.dart';
 import '../widgets/city_dropdown.dart';
-import '../widgets/commercial_register_field.dart';
 import '../widgets/company_name_field.dart';
 import '../widgets/company_type_dropdown.dart';
+import '../widgets/company_verification_form.dart';
 import '../widgets/continue_button.dart';
 import '../widgets/governorate_dropdown.dart';
+import '../widgets/identity_verification_form.dart';
 import '../widgets/logo_picker.dart';
-import '../widgets/progress_indicator.dart';
 import '../widgets/section_title.dart';
-import '../widgets/tax_number_field.dart';
 import '../widgets/textile_category_dropdown.dart';
+import '../widgets/verification_method_selector.dart';
+import '../widgets/verification_progress_card.dart';
 
 class CompleteProfileScreen extends ConsumerStatefulWidget {
   final UserRole? initialRole;
@@ -41,18 +42,31 @@ class _CompleteProfileScreenState
   late final TextEditingController _addressController = TextEditingController();
   late final TextEditingController _crController = TextEditingController();
   late final TextEditingController _taxController = TextEditingController();
+  late final TextEditingController _businessNameController = TextEditingController();
+  late final TextEditingController _businessAddressController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     final authUser = ref.read(authControllerProvider).user;
+    final session = ref.read(sessionNotifierProvider);
+
     if (authUser != null) {
       if (authUser.name.isNotEmpty) {
         _nameController.text = authUser.name;
+        _businessNameController.text = authUser.name;
       }
       if (authUser.email.isNotEmpty) {
         _emailController.text = authUser.email;
       }
+    } else if (session.entityName != null) {
+      _nameController.text = session.entityName!;
+      _businessNameController.text = session.entityName!;
+    }
+
+    if (session.address != null) {
+      _addressController.text = session.address!;
+      _businessAddressController.text = session.address!;
     }
 
     if (widget.initialRole != null) {
@@ -72,6 +86,8 @@ class _CompleteProfileScreenState
     _addressController.dispose();
     _crController.dispose();
     _taxController.dispose();
+    _businessNameController.dispose();
+    _businessAddressController.dispose();
     super.dispose();
   }
 
@@ -85,6 +101,7 @@ class _CompleteProfileScreenState
       }
       if (state.address.isNotEmpty) {
         _addressController.text = state.address;
+        _businessAddressController.text = state.address;
       }
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -103,25 +120,26 @@ class _CompleteProfileScreenState
     final success = await controller.submitProfile();
 
     if (success && mounted) {
-      int pct = 40; // Base percentage
-      if (_crController.text.trim().isNotEmpty) pct += 20;
-      if (_taxController.text.trim().isNotEmpty) pct += 15;
-      if (state.selectedLogo != null || (state.logoUrl != null && state.logoUrl!.isNotEmpty)) pct += 5;
-      if (state.selectedGovernorate != null && state.address.isNotEmpty) pct += 10;
-      if (state.selectedCategory != null) pct += 10;
-
-      final isVerified = _crController.text.trim().isNotEmpty && _taxController.text.trim().isNotEmpty;
+      final pct = state.completionPercentage;
+      final isCompany = state.verificationMethod == 'company';
+      final vLevel = isCompany ? 'business_verified' : 'identity_verified';
 
       final sessionNotifier = ref.read(sessionNotifierProvider.notifier);
-      await sessionNotifier.updateCompletionPercentage(pct > 100 ? 100 : pct);
-      await sessionNotifier.updateVerificationStatus(isVerified ? 'verified' : 'pending');
+      await sessionNotifier.updateCompletionPercentage(pct);
+      await sessionNotifier.updateVerificationDetails(
+        status: 'pending', // Sent for Admin Review
+        level: vLevel,
+        method: state.verificationMethod,
+        businessType: state.businessType,
+        idFrontUrl: state.idFrontFile?.path,
+        idBackUrl: state.idBackFile?.path,
+        selfieUrl: state.selfieFile?.path,
+      );
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(isVerified
-                ? 'تم تحديث بيانات الشركة بنجاح وحصلت على حالة شركة موثقة ⭐️'
-                : 'تم حفظ البيانات بنجاح! أكمل السجل الضريبي والتجاري للتوثيق.'),
+          const SnackBar(
+            content: Text('تم إرسال مستندات التوثيق بنجاح! طلبك قيد المراجعة الآن 🟡'),
             backgroundColor: Colors.teal,
           ),
         );
@@ -184,75 +202,34 @@ class _CompleteProfileScreenState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const CompleteProfileProgressIndicator(currentStep: 3),
-                const SizedBox(height: 16),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  decoration: BoxDecoration(
-                    color: isDark
-                        ? colorScheme.surfaceContainerHighest.withValues(alpha: 0.4)
-                        : colorScheme.primaryContainer.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: colorScheme.primary.withValues(alpha: 0.3),
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.verified_user_rounded,
-                                size: 18,
-                                color: colorScheme.primary,
-                              ),
-                              const SizedBox(width: 6),
-                              Text(
-                                'نسبة اكتمال ملف الشركة',
-                                style: theme.textTheme.bodyMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Text(
-                            '${state.completionPercentage}%',
-                            style: theme.textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: colorScheme.primary,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        child: LinearProgressIndicator(
-                          value: state.completionPercentage / 100.0,
-                          minHeight: 6,
-                          backgroundColor:
-                              colorScheme.outlineVariant.withValues(alpha: 0.3),
-                          color: colorScheme.primary,
-                        ),
-                      ),
-                    ],
-                  ),
+                // Modular Progress Breakdown Card
+                VerificationProgressCard(
+                  completionPercentage: state.completionPercentage,
+                  hasBasicInfo: state.companyName.isNotEmpty || state.businessName.isNotEmpty,
+                  hasPhoneVerified: true,
+                  hasLogo: state.selectedLogo != null || (state.logoUrl != null && state.logoUrl!.isNotEmpty),
+                  hasAddress: state.address.isNotEmpty || state.businessAddress.isNotEmpty,
+                  hasCategory: state.selectedCategory != null || state.businessType != null,
+                  hasDocuments: (state.crDocumentFile != null && state.taxDocumentFile != null) ||
+                      (state.idFrontFile != null && state.idBackFile != null && state.selfieFile != null),
+                  hasWebsite: state.website != null && state.website!.isNotEmpty,
                 ),
+
                 const SizedBox(height: 20),
+
                 LogoPicker(
                   selectedLogo: state.selectedLogo,
                   logoUrl: state.logoUrl,
                   onPickImage: controller.pickLogo,
                   onDeleteImage: controller.deleteLogo,
                 ),
+
                 const SizedBox(height: 20),
+
                 Text(
                   state.selectedRole == UserRole.factory
-                      ? 'استكمال بيانات المصنع'
-                      : 'استكمال بيانات المورد',
+                      ? 'استكمال بيانات وملف المصنع'
+                      : 'استكمال بيانات وملف المورد',
                   textAlign: TextAlign.center,
                   style: theme.textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
@@ -262,14 +239,16 @@ class _CompleteProfileScreenState
                 const SizedBox(height: 6),
                 Text(
                   state.selectedRole == UserRole.factory
-                      ? 'أكمل بيانات مصنعك للبدء في تصفح وطلب خامات النسيج'
-                      : 'أكمل بيانات شركتك الموردة للبدء في عرض وعرض منتجاتك للمصانع',
+                      ? 'أكمل بيانات وتوثيق مصنعك للبدء في تصفح وطلب خامات النسيج'
+                      : 'أكمل بيانات وتوثيق نشاطك المورد للبدء في تقديم العروض للمصانع',
                   textAlign: TextAlign.center,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: colorScheme.onSurfaceVariant,
                   ),
                 ),
+
                 const SizedBox(height: 28),
+
                 const SectionTitle(
                   title: 'نوع الحساب والتخصص',
                   icon: Icons.business_center_outlined,
@@ -283,7 +262,13 @@ class _CompleteProfileScreenState
                 CompanyNameField(
                   controller: _nameController,
                   errorText: state.validationErrors['name'],
-                  onChanged: controller.setCompanyName,
+                  onChanged: (val) {
+                    controller.setCompanyName(val);
+                    if (_businessNameController.text.isEmpty) {
+                      _businessNameController.text = val;
+                      controller.setBusinessName(val);
+                    }
+                  },
                 ),
                 if (_emailController.text.isNotEmpty) ...[
                   const SizedBox(height: 16),
@@ -321,7 +306,9 @@ class _CompleteProfileScreenState
                     if (val != null) controller.setCategory(val);
                   },
                 ),
+
                 const SizedBox(height: 24),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -364,26 +351,62 @@ class _CompleteProfileScreenState
                 AddressField(
                   controller: _addressController,
                   errorText: state.validationErrors['address'],
-                  onChanged: controller.setAddress,
+                  onChanged: (val) {
+                    controller.setAddress(val);
+                    if (_businessAddressController.text.isEmpty) {
+                      _businessAddressController.text = val;
+                      controller.setBusinessAddress(val);
+                    }
+                  },
                 ),
-                const SizedBox(height: 24),
-                const SectionTitle(
-                  title: 'البيانات القانونية والضريبية',
-                  icon: Icons.verified_user_outlined,
+
+                const SizedBox(height: 28),
+
+                // NEW SECTION: Flexible Verification System Selector (Card 1 vs Card 2)
+                VerificationMethodSelector(
+                  selectedMethod: state.verificationMethod,
+                  onMethodChanged: controller.setVerificationMethod,
                 ),
-                const SizedBox(height: 12),
-                CommercialRegisterField(
-                  controller: _crController,
-                  errorText: state.validationErrors['commercialRegister'],
-                  onChanged: controller.setCommercialRegister,
-                ),
-                const SizedBox(height: 16),
-                TaxNumberField(
-                  controller: _taxController,
-                  errorText: state.validationErrors['taxNumber'],
-                  onChanged: controller.setTaxNumber,
-                ),
+
+                const SizedBox(height: 20),
+
+                // FORM CONTENT ACCORDING TO SELECTION
+                if (state.verificationMethod == 'company')
+                  CompanyVerificationForm(
+                    crController: _crController,
+                    taxController: _taxController,
+                    crDocumentFile: state.crDocumentFile,
+                    taxDocumentFile: state.taxDocumentFile,
+                    validationErrors: state.validationErrors,
+                    onCrChanged: controller.setCommercialRegister,
+                    onTaxChanged: controller.setTaxNumber,
+                    onPickCrDocument: controller.setCrDocument,
+                    onPickTaxDocument: controller.setTaxDocument,
+                    onDeleteCrDocument: () => controller.deleteDocument('crDocument'),
+                    onDeleteTaxDocument: () => controller.deleteDocument('taxDocument'),
+                  )
+                else
+                  IdentityVerificationForm(
+                    businessNameController: _businessNameController,
+                    businessAddressController: _businessAddressController,
+                    selectedBusinessType: state.businessType,
+                    idFrontFile: state.idFrontFile,
+                    idBackFile: state.idBackFile,
+                    selfieFile: state.selfieFile,
+                    validationErrors: state.validationErrors,
+                    onBusinessNameChanged: controller.setBusinessName,
+                    onBusinessTypeChanged: controller.setBusinessType,
+                    onBusinessAddressChanged: controller.setBusinessAddress,
+                    onPickIdFront: controller.setIdFront,
+                    onPickIdBack: controller.setIdBack,
+                    onPickSelfie: controller.setSelfie,
+                    onDeleteIdFront: () => controller.deleteDocument('idFront'),
+                    onDeleteIdBack: () => controller.deleteDocument('idBack'),
+                    onDeleteSelfie: () => controller.deleteDocument('selfieWithId'),
+                  ),
+
                 const SizedBox(height: 32),
+
                 ContinueButton(
                   isLoading: state.isLoading,
                   onPressed: _handleSubmit,

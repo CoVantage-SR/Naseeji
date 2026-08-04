@@ -17,7 +17,9 @@ class SessionData {
   final bool isGuest;
   final bool basicProfileCompleted;
   final int completionPercentage;
-  final String verificationStatus; // 'unverified', 'pending', 'verified'
+  final String verificationStatus; // 'unverified', 'pending', 'verified', 'rejected'
+  final String verificationLevel; // 'guest', 'basic', 'phone_verified', 'identity_verified', 'business_verified', 'premium_verified'
+  final String verificationMethod; // 'company', 'identity'
   final String? entityName;
   final String? ownerName;
   final String? governorate;
@@ -25,6 +27,10 @@ class SessionData {
   final String? address;
   final String? category;
   final String? logoUrl;
+  final String? businessType;
+  final String? idFrontUrl;
+  final String? idBackUrl;
+  final String? selfieUrl;
 
   const SessionData({
     this.accessToken,
@@ -41,6 +47,8 @@ class SessionData {
     this.basicProfileCompleted = false,
     this.completionPercentage = 0,
     this.verificationStatus = 'unverified',
+    this.verificationLevel = 'basic',
+    this.verificationMethod = 'company',
     this.entityName,
     this.ownerName,
     this.governorate,
@@ -48,6 +56,10 @@ class SessionData {
     this.address,
     this.category,
     this.logoUrl,
+    this.businessType,
+    this.idFrontUrl,
+    this.idBackUrl,
+    this.selfieUrl,
   });
 
   SessionData copyWith({
@@ -65,6 +77,8 @@ class SessionData {
     bool? basicProfileCompleted,
     int? completionPercentage,
     String? verificationStatus,
+    String? verificationLevel,
+    String? verificationMethod,
     String? entityName,
     String? ownerName,
     String? governorate,
@@ -72,6 +86,10 @@ class SessionData {
     String? address,
     String? category,
     String? logoUrl,
+    String? businessType,
+    String? idFrontUrl,
+    String? idBackUrl,
+    String? selfieUrl,
   }) {
     return SessionData(
       accessToken: accessToken ?? this.accessToken,
@@ -88,6 +106,8 @@ class SessionData {
       basicProfileCompleted: basicProfileCompleted ?? this.basicProfileCompleted,
       completionPercentage: completionPercentage ?? this.completionPercentage,
       verificationStatus: verificationStatus ?? this.verificationStatus,
+      verificationLevel: verificationLevel ?? this.verificationLevel,
+      verificationMethod: verificationMethod ?? this.verificationMethod,
       entityName: entityName ?? this.entityName,
       ownerName: ownerName ?? this.ownerName,
       governorate: governorate ?? this.governorate,
@@ -95,6 +115,10 @@ class SessionData {
       address: address ?? this.address,
       category: category ?? this.category,
       logoUrl: logoUrl ?? this.logoUrl,
+      businessType: businessType ?? this.businessType,
+      idFrontUrl: idFrontUrl ?? this.idFrontUrl,
+      idBackUrl: idBackUrl ?? this.idBackUrl,
+      selfieUrl: selfieUrl ?? this.selfieUrl,
     );
   }
 }
@@ -114,6 +138,8 @@ class SessionManager {
   static const _kBasicProfileCompleted = 'session_basic_profile_completed';
   static const _kCompletionPercentage = 'session_completion_percentage';
   static const _kVerificationStatus = 'session_verification_status';
+  static const _kVerificationLevel = 'session_verification_level';
+  static const _kVerificationMethod = 'session_verification_method';
   static const _kEntityName = 'session_entity_name';
   static const _kOwnerName = 'session_owner_name';
   static const _kGovernorate = 'session_governorate';
@@ -121,6 +147,10 @@ class SessionManager {
   static const _kAddress = 'session_address';
   static const _kCategory = 'session_category';
   static const _kLogoUrl = 'session_logo_url';
+  static const _kBusinessType = 'session_business_type';
+  static const _kIdFrontUrl = 'session_id_front_url';
+  static const _kIdBackUrl = 'session_id_back_url';
+  static const _kSelfieUrl = 'session_selfie_url';
 
   final SharedPreferences _prefs;
   SessionData _currentSession;
@@ -144,8 +174,10 @@ class SessionManager {
     final loggedIn = _prefs.getBool(_kIsLoggedIn) ?? (token != null && token.isNotEmpty);
     final guest = _prefs.getBool(_kIsGuest) ?? false;
     final basicCompleted = _prefs.getBool(_kBasicProfileCompleted) ?? false;
-    final completionPct = _prefs.getInt(_kCompletionPercentage) ?? (basicCompleted ? 40 : 0);
+    final completionPct = _prefs.getInt(_kCompletionPercentage) ?? (basicCompleted ? 45 : 0);
     final vStatus = _prefs.getString(_kVerificationStatus) ?? 'unverified';
+    final vLevel = _prefs.getString(_kVerificationLevel) ?? (guest ? 'guest' : 'basic');
+    final vMethod = _prefs.getString(_kVerificationMethod) ?? 'company';
     final eName = _prefs.getString(_kEntityName);
     final oName = _prefs.getString(_kOwnerName);
     final gov = _prefs.getString(_kGovernorate);
@@ -153,6 +185,10 @@ class SessionManager {
     final addr = _prefs.getString(_kAddress);
     final cat = _prefs.getString(_kCategory);
     final logo = _prefs.getString(_kLogoUrl);
+    final bType = _prefs.getString(_kBusinessType);
+    final front = _prefs.getString(_kIdFrontUrl);
+    final back = _prefs.getString(_kIdBackUrl);
+    final selfie = _prefs.getString(_kSelfieUrl);
 
     UserRole role = UserRole.factory;
     if (roleStr == 'supplier') role = UserRole.supplier;
@@ -179,6 +215,8 @@ class SessionManager {
       basicProfileCompleted: basicCompleted,
       completionPercentage: completionPct,
       verificationStatus: vStatus,
+      verificationLevel: vLevel,
+      verificationMethod: vMethod,
       entityName: eName,
       ownerName: oName,
       governorate: gov,
@@ -186,6 +224,10 @@ class SessionManager {
       address: addr,
       category: cat,
       logoUrl: logo,
+      businessType: bType,
+      idFrontUrl: front,
+      idBackUrl: back,
+      selfieUrl: selfie,
     );
   }
 
@@ -289,6 +331,34 @@ class SessionManager {
   Future<void> updateVerificationStatus(String status) async {
     await _prefs.setString(_kVerificationStatus, status);
     _currentSession = _currentSession.copyWith(verificationStatus: status);
+  }
+
+  Future<void> updateVerificationDetails({
+    required String status,
+    required String level,
+    required String method,
+    String? businessType,
+    String? idFrontUrl,
+    String? idBackUrl,
+    String? selfieUrl,
+  }) async {
+    await _prefs.setString(_kVerificationStatus, status);
+    await _prefs.setString(_kVerificationLevel, level);
+    await _prefs.setString(_kVerificationMethod, method);
+    if (businessType != null) await _prefs.setString(_kBusinessType, businessType);
+    if (idFrontUrl != null) await _prefs.setString(_kIdFrontUrl, idFrontUrl);
+    if (idBackUrl != null) await _prefs.setString(_kIdBackUrl, idBackUrl);
+    if (selfieUrl != null) await _prefs.setString(_kSelfieUrl, selfieUrl);
+
+    _currentSession = _currentSession.copyWith(
+      verificationStatus: status,
+      verificationLevel: level,
+      verificationMethod: method,
+      businessType: businessType,
+      idFrontUrl: idFrontUrl,
+      idBackUrl: idBackUrl,
+      selfieUrl: selfieUrl,
+    );
   }
 
   Future<void> switchRole(UserRole role) async {

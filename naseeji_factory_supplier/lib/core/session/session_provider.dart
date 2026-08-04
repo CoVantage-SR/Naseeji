@@ -88,6 +88,27 @@ class SessionNotifier extends StateNotifier<SessionData> {
     state = _manager.currentSession;
   }
 
+  Future<void> updateVerificationDetails({
+    required String status,
+    required String level,
+    required String method,
+    String? businessType,
+    String? idFrontUrl,
+    String? idBackUrl,
+    String? selfieUrl,
+  }) async {
+    await _manager.updateVerificationDetails(
+      status: status,
+      level: level,
+      method: method,
+      businessType: businessType,
+      idFrontUrl: idFrontUrl,
+      idBackUrl: idBackUrl,
+      selfieUrl: selfieUrl,
+    );
+    state = _manager.currentSession;
+  }
+
   Future<void> switchRole(UserRole role) async {
     await _manager.switchRole(role);
     state = _manager.currentSession;

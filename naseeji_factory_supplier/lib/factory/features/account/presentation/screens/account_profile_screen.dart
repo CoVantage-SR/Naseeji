@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:naseeji_factory/core/constants/app_spacing.dart';
+import 'package:naseeji_factory/core/session/session_provider.dart';
+import 'package:naseeji_factory/shared/widgets/verification_status_card.dart';
 import '../providers/account_provider.dart';
 import '../widgets/account_reusable_widgets.dart';
 import '../widgets/profile_widgets.dart';
@@ -62,6 +64,11 @@ class AccountProfileScreen extends ConsumerWidget {
                         const SnackBar(content: Text('جاري توليد رمز QR...')),
                       );
                     },
+                  ),
+                  AppSpacing.hMD,
+                  VerificationStatusCard(
+                    status: ref.watch(sessionNotifierProvider).verificationStatus,
+                    level: ref.watch(sessionNotifierProvider).verificationLevel,
                   ),
                   AppSpacing.hMD,
                   SubscriptionCardWidget(

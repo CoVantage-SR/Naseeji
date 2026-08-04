@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../controllers/profile_controller.dart';
 import 'package:naseeji_factory/core/session/session_provider.dart';
 import 'package:naseeji_factory/core/theme/theme_controller.dart';
+import 'package:naseeji_factory/shared/widgets/verification_status_card.dart';
 
 class SupplierProfileScreen extends ConsumerWidget {
   const SupplierProfileScreen({super.key});
@@ -144,6 +145,14 @@ class SupplierProfileScreen extends ConsumerWidget {
                     phone: profile.phone.isNotEmpty ? profile.phone : '+20 101 234 5678',
                     accountType: 'مورد موثق',
                   ),
+                ),
+
+                const SizedBox(height: 14),
+
+                // 2.5 Verification Status Card
+                VerificationStatusCard(
+                  status: ref.watch(sessionNotifierProvider).verificationStatus,
+                  level: ref.watch(sessionNotifierProvider).verificationLevel,
                 ),
 
                 const SizedBox(height: 14),
