@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../shared/enums/user_role.dart';
 import '../../../core/constants/app_radius.dart';
 import '../../../core/constants/app_spacing.dart';
 import '../providers/register_provider.dart';
@@ -14,8 +13,7 @@ import '../widgets/register_textfields.dart';
 import '../widgets/terms_checkbox.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
-  final UserRole? initialRole;
-  const RegisterScreen({super.key, this.initialRole});
+  const RegisterScreen({super.key});
 
   @override
   ConsumerState<RegisterScreen> createState() => _RegisterScreenState();
@@ -68,7 +66,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       context.push('/auth/otp', extra: {
         'phone': _phoneController.text.trim(),
         'isForgotPassword': false,
-        'role': widget.initialRole,
       });
     } else if (mounted) {
       final err = ref.read(registerControllerProvider).errorMessage;
@@ -101,7 +98,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // 1. Top Header Bar (Back Button + Language Switcher)
+                // 1. Top Header Bar
                 RegisterHeader(
                   onBack: () => Navigator.of(context).pop(),
                   currentLanguage: _currentLanguage,
@@ -114,28 +111,24 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
                 AppSpacing.hSM,
 
-                // 2. Brand Identity Header with Logo & Factory Backdrop
+                // 2. Brand Identity Header
                 const RegisterLogo(),
 
                 AppSpacing.hMD,
 
-                // 3. Welcome Title & Subtitle
+                // 3. Stage Title
                 Text(
-                  widget.initialRole == UserRole.supplier
-                      ? 'إنشاء حساب كمورد'
-                      : widget.initialRole == UserRole.factory
-                          ? 'إنشاء حساب كمصنع'
-                          : 'إنشاء حساب جديد',
+                  'إنشاء حساب جديد (الخطوة 1 من 4)',
                   textAlign: TextAlign.center,
                   style: theme.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: isDark ? colorScheme.onSurface : const Color(0xFF1E293B),
-                    fontSize: 24,
+                    fontSize: 22,
                   ),
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  'أنشئ حسابك للوصول إلى أفضل الفرص في عالم النسيج',
+                  'أدخل بياناتك الشخصية الأساسية للبدء في التسجيل',
                   textAlign: TextAlign.center,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: isDark ? colorScheme.onSurfaceVariant : const Color(0xFF64748B),
@@ -145,7 +138,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
                 AppSpacing.hLG,
 
-                // 4. Form TextFields Section
+                // 4. Form TextFields (Full Name, Phone, Email opt, Password, Confirm Password)
                 Form(
                   key: _formKey,
                   child: RegisterTextFields(
@@ -159,7 +152,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
                 const SizedBox(height: 12),
 
-                // 5. Terms and Conditions Checkbox
+                // 5. Terms Checkbox
                 TermsCheckbox(
                   accepted: _acceptedTerms,
                   onChanged: (val) {
@@ -190,7 +183,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
                 AppSpacing.hLG,
 
-                // 6. Primary Register Button
+                // 6. Register Button
                 RegisterButton(
                   onPressed: _handleRegister,
                   isLoading: registerState.isLoading,
@@ -205,7 +198,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
                 AppSpacing.hLG,
 
-                // 8. Bottom Verification Info Card
                 const FactoryBanner(),
 
                 const SizedBox(height: 16),

@@ -31,7 +31,6 @@ import '../../supplier/features/products/presentation/screens/products_module_sc
 import '../../supplier/features/profile/presentation/screens/supplier_profile/supplier_profile_screen.dart';
 
 import '../../authentication/presentation/welcome/welcome_screen.dart';
-import '../../authentication/presentation/basic_profile/basic_profile_screen.dart';
 import '../../authentication/reset_password/reset_password_screen.dart';
 
 part 'app_router.g.dart';
@@ -102,10 +101,7 @@ GoRouter appRouter(AppRouterRef ref) {
       ),
       GoRoute(
         path: '/auth/register',
-        builder: (context, state) {
-          final role = state.extra as UserRole?;
-          return RegisterScreen(initialRole: role);
-        },
+        builder: (context, state) => const RegisterScreen(),
       ),
       GoRoute(
         path: '/auth/otp',
@@ -163,8 +159,8 @@ GoRouter appRouter(AppRouterRef ref) {
       GoRoute(
         path: '/auth/basic-profile',
         builder: (context, state) {
-          final role = state.extra as UserRole? ?? UserRole.factory;
-          return BasicProfileScreen(initialRole: role);
+          final role = state.extra as UserRole?;
+          return CompleteProfileScreen(initialRole: role);
         },
       ),
       GoRoute(

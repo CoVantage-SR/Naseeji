@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../constants/app_colors.dart';
+import 'package:naseeji_factory/core/theme/app_colors.dart';
 
 class VerificationStatusCard extends StatelessWidget {
   final String status; // 'unverified', 'pending', 'verified', 'rejected'
@@ -21,6 +21,14 @@ class VerificationStatusCard extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
 
     final statusConfig = _getStatusConfig(status, level);
+
+    final benefits = [
+      '⭐️ شارة التوثيق الرسمي (Verified Badge)',
+      '🔝 أولوية الترتيب والظهور في نتائج البحث (Higher Ranking)',
+      '📑 طلبات تسعير غير محدودة (Unlimited RFQs)',
+      '📦 طلبات ورسائل صفقات غير محدودة (Unlimited Orders)',
+      '🛡️ مؤشر موثوقية مرتفع (High Trust Score)',
+    ];
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -54,7 +62,7 @@ class VerificationStatusCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'حالة التوثيق',
+                    'حالة التوثيق والاعتماد',
                     style: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       fontSize: 14.5,
@@ -90,14 +98,35 @@ class VerificationStatusCard extends StatelessWidget {
             ),
           ),
           if (status != 'verified' && status != 'pending') ...[
+            const SizedBox(height: 12),
+            const Text(
+              'مميزات توثيق حسابك على نسيجي:',
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 6),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: benefits
+                  .map((b) => Padding(
+                        padding: const EdgeInsets.only(bottom: 3.0),
+                        child: Text(
+                          b,
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: isDark ? colorScheme.onSurfaceVariant : const Color(0xFF64748B),
+                          ),
+                        ),
+                      ))
+                  .toList(),
+            ),
             const SizedBox(height: 14),
             SizedBox(
               width: double.infinity,
-              height: 38,
+              height: 40,
               child: ElevatedButton.icon(
                 onPressed: onCompleteVerification ?? () => context.push('/auth/complete-profile'),
                 icon: const Icon(Icons.verified_user_outlined, size: 16),
-                label: const Text('استكمال وتوثيق الحساب الآن'),
+                label: const Text('استكمال التوثيق واحصل على المميزات'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   foregroundColor: Colors.white,
@@ -138,7 +167,7 @@ class VerificationStatusCard extends StatelessWidget {
         'darkBorderColor': const Color(0xFF16A34A),
         'icon': Icons.verified_rounded,
         'description': isIdentity
-            ? 'تم التحقق من هويتك الشخصية ونشاطك التجاري بنجاح. يمكنك الآن استخدام كامل مميزات المنصة.'
+            ? 'تم التحقق من هويتك الشخصية ونشاطك التجاري بنجاح. تكتسب الآن موثوقية عالية وتصنيف مرتفع.'
             : 'تم التوثيق الرسمي لشركتك/مصنعك بالسجل التجاري والبطاقة الضريبية.',
       };
     } else if (status == 'rejected') {
@@ -154,14 +183,14 @@ class VerificationStatusCard extends StatelessWidget {
       };
     } else {
       return {
-        'badgeText': '⚪ غير موثق',
+        'badgeText': '⚪ غير موثق (80% اكتمال)',
         'badgeColor': const Color(0xFF64748B),
         'bgColor': const Color(0xFFF8FAFC),
         'borderColor': const Color(0xFFCBD5E1),
         'darkBgColor': const Color(0xFF1E293B),
         'darkBorderColor': const Color(0xFF475569),
         'icon': Icons.shield_outlined,
-        'description': 'حسابك غير موثق حالياً. وثق حسابك الآن لفتح كافة المميزات والصفقات.',
+        'description': 'ملفك الأساسي مكتمل 80%. ارفع مستندات السجل والتكليف أو الهوية الشخصية للحصول على 100% وتوثيق الحساب.',
       };
     }
   }

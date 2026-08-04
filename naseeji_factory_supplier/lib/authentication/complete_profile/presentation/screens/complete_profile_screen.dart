@@ -120,14 +120,29 @@ class _CompleteProfileScreenState
     final success = await controller.submitProfile();
 
     if (success && mounted) {
-      final pct = state.completionPercentage;
       final isCompany = state.verificationMethod == 'company';
-      final vLevel = isCompany ? 'business_verified' : 'identity_verified';
+      final hasDocs = isCompany
+          ? (state.crDocumentFile != null || _crController.text.isNotEmpty)
+          : (state.idFrontFile != null || state.selfieFile != null);
+
+      final pct = hasDocs ? 100 : 80;
+      final vStatus = hasDocs ? 'pending' : 'unverified';
+      final vLevel = hasDocs ? (isCompany ? 'business_verified' : 'identity_verified') : 'basic';
 
       final sessionNotifier = ref.read(sessionNotifierProvider.notifier);
+      await sessionNotifier.saveBasicProfile(
+        entityName: _nameController.text.trim().isNotEmpty ? _nameController.text.trim() : _businessNameController.text.trim(),
+        ownerName: _nameController.text.trim(),
+        governorate: state.selectedGovernorate ?? 'القاهرة',
+        city: state.selectedCity ?? 'القاهرة',
+        address: _addressController.text.trim(),
+        category: state.selectedCategory ?? state.businessType ?? 'عام',
+        logoUrl: state.logoUrl,
+        role: state.selectedRole,
+      );
       await sessionNotifier.updateCompletionPercentage(pct);
       await sessionNotifier.updateVerificationDetails(
-        status: 'pending', // Sent for Admin Review
+        status: vStatus,
         level: vLevel,
         method: state.verificationMethod,
         businessType: state.businessType,
@@ -138,8 +153,10 @@ class _CompleteProfileScreenState
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('تم إرسال مستندات التوثيق بنجاح! طلبك قيد المراجعة الآن 🟡'),
+          SnackBar(
+            content: Text(hasDocs
+                ? 'تم حفظ بيانات الملف والمستندات بنجاح! طلبك قيد المراجعة 🟡'
+                : 'تم استكمال ملف الحساب بنجاح! يمكنك توثيق الحساب لاحقاً للحصول على شارة التوثيق ⭐️'),
             backgroundColor: Colors.teal,
           ),
         );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../constants/app_colors.dart';
+import 'package:naseeji_factory/core/theme/app_colors.dart';
 
 class VerificationLockedDialog extends StatelessWidget {
   final String title;
