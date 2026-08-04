@@ -273,7 +273,7 @@ class _BasicProfileScreenState extends ConsumerState<BasicProfileScreen> {
 
                   // Governorate Dropdown
                   DropdownButtonFormField<String>(
-                    value: _selectedGovernorate,
+                    initialValue: _selectedGovernorate,
                     validator: (v) => v == null ? 'يرجى اختيار المحافظة' : null,
                     items: _governorates
                         .map((g) => DropdownMenuItem(value: g, child: Text(g)))
@@ -322,7 +322,7 @@ class _BasicProfileScreenState extends ConsumerState<BasicProfileScreen> {
 
                   // Category Dropdown
                   DropdownButtonFormField<String>(
-                    value: _selectedCategory,
+                    initialValue: _selectedCategory,
                     validator: (v) => v == null ? 'يرجى اختيار النشاط' : null,
                     items: _categories
                         .map((c) => DropdownMenuItem(value: c, child: Text(c)))

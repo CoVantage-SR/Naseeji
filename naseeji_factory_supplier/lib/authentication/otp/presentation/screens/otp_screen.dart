@@ -48,7 +48,7 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
       if (widget.isForgotPassword) {
         context.push('/auth/reset-password', extra: widget.phone);
       } else if (widget.userRole != null) {
-        context.push('/auth/complete-profile', extra: widget.userRole);
+        context.push('/auth/basic-profile', extra: widget.userRole);
       } else {
         context.push('/auth/account-type');
       }

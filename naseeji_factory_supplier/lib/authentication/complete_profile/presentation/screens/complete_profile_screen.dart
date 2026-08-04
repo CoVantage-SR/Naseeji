@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/session/session_provider.dart';
 import '../../../presentation/providers/auth_providers.dart';
 import '../../../../core/widgets/general_widgets.dart';
 import '../../../../shared/enums/user_role.dart';
@@ -102,7 +103,36 @@ class _CompleteProfileScreenState
     final success = await controller.submitProfile();
 
     if (success && mounted) {
-      context.push('/auth/terms-acceptance', extra: state.selectedRole);
+      int pct = 40; // Base percentage
+      if (_crController.text.trim().isNotEmpty) pct += 20;
+      if (_taxController.text.trim().isNotEmpty) pct += 15;
+      if (state.selectedLogo != null || (state.logoUrl != null && state.logoUrl!.isNotEmpty)) pct += 5;
+      if (state.selectedGovernorate != null && state.address.isNotEmpty) pct += 10;
+      if (state.selectedCategory != null) pct += 10;
+
+      final isVerified = _crController.text.trim().isNotEmpty && _taxController.text.trim().isNotEmpty;
+
+      final sessionNotifier = ref.read(sessionNotifierProvider.notifier);
+      await sessionNotifier.updateCompletionPercentage(pct > 100 ? 100 : pct);
+      await sessionNotifier.updateVerificationStatus(isVerified ? 'verified' : 'pending');
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(isVerified
+                ? 'تم تحديث بيانات الشركة بنجاح وحصلت على حالة شركة موثقة ⭐️'
+                : 'تم حفظ البيانات بنجاح! أكمل السجل الضريبي والتجاري للتوثيق.'),
+            backgroundColor: Colors.teal,
+          ),
+        );
+
+        final role = state.selectedRole;
+        if (role == UserRole.supplier) {
+          context.go('/supplier/dashboard');
+        } else {
+          context.go('/factory/home');
+        }
+      }
     } else if (mounted) {
       final err = ref.read(completeProfileControllerProvider).errorMessage;
       if (err != null && err.isNotEmpty) {

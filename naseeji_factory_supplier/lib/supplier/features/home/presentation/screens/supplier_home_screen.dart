@@ -8,6 +8,8 @@ import '../widgets/today_tasks_section.dart';
 import '../widgets/quick_shortcuts_and_chart.dart';
 import '../widgets/notifications_bottom_banner.dart';
 
+import 'package:naseeji_factory/shared/widgets/profile_completion_card.dart';
+
 class SupplierHomeScreen extends ConsumerStatefulWidget {
   const SupplierHomeScreen({super.key});
 
@@ -67,6 +69,11 @@ class _SupplierHomeScreenState extends ConsumerState<SupplierHomeScreen> {
                   child: SupplierHomeHeader(
                     showNotificationBubble: _showNotificationBubble,
                   ),
+                ),
+
+                // Profile Completion Card
+                const SliverToBoxAdapter(
+                  child: ProfileCompletionCard(),
                 ),
 
                 // 2. Subscription Warning Banner (If < 7 days remaining)

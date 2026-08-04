@@ -25,14 +25,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
     final session = ref.read(sessionNotifierProvider);
 
-    if (session.isLoggedIn && session.accessToken != null) {
+    if ((session.isLoggedIn && session.accessToken != null) || session.isGuest) {
       if (session.role == UserRole.supplier) {
         context.go('/supplier/dashboard');
       } else {
         context.go('/factory/home');
       }
     } else {
-      context.go('/auth/login');
+      context.go('/auth/welcome');
     }
   }
 

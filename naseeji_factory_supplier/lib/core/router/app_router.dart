@@ -30,6 +30,8 @@ import '../../supplier/features/messages/presentation/screens/messages_screen.da
 import '../../supplier/features/products/presentation/screens/products_module_screen.dart';
 import '../../supplier/features/profile/presentation/screens/supplier_profile/supplier_profile_screen.dart';
 
+import '../../authentication/presentation/welcome/welcome_screen.dart';
+import '../../authentication/presentation/basic_profile/basic_profile_screen.dart';
 import '../../authentication/reset_password/reset_password_screen.dart';
 
 part 'app_router.g.dart';
@@ -52,23 +54,24 @@ GoRouter appRouter(AppRouterRef ref) {
     navigatorKey: rootNavigatorKey,
     initialLocation: '/',
     refreshListenable: routerNotifier,
-    errorBuilder: (context, state) => const LoginScreen(),
+    errorBuilder: (context, state) => const WelcomeScreen(),
     redirect: (context, state) {
       final session = ref.read(sessionNotifierProvider);
       final isFactoryRoute = state.matchedLocation.startsWith('/factory') ||
           state.matchedLocation.startsWith('/account');
       final isSupplierRoute = state.matchedLocation.startsWith('/supplier');
 
-      if (!session.isLoggedIn) {
+      if (!session.isLoggedIn && !session.isGuest) {
         if (isFactoryRoute || isSupplierRoute) {
-          return '/auth/login';
+          return '/auth/welcome';
         }
-      } else {
+      } else if (session.isLoggedIn) {
         final defaultDashboard = session.role == UserRole.supplier
             ? '/supplier/dashboard'
             : '/factory/home';
 
-        if (state.matchedLocation == '/auth/login' ||
+        if (state.matchedLocation == '/auth/welcome' ||
+            state.matchedLocation == '/auth/login' ||
             state.matchedLocation == '/auth/register') {
           return defaultDashboard;
         }
@@ -88,6 +91,10 @@ GoRouter appRouter(AppRouterRef ref) {
       GoRoute(
         path: '/',
         builder: (context, state) => const SplashScreen(),
+      ),
+      GoRoute(
+        path: '/auth/welcome',
+        builder: (context, state) => const WelcomeScreen(),
       ),
       GoRoute(
         path: '/auth/login',
@@ -131,11 +138,34 @@ GoRouter appRouter(AppRouterRef ref) {
       ),
       GoRoute(
         path: '/auth/account-type',
-        builder: (context, state) => const AccountTypeScreen(),
+        builder: (context, state) {
+          bool isGuest = false;
+          if (state.extra is Map<String, dynamic>) {
+            isGuest = (state.extra as Map<String, dynamic>)['isGuest'] == true;
+          } else if (state.extra is bool) {
+            isGuest = state.extra as bool;
+          }
+          return AccountTypeScreen(isGuest: isGuest);
+        },
       ),
       GoRoute(
         path: '/auth/choose-account-type',
-        builder: (context, state) => const AccountTypeScreen(),
+        builder: (context, state) {
+          bool isGuest = false;
+          if (state.extra is Map<String, dynamic>) {
+            isGuest = (state.extra as Map<String, dynamic>)['isGuest'] == true;
+          } else if (state.extra is bool) {
+            isGuest = state.extra as bool;
+          }
+          return AccountTypeScreen(isGuest: isGuest);
+        },
+      ),
+      GoRoute(
+        path: '/auth/basic-profile',
+        builder: (context, state) {
+          final role = state.extra as UserRole? ?? UserRole.factory;
+          return BasicProfileScreen(initialRole: role);
+        },
       ),
       GoRoute(
         path: '/auth/complete-profile',

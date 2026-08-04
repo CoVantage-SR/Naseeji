@@ -87,19 +87,27 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   void _navigateByUserRole(UserRole? role) {
     final effectiveRole = role ?? UserRole.factory;
+    final session = ref.read(sessionNotifierProvider);
+    final isBasicCompleted = session.basicProfileCompleted;
+
     ref
         .read(sessionNotifierProvider.notifier)
         .saveSession(
           accessToken: 'jwt_token_${DateTime.now().millisecondsSinceEpoch}',
           refreshToken: 'jwt_refresh_token',
           role: effectiveRole,
+          basicProfileCompleted: isBasicCompleted,
+          completionPercentage: isBasicCompleted ? (session.completionPercentage > 0 ? session.completionPercentage : 40) : 0,
         );
-    if (effectiveRole == UserRole.factory) {
+
+    if (!isBasicCompleted) {
+      context.go('/auth/basic-profile', extra: effectiveRole);
+    } else if (effectiveRole == UserRole.factory) {
       context.go('/factory/home');
     } else if (effectiveRole == UserRole.supplier) {
       context.go('/supplier/dashboard');
     } else {
-      context.go('/auth/choose-account-type');
+      context.go('/auth/account-type');
     }
   }
 

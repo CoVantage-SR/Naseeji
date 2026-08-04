@@ -17,6 +17,8 @@ import '../widgets/factory_home/recent_quotations_section.dart';
 import '../widgets/factory_home/recent_rfqs_section.dart';
 import '../widgets/factory_home/today_tasks_section.dart';
 
+import 'package:naseeji_factory/shared/widgets/profile_completion_card.dart';
+
 class FactoryHomeScreen extends ConsumerWidget {
   const FactoryHomeScreen({super.key});
 
@@ -42,6 +44,9 @@ class FactoryHomeScreen extends ConsumerWidget {
                 children: [
                   // 1. Header (Factory Name, Verification, Notifications, Profile, Greeting)
                   _buildHeader(context, ref),
+
+                  // Profile Completion Card
+                  const ProfileCompletionCard(),
 
                   // 2. Search & Filter Bar
                   FactorySearchBar(

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 class RegisterHeader extends StatelessWidget {
-  final VoidCallback onBack;
+  final VoidCallback? onBack;
+  final bool showBackButton;
   final String currentLanguage;
   final ValueChanged<String> onLanguageChanged;
 
   const RegisterHeader({
     super.key,
-    required this.onBack,
+    this.onBack,
+    this.showBackButton = true,
     required this.currentLanguage,
     required this.onLanguageChanged,
   });
@@ -22,32 +24,35 @@ class RegisterHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         // Circular Back Button
-        InkWell(
-          onTap: onBack,
-          borderRadius: BorderRadius.circular(20),
-          child: Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: isDark ? colorScheme.surfaceContainerHighest : Colors.white,
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: isDark ? colorScheme.outline : const Color(0xFFE2E8F0),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.03),
-                  blurRadius: 4,
-                  offset: const Offset(0, 2),
+        if (showBackButton && onBack != null)
+          InkWell(
+            onTap: onBack,
+            borderRadius: BorderRadius.circular(20),
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: isDark ? colorScheme.surfaceContainerHighest : Colors.white,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: isDark ? colorScheme.outline : const Color(0xFFE2E8F0),
                 ),
-              ],
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.03),
+                    blurRadius: 4,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Icon(
+                Icons.chevron_left_rounded,
+                size: 20,
+                color: isDark ? colorScheme.onSurface : const Color(0xFF334155),
+              ),
             ),
-            child: Icon(
-              Icons.chevron_left_rounded,
-              size: 20,
-              color: isDark ? colorScheme.onSurface : const Color(0xFF334155),
-            ),
-          ),
-        ),
+          )
+        else
+          const SizedBox.shrink(),
 
         // Language Switcher Badge
         PopupMenuButton<String>(
