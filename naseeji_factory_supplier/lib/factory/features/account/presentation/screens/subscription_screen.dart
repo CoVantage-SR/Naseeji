@@ -157,11 +157,13 @@ class SubscriptionScreen extends ConsumerWidget {
           // Invoices & History
           Text('سجل الفواتير وعمليات التجديد', style: TextStyle(color: textPrimary, fontWeight: FontWeight.bold, fontSize: 15)),
           const SizedBox(height: 8),
-          Container(
-            decoration: BoxDecoration(
-              color: surface,
+          Material(
+            color: surface,
+            borderRadius: AppRadius.rLG,
+            clipBehavior: Clip.antiAlias,
+            shape: RoundedRectangleBorder(
               borderRadius: AppRadius.rLG,
-              border: Border.all(color: border),
+              side: BorderSide(color: border),
             ),
             child: Column(
               children: [

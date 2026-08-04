@@ -38,7 +38,7 @@ class DocumentUploadCard extends StatelessWidget {
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
             color: isDark
-                ? colorScheme.surfaceContainerHighest.withValues(alpha: 0.3)
+                ? colorScheme.surfaceContainerHighest.withValues(alpha: 0.03)
                 : const Color(0xFFF8FAFC),
             borderRadius: BorderRadius.circular(14),
             border: Border.all(
@@ -47,7 +47,7 @@ class DocumentUploadCard extends StatelessWidget {
                   : file != null
                       ? AppColors.primary
                       : (isDark ? colorScheme.outline.withValues(alpha: 0.5) : const Color(0xFFE2E8F0)),
-              width: file != null ? 1.5 : 1,
+              width: file != null ? .05 : .01,
             ),
           ),
           child: Column(
@@ -70,10 +70,10 @@ class DocumentUploadCard extends StatelessWidget {
                           child: Icon(
                             file != null ? (isPdf ? Icons.picture_as_pdf_rounded : Icons.task_alt_rounded) : icon,
                             color: file != null ? AppColors.primary : colorScheme.onSurfaceVariant,
-                            size: 20,
+                            size: 10,
                           ),
                         ),
-                        const SizedBox(width: 10),
+                        const SizedBox(width: 5),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,6 +114,7 @@ class DocumentUploadCard extends StatelessWidget {
                         backgroundColor: AppColors.primary,
                         foregroundColor: Colors.white,
                         elevation: 0,
+                        minimumSize: const Size(0, 36),
                         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -148,7 +149,7 @@ class DocumentUploadCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   child: Image.file(
                     File(file!.path),
-                    height: 100,
+                    height: 80,
                     width: double.infinity,
                     fit: BoxFit.cover,
                     errorBuilder: (_, __, ___) => const SizedBox.shrink(),

@@ -171,61 +171,68 @@ class SubscriptionProfileTabView extends ConsumerWidget {
           const SizedBox(height: 20),
 
           // 4. Invoices Section
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: colorScheme.surface,
+          Material(
+            color: colorScheme.surface,
+            borderRadius: BorderRadius.circular(14),
+            clipBehavior: Clip.antiAlias,
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(14),
-              border: Border.all(
+              side: BorderSide(
                   color: colorScheme.outlineVariant.withValues(alpha: 0.5)),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'الفواتير والمطالبات المالية',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5),
-                ),
-                const SizedBox(height: 10),
-                if (state.invoices.isEmpty)
-                  const Text('لا توجد فواتير حتي الآن',
-                      style: TextStyle(fontSize: 11, color: Colors.grey))
-                else
-                  ...state.invoices.map(
-                    (inv) => ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.receipt_long_rounded,
-                          color: AppColors.primary),
-                      title: Text(inv.planName,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'الفواتير والمطالبات المالية',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13.5),
+                  ),
+                  const SizedBox(height: 10),
+                  if (state.invoices.isEmpty)
+                    const Text('لا توجد فواتير حتي الآن',
+                        style: TextStyle(fontSize: 11, color: Colors.grey))
+                  else
+                    ...state.invoices.map(
+                      (inv) => ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: const Icon(Icons.receipt_long_rounded,
+                            color: AppColors.primary),
+                        title: Text(inv.planName,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 12)),
+                        subtitle: Text(
+                            'رقم الفاتورة: ${inv.invoiceId} • ${inv.paymentMethod}',
+                            style: const TextStyle(fontSize: 10)),
+                        trailing: Text(
+                          '${inv.amount} ${inv.currency}',
                           style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 12)),
-                      subtitle: Text(
-                          'رقم الفاتورة: ${inv.invoiceId} • ${inv.paymentMethod}',
-                          style: const TextStyle(fontSize: 10)),
-                      trailing: Text(
-                        '${inv.amount} ${inv.currency}',
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                            color: Colors.green),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              color: Colors.green),
+                        ),
                       ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 20),
 
           // 5. Renewal History Section
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: colorScheme.surface,
+          Material(
+            color: colorScheme.surface,
+            borderRadius: BorderRadius.circular(14),
+            clipBehavior: Clip.antiAlias,
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(14),
-              border: Border.all(
+              side: BorderSide(
                   color: colorScheme.outlineVariant.withValues(alpha: 0.5)),
             ),
-            child: Column(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(

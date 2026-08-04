@@ -163,11 +163,13 @@ class _Step6PricingTiersWidgetState extends ConsumerState<Step6PricingTiersWidge
           Text('شرائح أسعار الجملة المحددة:', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: colorScheme.onSurface)),
           const SizedBox(height: 8),
 
-          Container(
-            decoration: BoxDecoration(
-              color: colorScheme.surface,
+          Material(
+            color: colorScheme.surface,
+            borderRadius: BorderRadius.circular(16),
+            clipBehavior: Clip.antiAlias,
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.5)),
+              side: BorderSide(color: colorScheme.outlineVariant.withValues(alpha: 0.5)),
             ),
             child: ListView.separated(
               shrinkWrap: true,

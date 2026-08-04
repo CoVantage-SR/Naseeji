@@ -154,11 +154,13 @@ class WalletScreen extends ConsumerWidget {
             // Bank accounts & Instapay section
             Text('طرق السحب والإيداع المرتبطة', style: TextStyle(color: textPrimary, fontWeight: FontWeight.bold, fontSize: 15)),
             AppSpacing.hSM,
-            Container(
-              decoration: BoxDecoration(
-                color: surface,
+            Material(
+              color: surface,
+              borderRadius: AppRadius.rLG,
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(
                 borderRadius: AppRadius.rLG,
-                border: Border.all(color: border),
+                side: BorderSide(color: border),
               ),
               child: Column(
                 children: [

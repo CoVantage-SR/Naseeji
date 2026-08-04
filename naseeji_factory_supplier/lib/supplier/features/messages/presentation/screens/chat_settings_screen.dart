@@ -346,20 +346,24 @@ class _ChatSettingsScreenState extends ConsumerState<ChatSettingsScreen> {
   Widget _buildGroupCard(List<Widget> children) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.03), blurRadius: 8, offset: const Offset(0, 2))],
       ),
-      child: Column(
-        children: List.generate(children.length, (i) {
-          if (i == children.length - 1) return children[i];
-          return Column(
-            children: [
-              children[i],
-              const Divider(height: 1, color: Color(0xFFF1F1F5), indent: 48),
-            ],
-          );
-        }),
+      child: Material(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(16),
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          children: List.generate(children.length, (i) {
+            if (i == children.length - 1) return children[i];
+            return Column(
+              children: [
+                children[i],
+                const Divider(height: 1, color: Color(0xFFF1F1F5), indent: 48),
+              ],
+            );
+          }),
+        ),
       ),
     );
   }

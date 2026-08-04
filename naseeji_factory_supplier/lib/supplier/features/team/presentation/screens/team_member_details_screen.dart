@@ -292,17 +292,15 @@ class _TeamMemberDetailsScreenState extends ConsumerState<TeamMemberDetailsScree
     Color secondaryTextColor,
     Color activeBlueColor,
   ) {
-    return Container(
-      decoration: BoxDecoration(
-        color: cardBgColor,
+    return Material(
+      color: cardBgColor,
+      borderRadius: BorderRadius.circular(16),
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: borderColor),
+        side: BorderSide(color: borderColor),
       ),
-      child: Material(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(16),
-        clipBehavior: Clip.antiAlias,
-        child: Column(
+      child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(

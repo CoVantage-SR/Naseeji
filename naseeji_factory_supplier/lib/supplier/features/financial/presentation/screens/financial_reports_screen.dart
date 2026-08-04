@@ -207,14 +207,17 @@ class _FinancialReportsScreenState extends ConsumerState<FinancialReportsScreen>
                     if (reports.isEmpty) {
                       return Center(child: Text('لا توجد تقارير سابقة متاحة'));
                     }
-                    return Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surface,
+                    return Material(
+                      color: Theme.of(context).colorScheme.surface,
+                      borderRadius: BorderRadius.circular(16),
+                      clipBehavior: Clip.antiAlias,
+                      shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
+                        side: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                       ),
-                      child: Column(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Column(
                         children: List.generate(reports.length, (index) {
                           final report = reports[index];
                           final dateStr = '${report.createdDate.year}-${report.createdDate.month.toString().padLeft(2, '0')}-${report.createdDate.day.toString().padLeft(2, '0')}';

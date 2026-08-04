@@ -117,14 +117,17 @@ class TaxCenterScreen extends ConsumerWidget {
                       style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.onSurface),
                     ),
                     SizedBox(height: 10),
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surface,
+                    Material(
+                      color: Theme.of(context).colorScheme.surface,
+                      borderRadius: BorderRadius.circular(16),
+                      clipBehavior: Clip.antiAlias,
+                      shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
+                        side: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                       ),
-                      child: Column(
+                      child: Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
                         children: data.documents.map((doc) {
                           return ListTile(
                             leading: const Icon(Icons.picture_as_pdf, color: Color(0xFFBA1A1A)),

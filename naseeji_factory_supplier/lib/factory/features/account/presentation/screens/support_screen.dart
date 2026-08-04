@@ -129,14 +129,17 @@ class SupportScreen extends ConsumerWidget {
               )
             else
               ...tickets.map((tck) {
-                return Container(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  decoration: BoxDecoration(
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Material(
                     color: surface,
                     borderRadius: AppRadius.rMD,
-                    border: Border.all(color: border),
-                  ),
-                  child: ListTile(
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadius.rMD,
+                      side: BorderSide(color: border),
+                    ),
+                    child: ListTile(
                     leading: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(

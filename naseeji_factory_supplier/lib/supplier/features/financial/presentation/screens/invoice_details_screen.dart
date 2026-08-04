@@ -203,14 +203,17 @@ class InvoiceDetailsScreen extends StatelessWidget {
               if (inv.attachments.isNotEmpty) ...[
                 _buildTitle('المرفقات والشهادات المرفقة'),
                 SizedBox(height: 8),
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface,
+                Material(
+                  color: Theme.of(context).colorScheme.surface,
+                  borderRadius: BorderRadius.circular(12),
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
+                    side: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3)),
                   ),
-                  child: Column(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Column(
                     children: inv.attachments.map((filename) {
                       return ListTile(
                         leading: const Icon(Icons.picture_as_pdf, color: Color(0xFFBA1A1A)),

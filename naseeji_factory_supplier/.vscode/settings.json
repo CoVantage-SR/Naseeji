@@ -1,5 +1,6 @@
 {
   "java.configuration.updateBuildConfiguration": "automatic",
   "commentTranslate.hover.enabled": true,
-  "commentTranslate.targetLanguage": "ar"
+  "commentTranslate.targetLanguage": "ar",
+  "java.compile.nullAnalysis.mode": "automatic"
 }

@@ -70,14 +70,17 @@ class AgreementSignatureWidget extends ConsumerWidget {
 
           // Checkbox Consent & Action Button for Supplier Signing
           if (canSign) ...[
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.04),
+            Material(
+              color: AppColors.primary.withValues(alpha: 0.04),
+              borderRadius: BorderRadius.circular(10),
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
+                side: BorderSide(color: AppColors.primary.withValues(alpha: 0.2)),
               ),
-              child: CheckboxListTile(
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: CheckboxListTile(
                 contentPadding: EdgeInsets.zero,
                 dense: true,
                 value: isAgreed,

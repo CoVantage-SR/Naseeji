@@ -109,16 +109,19 @@ class _NotificationCenterScreenState extends ConsumerState<NotificationCenterScr
                       itemCount: filtered.length,
                       itemBuilder: (context, index) {
                         final item = filtered[index];
-                        return Container(
-                          margin: const EdgeInsets.only(bottom: 10),
-                          decoration: BoxDecoration(
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: Material(
                             color: item.isRead ? surface : AppColors.primary.withValues(alpha: 0.05),
                             borderRadius: AppRadius.rMD,
-                            border: Border.all(
-                              color: item.isRead ? border : AppColors.primary.withValues(alpha: 0.3),
+                            clipBehavior: Clip.antiAlias,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: AppRadius.rMD,
+                              side: BorderSide(
+                                color: item.isRead ? border : AppColors.primary.withValues(alpha: 0.3),
+                              ),
                             ),
-                          ),
-                          child: ListTile(
+                            child: ListTile(
                             leading: Container(
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
