@@ -171,8 +171,9 @@ class SupportScreen extends ConsumerWidget {
                     ),
                     onTap: () => _showTicketDetailsModal(context, tck),
                   ),
-                );
-              }),
+                ),
+              );
+            }),
           ],
         ),
       ),

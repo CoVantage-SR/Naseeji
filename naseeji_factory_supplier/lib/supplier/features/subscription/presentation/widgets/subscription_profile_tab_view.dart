@@ -264,6 +264,7 @@ class SubscriptionProfileTabView extends ConsumerWidget {
               ],
             ),
           ),
+        ),
         ],
       ),
     );

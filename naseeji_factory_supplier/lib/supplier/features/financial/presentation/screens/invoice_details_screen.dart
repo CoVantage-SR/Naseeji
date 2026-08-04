@@ -228,7 +228,8 @@ class InvoiceDetailsScreen extends StatelessWidget {
                     }).toList(),
                   ),
                 ),
-                SizedBox(height: 20),
+              ),
+              SizedBox(height: 20),
               ],
 
               // Actions

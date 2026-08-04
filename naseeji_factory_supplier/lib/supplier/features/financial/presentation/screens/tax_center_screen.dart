@@ -143,7 +143,8 @@ class TaxCenterScreen extends ConsumerWidget {
                         }).toList(),
                       ),
                     ),
-                    SizedBox(height: 20),
+                  ),
+                  SizedBox(height: 20),
 
                     // VAT submission reports
                     Text(

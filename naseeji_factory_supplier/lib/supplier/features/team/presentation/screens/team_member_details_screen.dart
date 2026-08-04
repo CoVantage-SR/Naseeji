@@ -324,9 +324,8 @@ class _TeamMemberDetailsScreenState extends ConsumerState<TeamMemberDetailsScree
                 )),
           ],
         ),
-      ),
-    );
-  }
+      );
+    }
 
   Widget _buildActivityLogsTimeline(
     List<TeamActivityLog> logs,

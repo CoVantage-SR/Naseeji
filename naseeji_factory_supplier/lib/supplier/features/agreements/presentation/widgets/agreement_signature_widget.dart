@@ -99,7 +99,8 @@ class AgreementSignatureWidget extends ConsumerWidget {
                 controlAffinity: ListTileControlAffinity.leading,
               ),
             ),
-            const SizedBox(height: 12),
+          ),
+          const SizedBox(height: 12),
             SizedBox(
               width: double.infinity,
               height: 48,

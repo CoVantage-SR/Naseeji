@@ -237,8 +237,9 @@ class _FinancialReportsScreenState extends ConsumerState<FinancialReportsScreen>
                           );
                         }),
                       ),
-                    );
-                  },
+                    ),
+                  );
+                },
                 ),
               ],
             ),
