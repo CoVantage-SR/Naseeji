@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../constants/app_colors.dart';
 import '../constants/app_radius.dart';
 import '../constants/app_spacing.dart';
 import '../extensions/context_extensions.dart';
+import '../session/session_provider.dart';
 import '../../authentication/presentation/providers/auth_providers.dart';
 
 /// 1. PrimaryCard - Elevated styled card
@@ -836,8 +838,9 @@ class ErrorWidget extends StatelessWidget {
 }
 
 void checkGuestAction(BuildContext context, WidgetRef ref, VoidCallback onAllowed) {
+  final session = ref.read(sessionNotifierProvider);
   final authState = ref.read(authControllerProvider);
-  final isGuest = authState.user?.id == 'guest_user';
+  final isGuest = session.isGuest || authState.user?.id == 'guest_user';
 
   if (isGuest) {
     showModalBottomSheet(
@@ -845,83 +848,120 @@ void checkGuestAction(BuildContext context, WidgetRef ref, VoidCallback onAllowe
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) {
-        final isDark = Theme.of(context).brightness == Brightness.dark;
+        final theme = Theme.of(context);
+        final isDark = theme.brightness == Brightness.dark;
         return Container(
           padding: const EdgeInsets.all(24.0),
           decoration: BoxDecoration(
             color: isDark ? AppColors.surfaceDark : Colors.white,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                width: 50,
+                width: 48,
                 height: 5,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade400,
+                  color: isDark ? Colors.grey.shade700 : Colors.grey.shade300,
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
               const SizedBox(height: 24),
-              const Icon(
-                Icons.lock_person_outlined,
-                color: AppColors.primary,
-                size: 64,
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: 0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.lock_outline_rounded,
+                  color: AppColors.primary,
+                  size: 48,
+                ),
               ),
               const SizedBox(height: 16),
               Text(
-                'تسجيل الحساب مطلوب',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                'أنشئ حساباً لفتح هذه الميزة',
+                textAlign: TextAlign.center,
+                style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
+                  fontSize: 20,
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 8),
               Text(
-                'لتتمكن من إتمام هذا الإجراء والتفاعل مع الموردين وإرسال طلبات عروض الأسعار، يرجى تسجيل حساب مصنع كامل أولاً.',
+                'هذه الميزة متاحة فقط للحسابات المسجلة. سجل دخولك أو أنشئ حساباً جديداً للوصول الكامل إلى جميع الميزات.',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.grey,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: isDark ? Colors.grey.shade400 : const Color(0xFF64748B),
+                  fontSize: 13.5,
+                  height: 1.4,
                 ),
               ),
               const SizedBox(height: 24),
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        side: const BorderSide(color: AppColors.primary),
-                        foregroundColor: AppColors.primary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      child: const Text('تراجع'),
+              // Login Button
+              SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    context.push('/auth/login');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        ref.read(authControllerProvider.notifier).logout();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      child: const Text('تسجيل حساب جديد'),
-                    ),
+                  child: const Text(
+                    'تسجيل الدخول',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                   ),
-                ],
+                ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 10),
+              // Register Button
+              SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    context.push('/auth/register');
+                  },
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.primary,
+                    side: const BorderSide(color: AppColors.primary, width: 1.5),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: const Text(
+                    'إنشاء حساب جديد',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              // Close Button
+              SizedBox(
+                width: double.infinity,
+                height: 44,
+                child: TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(
+                    'إغلاق',
+                    style: TextStyle(
+                      color: isDark ? Colors.grey.shade400 : Colors.grey.shade700,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
             ],
           ),
         );

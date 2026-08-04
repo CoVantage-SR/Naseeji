@@ -31,6 +31,9 @@ class SessionNotifier extends StateNotifier<SessionData> {
     String? profileId,
     String? factoryId,
     String? supplierId,
+    bool basicProfileCompleted = true,
+    int completionPercentage = 40,
+    String verificationStatus = 'unverified',
   }) async {
     await _manager.saveSession(
       accessToken: accessToken,
@@ -40,7 +43,48 @@ class SessionNotifier extends StateNotifier<SessionData> {
       profileId: profileId,
       factoryId: factoryId,
       supplierId: supplierId,
+      basicProfileCompleted: basicProfileCompleted,
+      completionPercentage: completionPercentage,
+      verificationStatus: verificationStatus,
     );
+    state = _manager.currentSession;
+  }
+
+  Future<void> enterGuestMode(UserRole role) async {
+    await _manager.enterGuestMode(role);
+    state = _manager.currentSession;
+  }
+
+  Future<void> saveBasicProfile({
+    required String entityName,
+    required String ownerName,
+    required String governorate,
+    required String city,
+    required String address,
+    required String category,
+    String? logoUrl,
+    required UserRole role,
+  }) async {
+    await _manager.saveBasicProfile(
+      entityName: entityName,
+      ownerName: ownerName,
+      governorate: governorate,
+      city: city,
+      address: address,
+      category: category,
+      logoUrl: logoUrl,
+      role: role,
+    );
+    state = _manager.currentSession;
+  }
+
+  Future<void> updateCompletionPercentage(int percentage) async {
+    await _manager.updateCompletionPercentage(percentage);
+    state = _manager.currentSession;
+  }
+
+  Future<void> updateVerificationStatus(String status) async {
+    await _manager.updateVerificationStatus(status);
     state = _manager.currentSession;
   }
 

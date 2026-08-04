@@ -8,8 +8,16 @@ import '../widgets/account_type_card.dart';
 import '../widgets/register_header.dart';
 import '../widgets/register_logo.dart';
 
+import '../../../../core/session/session_provider.dart';
+import '../../../../shared/enums/user_role.dart';
+
 class AccountTypeScreen extends ConsumerStatefulWidget {
-  const AccountTypeScreen({super.key});
+  final bool isGuest;
+
+  const AccountTypeScreen({
+    super.key,
+    this.isGuest = false,
+  });
 
   @override
   ConsumerState<AccountTypeScreen> createState() => _AccountTypeScreenState();
@@ -18,9 +26,22 @@ class AccountTypeScreen extends ConsumerStatefulWidget {
 class _AccountTypeScreenState extends ConsumerState<AccountTypeScreen> {
   String _currentLanguage = 'العربية';
 
-  void _handleContinue() {
+  Future<void> _handleContinue() async {
     final selectedType = ref.read(accountTypeControllerProvider).selectedType;
-    context.push('/auth/complete-profile', extra: selectedType.toUserRole());
+    final role = selectedType.toUserRole();
+
+    if (widget.isGuest) {
+      await ref.read(sessionNotifierProvider.notifier).enterGuestMode(role);
+      if (mounted) {
+        if (role == UserRole.supplier) {
+          context.go('/supplier/dashboard');
+        } else {
+          context.go('/factory/home');
+        }
+      }
+    } else {
+      context.push('/auth/basic-profile', extra: role);
+    }
   }
 
   @override
@@ -53,7 +74,7 @@ class _AccountTypeScreenState extends ConsumerState<AccountTypeScreen> {
               const RegisterLogo(),
               AppSpacing.hMD,
               Text(
-                'اختر نوع الحساب',
+                widget.isGuest ? 'اختر نوع حساب الزائر' : 'اختر نوع الحساب',
                 textAlign: TextAlign.center,
                 style: theme.textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.bold,
@@ -63,7 +84,9 @@ class _AccountTypeScreenState extends ConsumerState<AccountTypeScreen> {
               ),
               const SizedBox(height: 6),
               Text(
-                'حدد طبيعة عملك على منصة نسيجي للبدء في الاستخدام',
+                widget.isGuest
+                    ? 'تصفح منصة نسيجي كزائر مصنع أو كزائر مورد'
+                    : 'حدد طبيعة عملك على منصة نسيجي للبدء في الاستخدام',
                 textAlign: TextAlign.center,
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: isDark ? colorScheme.onSurfaceVariant : const Color(0xFF64748B),
@@ -99,7 +122,7 @@ class _AccountTypeScreenState extends ConsumerState<AccountTypeScreen> {
                       fontSize: 16,
                     ),
                   ),
-                  child: const Text('متابعة'),
+                  child: Text(widget.isGuest ? 'دخول كزائر' : 'متابعة'),
                 ),
               ),
               AppSpacing.hLG,

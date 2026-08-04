@@ -14,6 +14,17 @@ class SessionData {
   final String language;
   final ThemeMode themeMode;
   final bool isLoggedIn;
+  final bool isGuest;
+  final bool basicProfileCompleted;
+  final int completionPercentage;
+  final String verificationStatus; // 'unverified', 'pending', 'verified'
+  final String? entityName;
+  final String? ownerName;
+  final String? governorate;
+  final String? city;
+  final String? address;
+  final String? category;
+  final String? logoUrl;
 
   const SessionData({
     this.accessToken,
@@ -26,6 +37,17 @@ class SessionData {
     this.language = 'ar',
     this.themeMode = ThemeMode.system,
     this.isLoggedIn = false,
+    this.isGuest = false,
+    this.basicProfileCompleted = false,
+    this.completionPercentage = 0,
+    this.verificationStatus = 'unverified',
+    this.entityName,
+    this.ownerName,
+    this.governorate,
+    this.city,
+    this.address,
+    this.category,
+    this.logoUrl,
   });
 
   SessionData copyWith({
@@ -39,6 +61,17 @@ class SessionData {
     String? language,
     ThemeMode? themeMode,
     bool? isLoggedIn,
+    bool? isGuest,
+    bool? basicProfileCompleted,
+    int? completionPercentage,
+    String? verificationStatus,
+    String? entityName,
+    String? ownerName,
+    String? governorate,
+    String? city,
+    String? address,
+    String? category,
+    String? logoUrl,
   }) {
     return SessionData(
       accessToken: accessToken ?? this.accessToken,
@@ -51,6 +84,17 @@ class SessionData {
       language: language ?? this.language,
       themeMode: themeMode ?? this.themeMode,
       isLoggedIn: isLoggedIn ?? this.isLoggedIn,
+      isGuest: isGuest ?? this.isGuest,
+      basicProfileCompleted: basicProfileCompleted ?? this.basicProfileCompleted,
+      completionPercentage: completionPercentage ?? this.completionPercentage,
+      verificationStatus: verificationStatus ?? this.verificationStatus,
+      entityName: entityName ?? this.entityName,
+      ownerName: ownerName ?? this.ownerName,
+      governorate: governorate ?? this.governorate,
+      city: city ?? this.city,
+      address: address ?? this.address,
+      category: category ?? this.category,
+      logoUrl: logoUrl ?? this.logoUrl,
     );
   }
 }
@@ -66,6 +110,17 @@ class SessionManager {
   static const _kLanguage = 'session_language';
   static const _kThemeMode = 'session_theme_mode';
   static const _kIsLoggedIn = 'session_is_logged_in';
+  static const _kIsGuest = 'session_is_guest';
+  static const _kBasicProfileCompleted = 'session_basic_profile_completed';
+  static const _kCompletionPercentage = 'session_completion_percentage';
+  static const _kVerificationStatus = 'session_verification_status';
+  static const _kEntityName = 'session_entity_name';
+  static const _kOwnerName = 'session_owner_name';
+  static const _kGovernorate = 'session_governorate';
+  static const _kCity = 'session_city';
+  static const _kAddress = 'session_address';
+  static const _kCategory = 'session_category';
+  static const _kLogoUrl = 'session_logo_url';
 
   final SharedPreferences _prefs;
   SessionData _currentSession;
@@ -87,6 +142,17 @@ class SessionManager {
     final lang = _prefs.getString(_kLanguage) ?? 'ar';
     final themeStr = _prefs.getString(_kThemeMode);
     final loggedIn = _prefs.getBool(_kIsLoggedIn) ?? (token != null && token.isNotEmpty);
+    final guest = _prefs.getBool(_kIsGuest) ?? false;
+    final basicCompleted = _prefs.getBool(_kBasicProfileCompleted) ?? false;
+    final completionPct = _prefs.getInt(_kCompletionPercentage) ?? (basicCompleted ? 40 : 0);
+    final vStatus = _prefs.getString(_kVerificationStatus) ?? 'unverified';
+    final eName = _prefs.getString(_kEntityName);
+    final oName = _prefs.getString(_kOwnerName);
+    final gov = _prefs.getString(_kGovernorate);
+    final cty = _prefs.getString(_kCity);
+    final addr = _prefs.getString(_kAddress);
+    final cat = _prefs.getString(_kCategory);
+    final logo = _prefs.getString(_kLogoUrl);
 
     UserRole role = UserRole.factory;
     if (roleStr == 'supplier') role = UserRole.supplier;
@@ -109,6 +175,17 @@ class SessionManager {
       language: lang,
       themeMode: themeMode,
       isLoggedIn: loggedIn,
+      isGuest: guest,
+      basicProfileCompleted: basicCompleted,
+      completionPercentage: completionPct,
+      verificationStatus: vStatus,
+      entityName: eName,
+      ownerName: oName,
+      governorate: gov,
+      city: cty,
+      address: addr,
+      category: cat,
+      logoUrl: logo,
     );
   }
 
@@ -120,6 +197,9 @@ class SessionManager {
     String? profileId,
     String? factoryId,
     String? supplierId,
+    bool basicProfileCompleted = true,
+    int completionPercentage = 40,
+    String verificationStatus = 'unverified',
   }) async {
     await _prefs.setString(_kAccessToken, accessToken);
     if (refreshToken != null) await _prefs.setString(_kRefreshToken, refreshToken);
@@ -129,6 +209,10 @@ class SessionManager {
     if (factoryId != null) await _prefs.setString(_kFactoryId, factoryId);
     if (supplierId != null) await _prefs.setString(_kSupplierId, supplierId);
     await _prefs.setBool(_kIsLoggedIn, true);
+    await _prefs.setBool(_kIsGuest, false);
+    await _prefs.setBool(_kBasicProfileCompleted, basicProfileCompleted);
+    await _prefs.setInt(_kCompletionPercentage, completionPercentage);
+    await _prefs.setString(_kVerificationStatus, verificationStatus);
 
     _currentSession = _currentSession.copyWith(
       accessToken: accessToken,
@@ -139,7 +223,72 @@ class SessionManager {
       factoryId: factoryId,
       supplierId: supplierId,
       isLoggedIn: true,
+      isGuest: false,
+      basicProfileCompleted: basicProfileCompleted,
+      completionPercentage: completionPercentage,
+      verificationStatus: verificationStatus,
     );
+  }
+
+  Future<void> enterGuestMode(UserRole role) async {
+    await _prefs.setString(_kUserRole, role.name);
+    await _prefs.setBool(_kIsLoggedIn, false);
+    await _prefs.setBool(_kIsGuest, true);
+
+    _currentSession = _currentSession.copyWith(
+      role: role,
+      isLoggedIn: false,
+      isGuest: true,
+    );
+  }
+
+  Future<void> saveBasicProfile({
+    required String entityName,
+    required String ownerName,
+    required String governorate,
+    required String city,
+    required String address,
+    required String category,
+    String? logoUrl,
+    required UserRole role,
+  }) async {
+    await _prefs.setString(_kEntityName, entityName);
+    await _prefs.setString(_kOwnerName, ownerName);
+    await _prefs.setString(_kGovernorate, governorate);
+    await _prefs.setString(_kCity, city);
+    await _prefs.setString(_kAddress, address);
+    await _prefs.setString(_kCategory, category);
+    if (logoUrl != null) await _prefs.setString(_kLogoUrl, logoUrl);
+    await _prefs.setBool(_kBasicProfileCompleted, true);
+    await _prefs.setInt(_kCompletionPercentage, 40);
+    await _prefs.setString(_kUserRole, role.name);
+    await _prefs.setBool(_kIsLoggedIn, true);
+    await _prefs.setBool(_kIsGuest, false);
+
+    _currentSession = _currentSession.copyWith(
+      entityName: entityName,
+      ownerName: ownerName,
+      governorate: governorate,
+      city: city,
+      address: address,
+      category: category,
+      logoUrl: logoUrl,
+      role: role,
+      basicProfileCompleted: true,
+      completionPercentage: 40,
+      isLoggedIn: true,
+      isGuest: false,
+    );
+  }
+
+  Future<void> updateCompletionPercentage(int percentage) async {
+    await _prefs.setInt(_kCompletionPercentage, percentage);
+    _currentSession = _currentSession.copyWith(completionPercentage: percentage);
+  }
+
+  Future<void> updateVerificationStatus(String status) async {
+    await _prefs.setString(_kVerificationStatus, status);
+    _currentSession = _currentSession.copyWith(verificationStatus: status);
   }
 
   Future<void> switchRole(UserRole role) async {
@@ -171,6 +320,17 @@ class SessionManager {
     await _prefs.remove(_kFactoryId);
     await _prefs.remove(_kSupplierId);
     await _prefs.setBool(_kIsLoggedIn, false);
+    await _prefs.setBool(_kIsGuest, false);
+    await _prefs.setBool(_kBasicProfileCompleted, false);
+    await _prefs.remove(_kCompletionPercentage);
+    await _prefs.remove(_kVerificationStatus);
+    await _prefs.remove(_kEntityName);
+    await _prefs.remove(_kOwnerName);
+    await _prefs.remove(_kGovernorate);
+    await _prefs.remove(_kCity);
+    await _prefs.remove(_kAddress);
+    await _prefs.remove(_kCategory);
+    await _prefs.remove(_kLogoUrl);
 
     _currentSession = const SessionData();
   }
