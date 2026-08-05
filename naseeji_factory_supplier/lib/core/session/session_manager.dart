@@ -6,6 +6,8 @@ import '../../shared/enums/user_role.dart';
 class SessionData {
   final String? accessToken;
   final String? refreshToken;
+  final String? sessionId;
+  final String? deviceId;
   final UserRole role;
   final AccountMode mode;
   final String? profileId;
@@ -35,6 +37,8 @@ class SessionData {
   const SessionData({
     this.accessToken,
     this.refreshToken,
+    this.sessionId,
+    this.deviceId,
     this.role = UserRole.factory,
     this.mode = AccountMode.real,
     this.profileId,
@@ -65,6 +69,8 @@ class SessionData {
   SessionData copyWith({
     String? accessToken,
     String? refreshToken,
+    String? sessionId,
+    String? deviceId,
     UserRole? role,
     AccountMode? mode,
     String? profileId,
@@ -94,6 +100,8 @@ class SessionData {
     return SessionData(
       accessToken: accessToken ?? this.accessToken,
       refreshToken: refreshToken ?? this.refreshToken,
+      sessionId: sessionId ?? this.sessionId,
+      deviceId: deviceId ?? this.deviceId,
       role: role ?? this.role,
       mode: mode ?? this.mode,
       profileId: profileId ?? this.profileId,
@@ -126,6 +134,8 @@ class SessionData {
 class SessionManager {
   static const _kAccessToken = 'session_access_token';
   static const _kRefreshToken = 'session_refresh_token';
+  static const _kSessionId = 'session_id';
+  static const _kDeviceId = 'session_device_id';
   static const _kUserRole = 'session_user_role';
   static const _kAccountMode = 'session_account_mode';
   static const _kProfileId = 'session_profile_id';
@@ -164,6 +174,8 @@ class SessionManager {
   void _loadFromStorage() {
     final token = _prefs.getString(_kAccessToken);
     final refresh = _prefs.getString(_kRefreshToken);
+    final sId = _prefs.getString(_kSessionId);
+    final dId = _prefs.getString(_kDeviceId);
     final roleStr = _prefs.getString(_kUserRole);
     final modeStr = _prefs.getString(_kAccountMode);
     final profile = _prefs.getString(_kProfileId);
@@ -203,6 +215,8 @@ class SessionManager {
     _currentSession = SessionData(
       accessToken: token,
       refreshToken: refresh,
+      sessionId: sId,
+      deviceId: dId,
       role: role,
       mode: mode,
       profileId: profile,
@@ -234,6 +248,8 @@ class SessionManager {
   Future<void> saveSession({
     required String accessToken,
     String? refreshToken,
+    String? sessionId,
+    String? deviceId,
     required UserRole role,
     AccountMode mode = AccountMode.real,
     String? profileId,
@@ -243,8 +259,13 @@ class SessionManager {
     int completionPercentage = 40,
     String verificationStatus = 'unverified',
   }) async {
+    final sId = sessionId ?? _prefs.getString(_kSessionId) ?? 'sess_${DateTime.now().millisecondsSinceEpoch}';
+    final dId = deviceId ?? _prefs.getString(_kDeviceId) ?? 'dev_mobile_01';
+
     await _prefs.setString(_kAccessToken, accessToken);
     if (refreshToken != null) await _prefs.setString(_kRefreshToken, refreshToken);
+    await _prefs.setString(_kSessionId, sId);
+    await _prefs.setString(_kDeviceId, dId);
     await _prefs.setString(_kUserRole, role.name);
     await _prefs.setString(_kAccountMode, mode.name);
     if (profileId != null) await _prefs.setString(_kProfileId, profileId);
@@ -259,6 +280,8 @@ class SessionManager {
     _currentSession = _currentSession.copyWith(
       accessToken: accessToken,
       refreshToken: refreshToken,
+      sessionId: sId,
+      deviceId: dId,
       role: role,
       mode: mode,
       profileId: profileId,
@@ -276,11 +299,15 @@ class SessionManager {
     await _prefs.setString(_kUserRole, role.name);
     await _prefs.setBool(_kIsLoggedIn, false);
     await _prefs.setBool(_kIsGuest, true);
+    await _prefs.remove(_kAccessToken);
+    await _prefs.remove(_kRefreshToken);
 
-    _currentSession = _currentSession.copyWith(
+    _currentSession = SessionData(
       role: role,
       isLoggedIn: false,
       isGuest: true,
+      language: _currentSession.language,
+      themeMode: _currentSession.themeMode,
     );
   }
 
@@ -294,6 +321,23 @@ class SessionManager {
     String? logoUrl,
     required UserRole role,
   }) async {
+    final activeToken = _currentSession.accessToken ??
+        _prefs.getString(_kAccessToken) ??
+        'jwt_token_${DateTime.now().millisecondsSinceEpoch}';
+    final activeRefresh = _currentSession.refreshToken ??
+        _prefs.getString(_kRefreshToken) ??
+        'jwt_refresh_token';
+    final sId = _currentSession.sessionId ??
+        _prefs.getString(_kSessionId) ??
+        'sess_${DateTime.now().millisecondsSinceEpoch}';
+    final dId = _currentSession.deviceId ??
+        _prefs.getString(_kDeviceId) ??
+        'dev_mobile_01';
+
+    await _prefs.setString(_kAccessToken, activeToken);
+    await _prefs.setString(_kRefreshToken, activeRefresh);
+    await _prefs.setString(_kSessionId, sId);
+    await _prefs.setString(_kDeviceId, dId);
     await _prefs.setString(_kEntityName, entityName);
     await _prefs.setString(_kOwnerName, ownerName);
     await _prefs.setString(_kGovernorate, governorate);
@@ -308,6 +352,10 @@ class SessionManager {
     await _prefs.setBool(_kIsGuest, false);
 
     _currentSession = _currentSession.copyWith(
+      accessToken: activeToken,
+      refreshToken: activeRefresh,
+      sessionId: sId,
+      deviceId: dId,
       entityName: entityName,
       ownerName: ownerName,
       governorate: governorate,
@@ -384,6 +432,8 @@ class SessionManager {
   Future<void> clearSession() async {
     await _prefs.remove(_kAccessToken);
     await _prefs.remove(_kRefreshToken);
+    await _prefs.remove(_kSessionId);
+    await _prefs.remove(_kDeviceId);
     await _prefs.remove(_kUserRole);
     await _prefs.remove(_kAccountMode);
     await _prefs.remove(_kProfileId);
@@ -405,5 +455,3 @@ class SessionManager {
     _currentSession = const SessionData();
   }
 }
-
-

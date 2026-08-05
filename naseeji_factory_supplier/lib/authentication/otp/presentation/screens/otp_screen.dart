@@ -12,6 +12,7 @@ import '../widgets/resend_button.dart';
 import '../widgets/verify_button.dart';
 
 import '../../../../shared/enums/user_role.dart';
+import '../../../../core/session/session_provider.dart';
 
 class OtpScreen extends ConsumerStatefulWidget {
   final String phone;
@@ -39,6 +40,18 @@ class _OtpScreenState extends ConsumerState<OtpScreen> {
         .verifyOtp(widget.phone);
 
     if (success && mounted) {
+      if (!widget.isForgotPassword) {
+        await ref.read(sessionNotifierProvider.notifier).saveSession(
+              accessToken: 'jwt_token_${DateTime.now().millisecondsSinceEpoch}',
+              refreshToken: 'jwt_refresh_token',
+              role: widget.userRole ?? UserRole.factory,
+              basicProfileCompleted: false,
+              completionPercentage: 25,
+            );
+      }
+
+      if (!mounted) return;
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('تم التحقق بنجاح!'),

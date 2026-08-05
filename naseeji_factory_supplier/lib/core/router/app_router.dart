@@ -62,11 +62,15 @@ GoRouter appRouter(AppRouterRef ref) {
           state.matchedLocation.startsWith('/account');
       final isSupplierRoute = state.matchedLocation.startsWith('/supplier');
 
-      if (!session.isLoggedIn && !session.isGuest) {
+      final isValidAuth = session.isLoggedIn &&
+          session.accessToken != null &&
+          session.accessToken!.isNotEmpty;
+
+      if (!isValidAuth && !session.isGuest) {
         if (isFactoryRoute || isSupplierRoute) {
           return '/auth/welcome';
         }
-      } else if (session.isLoggedIn) {
+      } else if (isValidAuth) {
         final defaultDashboard = session.role == UserRole.supplier
             ? '/supplier/dashboard'
             : '/factory/home';

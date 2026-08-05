@@ -90,6 +90,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       final user = ref.read(authControllerProvider).user;
       final session = ref.read(sessionNotifierProvider);
       final isExistingUser = (user?.hasCompletedRegistration ?? false) || session.basicProfileCompleted;
+      final role = user?.role ?? session.role;
+
+      await ref.read(sessionNotifierProvider.notifier).saveSession(
+            accessToken: 'jwt_google_token_${DateTime.now().millisecondsSinceEpoch}',
+            refreshToken: 'jwt_google_refresh_token',
+            role: role,
+            basicProfileCompleted: isExistingUser && session.basicProfileCompleted,
+            completionPercentage: isExistingUser ? 60 : 20,
+          );
+
+      if (!mounted) return;
 
       if (isExistingUser && user?.role != null) {
         if (session.basicProfileCompleted) {
