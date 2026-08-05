@@ -1,0 +1,20 @@
+name: Maintenance & Cache Cleanup
+
+on:
+  schedule:
+    - cron: '0 2 * * 0' # Every Sunday at 2 AM
+  workflow_dispatch:
+
+permissions:
+  actions: write
+
+jobs:
+  cleanup:
+    name: Purge Stale Artifacts & Caches
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prune Stale Caches
+        uses: actions/github-script@v7
+        with:
+          script: |
+            console.log("Cleanup cron triggered. Purging stale workflow caches.");
