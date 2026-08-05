@@ -33,6 +33,8 @@ void main() {
 
       final loginBtn = find.widgetWithText(ElevatedButton, 'تسجيل الدخول');
       expect(loginBtn, findsOneWidget);
+      await tester.ensureVisible(loginBtn);
+      await tester.pumpAndSettleClean();
       await tester.tap(loginBtn);
       await tester.pumpAndSettleClean();
 
