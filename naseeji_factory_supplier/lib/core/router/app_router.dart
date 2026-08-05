@@ -31,6 +31,7 @@ import '../../supplier/features/products/presentation/screens/products_module_sc
 import '../../supplier/features/profile/presentation/screens/supplier_profile/supplier_profile_screen.dart';
 import '../../supplier/features/buy_credits/presentation/screens/buy_credits_screen.dart';
 
+import '../../authentication/presentation/basic_profile/basic_profile_screen.dart';
 import '../../authentication/presentation/welcome/welcome_screen.dart';
 import '../../authentication/reset_password/reset_password_screen.dart';
 
@@ -146,22 +147,10 @@ GoRouter appRouter(AppRouterRef ref) {
         },
       ),
       GoRoute(
-        path: '/auth/choose-account-type',
-        builder: (context, state) {
-          bool isGuest = false;
-          if (state.extra is Map<String, dynamic>) {
-            isGuest = (state.extra as Map<String, dynamic>)['isGuest'] == true;
-          } else if (state.extra is bool) {
-            isGuest = state.extra as bool;
-          }
-          return AccountTypeScreen(isGuest: isGuest);
-        },
-      ),
-      GoRoute(
         path: '/auth/basic-profile',
         builder: (context, state) {
-          final role = state.extra as UserRole?;
-          return CompleteProfileScreen(initialRole: role);
+          final role = state.extra as UserRole? ?? UserRole.factory;
+          return BasicProfileScreen(initialRole: role);
         },
       ),
       GoRoute(

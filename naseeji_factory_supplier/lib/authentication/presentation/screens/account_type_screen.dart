@@ -41,7 +41,7 @@ class _AccountTypeScreenState extends ConsumerState<AccountTypeScreen> {
         }
       }
     } else {
-      context.push('/auth/complete-profile', extra: role);
+      context.push('/auth/basic-profile', extra: role);
     }
   }
 

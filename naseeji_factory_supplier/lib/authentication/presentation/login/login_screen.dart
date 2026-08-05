@@ -55,8 +55,29 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         );
 
     if (success && mounted) {
+      final session = ref.read(sessionNotifierProvider);
       final user = ref.read(authControllerProvider).user;
-      _navigateByUserRole(user?.role);
+      final role = user?.role ?? session.role;
+
+      await ref.read(sessionNotifierProvider.notifier).saveSession(
+            accessToken: 'jwt_token_${DateTime.now().millisecondsSinceEpoch}',
+            refreshToken: 'jwt_refresh_token',
+            role: role,
+            basicProfileCompleted: session.basicProfileCompleted,
+            completionPercentage: session.completionPercentage,
+          );
+
+      if (!mounted) return;
+
+      if (session.basicProfileCompleted) {
+        if (role == UserRole.supplier) {
+          context.go('/supplier/dashboard');
+        } else {
+          context.go('/factory/home');
+        }
+      } else {
+        context.push('/auth/basic-profile', extra: role);
+      }
     }
   }
 
@@ -67,12 +88,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         .loginWithGoogle();
     if (success && mounted) {
       final user = ref.read(authControllerProvider).user;
-      final isExistingUser = user?.hasCompletedRegistration ?? false;
+      final session = ref.read(sessionNotifierProvider);
+      final isExistingUser = (user?.hasCompletedRegistration ?? false) || session.basicProfileCompleted;
 
       if (isExistingUser && user?.role != null) {
-        _navigateByUserRole(user!.role);
+        if (session.basicProfileCompleted) {
+          if (user!.role == UserRole.supplier) {
+            context.go('/supplier/dashboard');
+          } else {
+            context.go('/factory/home');
+          }
+        } else {
+          context.push('/auth/basic-profile', extra: user!.role);
+        }
       } else {
-        context.push('/auth/account-type');
+        // New Google users MUST NEVER skip Account Type and Basic Profile
+        context.push('/auth/account-type', extra: {'isGoogleSignUp': true});
       }
     }
   }
@@ -81,29 +112,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     FocusScope.of(context).unfocus();
     await ref.read(authControllerProvider.notifier).loginDemo(role);
     if (mounted) {
-      _navigateByUserRole(role);
-    }
-  }
-
-  void _navigateByUserRole(UserRole? role) {
-    final effectiveRole = role ?? UserRole.factory;
-    final session = ref.read(sessionNotifierProvider);
-    final isProfileCompleted = session.basicProfileCompleted || session.completionPercentage >= 80;
-
-    ref
-        .read(sessionNotifierProvider.notifier)
-        .saveSession(
-          accessToken: 'jwt_token_${DateTime.now().millisecondsSinceEpoch}',
-          refreshToken: 'jwt_refresh_token',
-          role: effectiveRole,
-          basicProfileCompleted: true,
-          completionPercentage: isProfileCompleted ? session.completionPercentage : 80,
-        );
-
-    if (effectiveRole == UserRole.supplier) {
-      context.go('/supplier/dashboard');
-    } else {
-      context.go('/factory/home');
+      await ref.read(sessionNotifierProvider.notifier).saveSession(
+            accessToken: 'jwt_demo_token',
+            role: role,
+            basicProfileCompleted: true,
+            completionPercentage: 80,
+          );
+      if (!mounted) return;
+      if (role == UserRole.supplier) {
+        context.go('/supplier/dashboard');
+      } else {
+        context.go('/factory/home');
+      }
     }
   }
 
