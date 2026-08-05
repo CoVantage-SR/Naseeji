@@ -14,7 +14,7 @@ import '../widgets/empty_products_widget.dart';
 import '../widgets/loading_widget.dart';
 import '../widgets/subscription_limit_dialog.dart';
 import '../widgets/add_product_wizard_bottom_sheet.dart';
-import '../../core/widgets/app_bottom_navigation_bar.dart';
+import 'package:naseeji_factory/supplier/core/widgets/app_bottom_navigation_bar.dart';
 
 class ProductsModuleScreen extends ConsumerWidget {
   const ProductsModuleScreen({super.key});

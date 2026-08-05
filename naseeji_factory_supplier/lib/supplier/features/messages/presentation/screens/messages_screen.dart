@@ -5,7 +5,7 @@ import 'package:naseeji_factory/core/theme/app_colors.dart';
 import '../../domain/entities/conversation.dart';
 import '../controllers/messages_controller.dart';
 import 'widgets/conversation_card.dart';
-import '../../../core/widgets/app_bottom_navigation_bar.dart';
+import 'package:naseeji_factory/supplier/core/widgets/app_bottom_navigation_bar.dart';
 
 class MessagesScreen extends ConsumerStatefulWidget {
   const MessagesScreen({super.key});

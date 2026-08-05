@@ -10,7 +10,7 @@ import '../widgets/deal_filter_bar_widget.dart';
 import '../widgets/deal_card_widget.dart';
 import '../widgets/empty_state_widget.dart';
 import '../widgets/loading_widget.dart';
-import '../../../core/widgets/app_bottom_navigation_bar.dart';
+import 'package:naseeji_factory/supplier/core/widgets/app_bottom_navigation_bar.dart';
 
 class DealsDashboardScreen extends ConsumerWidget {
   const DealsDashboardScreen({super.key});

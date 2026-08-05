@@ -10,7 +10,7 @@ import '../widgets/notifications_bottom_banner.dart';
 
 import 'package:naseeji_factory/shared/widgets/profile_completion_card.dart';
 import 'package:naseeji_factory/supplier/features/credits/presentation/controllers/credits_controller.dart';
-import '../../../core/widgets/app_bottom_navigation_bar.dart';
+import 'package:naseeji_factory/supplier/core/widgets/app_bottom_navigation_bar.dart';
 
 class SupplierHomeScreen extends ConsumerStatefulWidget {
   const SupplierHomeScreen({super.key});
