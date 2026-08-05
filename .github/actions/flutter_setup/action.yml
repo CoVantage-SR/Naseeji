@@ -1,0 +1,46 @@
+name: 'Enterprise Flutter Setup'
+description: 'Sets up Java 17, Flutter SDK (Stable), and configures Pub package caching.'
+
+inputs:
+  flutter-version:
+    description: 'Flutter SDK version or channel'
+    required: false
+    default: 'stable'
+  java-version:
+    description: 'JDK version'
+    required: false
+    default: '17'
+  working-directory:
+    description: 'Path to Flutter application folder'
+    required: false
+    default: 'naseeji_factory_supplier'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Java JDK
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: ${{ inputs.java-version }}
+
+    - name: Set up Flutter SDK
+      uses: subosito/flutter-action@v2
+      with:
+        channel: ${{ inputs.flutter-version }}
+        cache: true
+        cache-key: "flutter-:os:-:channel:-:version:-:arch:-:hash:"
+
+    - name: Restore Pub Package Cache
+      uses: actions/cache@v4
+      with:
+        path: ~/.pub-cache
+        key: ${{ runner.os }}-pub-${{ hashFiles(format('{0}/pubspec.lock', inputs.working-directory)) }}
+        restore-keys: |
+          ${{ runner.os }}-pub-
+
+    - name: Install Dependencies
+      shell: bash
+      run: |
+        cd ${{ inputs.working-directory }}
+        flutter pub get

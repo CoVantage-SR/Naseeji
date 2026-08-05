@@ -1,4 +1,4 @@
-name: Static Code Analysis
+name: Unit Tests
 
 on:
   push:
@@ -18,7 +18,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: analyze-${{ github.workflow }}-${{ github.ref }}
+  group: unit-tests-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 defaults:
@@ -26,10 +26,10 @@ defaults:
     working-directory: naseeji_factory_supplier
 
 jobs:
-  analyze:
-    name: Code Formatting & Static Analysis
+  unit-tests:
+    name: Run Unit Tests & Coverage
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
 
     steps:
       - name: 1. Checkout Repository
@@ -41,8 +41,12 @@ jobs:
           flutter-version: 'stable'
           working-directory: 'naseeji_factory_supplier'
 
-      - name: 3. Verify Code Formatting (dart format)
-        run: dart format --set-exit-if-changed .
+      - name: 3. Execute Unit Tests & Generate Coverage
+        run: flutter test --coverage --exclude-tags golden
 
-      - name: 4. Run Static Analyzer (flutter analyze)
-        run: flutter analyze
+      - name: 4. Upload Coverage Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-coverage
+          path: naseeji_factory_supplier/coverage/lcov.info
+          retention-days: 7

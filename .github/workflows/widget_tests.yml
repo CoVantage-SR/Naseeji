@@ -1,4 +1,4 @@
-name: Static Code Analysis
+name: Widget Tests
 
 on:
   push:
@@ -18,7 +18,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: analyze-${{ github.workflow }}-${{ github.ref }}
+  group: widget-tests-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 defaults:
@@ -26,10 +26,10 @@ defaults:
     working-directory: naseeji_factory_supplier
 
 jobs:
-  analyze:
-    name: Code Formatting & Static Analysis
+  widget-tests:
+    name: Run Component Widget Tests
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
 
     steps:
       - name: 1. Checkout Repository
@@ -41,8 +41,5 @@ jobs:
           flutter-version: 'stable'
           working-directory: 'naseeji_factory_supplier'
 
-      - name: 3. Verify Code Formatting (dart format)
-        run: dart format --set-exit-if-changed .
-
-      - name: 4. Run Static Analyzer (flutter analyze)
-        run: flutter analyze
+      - name: 3. Run Component Widget Tests
+        run: flutter test test/authentication/presentation/login/login_screen_test.dart test/widget_test.dart

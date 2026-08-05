@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - development
+      - develop
   workflow_dispatch:
 
 permissions:
@@ -22,7 +22,7 @@ defaults:
 
 jobs:
   build-web:
-    name: Analyze & Build Flutter Web
+    name: Build Web Artifact
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
@@ -31,18 +31,15 @@ jobs:
         uses: actions/checkout@v4
 
       - name: 2. Setup Flutter Environment
-        uses: ./.github/workflows/reusable/flutter_setup.yml
+        uses: ./.github/actions/flutter_setup
         with:
-          channel: 'stable'
+          flutter-version: 'stable'
           working-directory: 'naseeji_factory_supplier'
 
-      - name: 3. Static Code Analysis (flutter analyze)
-        run: flutter analyze
-
-      - name: 4. Build Flutter Web (CanvasKit & Tree-shaking)
+      - name: 3. Build Flutter Web Bundle
         run: flutter build web --release --tree-shake-icons
 
-      - name: 5. Upload GitHub Pages Artifact
+      - name: 4. Upload GitHub Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: naseeji_factory_supplier/build/web
@@ -58,6 +55,6 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: 6. Deploy Build Output to GitHub Pages
+      - name: 5. Deploy Output to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

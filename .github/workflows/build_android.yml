@@ -1,21 +1,18 @@
-name: Build Android APK
+name: Build Android APK & AAB
 
 on:
   push:
     branches:
       - main
-      - development
-  pull_request:
-    branches:
-      - main
-      - development
+      - develop
+      - 'release/*'
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: android-build-${{ github.workflow }}-${{ github.ref }}
+  group: build-android-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 defaults:
@@ -23,27 +20,37 @@ defaults:
     working-directory: naseeji_factory_supplier
 
 jobs:
-  build-apk:
-    name: Build Release APK
+  build-android:
+    name: Build Android Binaries (APK & AAB)
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
 
     steps:
       - name: 1. Checkout Repository
         uses: actions/checkout@v4
 
       - name: 2. Setup Flutter Environment
-        uses: ./.github/workflows/reusable/flutter_setup.yml
+        uses: ./.github/actions/flutter_setup
         with:
-          channel: 'stable'
+          flutter-version: 'stable'
           working-directory: 'naseeji_factory_supplier'
 
       - name: 3. Build Release APK
-        run: flutter build apk --release
+        run: flutter build apk --release --tree-shake-icons
 
-      - name: 4. Upload APK Artifact
+      - name: 4. Build Release App Bundle (AAB)
+        run: flutter build appbundle --release --tree-shake-icons
+
+      - name: 5. Upload Android APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-release-apk
           path: naseeji_factory_supplier/build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 14
+
+      - name: 6. Upload Android App Bundle Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-aab
+          path: naseeji_factory_supplier/build/app/outputs/bundle/release/app-release.aab
           retention-days: 14

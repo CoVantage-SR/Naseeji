@@ -1,4 +1,4 @@
-name: Static Code Analysis
+name: Build Flutter Web
 
 on:
   push:
@@ -7,18 +7,13 @@ on:
       - develop
       - 'feature/*'
       - 'release/*'
-      - 'hotfix/*'
-  pull_request:
-    branches:
-      - main
-      - develop
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: analyze-${{ github.workflow }}-${{ github.ref }}
+  group: build-web-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 defaults:
@@ -26,10 +21,10 @@ defaults:
     working-directory: naseeji_factory_supplier
 
 jobs:
-  analyze:
-    name: Code Formatting & Static Analysis
+  build-web:
+    name: Compile Web Release Artifact
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
 
     steps:
       - name: 1. Checkout Repository
@@ -41,8 +36,12 @@ jobs:
           flutter-version: 'stable'
           working-directory: 'naseeji_factory_supplier'
 
-      - name: 3. Verify Code Formatting (dart format)
-        run: dart format --set-exit-if-changed .
+      - name: 3. Compile Web Release Bundle
+        run: flutter build web --release --tree-shake-icons
 
-      - name: 4. Run Static Analyzer (flutter analyze)
-        run: flutter analyze
+      - name: 4. Upload Web Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-release-build
+          path: naseeji_factory_supplier/build/web
+          retention-days: 7

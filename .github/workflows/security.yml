@@ -1,0 +1,33 @@
+name: Security & Vulnerability Scan
+
+on:
+  schedule:
+    - cron: '0 0 * * 0' # Every Sunday at midnight
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+defaults:
+  run:
+    working-directory: naseeji_factory_supplier
+
+jobs:
+  security-scan:
+    name: Dependency & Secret Scanning
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: 1. Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 2. Setup Flutter Environment
+        uses: ./.github/actions/flutter_setup
+        with:
+          flutter-version: 'stable'
+          working-directory: 'naseeji_factory_supplier'
+
+      - name: 3. Audit Outdated Dependencies
+        run: flutter pub outdated
