@@ -40,7 +40,7 @@ jobs:
         run: flutter analyze
 
       - name: 4. Build Flutter Web (CanvasKit & Tree-shaking)
-        run: flutter build web --release --web-renderer canvaskit --tree-shake-icons
+        run: flutter build web --release --tree-shake-icons
 
       - name: 5. Upload GitHub Pages Artifact
         uses: actions/upload-pages-artifact@v3
