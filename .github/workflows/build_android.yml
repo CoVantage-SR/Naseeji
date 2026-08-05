@@ -1,0 +1,49 @@
+name: Build Android APK
+
+on:
+  push:
+    branches:
+      - main
+      - development
+  pull_request:
+    branches:
+      - main
+      - development
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-build-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: naseeji_factory_supplier
+
+jobs:
+  build-apk:
+    name: Build Release APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: 1. Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 2. Setup Flutter Environment
+        uses: ./.github/workflows/reusable/flutter_setup.yml
+        with:
+          channel: 'stable'
+          working-directory: 'naseeji_factory_supplier'
+
+      - name: 3. Build Release APK
+        run: flutter build apk --release
+
+      - name: 4. Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-apk
+          path: naseeji_factory_supplier/build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 14

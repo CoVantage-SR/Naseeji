@@ -1,0 +1,63 @@
+name: Deploy Flutter Web to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - development
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: naseeji_factory_supplier
+
+jobs:
+  build-web:
+    name: Analyze & Build Flutter Web
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: 1. Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 2. Setup Flutter Environment
+        uses: ./.github/workflows/reusable/flutter_setup.yml
+        with:
+          channel: 'stable'
+          working-directory: 'naseeji_factory_supplier'
+
+      - name: 3. Static Code Analysis (flutter analyze)
+        run: flutter analyze
+
+      - name: 4. Build Flutter Web (CanvasKit & Tree-shaking)
+        run: flutter build web --release --web-renderer canvaskit --tree-shake-icons
+
+      - name: 5. Upload GitHub Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: naseeji_factory_supplier/build/web
+
+  deploy-web:
+    name: Deploy to GitHub Pages
+    needs: build-web
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: 6. Deploy Build Output to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

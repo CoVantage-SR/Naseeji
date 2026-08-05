@@ -1,0 +1,42 @@
+name: Static Code Analysis
+
+on:
+  push:
+    branches:
+      - main
+      - development
+  pull_request:
+    branches:
+      - main
+      - development
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: analyze-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: naseeji_factory_supplier
+
+jobs:
+  analyze:
+    name: Flutter Analyze
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: 1. Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 2. Setup Flutter Environment
+        uses: ./.github/workflows/reusable/flutter_setup.yml
+        with:
+          channel: 'stable'
+          working-directory: 'naseeji_factory_supplier'
+
+      - name: 3. Run Flutter Analyze
+        run: flutter analyze
