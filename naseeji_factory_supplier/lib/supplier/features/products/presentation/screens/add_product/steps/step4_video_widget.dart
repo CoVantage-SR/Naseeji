@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naseeji_factory/supplier/features/products/domain/entities/product_form_data.dart';
 import 'package:naseeji_factory/supplier/features/products/presentation/controllers/add_product_controller.dart';
+import 'package:naseeji_factory/supplier/features/credits/presentation/controllers/credits_controller.dart';
 
 class Step4VideoWidget extends ConsumerWidget {
   final ProductFormData formData;
@@ -98,14 +99,19 @@ class Step4VideoWidget extends ConsumerWidget {
           ] else ...[
             // Video Upload Prompt Dropzone
             InkWell(
-              onTap: () {
-                controller.setVideo(
-                  'https://example.com/videos/yarn_demo.mp4',
-                  'فيديو_اختبار_المتانة_والغزل.mp4',
-                  '01:30 دقيقة',
-                  14.5,
-                  context,
-                );
+              onTap: () async {
+                final canUpload = await ref
+                    .read(creditsControllerProvider.notifier)
+                    .tryConsumeForVideo(context);
+                if (canUpload && context.mounted) {
+                  controller.setVideo(
+                    'https://example.com/videos/yarn_demo.mp4',
+                    'فيديو_اختبار_المتانة_والغزل.mp4',
+                    '01:30 دقيقة',
+                    14.5,
+                    context,
+                  );
+                }
               },
               borderRadius: BorderRadius.circular(16),
               child: Container(

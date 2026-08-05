@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naseeji_factory/supplier/features/products/domain/entities/product_form_data.dart';
 import 'package:naseeji_factory/supplier/features/products/presentation/controllers/add_product_controller.dart';
+import 'package:naseeji_factory/supplier/features/credits/presentation/controllers/credits_controller.dart';
 
 class WizardNavigationBar extends ConsumerWidget {
   final ProductFormData formData;
@@ -66,9 +67,14 @@ class WizardNavigationBar extends ConsumerWidget {
 
             // Next Step or Publish Button
             ElevatedButton.icon(
-              onPressed: () {
+              onPressed: () async {
                 if (isLastStep) {
-                  controller.publishProduct(context);
+                  final canPublish = await ref
+                      .read(creditsControllerProvider.notifier)
+                      .tryConsumeForProduct(context);
+                  if (canPublish && context.mounted) {
+                    controller.publishProduct(context);
+                  }
                 } else {
                   controller.nextStep(context);
                 }

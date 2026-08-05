@@ -9,6 +9,7 @@ import '../widgets/quick_shortcuts_and_chart.dart';
 import '../widgets/notifications_bottom_banner.dart';
 
 import 'package:naseeji_factory/shared/widgets/profile_completion_card.dart';
+import 'package:naseeji_factory/supplier/features/credits/presentation/controllers/credits_controller.dart';
 
 class SupplierHomeScreen extends ConsumerStatefulWidget {
   const SupplierHomeScreen({super.key});
@@ -26,6 +27,9 @@ class _SupplierHomeScreenState extends ConsumerState<SupplierHomeScreen> {
     super.initState();
     _scrollController = ScrollController();
     _scrollController.addListener(_onScroll);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(creditsControllerProvider.notifier).checkAndGrantWelcomePackage(context);
+    });
   }
 
   void _onScroll() {

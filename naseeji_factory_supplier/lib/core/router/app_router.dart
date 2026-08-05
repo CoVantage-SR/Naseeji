@@ -29,6 +29,7 @@ import '../../supplier/features/deals/presentation/screens/deals_dashboard_scree
 import '../../supplier/features/messages/presentation/screens/messages_screen.dart';
 import '../../supplier/features/products/presentation/screens/products_module_screen.dart';
 import '../../supplier/features/profile/presentation/screens/supplier_profile/supplier_profile_screen.dart';
+import '../../supplier/features/buy_credits/presentation/screens/buy_credits_screen.dart';
 
 import '../../authentication/presentation/welcome/welcome_screen.dart';
 import '../../authentication/reset_password/reset_password_screen.dart';
@@ -236,6 +237,10 @@ GoRouter appRouter(AppRouterRef ref) {
       GoRoute(
         path: '/supplier/profile',
         builder: (context, state) => const SupplierProfileScreen(),
+      ),
+      GoRoute(
+        path: '/supplier/credits/buy',
+        builder: (context, state) => const BuyCreditsScreen(),
       ),
     ],
   );

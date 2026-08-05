@@ -8,6 +8,7 @@ import '../../controllers/profile_controller.dart';
 import 'package:naseeji_factory/core/session/session_provider.dart';
 import 'package:naseeji_factory/core/theme/theme_controller.dart';
 import 'package:naseeji_factory/shared/widgets/verification_status_card.dart';
+import 'package:naseeji_factory/supplier/features/credits/presentation/widgets/credits_card.dart';
 
 class SupplierProfileScreen extends ConsumerWidget {
   const SupplierProfileScreen({super.key});
@@ -159,6 +160,11 @@ class SupplierProfileScreen extends ConsumerWidget {
 
                 // 3. Current Subscription Card (Blue Banner)
                 _buildSubscriptionCard(context),
+
+                const SizedBox(height: 14),
+
+                // 3.5 Credits & Monetization Card (Supplier Only)
+                const CreditsCard(),
 
                 const SizedBox(height: 14),
 
