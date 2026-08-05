@@ -10,6 +10,7 @@ import '../widgets/notifications_bottom_banner.dart';
 
 import 'package:naseeji_factory/shared/widgets/profile_completion_card.dart';
 import 'package:naseeji_factory/supplier/features/credits/presentation/controllers/credits_controller.dart';
+import '../../../core/widgets/app_bottom_navigation_bar.dart';
 
 class SupplierHomeScreen extends ConsumerStatefulWidget {
   const SupplierHomeScreen({super.key});
@@ -52,6 +53,7 @@ class _SupplierHomeScreenState extends ConsumerState<SupplierHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 0),
       body: Directionality(
         textDirection: TextDirection.rtl, // Force Arabic RTL Layout across the entire screen
         child: SafeArea(

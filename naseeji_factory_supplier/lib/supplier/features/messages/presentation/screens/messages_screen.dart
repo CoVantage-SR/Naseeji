@@ -5,6 +5,7 @@ import 'package:naseeji_factory/core/theme/app_colors.dart';
 import '../../domain/entities/conversation.dart';
 import '../controllers/messages_controller.dart';
 import 'widgets/conversation_card.dart';
+import '../../../core/widgets/app_bottom_navigation_bar.dart';
 
 class MessagesScreen extends ConsumerStatefulWidget {
   const MessagesScreen({super.key});
@@ -50,6 +51,7 @@ class _MessagesScreenState extends ConsumerState<MessagesScreen>
     final stateAsync = ref.watch(messagesControllerProvider);
 
     return Scaffold(
+      bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 3),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.surface,

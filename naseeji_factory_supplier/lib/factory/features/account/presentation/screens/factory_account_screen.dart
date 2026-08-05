@@ -10,6 +10,7 @@ import '../providers/account_provider.dart';
 import '../widgets/account_dialogs.dart';
 import '../widgets/account_widgets.dart';
 import '../widgets/quick_settings_bottom_sheet.dart';
+import '../../../home/presentation/widgets/factory_bottom_navigation.dart';
 
 class FactoryAccountScreen extends ConsumerStatefulWidget {
   const FactoryAccountScreen({super.key});
@@ -35,6 +36,28 @@ class _FactoryAccountScreenState extends ConsumerState<FactoryAccountScreen>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
+      bottomNavigationBar: FactoryBottomNavigation(
+        currentIndex: 4,
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              context.go('/factory/home');
+              break;
+            case 1:
+              context.push('/suppliers');
+              break;
+            case 2:
+              context.push('/rfq');
+              break;
+            case 3:
+              context.push('/orders');
+              break;
+            case 4:
+              context.go('/factory/account');
+              break;
+          }
+        },
+      ),
       backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       body: SafeArea(
         child: Column(

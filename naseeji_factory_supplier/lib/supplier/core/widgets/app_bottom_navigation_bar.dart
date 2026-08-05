@@ -72,19 +72,19 @@ class AppBottomNavigationBar extends StatelessWidget {
                 if (index == activeIndex) return;
                 switch (index) {
                   case 0:
-                    context.go('/home');
+                    context.go('/supplier/dashboard');
                     break;
                   case 1:
-                    context.go('/products');
+                    context.go('/supplier/products');
                     break;
                   case 2:
-                    context.go('/deals');
+                    context.go('/supplier/deals');
                     break;
                   case 3:
-                    context.go('/messages');
+                    context.go('/supplier/messages');
                     break;
                   case 4:
-                    context.go('/profile');
+                    context.go('/supplier/profile');
                     break;
                 }
               }

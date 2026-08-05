@@ -9,6 +9,7 @@ import 'package:naseeji_factory/core/session/session_provider.dart';
 import 'package:naseeji_factory/core/theme/theme_controller.dart';
 import 'package:naseeji_factory/shared/widgets/verification_status_card.dart';
 import 'package:naseeji_factory/supplier/features/credits/presentation/widgets/credits_card.dart';
+import '../../../../core/widgets/app_bottom_navigation_bar.dart';
 
 class SupplierProfileScreen extends ConsumerWidget {
   const SupplierProfileScreen({super.key});
@@ -22,6 +23,7 @@ class SupplierProfileScreen extends ConsumerWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 4),
         backgroundColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFF9FAFB),
         body: SafeArea(
           child: SingleChildScrollView(

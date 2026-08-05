@@ -14,6 +14,7 @@ import '../widgets/empty_products_widget.dart';
 import '../widgets/loading_widget.dart';
 import '../widgets/subscription_limit_dialog.dart';
 import '../widgets/add_product_wizard_bottom_sheet.dart';
+import '../../core/widgets/app_bottom_navigation_bar.dart';
 
 class ProductsModuleScreen extends ConsumerWidget {
   const ProductsModuleScreen({super.key});
@@ -31,6 +32,7 @@ class ProductsModuleScreen extends ConsumerWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        bottomNavigationBar: const AppBottomNavigationBar(currentIndex: 1),
         backgroundColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFF9FAFB),
         body: SafeArea(
           child: Column(

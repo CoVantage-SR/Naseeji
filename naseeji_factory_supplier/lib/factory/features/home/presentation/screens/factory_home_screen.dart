@@ -16,6 +16,7 @@ import '../widgets/factory_home/quick_actions_section.dart';
 import '../widgets/factory_home/recent_quotations_section.dart';
 import '../widgets/factory_home/recent_rfqs_section.dart';
 import '../widgets/factory_home/today_tasks_section.dart';
+import '../widgets/factory_bottom_navigation.dart';
 
 import 'package:naseeji_factory/shared/widgets/profile_completion_card.dart';
 
@@ -25,6 +26,28 @@ class FactoryHomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      bottomNavigationBar: FactoryBottomNavigation(
+        currentIndex: 0,
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              context.go('/factory/home');
+              break;
+            case 1:
+              context.push('/suppliers');
+              break;
+            case 2:
+              context.push('/rfq');
+              break;
+            case 3:
+              context.push('/orders');
+              break;
+            case 4:
+              context.go('/factory/account');
+              break;
+          }
+        },
+      ),
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
