@@ -15,7 +15,7 @@ extension GetAppSettingCollection on Isar {
 
 const AppSettingSchema = CollectionSchema(
   name: r'AppSetting',
-  id: -948817443998796339,
+  id: -948817443998796288,
   properties: {
     r'key': PropertySchema(
       id: 0,
@@ -35,7 +35,7 @@ const AppSettingSchema = CollectionSchema(
   idName: r'id',
   indexes: {
     r'key': IndexSchema(
-      id: -4906094122524121629,
+      id: -4906094122524122112,
       name: r'key',
       unique: true,
       replace: true,
