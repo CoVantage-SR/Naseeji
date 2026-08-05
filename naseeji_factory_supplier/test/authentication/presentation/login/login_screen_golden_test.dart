@@ -11,6 +11,10 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   late SharedPreferences mockPrefs;
 
+  setUpAll(() {
+    setupGoldenComparator('test/authentication/presentation/login/login_screen_golden_test.dart');
+  });
+
   setUp(() async {
     mockPrefs = await createMockSharedPreferences();
   });

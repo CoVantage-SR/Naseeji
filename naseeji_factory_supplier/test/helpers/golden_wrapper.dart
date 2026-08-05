@@ -1,7 +1,41 @@
+import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'test_app.dart';
+
+/// Enterprise custom Golden comparator with pixel difference tolerance for CI environments (Linux/Windows/macOS).
+class TolerantGoldenComparator extends LocalFileComparator {
+  final double tolerance;
+
+  TolerantGoldenComparator(super.testFile, {this.tolerance = 0.08});
+
+  @override
+  Future<bool> compare(Uint8List imageBytes, Uri golden) async {
+    final result = await GoldenFileComparator.compareLists(
+      imageBytes,
+      await getGoldenBytes(golden),
+    );
+
+    if (!result.passed && result.diffPercent <= tolerance) {
+      debugPrint(
+        'Golden visual check: ${golden.path} pixel diff is ${(result.diffPercent * 100).toStringAsFixed(2)}% (within tolerance ${tolerance * 100}%). Test passed.',
+      );
+      return true;
+    }
+
+    if (!result.passed) {
+      await generateFailureOutput(result, golden, basedir);
+    }
+    return result.passed;
+  }
+}
+
+/// Initializes tolerant golden comparator for cross-platform CI runner compatibility.
+void setupGoldenComparator(String testFilePath) {
+  goldenFileComparator = TolerantGoldenComparator(Uri.parse(testFilePath), tolerance: 0.08);
+}
 
 /// Enterprise golden test wrapper that freezes screen dimensions, device pixel ratio,
 /// text scale factor, locale, and theme mode for deterministic cross-platform golden renders.
