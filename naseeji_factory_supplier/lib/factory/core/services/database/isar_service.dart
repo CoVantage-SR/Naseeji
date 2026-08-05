@@ -32,9 +32,10 @@ class IsarService {
   }
 
   Future<void> cleanDb() async {
-    if (_isar == null) return;
-    await _isar!.writeTxn(() async {
-      await _isar!.clear();
+    final isarInstance = _isar;
+    if (isarInstance == null) return;
+    await isarInstance.writeTxn(() async {
+      await isarInstance.clear();
     });
   }
 
