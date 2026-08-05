@@ -29,6 +29,7 @@ class GoogleSignInButton extends StatelessWidget {
         child: OutlinedButton(
           onPressed: isLoading ? null : onPressed,
           style: OutlinedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             backgroundColor: colorScheme.surfaceContainerLow,
             foregroundColor: colorScheme.onSurface,
             side: BorderSide(
@@ -50,9 +51,10 @@ class GoogleSignInButton extends StatelessWidget {
                 )
               : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     const GoogleLogoPainterWidget(size: 20),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 8),
                     Flexible(
                       child: Text(
                         l10n.googleSignIn,
