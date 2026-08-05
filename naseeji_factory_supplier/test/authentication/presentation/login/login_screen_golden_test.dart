@@ -4,30 +4,33 @@ import 'package:naseeji_factory/authentication/presentation/login/login_screen.d
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../helpers/fake_services.dart';
-import '../../../helpers/golden_wrapper.dart';
+import '../../../helpers/fonts_loader.dart';
+import '../../../helpers/golden_configuration.dart';
+import '../../../helpers/golden_test_wrapper.dart';
 import '../../../helpers/pump_helpers.dart';
+import '../../../helpers/screen_sizes.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   late SharedPreferences mockPrefs;
 
-  setUpAll(() {
-    setupGoldenComparator('test/authentication/presentation/login/login_screen_golden_test.dart');
+  setUpAll(() async {
+    await TestFontsLoader.loadTestFonts();
+    configureEnterpriseGoldenComparator('test/authentication/presentation/login/login_screen_golden_test.dart');
   });
 
   setUp(() async {
     mockPrefs = await createMockSharedPreferences();
   });
 
-  group('LoginScreen Golden Visual Tests', () {
+  group('LoginScreen Enterprise Golden Tests', () {
     testWidgets('Golden Test - Light Theme Arabic (360dp Mobile)', (WidgetTester tester) async {
-      const size = Size(360, 800);
-      configureGoldenDeviceView(tester, size);
+      setupGoldenDeviceView(tester, ScreenSizes.mobile360);
 
-      await tester.pumpWidget(buildGoldenWrapper(
+      await tester.pumpWidget(buildGoldenTestWrapper(
         child: const LoginScreen(),
         prefs: mockPrefs,
-        size: size,
+        size: ScreenSizes.mobile360,
         themeMode: ThemeMode.light,
         locale: const Locale('ar'),
       ));
@@ -41,9 +44,9 @@ void main() {
 
     testWidgets('Golden Test - Dark Theme English (480dp Tablet/Desktop)', (WidgetTester tester) async {
       const size = Size(480, 900);
-      configureGoldenDeviceView(tester, size);
+      setupGoldenDeviceView(tester, size);
 
-      await tester.pumpWidget(buildGoldenWrapper(
+      await tester.pumpWidget(buildGoldenTestWrapper(
         child: const LoginScreen(),
         prefs: mockPrefs,
         size: size,
@@ -59,13 +62,12 @@ void main() {
     });
 
     testWidgets('Golden Test - Small Phone (320dp)', (WidgetTester tester) async {
-      const size = Size(320, 640);
-      configureGoldenDeviceView(tester, size);
+      setupGoldenDeviceView(tester, ScreenSizes.smallPhone);
 
-      await tester.pumpWidget(buildGoldenWrapper(
+      await tester.pumpWidget(buildGoldenTestWrapper(
         child: const LoginScreen(),
         prefs: mockPrefs,
-        size: size,
+        size: ScreenSizes.smallPhone,
         themeMode: ThemeMode.light,
         locale: const Locale('ar'),
       ));
@@ -78,13 +80,12 @@ void main() {
     });
 
     testWidgets('Golden Test - Landscape Mode (800x400)', (WidgetTester tester) async {
-      const size = Size(800, 400);
-      configureGoldenDeviceView(tester, size);
+      setupGoldenDeviceView(tester, ScreenSizes.landscape);
 
-      await tester.pumpWidget(buildGoldenWrapper(
+      await tester.pumpWidget(buildGoldenTestWrapper(
         child: const LoginScreen(),
         prefs: mockPrefs,
-        size: size,
+        size: ScreenSizes.landscape,
         themeMode: ThemeMode.light,
         locale: const Locale('ar'),
       ));
