@@ -37,7 +37,7 @@ jobs:
           working-directory: 'naseeji_factory_supplier'
 
       - name: 3. Build Flutter Web Bundle
-        run: flutter build web --release --tree-shake-icons
+        run: flutter build web --release --base-href /Naseeji/ --tree-shake-icons
 
       - name: 4. Upload GitHub Pages Artifact
         uses: actions/upload-pages-artifact@v3
