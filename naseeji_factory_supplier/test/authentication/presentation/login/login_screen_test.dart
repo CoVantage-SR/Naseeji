@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:naseeji_factory/authentication/presentation/login/login_screen.dart';
-import 'package:naseeji_factory/authentication/presentation/login/widgets/demo_explore_banner.dart';
 import 'package:naseeji_factory/authentication/presentation/login/widgets/google_sign_in_button.dart';
 import 'package:naseeji_factory/authentication/presentation/login/widgets/login_form.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,20 +17,23 @@ void main() {
     mockPrefs = await createMockSharedPreferences();
   });
 
-  group('LoginScreen Widget Tests', () {
+  group('LoginScreen Enterprise Widget Tests', () {
     testWidgets('renders all core login components properly', (WidgetTester tester) async {
       await tester.pumpWidget(buildTestApp(child: const LoginScreen(), prefs: mockPrefs));
       await tester.pumpAndSettleClean();
 
       expect(find.byType(LoginForm), findsOneWidget);
       expect(find.byType(GoogleSignInButton), findsOneWidget);
+      expect(find.byKey(const Key('login_phone_email_field')), findsOneWidget);
+      expect(find.byKey(const Key('login_password_field')), findsOneWidget);
+      expect(find.byKey(const Key('login_button')), findsOneWidget);
     });
 
     testWidgets('validates empty inputs and shows error messages', (WidgetTester tester) async {
       await tester.pumpWidget(buildTestApp(child: const LoginScreen(), prefs: mockPrefs));
       await tester.pumpAndSettleClean();
 
-      final loginBtn = find.widgetWithText(ElevatedButton, 'تسجيل الدخول');
+      final loginBtn = find.byKey(const Key('login_button'));
       expect(loginBtn, findsOneWidget);
       await tester.ensureVisible(loginBtn);
       await tester.pumpAndSettleClean();
@@ -46,7 +48,7 @@ void main() {
       await tester.pumpWidget(buildTestApp(child: const LoginScreen(), prefs: mockPrefs));
       await tester.pumpAndSettleClean();
 
-      final checkbox = find.byType(Checkbox);
+      final checkbox = find.byKey(const Key('remember_me_checkbox'));
       expect(checkbox, findsOneWidget);
 
       await tester.tap(checkbox);
@@ -57,7 +59,7 @@ void main() {
       await tester.pumpWidget(buildTestApp(child: const LoginScreen(), prefs: mockPrefs));
       await tester.pumpAndSettleClean();
 
-      final toggleIcon = find.byIcon(Icons.visibility_off_outlined);
+      final toggleIcon = find.byKey(const Key('toggle_password_visibility_button'));
       expect(toggleIcon, findsOneWidget);
 
       await tester.tap(toggleIcon);
@@ -75,18 +77,19 @@ void main() {
       await tester.pumpAndSettleClean();
 
       expect(find.text('Sign In'), findsWidgets);
-      expect(find.text('Sign in with Google'), findsOneWidget);
+      expect(find.byKey(const Key('google_login_button')), findsOneWidget);
     });
 
     testWidgets('opens guest mode options popup menu', (WidgetTester tester) async {
       await tester.pumpWidget(buildTestApp(child: const LoginScreen(), prefs: mockPrefs));
       await tester.pumpAndSettleClean();
 
-      final bannerFinder = find.byType(DemoExploreBanner);
-      await tester.ensureVisible(bannerFinder);
+      final guestBtn = find.byKey(const Key('guest_button'));
+      expect(guestBtn, findsOneWidget);
+      await tester.ensureVisible(guestBtn);
       await tester.pumpAndSettleClean();
 
-      await tester.tap(bannerFinder);
+      await tester.tap(guestBtn);
       await tester.pumpAndSettleClean();
 
       expect(find.text('تجربة المنصة كمصنع'), findsOneWidget);

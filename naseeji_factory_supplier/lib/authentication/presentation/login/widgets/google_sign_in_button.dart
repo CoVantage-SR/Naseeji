@@ -27,6 +27,7 @@ class GoogleSignInButton extends StatelessWidget {
       child: SizedBox(
         height: 50,
         child: OutlinedButton(
+          key: const Key('google_login_button'),
           onPressed: isLoading ? null : onPressed,
           style: OutlinedButton.styleFrom(
             padding: const EdgeInsets.symmetric(horizontal: 12),

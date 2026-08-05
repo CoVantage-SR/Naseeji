@@ -38,6 +38,7 @@ class DemoExploreBanner extends StatelessWidget {
           color: Colors.transparent,
           borderRadius: AppRadius.rMD,
           child: PopupMenuButton<String>(
+            key: const Key('guest_button'),
             onSelected: (val) {
               if (val == 'factory') onDemoFactory();
               if (val == 'supplier') onDemoSupplier();

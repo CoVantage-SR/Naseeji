@@ -64,6 +64,7 @@ class _LoginFormState extends State<LoginForm> {
           _FormInputLabel(label: l10n.emailOrPhoneLabel),
           const SizedBox(height: 6),
           TextFormField(
+            key: const Key('login_phone_email_field'),
             controller: widget.phoneOrEmailController,
             focusNode: _phoneOrEmailFocusNode,
             keyboardType: TextInputType.emailAddress,
@@ -95,6 +96,7 @@ class _LoginFormState extends State<LoginForm> {
           _FormInputLabel(label: l10n.passwordLabel),
           const SizedBox(height: 6),
           TextFormField(
+            key: const Key('login_password_field'),
             controller: widget.passwordController,
             focusNode: _passwordFocusNode,
             obscureText: _obscurePassword,
@@ -115,6 +117,7 @@ class _LoginFormState extends State<LoginForm> {
                 size: 20,
               ),
               suffixIcon: IconButton(
+                key: const Key('toggle_password_visibility_button'),
                 icon: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 200),
                   transitionBuilder: (child, anim) => ScaleTransition(scale: anim, child: child),
@@ -161,6 +164,7 @@ class _LoginFormState extends State<LoginForm> {
                             height: 24,
                             width: 24,
                             child: Checkbox(
+                              key: const Key('remember_me_checkbox'),
                               value: widget.rememberMe,
                               onChanged: (val) => widget.onRememberMeChanged(val ?? false),
                               shape: RoundedRectangleBorder(
@@ -197,6 +201,7 @@ class _LoginFormState extends State<LoginForm> {
                   child: SizedBox(
                     height: 48,
                     child: TextButton(
+                      key: const Key('forgot_password_button'),
                       onPressed: widget.onForgotPassword,
                       style: TextButton.styleFrom(
                         padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -227,6 +232,7 @@ class _LoginFormState extends State<LoginForm> {
             child: SizedBox(
               height: 50,
               child: ElevatedButton(
+                key: const Key('login_button'),
                 onPressed: widget.isLoading ? null : widget.onLogin,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: colorScheme.primary,
