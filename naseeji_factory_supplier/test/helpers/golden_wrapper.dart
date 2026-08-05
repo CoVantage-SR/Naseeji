@@ -36,10 +36,8 @@ Widget buildGoldenWrapper({
 void configureGoldenDeviceView(WidgetTester tester, Size size) {
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1.0;
-  tester.view.textScaleFactor = 1.0;
   addTearDown(() {
     tester.view.resetPhysicalSize();
     tester.view.resetDevicePixelRatio();
-    tester.view.resetTextScaleFactor();
   });
 }
