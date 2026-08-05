@@ -125,7 +125,7 @@ class _CompleteProfileScreenState
           ? (state.crDocumentFile != null || _crController.text.isNotEmpty)
           : (state.idFrontFile != null || state.selfieFile != null);
 
-      final pct = hasDocs ? 100 : 80;
+      final pct = state.completionPercentage;
       final vStatus = hasDocs ? 'pending' : 'unverified';
       final vLevel = hasDocs ? (isCompany ? 'business_verified' : 'identity_verified') : 'basic';
 

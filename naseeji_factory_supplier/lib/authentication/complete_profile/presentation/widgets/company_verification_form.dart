@@ -54,7 +54,7 @@ class CompanyVerificationForm extends StatelessWidget {
           onChanged: onCrChanged,
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
-            labelText: 'رقم السجل التجاري *',
+            labelText: 'رقم السجل التجاري (اختياري)',
             hintText: 'مثال: 123456',
             prefixIcon: const Icon(Icons.subtitles_outlined),
             errorText: validationErrors['commercialRegister'],
@@ -72,7 +72,7 @@ class CompanyVerificationForm extends StatelessWidget {
           onChanged: onTaxChanged,
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
-            labelText: 'رقم البطاقة الضريبية *',
+            labelText: 'رقم البطاقة الضريبية (اختياري)',
             hintText: 'مثال: 987654321',
             prefixIcon: const Icon(Icons.receipt_long_outlined),
             errorText: validationErrors['taxNumber'],
@@ -86,7 +86,7 @@ class CompanyVerificationForm extends StatelessWidget {
 
         // Upload CR Document
         DocumentUploadCard(
-          title: 'رفع ملف السجل التجاري *',
+          title: 'رفع ملف السجل التجاري (اختياري)',
           icon: Icons.folder_open_rounded,
           file: crDocumentFile,
           errorText: validationErrors['crDocument'],
@@ -98,7 +98,7 @@ class CompanyVerificationForm extends StatelessWidget {
 
         // Upload Tax Card Document
         DocumentUploadCard(
-          title: 'رفع ملف البطاقة الضريبية *',
+          title: 'رفع ملف البطاقة الضريبية (اختياري)',
           icon: Icons.badge_outlined,
           file: taxDocumentFile,
           errorText: validationErrors['taxDocument'],

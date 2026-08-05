@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../../../core/constants/app_radius.dart';
 import 'document_upload_card.dart';
 
 class IdentityVerificationForm extends StatelessWidget {
@@ -52,7 +51,10 @@ class IdentityVerificationForm extends StatelessWidget {
 
   Future<void> _pickFile(Function(XFile) onPicked) async {
     final picker = ImagePicker();
-    final image = await picker.pickImage(source: ImageSource.gallery, imageQuality: 85);
+    final image = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 85,
+    );
     if (image != null) {
       onPicked(image);
     }
@@ -60,16 +62,13 @@ class IdentityVerificationForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final isDark = theme.brightness == Brightness.dark;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // 1. National ID Front Upload
         DocumentUploadCard(
-          title: 'وجه البطاقة الشخصية (Front ID) *',
+          title: 'وجه البطاقة الشخصية (Front ID) (اختياري)',
           icon: Icons.credit_card_rounded,
           file: idFrontFile,
           errorText: validationErrors['idFront'],
@@ -81,7 +80,7 @@ class IdentityVerificationForm extends StatelessWidget {
 
         // 2. National ID Back Upload
         DocumentUploadCard(
-          title: 'ظهر البطاقة الشخصية (Back ID) *',
+          title: 'ظهر البطاقة الشخصية (Back ID) (اختياري)',
           icon: Icons.credit_card_outlined,
           file: idBackFile,
           errorText: validationErrors['idBack'],
@@ -93,72 +92,13 @@ class IdentityVerificationForm extends StatelessWidget {
 
         // 3. Selfie Holding ID Upload
         DocumentUploadCard(
-          title: 'صورة سيلفي مع البطاقة (Selfie Holding ID) *',
+          title: 'صورة سيلفي مع البطاقة (Selfie Holding ID) (اختياري)',
           description: 'صورة واضحة لوجهك أثناء الإمساك ببطاقتك الشخصية',
           icon: Icons.face_retouching_natural_rounded,
           file: selfieFile,
           errorText: validationErrors['selfieWithId'],
           onPick: () => _pickFile(onPickSelfie),
           onDelete: onDeleteSelfie,
-        ),
-
-        const SizedBox(height: 16),
-
-        // 4. Business Name Field
-        TextFormField(
-          controller: businessNameController,
-          onChanged: onBusinessNameChanged,
-          decoration: InputDecoration(
-            labelText: 'اسم النشاط التجاري / الورشة / المحل *',
-            hintText: 'مثال: ورشة الأمل للنسيج والتريكو',
-            prefixIcon: const Icon(Icons.storefront_outlined),
-            errorText: validationErrors['businessName'],
-            filled: true,
-            fillColor: isDark ? colorScheme.surfaceContainerHighest.withValues(alpha: 0.3) : Colors.white,
-            border: OutlineInputBorder(borderRadius: AppRadius.rSM),
-          ),
-        ),
-
-        const SizedBox(height: 14),
-
-        // 5. Business Type Dropdown
-        DropdownButtonFormField<String>(
-          initialValue: selectedBusinessType,
-          validator: (v) => v == null ? 'يرجى اختيار نوع النشاط' : null,
-          items: businessTypes
-              .map((type) => DropdownMenuItem<String>(
-                    value: type['value'],
-                    child: Text(type['label']!),
-                  ))
-              .toList(),
-          onChanged: (val) {
-            if (val != null) onBusinessTypeChanged(val);
-          },
-          decoration: InputDecoration(
-            labelText: 'نوع النشاط التجاري *',
-            prefixIcon: const Icon(Icons.work_outline_rounded),
-            errorText: validationErrors['businessType'],
-            filled: true,
-            fillColor: isDark ? colorScheme.surfaceContainerHighest.withValues(alpha: 0.3) : Colors.white,
-            border: OutlineInputBorder(borderRadius: AppRadius.rSM),
-          ),
-        ),
-
-        const SizedBox(height: 14),
-
-        // 6. Business Address Field
-        TextFormField(
-          controller: businessAddressController,
-          onChanged: onBusinessAddressChanged,
-          decoration: InputDecoration(
-            labelText: 'عنوان ورشتك أو مكان نشاطك *',
-            hintText: 'مثال: شارع المصانع - منطقة الورش - المحلة الكبرى',
-            prefixIcon: const Icon(Icons.location_on_outlined),
-            errorText: validationErrors['businessAddress'],
-            filled: true,
-            fillColor: isDark ? colorScheme.surfaceContainerHighest.withValues(alpha: 0.3) : Colors.white,
-            border: OutlineInputBorder(borderRadius: AppRadius.rSM),
-          ),
         ),
       ],
     );

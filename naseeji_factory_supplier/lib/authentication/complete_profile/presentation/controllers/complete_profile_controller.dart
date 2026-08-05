@@ -202,17 +202,29 @@ class CompleteProfileController extends StateNotifier<CompleteProfileState> {
   }
 
   Future<bool> submitProfile() async {
-    Map<String, String> errors = {};
+    // 1. Validate basic required profile fields (Name, Category, Governorate, City, Address)
+    final Map<String, String> errors = validateProfileUseCase.execute(
+      name: state.companyName.isNotEmpty ? state.companyName : state.businessName,
+      category: state.selectedCategory ?? state.businessType ?? '',
+      governorate: state.selectedGovernorate ?? '',
+      city: state.selectedCity ?? '',
+      address: state.address.isNotEmpty ? state.address : state.businessAddress,
+      commercialRegister: state.commercialRegister,
+      taxNumber: state.taxNumber,
+      website: state.website,
+    );
 
+    // 2. Optional document verification validation (checks size/format if uploaded)
+    Map<String, String> docErrors = {};
     if (state.verificationMethod == 'company') {
-      errors = VerificationValidator.validateCompanyVerification(
+      docErrors = VerificationValidator.validateCompanyVerification(
         commercialRegister: state.commercialRegister,
         taxNumber: state.taxNumber,
         crDocument: state.crDocumentFile != null ? File(state.crDocumentFile!.path) : null,
         taxDocument: state.taxDocumentFile != null ? File(state.taxDocumentFile!.path) : null,
       );
     } else {
-      errors = VerificationValidator.validateIdentityVerification(
+      docErrors = VerificationValidator.validateIdentityVerification(
         idFront: state.idFrontFile != null ? File(state.idFrontFile!.path) : null,
         idBack: state.idBackFile != null ? File(state.idBackFile!.path) : null,
         selfieWithId: state.selfieFile != null ? File(state.selfieFile!.path) : null,
@@ -222,10 +234,22 @@ class CompleteProfileController extends StateNotifier<CompleteProfileState> {
       );
     }
 
+    errors.addAll(docErrors);
+
+    // 3. Minimum 50% Profile Completion requirement to proceed
+    const int minRequiredPercentage = 50;
+    if (state.completionPercentage < minRequiredPercentage) {
+      state = state.copyWith(
+        validationErrors: errors,
+        errorMessage: 'يجب الوصول إلى $minRequiredPercentage% على الأقل من إكمال الملف للمتابعة (نسبة إكتمال ملفك الحالية: ${state.completionPercentage}%)',
+      );
+      return false;
+    }
+
     if (errors.isNotEmpty) {
       state = state.copyWith(
         validationErrors: errors,
-        errorMessage: 'يرجى استكمال مستندات وبيانات التوثيق بشكل صحيح',
+        errorMessage: 'يرجى استكمال البيانات الأساسية بشكل صحيح للمتابعة',
       );
       return false;
     }

@@ -45,18 +45,10 @@ class VerificationValidator {
   }) {
     final Map<String, String> errors = {};
 
-    if (commercialRegister.trim().isEmpty) {
-      errors['commercialRegister'] = 'رقم السجل التجاري مطلوب';
-    }
-
-    if (taxNumber == null || taxNumber.trim().isEmpty) {
-      errors['taxNumber'] = 'رقم البطاقة الضريبية مطلوب';
-    }
-
-    final crErr = validateFile(crDocument, isRequired: true, fieldName: 'ملف السجل التجاري');
+    final crErr = validateFile(crDocument, isRequired: false, fieldName: 'ملف السجل التجاري');
     if (crErr != null) errors['crDocument'] = crErr;
 
-    final taxErr = validateFile(taxDocument, isRequired: true, fieldName: 'ملف البطاقة الضريبية');
+    final taxErr = validateFile(taxDocument, isRequired: false, fieldName: 'ملف البطاقة الضريبية');
     if (taxErr != null) errors['taxDocument'] = taxErr;
 
     return errors;
@@ -72,26 +64,14 @@ class VerificationValidator {
   }) {
     final Map<String, String> errors = {};
 
-    final frontErr = validateFile(idFront, isRequired: true, fieldName: 'وجه البطاقة الشخصية');
+    final frontErr = validateFile(idFront, isRequired: false, fieldName: 'وجه البطاقة الشخصية');
     if (frontErr != null) errors['idFront'] = frontErr;
 
-    final backErr = validateFile(idBack, isRequired: true, fieldName: 'ظهر البطاقة الشخصية');
+    final backErr = validateFile(idBack, isRequired: false, fieldName: 'ظهر البطاقة الشخصية');
     if (backErr != null) errors['idBack'] = backErr;
 
-    final selfieErr = validateFile(selfieWithId, isRequired: true, fieldName: 'صورة سيلفي مع البطاقة');
+    final selfieErr = validateFile(selfieWithId, isRequired: false, fieldName: 'صورة سيلفي مع البطاقة');
     if (selfieErr != null) errors['selfieWithId'] = selfieErr;
-
-    if (businessName.trim().isEmpty) {
-      errors['businessName'] = 'اسم النشاط التجاري/الورشة مطلوب';
-    }
-
-    if (businessType == null || businessType.trim().isEmpty) {
-      errors['businessType'] = 'نوع النشاط مطلوب';
-    }
-
-    if (businessAddress.trim().isEmpty) {
-      errors['businessAddress'] = 'عنوان النشاط مطلوب';
-    }
 
     return errors;
   }
