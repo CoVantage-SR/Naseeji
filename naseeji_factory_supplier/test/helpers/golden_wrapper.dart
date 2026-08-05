@@ -46,14 +46,13 @@ class TolerantGoldenComparator extends LocalFileComparator {
   }
 }
 
-/// Initializes tolerant golden comparator for cross-platform CI runner compatibility.
-void setupGoldenComparator([String? fallbackFilePath]) {
-  if (fallbackFilePath != null) {
-    goldenFileComparator = TolerantGoldenComparator(Uri.parse(fallbackFilePath));
-  } else if (goldenFileComparator is LocalFileComparator) {
-    final baseDir = (goldenFileComparator as LocalFileComparator).basedir;
-    goldenFileComparator = TolerantGoldenComparator(baseDir);
-  }
+/// Initializes tolerant golden comparator using the test file's absolute path.
+void setupGoldenComparator(String testFilePath) {
+  final currentDir = Directory.current.path.endsWith('/') || Directory.current.path.endsWith('\\')
+      ? Directory.current.path
+      : '${Directory.current.path}/';
+  final absoluteUri = Uri.file('$currentDir$testFilePath');
+  goldenFileComparator = TolerantGoldenComparator(absoluteUri);
 }
 
 /// Enterprise golden test wrapper that freezes screen dimensions, device pixel ratio,

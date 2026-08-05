@@ -38,7 +38,7 @@ void main() {
       await tester.tap(loginBtn);
       await tester.pumpAndSettleClean();
 
-      expect(find.text('أدخل بريدك الإلكتروني أو رقم هاتفك'), findsWidgets);
+      expect(find.text('يرجى إدخال بريد إلكتروني أو رقم هاتف صحيح'), findsOneWidget);
       expect(find.text('يرجى إدخال كلمة المرور'), findsOneWidget);
     });
 
