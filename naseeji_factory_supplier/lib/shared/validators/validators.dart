@@ -62,7 +62,7 @@ class Validators {
   /// Validates input as either a valid email or a valid Egyptian phone number.
   static String? emailOrPhone(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'أدخل بريدك الإلكتروني أو رقم هاتفك المصري';
+      return 'أدخل بريدك الإلكتروني أو رقم هاتفك';
     }
     final input = value.trim();
     if (input.contains('@')) {

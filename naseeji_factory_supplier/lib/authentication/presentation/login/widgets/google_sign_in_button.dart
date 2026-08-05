@@ -53,11 +53,14 @@ class GoogleSignInButton extends StatelessWidget {
                   children: [
                     const GoogleLogoPainterWidget(size: 20),
                     const SizedBox(width: 10),
-                    Text(
-                      l10n.googleSignIn,
-                      style: theme.textTheme.bodyLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: colorScheme.onSurface,
+                    Flexible(
+                      child: Text(
+                        l10n.googleSignIn,
+                        overflow: TextOverflow.ellipsis,
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.onSurface,
+                        ),
                       ),
                     ),
                   ],
