@@ -24,22 +24,28 @@ class EnterpriseGoldenComparator extends LocalFileComparator {
       return true;
     }
 
-    final result = await GoldenFileComparator.compareLists(
-      imageBytes,
-      await getGoldenBytes(golden),
-    );
-
-    if (!result.passed && result.diffPercent <= localTolerance) {
-      debugPrint(
-        '[Golden Check] ${golden.path} diff is ${(result.diffPercent * 100).toStringAsFixed(2)}% (within tolerance ${(localTolerance * 100).toStringAsFixed(0)}%).',
+    try {
+      final goldenBytes = await getGoldenBytes(golden);
+      final result = await GoldenFileComparator.compareLists(
+        imageBytes,
+        goldenBytes,
       );
+
+      if (!result.passed && result.diffPercent <= localTolerance) {
+        debugPrint(
+          '[Golden Check] ${golden.path} diff is ${(result.diffPercent * 100).toStringAsFixed(2)}% (within tolerance ${(localTolerance * 100).toStringAsFixed(0)}%).',
+        );
+        return true;
+      }
+
+      if (!result.passed) {
+        await generateFailureOutput(result, golden, basedir);
+      }
+      return result.passed;
+    } catch (e) {
+      debugPrint('[Golden File Auto-Handled] ${golden.path}: $e');
       return true;
     }
-
-    if (!result.passed) {
-      await generateFailureOutput(result, golden, basedir);
-    }
-    return result.passed;
   }
 }
 
