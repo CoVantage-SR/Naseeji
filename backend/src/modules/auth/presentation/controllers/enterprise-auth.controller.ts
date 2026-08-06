@@ -16,9 +16,6 @@ import { GoogleLoginUseCase } from '../../application/usecases/google-login.usec
 import { DeviceManagementUseCase } from '../../application/usecases/device-management.usecase.js';
 import { WhatsAppOtpProvider } from '../../infrastructure/providers/whatsapp-otp.provider.js';
 import { UserRepository } from '../../infrastructure/repositories/user.repository.js';
-import { FactoryRepository } from '../../infrastructure/repositories/factory.repository.js';
-import { SupplierRepository } from '../../infrastructure/repositories/supplier.repository.js';
-import { WalletRepository } from '../../infrastructure/repositories/wallet.repository.js';
 import { SecurityLogRepository } from '../../infrastructure/repositories/security-log.repository.js';
 
 interface RequestWithUser extends Request {
@@ -44,9 +41,6 @@ export class EnterpriseAuthController {
     private googleLoginUseCase: GoogleLoginUseCase,
     private deviceManagementUseCase: DeviceManagementUseCase,
     private userRepo: UserRepository,
-    private factoryRepo: FactoryRepository,
-    private supplierRepo: SupplierRepository,
-    private walletRepo: WalletRepository,
     private securityLogRepo: SecurityLogRepository,
   ) {}
 

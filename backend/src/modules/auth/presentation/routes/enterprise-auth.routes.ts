@@ -139,7 +139,6 @@ const googleLoginUseCase = new GoogleLoginUseCase(
 
 const deviceManagementUseCase = new DeviceManagementUseCase(
   deviceRepo,
-  sessionRepo,
   userRepo,
   factoryRepo,
   supplierRepo,

@@ -96,9 +96,59 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
   }
 
+  Future<void> loginGoogle({required String idToken, String accountType = 'factory'}) async {
+    state = AuthState.loading();
+    try {
+      final response = await repository.loginGoogle(idToken: idToken, accountType: accountType);
+      if (response['success'] == true) {
+        await checkAuthStatus();
+      } else {
+        state = AuthState.error(response['message'] ?? 'Google Login failed');
+      }
+    } catch (e) {
+      state = AuthState.error(e.toString());
+    }
+  }
+
+  Future<bool> sendWhatsAppOtp({required String phone, String type = 'phone_verification'}) async {
+    try {
+      final response = await repository.sendWhatsAppOtp(phone: phone, type: type);
+      return response['success'] == true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  Future<bool> verifyWhatsAppOtp({
+    required String phone,
+    required String otpCode,
+    String type = 'phone_verification',
+  }) async {
+    try {
+      final response = await repository.verifyWhatsAppOtp(
+        phone: phone,
+        otpCode: otpCode,
+        type: type,
+      );
+      if (response['success'] == true) {
+        await checkAuthStatus();
+        return true;
+      }
+      return false;
+    } catch (_) {
+      return false;
+    }
+  }
+
   Future<void> logout() async {
     state = AuthState.loading();
     await repository.logout();
+    state = AuthState.unauthenticated();
+  }
+
+  Future<void> logoutAll() async {
+    state = AuthState.loading();
+    await repository.logoutAll();
     state = AuthState.unauthenticated();
   }
 }

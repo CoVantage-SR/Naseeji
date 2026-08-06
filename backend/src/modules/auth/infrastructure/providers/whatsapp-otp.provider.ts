@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { RedisService } from '../../../infrastructure/redis/redis.service.js';
+import { RedisService } from '../../../../infrastructure/redis/redis.service.js';
 import { WinstonLogger } from '../../../../core/logger/winston.logger.js';
 
 export interface SendWhatsAppOtpDto {
@@ -30,15 +30,12 @@ export class WhatsAppOtpProvider {
     const redisKey = `otp:whatsapp:${dto.phone}:${dto.type}`;
 
     if (redisClient) {
-      // Store in Redis with 300 seconds TTL (5 minutes) and 0 attempts
       const otpData = JSON.stringify({ codeHash, attempts: 0 });
       await redisClient.set(redisKey, otpData, 'EX', 300);
     }
 
     this.logger.info(`📱 Sending WhatsApp OTP to ${dto.phone} for ${dto.type}...`);
 
-    // Provider payload execution (Meta WhatsApp Cloud API / Twilio WhatsApp)
-    // If WhatsApp credentials provided in process.env, call Meta Cloud API endpoint
     if (process.env.META_WHATSAPP_TOKEN && process.env.META_WHATSAPP_PHONE_ID) {
       try {
         await fetch(
@@ -88,7 +85,7 @@ export class WhatsAppOtpProvider {
     const redisKey = `otp:whatsapp:${phone}:${type}`;
 
     if (!redisClient) {
-      return true; // Fallback mode
+      return true;
     }
 
     const rawData = await redisClient.get(redisKey);

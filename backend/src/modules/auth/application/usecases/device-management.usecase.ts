@@ -1,5 +1,5 @@
+import crypto from 'crypto';
 import { DeviceRepository } from '../../infrastructure/repositories/device.repository.js';
-import { SessionRepository } from '../../infrastructure/repositories/session.repository.js';
 import { UserRepository } from '../../infrastructure/repositories/user.repository.js';
 import { FactoryRepository } from '../../infrastructure/repositories/factory.repository.js';
 import { SupplierRepository } from '../../infrastructure/repositories/supplier.repository.js';
@@ -9,7 +9,6 @@ import { SecurityLogRepository } from '../../infrastructure/repositories/securit
 export class DeviceManagementUseCase {
   constructor(
     private deviceRepo: DeviceRepository,
-    private sessionRepo: SessionRepository,
     private userRepo: UserRepository,
     private factoryRepo: FactoryRepository,
     private supplierRepo: SupplierRepository,
@@ -43,7 +42,7 @@ export class DeviceManagementUseCase {
       },
       profile,
       wallet: wallet
-        ? { balance: wallet.balance, currency: wallet.currency, points: wallet.points }
+        ? { balance: wallet.balance, currency: wallet.currency, points: wallet.pointsBalance }
         : { balance: 0, currency: 'EGP', points: 100 },
       devicesCount: devices.length,
     };

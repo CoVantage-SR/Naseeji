@@ -35,10 +35,9 @@ export class GoogleLoginUseCase {
     const googlePayload = await this.googleAuthService.verifyIdToken(dto.idToken);
     let user = await this.userRepo.findByEmail(googlePayload.email);
 
-    let role = dto.accountType || 'factory';
+    let role: 'factory' | 'supplier' = dto.accountType || 'factory';
 
     if (!user) {
-      // First time Google Login - Auto Create User & Profile
       const userId = crypto.randomUUID();
       const dummyPasswordHash = await bcrypt.hash(crypto.randomBytes(16).toString('hex'), 12);
 
@@ -47,7 +46,7 @@ export class GoogleLoginUseCase {
         phone: `+201${Math.floor(100000000 + Math.random() * 900000000)}`,
         email: googlePayload.email,
         passwordHash: dummyPasswordHash,
-        role: role as 'factory' | 'supplier',
+        role,
         status: 'active',
         isEmailVerified: true,
         isPhoneVerified: false,
@@ -71,13 +70,15 @@ export class GoogleLoginUseCase {
           _id: crypto.randomUUID(),
           userId,
           companyName: googlePayload.name || 'Google Supplier',
-          supplierType: 'fabric_manufacturer',
+          supplierCategory: 'fabric_manufacturer',
+          phone: user.phone,
+          email: user.email,
           governorate: 'Cairo',
-          city: 'Cairo',
           address: 'Cairo Textile Hub',
           commercialRegistration: `CR-${Math.floor(100000 + Math.random() * 900000)}`,
           taxNumber: `TAX-${Math.floor(100000 + Math.random() * 900000)}`,
           verificationStatus: 'pending',
+          subscriptionStatus: 'trial',
         });
       }
 
@@ -86,25 +87,31 @@ export class GoogleLoginUseCase {
         userId,
         balance: 0,
         currency: 'EGP',
-        points: 100,
+        pointsBalance: 100,
       });
     } else {
-      role = user.role;
+      role = (user.role === 'factory' || user.role === 'supplier') ? user.role : 'factory';
     }
 
-    // Register / Update Device Security Context
     await this.deviceRepo.upsertDevice({
       ...dto.deviceInfo,
       userId: user._id,
     });
 
-    // Create Session
     const sessionId = crypto.randomUUID();
+    const refreshTokenRaw = crypto.randomBytes(40).toString('hex');
+    const refreshTokenHash = crypto.createHash('sha256').update(refreshTokenRaw).digest('hex');
+
     await this.sessionRepo.create({
       _id: sessionId,
       userId: user._id,
+      refreshTokenHash,
       deviceId: dto.deviceInfo.deviceId,
-      deviceInfo: `${dto.deviceInfo.deviceName} (${dto.deviceInfo.deviceType || 'android'})`,
+      deviceInfo: {
+        userAgent: dto.deviceInfo.deviceName,
+        os: dto.deviceInfo.osVersion,
+        device: dto.deviceInfo.deviceType,
+      },
       ipAddress: dto.deviceInfo.ipAddress,
       country: dto.deviceInfo.country || 'Egypt',
       isRevoked: false,
@@ -112,15 +119,12 @@ export class GoogleLoginUseCase {
       expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
     });
 
-    // Generate JWT Access & Refresh Tokens
     const accessToken = jwt.sign(
       { sub: user._id, role: user.role, email: user.email, phone: user.phone, sessionId },
       this.jwtSecret,
       { expiresIn: '15m' },
     );
 
-    const refreshTokenRaw = crypto.randomBytes(40).toString('hex');
-    const refreshTokenHash = crypto.createHash('sha256').update(refreshTokenRaw).digest('hex');
     const familyId = crypto.randomUUID();
 
     await this.refreshTokenRepo.create({
@@ -134,7 +138,6 @@ export class GoogleLoginUseCase {
       expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
     });
 
-    // Fetch Profile & Wallet
     const profile =
       user.role === 'factory'
         ? await this.factoryRepo.findByUserId(user._id)
@@ -171,7 +174,7 @@ export class GoogleLoginUseCase {
         ? {
             balance: wallet.balance,
             currency: wallet.currency,
-            points: wallet.points,
+            points: wallet.pointsBalance,
           }
         : { balance: 0, currency: 'EGP', points: 100 },
     };

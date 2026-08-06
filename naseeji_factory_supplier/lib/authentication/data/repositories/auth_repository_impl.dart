@@ -37,6 +37,50 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<Map<String, dynamic>> loginGoogle({
+    required String idToken,
+    String accountType = 'factory',
+  }) async {
+    final response = await remoteDataSource.loginGoogle(
+      idToken: idToken,
+      accountType: accountType,
+    );
+
+    if (response['success'] == true) {
+      final tokens = response['data']['tokens'];
+      final user = response['data']['user'];
+      await tokenStorage.saveTokens(
+        accessToken: tokens['accessToken'],
+        refreshToken: tokens['refreshToken'],
+        role: user['role'],
+        userId: user['id'],
+      );
+    }
+    return response;
+  }
+
+  @override
+  Future<Map<String, dynamic>> sendWhatsAppOtp({
+    required String phone,
+    String type = 'phone_verification',
+  }) async {
+    return await remoteDataSource.sendWhatsAppOtp(phone: phone, type: type);
+  }
+
+  @override
+  Future<Map<String, dynamic>> verifyWhatsAppOtp({
+    required String phone,
+    required String otpCode,
+    String type = 'phone_verification',
+  }) async {
+    return await remoteDataSource.verifyWhatsAppOtp(
+      phone: phone,
+      otpCode: otpCode,
+      type: type,
+    );
+  }
+
+  @override
   Future<Map<String, dynamic>> registerFactory(Map<String, dynamic> data) async {
     return await remoteDataSource.registerFactory(data);
   }
@@ -54,6 +98,11 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<void> logout() async {
     await remoteDataSource.logout();
+  }
+
+  @override
+  Future<void> logoutAll() async {
+    await remoteDataSource.logoutAll();
   }
 
   @override
