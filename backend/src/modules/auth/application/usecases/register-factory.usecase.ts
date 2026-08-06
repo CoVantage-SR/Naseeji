@@ -31,7 +31,7 @@ export class RegisterFactoryUseCase {
     private securityLogRepo: SecurityLogRepository,
   ) {}
 
-  public async execute(dto: RegisterFactoryDto) {
+  public async execute(dto: RegisterFactoryDto): Promise<Record<string, unknown>> {
     // 1. Check duplicate email or phone
     const existingEmail = await this.userRepo.findByEmail(dto.email);
     if (existingEmail) {
@@ -82,7 +82,7 @@ export class RegisterFactoryUseCase {
       _id: walletId,
       userId,
       balance: 0,
-      pointsBalance: 100, // Initial signup bonus points
+      pointsBalance: 100,
       currency: 'EGP',
     });
 

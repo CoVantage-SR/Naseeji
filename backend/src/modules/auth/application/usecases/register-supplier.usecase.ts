@@ -30,7 +30,7 @@ export class RegisterSupplierUseCase {
     private securityLogRepo: SecurityLogRepository,
   ) {}
 
-  public async execute(dto: RegisterSupplierDto) {
+  public async execute(dto: RegisterSupplierDto): Promise<Record<string, unknown>> {
     // 1. Duplicate Checks
     const existingEmail = await this.userRepo.findByEmail(dto.email);
     if (existingEmail) {
@@ -82,7 +82,7 @@ export class RegisterSupplierUseCase {
       _id: walletId,
       userId,
       balance: 0,
-      pointsBalance: 150, // Initial bonus for suppliers
+      pointsBalance: 150,
       currency: 'EGP',
     });
 

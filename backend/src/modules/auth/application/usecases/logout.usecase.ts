@@ -15,7 +15,7 @@ export class LogoutUseCase {
     refreshToken?: string,
     ipAddress: string = '127.0.0.1',
     userAgent: string = 'Unknown',
-  ) {
+  ): Promise<{ success: boolean; message: string }> {
     if (refreshToken) {
       const tokenHash = crypto.createHash('sha256').update(refreshToken).digest('hex');
       const tokenDoc = await this.refreshTokenRepo.findByHash(tokenHash);
@@ -40,7 +40,7 @@ export class LogoutUseCase {
     userId: string,
     ipAddress: string = '127.0.0.1',
     userAgent: string = 'Unknown',
-  ) {
+  ): Promise<{ success: boolean; message: string }> {
     await this.sessionRepo.revokeAllUserSessions(userId);
     await this.refreshTokenRepo.revokeAllForUser(userId);
 

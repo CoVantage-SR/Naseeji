@@ -4,6 +4,7 @@ import { FactoryRepository } from '../../infrastructure/repositories/factory.rep
 import { VerificationRequestRepository } from '../../infrastructure/repositories/verification-request.repository.js';
 import { UserRepository } from '../../infrastructure/repositories/user.repository.js';
 import { SecurityLogRepository } from '../../infrastructure/repositories/security-log.repository.js';
+import { IVerificationRequestDocument } from '../../infrastructure/database/verification-request.schema.js';
 
 export interface UpdateVerificationDto {
   requestId: string;
@@ -23,7 +24,9 @@ export class SupplierVerificationUseCase {
     private securityLogRepo: SecurityLogRepository,
   ) {}
 
-  public async updateStatus(dto: UpdateVerificationDto) {
+  public async updateStatus(
+    dto: UpdateVerificationDto,
+  ): Promise<IVerificationRequestDocument | null> {
     const request = await this.verificationRepo.findById(dto.requestId);
     if (!request) {
       throw new Error('Verification request not found');
@@ -58,7 +61,7 @@ export class SupplierVerificationUseCase {
     return updatedRequest;
   }
 
-  public async getPendingRequests() {
+  public async getPendingRequests(): Promise<IVerificationRequestDocument[]> {
     return await this.verificationRepo.findPendingRequests();
   }
 }

@@ -42,7 +42,7 @@ export class Wallet {
     this.props.updatedAt = new Date();
   }
 
-  public toJSON() {
+  public toJSON(): Record<string, unknown> {
     return { ...this.props };
   }
 }

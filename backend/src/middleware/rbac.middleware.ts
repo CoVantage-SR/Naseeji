@@ -1,8 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
 
+interface RequestWithUserRole extends Request {
+  user?: {
+    role?: string;
+    roles?: string[];
+  };
+}
+
 export const requireRoles = (...allowedRoles: string[]) => {
   return (req: Request, res: Response, next: NextFunction): void => {
-    const user = req.userContext || (req as any).user;
+    const customReq = req as RequestWithUserRole;
+    const user = req.userContext || customReq.user;
     if (!user) {
       res.status(401).json({
         success: false,

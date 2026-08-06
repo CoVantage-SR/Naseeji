@@ -10,7 +10,7 @@ export interface ISecurityLogDocument {
   device?: string;
   browser?: string;
   country?: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
   createdAt?: Date;
   updatedAt?: Date;
 }

@@ -22,10 +22,10 @@ describe('Enterprise Auth & Security Suite', () => {
       const payload = { sub: 'user-123', role: 'factory', email: 'factory@naseeji.com' };
       const token = jwt.sign(payload, secret, { expiresIn: '15m' });
 
-      const decoded = jwt.verify(token, secret) as any;
+      const decoded = jwt.verify(token, secret) as jwt.JwtPayload;
       expect(decoded.sub).toBe('user-123');
-      expect(decoded.role).toBe('factory');
-      expect(decoded.email).toBe('factory@naseeji.com');
+      expect(decoded['role']).toBe('factory');
+      expect(decoded['email']).toBe('factory@naseeji.com');
     });
 
     it('should reject tampered or expired tokens', () => {

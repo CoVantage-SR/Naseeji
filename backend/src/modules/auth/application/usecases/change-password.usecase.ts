@@ -21,7 +21,7 @@ export class ChangePasswordUseCase {
     private securityLogRepo: SecurityLogRepository,
   ) {}
 
-  public async execute(dto: ChangePasswordDto) {
+  public async execute(dto: ChangePasswordDto): Promise<{ success: boolean; message: string }> {
     const user = await this.userRepo.findById(dto.userId);
     if (!user) {
       throw new Error('User not found');
@@ -35,7 +35,6 @@ export class ChangePasswordUseCase {
     const newPasswordHash = await bcrypt.hash(dto.newPassword, 12);
     await this.userRepo.update(user._id, { passwordHash: newPasswordHash });
 
-    // Revoke existing sessions for security
     await this.sessionRepo.revokeAllUserSessions(user._id);
     await this.refreshTokenRepo.revokeAllForUser(user._id);
 

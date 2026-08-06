@@ -23,7 +23,7 @@ export interface SecurityLogProps {
   device?: string;
   browser?: string;
   country?: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
   createdAt: Date;
 }
 
@@ -58,14 +58,14 @@ export class SecurityLog {
   public get country(): string | undefined {
     return this.props.country;
   }
-  public get metadata(): Record<string, any> | undefined {
+  public get metadata(): Record<string, unknown> | undefined {
     return this.props.metadata;
   }
   public get createdAt(): Date {
     return this.props.createdAt;
   }
 
-  public toJSON() {
+  public toJSON(): Record<string, unknown> {
     return { ...this.props };
   }
 }

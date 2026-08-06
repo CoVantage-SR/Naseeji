@@ -17,7 +17,7 @@ export class VerifyEmailPhoneUseCase {
     otpCode: string,
     ip: string,
     userAgent: string,
-  ) {
+  ): Promise<{ success: boolean; message: string }> {
     const validOtp = await this.otpRepo.findValidOtp(phone, 'phone_verification');
     if (!validOtp) {
       throw new Error('Invalid or expired OTP');
@@ -50,7 +50,7 @@ export class VerifyEmailPhoneUseCase {
     otpCode: string,
     ip: string,
     userAgent: string,
-  ) {
+  ): Promise<{ success: boolean; message: string }> {
     const validOtp = await this.otpRepo.findValidOtp(email, 'email_verification');
     if (!validOtp) {
       throw new Error('Invalid or expired OTP');
@@ -82,7 +82,7 @@ export class VerifyEmailPhoneUseCase {
     type: 'phone_verification' | 'email_verification' | 'password_reset',
     ip: string,
     userAgent: string,
-  ) {
+  ): Promise<Record<string, unknown>> {
     const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
     const codeHash = await bcrypt.hash(otpCode, 10);
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000);

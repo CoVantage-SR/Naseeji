@@ -10,7 +10,7 @@ import { RefreshTokenRepository } from '../../infrastructure/repositories/refres
 import { SecurityLogRepository } from '../../infrastructure/repositories/security-log.repository.js';
 
 export interface LoginDto {
-  identifier: string; // phone or email
+  identifier: string;
   password: string;
   rememberMe?: boolean;
   ipAddress: string;
@@ -30,7 +30,7 @@ export class LoginUseCase {
     private jwtSecret: string,
   ) {}
 
-  public async execute(dto: LoginDto) {
+  public async execute(dto: LoginDto): Promise<Record<string, unknown>> {
     const isEmail = dto.identifier.includes('@');
     const user = isEmail
       ? await this.userRepo.findByEmail(dto.identifier)
@@ -111,7 +111,7 @@ export class LoginUseCase {
     });
 
     // Fetch Profile & Wallet
-    let profile: any = null;
+    let profile: unknown = null;
     if (user.role === 'factory') {
       profile = await this.factoryRepo.findByUserId(user._id);
     } else if (user.role === 'supplier') {

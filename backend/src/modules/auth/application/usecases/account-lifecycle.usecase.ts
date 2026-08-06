@@ -12,7 +12,11 @@ export class AccountLifecycleUseCase {
     private securityLogRepo: SecurityLogRepository,
   ) {}
 
-  public async deactivate(userId: string, ip: string, userAgent: string) {
+  public async deactivate(
+    userId: string,
+    ip: string,
+    userAgent: string,
+  ): Promise<{ success: boolean; message: string }> {
     await this.userRepo.update(userId, { status: 'deactivated' });
     await this.sessionRepo.revokeAllUserSessions(userId);
     await this.refreshTokenRepo.revokeAllForUser(userId);
@@ -28,7 +32,11 @@ export class AccountLifecycleUseCase {
     return { success: true, message: 'Account deactivated successfully' };
   }
 
-  public async softDelete(userId: string, ip: string, userAgent: string) {
+  public async softDelete(
+    userId: string,
+    ip: string,
+    userAgent: string,
+  ): Promise<{ success: boolean; message: string }> {
     await this.userRepo.softDelete(userId);
     await this.sessionRepo.revokeAllUserSessions(userId);
     await this.refreshTokenRepo.revokeAllForUser(userId);

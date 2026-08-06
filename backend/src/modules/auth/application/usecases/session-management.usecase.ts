@@ -9,7 +9,7 @@ export class SessionManagementUseCase {
     private securityLogRepo: SecurityLogRepository,
   ) {}
 
-  public async getActiveSessions(userId: string) {
+  public async getActiveSessions(userId: string): Promise<Record<string, unknown>[]> {
     const sessions = await this.sessionRepo.findActiveByUserId(userId);
     return sessions.map((s) => ({
       id: s._id,
@@ -22,7 +22,12 @@ export class SessionManagementUseCase {
     }));
   }
 
-  public async revokeSession(userId: string, sessionId: string, ip: string, userAgent: string) {
+  public async revokeSession(
+    userId: string,
+    sessionId: string,
+    ip: string,
+    userAgent: string,
+  ): Promise<{ success: boolean; message: string }> {
     const revoked = await this.sessionRepo.revokeById(sessionId, userId);
     if (revoked) {
       await this.refreshTokenRepo.revokeAllForSession(sessionId);
@@ -38,7 +43,11 @@ export class SessionManagementUseCase {
     return { success: revoked, message: revoked ? 'Device session revoked' : 'Session not found' };
   }
 
-  public async revokeAllSessions(userId: string, ip: string, userAgent: string) {
+  public async revokeAllSessions(
+    userId: string,
+    ip: string,
+    userAgent: string,
+  ): Promise<{ success: boolean; message: string }> {
     await this.sessionRepo.revokeAllUserSessions(userId);
     await this.refreshTokenRepo.revokeAllForUser(userId);
     await this.securityLogRepo.logAction({

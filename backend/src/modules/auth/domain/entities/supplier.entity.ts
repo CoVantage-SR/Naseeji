@@ -83,7 +83,7 @@ export class Supplier {
     this.props.updatedAt = new Date();
   }
 
-  public toJSON() {
+  public toJSON(): Record<string, unknown> {
     return { ...this.props };
   }
 }

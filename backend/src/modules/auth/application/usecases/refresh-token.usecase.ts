@@ -20,7 +20,7 @@ export class RefreshTokenUseCase {
     private jwtSecret: string,
   ) {}
 
-  public async execute(dto: RefreshTokenDto) {
+  public async execute(dto: RefreshTokenDto): Promise<Record<string, unknown>> {
     const tokenHash = crypto.createHash('sha256').update(dto.refreshToken).digest('hex');
     const existingToken = await this.refreshTokenRepo.findByHash(tokenHash);
 
@@ -30,7 +30,6 @@ export class RefreshTokenUseCase {
 
     // Reuse Detection Security Check
     if (existingToken.isUsed || existingToken.isRevoked) {
-      // Token reuse detected! Revoke all tokens in this family to neutralize attack.
       await this.refreshTokenRepo.revokeFamily(existingToken.familyId);
       await this.sessionRepo.revokeById(existingToken.sessionId, existingToken.userId);
 

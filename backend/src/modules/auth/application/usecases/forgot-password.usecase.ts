@@ -5,7 +5,7 @@ import { OtpRepository } from '../../infrastructure/repositories/otp.repository.
 import { SecurityLogRepository } from '../../infrastructure/repositories/security-log.repository.js';
 
 export interface ForgotPasswordDto {
-  target: string; // phone or email
+  target: string;
   ipAddress: string;
   userAgent: string;
 }
@@ -25,21 +25,19 @@ export class ForgotPasswordUseCase {
     private securityLogRepo: SecurityLogRepository,
   ) {}
 
-  public async execute(dto: ForgotPasswordDto) {
+  public async execute(dto: ForgotPasswordDto): Promise<Record<string, unknown>> {
     const isEmail = dto.target.includes('@');
     const user = isEmail
       ? await this.userRepo.findByEmail(dto.target)
       : await this.userRepo.findByPhone(dto.target);
 
     if (!user) {
-      // Return success anyway to avoid user enumeration vulnerability
       return { success: true, message: 'If account exists, an OTP code has been sent.' };
     }
 
-    // Generate 6-digit OTP
     const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
     const codeHash = await bcrypt.hash(otpCode, 10);
-    const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000);
 
     await this.otpRepo.create({
       _id: crypto.randomUUID(),
@@ -63,7 +61,6 @@ export class ForgotPasswordUseCase {
     return {
       success: true,
       message: 'OTP code has been generated and sent.',
-      // Demo helper in non-prod environment for API testing
       debugOtp: process.env.NODE_ENV !== 'production' ? otpCode : undefined,
     };
   }
@@ -76,7 +73,7 @@ export class ResetPasswordUseCase {
     private securityLogRepo: SecurityLogRepository,
   ) {}
 
-  public async execute(dto: ResetPasswordDto) {
+  public async execute(dto: ResetPasswordDto): Promise<{ success: boolean; message: string }> {
     const validOtp = await this.otpRepo.findValidOtp(dto.target, 'password_reset');
     if (!validOtp) {
       throw new Error('Invalid or expired OTP code');
