@@ -16,6 +16,7 @@ class AccountProfileScreen extends ConsumerWidget {
     final profile = ref.watch(accountNotifierProvider).profile;
 
     return Scaffold(
+      bottomNavigationBar: const FactoryBottomNavigation(currentIndex: 4),
       body: CustomScrollView(
         slivers: [
           // Collapsible Header
@@ -23,18 +24,19 @@ class AccountProfileScreen extends ConsumerWidget {
             expandedHeight: 240,
             pinned: true,
             automaticallyImplyLeading: false,
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.settings_rounded),
-                onPressed: () => context.push('/account/settings'),
-                tooltip: 'الإعدادات',
-              ),
-            ],
             flexibleSpace: FlexibleSpaceBar(
               collapseMode: CollapseMode.pin,
               background: ProfileHeaderWidget(
                 profile: profile,
                 onEdit: () => context.push('/account/profile/edit'),
+                onBack: () {
+                  if (context.canPop()) {
+                    context.pop();
+                  } else {
+                    context.go('/factory/home');
+                  }
+                },
+                onSettings: () => context.push('/account/settings'),
               ),
             ),
           ),
@@ -42,16 +44,11 @@ class AccountProfileScreen extends ConsumerWidget {
           // Content
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 62, 16, 24),
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Name + quick actions
-                  Text(
-                    profile.name,
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                  ),
-                  AppSpacing.hXS,
+                  // Quick Actions Bar
                   QuickActionsWidget(
                     onEditProfile: () => context.push('/account/profile/edit'),
                     onShareProfile: () {
@@ -80,7 +77,7 @@ class AccountProfileScreen extends ConsumerWidget {
                     },
                   ),
                   AppSpacing.hMD,
-                  FactoryStatisticsWidget(),
+                  const FactoryStatisticsWidget(),
                   AppSpacing.hMD,
                   FactorySummaryWidget(profile: profile),
                   AppSpacing.hMD,
@@ -89,29 +86,60 @@ class AccountProfileScreen extends ConsumerWidget {
                   ContactInformationWidget(profile: profile),
                   AppSpacing.hMD,
                   // Navigation tiles
-                  _navTile(context, Icons.people_rounded, 'إدارة الموظفين والصلاحيات',
-                      () => context.push('/account/employees')),
-                  _navTile(context, Icons.settings_rounded, 'الإعدادات العامة',
-                      () => context.push('/account/settings')),
-                  _navTile(context, Icons.privacy_tip_rounded, 'سياسة الخصوصية',
-                      () => context.push('/account/privacy')),
-                  _navTile(context, Icons.gavel_rounded, 'الشروط والأحكام',
-                      () => context.push('/account/terms')),
+                  _navTile(
+                    context,
+                    Icons.people_rounded,
+                    'إدارة الموظفين والصلاحيات',
+                    () => context.push('/account/employees'),
+                  ),
+                  _navTile(
+                    context,
+                    Icons.settings_rounded,
+                    'الإعدادات العامة',
+                    () => context.push('/account/settings'),
+                  ),
+                  _navTile(
+                    context,
+                    Icons.privacy_tip_rounded,
+                    'سياسة الخصوصية',
+                    () => context.push('/account/privacy'),
+                  ),
+                  _navTile(
+                    context,
+                    Icons.gavel_rounded,
+                    'الشروط والأحكام',
+                    () => context.push('/account/terms'),
+                  ),
                   const SizedBox(height: 8),
                   const Divider(),
                   ListTile(
                     leading: Container(
-                      width: 40, height: 40,
+                      width: 40,
+                      height: 40,
                       decoration: BoxDecoration(
                         color: Colors.red.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: const Icon(Icons.logout_rounded, color: Colors.red, size: 20),
+                      child: const Icon(
+                        Icons.logout_rounded,
+                        color: Colors.red,
+                        size: 20,
+                      ),
                     ),
-                    title: const Text('تسجيل الخروج',
-                        style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: Colors.red)),
-                    trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: Colors.red),
-                    onTap: () => context.go('/login'),
+                    title: const Text(
+                      'تسجيل الخروج',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
+                        color: Colors.red,
+                      ),
+                    ),
+                    trailing: const Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      size: 14,
+                      color: Colors.red,
+                    ),
+                    onTap: () => context.go('/auth/login'),
                   ),
                   const SizedBox(height: 32),
                 ],

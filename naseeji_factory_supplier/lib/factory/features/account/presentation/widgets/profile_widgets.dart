@@ -9,140 +9,197 @@ import '../providers/account_provider.dart';
 import 'account_reusable_widgets.dart';
 
 
-// ─── Profile Header Widget ─────────────────────────────────────────────────
 class ProfileHeaderWidget extends StatelessWidget {
   final FactoryProfileModel profile;
   final VoidCallback onEdit;
+  final VoidCallback? onBack;
+  final VoidCallback? onSettings;
 
-  const ProfileHeaderWidget({super.key, required this.profile, required this.onEdit});
+  const ProfileHeaderWidget({
+    super.key,
+    required this.profile,
+    required this.onEdit,
+    this.onBack,
+    this.onSettings,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Stack(
-      clipBehavior: Clip.none,
       children: [
         // Cover Image
-        ClipRRect(
-          borderRadius: const BorderRadius.vertical(bottom: Radius.circular(0)),
-          child: Image.network(
-            profile.coverUrl,
-            height: 180,
-            width: double.infinity,
-            fit: BoxFit.cover,
-            errorBuilder: (_, __, ___) => Container(
-              height: 180,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [AppColors.primary, AppColors.primaryDark],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
+        Image.network(
+          profile.coverUrl,
+          height: 240,
+          width: double.infinity,
+          fit: BoxFit.cover,
+          errorBuilder: (_, __, ___) => Container(
+            height: 240,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [AppColors.primary, AppColors.primaryDark],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
             ),
           ),
         ),
-        // Gradient overlay
+
+        // Dark gradient overlay
         Container(
-          height: 180,
+          height: 240,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.transparent, Colors.black.withValues(alpha: 0.4)],
+              colors: [
+                Colors.black.withValues(alpha: 0.5),
+                Colors.transparent,
+                Colors.black.withValues(alpha: 0.7),
+              ],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
           ),
         ),
-        // Edit cover button
+
+        // Header Actions Bar (Back & Edit & Settings)
         Positioned(
-          top: 12,
-          left: 12,
-          child: GestureDetector(
-            onTap: onEdit,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-              decoration: BoxDecoration(
-                color: Colors.black.withValues(alpha: 0.4),
-                borderRadius: AppRadius.rRound,
-              ),
-              child: const Row(
+          top: MediaQuery.of(context).padding.top + 8,
+          left: 16,
+          right: 16,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              if (onBack != null)
+                IconButton(
+                  style: IconButton.styleFrom(
+                    backgroundColor: Colors.black.withValues(alpha: 0.4),
+                    foregroundColor: Colors.white,
+                  ),
+                  icon: const Icon(Icons.arrow_back_rounded),
+                  onPressed: onBack,
+                )
+              else
+                const SizedBox.shrink(),
+              Row(
                 children: [
-                  Icon(Icons.edit_rounded, color: Colors.white, size: 14),
-                  SizedBox(width: 4),
-                  Text('تعديل', style: TextStyle(color: Colors.white, fontSize: 11)),
+                  GestureDetector(
+                    onTap: onEdit,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: 0.4),
+                        borderRadius: AppRadius.rRound,
+                      ),
+                      child: const Row(
+                        children: [
+                          Icon(Icons.edit_rounded, color: Colors.white, size: 14),
+                          SizedBox(width: 4),
+                          Text(
+                            'تعديل',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  if (onSettings != null) ...[
+                    const SizedBox(width: 8),
+                    IconButton(
+                      style: IconButton.styleFrom(
+                        backgroundColor: Colors.black.withValues(alpha: 0.4),
+                        foregroundColor: Colors.white,
+                      ),
+                      icon: const Icon(Icons.settings_rounded),
+                      onPressed: onSettings,
+                    ),
+                  ],
                 ],
               ),
-            ),
+            ],
           ),
         ),
-        // Logo & info positioned at the bottom
+
+        // Bottom Info Row inside the cover
         Positioned(
-          bottom: -50,
+          bottom: 16,
           right: 16,
           left: 16,
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Stack(
-                children: [
-                  Container(
-                    width: 88,
-                    height: 88,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white, width: 3),
-                      color: Colors.white,
+              // Avatar Logo
+              Container(
+                width: 72,
+                height: 72,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.white, width: 2.5),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.2),
+                      blurRadius: 6,
                     ),
-                    child: ClipOval(
-                      child: Image.network(
-                        profile.logoUrl,
-                        fit: BoxFit.cover,
-                        errorBuilder: (_, __, ___) => Container(
-                          color: AppColors.primary.withValues(alpha: 0.1),
-                          child: const Icon(Icons.factory_rounded, color: AppColors.primary, size: 42),
-                        ),
+                  ],
+                ),
+                child: ClipOval(
+                  child: Image.network(
+                    profile.logoUrl,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => Container(
+                      color: AppColors.primary.withValues(alpha: 0.1),
+                      child: const Icon(
+                        Icons.factory_rounded,
+                        color: AppColors.primary,
+                        size: 36,
                       ),
                     ),
                   ),
-                  if (profile.isVerified)
-                    Positioned(
-                      bottom: 2,
-                      left: 2,
-                      child: Container(
-                        padding: const EdgeInsets.all(3),
-                        decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-                        child: const Icon(Icons.verified_rounded, color: AppColors.info, size: 18),
-                      ),
-                    ),
-                ],
+                ),
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 6),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SubscriptionBadge(plan: profile.subscriptionPlan),
-                      const SizedBox(height: 4),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                        decoration: BoxDecoration(
-                          color: profile.isAccountActive
-                              ? AppColors.success.withValues(alpha: 0.15)
-                              : AppColors.error.withValues(alpha: 0.15),
-                          borderRadius: AppRadius.rRound,
-                        ),
-                        child: Text(
-                          profile.isAccountActive ? 'الحساب نشط' : 'الحساب موقوف',
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: profile.isAccountActive ? AppColors.success : AppColors.error,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      profile.name,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        shadows: [Shadow(color: Colors.black45, blurRadius: 4)],
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        SubscriptionBadge(plan: profile.subscriptionPlan),
+                        const SizedBox(width: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                          decoration: BoxDecoration(
+                            color: profile.isAccountActive
+                                ? AppColors.success.withValues(alpha: 0.9)
+                                : AppColors.error.withValues(alpha: 0.9),
+                            borderRadius: AppRadius.rRound,
+                          ),
+                          child: Text(
+                            profile.isAccountActive ? 'الحساب نشط' : 'الحساب موقوف',
+                            style: const TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ],
