@@ -114,41 +114,45 @@ class _AccountTypeScreenState extends ConsumerState<AccountTypeScreen> {
               ),
               const SizedBox(height: 16),
               // Option 3: Guest Mode Card (👤 الزائر)
-              Container(
-                decoration: BoxDecoration(
-                  color: _isGuestModeSelected
-                      ? colorScheme.primary.withValues(alpha: isDark ? 0.2 : 0.08)
-                      : (isDark ? colorScheme.surfaceContainerHighest.withValues(alpha: 0.3) : Colors.white),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: _isGuestModeSelected
-                        ? colorScheme.primary
-                        : (isDark ? colorScheme.outline.withValues(alpha: 0.3) : const Color(0xFFE2E8F0)),
-                    width: _isGuestModeSelected ? 2 : 1,
-                  ),
-                ),
-                child: ListTile(
-                  onTap: () {
-                    setState(() => _isGuestModeSelected = true);
-                  },
-                  leading: const CircleAvatar(
-                    backgroundColor: Color(0xFF64748B),
-                    child: Icon(Icons.person_outline_rounded, color: Colors.white),
-                  ),
-                  title: Text(
-                    '👤 تصفح كزائر (Guest)',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
+              Material(
+                color: _isGuestModeSelected
+                    ? colorScheme.primary.withValues(alpha: isDark ? 0.2 : 0.08)
+                    : (isDark ? colorScheme.surfaceContainerHighest.withValues(alpha: 0.3) : Colors.white),
+                borderRadius: BorderRadius.circular(16),
+                clipBehavior: Clip.antiAlias,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: _isGuestModeSelected
+                          ? colorScheme.primary
+                          : (isDark ? colorScheme.outline.withValues(alpha: 0.3) : const Color(0xFFE2E8F0)),
+                      width: _isGuestModeSelected ? 2 : 1,
                     ),
                   ),
-                  subtitle: const Text(
-                    'تصفح المنتجات والمصانع مباشرة بدون إدخال بيانات شركة (خصائص محدودة)',
-                    style: TextStyle(fontSize: 11.5),
-                  ),
-                  trailing: Icon(
-                    _isGuestModeSelected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
-                    color: _isGuestModeSelected ? colorScheme.primary : colorScheme.outline,
+                  child: ListTile(
+                    onTap: () {
+                      setState(() => _isGuestModeSelected = true);
+                    },
+                    leading: const CircleAvatar(
+                      backgroundColor: Color(0xFF64748B),
+                      child: Icon(Icons.person_outline_rounded, color: Colors.white),
+                    ),
+                    title: Text(
+                      '👤 تصفح كزائر (Guest)',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                    subtitle: const Text(
+                      'تصفح المنتجات والمصانع مباشرة بدون إدخال بيانات شركة (خصائص محدودة)',
+                      style: TextStyle(fontSize: 11.5),
+                    ),
+                    trailing: Icon(
+                      _isGuestModeSelected ? Icons.radio_button_checked : Icons.radio_button_unchecked,
+                      color: _isGuestModeSelected ? colorScheme.primary : colorScheme.outline,
+                    ),
                   ),
                 ),
               ),

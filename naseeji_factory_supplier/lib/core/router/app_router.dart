@@ -34,6 +34,11 @@ import '../../supplier/features/buy_credits/presentation/screens/buy_credits_scr
 import '../../authentication/presentation/basic_profile/basic_profile_screen.dart';
 import '../../authentication/presentation/welcome/welcome_screen.dart';
 import '../../authentication/reset_password/reset_password_screen.dart';
+import '../../factory/features/marketplace/presentation/screens/factory_marketplace_screen.dart';
+import '../../factory/features/rfq/presentation/screens/rfq_screen.dart';
+import '../../factory/features/rfq/presentation/screens/factory_orders_screen.dart';
+import '../../factory/features/rfq/presentation/screens/create_rfq_screen.dart';
+import '../../factory/features/account/presentation/screens/notification_center_screen.dart';
 
 part 'app_router.g.dart';
 
@@ -176,6 +181,38 @@ GoRouter appRouter(AppRouterRef ref) {
       GoRoute(
         path: '/factory/home',
         builder: (context, state) => const factory_home.HomeScreen(),
+      ),
+      GoRoute(
+        path: '/suppliers',
+        builder: (context, state) => const FactoryMarketplaceScreen(),
+      ),
+      GoRoute(
+        path: '/factory/marketplace',
+        builder: (context, state) => const FactoryMarketplaceScreen(),
+      ),
+      GoRoute(
+        path: '/rfq',
+        builder: (context, state) => const RfqScreen(),
+      ),
+      GoRoute(
+        path: '/factory/rfq',
+        builder: (context, state) => const RfqScreen(),
+      ),
+      GoRoute(
+        path: '/rfq/create',
+        builder: (context, state) => const CreateRFQScreen(),
+      ),
+      GoRoute(
+        path: '/orders',
+        builder: (context, state) => const FactoryOrdersScreen(),
+      ),
+      GoRoute(
+        path: '/factory/orders',
+        builder: (context, state) => const FactoryOrdersScreen(),
+      ),
+      GoRoute(
+        path: '/notifications',
+        builder: (context, state) => const NotificationCenterScreen(),
       ),
       GoRoute(
         path: '/factory/account',
