@@ -42,7 +42,9 @@ export class RegisterSupplierUseCase {
       throw new Error('Phone number is already registered');
     }
 
-    const existingCr = await this.supplierRepo.findByCommercialRegistration(dto.commercialRegistration);
+    const existingCr = await this.supplierRepo.findByCommercialRegistration(
+      dto.commercialRegistration,
+    );
     if (existingCr) {
       throw new Error('Commercial Registration number is already registered');
     }

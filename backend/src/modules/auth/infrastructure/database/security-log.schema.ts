@@ -1,7 +1,7 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { baseSchemaOptions } from '@database/mongo/base.schema.js';
 
-export interface ISecurityLogDocument extends Document {
+export interface ISecurityLogDocument {
   _id: string;
   userId?: string;
   action: string;
@@ -11,7 +11,8 @@ export interface ISecurityLogDocument extends Document {
   browser?: string;
   country?: string;
   metadata?: Record<string, any>;
-  createdAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const securityLogSchema = new Schema<ISecurityLogDocument>(
@@ -29,4 +30,8 @@ const securityLogSchema = new Schema<ISecurityLogDocument>(
   baseSchemaOptions,
 );
 
-export const SecurityLogModel = model<ISecurityLogDocument>('SecurityLog', securityLogSchema, 'security_logs');
+export const SecurityLogModel = model<ISecurityLogDocument>(
+  'SecurityLog',
+  securityLogSchema,
+  'security_logs',
+);

@@ -30,7 +30,10 @@ import { RegisterSupplierUseCase } from '../../application/usecases/register-sup
 import { LoginUseCase } from '../../application/usecases/login.usecase.js';
 import { LogoutUseCase } from '../../application/usecases/logout.usecase.js';
 import { RefreshTokenUseCase } from '../../application/usecases/refresh-token.usecase.js';
-import { ForgotPasswordUseCase, ResetPasswordUseCase } from '../../application/usecases/forgot-password.usecase.js';
+import {
+  ForgotPasswordUseCase,
+  ResetPasswordUseCase,
+} from '../../application/usecases/forgot-password.usecase.js';
 import { ChangePasswordUseCase } from '../../application/usecases/change-password.usecase.js';
 import { VerifyEmailPhoneUseCase } from '../../application/usecases/verify-email-phone.usecase.js';
 import { SessionManagementUseCase } from '../../application/usecases/session-management.usecase.js';
@@ -55,18 +58,65 @@ const otpRepo = new OtpRepository();
 const securityLogRepo = new SecurityLogRepository();
 
 // Instantiate Use Cases
-const registerFactoryUseCase = new RegisterFactoryUseCase(userRepo, factoryRepo, walletRepo, verificationRepo, securityLogRepo);
-const registerSupplierUseCase = new RegisterSupplierUseCase(userRepo, supplierRepo, walletRepo, verificationRepo, securityLogRepo);
-const loginUseCase = new LoginUseCase(userRepo, factoryRepo, supplierRepo, walletRepo, sessionRepo, refreshTokenRepo, securityLogRepo, jwtSecret);
+const registerFactoryUseCase = new RegisterFactoryUseCase(
+  userRepo,
+  factoryRepo,
+  walletRepo,
+  verificationRepo,
+  securityLogRepo,
+);
+const registerSupplierUseCase = new RegisterSupplierUseCase(
+  userRepo,
+  supplierRepo,
+  walletRepo,
+  verificationRepo,
+  securityLogRepo,
+);
+const loginUseCase = new LoginUseCase(
+  userRepo,
+  factoryRepo,
+  supplierRepo,
+  walletRepo,
+  sessionRepo,
+  refreshTokenRepo,
+  securityLogRepo,
+  jwtSecret,
+);
 const logoutUseCase = new LogoutUseCase(sessionRepo, refreshTokenRepo, securityLogRepo);
-const refreshTokenUseCase = new RefreshTokenUseCase(userRepo, sessionRepo, refreshTokenRepo, securityLogRepo, jwtSecret);
+const refreshTokenUseCase = new RefreshTokenUseCase(
+  userRepo,
+  sessionRepo,
+  refreshTokenRepo,
+  securityLogRepo,
+  jwtSecret,
+);
 const forgotPasswordUseCase = new ForgotPasswordUseCase(userRepo, otpRepo, securityLogRepo);
 const resetPasswordUseCase = new ResetPasswordUseCase(userRepo, otpRepo, securityLogRepo);
-const changePasswordUseCase = new ChangePasswordUseCase(userRepo, sessionRepo, refreshTokenRepo, securityLogRepo);
+const changePasswordUseCase = new ChangePasswordUseCase(
+  userRepo,
+  sessionRepo,
+  refreshTokenRepo,
+  securityLogRepo,
+);
 const verifyEmailPhoneUseCase = new VerifyEmailPhoneUseCase(userRepo, otpRepo, securityLogRepo);
-const sessionManagementUseCase = new SessionManagementUseCase(sessionRepo, refreshTokenRepo, securityLogRepo);
-const accountLifecycleUseCase = new AccountLifecycleUseCase(userRepo, sessionRepo, refreshTokenRepo, securityLogRepo);
-const supplierVerificationUseCase = new SupplierVerificationUseCase(verificationRepo, supplierRepo, factoryRepo, userRepo, securityLogRepo);
+const sessionManagementUseCase = new SessionManagementUseCase(
+  sessionRepo,
+  refreshTokenRepo,
+  securityLogRepo,
+);
+const accountLifecycleUseCase = new AccountLifecycleUseCase(
+  userRepo,
+  sessionRepo,
+  refreshTokenRepo,
+  securityLogRepo,
+);
+const supplierVerificationUseCase = new SupplierVerificationUseCase(
+  verificationRepo,
+  supplierRepo,
+  factoryRepo,
+  userRepo,
+  securityLogRepo,
+);
 
 // Instantiate Controllers
 const authController = new EnterpriseAuthController(
@@ -93,11 +143,23 @@ const verificationController = new VerificationController(supplierVerificationUs
 const router = Router();
 
 // Public Routes
-router.post('/register/factory', validateRequest(registerFactorySchema), authController.registerFactory);
-router.post('/register/supplier', validateRequest(registerSupplierSchema), authController.registerSupplier);
+router.post(
+  '/register/factory',
+  validateRequest(registerFactorySchema),
+  authController.registerFactory,
+);
+router.post(
+  '/register/supplier',
+  validateRequest(registerSupplierSchema),
+  authController.registerSupplier,
+);
 router.post('/login', validateRequest(loginSchema), authController.login);
 router.post('/refresh', validateRequest(refreshTokenSchema), authController.refreshToken);
-router.post('/forgot-password', validateRequest(forgotPasswordSchema), authController.forgotPassword);
+router.post(
+  '/forgot-password',
+  validateRequest(forgotPasswordSchema),
+  authController.forgotPassword,
+);
 router.post('/reset-password', validateRequest(resetPasswordSchema), authController.resetPassword);
 router.post('/resend-otp', authController.resendOtp);
 
@@ -105,7 +167,11 @@ router.post('/resend-otp', authController.resendOtp);
 router.use(authenticateMiddleware);
 router.get('/me', authController.getMe);
 router.post('/logout', authController.logout);
-router.post('/change-password', validateRequest(changePasswordSchema), authController.changePassword);
+router.post(
+  '/change-password',
+  validateRequest(changePasswordSchema),
+  authController.changePassword,
+);
 router.post('/verify-phone', authController.verifyPhone);
 router.post('/verify-email', authController.verifyEmail);
 router.post('/deactivate', authController.deactivate);
@@ -120,7 +186,16 @@ router.delete('/sessions', authController.revokeAllSessions);
 router.get('/security-logs', authController.getSecurityLogs);
 
 // Admin & Support Verification Management Routes
-router.get('/verification/requests', requireRoles('admin', 'support', 'auditor'), verificationController.getPendingRequests);
-router.patch('/verification/:requestId', requireRoles('admin', 'support'), validateRequest(updateVerificationStatusSchema), verificationController.updateStatus);
+router.get(
+  '/verification/requests',
+  requireRoles('admin', 'support', 'auditor'),
+  verificationController.getPendingRequests,
+);
+router.patch(
+  '/verification/:requestId',
+  requireRoles('admin', 'support'),
+  validateRequest(updateVerificationStatusSchema),
+  verificationController.updateStatus,
+);
 
 export const enterpriseAuthRouter = router;

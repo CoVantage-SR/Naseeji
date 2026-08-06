@@ -10,7 +10,12 @@ export class LogoutUseCase {
     private securityLogRepo: SecurityLogRepository,
   ) {}
 
-  public async execute(userId: string, refreshToken?: string, ipAddress: string = '127.0.0.1', userAgent: string = 'Unknown') {
+  public async execute(
+    userId: string,
+    refreshToken?: string,
+    ipAddress: string = '127.0.0.1',
+    userAgent: string = 'Unknown',
+  ) {
     if (refreshToken) {
       const tokenHash = crypto.createHash('sha256').update(refreshToken).digest('hex');
       const tokenDoc = await this.refreshTokenRepo.findByHash(tokenHash);
@@ -31,7 +36,11 @@ export class LogoutUseCase {
     return { success: true, message: 'Logged out successfully' };
   }
 
-  public async executeLogoutAll(userId: string, ipAddress: string = '127.0.0.1', userAgent: string = 'Unknown') {
+  public async executeLogoutAll(
+    userId: string,
+    ipAddress: string = '127.0.0.1',
+    userAgent: string = 'Unknown',
+  ) {
     await this.sessionRepo.revokeAllUserSessions(userId);
     await this.refreshTokenRepo.revokeAllForUser(userId);
 

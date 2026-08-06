@@ -1,7 +1,7 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { baseSchemaOptions } from '@database/mongo/base.schema.js';
 
-export interface ISupplierDocument extends Document {
+export interface ISupplierDocument {
   _id: string;
   userId: string;
   companyName: string;
@@ -16,8 +16,8 @@ export interface ISupplierDocument extends Document {
   verificationStatus: 'pending' | 'verified' | 'rejected' | 'need_more_documents';
   verificationNotes?: string;
   subscriptionStatus: 'active' | 'inactive' | 'suspended' | 'trial';
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const supplierSchema = new Schema<ISupplierDocument>(

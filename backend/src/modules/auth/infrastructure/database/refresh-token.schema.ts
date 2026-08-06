@@ -1,17 +1,17 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { baseSchemaOptions } from '@database/mongo/base.schema.js';
 
-export interface IRefreshTokenDocument extends Document {
+export interface IRefreshTokenDocument {
   _id: string;
   userId: string;
   sessionId: string;
   tokenHash: string;
-  familyId: string; // for detecting reuse attack & revoking entire token family
+  familyId: string;
   isUsed: boolean;
   isRevoked: boolean;
   expiresAt: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const refreshTokenSchema = new Schema<IRefreshTokenDocument>(
@@ -28,4 +28,8 @@ const refreshTokenSchema = new Schema<IRefreshTokenDocument>(
   baseSchemaOptions,
 );
 
-export const RefreshTokenModel = model<IRefreshTokenDocument>('RefreshToken', refreshTokenSchema, 'refresh_tokens');
+export const RefreshTokenModel = model<IRefreshTokenDocument>(
+  'RefreshToken',
+  refreshTokenSchema,
+  'refresh_tokens',
+);

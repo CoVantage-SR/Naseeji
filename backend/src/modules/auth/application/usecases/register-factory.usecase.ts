@@ -44,7 +44,9 @@ export class RegisterFactoryUseCase {
     }
 
     // 2. Check duplicate CR or Tax Number
-    const existingCr = await this.factoryRepo.findByCommercialRegistration(dto.commercialRegistration);
+    const existingCr = await this.factoryRepo.findByCommercialRegistration(
+      dto.commercialRegistration,
+    );
     if (existingCr) {
       throw new Error('Commercial Registration number is already registered');
     }

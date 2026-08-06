@@ -1,14 +1,14 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { baseSchemaOptions } from '@database/mongo/base.schema.js';
 
-export interface IWalletDocument extends Document {
+export interface IWalletDocument {
   _id: string;
   userId: string;
   balance: number;
   pointsBalance: number;
   currency: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const walletSchema = new Schema<IWalletDocument>(

@@ -1,7 +1,7 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { baseSchemaOptions } from '@database/mongo/base.schema.js';
 
-export interface ISessionDocument extends Document {
+export interface ISessionDocument {
   _id: string;
   userId: string;
   refreshTokenHash: string;
@@ -17,8 +17,8 @@ export interface ISessionDocument extends Document {
   isRevoked: boolean;
   expiresAt: Date;
   lastActiveAt: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const sessionSchema = new Schema<ISessionDocument>(

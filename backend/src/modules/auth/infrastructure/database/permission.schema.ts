@@ -1,13 +1,13 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { baseSchemaOptions } from '@database/mongo/base.schema.js';
 
-export interface IPermissionDocument extends Document {
+export interface IPermissionDocument {
   _id: string;
-  key: string; // e.g. 'auth:login', 'supplier:verify'
+  key: string;
   description: string;
   module: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const permissionSchema = new Schema<IPermissionDocument>(
@@ -20,4 +20,8 @@ const permissionSchema = new Schema<IPermissionDocument>(
   baseSchemaOptions,
 );
 
-export const PermissionModel = model<IPermissionDocument>('Permission', permissionSchema, 'permissions');
+export const PermissionModel = model<IPermissionDocument>(
+  'Permission',
+  permissionSchema,
+  'permissions',
+);

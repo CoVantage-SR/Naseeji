@@ -1,17 +1,17 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { baseSchemaOptions } from '@database/mongo/base.schema.js';
 
-export interface IOtpDocument extends Document {
+export interface IOtpDocument {
   _id: string;
   userId?: string;
-  target: string; // phone number or email address
+  target: string;
   type: 'phone_verification' | 'email_verification' | 'password_reset' | 'login_2fa';
   codeHash: string;
   expiresAt: Date;
   isUsed: boolean;
   attempts: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const otpSchema = new Schema<IOtpDocument>(

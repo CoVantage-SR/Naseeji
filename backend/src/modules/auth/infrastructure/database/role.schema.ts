@@ -1,13 +1,13 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { baseSchemaOptions } from '@database/mongo/base.schema.js';
 
-export interface IRoleDocument extends Document {
+export interface IRoleDocument {
   _id: string;
-  name: string; // 'factory' | 'supplier' | 'admin' | 'support' | 'auditor'
+  name: string;
   description: string;
-  permissions: string[]; // array of permission keys e.g. ['factory:read', 'factory:write']
-  createdAt: Date;
-  updatedAt: Date;
+  permissions: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const roleSchema = new Schema<IRoleDocument>(

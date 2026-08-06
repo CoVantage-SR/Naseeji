@@ -1,4 +1,4 @@
-export type SecurityAction = 
+export type SecurityAction =
   | 'login_success'
   | 'login_failure'
   | 'logout'
@@ -34,16 +34,36 @@ export class SecurityLog {
     this.props = props;
   }
 
-  public get id(): string { return this.props.id; }
-  public get userId(): string | undefined { return this.props.userId; }
-  public get action(): SecurityAction { return this.props.action; }
-  public get ipAddress(): string { return this.props.ipAddress; }
-  public get userAgent(): string { return this.props.userAgent; }
-  public get device(): string | undefined { return this.props.device; }
-  public get browser(): string | undefined { return this.props.browser; }
-  public get country(): string | undefined { return this.props.country; }
-  public get metadata(): Record<string, any> | undefined { return this.props.metadata; }
-  public get createdAt(): Date { return this.props.createdAt; }
+  public get id(): string {
+    return this.props.id;
+  }
+  public get userId(): string | undefined {
+    return this.props.userId;
+  }
+  public get action(): SecurityAction {
+    return this.props.action;
+  }
+  public get ipAddress(): string {
+    return this.props.ipAddress;
+  }
+  public get userAgent(): string {
+    return this.props.userAgent;
+  }
+  public get device(): string | undefined {
+    return this.props.device;
+  }
+  public get browser(): string | undefined {
+    return this.props.browser;
+  }
+  public get country(): string | undefined {
+    return this.props.country;
+  }
+  public get metadata(): Record<string, any> | undefined {
+    return this.props.metadata;
+  }
+  public get createdAt(): Date {
+    return this.props.createdAt;
+  }
 
   public toJSON() {
     return { ...this.props };

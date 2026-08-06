@@ -1,10 +1,10 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { baseSchemaOptions } from '@database/mongo/base.schema.js';
 
-export interface IVerificationRequestDocument extends Document {
+export interface IVerificationRequestDocument {
   _id: string;
   userId: string;
-  targetId: string; // factoryId or supplierId
+  targetId: string;
   entityType: 'factory' | 'supplier';
   status: 'pending' | 'verified' | 'rejected' | 'need_more_documents';
   commercialRegistration: string;
@@ -13,8 +13,8 @@ export interface IVerificationRequestDocument extends Document {
   verificationNotes?: string;
   reviewedBy?: string;
   reviewedAt?: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const verificationRequestSchema = new Schema<IVerificationRequestDocument>(

@@ -17,8 +17,13 @@ export class UserRepository {
     return await UserModel.findOne({ phone, deletedAt: null });
   }
 
-  public async update(id: string, updateData: Partial<IUserDocument>): Promise<IUserDocument | null> {
-    return await UserModel.findOneAndUpdate({ _id: id, deletedAt: null }, updateData, { new: true });
+  public async update(
+    id: string,
+    updateData: Partial<IUserDocument>,
+  ): Promise<IUserDocument | null> {
+    return await UserModel.findOneAndUpdate({ _id: id, deletedAt: null }, updateData, {
+      new: true,
+    });
   }
 
   public async softDelete(id: string): Promise<boolean> {

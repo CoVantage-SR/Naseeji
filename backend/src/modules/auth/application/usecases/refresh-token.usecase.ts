@@ -40,7 +40,10 @@ export class RefreshTokenUseCase {
         action: 'token_reuse_detected',
         ipAddress: dto.ipAddress,
         userAgent: dto.userAgent,
-        metadata: { familyId: existingToken.familyId, warning: 'Revoked all session tokens due to reuse attempt' },
+        metadata: {
+          familyId: existingToken.familyId,
+          warning: 'Revoked all session tokens due to reuse attempt',
+        },
       });
 
       throw new Error('Refresh token security violation. All sessions have been revoked.');
@@ -67,7 +70,10 @@ export class RefreshTokenUseCase {
     );
 
     const newRefreshTokenRaw = crypto.randomBytes(40).toString('hex');
-    const newRefreshTokenHash = crypto.createHash('sha256').update(newRefreshTokenRaw).digest('hex');
+    const newRefreshTokenHash = crypto
+      .createHash('sha256')
+      .update(newRefreshTokenRaw)
+      .digest('hex');
 
     // Create New Refresh Token under SAME Family ID
     await this.refreshTokenRepo.create({

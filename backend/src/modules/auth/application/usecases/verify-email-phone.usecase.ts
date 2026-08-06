@@ -11,7 +11,13 @@ export class VerifyEmailPhoneUseCase {
     private securityLogRepo: SecurityLogRepository,
   ) {}
 
-  public async verifyPhone(userId: string, phone: string, otpCode: string, ip: string, userAgent: string) {
+  public async verifyPhone(
+    userId: string,
+    phone: string,
+    otpCode: string,
+    ip: string,
+    userAgent: string,
+  ) {
     const validOtp = await this.otpRepo.findValidOtp(phone, 'phone_verification');
     if (!validOtp) {
       throw new Error('Invalid or expired OTP');
@@ -38,7 +44,13 @@ export class VerifyEmailPhoneUseCase {
     return { success: true, message: 'Phone verified successfully' };
   }
 
-  public async verifyEmail(userId: string, email: string, otpCode: string, ip: string, userAgent: string) {
+  public async verifyEmail(
+    userId: string,
+    email: string,
+    otpCode: string,
+    ip: string,
+    userAgent: string,
+  ) {
     const validOtp = await this.otpRepo.findValidOtp(email, 'email_verification');
     if (!validOtp) {
       throw new Error('Invalid or expired OTP');
@@ -65,7 +77,12 @@ export class VerifyEmailPhoneUseCase {
     return { success: true, message: 'Email verified successfully' };
   }
 
-  public async resendOtp(target: string, type: 'phone_verification' | 'email_verification' | 'password_reset', ip: string, userAgent: string) {
+  public async resendOtp(
+    target: string,
+    type: 'phone_verification' | 'email_verification' | 'password_reset',
+    ip: string,
+    userAgent: string,
+  ) {
     const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
     const codeHash = await bcrypt.hash(otpCode, 10);
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000);

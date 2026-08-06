@@ -91,8 +91,8 @@ export class ResetPasswordUseCase {
     const user = validOtp.userId
       ? await this.userRepo.findById(validOtp.userId)
       : dto.target.includes('@')
-      ? await this.userRepo.findByEmail(dto.target)
-      : await this.userRepo.findByPhone(dto.target);
+        ? await this.userRepo.findByEmail(dto.target)
+        : await this.userRepo.findByPhone(dto.target);
 
     if (!user) {
       throw new Error('User not found');

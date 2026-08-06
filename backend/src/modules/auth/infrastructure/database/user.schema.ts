@@ -1,10 +1,10 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { baseSchemaOptions } from '@database/mongo/base.schema.js';
 
 export type UserRoleType = 'factory' | 'supplier' | 'admin' | 'support' | 'auditor';
 export type UserStatusType = 'active' | 'pending' | 'deactivated' | 'deleted' | 'suspended';
 
-export interface IUserDocument extends Document {
+export interface IUserDocument {
   _id: string;
   phone: string;
   email: string;
@@ -16,8 +16,8 @@ export interface IUserDocument extends Document {
   factoryId?: string;
   supplierId?: string;
   walletId?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
   deletedAt?: Date;
 }
 
@@ -27,8 +27,18 @@ const userSchema = new Schema<IUserDocument>(
     phone: { type: String, required: true, unique: true, index: true },
     email: { type: String, required: true, unique: true, index: true, lowercase: true, trim: true },
     passwordHash: { type: String, required: true },
-    role: { type: String, enum: ['factory', 'supplier', 'admin', 'support', 'auditor'], required: true, index: true },
-    status: { type: String, enum: ['active', 'pending', 'deactivated', 'deleted', 'suspended'], default: 'pending', index: true },
+    role: {
+      type: String,
+      enum: ['factory', 'supplier', 'admin', 'support', 'auditor'],
+      required: true,
+      index: true,
+    },
+    status: {
+      type: String,
+      enum: ['active', 'pending', 'deactivated', 'deleted', 'suspended'],
+      default: 'pending',
+      index: true,
+    },
     isEmailVerified: { type: Boolean, default: false },
     isPhoneVerified: { type: Boolean, default: false },
     factoryId: { type: String, ref: 'Factory', index: true },

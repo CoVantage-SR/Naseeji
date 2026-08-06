@@ -14,17 +14,26 @@ export class RefreshTokenRepository {
   }
 
   public async revokeFamily(familyId: string): Promise<number> {
-    const res = await RefreshTokenModel.updateMany({ familyId, isRevoked: false }, { isRevoked: true });
+    const res = await RefreshTokenModel.updateMany(
+      { familyId, isRevoked: false },
+      { isRevoked: true },
+    );
     return res.modifiedCount;
   }
 
   public async revokeAllForSession(sessionId: string): Promise<number> {
-    const res = await RefreshTokenModel.updateMany({ sessionId, isRevoked: false }, { isRevoked: true });
+    const res = await RefreshTokenModel.updateMany(
+      { sessionId, isRevoked: false },
+      { isRevoked: true },
+    );
     return res.modifiedCount;
   }
 
   public async revokeAllForUser(userId: string): Promise<number> {
-    const res = await RefreshTokenModel.updateMany({ userId, isRevoked: false }, { isRevoked: true });
+    const res = await RefreshTokenModel.updateMany(
+      { userId, isRevoked: false },
+      { isRevoked: true },
+    );
     return res.modifiedCount;
   }
 }

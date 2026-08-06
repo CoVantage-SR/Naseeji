@@ -1,7 +1,12 @@
-import { VerificationRequestModel, IVerificationRequestDocument } from '../database/verification-request.schema.js';
+import {
+  VerificationRequestModel,
+  IVerificationRequestDocument,
+} from '../database/verification-request.schema.js';
 
 export class VerificationRequestRepository {
-  public async create(data: Partial<IVerificationRequestDocument>): Promise<IVerificationRequestDocument> {
+  public async create(
+    data: Partial<IVerificationRequestDocument>,
+  ): Promise<IVerificationRequestDocument> {
     return await VerificationRequestModel.create(data);
   }
 

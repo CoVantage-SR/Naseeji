@@ -1,7 +1,7 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { baseSchemaOptions } from '@database/mongo/base.schema.js';
 
-export interface IFactoryDocument extends Document {
+export interface IFactoryDocument {
   _id: string;
   userId: string;
   companyName: string;
@@ -14,8 +14,8 @@ export interface IFactoryDocument extends Document {
   logoUrl?: string;
   verificationStatus: 'pending' | 'verified' | 'rejected' | 'need_more_documents';
   verificationNotes?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 const factorySchema = new Schema<IFactoryDocument>(
