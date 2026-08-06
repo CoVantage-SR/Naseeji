@@ -1,9 +1,4 @@
 import 'package:dio/dio.dart';
-import '../models/auth_tokens_model.dart';
-import '../models/user_model.dart';
-import '../models/factory_profile_model.dart';
-import '../models/supplier_profile_model.dart';
-import '../models/wallet_model.dart';
 import 'token_storage_service.dart';
 
 class AuthRemoteDataSource {
@@ -14,7 +9,7 @@ class AuthRemoteDataSource {
   AuthRemoteDataSource({
     Dio? dio,
     required TokenStorageService tokenStorage,
-    String baseUrl = 'http://localhost:5000/api/v1',
+    String baseUrl = 'http://10.0.2.2:5000/api/v1', // Android Emulator default
   })  : _tokenStorage = tokenStorage,
         _baseUrl = baseUrl,
         _dio = dio ?? Dio() {
@@ -82,6 +77,44 @@ class AuthRemoteDataSource {
     return response.data;
   }
 
+  Future<Map<String, dynamic>> loginGoogle({
+    required String idToken,
+    String accountType = 'factory',
+  }) async {
+    final response = await _dio.post('/auth/google', data: {
+      'idToken': idToken,
+      'accountType': accountType,
+      'deviceId': 'flutter-android-id-01',
+      'deviceName': 'Flutter Mobile App',
+      'deviceType': 'android',
+    });
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> sendWhatsAppOtp({
+    required String phone,
+    String type = 'phone_verification',
+  }) async {
+    final response = await _dio.post('/auth/send-otp', data: {
+      'phone': phone,
+      'type': type,
+    });
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> verifyWhatsAppOtp({
+    required String phone,
+    required String otpCode,
+    String type = 'phone_verification',
+  }) async {
+    final response = await _dio.post('/auth/verify-otp', data: {
+      'phone': phone,
+      'otpCode': otpCode,
+      'type': type,
+    });
+    return response.data;
+  }
+
   Future<Map<String, dynamic>> registerFactory(Map<String, dynamic> data) async {
     final response = await _dio.post('/auth/register/factory', data: data);
     return response.data;
@@ -97,10 +130,28 @@ class AuthRemoteDataSource {
     return response.data;
   }
 
+  Future<Map<String, dynamic>> getUserDevices() async {
+    final response = await _dio.get('/auth/devices');
+    return response.data;
+  }
+
+  Future<Map<String, dynamic>> deleteDevice(String deviceId) async {
+    final response = await _dio.delete('/auth/device/$deviceId');
+    return response.data;
+  }
+
   Future<void> logout() async {
     final refreshToken = await _tokenStorage.getRefreshToken();
     try {
       await _dio.post('/auth/logout', data: {'refreshToken': refreshToken});
+    } finally {
+      await _tokenStorage.clearAll();
+    }
+  }
+
+  Future<void> logoutAll() async {
+    try {
+      await _dio.post('/auth/logout-all');
     } finally {
       await _tokenStorage.clearAll();
     }

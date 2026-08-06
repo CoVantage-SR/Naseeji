@@ -12,6 +12,9 @@ import { ChangePasswordUseCase } from '../../application/usecases/change-passwor
 import { VerifyEmailPhoneUseCase } from '../../application/usecases/verify-email-phone.usecase.js';
 import { SessionManagementUseCase } from '../../application/usecases/session-management.usecase.js';
 import { AccountLifecycleUseCase } from '../../application/usecases/account-lifecycle.usecase.js';
+import { GoogleLoginUseCase } from '../../application/usecases/google-login.usecase.js';
+import { DeviceManagementUseCase } from '../../application/usecases/device-management.usecase.js';
+import { WhatsAppOtpProvider } from '../../infrastructure/providers/whatsapp-otp.provider.js';
 import { UserRepository } from '../../infrastructure/repositories/user.repository.js';
 import { FactoryRepository } from '../../infrastructure/repositories/factory.repository.js';
 import { SupplierRepository } from '../../infrastructure/repositories/supplier.repository.js';
@@ -38,6 +41,8 @@ export class EnterpriseAuthController {
     private verifyEmailPhoneUseCase: VerifyEmailPhoneUseCase,
     private sessionManagementUseCase: SessionManagementUseCase,
     private accountLifecycleUseCase: AccountLifecycleUseCase,
+    private googleLoginUseCase: GoogleLoginUseCase,
+    private deviceManagementUseCase: DeviceManagementUseCase,
     private userRepo: UserRepository,
     private factoryRepo: FactoryRepository,
     private supplierRepo: SupplierRepository,
@@ -86,6 +91,67 @@ export class EnterpriseAuthController {
       res.status(200).json({ success: true, data: result });
     } catch (err: unknown) {
       res.status(401).json({ success: false, message: (err as Error).message });
+    }
+  };
+
+  public loginGoogle = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const result = await this.googleLoginUseCase.execute({
+        idToken: req.body.idToken,
+        accountType: req.body.accountType,
+        deviceInfo: {
+          userId: '',
+          deviceId: req.body.deviceId || 'device-id-unknown',
+          deviceName: req.body.deviceName || 'Mobile Device',
+          deviceType: req.body.deviceType || 'android',
+          osVersion: req.body.osVersion || '14.0',
+          appVersion: req.body.appVersion || '1.0.0',
+          ipAddress: req.ip || '127.0.0.1',
+          country: req.body.country,
+          city: req.body.city,
+          pushToken: req.body.pushToken,
+          firebaseInstallationId: req.body.firebaseInstallationId,
+        },
+      });
+      res.status(200).json({ success: true, data: result });
+    } catch (err: unknown) {
+      res.status(401).json({ success: false, message: (err as Error).message });
+    }
+  };
+
+  public sendWhatsAppOtp = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { phone, type } = req.body;
+      const result = await WhatsAppOtpProvider.getInstance().generateAndSendOtp({
+        phone,
+        type: type || 'phone_verification',
+      });
+      res.status(200).json(result);
+    } catch (err: unknown) {
+      res.status(400).json({ success: false, message: (err as Error).message });
+    }
+  };
+
+  public verifyWhatsAppOtp = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { phone, type, otpCode } = req.body;
+      await WhatsAppOtpProvider.getInstance().verifyOtp(
+        phone,
+        type || 'phone_verification',
+        otpCode,
+      );
+
+      const userId = this.extractUserId(req);
+      if (userId) {
+        await this.userRepo.update(userId, { isPhoneVerified: true });
+      }
+
+      res.status(200).json({
+        success: true,
+        message: 'WhatsApp OTP code verified successfully.',
+      });
+    } catch (err: unknown) {
+      res.status(400).json({ success: false, message: (err as Error).message });
     }
   };
 
@@ -248,6 +314,32 @@ export class EnterpriseAuthController {
     }
   };
 
+  public getDevices = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const userId = this.extractUserId(req);
+      const devices = await this.deviceManagementUseCase.getUserDevices(userId);
+      res.status(200).json({ success: true, data: devices });
+    } catch (err: unknown) {
+      res.status(400).json({ success: false, message: (err as Error).message });
+    }
+  };
+
+  public deleteDevice = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const userId = this.extractUserId(req);
+      const deviceId = req.params.id ?? '';
+      const result = await this.deviceManagementUseCase.removeDevice(
+        userId,
+        deviceId,
+        req.ip || '127.0.0.1',
+        req.headers['user-agent'] || 'Unknown',
+      );
+      res.status(200).json(result);
+    } catch (err: unknown) {
+      res.status(400).json({ success: false, message: (err as Error).message });
+    }
+  };
+
   public revokeSession = async (req: Request, res: Response): Promise<void> => {
     try {
       const userId = this.extractUserId(req);
@@ -291,38 +383,8 @@ export class EnterpriseAuthController {
   public getMe = async (req: Request, res: Response): Promise<void> => {
     try {
       const userId = this.extractUserId(req);
-      const user = await this.userRepo.findById(userId);
-      if (!user) {
-        res.status(404).json({ success: false, message: 'User not found' });
-        return;
-      }
-
-      let profile: unknown = null;
-      if (user.role === 'factory') {
-        profile = await this.factoryRepo.findByUserId(userId);
-      } else if (user.role === 'supplier') {
-        profile = await this.supplierRepo.findByUserId(userId);
-      }
-
-      const wallet = await this.walletRepo.findByUserId(userId);
-
-      res.status(200).json({
-        success: true,
-        data: {
-          user: {
-            id: user._id,
-            phone: user.phone,
-            email: user.email,
-            role: user.role,
-            status: user.status,
-            isEmailVerified: user.isEmailVerified,
-            isPhoneVerified: user.isPhoneVerified,
-            createdAt: user.createdAt,
-          },
-          profile,
-          wallet,
-        },
-      });
+      const data = await this.deviceManagementUseCase.getMe(userId);
+      res.status(200).json({ success: true, data });
     } catch (err: unknown) {
       res.status(400).json({ success: false, message: (err as Error).message });
     }
