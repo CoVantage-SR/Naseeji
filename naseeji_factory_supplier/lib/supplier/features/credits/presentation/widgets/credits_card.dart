@@ -25,7 +25,6 @@ class CreditsCard extends ConsumerWidget {
       error: (err, _) => const SizedBox.shrink(),
       data: (credits) {
         final int balance = credits.creditsBalance;
-        final int freeProducts = credits.freeProductsRemaining;
         final double progress = (balance / 100).clamp(0.0, 1.0);
 
         return Container(
@@ -41,7 +40,6 @@ class CreditsCard extends ConsumerWidget {
           ),
           child: Material(
             color: isDark ? const Color(0xFF1E293B) : Colors.white,
-            borderRadius: BorderRadius.circular(16),
             clipBehavior: Clip.antiAlias,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
@@ -67,7 +65,7 @@ class CreditsCard extends ConsumerWidget {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Icon(
-                              Icons.stars_rounded,
+                              Icons.bolt_rounded,
                               color: colorScheme.primary,
                               size: 20,
                             ),
@@ -86,7 +84,7 @@ class CreditsCard extends ConsumerWidget {
                               ),
                               const SizedBox(height: 2),
                               Text(
-                                'باقة الترحيب المخصصة للموردين',
+                                'نظام رصيد النقاط بدون اشتراك شهري',
                                 style: TextStyle(
                                   fontSize: 11,
                                   color: isDark
@@ -100,7 +98,9 @@ class CreditsCard extends ConsumerWidget {
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 4),
+                          horizontal: 10,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.amber.withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(20),
@@ -109,7 +109,7 @@ class CreditsCard extends ConsumerWidget {
                           ),
                         ),
                         child: Text(
-                          '$balance رصيد متبقي',
+                          '$balance نقطة متبقية',
                           style: const TextStyle(
                             fontSize: 11.5,
                             fontWeight: FontWeight.bold,
@@ -143,22 +143,20 @@ class CreditsCard extends ConsumerWidget {
 
                   const SizedBox(height: 12),
 
-                  // Sub-info: Free Products & Premium Status
+                  // Sub-info
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
                           const Icon(
-                            Icons.inventory_2_outlined,
+                            Icons.check_circle_outline_rounded,
                             size: 14,
                             color: Colors.green,
                           ),
                           const SizedBox(width: 4),
                           Text(
-                            freeProducts > 0
-                                ? 'المنتجات المجانية: $freeProducts متبقية'
-                                : 'تُخصم 5 نقاط لكل منتج جديد',
+                            'المنتجات: 5 نقاط • الفيديو: 10 نقاط • التوثيق: 35 نقطة',
                             style: TextStyle(
                               fontSize: 11,
                               fontWeight: FontWeight.w600,
@@ -169,25 +167,6 @@ class CreditsCard extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      if (credits.isPremiumTrialActive)
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.star_rounded,
-                              size: 14,
-                              color: Colors.amber,
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              'بريميوم: ${credits.daysLeftInTrial} يوماً',
-                              style: const TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.amber,
-                              ),
-                            ),
-                          ],
-                        ),
                     ],
                   ),
 
@@ -198,7 +177,7 @@ class CreditsCard extends ConsumerWidget {
                     width: double.infinity,
                     height: 40,
                     child: ElevatedButton.icon(
-                      onPressed: () => context.push('/supplier/credits/buy'),
+                      onPressed: () => context.push('/supplier/buy-credits'),
                       icon: const Icon(Icons.add_shopping_cart_rounded, size: 16),
                       label: const Text('شراء رصيد نقاط (Buy Credits)'),
                       style: ElevatedButton.styleFrom(

@@ -188,7 +188,6 @@ class CreditsRepositoryImpl implements CreditsRepository {
     String supplierId,
     CreditPackage package,
   ) async {
-    final current = await getCredits(supplierId);
 
     final purchase = CreditPurchaseHistory(
       id: 'pur_${DateTime.now().millisecondsSinceEpoch}',
