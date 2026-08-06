@@ -38,13 +38,36 @@ class MockAuthRemoteDatasource implements AuthRemoteDatasource {
     required String phoneOrEmail,
     required String password,
   }) async {
-    await Future.delayed(const Duration(milliseconds: 600));
-    return const UserEntity(
-      id: 'USR-101',
-      name: 'أحمد محمود',
-      email: 'ahmed@naseeji.com',
-      phone: '01012345678',
-      role: UserRole.factory,
+    await Future.delayed(const Duration(milliseconds: 400));
+    final lower = phoneOrEmail.toLowerCase();
+    
+    // Check if supplier login
+    final isSupplier = lower.contains('supplier') ||
+        lower.contains('misr') ||
+        lower.contains('oriental') ||
+        lower.contains('mahalla') ||
+        lower.contains('cairo') ||
+        lower.contains('ahram') ||
+        lower.contains('alex') ||
+        lower.contains('sharkia') ||
+        lower.contains('international') ||
+        lower.startsWith('0101111') ||
+        lower.startsWith('0102222') ||
+        lower.startsWith('0103333') ||
+        lower.startsWith('0104444') ||
+        lower.startsWith('0105555') ||
+        lower.startsWith('0106666') ||
+        lower.startsWith('0107777') ||
+        lower.startsWith('0108888');
+
+    final role = isSupplier ? UserRole.supplier : UserRole.factory;
+
+    return UserEntity(
+      id: 'USR-${DateTime.now().millisecondsSinceEpoch}',
+      name: isSupplier ? 'مورد معتمد - منصة نسيجي' : 'مهندس / إبراهيم الششتاوي (مصنع النيل)',
+      email: phoneOrEmail.contains('@') ? phoneOrEmail : '$phoneOrEmail@naseeji.com',
+      phone: phoneOrEmail.contains('@') ? '01012345678' : phoneOrEmail,
+      role: role,
       mode: AccountMode.real,
       isVerified: true,
       hasCompletedRegistration: true,
