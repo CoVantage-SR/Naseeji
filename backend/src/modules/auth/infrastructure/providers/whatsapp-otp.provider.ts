@@ -1,17 +1,16 @@
 import bcrypt from 'bcrypt';
+import { IOtpProvider, SendOtpDto } from './otp-provider.interface.js';
 import { RedisService } from '../../../../infrastructure/redis/redis.service.js';
 import { WinstonLogger } from '../../../../core/logger/winston.logger.js';
 
-export interface SendWhatsAppOtpDto {
-  phone: string;
-  type: 'phone_verification' | 'password_reset' | 'login_2fa';
-}
-
-export class WhatsAppOtpProvider {
+export class WhatsAppOtpProvider implements IOtpProvider {
   private static instance: WhatsAppOtpProvider;
-  private logger = WinstonLogger.getInstance();
 
   private constructor() {}
+
+  private get logger(): WinstonLogger {
+    return WinstonLogger.getInstance();
+  }
 
   public static getInstance(): WhatsAppOtpProvider {
     if (!WhatsAppOtpProvider.instance) {
@@ -21,7 +20,7 @@ export class WhatsAppOtpProvider {
   }
 
   public async generateAndSendOtp(
-    dto: SendWhatsAppOtpDto,
+    dto: SendOtpDto,
   ): Promise<{ success: boolean; message: string; debugOtp?: string }> {
     const redisClient = RedisService.getInstance().getClient();
     const otpCode = Math.floor(100000 + Math.random() * 900000).toString();

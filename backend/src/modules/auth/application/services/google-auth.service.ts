@@ -9,7 +9,9 @@ export interface GooglePayload {
 }
 
 export class GoogleOAuthService {
-  private logger = WinstonLogger.getInstance();
+  private get logger(): WinstonLogger {
+    return WinstonLogger.getInstance();
+  }
 
   public async verifyIdToken(idToken: string): Promise<GooglePayload> {
     try {
