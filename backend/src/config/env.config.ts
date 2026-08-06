@@ -5,7 +5,7 @@ import path from 'path';
 dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 
 const envSchema = z.object({
-  NODE_ENV: z.enum(['development', 'testing', 'production']).default('development'),
+  NODE_ENV: z.enum(['development', 'testing', 'production', 'test']).default('development'),
   PORT: z.coerce.number().default(5000),
   API_PREFIX: z.string().default('/api/v1'),
   MONGODB_URI: z.string({

@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { validateRequest } from '../../../middleware/request-validator.middleware.js';
-import { authenticateMiddleware } from '../../../middleware/authenticate.middleware.js';
-import { requireRoles } from '../../../middleware/rbac.middleware.js';
+import { validateRequest } from '@middleware/request-validator.middleware.js';
+import { authenticateMiddleware } from '@middleware/authenticate.middleware.js';
+import { requireRoles } from '@middleware/rbac.middleware.js';
 import {
   registerFactorySchema,
   registerSupplierSchema,
