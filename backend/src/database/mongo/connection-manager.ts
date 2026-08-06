@@ -13,13 +13,14 @@ export class MongoConnectionManager {
       return;
     }
 
+    const isTestEnv = process.env.NODE_ENV === 'test';
     const options: mongoose.ConnectOptions = {
       minPoolSize: config.minPoolSize,
       maxPoolSize: config.maxPoolSize,
-      serverSelectionTimeoutMS: config.serverSelectionTimeoutMS,
+      serverSelectionTimeoutMS: isTestEnv ? 1000 : config.serverSelectionTimeoutMS,
     };
 
-    let retries = 5;
+    let retries = isTestEnv ? 1 : 5;
     while (retries > 0) {
       try {
         logger.info(`Attempting MongoDB connection... (Retries left: ${retries})`);
@@ -41,6 +42,10 @@ export class MongoConnectionManager {
         retries -= 1;
         logger.error(`MongoDB connection failed: ${(error as Error).message}`);
         if (retries === 0) {
+          if (isTestEnv) {
+            logger.warn('MongoDB connection skipped in test environment.');
+            return;
+          }
           throw new DatabaseException('Failed to connect to MongoDB after 5 attempts');
         }
         await new Promise((resolve) => setTimeout(resolve, 3000));

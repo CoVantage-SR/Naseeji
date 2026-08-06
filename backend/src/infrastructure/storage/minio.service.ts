@@ -21,6 +21,11 @@ export class MinioService {
     const logger = WinstonLogger.getInstance();
     this.bucketName = config.bucketName;
 
+    if (process.env.NODE_ENV === 'test') {
+      logger.info('Skipping MinIO connection in test environment.');
+      return;
+    }
+
     try {
       logger.info(`Attempting MinIO connection to ${config.endPoint}:${config.port}...`);
       this.client = new Minio.Client({

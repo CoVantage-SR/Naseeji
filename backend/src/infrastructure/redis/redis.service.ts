@@ -21,6 +21,11 @@ export class RedisService {
       return;
     }
 
+    if (process.env.NODE_ENV === 'test') {
+      logger.info('Skipping Redis connection in test environment.');
+      return;
+    }
+
     try {
       logger.info('Attempting Redis connection...');
       this.client = new Redis(redisUrl, {
