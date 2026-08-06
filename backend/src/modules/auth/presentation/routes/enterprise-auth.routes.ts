@@ -162,6 +162,8 @@ const authController = new EnterpriseAuthController(
   googleLoginUseCase,
   deviceManagementUseCase,
   userRepo,
+  factoryRepo,
+  supplierRepo,
   securityLogRepo,
 );
 
@@ -184,7 +186,11 @@ router.post('/login', validateRequest(loginSchema), authController.login);
 router.post('/google', authController.loginGoogle);
 router.post('/send-otp', authController.sendWhatsAppOtp);
 router.post('/verify-otp', authController.verifyWhatsAppOtp);
+
+// Refresh Token Route & Alias
 router.post('/refresh', validateRequest(refreshTokenSchema), authController.refreshToken);
+router.post('/refresh-token', validateRequest(refreshTokenSchema), authController.refreshToken);
+
 router.post(
   '/forgot-password',
   validateRequest(forgotPasswordSchema),
@@ -193,9 +199,11 @@ router.post(
 router.post('/reset-password', validateRequest(resetPasswordSchema), authController.resetPassword);
 router.post('/resend-otp', authController.resendOtp);
 
-// Authenticated User Routes
+// Authenticated User Routes & Aliases
 router.use(authenticateMiddleware);
 router.get('/me', authController.getMe);
+router.get('/profile', authController.getMe);
+router.patch('/profile', authController.updateProfile);
 router.post('/logout', authController.logout);
 router.post('/logout-all', authController.revokeAllSessions);
 router.post(

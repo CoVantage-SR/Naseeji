@@ -16,6 +16,8 @@ import { GoogleLoginUseCase } from '../../application/usecases/google-login.usec
 import { DeviceManagementUseCase } from '../../application/usecases/device-management.usecase.js';
 import { WhatsAppOtpProvider } from '../../infrastructure/providers/whatsapp-otp.provider.js';
 import { UserRepository } from '../../infrastructure/repositories/user.repository.js';
+import { FactoryRepository } from '../../infrastructure/repositories/factory.repository.js';
+import { SupplierRepository } from '../../infrastructure/repositories/supplier.repository.js';
 import { SecurityLogRepository } from '../../infrastructure/repositories/security-log.repository.js';
 
 interface RequestWithUser extends Request {
@@ -41,6 +43,8 @@ export class EnterpriseAuthController {
     private googleLoginUseCase: GoogleLoginUseCase,
     private deviceManagementUseCase: DeviceManagementUseCase,
     private userRepo: UserRepository,
+    private factoryRepo: FactoryRepository,
+    private supplierRepo: SupplierRepository,
     private securityLogRepo: SecurityLogRepository,
   ) {}
 
@@ -379,6 +383,28 @@ export class EnterpriseAuthController {
       const userId = this.extractUserId(req);
       const data = await this.deviceManagementUseCase.getMe(userId);
       res.status(200).json({ success: true, data });
+    } catch (err: unknown) {
+      res.status(400).json({ success: false, message: (err as Error).message });
+    }
+  };
+
+  public updateProfile = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const userId = this.extractUserId(req);
+      const user = await this.userRepo.findById(userId);
+      if (!user) {
+        res.status(404).json({ success: false, message: 'User not found' });
+        return;
+      }
+
+      let profile: unknown = null;
+      if (user.role === 'factory') {
+        profile = await this.factoryRepo.updateByUserId(userId, req.body);
+      } else if (user.role === 'supplier') {
+        profile = await this.supplierRepo.updateByUserId(userId, req.body);
+      }
+
+      res.status(200).json({ success: true, data: profile });
     } catch (err: unknown) {
       res.status(400).json({ success: false, message: (err as Error).message });
     }

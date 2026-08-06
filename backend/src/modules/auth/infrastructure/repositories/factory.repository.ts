@@ -21,6 +21,13 @@ export class FactoryRepository {
     return await FactoryModel.findOne({ taxNumber });
   }
 
+  public async updateByUserId(
+    userId: string,
+    data: Partial<IFactoryDocument>,
+  ): Promise<IFactoryDocument | null> {
+    return await FactoryModel.findOneAndUpdate({ userId }, data, { new: true });
+  }
+
   public async updateVerificationStatus(
     id: string,
     status: 'pending' | 'verified' | 'rejected' | 'need_more_documents',

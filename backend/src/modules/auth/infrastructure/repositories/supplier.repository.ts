@@ -21,6 +21,13 @@ export class SupplierRepository {
     return await SupplierModel.findOne({ taxNumber });
   }
 
+  public async updateByUserId(
+    userId: string,
+    data: Partial<ISupplierDocument>,
+  ): Promise<ISupplierDocument | null> {
+    return await SupplierModel.findOneAndUpdate({ userId }, data, { new: true });
+  }
+
   public async updateVerificationStatus(
     id: string,
     status: 'pending' | 'verified' | 'rejected' | 'need_more_documents',
