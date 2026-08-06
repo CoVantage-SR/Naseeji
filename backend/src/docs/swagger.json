@@ -1,0 +1,192 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "NASEEJI B2B Marketplace - Authentication & Identity API",
+    "version": "1.0.0",
+    "description": "Production-ready Enterprise Authentication, Identity, Verification, Wallet, RBAC, and Session Management API for NASEEJI Digital Textile Marketplace."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/api/v1",
+      "description": "Local Development Server"
+    },
+    {
+      "url": "https://api.naseeji.com/v1",
+      "description": "Production Server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "FactoryRegisterRequest": {
+        "type": "object",
+        "required": ["phone", "email", "password", "companyName", "factoryType", "governorate", "city", "address", "commercialRegistration", "taxNumber"],
+        "properties": {
+          "phone": { "type": "string", "example": "01012345678" },
+          "email": { "type": "string", "example": "factory@textile.com" },
+          "password": { "type": "string", "example": "Pass@1234" },
+          "companyName": { "type": "string", "example": "Al-Nour Weaving & Spinning Factory" },
+          "factoryType": { "type": "string", "example": "Weaving & Knitting" },
+          "governorate": { "type": "string", "example": "Gharbia" },
+          "city": { "type": "string", "example": "Mahalla" },
+          "address": { "type": "string", "example": "Industrial Zone Building 4" },
+          "commercialRegistration": { "type": "string", "example": "10098765" },
+          "taxNumber": { "type": "string", "example": "999888777" },
+          "logoUrl": { "type": "string", "example": "https://cdn.naseeji.com/logos/factory1.png" }
+        }
+      },
+      "SupplierRegisterRequest": {
+        "type": "object",
+        "required": ["phone", "email", "password", "companyName", "supplierCategory", "commercialRegistration", "taxNumber", "governorate", "address"],
+        "properties": {
+          "phone": { "type": "string", "example": "01198765432" },
+          "email": { "type": "string", "example": "supplier@textileyarns.com" },
+          "password": { "type": "string", "example": "Supp@1234" },
+          "companyName": { "type": "string", "example": "Egyptian Cotton & Yarns Ltd" },
+          "supplierCategory": { "type": "string", "example": "Raw Yarns & Dyes" },
+          "commercialRegistration": { "type": "string", "example": "20087654" },
+          "taxNumber": { "type": "string", "example": "888777666" },
+          "country": { "type": "string", "example": "Egypt" },
+          "governorate": { "type": "string", "example": "Cairo" },
+          "address": { "type": "string", "example": "10 El-Tahrir Sq" }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["identifier", "password"],
+        "properties": {
+          "identifier": { "type": "string", "example": "factory@textile.com" },
+          "password": { "type": "string", "example": "Pass@1234" },
+          "rememberMe": { "type": "boolean", "example": true }
+        }
+      },
+      "RefreshTokenRequest": {
+        "type": "object",
+        "required": ["refreshToken"],
+        "properties": {
+          "refreshToken": { "type": "string", "example": "7f8b9c..." }
+        }
+      },
+      "AuthResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean" },
+          "data": {
+            "type": "object",
+            "properties": {
+              "tokens": {
+                "type": "object",
+                "properties": {
+                  "accessToken": { "type": "string" },
+                  "refreshToken": { "type": "string" },
+                  "tokenType": { "type": "string", "example": "Bearer" },
+                  "expiresInSeconds": { "type": "number", "example": 900 }
+                }
+              },
+              "user": { "type": "object" },
+              "profile": { "type": "object" },
+              "wallet": { "type": "object" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/auth/register/factory": {
+      "post": {
+        "summary": "Register a new Factory user account",
+        "tags": ["Authentication"],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/FactoryRegisterRequest" } } }
+        },
+        "responses": {
+          "201": { "description": "Factory registered successfully", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AuthResponse" } } } },
+          "400": { "description": "Validation error or duplicate record" }
+        }
+      }
+    },
+    "/auth/register/supplier": {
+      "post": {
+        "summary": "Register a new Supplier user account",
+        "tags": ["Authentication"],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SupplierRegisterRequest" } } }
+        },
+        "responses": {
+          "201": { "description": "Supplier registered successfully" },
+          "400": { "description": "Validation error or duplicate record" }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Authenticate user (Factory, Supplier, Admin, Support, Auditor)",
+        "tags": ["Authentication"],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/LoginRequest" } } }
+        },
+        "responses": {
+          "200": { "description": "Logged in successfully", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AuthResponse" } } } },
+          "401": { "description": "Invalid credentials" }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "summary": "Rotate refresh token & issue new access token",
+        "tags": ["Authentication"],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/RefreshTokenRequest" } } }
+        },
+        "responses": {
+          "200": { "description": "Tokens refreshed" },
+          "401": { "description": "Invalid or revoked refresh token" }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "summary": "Get authenticated user profile and wallet info",
+        "tags": ["User Identity"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "User details retrieved" },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+    "/auth/sessions": {
+      "get": {
+        "summary": "Get active logged-in device sessions",
+        "tags": ["Session Management"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Active session list" } }
+      },
+      "delete": {
+        "summary": "Revoke all active device sessions",
+        "tags": ["Session Management"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "All sessions revoked" } }
+      }
+    },
+    "/admin/verification/requests": {
+      "get": {
+        "summary": "Get pending supplier & factory verification requests",
+        "tags": ["Admin Verification"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Pending requests" }, "403": { "description": "Forbidden - Requires Admin/Support role" } }
+      }
+    }
+  }
+}
