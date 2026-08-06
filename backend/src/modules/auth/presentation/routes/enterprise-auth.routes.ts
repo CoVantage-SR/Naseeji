@@ -162,9 +162,6 @@ const authController = new EnterpriseAuthController(
   googleLoginUseCase,
   deviceManagementUseCase,
   userRepo,
-  factoryRepo,
-  supplierRepo,
-  walletRepo,
   securityLogRepo,
 );
 

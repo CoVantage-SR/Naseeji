@@ -65,7 +65,9 @@ export class WhatsAppOtpProvider {
         );
         this.logger.info(`WhatsApp OTP message dispatched successfully to ${dto.phone}`);
       } catch (err) {
-        this.logger.error(`Failed to send WhatsApp message via Meta API: ${(err as Error).message}`);
+        this.logger.error(
+          `Failed to send WhatsApp message via Meta API: ${(err as Error).message}`,
+        );
       }
     }
 

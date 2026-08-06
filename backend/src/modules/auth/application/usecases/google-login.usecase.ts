@@ -6,7 +6,10 @@ import { UserRepository } from '../../infrastructure/repositories/user.repositor
 import { FactoryRepository } from '../../infrastructure/repositories/factory.repository.js';
 import { SupplierRepository } from '../../infrastructure/repositories/supplier.repository.js';
 import { WalletRepository } from '../../infrastructure/repositories/wallet.repository.js';
-import { DeviceRepository, RegisterDeviceDto } from '../../infrastructure/repositories/device.repository.js';
+import {
+  DeviceRepository,
+  RegisterDeviceDto,
+} from '../../infrastructure/repositories/device.repository.js';
 import { SessionRepository } from '../../infrastructure/repositories/session.repository.js';
 import { RefreshTokenRepository } from '../../infrastructure/repositories/refresh-token.repository.js';
 import { SecurityLogRepository } from '../../infrastructure/repositories/security-log.repository.js';
@@ -90,7 +93,7 @@ export class GoogleLoginUseCase {
         pointsBalance: 100,
       });
     } else {
-      role = (user.role === 'factory' || user.role === 'supplier') ? user.role : 'factory';
+      role = user.role === 'factory' || user.role === 'supplier' ? user.role : 'factory';
     }
 
     await this.deviceRepo.upsertDevice({

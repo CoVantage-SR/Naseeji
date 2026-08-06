@@ -31,7 +31,8 @@ export class DeviceRepository {
       existing.country = dto.country || existing.country;
       existing.city = dto.city || existing.city;
       existing.pushToken = dto.pushToken || existing.pushToken;
-      existing.firebaseInstallationId = dto.firebaseInstallationId || existing.firebaseInstallationId;
+      existing.firebaseInstallationId =
+        dto.firebaseInstallationId || existing.firebaseInstallationId;
       existing.lastSeenAt = new Date();
       await existing.save();
       return existing;
