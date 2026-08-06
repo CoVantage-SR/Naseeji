@@ -8,9 +8,7 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'testing', 'production', 'test']).default('development'),
   PORT: z.coerce.number().default(5000),
   API_PREFIX: z.string().default('/api/v1'),
-  MONGODB_URI: z
-    .string()
-    .default('mongodb://admin:admin123@mongodb:27017/naseeji?authSource=admin'),
+  MONGODB_URI: z.string().default('mongodb://127.0.0.1:27017/naseeji'),
   MONGODB_MIN_POOL_SIZE: z.coerce.number().default(5),
   MONGODB_MAX_POOL_SIZE: z.coerce.number().default(20),
   REDIS_URL: z.string().default('redis://:redis123@redis:6379'),
