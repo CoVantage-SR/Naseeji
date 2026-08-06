@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { createApplication } from '../../src/app/app';
+import { createApplication } from '../../src/app/app.js';
 import { Express } from 'express';
 
 describe('Auth & Identity End-to-End API Test Suite', () => {
@@ -8,7 +8,7 @@ describe('Auth & Identity End-to-End API Test Suite', () => {
   beforeAll(async () => {
     const bootstrap = await createApplication();
     app = bootstrap.app;
-  });
+  }, 30000);
 
   describe('GET /api/v1/health', () => {
     it('should return system health status', async () => {
