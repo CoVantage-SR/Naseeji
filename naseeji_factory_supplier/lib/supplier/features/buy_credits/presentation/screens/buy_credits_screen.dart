@@ -1,396 +1,357 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:naseeji_factory/supplier/features/credits/presentation/controllers/credits_controller.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/app_radius.dart';
+import '../../../../core/constants/app_spacing.dart';
+import '../../credits/domain/entities/credit_package.dart';
+import '../../credits/presentation/controllers/credit_manager.dart';
 
-class CreditPackage {
-  final int id;
-  final int credits;
-  final String title;
-  final String price;
-  final String badge;
-  final bool isPopular;
-  final Color themeColor;
-
-  const CreditPackage({
-    required this.id,
-    required this.credits,
-    required this.title,
-    required this.price,
-    required this.badge,
-    this.isPopular = false,
-    required this.themeColor,
-  });
-}
-
-class BuyCreditsScreen extends ConsumerWidget {
-  const BuyCreditsScreen({super.key});
-
-  static const List<CreditPackage> packages = [
-    CreditPackage(
-      id: 1,
-      credits: 100,
-      title: 'باقة المبتدئين',
-      price: '200 ج.م',
-      badge: '🎁 100 رصيد',
-      themeColor: Colors.teal,
-    ),
-    CreditPackage(
-      id: 2,
-      credits: 250,
-      title: 'الباقة الأكثر طلباً',
-      price: '450 ج.م',
-      badge: '🔥 250 رصيد',
-      isPopular: true,
-      themeColor: Colors.blue,
-    ),
-    CreditPackage(
-      id: 3,
-      credits: 500,
-      title: 'باقة المحترفين',
-      price: '800 ج.م',
-      badge: '⭐ 500 رصيد',
-      themeColor: Colors.amber,
-    ),
-    CreditPackage(
-      id: 4,
-      credits: 1000,
-      title: 'باقة الشركات الكبرى',
-      price: '1,500 ج.م',
-      badge: '👑 1000 رصيد',
-      themeColor: Colors.deepPurple,
-    ),
-  ];
+class CreditStoreScreen extends ConsumerStatefulWidget {
+  const CreditStoreScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final isDark = theme.brightness == Brightness.dark;
+  ConsumerState<CreditStoreScreen> createState() => _CreditStoreScreenState();
+}
 
-    final creditsAsync = ref.watch(creditsControllerProvider);
-    final int currentBalance = creditsAsync.valueOrNull?.creditsBalance ?? 0;
+class _CreditStoreScreenState extends ConsumerState<CreditStoreScreen> {
+  bool _isProcessing = false;
 
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Scaffold(
-        backgroundColor: isDark ? const Color(0xFF0F172A) : const Color(0xFFF8FAFC),
-        appBar: AppBar(
-          backgroundColor: isDark ? const Color(0xFF1E293B) : Colors.white,
-          elevation: 0.5,
-          title: Text(
-            'شراء رصيد نقاط (Buy Credits)',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: isDark ? Colors.white : const Color(0xFF0F172A),
+  Future<void> _handlePurchase(CreditPackage package) async {
+    setState(() => _isProcessing = true);
+    await Future.delayed(const Duration(milliseconds: 600));
+
+    final success = await ref
+        .read(creditManagerProvider.notifier)
+        .buyPackage(package);
+
+    if (mounted) {
+      setState(() => _isProcessing = false);
+      if (success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: const Color(0xFF16A34A),
+            content: Text(
+              'تم شراء باقة (${package.name}) وإضافة ${package.credits} نقطة إلى رصيدك بنجاح! 🎉',
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios_new_rounded,
-              color: isDark ? Colors.white : const Color(0xFF0F172A),
-              size: 20,
-            ),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
+        );
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final creditState = ref.watch(creditManagerProvider);
+    final credits = creditState.value;
+
+    return Scaffold(
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
+      appBar: AppBar(
+        title: const Text(
+          'متجر النقاط والرصيد',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
-        body: SafeArea(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Header Balance Banner Card
-                Container(
-                  padding: const EdgeInsets.all(18),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        colorScheme.primary,
-                        colorScheme.primary.withValues(alpha: 0.8),
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: colorScheme.primary.withValues(alpha: 0.3),
-                        blurRadius: 12,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_rounded),
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go('/supplier/dashboard');
+            }
+          },
+        ),
+      ),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // ── Current Balance Top Banner ──────────────────────────────
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0xFF2563EB), Color(0xFF1D4ED8)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: AppRadius.rLG,
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFF2563EB).withValues(alpha: 0.3),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
                   ),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.2),
-                          shape: BoxShape.circle,
+                ],
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 56,
+                    height: 56,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.2),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.bolt_rounded,
+                      color: Color(0xFFFBBF24),
+                      size: 36,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'رصيد النقاط الحالي',
+                          style: TextStyle(color: Colors.white70, fontSize: 12),
                         ),
-                        child: const Icon(
-                          Icons.account_balance_wallet_rounded,
-                          color: Colors.white,
-                          size: 28,
+                        const SizedBox(height: 2),
+                        Text(
+                          '${credits?.creditsBalance ?? 0} نقطة',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 14),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            AppSpacing.hLG,
+
+            const Text(
+              'اختر باقة النقاط المناسبة لنشاطك',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'النقاط تتيح لك توثيق الحساب، وإضافة المنتجات وفيديوهات العرض بكل مرونة بدون اشتراكات شهرية',
+              style: TextStyle(
+                fontSize: 12,
+                color: isDark ? Colors.grey[400] : const Color(0xFF64748B),
+              ),
+            ),
+
+            AppSpacing.hMD,
+
+            // ── Credit Packages List ─────────────────────────────────────
+            ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: CreditPackage.defaultPackages.length,
+              separatorBuilder: (_, __) => const SizedBox(height: 12),
+              itemBuilder: (context, index) {
+                final pkg = CreditPackage.defaultPackages[index];
+                final isPopular = pkg.badge == 'الأكثر طلباً';
+
+                return Card(
+                  elevation: isPopular ? 2 : 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadius.rMD,
+                    side: BorderSide(
+                      color: isPopular
+                          ? const Color(0xFF2563EB)
+                          : (isDark ? AppColors.borderDark : AppColors.borderLight),
+                      width: isPopular ? 2 : 1,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
-                              'رصيد الحساب الحالي',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.white70,
-                                fontWeight: FontWeight.w500,
+                            Text(
+                              pkg.name,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
                               ),
                             ),
-                            const SizedBox(height: 2),
+                            if (pkg.badge != null)
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: isPopular
+                                      ? const Color(0xFFEFF6FF)
+                                      : const Color(0xFFF3E8FF),
+                                  borderRadius: AppRadius.rRound,
+                                ),
+                                child: Text(
+                                  pkg.badge!,
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.bold,
+                                    color: isPopular
+                                        ? const Color(0xFF2563EB)
+                                        : const Color(0xFF9333EA),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.bolt_rounded,
+                              color: Color(0xFFF59E0B),
+                              size: 24,
+                            ),
+                            const SizedBox(width: 6),
                             Text(
-                              '$currentBalance رصيد نقاط',
+                              '${pkg.credits} نقطة',
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                                color: Color(0xFF2563EB),
+                              ),
+                            ),
+                            const Spacer(),
+                            Text(
+                              '${pkg.price.toInt()} ${pkg.currency}',
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 20),
-
-                Text(
-                  'اختر باقة النقاط المناسبة لاحتياجاتك:',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: isDark ? Colors.white : const Color(0xFF0F172A),
-                  ),
-                ),
-
-                const SizedBox(height: 12),
-
-                // Credit Packages Grid / List
-                ListView.separated(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: packages.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 12),
-                  itemBuilder: (context, index) {
-                    final pkg = packages[index];
-                    return _buildPackageCard(context, ref, pkg);
-                  },
-                ),
-
-                const SizedBox(height: 24),
-
-                // Cost Summary Table Card
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: isDark ? const Color(0xFF1E293B) : Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0),
-                    ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.info_outline_rounded,
-                              size: 18, color: colorScheme.primary),
-                          const SizedBox(width: 6),
-                          Text(
-                            'جدول استهلاك رصيد النقاط (Credits Cost Table):',
-                            style: TextStyle(
-                              fontSize: 12.5,
-                              fontWeight: FontWeight.bold,
-                              color: isDark ? Colors.white : const Color(0xFF0F172A),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      _buildCostRow('إضافة منتج جديد (بعد أول 5 منتجات مجانية)', '5 رصيد'),
-                      const Divider(height: 16),
-                      _buildCostRow('رفع فيديو تعريفي للمنشأة أو المنتج', '10 رصيد'),
-                      const Divider(height: 16),
-                      _buildCostRow('طلب الحصول على شارة التوثيق الأزرق', '35 رصيد'),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPackageCard(
-    BuildContext context,
-    WidgetRef ref,
-    CreditPackage pkg,
-  ) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final isDark = theme.brightness == Brightness.dark;
-
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: pkg.isPopular
-              ? colorScheme.primary
-              : (isDark ? const Color(0xFF334155) : const Color(0xFFE2E8F0)),
-          width: pkg.isPopular ? 2 : 1,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: isDark ? 0.08 : 0.03),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Material(
-        color: isDark ? const Color(0xFF1E293B) : Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        clipBehavior: Clip.antiAlias,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Package details
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          pkg.badge,
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        if (pkg.isPopular) ...[
-                          const SizedBox(width: 8),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 2),
-                            decoration: BoxDecoration(
-                              color: colorScheme.primary,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: const Text(
-                              'الأعلى مبيعاً',
-                              style: TextStyle(
-                                fontSize: 9.5,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                        const SizedBox(height: 14),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: _isProcessing ? null : () => _handlePurchase(pkg),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: isPopular
+                                  ? const Color(0xFF2563EB)
+                                  : (isDark ? AppColors.surfaceDark : Colors.grey[900]),
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              minimumSize: const Size(0, 44),
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: AppRadius.rMD,
                               ),
                             ),
+                            child: _isProcessing
+                                ? const SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : Text(
+                                    'شراء الآن — ${pkg.price.toInt()} ${pkg.currency}',
+                                    style: const TextStyle(fontWeight: FontWeight.bold),
+                                  ),
                           ),
-                        ],
+                        ),
                       ],
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      pkg.title,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      pkg.price,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: colorScheme.primary,
-                      ),
-                    ),
-                  ],
+                  ),
+                );
+              },
+            ),
+
+            AppSpacing.hXL,
+
+            // ── Purchase History Section ──────────────────────────────────
+            const Text(
+              'سجل عمليات الشراء والعمليات',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+
+            if (credits?.transactions.isEmpty ?? true)
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: Center(
+                  child: Text(
+                    'لا يوجد سجل عمليات سابق',
+                    style: TextStyle(color: Colors.grey),
+                  ),
                 ),
+              )
+            else
+              ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: credits!.transactions.length,
+                separatorBuilder: (_, __) => const Divider(height: 1),
+                itemBuilder: (context, index) {
+                  final tx = credits.transactions[index];
+                  final isDeduct = tx.isDeduction;
+
+                  return ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: isDeduct
+                            ? const Color(0xFFFEF2F2)
+                            : const Color(0xFFECFDF5),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        isDeduct
+                            ? Icons.remove_circle_outline_rounded
+                            : Icons.add_circle_outline_rounded,
+                        color: isDeduct
+                            ? const Color(0xFFEF4444)
+                            : const Color(0xFF10B981),
+                        size: 20,
+                      ),
+                    ),
+                    title: Text(
+                      tx.operation,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                      ),
+                    ),
+                    subtitle: Text(
+                      '${tx.createdAt.year}/${tx.createdAt.month}/${tx.createdAt.day} • الرصيد بعدها: ${tx.balanceAfter}',
+                      style: const TextStyle(fontSize: 11, color: Colors.grey),
+                    ),
+                    trailing: Text(
+                      '${tx.amount > 0 ? "+" : ""}${tx.amount} نقطة',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                        color: isDeduct
+                            ? const Color(0xFFEF4444)
+                            : const Color(0xFF10B981),
+                      ),
+                    ),
+                  );
+                },
               ),
 
-              // Action button
-              ElevatedButton(
-                onPressed: () {
-                  ref
-                      .read(creditsControllerProvider.notifier)
-                      .buyCredits(context, pkg.credits);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: pkg.isPopular
-                      ? colorScheme.primary
-                      : (isDark ? const Color(0xFF334155) : const Color(0xFFF1F5F9)),
-                  foregroundColor: pkg.isPopular
-                      ? Colors.white
-                      : (isDark ? Colors.white : const Color(0xFF0F172A)),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16, vertical: 10),
-                  minimumSize: const Size(0, 40),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  elevation: 0,
-                ),
-                child: const Text(
-                  'شراء الآن',
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
+            const SizedBox(height: 32),
+          ],
         ),
       ),
-    );
-  }
-
-  Widget _buildCostRow(String title, String cost) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: Text(
-            title,
-            style: const TextStyle(fontSize: 11.5),
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-          decoration: BoxDecoration(
-            color: Colors.amber.withValues(alpha: 0.15),
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: Text(
-            cost,
-            style: const TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.bold,
-              color: Colors.amber,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

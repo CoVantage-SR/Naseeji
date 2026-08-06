@@ -1,167 +1,166 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/app_radius.dart';
 
 class InsufficientCreditsDialog extends StatelessWidget {
-  final String? requiredActionName;
-  final int? requiredCredits;
+  final int requiredCredits;
+  final int availableCredits;
+  final String operationName;
+  final VoidCallback onBuyCredits;
 
   const InsufficientCreditsDialog({
     super.key,
-    this.requiredActionName,
-    this.requiredCredits,
+    required this.requiredCredits,
+    required this.availableCredits,
+    required this.operationName,
+    required this.onBuyCredits,
   });
-
-  static Future<void> show(
-    BuildContext context, {
-    String? requiredActionName,
-    int? requiredCredits,
-  }) {
-    return showDialog<void>(
-      context: context,
-      builder: (context) => InsufficientCreditsDialog(
-        requiredActionName: requiredActionName,
-        requiredCredits: requiredCredits,
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final isDark = theme.brightness == Brightness.dark;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final surfaceColor = isDark ? AppColors.surfaceDark : AppColors.surfaceLight;
 
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        backgroundColor: isDark ? const Color(0xFF1E293B) : Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(22.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Icon Header
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: Colors.amber.withValues(alpha: 0.15),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.monetization_on_outlined,
-                  color: Colors.amber,
-                  size: 32,
-                ),
+    return Dialog(
+      shape: const RoundedRectangleBorder(borderRadius: AppRadius.rLG),
+      backgroundColor: surfaceColor,
+      insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Icon
+            Container(
+              width: 64,
+              height: 64,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: const Color(0xFFFEF2F2),
+                border: Border.all(color: const Color(0xFFFCA5A5), width: 1.5),
               ),
-
-              const SizedBox(height: 16),
-
-              // Title
-              Text(
-                'رصيد النقاط غير كافٍ ⚠️',
-                textAlign: TextAlign.center,
-                style: theme.textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: isDark ? Colors.white : const Color(0xFF0F172A),
-                ),
+              child: const Icon(
+                Icons.bolt_rounded,
+                color: Color(0xFFEF4444),
+                size: 36,
               ),
+            ),
+            const SizedBox(height: 16),
 
-              const SizedBox(height: 8),
-
-              // Message
-              Text(
-                requiredActionName != null && requiredCredits != null
-                    ? 'يتطلب إجراء "$requiredActionName" وجود $requiredCredits رصيد نقاط على الأقل.\nقُم بشراء باقة رصيد إضافية أو ترقية اشتراكك للاستمرار.'
-                    : 'ليس لديك رصيد نقاط كافٍ لإتمام هذه العملية.\nقُم بشراء باقة رصيد إضافية أو قُم بترقية اشتراكك للاستمرار.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 12.5,
-                  color: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
-                  height: 1.5,
-                ),
+            // Title
+            const Text(
+              'رصيد النقاط غير كافٍ',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
               ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
 
-              const SizedBox(height: 22),
+            // Subtitle / Description
+            Text(
+              'لإتمام عملية ($operationName) يلزم وجود $requiredCredits نقطة، ورصيدك الحالي هو $availableCredits نقطة فقط.',
+              style: TextStyle(
+                fontSize: 13,
+                height: 1.5,
+                color: isDark ? Colors.grey[400] : const Color(0xFF64748B),
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
 
-              // Action Buttons
-              Row(
+            // Required vs Available Box
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: isDark ? AppColors.borderDark : const Color(0xFFF8FAFC),
+                borderRadius: AppRadius.rMD,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  // Buy Credits Button
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        context.push('/supplier/credits/buy');
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: colorScheme.primary,
-                        foregroundColor: Colors.white,
-                        minimumSize: const Size(0, 42),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        elevation: 0,
+                  Column(
+                    children: [
+                      const Text(
+                        'المطلوب',
+                        style: TextStyle(fontSize: 11, color: Colors.grey),
                       ),
-                      child: const Text(
-                        'شراء رصيد',
-                        style: TextStyle(
-                          fontSize: 13,
+                      const SizedBox(height: 2),
+                      Text(
+                        '$requiredCredits نقطة',
+                        style: const TextStyle(
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
+                          color: Color(0xFFEF4444),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-
-                  const SizedBox(width: 8),
-
-                  // Upgrade Button
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        context.push('/supplier/subscription');
-                      },
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: isDark ? Colors.white : colorScheme.primary,
-                        side: BorderSide(color: colorScheme.primary),
-                        minimumSize: const Size(0, 42),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                  Container(
+                    height: 28,
+                    width: 1,
+                    color: Colors.grey.withValues(alpha: 0.3),
+                  ),
+                  Column(
+                    children: [
+                      const Text(
+                        'الرصيد المتاح',
+                        style: TextStyle(fontSize: 11, color: Colors.grey),
                       ),
-                      child: const Text(
-                        'ترقية الاشتراك',
-                        style: TextStyle(
-                          fontSize: 12.5,
+                      const SizedBox(height: 2),
+                      Text(
+                        '$availableCredits نقطة',
+                        style: const TextStyle(
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
+                          color: Color(0xFF2563EB),
                         ),
                       ),
-                    ),
+                    ],
                   ),
                 ],
               ),
+            ),
+            const SizedBox(height: 24),
 
-              const SizedBox(height: 8),
-
-              // Cancel Button
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                style: TextButton.styleFrom(
-                  minimumSize: const Size(double.infinity, 36),
-                  foregroundColor: isDark ? const Color(0xFF94A3B8) : const Color(0xFF64748B),
+            // Action Buttons Row (Buy Credits / Cancel)
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: AppRadius.rMD,
+                      ),
+                    ),
+                    child: const Text('إلغاء'),
+                  ),
                 ),
-                child: const Text(
-                  'إلغاء',
-                  style: TextStyle(fontSize: 12),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: onBuyCredits,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF2563EB),
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      minimumSize: const Size(0, 44),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: AppRadius.rMD,
+                      ),
+                    ),
+                    child: const Text(
+                      'شراء نقاط',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ),
       ),
     );

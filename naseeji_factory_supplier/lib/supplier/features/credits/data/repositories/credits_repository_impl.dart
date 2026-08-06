@@ -1,164 +1,230 @@
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../domain/entities/supplier_credits.dart';
+import '../../domain/entities/credit_transaction.dart';
+import '../../domain/entities/credit_package.dart';
+import '../../domain/entities/credit_purchase_history.dart';
+import '../../domain/entities/credit_costs.dart';
 import '../../domain/repositories/credits_repository.dart';
+import '../../domain/services/credit_service.dart';
 
 class CreditsRepositoryImpl implements CreditsRepository {
-  static const String _kWelcomeGranted = 'supplier_welcome_credits_granted';
-  static const String _kCreditsBalance = 'supplier_credits_balance';
-  static const String _kFreeProducts = 'supplier_free_products_remaining';
-  static const String _kTrialEndDate = 'supplier_premium_trial_end_date';
-  static const String _kBlueStatus = 'supplier_blue_verification_status';
+  final CreditService _creditService;
+  
+  // InMemory state map to simulate persistence per supplier
+  final Map<String, SupplierCredits> _supplierCreditsMap = {};
 
-  // In-memory cache
-  SupplierCredits? _cache;
-
-  @override
-  Future<SupplierCredits> getCredits() async {
-    if (_cache != null) return _cache!;
-
-    final prefs = await SharedPreferences.getInstance();
-    final welcomeGranted = prefs.getBool(_kWelcomeGranted) ?? false;
-    
-    if (!welcomeGranted) {
-      // Uninitialized new supplier: grant 60 welcome credits immediately
-      return grantWelcomePackage();
-    }
-
-    final balance = prefs.getInt(_kCreditsBalance) ?? 60;
-    final freeProducts = prefs.getInt(_kFreeProducts) ?? 5;
-    final trialStr = prefs.getString(_kTrialEndDate);
-    final blueStatus = prefs.getString(_kBlueStatus) ?? 'none';
-
-    DateTime? trialEnd;
-    if (trialStr != null) {
-      trialEnd = DateTime.tryParse(trialStr);
-    }
-
-    _cache = SupplierCredits(
-      welcomeCreditsGranted: welcomeGranted,
-      creditsBalance: balance,
-      freeProductsRemaining: freeProducts,
-      premiumTrialEndDate: trialEnd,
-      blueVerificationStatus: blueStatus,
-    );
-
-    return _cache!;
+  CreditsRepositoryImpl({CreditService? creditService})
+      : _creditService = creditService ?? CreditService() {
+    _seedDefaultData();
   }
 
-  @override
-  Future<SupplierCredits> grantWelcomePackage() async {
-    final prefs = await SharedPreferences.getInstance();
-    final alreadyGranted = prefs.getBool(_kWelcomeGranted) ?? false;
-
-    if (alreadyGranted && _cache != null) {
-      return _cache!;
-    }
-
-    final trialEnd = DateTime.now().add(const Duration(days: 30));
-
-    await prefs.setBool(_kWelcomeGranted, true);
-    await prefs.setInt(_kCreditsBalance, 60);
-    await prefs.setInt(_kFreeProducts, 5);
-    await prefs.setString(_kTrialEndDate, trialEnd.toIso8601String());
-    await prefs.setString(_kBlueStatus, 'none');
-
-    _cache = SupplierCredits(
+  void _seedDefaultData() {
+    final now = DateTime.now();
+    _supplierCreditsMap['sup_1'] = SupplierCredits(
+      supplierId: 'sup_1',
       welcomeCreditsGranted: true,
-      creditsBalance: 60,
-      freeProductsRemaining: 5,
-      premiumTrialEndDate: trialEnd,
-      blueVerificationStatus: 'none',
+      creditsBalance: 50,
+      blueVerificationStatus: 'approved',
+      verificationDate: now.subtract(const Duration(days: 30)),
+      transactions: [
+        CreditTransaction(
+          id: 'tx_init_01',
+          supplierId: 'sup_1',
+          operation: 'مكافأة التسجيل الأول',
+          amount: 50,
+          balanceBefore: 0,
+          balanceAfter: 50,
+          createdAt: now.subtract(const Duration(days: 30)),
+        ),
+      ],
+      purchaseHistory: [
+        CreditPurchaseHistory(
+          id: 'pur_init_01',
+          supplierId: 'sup_1',
+          packageId: 'pkg_starter',
+          packageName: 'الباقة الأساسية',
+          credits: 50,
+          amountPaid: 250.0,
+          paymentStatus: 'completed',
+          purchasedAt: now.subtract(const Duration(days: 15)),
+        ),
+      ],
+    );
+  }
+
+  @override
+  Future<SupplierCredits> getCredits(String supplierId) async {
+    await Future.delayed(const Duration(milliseconds: 200));
+    if (!_supplierCreditsMap.containsKey(supplierId)) {
+      // First time supplier login -> grant 50 welcome credits ONCE
+      final newCredits = SupplierCredits(
+        supplierId: supplierId,
+        welcomeCreditsGranted: true,
+        creditsBalance: CreditCosts.firstLoginBonus,
+        blueVerificationStatus: 'none',
+        transactions: [
+          CreditTransaction(
+            id: 'tx_welcome_${DateTime.now().millisecondsSinceEpoch}',
+            supplierId: supplierId,
+            operation: 'مكافأة التسجيل الأول',
+            amount: CreditCosts.firstLoginBonus,
+            balanceBefore: 0,
+            balanceAfter: CreditCosts.firstLoginBonus,
+            createdAt: DateTime.now(),
+          ),
+        ],
+      );
+      _supplierCreditsMap[supplierId] = newCredits;
+    }
+    return _supplierCreditsMap[supplierId]!;
+  }
+
+  @override
+  Future<SupplierCredits> grantWelcomeCredits(String supplierId) async {
+    final current = await getCredits(supplierId);
+    if (current.welcomeCreditsGranted) {
+      return current; // Only once ever
+    }
+    return addCredits(
+      supplierId: supplierId,
+      operation: 'مكافأة التسجيل الأول',
+      amount: CreditCosts.firstLoginBonus,
+    );
+  }
+
+  @override
+  Future<SupplierCredits> consumeCredits({
+    required String supplierId,
+    required String operation,
+    required int amount,
+  }) async {
+    final current = await getCredits(supplierId);
+    final tx = _creditService.consumeCredits(
+      supplierId: supplierId,
+      operation: operation,
+      amount: amount,
+      currentBalance: current.creditsBalance,
     );
 
-    return _cache!;
-  }
-
-  @override
-  Future<SupplierCredits?> consumeForProduct() async {
-    final current = await getCredits();
-
-    if (current.freeProductsRemaining > 0) {
-      final updated = current.copyWith(
-        freeProductsRemaining: current.freeProductsRemaining - 1,
-      );
-      await _save(updated);
-      return updated;
-    }
-
-    // After first 5 products: costs 5 credits
-    if (current.creditsBalance >= 5) {
-      final updated = current.copyWith(
-        creditsBalance: current.creditsBalance - 5,
-      );
-      await _save(updated);
-      return updated;
-    }
-
-    // Insufficient credits
-    return null;
-  }
-
-  @override
-  Future<SupplierCredits?> consumeForVideo() async {
-    final current = await getCredits();
-
-    // Video costs 10 credits
-    if (current.creditsBalance >= 10) {
-      final updated = current.copyWith(
-        creditsBalance: current.creditsBalance - 10,
-      );
-      await _save(updated);
-      return updated;
-    }
-
-    // Insufficient credits
-    return null;
-  }
-
-  @override
-  Future<SupplierCredits> requestBlueVerification() async {
-    final current = await getCredits();
-    final updated = current.copyWith(blueVerificationStatus: 'pending');
-    await _save(updated);
-    return updated;
-  }
-
-  @override
-  Future<SupplierCredits?> approveBlueVerification() async {
-    final current = await getCredits();
-
-    // Blue Verification costs 35 credits ONLY after approval
-    if (current.creditsBalance >= 35) {
-      final updated = current.copyWith(
-        creditsBalance: current.creditsBalance - 35,
-        blueVerificationStatus: 'approved',
-      );
-      await _save(updated);
-      return updated;
-    }
-
-    return null;
-  }
-
-  @override
-  Future<SupplierCredits> buyCredits(int count) async {
-    final current = await getCredits();
     final updated = current.copyWith(
-      creditsBalance: current.creditsBalance + count,
+      creditsBalance: tx.balanceAfter,
+      transactions: [tx, ...current.transactions],
     );
-    await _save(updated);
+
+    _supplierCreditsMap[supplierId] = updated;
     return updated;
   }
 
-  Future<void> _save(SupplierCredits credits) async {
-    _cache = credits;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_kWelcomeGranted, credits.welcomeCreditsGranted);
-    await prefs.setInt(_kCreditsBalance, credits.creditsBalance);
-    await prefs.setInt(_kFreeProducts, credits.freeProductsRemaining);
-    if (credits.premiumTrialEndDate != null) {
-      await prefs.setString(_kTrialEndDate, credits.premiumTrialEndDate!.toIso8601String());
+  @override
+  Future<SupplierCredits> addCredits({
+    required String supplierId,
+    required String operation,
+    required int amount,
+  }) async {
+    final current = await getCredits(supplierId);
+    final tx = _creditService.addCredits(
+      supplierId: supplierId,
+      operation: operation,
+      amount: amount,
+      currentBalance: current.creditsBalance,
+    );
+
+    final updated = current.copyWith(
+      creditsBalance: tx.balanceAfter,
+      transactions: [tx, ...current.transactions],
+    );
+
+    _supplierCreditsMap[supplierId] = updated;
+    return updated;
+  }
+
+  @override
+  Future<SupplierCredits> refundCredits({
+    required String supplierId,
+    required String operation,
+    required int amount,
+  }) async {
+    final current = await getCredits(supplierId);
+    final tx = _creditService.refundCredits(
+      supplierId: supplierId,
+      operation: operation,
+      amount: amount,
+      currentBalance: current.creditsBalance,
+    );
+
+    final updated = current.copyWith(
+      creditsBalance: tx.balanceAfter,
+      transactions: [tx, ...current.transactions],
+    );
+
+    _supplierCreditsMap[supplierId] = updated;
+    return updated;
+  }
+
+  @override
+  Future<SupplierCredits> requestBlueVerification(String supplierId) async {
+    final current = await getCredits(supplierId);
+    if (current.isBlueVerified || current.isBluePending) {
+      return current;
     }
-    await prefs.setString(_kBlueStatus, credits.blueVerificationStatus);
+
+    // Consume 35 credits for verification
+    final afterConsume = await consumeCredits(
+      supplierId: supplierId,
+      operation: 'طلب التوثيق الزرقاء',
+      amount: CreditCosts.blueVerification,
+    );
+
+    final updated = afterConsume.copyWith(
+      blueVerificationStatus: 'approved',
+      verificationDate: DateTime.now(),
+    );
+
+    _supplierCreditsMap[supplierId] = updated;
+    return updated;
+  }
+
+  @override
+  Future<SupplierCredits> buyCreditPackage(
+    String supplierId,
+    CreditPackage package,
+  ) async {
+    final current = await getCredits(supplierId);
+
+    final purchase = CreditPurchaseHistory(
+      id: 'pur_${DateTime.now().millisecondsSinceEpoch}',
+      supplierId: supplierId,
+      packageId: package.id,
+      packageName: package.name,
+      credits: package.credits,
+      amountPaid: package.price,
+      currency: package.currency,
+      paymentStatus: 'completed',
+      purchasedAt: DateTime.now(),
+    );
+
+    final afterAdd = await addCredits(
+      supplierId: supplierId,
+      operation: 'شراء باقة نقاط (${package.name})',
+      amount: package.credits,
+    );
+
+    final updated = afterAdd.copyWith(
+      purchaseHistory: [purchase, ...afterAdd.purchaseHistory],
+    );
+
+    _supplierCreditsMap[supplierId] = updated;
+    return updated;
+  }
+
+  @override
+  Future<List<CreditTransaction>> getTransactions(String supplierId) async {
+    final credits = await getCredits(supplierId);
+    return credits.transactions;
+  }
+
+  @override
+  Future<List<CreditPurchaseHistory>> getPurchaseHistory(String supplierId) async {
+    final credits = await getCredits(supplierId);
+    return credits.purchaseHistory;
   }
 }

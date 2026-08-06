@@ -270,7 +270,11 @@ GoRouter appRouter(AppRouterRef ref) {
       ),
       GoRoute(
         path: '/supplier/credits/buy',
-        builder: (context, state) => const BuyCreditsScreen(),
+        builder: (context, state) => const CreditStoreScreen(),
+      ),
+      GoRoute(
+        path: '/supplier/buy-credits',
+        builder: (context, state) => const CreditStoreScreen(),
       ),
     ],
   );

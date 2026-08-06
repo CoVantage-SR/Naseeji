@@ -1,48 +1,53 @@
 import 'package:flutter/foundation.dart';
+import 'credit_transaction.dart';
+import 'credit_purchase_history.dart';
 
 @immutable
 class SupplierCredits {
+  final String supplierId;
   final bool welcomeCreditsGranted;
   final int creditsBalance;
-  final int freeProductsRemaining;
-  final DateTime? premiumTrialEndDate;
   final String blueVerificationStatus; // 'none', 'pending', 'approved', 'rejected'
+  final DateTime? verificationDate;
+  final String? verificationRequest;
+  final List<CreditTransaction> transactions;
+  final List<CreditPurchaseHistory> purchaseHistory;
 
   const SupplierCredits({
-    this.welcomeCreditsGranted = false,
-    this.creditsBalance = 0,
-    this.freeProductsRemaining = 0,
-    this.premiumTrialEndDate,
-    this.blueVerificationStatus = 'none',
+    this.supplierId = 'sup_1',
+    this.welcomeCreditsGranted = true,
+    this.creditsBalance = 50,
+    this.blueVerificationStatus = 'approved',
+    this.verificationDate,
+    this.verificationRequest,
+    this.transactions = const [],
+    this.purchaseHistory = const [],
   });
 
   bool get isBlueVerified => blueVerificationStatus == 'approved';
   bool get isBluePending => blueVerificationStatus == 'pending';
 
-  bool get isPremiumTrialActive {
-    if (premiumTrialEndDate == null) return false;
-    return DateTime.now().isBefore(premiumTrialEndDate!);
-  }
-
-  int get daysLeftInTrial {
-    if (premiumTrialEndDate == null) return 0;
-    final diff = premiumTrialEndDate!.difference(DateTime.now()).inDays;
-    return diff < 0 ? 0 : diff;
-  }
+  bool hasEnoughCredits(int required) => creditsBalance >= required;
 
   SupplierCredits copyWith({
+    String? supplierId,
     bool? welcomeCreditsGranted,
     int? creditsBalance,
-    int? freeProductsRemaining,
-    DateTime? premiumTrialEndDate,
     String? blueVerificationStatus,
+    DateTime? verificationDate,
+    String? verificationRequest,
+    List<CreditTransaction>? transactions,
+    List<CreditPurchaseHistory>? purchaseHistory,
   }) {
     return SupplierCredits(
+      supplierId: supplierId ?? this.supplierId,
       welcomeCreditsGranted: welcomeCreditsGranted ?? this.welcomeCreditsGranted,
       creditsBalance: creditsBalance ?? this.creditsBalance,
-      freeProductsRemaining: freeProductsRemaining ?? this.freeProductsRemaining,
-      premiumTrialEndDate: premiumTrialEndDate ?? this.premiumTrialEndDate,
       blueVerificationStatus: blueVerificationStatus ?? this.blueVerificationStatus,
+      verificationDate: verificationDate ?? this.verificationDate,
+      verificationRequest: verificationRequest ?? this.verificationRequest,
+      transactions: transactions ?? this.transactions,
+      purchaseHistory: purchaseHistory ?? this.purchaseHistory,
     );
   }
 }
