@@ -16,7 +16,10 @@ const envSchema = z.object({
   REDIS_URL: z.string().default('redis://:redis123@redis:6379'),
   MINIO_ENDPOINT: z.string().default('minio'),
   MINIO_PORT: z.coerce.number().default(9000),
-  MINIO_USE_SSL: z.coerce.boolean().default(false),
+  MINIO_USE_SSL: z
+    .union([z.boolean(), z.string()])
+    .transform((val) => val === true || val === 'true')
+    .default(false),
   MINIO_ACCESS_KEY: z.string().default('minioadmin'),
   MINIO_SECRET_KEY: z.string().default('minioadmin123'),
   MINIO_BUCKET_NAME: z.string().default('naseeji-uploads'),

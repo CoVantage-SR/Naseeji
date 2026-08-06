@@ -26,17 +26,19 @@ export class MinioService {
       return;
     }
 
+    let endPoint = config.endPoint;
+    const useSSL = config.useSSL;
+
     try {
-      logger.info(`Attempting MinIO connection to ${config.endPoint}:${config.port}...`);
+      logger.info(`Attempting MinIO connection to ${endPoint}:${config.port} (SSL: ${useSSL})...`);
       this.client = new Minio.Client({
-        endPoint: config.endPoint,
+        endPoint,
         port: config.port,
-        useSSL: config.useSSL,
+        useSSL,
         accessKey: config.accessKey,
         secretKey: config.secretKey,
       });
 
-      // Ensure target bucket exists
       const exists = await this.client.bucketExists(this.bucketName);
       if (!exists) {
         await this.client.makeBucket(this.bucketName);
@@ -48,7 +50,31 @@ export class MinioService {
       this.isInitialized = true;
       logger.info('MinIO Service Initialized Successfully.');
     } catch (error) {
-      logger.error(`MinIO Initialization Error: ${(error as Error).message}`);
+      // Fallback for local development when running outside Docker container
+      if (endPoint === 'minio') {
+        endPoint = '127.0.0.1';
+        logger.warn(`MinIO hostname 'minio' unresolvable locally. Retrying with ${endPoint}...`);
+        try {
+          this.client = new Minio.Client({
+            endPoint,
+            port: config.port,
+            useSSL: false,
+            accessKey: config.accessKey,
+            secretKey: config.secretKey,
+          });
+          const exists = await this.client.bucketExists(this.bucketName);
+          if (!exists) {
+            await this.client.makeBucket(this.bucketName);
+          }
+          this.isInitialized = true;
+          logger.info('MinIO Service Initialized Successfully via local fallback.');
+          return;
+        } catch (fallbackError) {
+          logger.error(`MinIO Initialization Error: ${(fallbackError as Error).message}`);
+        }
+      } else {
+        logger.error(`MinIO Initialization Error: ${(error as Error).message}`);
+      }
     }
   }
 

@@ -26,19 +26,18 @@ export class RedisService {
       return;
     }
 
+    let targetUrl = redisUrl;
     try {
       logger.info('Attempting Redis connection...');
-      this.client = new Redis(redisUrl, {
+      this.client = new Redis(targetUrl, {
         maxRetriesPerRequest: 1,
         lazyConnect: true,
+        connectTimeout: 2000,
         retryStrategy(times: number): number | null {
-          if (times > 3) {
-            logger.warn('Redis unavailable locally. Operating in fallback mode.');
+          if (times > 2) {
             return null;
           }
-          const delay = Math.min(times * 200, 1000);
-          logger.warn(`Redis connection retry #${times} in ${delay}ms`);
-          return delay;
+          return 200;
         },
       });
 
@@ -48,10 +47,7 @@ export class RedisService {
       });
 
       this.client.on('error', (err) => {
-        if (!this.isConnected) {
-          // Suppress noise when server isn't running locally
-          return;
-        }
+        if (!this.isConnected) return;
         logger.error('Redis Runtime Connection Error:', { error: err.message });
       });
 
@@ -63,6 +59,33 @@ export class RedisService {
       await this.client.ping();
       this.isConnected = true;
     } catch (error) {
+      // If docker container hostname '@redis:6379' fails locally, try 127.0.0.1:6379
+      if (targetUrl.includes('@redis:6379')) {
+        targetUrl = targetUrl.replace('@redis:6379', '@127.0.0.1:6379');
+        logger.warn(`Redis hostname 'redis' unresolvable locally. Retrying with 127.0.0.1:6379...`);
+        try {
+          this.client = new Redis(targetUrl, {
+            maxRetriesPerRequest: 1,
+            lazyConnect: true,
+            connectTimeout: 2000,
+          });
+          await this.client.connect();
+          await this.client.ping();
+          this.isConnected = true;
+          logger.info('Redis Connection Established Successfully via 127.0.0.1.');
+          return;
+        } catch (fallbackError) {
+          logger.warn(
+            `Redis not available locally (${(fallbackError as Error).message}). Operating in fallback mode.`,
+          );
+          if (this.client) {
+            this.client.disconnect();
+            this.client = null;
+          }
+          return;
+        }
+      }
+
       logger.warn(
         `Redis not available locally (${(error as Error).message}). Continuing in fallback mode.`,
       );
