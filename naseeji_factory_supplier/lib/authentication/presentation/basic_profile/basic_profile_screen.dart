@@ -170,7 +170,13 @@ class _BasicProfileScreenState extends ConsumerState<BasicProfileScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   RegisterHeader(
-                    onBack: () => Navigator.of(context).pop(),
+                    onBack: () {
+                      if (context.canPop()) {
+                        context.pop();
+                      } else {
+                        context.go('/auth/welcome');
+                      }
+                    },
                     currentLanguage: _currentLanguage,
                     onLanguageChanged: (lang) {
                       setState(() {
