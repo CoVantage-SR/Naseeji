@@ -34,16 +34,16 @@ export class IssueRefreshTokenUseCase {
 
     const newTokens = this.jwtService.issueTokens(
       payload.sub,
-      payload.sessionId,
-      payload.accountType,
-      payload.roles,
+      payload.sessionId || '',
+      payload.accountType || '',
+      payload.roles || [],
     );
 
     const newTokenEntity = RefreshTokenEntity.create(
       UuidUtil.generate(),
       newTokens.jti,
       newTokens.refreshToken,
-      payload.sessionId,
+      payload.sessionId || '',
       payload.sub,
       existingToken.tokenFamilyId,
     );

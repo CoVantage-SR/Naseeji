@@ -1,17 +1,29 @@
 import { Router, Request, Response } from 'express';
 import { MongoHealthChecker } from '../../database/mongo/health-checker.js';
+import { RedisService } from '../../infrastructure/redis/redis.service.js';
+import { MinioService } from '../../infrastructure/storage/minio.service.js';
 
 const router = Router();
 
+// Full Health Telemetry Report
 router.get('/health', async (_req: Request, res: Response) => {
   const mongoHealth = await MongoHealthChecker.check();
+  const redisHealth = await RedisService.getInstance().checkHealth();
+  const minioHealth = await MinioService.getInstance().checkHealth();
   const memoryUsage = process.memoryUsage();
 
+  const isHealthy =
+    mongoHealth.status === 'up' && redisHealth.status === 'UP' && minioHealth.status === 'UP';
+
   const healthData = {
-    status: mongoHealth.status === 'up' ? 'UP' : 'DEGRADED',
+    status: isHealthy ? 'UP' : 'DEGRADED',
     timestamp: new Date().toISOString(),
     uptimeSeconds: Math.floor(process.uptime()),
-    database: mongoHealth,
+    services: {
+      database: mongoHealth,
+      redis: redisHealth,
+      minio: minioHealth,
+    },
     memory: {
       rssMB: Math.round(memoryUsage.rss / 1024 / 1024),
       heapTotalMB: Math.round(memoryUsage.heapTotal / 1024 / 1024),
@@ -19,8 +31,36 @@ router.get('/health', async (_req: Request, res: Response) => {
     },
   };
 
-  const statusCode = mongoHealth.status === 'up' ? 200 : 503;
+  const statusCode = isHealthy ? 200 : 503;
   res.success(healthData, 'System Health Status', statusCode);
+});
+
+// Docker & Kubernetes Readiness Probe
+router.get('/ready', async (_req: Request, res: Response) => {
+  const mongoHealth = await MongoHealthChecker.check();
+  const redisHealth = await RedisService.getInstance().checkHealth();
+  const minioHealth = await MinioService.getInstance().checkHealth();
+
+  const isReady =
+    mongoHealth.status === 'up' && redisHealth.status === 'UP' && minioHealth.status === 'UP';
+
+  if (isReady) {
+    res.status(200).json({ status: 'READY', message: 'All dependency services operational' });
+  } else {
+    res.status(503).json({
+      status: 'NOT_READY',
+      services: {
+        database: mongoHealth.status,
+        redis: redisHealth.status,
+        minio: minioHealth.status,
+      },
+    });
+  }
+});
+
+// Docker & Kubernetes Liveness Probe
+router.get('/live', (_req: Request, res: Response) => {
+  res.status(200).json({ status: 'ALIVE', timestamp: new Date().toISOString() });
 });
 
 export const healthRouter = router;

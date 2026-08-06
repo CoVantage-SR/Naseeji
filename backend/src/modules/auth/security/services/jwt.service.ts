@@ -3,9 +3,12 @@ import { UuidUtil } from '@core/utils/uuid.util.js';
 
 export interface TokenPayload {
   sub: string;
-  sessionId: string;
-  accountType: string;
-  roles: string[];
+  sessionId?: string;
+  accountType?: string;
+  role?: string;
+  roles?: string[];
+  email?: string;
+  phone?: string;
   jti?: string;
 }
 

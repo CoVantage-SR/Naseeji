@@ -6,6 +6,7 @@ export interface UserContext {
   userId: string;
   sessionId: string;
   accountType: string;
+  role?: string;
   roles: string[];
 }
 
@@ -22,9 +23,10 @@ export const authenticateMiddleware = (req: Request, _res: Response, next: NextF
 
     req.userContext = {
       userId: payload.sub,
-      sessionId: payload.sessionId,
-      accountType: payload.accountType,
-      roles: payload.roles || [],
+      sessionId: payload.sessionId || '',
+      accountType: payload.accountType || payload.role || 'user',
+      role: payload.role,
+      roles: payload.roles || (payload.role ? [payload.role] : []),
     };
 
     next();

@@ -1,5 +1,6 @@
 import { Server } from 'http';
 import { MongoConnectionManager } from '../database/mongo/connection-manager.js';
+import { RedisService } from '../infrastructure/redis/redis.service.js';
 import { WinstonLogger } from '../core/logger/winston.logger.js';
 
 export const setupGracefulShutdown = (server: Server): void => {
@@ -12,10 +13,11 @@ export const setupGracefulShutdown = (server: Server): void => {
       logger.info('HTTP Server closed.');
       try {
         await MongoConnectionManager.disconnect();
+        await RedisService.getInstance().disconnect();
         logger.info('Graceful shutdown completed successfully.');
         process.exit(0);
       } catch (error) {
-        logger.error('Error during database disconnect in shutdown:', {
+        logger.error('Error during service disconnect in shutdown:', {
           error: (error as Error).message,
         });
         process.exit(1);
