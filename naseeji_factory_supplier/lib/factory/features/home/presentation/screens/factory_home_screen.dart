@@ -26,28 +26,7 @@ class FactoryHomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      bottomNavigationBar: FactoryBottomNavigation(
-        currentIndex: 0,
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              context.go('/factory/home');
-              break;
-            case 1:
-              context.push('/suppliers');
-              break;
-            case 2:
-              context.push('/rfq');
-              break;
-            case 3:
-              context.push('/orders');
-              break;
-            case 4:
-              context.go('/factory/account');
-              break;
-          }
-        },
-      ),
+      bottomNavigationBar: const FactoryBottomNavigation(currentIndex: 0),
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {

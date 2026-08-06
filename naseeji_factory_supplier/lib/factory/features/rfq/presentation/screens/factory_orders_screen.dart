@@ -7,6 +7,8 @@ import '../../../../core/widgets/reusable_widgets.dart';
 import '../providers/rfq_provider.dart';
 import '../widgets/factory_orders_widgets.dart';
 
+import '../../../home/presentation/widgets/factory_bottom_navigation.dart';
+
 class FactoryOrdersScreen extends ConsumerStatefulWidget {
   const FactoryOrdersScreen({super.key});
 
@@ -75,6 +77,7 @@ class _FactoryOrdersScreenState extends ConsumerState<FactoryOrdersScreen>
     final pageItems = filteredList.sublist(start, end);
 
     return Scaffold(
+      bottomNavigationBar: const FactoryBottomNavigation(currentIndex: 3),
       backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       body: SafeArea(
         child: Column(

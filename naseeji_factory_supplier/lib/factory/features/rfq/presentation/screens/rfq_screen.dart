@@ -8,6 +8,8 @@ import 'package:naseeji_factory/core/widgets/reusable_widgets.dart';
 import '../providers/rfq_provider.dart';
 import '../widgets/rfq_list_widgets.dart';
 
+import '../../../home/presentation/widgets/factory_bottom_navigation.dart';
+
 class RfqScreen extends ConsumerStatefulWidget {
   const RfqScreen({super.key});
 
@@ -57,6 +59,7 @@ class _RfqScreenState extends ConsumerState<RfqScreen> with SingleTickerProvider
     }
 
     return Scaffold(
+      bottomNavigationBar: const FactoryBottomNavigation(currentIndex: 2),
       appBar: AppBar(
         title: const Text('طلبات عروض الأسعار (RFQ)'),
         actions: [

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/widgets/reusable_widgets.dart' show checkGuestAction;
+import '../../../home/presentation/widgets/factory_bottom_navigation.dart';
 import '../providers/marketplace_providers.dart';
 import '../widgets/active_filters_bar.dart';
 import '../widgets/category_chips.dart';
@@ -36,6 +37,7 @@ class _FactoryMarketplaceScreenState extends ConsumerState<FactoryMarketplaceScr
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: const FactoryBottomNavigation(currentIndex: 1),
       appBar: MarketplaceHeader(
         unreadNotificationsCount: 3,
         onNotificationsTap: () => checkGuestAction(context, ref, () => context.push('/notifications')),

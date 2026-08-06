@@ -36,28 +36,7 @@ class _FactoryAccountScreenState extends ConsumerState<FactoryAccountScreen>
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      bottomNavigationBar: FactoryBottomNavigation(
-        currentIndex: 4,
-        onTap: (index) {
-          switch (index) {
-            case 0:
-              context.go('/factory/home');
-              break;
-            case 1:
-              context.push('/suppliers');
-              break;
-            case 2:
-              context.push('/rfq');
-              break;
-            case 3:
-              context.push('/orders');
-              break;
-            case 4:
-              context.go('/factory/account');
-              break;
-          }
-        },
-      ),
+      bottomNavigationBar: const FactoryBottomNavigation(currentIndex: 4),
       backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       body: SafeArea(
         child: Column(

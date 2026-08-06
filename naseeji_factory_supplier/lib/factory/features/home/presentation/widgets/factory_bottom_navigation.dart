@@ -1,16 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../providers/factory_navigation_provider.dart';
 
 class FactoryBottomNavigation extends ConsumerWidget {
   final int currentIndex;
-  final ValueChanged<int> onTap;
+  final ValueChanged<int>? onTap;
 
   const FactoryBottomNavigation({
     super.key,
     required this.currentIndex,
-    required this.onTap,
+    this.onTap,
   });
+
+  void _defaultOnTap(BuildContext context, int index) {
+    if (index == currentIndex) return;
+    switch (index) {
+      case 0:
+        context.go('/factory/home');
+        break;
+      case 1:
+        context.go('/suppliers');
+        break;
+      case 2:
+        context.go('/rfq');
+        break;
+      case 3:
+        context.go('/orders');
+        break;
+      case 4:
+        context.go('/factory/account');
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -80,7 +102,13 @@ class FactoryBottomNavigation extends ConsumerWidget {
 
               return Expanded(
                 child: InkWell(
-                  onTap: () => onTap(index),
+                  onTap: () {
+                    if (onTap != null) {
+                      onTap!(index);
+                    } else {
+                      _defaultOnTap(context, index);
+                    }
+                  },
                   splashColor: primaryColor.withValues(alpha: 0.1),
                   highlightColor: Colors.transparent,
                   child: Column(
@@ -161,6 +189,3 @@ class _NavItemData {
     this.badgeCount,
   });
 }
-
-
-
