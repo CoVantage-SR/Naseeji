@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naseeji_factory/supplier/features/products/domain/entities/product_form_data.dart';
 import 'package:naseeji_factory/supplier/features/products/presentation/controllers/add_product_controller.dart';
-import 'package:naseeji_factory/supplier/features/credits/presentation/controllers/credits_controller.dart';
+import 'package:naseeji_factory/supplier/features/credits/presentation/controllers/credit_manager.dart';
 
 class WizardNavigationBar extends ConsumerWidget {
   final ProductFormData formData;
@@ -69,12 +69,15 @@ class WizardNavigationBar extends ConsumerWidget {
             ElevatedButton.icon(
               onPressed: () async {
                 if (isLastStep) {
-                  final canPublish = await ref
-                      .read(creditsControllerProvider.notifier)
-                      .tryConsumeForProduct(context);
-                  if (canPublish && context.mounted) {
-                    controller.publishProduct(context);
-                  }
+                  await ref.read(creditManagerProvider.notifier).executeWithCreditsGuard(
+                    context: context,
+                    operationName: 'إضافة منتج',
+                    requiredCredits: 5,
+                    onExecuteOperation: () async {
+                      controller.publishProduct(context);
+                      return true;
+                    },
+                  );
                 } else {
                   controller.nextStep(context);
                 }

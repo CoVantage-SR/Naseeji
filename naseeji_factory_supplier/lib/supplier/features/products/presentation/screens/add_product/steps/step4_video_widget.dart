@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naseeji_factory/supplier/features/products/domain/entities/product_form_data.dart';
 import 'package:naseeji_factory/supplier/features/products/presentation/controllers/add_product_controller.dart';
-import 'package:naseeji_factory/supplier/features/credits/presentation/controllers/credits_controller.dart';
+import 'package:naseeji_factory/supplier/features/credits/presentation/controllers/credit_manager.dart';
 
 class Step4VideoWidget extends ConsumerWidget {
   final ProductFormData formData;
@@ -100,18 +100,20 @@ class Step4VideoWidget extends ConsumerWidget {
             // Video Upload Prompt Dropzone
             InkWell(
               onTap: () async {
-                final canUpload = await ref
-                    .read(creditsControllerProvider.notifier)
-                    .tryConsumeForVideo(context);
-                if (canUpload && context.mounted) {
-                  controller.setVideo(
-                    'https://example.com/videos/yarn_demo.mp4',
-                    'فيديو_اختبار_المتانة_والغزل.mp4',
-                    '01:30 دقيقة',
-                    14.5,
-                    context,
-                  );
-                }
+                await ref.read(creditManagerProvider.notifier).executeWithCreditsGuard(
+                  context: context,
+                  operationName: 'إضافة فيديو منتج',
+                  requiredCredits: 10,
+                  onExecuteOperation: () async {
+                    controller.setVideo(
+                      'https://example.com/videos/yarn_demo.mp4',
+                      'فيديو_اختبار_المتانة_والغزل.mp4',
+                      '01:30 دقيقة',
+                      12.5,
+                    );
+                    return true;
+                  },
+                );
               },
               borderRadius: BorderRadius.circular(16),
               child: Container(

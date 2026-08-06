@@ -844,12 +844,12 @@ class SupplierProfileScreen extends ConsumerWidget {
         route: '/team',
       ),
       _MenuItemData(
-        title: 'طرق الدفع والحسابات البنكية',
-        subtitle: 'إدارة حساباتك البنكية وطرق الدفع والاشتراك',
-        icon: Icons.credit_card_rounded,
-        iconColor: const Color(0xFF9333EA),
-        bgColor: const Color(0xFFF3E8FF),
-        route: '/subscription',
+        title: 'متجر النقاط والرصيد',
+        subtitle: 'شراء رصيد نقاط واستعراض سجل المعاملات',
+        icon: Icons.bolt_rounded,
+        iconColor: const Color(0xFFF59E0B),
+        bgColor: const Color(0xFFFEF3C7),
+        route: '/supplier/buy-credits',
       ),
       _MenuItemData(
         title: 'إعدادات الإشعارات',
