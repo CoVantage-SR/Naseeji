@@ -11,12 +11,25 @@ import { WalletModel } from '../../modules/auth/infrastructure/database/wallet.s
 
 dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 
-const mongoUri =
+const primaryUri =
   process.env.MONGODB_URI || 'mongodb://admin:admin123@127.0.0.1:27017/naseeji?authSource=admin';
+const fallbackUri = 'mongodb://127.0.0.1:27017/naseeji';
 
 export const seedDatabase = async (): Promise<void> => {
   console.log('🌱 Connecting to MongoDB for Database Seeding...');
-  await mongoose.connect(mongoUri);
+
+  try {
+    await mongoose.connect(primaryUri);
+  } catch (err: unknown) {
+    if (primaryUri.includes('@')) {
+      console.log(
+        `⚠️ Authenticated connection failed. Trying local unauthenticated URI: ${fallbackUri}`,
+      );
+      await mongoose.connect(fallbackUri);
+    } else {
+      throw err;
+    }
+  }
 
   const defaultPasswordHash = await bcrypt.hash('Password@123', 12);
 

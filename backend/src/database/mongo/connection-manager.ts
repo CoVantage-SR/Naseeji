@@ -20,11 +20,15 @@ export class MongoConnectionManager {
       serverSelectionTimeoutMS: isTestEnv ? 1000 : config.serverSelectionTimeoutMS,
     };
 
+    let targetUri = config.uri;
     let retries = isTestEnv ? 1 : 5;
+
     while (retries > 0) {
       try {
-        logger.info(`Attempting MongoDB connection... (Retries left: ${retries})`);
-        await mongoose.connect(config.uri, options);
+        logger.info(
+          `Attempting MongoDB connection to ${targetUri.replace(/:([^@]+)@/, ':****@')}... (Retries left: ${retries})`,
+        );
+        await mongoose.connect(targetUri, options);
         this.isConnected = true;
         logger.info('MongoDB Connection Established Successfully.');
 
@@ -40,7 +44,15 @@ export class MongoConnectionManager {
         return;
       } catch (error) {
         retries -= 1;
-        logger.error(`MongoDB connection failed: ${(error as Error).message}`);
+        const errMsg = (error as Error).message;
+        logger.error(`MongoDB connection failed: ${errMsg}`);
+
+        // If local authentication failed, fallback to unauthenticated local URI once
+        if (errMsg.includes('Authentication failed') && targetUri.includes('@')) {
+          targetUri = 'mongodb://127.0.0.1:27017/naseeji';
+          logger.warn(`Switching to unauthenticated local Mongo URI: ${targetUri}`);
+        }
+
         if (retries === 0) {
           if (isTestEnv) {
             logger.warn('MongoDB connection skipped in test environment.');
@@ -48,7 +60,7 @@ export class MongoConnectionManager {
           }
           throw new DatabaseException('Failed to connect to MongoDB after 5 attempts');
         }
-        await new Promise((resolve) => setTimeout(resolve, 3000));
+        await new Promise((resolve) => setTimeout(resolve, 2000));
       }
     }
   }
