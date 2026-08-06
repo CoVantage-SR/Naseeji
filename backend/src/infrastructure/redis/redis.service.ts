@@ -29,9 +29,14 @@ export class RedisService {
     try {
       logger.info('Attempting Redis connection...');
       this.client = new Redis(redisUrl, {
-        maxRetriesPerRequest: 3,
-        retryStrategy(times: number): number {
-          const delay = Math.min(times * 200, 3000);
+        maxRetriesPerRequest: 1,
+        lazyConnect: true,
+        retryStrategy(times: number): number | null {
+          if (times > 3) {
+            logger.warn('Redis unavailable locally. Operating in fallback mode.');
+            return null;
+          }
+          const delay = Math.min(times * 200, 1000);
           logger.warn(`Redis connection retry #${times} in ${delay}ms`);
           return delay;
         },
@@ -43,23 +48,33 @@ export class RedisService {
       });
 
       this.client.on('error', (err) => {
+        if (!this.isConnected) {
+          // Suppress noise when server isn't running locally
+          return;
+        }
         logger.error('Redis Runtime Connection Error:', { error: err.message });
       });
 
       this.client.on('end', () => {
         this.isConnected = false;
-        logger.warn('Redis Connection Ended.');
       });
 
+      await this.client.connect();
       await this.client.ping();
       this.isConnected = true;
     } catch (error) {
-      logger.error(`Redis connection initial failure: ${(error as Error).message}`);
+      logger.warn(
+        `Redis not available locally (${(error as Error).message}). Continuing in fallback mode.`,
+      );
+      if (this.client) {
+        this.client.disconnect();
+        this.client = null;
+      }
     }
   }
 
   public getClient(): Redis | null {
-    return this.client;
+    return this.isConnected ? this.client : null;
   }
 
   public async checkHealth(): Promise<{
