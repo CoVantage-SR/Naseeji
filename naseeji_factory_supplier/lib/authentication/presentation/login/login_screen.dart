@@ -63,20 +63,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             accessToken: 'jwt_token_${DateTime.now().millisecondsSinceEpoch}',
             refreshToken: 'jwt_refresh_token',
             role: role,
-            basicProfileCompleted: session.basicProfileCompleted,
-            completionPercentage: session.completionPercentage,
+            basicProfileCompleted: true,
+            completionPercentage: 100,
           );
 
       if (!mounted) return;
 
-      if (session.basicProfileCompleted) {
-        if (role == UserRole.supplier) {
-          context.go('/supplier/dashboard');
-        } else {
-          context.go('/factory/home');
-        }
+      if (role == UserRole.supplier) {
+        context.go('/supplier/dashboard');
       } else {
-        context.push('/auth/basic-profile', extra: role);
+        context.go('/factory/home');
       }
     }
   }
