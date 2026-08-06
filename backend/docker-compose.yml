@@ -44,7 +44,7 @@ services:
 
   # 3. MinIO S3 Compatible Object Storage Container
   minio:
-    image: minio/minio:RELEASE.2024-08-03T04-33-08Z
+    image: minio/minio:latest
     container_name: naseeji-minio
     restart: always
     ports:
