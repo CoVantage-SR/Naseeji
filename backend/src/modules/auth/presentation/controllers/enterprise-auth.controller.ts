@@ -117,11 +117,7 @@ export class EnterpriseAuthController {
     }
   };
 
-  public loginGoogle = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ): Promise<void> => {
+  public loginGoogle = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const result = await this.googleLoginUseCase.execute({
         idToken: req.body.idToken,
@@ -195,11 +191,7 @@ export class EnterpriseAuthController {
 
   // ─── Token ─────────────────────────────────────────────────────────────────
 
-  public refreshToken = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ): Promise<void> => {
+  public refreshToken = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { refreshToken } = req.body;
       const result = await this.refreshTokenUseCase.execute({
@@ -250,11 +242,7 @@ export class EnterpriseAuthController {
     }
   };
 
-  public resetPassword = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ): Promise<void> => {
+  public resetPassword = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const result = await this.resetPasswordUseCase.execute({
         ...req.body,
@@ -380,11 +368,7 @@ export class EnterpriseAuthController {
     }
   };
 
-  public revokeSession = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ): Promise<void> => {
+  public revokeSession = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userId = this.extractUserId(req);
       const sessionId = req.params.sessionId ?? '';
@@ -430,11 +414,7 @@ export class EnterpriseAuthController {
     }
   };
 
-  public deleteDevice = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ): Promise<void> => {
+  public deleteDevice = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userId = this.extractUserId(req);
       const deviceId = req.params.id ?? '';
@@ -462,11 +442,7 @@ export class EnterpriseAuthController {
     }
   };
 
-  public updateProfile = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ): Promise<void> => {
+  public updateProfile = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userId = this.extractUserId(req);
       const user = await this.userRepo.findById(userId);

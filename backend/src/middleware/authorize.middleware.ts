@@ -7,7 +7,7 @@ import { AuthenticationException } from '../core/errors/auth.exception.js';
 
 export const authorize = (requiredPermission: string) => {
   return async (req: Request, _res: Response, next: NextFunction): Promise<void> => {
-    if (!req.userContext) {
+    if (!req.userContext || !req.userContext.userId) {
       return next(new AuthenticationException('User context missing. Must authenticate first.'));
     }
 
@@ -16,14 +16,23 @@ export const authorize = (requiredPermission: string) => {
       const resolver = new PermissionResolverService(roleRepo);
       const checker = new PermissionCheckerService(resolver);
 
-      await checker.ensurePermission(req.userContext.roles, requiredPermission);
+      const userRoles = req.userContext.roles || [
+        req.userContext.role || req.userContext.accountType,
+      ];
+      await checker.ensurePermission(userRoles, requiredPermission);
       next();
     } catch (error) {
       if (error instanceof AuthorizationException) {
         next(error);
       } else {
-        next(new AuthorizationException('Permission denied for requested endpoint'));
+        next(
+          new AuthorizationException(
+            `Permission denied for requested endpoint: missing "${requiredPermission}"`,
+          ),
+        );
       }
     }
   };
 };
+
+export const requirePermission = authorize;

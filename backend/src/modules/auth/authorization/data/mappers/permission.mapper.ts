@@ -9,7 +9,7 @@ export class PermissionMapper {
       code: doc.code,
       group: doc.group,
       description: doc.description,
-      createdAt: doc.createdAt,
+      createdAt: doc.createdAt || new Date(),
     });
   }
 

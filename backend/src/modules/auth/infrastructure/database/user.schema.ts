@@ -1,15 +1,9 @@
 import { Schema, model } from 'mongoose';
 import { baseSchemaOptions } from '@database/mongo/base.schema.js';
 
-export type UserRoleType = 'factory' | 'supplier' | 'admin' | 'support' | 'auditor';
+export type UserRoleType = 'factory' | 'supplier' | 'admin' | 'support' | 'auditor' | 'employee';
 export type UserStatusType =
-  | 'active'
-  | 'pending'
-  | 'deactivated'
-  | 'deleted'
-  | 'suspended'
-  | 'blocked'
-  | 'rejected';
+  'active' | 'pending' | 'deactivated' | 'deleted' | 'suspended' | 'blocked' | 'rejected';
 
 export interface IUserDocument {
   _id: string;
@@ -22,6 +16,7 @@ export interface IUserDocument {
   isPhoneVerified: boolean;
   factoryId?: string;
   supplierId?: string;
+  employeeId?: string;
   walletId?: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -36,7 +31,7 @@ const userSchema = new Schema<IUserDocument>(
     passwordHash: { type: String, required: true },
     role: {
       type: String,
-      enum: ['factory', 'supplier', 'admin', 'support', 'auditor'],
+      enum: ['factory', 'supplier', 'admin', 'support', 'auditor', 'employee'],
       required: true,
       index: true,
     },
@@ -50,6 +45,7 @@ const userSchema = new Schema<IUserDocument>(
     isPhoneVerified: { type: Boolean, default: false },
     factoryId: { type: String, ref: 'Factory', index: true },
     supplierId: { type: String, ref: 'Supplier', index: true },
+    employeeId: { type: String, ref: 'Employee', index: true },
     walletId: { type: String, ref: 'Wallet', index: true },
     deletedAt: { type: Date, default: null },
   },

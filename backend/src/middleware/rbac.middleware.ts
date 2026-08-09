@@ -1,33 +1,33 @@
 import { Request, Response, NextFunction } from 'express';
-
-interface RequestWithUserRole extends Request {
-  user?: {
-    role?: string;
-    roles?: string[];
-  };
-}
+import { AuthenticationException } from '../core/errors/auth.exception.js';
+import { AuthorizationException } from '../core/errors/forbidden.exception.js';
 
 export const requireRoles = (...allowedRoles: string[]) => {
-  return (req: Request, res: Response, next: NextFunction): void => {
-    const customReq = req as RequestWithUserRole;
-    const user = req.userContext || customReq.user;
-    if (!user) {
-      res.status(401).json({
-        success: false,
-        message: 'Unauthorized access',
-      });
-      return;
+  const normalizedAllowed = allowedRoles.map((r) => r.toLowerCase().trim());
+
+  return (req: Request, _res: Response, next: NextFunction): void => {
+    const user = req.userContext;
+    if (!user || !user.userId) {
+      return next(new AuthenticationException('User context missing. Must authenticate first.'));
     }
 
-    const userRole = user.role || (user.roles && user.roles[0]);
-    if (!userRole || !allowedRoles.includes(userRole)) {
-      res.status(403).json({
-        success: false,
-        message: `Forbidden: Access restricted to roles [${allowedRoles.join(', ')}]`,
-      });
-      return;
+    const userRoles = [
+      ...(user.role ? [user.role.toLowerCase()] : []),
+      ...(user.roles ? user.roles.map((r) => r.toLowerCase()) : []),
+    ];
+
+    const hasRole = userRoles.some((role) => normalizedAllowed.includes(role));
+
+    if (!hasRole) {
+      return next(
+        new AuthorizationException(
+          `Forbidden: Required role matching [${allowedRoles.join(', ')}]`,
+        ),
+      );
     }
 
     next();
   };
 };
+
+export const requireRole = requireRoles;

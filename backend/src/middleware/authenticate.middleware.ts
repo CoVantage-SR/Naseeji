@@ -72,9 +72,7 @@ export const authenticateMiddleware = async (
       return next(new AuthenticationException('User account not found.'));
     }
     if (BLOCKED_STATUSES.includes(user.status as (typeof BLOCKED_STATUSES)[number])) {
-      return next(
-        new AuthenticationException(`Account access denied. Status: ${user.status}`),
-      );
+      return next(new AuthenticationException(`Account access denied. Status: ${user.status}`));
     }
 
     req.userContext = {

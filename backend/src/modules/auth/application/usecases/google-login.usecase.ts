@@ -122,8 +122,11 @@ export class GoogleLoginUseCase {
     const familyId = crypto.randomUUID();
 
     // Issue tokens via JwtService
-    const { accessToken, refreshToken: refreshTokenRaw, accessTokenExpiresIn } =
-      this.jwtService.issueTokens(user._id, sessionId, role, [role]);
+    const {
+      accessToken,
+      refreshToken: refreshTokenRaw,
+      accessTokenExpiresIn,
+    } = this.jwtService.issueTokens(user._id, sessionId, role, [role]);
 
     const refreshTokenHash = crypto.createHash('sha256').update(refreshTokenRaw).digest('hex');
     const refreshExpiry = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);

@@ -37,8 +37,7 @@ export class JwtService {
   private readonly refreshTokenTtl: string;
 
   constructor() {
-    this.accessSecret =
-      process.env.JWT_SECRET || 'naseeji-enterprise-super-secret-jwt-key-2026';
+    this.accessSecret = process.env.JWT_SECRET || 'naseeji-enterprise-super-secret-jwt-key-2026';
     this.refreshSecret =
       process.env.JWT_REFRESH_SECRET || 'naseeji-enterprise-super-secret-refresh-key-2026';
     this.accessTokenTtl = process.env.JWT_ACCESS_TTL || '15m';

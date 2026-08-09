@@ -4,15 +4,16 @@ import { RoleId } from '../../domain/value-objects/role-id.vo.js';
 
 export class RoleMapper {
   public static toDomain(doc: IRoleDocument): Role {
+    const now = new Date();
     return Role.reconstitute({
       id: RoleId.create(doc._id),
       code: doc.code,
       name: doc.name,
       description: doc.description,
       isSystemRole: doc.isSystemRole,
-      permissionCodes: doc.permissionCodes || [],
-      createdAt: doc.createdAt,
-      updatedAt: doc.updatedAt,
+      permissionCodes: doc.permissionCodes || doc.permissions || [],
+      createdAt: doc.createdAt || now,
+      updatedAt: doc.updatedAt || now,
     });
   }
 
@@ -24,6 +25,7 @@ export class RoleMapper {
       description: role.description,
       isSystemRole: role.isSystemRole,
       permissionCodes: role.permissionCodes,
+      permissions: role.permissionCodes,
     };
   }
 }

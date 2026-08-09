@@ -95,13 +95,13 @@ export class LoginUseCase {
     const deviceId = dto.deviceId || crypto.randomUUID();
 
     // Issue tokens via JwtService (access with JWT_SECRET, refresh with JWT_REFRESH_SECRET)
-    const { accessToken, refreshToken: refreshTokenRaw, accessTokenExpiresIn } =
-      this.jwtService.issueTokens(user._id, sessionId, user.role, [user.role]);
+    const {
+      accessToken,
+      refreshToken: refreshTokenRaw,
+      accessTokenExpiresIn,
+    } = this.jwtService.issueTokens(user._id, sessionId, user.role, [user.role]);
 
-    const refreshTokenHash = crypto
-      .createHash('sha256')
-      .update(refreshTokenRaw)
-      .digest('hex');
+    const refreshTokenHash = crypto.createHash('sha256').update(refreshTokenRaw).digest('hex');
 
     // Save Session
     await this.sessionRepo.create({

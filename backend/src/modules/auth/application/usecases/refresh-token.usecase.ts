@@ -82,8 +82,11 @@ export class RefreshTokenUseCase {
     await this.refreshTokenRepo.markAsUsed(existingToken._id);
 
     // Issue new access + refresh tokens (token rotation)
-    const { accessToken: newAccessToken, refreshToken: newRefreshTokenRaw, accessTokenExpiresIn } =
-      this.jwtService.issueTokens(user._id, existingToken.sessionId, user.role, [user.role]);
+    const {
+      accessToken: newAccessToken,
+      refreshToken: newRefreshTokenRaw,
+      accessTokenExpiresIn,
+    } = this.jwtService.issueTokens(user._id, existingToken.sessionId, user.role, [user.role]);
 
     const newRefreshTokenHash = crypto
       .createHash('sha256')

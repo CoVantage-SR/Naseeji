@@ -8,6 +8,9 @@ import { UserModel } from '../../modules/auth/infrastructure/database/user.schem
 import { FactoryModel } from '../../modules/auth/infrastructure/database/factory.schema.js';
 import { SupplierModel } from '../../modules/auth/infrastructure/database/supplier.schema.js';
 import { WalletModel } from '../../modules/auth/infrastructure/database/wallet.schema.js';
+import { RoleModel } from '../../modules/auth/infrastructure/database/role.schema.js';
+import { PermissionModel } from '../../modules/auth/infrastructure/database/permission.schema.js';
+import { PERMISSIONS_CATALOG, DEFAULT_ROLE_PERMISSIONS } from '../../config/permissions.config.js';
 
 dotenv.config({ path: path.resolve(process.cwd(), '.env') });
 
@@ -31,9 +34,112 @@ export const seedDatabase = async (): Promise<void> => {
     }
   }
 
+  // 1. Seed System Permissions (Idempotent)
+  console.log('🔒 Seeding System Permissions...');
+  await PermissionModel.collection.dropIndexes().catch(() => {});
+  await RoleModel.collection.dropIndexes().catch(() => {});
+  let permCount = 0;
+  for (const perm of PERMISSIONS_CATALOG) {
+    const existing = await PermissionModel.findOne({ code: perm.code });
+    if (!existing) {
+      await PermissionModel.create({
+        _id: crypto.randomUUID(),
+        code: perm.code,
+        group: perm.group,
+        description: perm.description,
+      });
+      permCount++;
+    }
+  }
+  console.log(
+    `✅ Seeded ${permCount} new permissions (${PERMISSIONS_CATALOG.length} total active).`,
+  );
+
+  // 2. Seed System Roles (Idempotent)
+  console.log('🛡️ Seeding System Roles...');
+  const systemRoles = [
+    {
+      code: 'ADMIN',
+      name: 'Administrator',
+      description: 'Full administrative access across all system resources',
+      permissions: DEFAULT_ROLE_PERMISSIONS.ADMIN,
+    },
+    {
+      code: 'admin',
+      name: 'Administrator (alias)',
+      description: 'Full administrative access across all system resources',
+      permissions: DEFAULT_ROLE_PERMISSIONS.admin,
+    },
+    {
+      code: 'FACTORY',
+      name: 'Factory Owner',
+      description: 'Factory organization management and procurement access',
+      permissions: DEFAULT_ROLE_PERMISSIONS.FACTORY,
+    },
+    {
+      code: 'factory',
+      name: 'Factory Owner (alias)',
+      description: 'Factory organization management and procurement access',
+      permissions: DEFAULT_ROLE_PERMISSIONS.factory,
+    },
+    {
+      code: 'SUPPLIER',
+      name: 'Supplier Owner',
+      description: 'Supplier organization management and product catalog access',
+      permissions: DEFAULT_ROLE_PERMISSIONS.SUPPLIER,
+    },
+    {
+      code: 'supplier',
+      name: 'Supplier Owner (alias)',
+      description: 'Supplier organization management and product catalog access',
+      permissions: DEFAULT_ROLE_PERMISSIONS.supplier,
+    },
+    {
+      code: 'EMPLOYEE',
+      name: 'Organization Employee',
+      description: 'Base access for factory/supplier organization staff',
+      permissions: DEFAULT_ROLE_PERMISSIONS.EMPLOYEE,
+    },
+    {
+      code: 'employee',
+      name: 'Organization Employee (alias)',
+      description: 'Base access for factory/supplier organization staff',
+      permissions: DEFAULT_ROLE_PERMISSIONS.employee,
+    },
+  ];
+
+  let roleCount = 0;
+  for (const sysRole of systemRoles) {
+    const existing = await RoleModel.findOne({ code: sysRole.code });
+    if (!existing) {
+      await RoleModel.create({
+        _id: crypto.randomUUID(),
+        code: sysRole.code,
+        name: sysRole.name,
+        description: sysRole.description,
+        isSystemRole: true,
+        permissionCodes: sysRole.permissions,
+        permissions: sysRole.permissions,
+      });
+      roleCount++;
+    } else {
+      // Update system role permissions to stay in sync with config
+      await RoleModel.updateOne(
+        { _id: existing._id },
+        {
+          isSystemRole: true,
+          permissionCodes: sysRole.permissions,
+          permissions: sysRole.permissions,
+        },
+      );
+    }
+  }
+  console.log(`✅ Seeded ${roleCount} new system roles.`);
+
+  // 3. Seed Default System Users
   const defaultPasswordHash = await bcrypt.hash('Password@123', 12);
 
-  // 1. Seed Factory User
+  // 3a. Factory User
   let factoryUser = await UserModel.findOne({ email: 'factory@naseeji.com' });
   if (!factoryUser) {
     const factoryUserId = crypto.randomUUID();
@@ -74,7 +180,7 @@ export const seedDatabase = async (): Promise<void> => {
     console.log('ℹ️ Factory User already exists.');
   }
 
-  // 2. Seed Supplier User
+  // 3b. Supplier User
   let supplierUser = await UserModel.findOne({ email: 'supplier@naseeji.com' });
   if (!supplierUser) {
     const supplierUserId = crypto.randomUUID();
@@ -117,7 +223,7 @@ export const seedDatabase = async (): Promise<void> => {
     console.log('ℹ️ Supplier User already exists.');
   }
 
-  // 3. Seed Admin User
+  // 3c. Admin User
   let adminUser = await UserModel.findOne({ email: 'admin@naseeji.com' });
   if (!adminUser) {
     const adminUserId = crypto.randomUUID();

@@ -34,7 +34,7 @@ export class RegisterFactoryUseCase {
     private otpRepo?: OtpRepository,
   ) {}
 
-  private get logger() {
+  private get logger(): WinstonLogger {
     return WinstonLogger.getInstance();
   }
 
@@ -138,7 +138,11 @@ export class RegisterFactoryUseCase {
     let debugOtp: string | undefined;
     if (this.otpRepo) {
       try {
-        const { code } = await this.otpRepo.generateOtp(normalizedPhone, 'phone_verification', userId);
+        const { code } = await this.otpRepo.generateOtp(
+          normalizedPhone,
+          'phone_verification',
+          userId,
+        );
         debugOtp = process.env.NODE_ENV !== 'production' ? code : undefined;
         this.logger.info(`📱 Phone verification OTP generated for factory user ${userId}`);
       } catch (otpErr) {

@@ -19,7 +19,7 @@ interface RedisOtpRecord {
  * Cooldown key format: otp:cooldown:{target}:{type}
  */
 export class OtpRepository {
-  private get redis() {
+  private get redis(): import('ioredis').default | null {
     return RedisService.getInstance().getClient();
   }
 
@@ -71,7 +71,12 @@ export class OtpRepository {
         userId: data.userId,
         expiresAt: Date.now() + this.otpTtlSeconds * 1000,
       };
-      await client.set(this.redisKey(target, type), JSON.stringify(record), 'EX', this.otpTtlSeconds);
+      await client.set(
+        this.redisKey(target, type),
+        JSON.stringify(record),
+        'EX',
+        this.otpTtlSeconds,
+      );
       // Set cooldown key
       await client.set(this.cooldownKey(target, type), '1', 'EX', this.resendCooldownSeconds);
 
@@ -95,10 +100,7 @@ export class OtpRepository {
   /**
    * Finds the most recent valid (non-expired, non-used) OTP for a target+type.
    */
-  public async findValidOtp(
-    target: string,
-    type: string,
-  ): Promise<IOtpDocument | null> {
+  public async findValidOtp(target: string, type: string): Promise<IOtpDocument | null> {
     const client = this.redis;
     if (client) {
       const raw = await client.get(this.redisKey(target, type));

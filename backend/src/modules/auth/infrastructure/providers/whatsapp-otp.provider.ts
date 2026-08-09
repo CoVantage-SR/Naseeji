@@ -94,9 +94,7 @@ export class WhatsAppOtpProvider implements IOtpProvider {
         this.logger.error(`WhatsApp API fetch failed: ${(err as Error).message}`);
       }
     } else {
-      this.logger.warn(
-        `⚠️  WhatsApp API credentials not configured. Running in mock/dev mode.`,
-      );
+      this.logger.warn(`⚠️  WhatsApp API credentials not configured. Running in mock/dev mode.`);
     }
 
     return {

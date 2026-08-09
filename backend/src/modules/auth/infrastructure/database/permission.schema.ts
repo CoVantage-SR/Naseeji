@@ -3,9 +3,10 @@ import { baseSchemaOptions } from '@database/mongo/base.schema.js';
 
 export interface IPermissionDocument {
   _id: string;
-  key: string;
+  code: string;
+  name?: string;
+  group: string;
   description: string;
-  module: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -13,9 +14,10 @@ export interface IPermissionDocument {
 const permissionSchema = new Schema<IPermissionDocument>(
   {
     _id: { type: String, required: true },
-    key: { type: String, required: true, unique: true, index: true },
+    code: { type: String, required: true, unique: true, index: true },
+    name: { type: String },
+    group: { type: String, required: true, index: true },
     description: { type: String, required: true },
-    module: { type: String, required: true, index: true },
   },
   baseSchemaOptions,
 );

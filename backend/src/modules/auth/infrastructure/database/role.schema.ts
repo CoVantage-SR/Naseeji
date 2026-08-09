@@ -3,9 +3,12 @@ import { baseSchemaOptions } from '@database/mongo/base.schema.js';
 
 export interface IRoleDocument {
   _id: string;
+  code: string;
   name: string;
   description: string;
-  permissions: string[];
+  isSystemRole: boolean;
+  permissionCodes: string[];
+  permissions?: string[];
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -13,9 +16,12 @@ export interface IRoleDocument {
 const roleSchema = new Schema<IRoleDocument>(
   {
     _id: { type: String, required: true },
-    name: { type: String, required: true, unique: true, index: true },
+    code: { type: String, required: true, unique: true, index: true },
+    name: { type: String, required: true },
     description: { type: String, required: true },
-    permissions: [{ type: String, index: true }],
+    isSystemRole: { type: Boolean, default: false, index: true },
+    permissionCodes: [{ type: String }],
+    permissions: [{ type: String }],
   },
   baseSchemaOptions,
 );

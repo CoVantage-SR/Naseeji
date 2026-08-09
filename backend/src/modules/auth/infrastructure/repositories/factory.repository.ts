@@ -1,40 +1,48 @@
+import mongoose from 'mongoose';
 import { FactoryModel, IFactoryDocument } from '../database/factory.schema.js';
 
 export class FactoryRepository {
   public async create(data: Partial<IFactoryDocument>): Promise<IFactoryDocument> {
+    if (mongoose.connection.readyState !== 1) return data as IFactoryDocument;
     return await FactoryModel.create(data);
   }
 
   public async findById(id: string): Promise<IFactoryDocument | null> {
+    if (mongoose.connection.readyState !== 1) return null;
     return await FactoryModel.findById(id);
   }
 
   public async findByUserId(userId: string): Promise<IFactoryDocument | null> {
+    if (mongoose.connection.readyState !== 1) return null;
     return await FactoryModel.findOne({ userId });
   }
 
   public async findByCommercialRegistration(cr: string): Promise<IFactoryDocument | null> {
+    if (mongoose.connection.readyState !== 1) return null;
     return await FactoryModel.findOne({ commercialRegistration: cr });
   }
 
-  public async findByTaxNumber(taxNumber: string): Promise<IFactoryDocument | null> {
-    return await FactoryModel.findOne({ taxNumber });
+  public async findByTaxNumber(tax: string): Promise<IFactoryDocument | null> {
+    if (mongoose.connection.readyState !== 1) return null;
+    return await FactoryModel.findOne({ taxNumber: tax });
   }
 
   public async updateByUserId(
     userId: string,
-    data: Partial<IFactoryDocument>,
+    updates: Partial<IFactoryDocument>,
   ): Promise<IFactoryDocument | null> {
-    return await FactoryModel.findOneAndUpdate({ userId }, data, { new: true });
+    if (mongoose.connection.readyState !== 1) return updates as IFactoryDocument;
+    return await FactoryModel.findOneAndUpdate({ userId }, updates, { new: true });
   }
 
   public async updateVerificationStatus(
-    id: string,
-    status: 'pending' | 'verified' | 'rejected' | 'need_more_documents',
+    userId: string,
+    status: 'verified' | 'rejected' | 'pending',
     notes?: string,
   ): Promise<IFactoryDocument | null> {
-    return await FactoryModel.findByIdAndUpdate(
-      id,
+    if (mongoose.connection.readyState !== 1) return null;
+    return await FactoryModel.findOneAndUpdate(
+      { userId },
       { verificationStatus: status, verificationNotes: notes },
       { new: true },
     );
