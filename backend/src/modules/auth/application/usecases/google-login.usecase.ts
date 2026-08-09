@@ -1,5 +1,4 @@
 import crypto from 'crypto';
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { GoogleOAuthService } from '../services/google-auth.service.js';
 import { UserRepository } from '../../infrastructure/repositories/user.repository.js';
@@ -13,6 +12,7 @@ import {
 import { SessionRepository } from '../../infrastructure/repositories/session.repository.js';
 import { RefreshTokenRepository } from '../../infrastructure/repositories/refresh-token.repository.js';
 import { SecurityLogRepository } from '../../infrastructure/repositories/security-log.repository.js';
+import { JwtService } from '../../security/services/jwt.service.js';
 
 export interface GoogleLoginDto {
   idToken: string;
@@ -21,6 +21,8 @@ export interface GoogleLoginDto {
 }
 
 export class GoogleLoginUseCase {
+  private readonly jwtService: JwtService;
+
   constructor(
     private googleAuthService: GoogleOAuthService,
     private userRepo: UserRepository,
@@ -31,16 +33,27 @@ export class GoogleLoginUseCase {
     private sessionRepo: SessionRepository,
     private refreshTokenRepo: RefreshTokenRepository,
     private securityLogRepo: SecurityLogRepository,
-    private jwtSecret: string,
-  ) {}
+    // jwtSecret kept for backward compatibility — JwtService reads from env
+    _jwtSecret?: string,
+  ) {
+    this.jwtService = new JwtService();
+  }
 
   public async execute(dto: GoogleLoginDto): Promise<Record<string, unknown>> {
     const googlePayload = await this.googleAuthService.verifyIdToken(dto.idToken);
     let user = await this.userRepo.findByEmail(googlePayload.email);
 
-    let role: 'factory' | 'supplier' = dto.accountType || 'factory';
+    let role: 'factory' | 'supplier';
 
     if (!user) {
+      // New user — accountType is REQUIRED
+      if (!dto.accountType) {
+        throw new Error(
+          'accountType is required for new Google Sign-In registrations. Please specify "factory" or "supplier".',
+        );
+      }
+      role = dto.accountType;
+
       const userId = crypto.randomUUID();
       const dummyPasswordHash = await bcrypt.hash(crypto.randomBytes(16).toString('hex'), 12);
 
@@ -93,7 +106,11 @@ export class GoogleLoginUseCase {
         pointsBalance: 100,
       });
     } else {
-      role = user.role === 'factory' || user.role === 'supplier' ? user.role : 'factory';
+      // Existing user — use their existing role
+      if (user.role !== 'factory' && user.role !== 'supplier') {
+        throw new Error('Google Sign-In is only available for factory and supplier accounts.');
+      }
+      role = user.role;
     }
 
     await this.deviceRepo.upsertDevice({
@@ -102,8 +119,14 @@ export class GoogleLoginUseCase {
     });
 
     const sessionId = crypto.randomUUID();
-    const refreshTokenRaw = crypto.randomBytes(40).toString('hex');
+    const familyId = crypto.randomUUID();
+
+    // Issue tokens via JwtService
+    const { accessToken, refreshToken: refreshTokenRaw, accessTokenExpiresIn } =
+      this.jwtService.issueTokens(user._id, sessionId, role, [role]);
+
     const refreshTokenHash = crypto.createHash('sha256').update(refreshTokenRaw).digest('hex');
+    const refreshExpiry = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
 
     await this.sessionRepo.create({
       _id: sessionId,
@@ -119,16 +142,8 @@ export class GoogleLoginUseCase {
       country: dto.deviceInfo.country || 'Egypt',
       isRevoked: false,
       lastActiveAt: new Date(),
-      expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+      expiresAt: refreshExpiry,
     });
-
-    const accessToken = jwt.sign(
-      { sub: user._id, role: user.role, email: user.email, phone: user.phone, sessionId },
-      this.jwtSecret,
-      { expiresIn: '15m' },
-    );
-
-    const familyId = crypto.randomUUID();
 
     await this.refreshTokenRepo.create({
       _id: crypto.randomUUID(),
@@ -138,7 +153,7 @@ export class GoogleLoginUseCase {
       familyId,
       isUsed: false,
       isRevoked: false,
-      expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+      expiresAt: refreshExpiry,
     });
 
     const profile =
@@ -161,7 +176,7 @@ export class GoogleLoginUseCase {
         accessToken,
         refreshToken: refreshTokenRaw,
         tokenType: 'Bearer',
-        expiresInSeconds: 15 * 60,
+        expiresInSeconds: accessTokenExpiresIn,
       },
       user: {
         id: user._id,

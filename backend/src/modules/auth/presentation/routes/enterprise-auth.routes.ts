@@ -70,6 +70,7 @@ const registerFactoryUseCase = new RegisterFactoryUseCase(
   walletRepo,
   verificationRepo,
   securityLogRepo,
+  otpRepo, // inject OtpRepository for post-registration OTP dispatch
 );
 const registerSupplierUseCase = new RegisterSupplierUseCase(
   userRepo,
@@ -77,6 +78,7 @@ const registerSupplierUseCase = new RegisterSupplierUseCase(
   walletRepo,
   verificationRepo,
   securityLogRepo,
+  otpRepo, // inject OtpRepository for post-registration OTP dispatch
 );
 const loginUseCase = new LoginUseCase(
   userRepo,

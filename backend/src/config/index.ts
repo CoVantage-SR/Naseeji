@@ -4,6 +4,7 @@ import { getLoggerConfig, LoggerConfig } from './logger.config.js';
 import { getSecurityConfig, SecurityConfig } from './security.config.js';
 import { getRedisConfig, RedisConfig } from './redis.config.js';
 import { getMinioConfig, MinioConfig } from './minio.config.js';
+import { getMailConfig, MailConfig } from './mail.config.js';
 
 export interface AppConfig {
   env: EnvConfig;
@@ -12,6 +13,7 @@ export interface AppConfig {
   security: SecurityConfig;
   redis: RedisConfig;
   minio: MinioConfig;
+  mail: MailConfig;
 }
 
 export const loadConfig = (): AppConfig => {
@@ -23,6 +25,7 @@ export const loadConfig = (): AppConfig => {
     security: getSecurityConfig(env),
     redis: getRedisConfig(env),
     minio: getMinioConfig(env),
+    mail: getMailConfig(env),
   };
 };
 
@@ -32,4 +35,5 @@ export * from './logger.config.js';
 export * from './security.config.js';
 export * from './redis.config.js';
 export * from './minio.config.js';
+export * from './mail.config.js';
 export * from './swagger.config.js';

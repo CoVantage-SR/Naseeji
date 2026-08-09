@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { RegisterFactoryUseCase } from '../../application/usecases/register-factory.usecase.js';
 import { RegisterSupplierUseCase } from '../../application/usecases/register-supplier.usecase.js';
 import { LoginUseCase } from '../../application/usecases/login.usecase.js';
@@ -19,13 +19,19 @@ import { UserRepository } from '../../infrastructure/repositories/user.repositor
 import { FactoryRepository } from '../../infrastructure/repositories/factory.repository.js';
 import { SupplierRepository } from '../../infrastructure/repositories/supplier.repository.js';
 import { SecurityLogRepository } from '../../infrastructure/repositories/security-log.repository.js';
+import { BusinessException } from '../../../../core/errors/business.exception.js';
+import { AuthenticationException } from '../../../../core/errors/auth.exception.js';
 
-interface RequestWithUser extends Request {
-  user?: {
-    userId?: string;
-    id?: string;
-  };
-}
+/** Fields that must never be changed by a user through the profile update endpoint */
+const PROTECTED_PROFILE_FIELDS = [
+  'verificationStatus',
+  'subscriptionStatus',
+  'userId',
+  '_id',
+  'id',
+  'commercialRegistration',
+  'taxNumber',
+] as const;
 
 export class EnterpriseAuthController {
   constructor(
@@ -49,11 +55,24 @@ export class EnterpriseAuthController {
   ) {}
 
   private extractUserId(req: Request): string {
-    const customReq = req as RequestWithUser;
-    return req.userContext?.userId || customReq.user?.userId || customReq.user?.id || '';
+    return req.userContext?.userId || '';
   }
 
-  public registerFactory = async (req: Request, res: Response): Promise<void> => {
+  private sanitizeProfileUpdate(body: Record<string, unknown>): Record<string, unknown> {
+    const sanitized = { ...body };
+    for (const field of PROTECTED_PROFILE_FIELDS) {
+      delete sanitized[field];
+    }
+    return sanitized;
+  }
+
+  // ─── Registration ───────────────────────────────────────────────────────────
+
+  public registerFactory = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
     try {
       const result = await this.registerFactoryUseCase.execute({
         ...req.body,
@@ -61,12 +80,16 @@ export class EnterpriseAuthController {
         userAgent: req.headers['user-agent'] || 'Unknown',
       });
       res.status(201).json({ success: true, data: result });
-    } catch (err: unknown) {
-      res.status(400).json({ success: false, message: (err as Error).message });
+    } catch (err) {
+      next(new BusinessException((err as Error).message));
     }
   };
 
-  public registerSupplier = async (req: Request, res: Response): Promise<void> => {
+  public registerSupplier = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
     try {
       const result = await this.registerSupplierUseCase.execute({
         ...req.body,
@@ -74,12 +97,14 @@ export class EnterpriseAuthController {
         userAgent: req.headers['user-agent'] || 'Unknown',
       });
       res.status(201).json({ success: true, data: result });
-    } catch (err: unknown) {
-      res.status(400).json({ success: false, message: (err as Error).message });
+    } catch (err) {
+      next(new BusinessException((err as Error).message));
     }
   };
 
-  public login = async (req: Request, res: Response): Promise<void> => {
+  // ─── Login ──────────────────────────────────────────────────────────────────
+
+  public login = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const result = await this.loginUseCase.execute({
         ...req.body,
@@ -87,12 +112,16 @@ export class EnterpriseAuthController {
         userAgent: req.headers['user-agent'] || 'Unknown',
       });
       res.status(200).json({ success: true, data: result });
-    } catch (err: unknown) {
-      res.status(401).json({ success: false, message: (err as Error).message });
+    } catch (err) {
+      next(new AuthenticationException((err as Error).message));
     }
   };
 
-  public loginGoogle = async (req: Request, res: Response): Promise<void> => {
+  public loginGoogle = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
     try {
       const result = await this.googleLoginUseCase.execute({
         idToken: req.body.idToken,
@@ -112,12 +141,18 @@ export class EnterpriseAuthController {
         },
       });
       res.status(200).json({ success: true, data: result });
-    } catch (err: unknown) {
-      res.status(401).json({ success: false, message: (err as Error).message });
+    } catch (err) {
+      next(new AuthenticationException((err as Error).message));
     }
   };
 
-  public sendWhatsAppOtp = async (req: Request, res: Response): Promise<void> => {
+  // ─── OTP ───────────────────────────────────────────────────────────────────
+
+  public sendWhatsAppOtp = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
     try {
       const { phone, type } = req.body;
       const result = await WhatsAppOtpProvider.getInstance().generateAndSendOtp({
@@ -125,12 +160,16 @@ export class EnterpriseAuthController {
         type: type || 'phone_verification',
       });
       res.status(200).json(result);
-    } catch (err: unknown) {
-      res.status(400).json({ success: false, message: (err as Error).message });
+    } catch (err) {
+      next(new BusinessException((err as Error).message));
     }
   };
 
-  public verifyWhatsAppOtp = async (req: Request, res: Response): Promise<void> => {
+  public verifyWhatsAppOtp = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
     try {
       const { phone, type, otpCode } = req.body;
       await WhatsAppOtpProvider.getInstance().verifyOtp(
@@ -139,6 +178,7 @@ export class EnterpriseAuthController {
         otpCode,
       );
 
+      // If the user is authenticated, mark phone as verified
       const userId = this.extractUserId(req);
       if (userId) {
         await this.userRepo.update(userId, { isPhoneVerified: true });
@@ -148,12 +188,34 @@ export class EnterpriseAuthController {
         success: true,
         message: 'WhatsApp OTP code verified successfully.',
       });
-    } catch (err: unknown) {
-      res.status(400).json({ success: false, message: (err as Error).message });
+    } catch (err) {
+      next(new BusinessException((err as Error).message));
     }
   };
 
-  public logout = async (req: Request, res: Response): Promise<void> => {
+  // ─── Token ─────────────────────────────────────────────────────────────────
+
+  public refreshToken = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const { refreshToken } = req.body;
+      const result = await this.refreshTokenUseCase.execute({
+        refreshToken,
+        ipAddress: req.ip || '127.0.0.1',
+        userAgent: req.headers['user-agent'] || 'Unknown',
+      });
+      res.status(200).json({ success: true, data: result });
+    } catch (err) {
+      next(new AuthenticationException((err as Error).message));
+    }
+  };
+
+  // ─── Logout ─────────────────────────────────────────────────────────────────
+
+  public logout = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userId = this.extractUserId(req);
       const { refreshToken } = req.body;
@@ -164,26 +226,18 @@ export class EnterpriseAuthController {
         req.headers['user-agent'] || 'Unknown',
       );
       res.status(200).json({ success: true, message: result.message });
-    } catch (err: unknown) {
-      res.status(400).json({ success: false, message: (err as Error).message });
+    } catch (err) {
+      next(new BusinessException((err as Error).message));
     }
   };
 
-  public refreshToken = async (req: Request, res: Response): Promise<void> => {
-    try {
-      const { refreshToken } = req.body;
-      const result = await this.refreshTokenUseCase.execute({
-        refreshToken,
-        ipAddress: req.ip || '127.0.0.1',
-        userAgent: req.headers['user-agent'] || 'Unknown',
-      });
-      res.status(200).json({ success: true, data: result });
-    } catch (err: unknown) {
-      res.status(401).json({ success: false, message: (err as Error).message });
-    }
-  };
+  // ─── Password ───────────────────────────────────────────────────────────────
 
-  public forgotPassword = async (req: Request, res: Response): Promise<void> => {
+  public forgotPassword = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
     try {
       const result = await this.forgotPasswordUseCase.execute({
         target: req.body.target,
@@ -191,12 +245,16 @@ export class EnterpriseAuthController {
         userAgent: req.headers['user-agent'] || 'Unknown',
       });
       res.status(200).json(result);
-    } catch (err: unknown) {
-      res.status(400).json({ success: false, message: (err as Error).message });
+    } catch (err) {
+      next(new BusinessException((err as Error).message));
     }
   };
 
-  public resetPassword = async (req: Request, res: Response): Promise<void> => {
+  public resetPassword = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
     try {
       const result = await this.resetPasswordUseCase.execute({
         ...req.body,
@@ -204,12 +262,16 @@ export class EnterpriseAuthController {
         userAgent: req.headers['user-agent'] || 'Unknown',
       });
       res.status(200).json(result);
-    } catch (err: unknown) {
-      res.status(400).json({ success: false, message: (err as Error).message });
+    } catch (err) {
+      next(new BusinessException((err as Error).message));
     }
   };
 
-  public changePassword = async (req: Request, res: Response): Promise<void> => {
+  public changePassword = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
     try {
       const userId = this.extractUserId(req);
       const result = await this.changePasswordUseCase.execute({
@@ -220,12 +282,14 @@ export class EnterpriseAuthController {
         userAgent: req.headers['user-agent'] || 'Unknown',
       });
       res.status(200).json(result);
-    } catch (err: unknown) {
-      res.status(400).json({ success: false, message: (err as Error).message });
+    } catch (err) {
+      next(new BusinessException((err as Error).message));
     }
   };
 
-  public verifyPhone = async (req: Request, res: Response): Promise<void> => {
+  // ─── OTP Verification ───────────────────────────────────────────────────────
+
+  public verifyPhone = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userId = this.extractUserId(req);
       const { phone, otpCode } = req.body;
@@ -237,12 +301,12 @@ export class EnterpriseAuthController {
         req.headers['user-agent'] || 'Unknown',
       );
       res.status(200).json(result);
-    } catch (err: unknown) {
-      res.status(400).json({ success: false, message: (err as Error).message });
+    } catch (err) {
+      next(new BusinessException((err as Error).message));
     }
   };
 
-  public verifyEmail = async (req: Request, res: Response): Promise<void> => {
+  public verifyEmail = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userId = this.extractUserId(req);
       const { email, otpCode } = req.body;
@@ -254,12 +318,12 @@ export class EnterpriseAuthController {
         req.headers['user-agent'] || 'Unknown',
       );
       res.status(200).json(result);
-    } catch (err: unknown) {
-      res.status(400).json({ success: false, message: (err as Error).message });
+    } catch (err) {
+      next(new BusinessException((err as Error).message));
     }
   };
 
-  public resendOtp = async (req: Request, res: Response): Promise<void> => {
+  public resendOtp = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { target, type } = req.body;
       const result = await this.verifyEmailPhoneUseCase.resendOtp(
@@ -269,12 +333,14 @@ export class EnterpriseAuthController {
         req.headers['user-agent'] || 'Unknown',
       );
       res.status(200).json(result);
-    } catch (err: unknown) {
-      res.status(400).json({ success: false, message: (err as Error).message });
+    } catch (err) {
+      next(new BusinessException((err as Error).message));
     }
   };
 
-  public deactivate = async (req: Request, res: Response): Promise<void> => {
+  // ─── Account Lifecycle ──────────────────────────────────────────────────────
+
+  public deactivate = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userId = this.extractUserId(req);
       const result = await this.accountLifecycleUseCase.deactivate(
@@ -283,12 +349,12 @@ export class EnterpriseAuthController {
         req.headers['user-agent'] || 'Unknown',
       );
       res.status(200).json(result);
-    } catch (err: unknown) {
-      res.status(400).json({ success: false, message: (err as Error).message });
+    } catch (err) {
+      next(new BusinessException((err as Error).message));
     }
   };
 
-  public softDelete = async (req: Request, res: Response): Promise<void> => {
+  public softDelete = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userId = this.extractUserId(req);
       const result = await this.accountLifecycleUseCase.softDelete(
@@ -297,48 +363,28 @@ export class EnterpriseAuthController {
         req.headers['user-agent'] || 'Unknown',
       );
       res.status(200).json(result);
-    } catch (err: unknown) {
-      res.status(400).json({ success: false, message: (err as Error).message });
+    } catch (err) {
+      next(new BusinessException((err as Error).message));
     }
   };
 
-  public getSessions = async (req: Request, res: Response): Promise<void> => {
+  // ─── Session Management ─────────────────────────────────────────────────────
+
+  public getSessions = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userId = this.extractUserId(req);
       const sessions = await this.sessionManagementUseCase.getActiveSessions(userId);
       res.status(200).json({ success: true, data: sessions });
-    } catch (err: unknown) {
-      res.status(400).json({ success: false, message: (err as Error).message });
+    } catch (err) {
+      next(new BusinessException((err as Error).message));
     }
   };
 
-  public getDevices = async (req: Request, res: Response): Promise<void> => {
-    try {
-      const userId = this.extractUserId(req);
-      const devices = await this.deviceManagementUseCase.getUserDevices(userId);
-      res.status(200).json({ success: true, data: devices });
-    } catch (err: unknown) {
-      res.status(400).json({ success: false, message: (err as Error).message });
-    }
-  };
-
-  public deleteDevice = async (req: Request, res: Response): Promise<void> => {
-    try {
-      const userId = this.extractUserId(req);
-      const deviceId = req.params.id ?? '';
-      const result = await this.deviceManagementUseCase.removeDevice(
-        userId,
-        deviceId,
-        req.ip || '127.0.0.1',
-        req.headers['user-agent'] || 'Unknown',
-      );
-      res.status(200).json(result);
-    } catch (err: unknown) {
-      res.status(400).json({ success: false, message: (err as Error).message });
-    }
-  };
-
-  public revokeSession = async (req: Request, res: Response): Promise<void> => {
+  public revokeSession = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
     try {
       const userId = this.extractUserId(req);
       const sessionId = req.params.sessionId ?? '';
@@ -349,12 +395,16 @@ export class EnterpriseAuthController {
         req.headers['user-agent'] || 'Unknown',
       );
       res.status(200).json(result);
-    } catch (err: unknown) {
-      res.status(400).json({ success: false, message: (err as Error).message });
+    } catch (err) {
+      next(new BusinessException((err as Error).message));
     }
   };
 
-  public revokeAllSessions = async (req: Request, res: Response): Promise<void> => {
+  public revokeAllSessions = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
     try {
       const userId = this.extractUserId(req);
       const result = await this.sessionManagementUseCase.revokeAllSessions(
@@ -363,32 +413,60 @@ export class EnterpriseAuthController {
         req.headers['user-agent'] || 'Unknown',
       );
       res.status(200).json(result);
-    } catch (err: unknown) {
-      res.status(400).json({ success: false, message: (err as Error).message });
+    } catch (err) {
+      next(new BusinessException((err as Error).message));
     }
   };
 
-  public getSecurityLogs = async (req: Request, res: Response): Promise<void> => {
+  // ─── Device Management ──────────────────────────────────────────────────────
+
+  public getDevices = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userId = this.extractUserId(req);
-      const logs = await this.securityLogRepo.findByUserId(userId, 50);
-      res.status(200).json({ success: true, data: logs });
-    } catch (err: unknown) {
-      res.status(400).json({ success: false, message: (err as Error).message });
+      const devices = await this.deviceManagementUseCase.getUserDevices(userId);
+      res.status(200).json({ success: true, data: devices });
+    } catch (err) {
+      next(new BusinessException((err as Error).message));
     }
   };
 
-  public getMe = async (req: Request, res: Response): Promise<void> => {
+  public deleteDevice = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const userId = this.extractUserId(req);
+      const deviceId = req.params.id ?? '';
+      const result = await this.deviceManagementUseCase.removeDevice(
+        userId,
+        deviceId,
+        req.ip || '127.0.0.1',
+        req.headers['user-agent'] || 'Unknown',
+      );
+      res.status(200).json(result);
+    } catch (err) {
+      next(new BusinessException((err as Error).message));
+    }
+  };
+
+  // ─── Profile & Security Logs ────────────────────────────────────────────────
+
+  public getMe = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userId = this.extractUserId(req);
       const data = await this.deviceManagementUseCase.getMe(userId);
       res.status(200).json({ success: true, data });
-    } catch (err: unknown) {
-      res.status(400).json({ success: false, message: (err as Error).message });
+    } catch (err) {
+      next(new BusinessException((err as Error).message));
     }
   };
 
-  public updateProfile = async (req: Request, res: Response): Promise<void> => {
+  public updateProfile = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
     try {
       const userId = this.extractUserId(req);
       const user = await this.userRepo.findById(userId);
@@ -397,16 +475,33 @@ export class EnterpriseAuthController {
         return;
       }
 
+      // Strip any protected fields from the update payload
+      const safeUpdate = this.sanitizeProfileUpdate(req.body as Record<string, unknown>);
+
       let profile: unknown = null;
       if (user.role === 'factory') {
-        profile = await this.factoryRepo.updateByUserId(userId, req.body);
+        profile = await this.factoryRepo.updateByUserId(userId, safeUpdate);
       } else if (user.role === 'supplier') {
-        profile = await this.supplierRepo.updateByUserId(userId, req.body);
+        profile = await this.supplierRepo.updateByUserId(userId, safeUpdate);
       }
 
       res.status(200).json({ success: true, data: profile });
-    } catch (err: unknown) {
-      res.status(400).json({ success: false, message: (err as Error).message });
+    } catch (err) {
+      next(new BusinessException((err as Error).message));
+    }
+  };
+
+  public getSecurityLogs = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const userId = this.extractUserId(req);
+      const logs = await this.securityLogRepo.findByUserId(userId, 50);
+      res.status(200).json({ success: true, data: logs });
+    } catch (err) {
+      next(new BusinessException((err as Error).message));
     }
   };
 }

@@ -1,9 +1,9 @@
 import crypto from 'crypto';
-import jwt from 'jsonwebtoken';
 import { UserRepository } from '../../infrastructure/repositories/user.repository.js';
 import { SessionRepository } from '../../infrastructure/repositories/session.repository.js';
 import { RefreshTokenRepository } from '../../infrastructure/repositories/refresh-token.repository.js';
 import { SecurityLogRepository } from '../../infrastructure/repositories/security-log.repository.js';
+import { JwtService } from '../../security/services/jwt.service.js';
 
 export interface RefreshTokenDto {
   refreshToken: string;
@@ -11,14 +11,22 @@ export interface RefreshTokenDto {
   userAgent: string;
 }
 
+/** Statuses that should block token rotation */
+const BLOCKED_STATUSES = ['deactivated', 'deleted', 'blocked', 'suspended', 'rejected'] as const;
+
 export class RefreshTokenUseCase {
+  private readonly jwtService: JwtService;
+
   constructor(
     private userRepo: UserRepository,
     private sessionRepo: SessionRepository,
     private refreshTokenRepo: RefreshTokenRepository,
     private securityLogRepo: SecurityLogRepository,
-    private jwtSecret: string,
-  ) {}
+    // jwtSecret kept for backward compatibility — JwtService reads from env internally
+    _jwtSecret?: string,
+  ) {
+    this.jwtService = new JwtService();
+  }
 
   public async execute(dto: RefreshTokenDto): Promise<Record<string, unknown>> {
     const tokenHash = crypto.createHash('sha256').update(dto.refreshToken).digest('hex');
@@ -28,7 +36,7 @@ export class RefreshTokenUseCase {
       throw new Error('Invalid refresh token');
     }
 
-    // Reuse Detection Security Check
+    // Reuse Detection Security Check — revoke entire family on stolen token replay
     if (existingToken.isUsed || existingToken.isRevoked) {
       await this.refreshTokenRepo.revokeFamily(existingToken.familyId);
       await this.sessionRepo.revokeById(existingToken.sessionId, existingToken.userId);
@@ -48,33 +56,41 @@ export class RefreshTokenUseCase {
       throw new Error('Refresh token security violation. All sessions have been revoked.');
     }
 
-    // Check expiration
+    // Check token expiration
     if (new Date() > new Date(existingToken.expiresAt)) {
       throw new Error('Refresh token expired');
     }
 
-    const user = await this.userRepo.findById(existingToken.userId);
-    if (!user || user.status === 'deactivated' || user.status === 'deleted') {
-      throw new Error('User inactive or deleted');
+    // Verify the parent session is still active (not manually revoked)
+    const session = await this.sessionRepo.findById(existingToken.sessionId);
+    if (!session || session.isRevoked) {
+      throw new Error('Session has been revoked. Please log in again.');
     }
 
-    // Mark current token as used
+    const user = await this.userRepo.findById(existingToken.userId);
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    if (BLOCKED_STATUSES.includes(user.status as (typeof BLOCKED_STATUSES)[number])) {
+      await this.refreshTokenRepo.revokeFamily(existingToken.familyId);
+      await this.sessionRepo.revokeById(existingToken.sessionId, existingToken.userId);
+      throw new Error(`Account access denied. Status: ${user.status}`);
+    }
+
+    // Mark current token as used (prevents replay)
     await this.refreshTokenRepo.markAsUsed(existingToken._id);
 
-    // Generate NEW Access & Refresh Token (Token Rotation)
-    const newAccessToken = jwt.sign(
-      { sub: user._id, role: user.role, email: user.email, phone: user.phone },
-      this.jwtSecret,
-      { expiresIn: '15m' },
-    );
+    // Issue new access + refresh tokens (token rotation)
+    const { accessToken: newAccessToken, refreshToken: newRefreshTokenRaw, accessTokenExpiresIn } =
+      this.jwtService.issueTokens(user._id, existingToken.sessionId, user.role, [user.role]);
 
-    const newRefreshTokenRaw = crypto.randomBytes(40).toString('hex');
     const newRefreshTokenHash = crypto
       .createHash('sha256')
       .update(newRefreshTokenRaw)
       .digest('hex');
 
-    // Create New Refresh Token under SAME Family ID
+    // Create new refresh token under the SAME family (rotation chain)
     await this.refreshTokenRepo.create({
       _id: crypto.randomUUID(),
       userId: user._id,
@@ -86,10 +102,9 @@ export class RefreshTokenUseCase {
       expiresAt: existingToken.expiresAt,
     });
 
-    // Touch Session
+    // Update session hash & lastActiveAt
     await this.sessionRepo.touchSession(existingToken.sessionId);
 
-    // Log Action
     await this.securityLogRepo.logAction({
       _id: crypto.randomUUID(),
       userId: user._id,
@@ -102,7 +117,7 @@ export class RefreshTokenUseCase {
       accessToken: newAccessToken,
       refreshToken: newRefreshTokenRaw,
       tokenType: 'Bearer',
-      expiresInSeconds: 15 * 60,
+      expiresInSeconds: accessTokenExpiresIn,
     };
   }
 }

@@ -1,6 +1,7 @@
 import { Server } from 'http';
 import { MongoConnectionManager } from '../database/mongo/connection-manager.js';
 import { RedisService } from '../infrastructure/redis/redis.service.js';
+import { MailService } from '../infrastructure/mail/mail.service.js';
 import { WinstonLogger } from '../core/logger/winston.logger.js';
 
 export const setupGracefulShutdown = (server: Server): void => {
@@ -14,6 +15,7 @@ export const setupGracefulShutdown = (server: Server): void => {
       try {
         await MongoConnectionManager.disconnect();
         await RedisService.getInstance().disconnect();
+        await MailService.getInstance().disconnect();
         logger.info('Graceful shutdown completed successfully.');
         process.exit(0);
       } catch (error) {

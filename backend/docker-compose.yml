@@ -91,6 +91,10 @@ services:
       FRONTEND_URL: http://localhost:3000
       API_URL: http://localhost:5000/api/v1
       LOG_LEVEL: debug
+      SMTP_HOST: mailpit
+      SMTP_PORT: 1025
+      SMTP_SECURE: "false"
+      MAIL_FROM: info@naseeji.com
     depends_on:
       mongodb:
         condition: service_healthy

@@ -1,15 +1,46 @@
 import bcrypt from 'bcrypt';
 import { IOtpProvider, SendOtpDto } from './otp-provider.interface.js';
-import { RedisService } from '../../../../infrastructure/redis/redis.service.js';
+import { OtpRepository } from '../repositories/otp.repository.js';
 import { WinstonLogger } from '../../../../core/logger/winston.logger.js';
 
+/**
+ * WhatsAppOtpProvider — dispatches OTP codes via WhatsApp (Meta Business API).
+ * In development/test environments it operates in mock mode: OTP is logged and returned.
+ * Resend cooldown and attempt limits are enforced via OtpRepository.
+ *
+ * Supported env vars:
+ *  - WHATSAPP_API_TOKEN       (new, preferred)
+ *  - META_WHATSAPP_TOKEN      (legacy alias)
+ *  - WHATSAPP_PHONE_NUMBER_ID (new, preferred)
+ *  - META_WHATSAPP_PHONE_ID   (legacy alias)
+ *  - WHATSAPP_API_URL         (default: https://graph.facebook.com/v19.0)
+ */
 export class WhatsAppOtpProvider implements IOtpProvider {
   private static instance: WhatsAppOtpProvider;
+  private readonly otpRepo: OtpRepository;
 
-  private constructor() {}
+  private constructor() {
+    this.otpRepo = new OtpRepository();
+  }
 
   private get logger(): WinstonLogger {
     return WinstonLogger.getInstance();
+  }
+
+  private get apiToken(): string | undefined {
+    return process.env.WHATSAPP_API_TOKEN || process.env.META_WHATSAPP_TOKEN;
+  }
+
+  private get phoneNumberId(): string | undefined {
+    return process.env.WHATSAPP_PHONE_NUMBER_ID || process.env.META_WHATSAPP_PHONE_ID;
+  }
+
+  private get apiBaseUrl(): string {
+    return process.env.WHATSAPP_API_URL || 'https://graph.facebook.com/v19.0';
+  }
+
+  private get isProduction(): boolean {
+    return process.env.NODE_ENV === 'production';
   }
 
   public static getInstance(): WhatsAppOtpProvider {
@@ -22,58 +53,57 @@ export class WhatsAppOtpProvider implements IOtpProvider {
   public async generateAndSendOtp(
     dto: SendOtpDto,
   ): Promise<{ success: boolean; message: string; debugOtp?: string }> {
-    const redisClient = RedisService.getInstance().getClient();
-    const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
-    const codeHash = await bcrypt.hash(otpCode, 10);
+    // OtpRepository.create() enforces cooldown internally — throws if active
+    const { code: otpCode } = await this.otpRepo.generateOtp(dto.phone, dto.type);
 
-    const redisKey = `otp:whatsapp:${dto.phone}:${dto.type}`;
+    this.logger.info(`📱 WhatsApp OTP triggered for ${dto.phone} (type: ${dto.type})`);
 
-    if (redisClient) {
-      const otpData = JSON.stringify({ codeHash, attempts: 0 });
-      await redisClient.set(redisKey, otpData, 'EX', 300);
-    }
-
-    this.logger.info(`📱 Sending WhatsApp OTP to ${dto.phone} for ${dto.type}...`);
-
-    if (process.env.META_WHATSAPP_TOKEN && process.env.META_WHATSAPP_PHONE_ID) {
+    // Dispatch via Meta API when credentials are configured
+    if (this.apiToken && this.phoneNumberId) {
       try {
-        await fetch(
-          `https://graph.facebook.com/v19.0/${process.env.META_WHATSAPP_PHONE_ID}/messages`,
-          {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${process.env.META_WHATSAPP_TOKEN}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              messaging_product: 'whatsapp',
-              to: dto.phone,
-              type: 'template',
-              template: {
-                name: 'naseeji_otp_verification',
-                language: { code: 'ar' },
-                components: [
-                  {
-                    type: 'body',
-                    parameters: [{ type: 'text', text: otpCode }],
-                  },
-                ],
-              },
-            }),
+        const response = await fetch(`${this.apiBaseUrl}/${this.phoneNumberId}/messages`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${this.apiToken}`,
+            'Content-Type': 'application/json',
           },
-        );
-        this.logger.info(`WhatsApp OTP message dispatched successfully to ${dto.phone}`);
+          body: JSON.stringify({
+            messaging_product: 'whatsapp',
+            to: dto.phone,
+            type: 'template',
+            template: {
+              name: 'naseeji_otp_verification',
+              language: { code: 'ar' },
+              components: [
+                {
+                  type: 'body',
+                  parameters: [{ type: 'text', text: otpCode }],
+                },
+              ],
+            },
+          }),
+        });
+
+        if (!response.ok) {
+          const errorBody = await response.text();
+          this.logger.error(`WhatsApp API error: ${response.status} — ${errorBody}`);
+        } else {
+          this.logger.info(`✅ WhatsApp OTP dispatched to ${dto.phone}`);
+        }
       } catch (err) {
-        this.logger.error(
-          `Failed to send WhatsApp message via Meta API: ${(err as Error).message}`,
-        );
+        this.logger.error(`WhatsApp API fetch failed: ${(err as Error).message}`);
       }
+    } else {
+      this.logger.warn(
+        `⚠️  WhatsApp API credentials not configured. Running in mock/dev mode.`,
+      );
     }
 
     return {
       success: true,
-      message: 'WhatsApp OTP code generated and sent successfully.',
-      debugOtp: process.env.NODE_ENV !== 'production' ? otpCode : undefined,
+      message: 'OTP code has been sent via WhatsApp.',
+      // Expose code only in non-production environments for easier development/testing
+      debugOtp: !this.isProduction ? otpCode : undefined,
     };
   }
 
@@ -82,32 +112,18 @@ export class WhatsAppOtpProvider implements IOtpProvider {
     type: 'phone_verification' | 'password_reset' | 'login_2fa',
     otpCode: string,
   ): Promise<boolean> {
-    const redisClient = RedisService.getInstance().getClient();
-    const redisKey = `otp:whatsapp:${phone}:${type}`;
-
-    if (!redisClient) {
-      return true;
+    const validOtp = await this.otpRepo.findValidOtp(phone, type);
+    if (!validOtp) {
+      throw new Error('WhatsApp OTP expired or not found. Please request a new code.');
     }
 
-    const rawData = await redisClient.get(redisKey);
-    if (!rawData) {
-      throw new Error('WhatsApp OTP expired or invalid.');
-    }
-
-    const parsed = JSON.parse(rawData) as { codeHash: string; attempts: number };
-    if (parsed.attempts >= 5) {
-      await redisClient.del(redisKey);
-      throw new Error('Maximum OTP retry attempts exceeded. Please request a new code.');
-    }
-
-    const isValid = await bcrypt.compare(otpCode, parsed.codeHash);
+    const isValid = await bcrypt.compare(otpCode, validOtp.codeHash);
     if (!isValid) {
-      parsed.attempts += 1;
-      await redisClient.set(redisKey, JSON.stringify(parsed), 'KEEPTTL');
+      await this.otpRepo.incrementAttempts(validOtp._id);
       throw new Error('Invalid OTP code.');
     }
 
-    await redisClient.del(redisKey);
+    await this.otpRepo.markAsUsed(validOtp._id);
     return true;
   }
 }

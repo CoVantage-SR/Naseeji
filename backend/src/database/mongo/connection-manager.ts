@@ -14,10 +14,15 @@ export class MongoConnectionManager {
     }
 
     const isTestEnv = process.env.NODE_ENV === 'test';
+    if (isTestEnv) {
+      logger.info('MongoDB connection skipped in test environment.');
+      return;
+    }
+
     const options: mongoose.ConnectOptions = {
       minPoolSize: config.minPoolSize,
       maxPoolSize: config.maxPoolSize,
-      serverSelectionTimeoutMS: isTestEnv ? 1000 : config.serverSelectionTimeoutMS,
+      serverSelectionTimeoutMS: config.serverSelectionTimeoutMS,
     };
 
     let targetUri = config.uri;
@@ -67,11 +72,10 @@ export class MongoConnectionManager {
 
   public static async disconnect(): Promise<void> {
     const logger = WinstonLogger.getInstance();
-    if (!this.isConnected) return;
     try {
       await mongoose.disconnect();
       this.isConnected = false;
-      logger.info('MongoDB Disconnected Gracefully.');
+      logger.info('MongoDB Disconnected.');
     } catch (error) {
       logger.error('Error during MongoDB disconnect:', { error: (error as Error).message });
     }

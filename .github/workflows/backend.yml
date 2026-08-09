@@ -34,6 +34,37 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
 
       - name: 3. Verify Docker Setup
         run: docker info
+
+      - name: 4. Install Dependencies
+        run: |
+          cd backend
+          npm ci
+
+      - name: 5. Run Linter
+        run: |
+          cd backend
+          npm run lint
+
+      - name: 6. Check Code Formatting
+        run: |
+          cd backend
+          npm run format:check
+
+      - name: 7. Compile TypeScript (Build Check)
+        run: |
+          cd backend
+          npm run build
+
+      - name: 8. Validate Docker Compose Configuration
+        run: |
+          cd backend
+          docker compose config
+
+      - name: 9. Run Test Suite
+        run: |
+          cd backend
+          npm test

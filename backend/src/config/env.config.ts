@@ -23,6 +23,8 @@ const envSchema = z.object({
   MINIO_BUCKET_NAME: z.string().default('naseeji-uploads'),
   JWT_SECRET: z.string().default('naseeji-enterprise-super-secret-jwt-key-2026'),
   JWT_REFRESH_SECRET: z.string().default('naseeji-enterprise-super-secret-refresh-key-2026'),
+  JWT_ACCESS_TTL: z.string().default('15m'),
+  JWT_REFRESH_TTL: z.string().default('30d'),
   FRONTEND_URL: z.string().default('http://localhost:3000'),
   API_URL: z.string().default('http://localhost:5000/api/v1'),
   LOG_LEVEL: z.string().default('info'),
@@ -30,6 +32,29 @@ const envSchema = z.object({
   CORS_ORIGIN: z.string().default('*'),
   RATE_LIMIT_WINDOW_MS: z.coerce.number().default(900000),
   RATE_LIMIT_MAX_REQUESTS: z.coerce.number().default(100),
+  SMTP_HOST: z.string().default('127.0.0.1'),
+  SMTP_PORT: z.coerce.number().default(1025),
+  SMTP_SECURE: z
+    .union([z.boolean(), z.string()])
+    .transform((val) => val === true || val === 'true')
+    .default(false),
+  SMTP_USER: z.string().optional(),
+  SMTP_PASS: z.string().optional(),
+  MAIL_FROM: z.string().default('noreply@naseeji.com'),
+  // OTP security configuration
+  OTP_TTL_SECONDS: z.coerce.number().default(300),
+  OTP_MAX_ATTEMPTS: z.coerce.number().default(5),
+  OTP_RESEND_COOLDOWN_SECONDS: z.coerce.number().default(60),
+  PASSWORD_HASH_ROUNDS: z.coerce.number().default(12),
+  // Google OAuth
+  GOOGLE_CLIENT_ID: z.string().optional(),
+  // WhatsApp Meta API
+  WHATSAPP_API_TOKEN: z.string().optional(),
+  WHATSAPP_PHONE_NUMBER_ID: z.string().optional(),
+  WHATSAPP_API_URL: z.string().default('https://graph.facebook.com/v19.0'),
+  // Legacy Meta env aliases (kept for backward compatibility)
+  META_WHATSAPP_TOKEN: z.string().optional(),
+  META_WHATSAPP_PHONE_ID: z.string().optional(),
 });
 
 export type EnvConfig = z.infer<typeof envSchema>;

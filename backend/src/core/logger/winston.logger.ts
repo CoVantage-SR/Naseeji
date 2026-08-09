@@ -45,27 +45,32 @@ export class WinstonLogger implements ILogger {
         level: config.level,
         format: consoleFormat,
       }),
-      new winston.transports.DailyRotateFile({
-        dirname: logDir,
-        filename: 'application-%DATE%.log',
-        datePattern: 'YYYY-MM-DD',
-        zippedArchive: true,
-        maxSize: '20m',
-        maxFiles: '14d',
-        level: config.level,
-        format: logFormat,
-      }),
-      new winston.transports.DailyRotateFile({
-        dirname: path.join(logDir, 'errors'),
-        filename: 'error-%DATE%.log',
-        datePattern: 'YYYY-MM-DD',
-        zippedArchive: true,
-        maxSize: '20m',
-        maxFiles: '30d',
-        level: 'error',
-        format: logFormat,
-      }),
     ];
+
+    if (process.env.NODE_ENV !== 'test' && process.env.NODE_ENV !== 'testing') {
+      transports.push(
+        new winston.transports.DailyRotateFile({
+          dirname: logDir,
+          filename: 'application-%DATE%.log',
+          datePattern: 'YYYY-MM-DD',
+          zippedArchive: true,
+          maxSize: '20m',
+          maxFiles: '14d',
+          level: config.level,
+          format: logFormat,
+        }),
+        new winston.transports.DailyRotateFile({
+          dirname: path.join(logDir, 'errors'),
+          filename: 'error-%DATE%.log',
+          datePattern: 'YYYY-MM-DD',
+          zippedArchive: true,
+          maxSize: '20m',
+          maxFiles: '30d',
+          level: 'error',
+          format: logFormat,
+        }),
+      );
+    }
 
     this.logger = winston.createLogger({
       level: config.level,

@@ -2,7 +2,14 @@ import { Schema, model } from 'mongoose';
 import { baseSchemaOptions } from '@database/mongo/base.schema.js';
 
 export type UserRoleType = 'factory' | 'supplier' | 'admin' | 'support' | 'auditor';
-export type UserStatusType = 'active' | 'pending' | 'deactivated' | 'deleted' | 'suspended';
+export type UserStatusType =
+  | 'active'
+  | 'pending'
+  | 'deactivated'
+  | 'deleted'
+  | 'suspended'
+  | 'blocked'
+  | 'rejected';
 
 export interface IUserDocument {
   _id: string;
@@ -35,7 +42,7 @@ const userSchema = new Schema<IUserDocument>(
     },
     status: {
       type: String,
-      enum: ['active', 'pending', 'deactivated', 'deleted', 'suspended'],
+      enum: ['active', 'pending', 'deactivated', 'deleted', 'suspended', 'blocked', 'rejected'],
       default: 'pending',
       index: true,
     },

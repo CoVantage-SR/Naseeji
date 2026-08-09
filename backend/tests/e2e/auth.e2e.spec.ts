@@ -1,6 +1,9 @@
 import request from 'supertest';
 import { createApplication } from '../../src/app/app.js';
 import { Express } from 'express';
+import { MongoConnectionManager } from '../../src/database/mongo/connection-manager.js';
+import { RedisService } from '../../src/infrastructure/redis/redis.service.js';
+import { MailService } from '../../src/infrastructure/mail/mail.service.js';
 
 describe('Auth & Identity End-to-End API Test Suite', () => {
   let app: Express;
@@ -9,6 +12,12 @@ describe('Auth & Identity End-to-End API Test Suite', () => {
     const bootstrap = await createApplication();
     app = bootstrap.app;
   }, 10000);
+
+  afterAll(async () => {
+    await MongoConnectionManager.disconnect();
+    await RedisService.getInstance().disconnect();
+    await MailService.getInstance().disconnect();
+  });
 
   describe('GET /api/v1/health', () => {
     it('should return system health status', async () => {

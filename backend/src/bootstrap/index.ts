@@ -8,6 +8,7 @@ import { AppConfig } from '../config/index.js';
 import { WinstonLogger } from '../core/logger/winston.logger.js';
 import { RedisService } from '../infrastructure/redis/redis.service.js';
 import { MinioService } from '../infrastructure/storage/minio.service.js';
+import { MailService } from '../infrastructure/mail/mail.service.js';
 
 export interface BootstrapResult {
   app: Express;
@@ -37,7 +38,10 @@ export class MasterBootstrapper {
     // 6. MinIO S3 Object Storage Initialization
     await MinioService.getInstance().initialize(config.minio);
 
-    // 7. Express Application Setup & Security
+    // 7. Mailpit SMTP Mail Server Connection Initialization
+    await MailService.getInstance().initialize(config.mail);
+
+    // 8. Express Application Setup & Security
     const app = bootstrapExpress(config);
     logger.info('Express Security & Routes Configured.');
 

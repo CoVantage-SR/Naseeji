@@ -1,6 +1,5 @@
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import { UserRepository } from '../../infrastructure/repositories/user.repository.js';
 import { FactoryRepository } from '../../infrastructure/repositories/factory.repository.js';
 import { SupplierRepository } from '../../infrastructure/repositories/supplier.repository.js';
@@ -8,6 +7,7 @@ import { WalletRepository } from '../../infrastructure/repositories/wallet.repos
 import { SessionRepository } from '../../infrastructure/repositories/session.repository.js';
 import { RefreshTokenRepository } from '../../infrastructure/repositories/refresh-token.repository.js';
 import { SecurityLogRepository } from '../../infrastructure/repositories/security-log.repository.js';
+import { JwtService } from '../../security/services/jwt.service.js';
 
 export interface LoginDto {
   identifier: string;
@@ -18,7 +18,12 @@ export interface LoginDto {
   deviceId?: string;
 }
 
+/** Statuses that block login entirely */
+const BLOCKED_STATUSES = ['deactivated', 'deleted', 'blocked', 'suspended', 'rejected'] as const;
+
 export class LoginUseCase {
+  private readonly jwtService: JwtService;
+
   constructor(
     private userRepo: UserRepository,
     private factoryRepo: FactoryRepository,
@@ -27,14 +32,21 @@ export class LoginUseCase {
     private sessionRepo: SessionRepository,
     private refreshTokenRepo: RefreshTokenRepository,
     private securityLogRepo: SecurityLogRepository,
-    private jwtSecret: string,
-  ) {}
+    // jwtSecret param kept for backward compatibility — JwtService reads from env internally
+    _jwtSecret?: string,
+  ) {
+    this.jwtService = new JwtService();
+  }
 
   public async execute(dto: LoginDto): Promise<Record<string, unknown>> {
     const isEmail = dto.identifier.includes('@');
+    const normalizedIdentifier = isEmail
+      ? dto.identifier.toLowerCase().trim()
+      : dto.identifier.replace(/\s+/g, '');
+
     const user = isEmail
-      ? await this.userRepo.findByEmail(dto.identifier)
-      : await this.userRepo.findByPhone(dto.identifier);
+      ? await this.userRepo.findByEmail(normalizedIdentifier)
+      : await this.userRepo.findByPhone(normalizedIdentifier);
 
     if (!user) {
       await this.securityLogRepo.logAction({
@@ -47,8 +59,17 @@ export class LoginUseCase {
       throw new Error('Invalid credentials');
     }
 
-    if (user.status === 'deactivated' || user.status === 'deleted') {
-      throw new Error('Account is deactivated or deleted');
+    // Block all non-active/non-pending statuses
+    if (BLOCKED_STATUSES.includes(user.status as (typeof BLOCKED_STATUSES)[number])) {
+      await this.securityLogRepo.logAction({
+        _id: crypto.randomUUID(),
+        userId: user._id,
+        action: 'login_failure',
+        ipAddress: dto.ipAddress,
+        userAgent: dto.userAgent,
+        metadata: { reason: `Account status: ${user.status}` },
+      });
+      throw new Error(`Account access denied. Status: ${user.status}`);
     }
 
     // Verify Password
@@ -65,25 +86,22 @@ export class LoginUseCase {
       throw new Error('Invalid credentials');
     }
 
-    // Generate JWT Access & Refresh Tokens
-    const accessTokenExpiryMinutes = 15;
-    const refreshTokenExpiryDays = dto.rememberMe ? 30 : 7;
-
-    const accessToken = jwt.sign(
-      { sub: user._id, role: user.role, email: user.email, phone: user.phone },
-      this.jwtSecret,
-      { expiresIn: `${accessTokenExpiryMinutes}m` },
-    );
-
-    const refreshTokenRaw = crypto.randomBytes(40).toString('hex');
-    const refreshTokenHash = crypto.createHash('sha256').update(refreshTokenRaw).digest('hex');
+    // Determine token TTL (rememberMe extends refresh to 30d, otherwise 7d)
+    const refreshDays = dto.rememberMe ? 30 : 7;
+    const expiresAt = new Date(Date.now() + refreshDays * 24 * 60 * 60 * 1000);
 
     const sessionId = crypto.randomUUID();
     const familyId = crypto.randomUUID();
     const deviceId = dto.deviceId || crypto.randomUUID();
 
-    const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + refreshTokenExpiryDays);
+    // Issue tokens via JwtService (access with JWT_SECRET, refresh with JWT_REFRESH_SECRET)
+    const { accessToken, refreshToken: refreshTokenRaw, accessTokenExpiresIn } =
+      this.jwtService.issueTokens(user._id, sessionId, user.role, [user.role]);
+
+    const refreshTokenHash = crypto
+      .createHash('sha256')
+      .update(refreshTokenRaw)
+      .digest('hex');
 
     // Save Session
     await this.sessionRepo.create({
@@ -98,7 +116,7 @@ export class LoginUseCase {
       lastActiveAt: new Date(),
     });
 
-    // Save Refresh Token
+    // Save Refresh Token (hashed)
     await this.refreshTokenRepo.create({
       _id: crypto.randomUUID(),
       userId: user._id,
@@ -135,7 +153,7 @@ export class LoginUseCase {
         accessToken,
         refreshToken: refreshTokenRaw,
         tokenType: 'Bearer',
-        expiresInSeconds: accessTokenExpiryMinutes * 60,
+        expiresInSeconds: accessTokenExpiresIn,
       },
       user: {
         id: user._id,
