@@ -31,6 +31,7 @@ import { GetStoreUseCase } from '../../application/usecases/get-store.usecase.js
 // Controllers
 import { SupplierController } from '../controllers/supplier.controller.js';
 import { StoreController } from '../controllers/store.controller.js';
+import { productController } from '../../catalog/presentation/routes/product.routes.js';
 
 const supplierRepo = new SupplierRepository();
 const verificationRepo = new VerificationRequestRepository();
@@ -115,6 +116,14 @@ router.patch(
   requireRoles('supplier', 'ADMIN', 'admin'),
   validateRequest(updateStoreSchema),
   storeController.updateSelfStore,
+);
+
+// Authenticated Supplier Product Management Route (/api/v1/suppliers/me/products)
+router.get(
+  '/me/products',
+  authenticateMiddleware,
+  requireRoles('supplier', 'ADMIN', 'admin'),
+  productController.listSelfSupplierProducts,
 );
 
 // Admin Supplier & Verification Management Routes

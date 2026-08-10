@@ -32,6 +32,26 @@ export const PERMISSIONS_CATALOG: PermissionDefinition[] = [
   { code: 'products.create', group: 'products', description: 'Create new product listings' },
   { code: 'products.update', group: 'products', description: 'Update product listings' },
   { code: 'products.delete', group: 'products', description: 'Delete product listings' },
+  { code: 'products.publish', group: 'products', description: 'Publish product listings' },
+  { code: 'products.approve', group: 'products', description: 'Approve or reject supplier product listings' },
+  { code: 'products.archive', group: 'products', description: 'Archive product listings' },
+
+  // Category permissions
+  { code: 'categories.read', group: 'categories', description: 'View product categories' },
+  { code: 'categories.create', group: 'categories', description: 'Create new product categories' },
+  { code: 'categories.update', group: 'categories', description: 'Update product categories' },
+  { code: 'categories.delete', group: 'categories', description: 'Delete product categories' },
+
+  // Brand permissions
+  { code: 'brands.read', group: 'brands', description: 'View brands catalog' },
+  { code: 'brands.create', group: 'brands', description: 'Create new brands' },
+  { code: 'brands.update', group: 'brands', description: 'Update brands' },
+  { code: 'brands.delete', group: 'brands', description: 'Delete brands' },
+
+  // Product Media permissions
+  { code: 'product_media.read', group: 'product_media', description: 'View product media' },
+  { code: 'product_media.create', group: 'product_media', description: 'Upload product media' },
+  { code: 'product_media.delete', group: 'product_media', description: 'Delete product media' },
 
   // Supplier permissions
   {
@@ -122,6 +142,9 @@ export const DEFAULT_ROLE_PERMISSIONS: Record<string, string[]> = {
     'factories.read',
     'factories.update',
     'products.read',
+    'categories.read',
+    'brands.read',
+    'product_media.read',
     'suppliers.read',
     'rfq.create',
     'rfq.read',
@@ -142,6 +165,9 @@ export const DEFAULT_ROLE_PERMISSIONS: Record<string, string[]> = {
     'factories.read',
     'factories.update',
     'products.read',
+    'categories.read',
+    'brands.read',
+    'product_media.read',
     'suppliers.read',
     'rfq.create',
     'rfq.read',
@@ -170,6 +196,12 @@ export const DEFAULT_ROLE_PERMISSIONS: Record<string, string[]> = {
     'products.create',
     'products.update',
     'products.delete',
+    'products.publish',
+    'categories.read',
+    'brands.read',
+    'product_media.read',
+    'product_media.create',
+    'product_media.delete',
     'factories.read',
     'rfq.read',
     'rfq.respond',
@@ -195,6 +227,12 @@ export const DEFAULT_ROLE_PERMISSIONS: Record<string, string[]> = {
     'products.create',
     'products.update',
     'products.delete',
+    'products.publish',
+    'categories.read',
+    'brands.read',
+    'product_media.read',
+    'product_media.create',
+    'product_media.delete',
     'factories.read',
     'rfq.read',
     'rfq.respond',
@@ -210,6 +248,9 @@ export const DEFAULT_ROLE_PERMISSIONS: Record<string, string[]> = {
 
   EMPLOYEE: [
     'products.read',
+    'categories.read',
+    'brands.read',
+    'product_media.read',
     'suppliers.read',
     'factories.read',
     'rfq.read',
@@ -219,6 +260,9 @@ export const DEFAULT_ROLE_PERMISSIONS: Record<string, string[]> = {
   ],
   employee: [
     'products.read',
+    'categories.read',
+    'brands.read',
+    'product_media.read',
     'suppliers.read',
     'factories.read',
     'rfq.read',
