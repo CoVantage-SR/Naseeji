@@ -11,6 +11,10 @@ import { StoreModel } from '../../modules/supplier/infrastructure/database/store
 import { WalletModel } from '../../modules/auth/infrastructure/database/wallet.schema.js';
 import { RoleModel } from '../../modules/auth/infrastructure/database/role.schema.js';
 import { PermissionModel } from '../../modules/auth/infrastructure/database/permission.schema.js';
+import { CategoryModel } from '../../modules/catalog/infrastructure/database/category.schema.js';
+import { BrandModel } from '../../modules/catalog/infrastructure/database/brand.schema.js';
+import { ProductModel } from '../../modules/catalog/infrastructure/database/product.schema.js';
+import { ProductMediaModel } from '../../modules/catalog/infrastructure/database/product-media.schema.js';
 import { PERMISSIONS_CATALOG, DEFAULT_ROLE_PERMISSIONS } from '../../config/permissions.config.js';
 
 dotenv.config({ path: path.resolve(process.cwd(), '.env') });
@@ -278,6 +282,214 @@ export const seedDatabase = async (): Promise<void> => {
     console.log('✅ Admin User Seeded (email: admin@naseeji.com / pass: Password@123)');
   } else {
     console.log('ℹ️ Admin User already exists.');
+  }
+
+  // 4. Seed Catalog Categories (Idempotent)
+  console.log('📦 Seeding Catalog Categories...');
+  const rootCategories = [
+    { name: 'Fabrics', slug: 'fabrics', description: 'Raw and finished textiles and fabrics', isFeatured: true, sortOrder: 1 },
+    { name: 'Yarn', slug: 'yarn', description: 'Natural and synthetic yarns', isFeatured: true, sortOrder: 2 },
+    { name: 'Accessories', slug: 'accessories', description: 'Zippers, buttons, threads, and trims', isFeatured: false, sortOrder: 3 },
+    { name: 'Packaging', slug: 'packaging', description: 'Textile packaging bags and materials', isFeatured: false, sortOrder: 4 },
+  ];
+
+  const categoryMap = new Map<string, string>();
+
+  for (const cat of rootCategories) {
+    let existing = await CategoryModel.findOne({ slug: cat.slug });
+    if (!existing) {
+      existing = await CategoryModel.create({
+        _id: crypto.randomUUID(),
+        name: cat.name,
+        slug: cat.slug,
+        description: cat.description,
+        level: 0,
+        status: 'active',
+        sortOrder: cat.sortOrder,
+        isFeatured: cat.isFeatured,
+        productCount: 0,
+      });
+    }
+    categoryMap.set(cat.slug, existing._id);
+  }
+
+  const fabricsId = categoryMap.get('fabrics');
+  if (fabricsId) {
+    const fabricSubcategories = [
+      { name: 'Cotton', slug: 'cotton', description: '100% Organic and Egyptian Cotton fabrics', parentId: fabricsId, level: 1 },
+      { name: 'Polyester', slug: 'polyester', description: 'Durable synthetic polyester blends', parentId: fabricsId, level: 1 },
+      { name: 'Denim', slug: 'denim', description: 'Heavyweight indigo denim fabrics', parentId: fabricsId, level: 1 },
+    ];
+
+    for (const sub of fabricSubcategories) {
+      let existingSub = await CategoryModel.findOne({ slug: sub.slug });
+      if (!existingSub) {
+        existingSub = await CategoryModel.create({
+          _id: crypto.randomUUID(),
+          name: sub.name,
+          slug: sub.slug,
+          description: sub.description,
+          parentId: sub.parentId,
+          level: sub.level,
+          status: 'active',
+          sortOrder: 1,
+          isFeatured: true,
+          productCount: 0,
+        });
+      }
+      categoryMap.set(sub.slug, existingSub._id);
+    }
+  }
+
+  console.log('✅ Seeded Root Categories & Subcategories.');
+
+  // 5. Seed Catalog Brands (Idempotent)
+  console.log('🏷️ Seeding Catalog Brands...');
+  const defaultBrands = [
+    { name: 'NASEEJI', slug: 'naseeji', description: 'Official NASEEJI Signature Line' },
+    { name: 'Egyptian Cotton', slug: 'egyptian-cotton', description: 'Certified Long-Staple Egyptian Cotton' },
+    { name: 'Nile Textile', slug: 'nile-textile', description: 'Industrial High-Grade Fabrics' },
+  ];
+
+  const brandMap = new Map<string, string>();
+
+  for (const b of defaultBrands) {
+    let existingBrand = await BrandModel.findOne({ slug: b.slug });
+    if (!existingBrand) {
+      existingBrand = await BrandModel.create({
+        _id: crypto.randomUUID(),
+        name: b.name,
+        slug: b.slug,
+        description: b.description,
+        status: 'active',
+      });
+    }
+    brandMap.set(b.slug, existingBrand._id);
+  }
+  console.log('✅ Seeded Catalog Brands.');
+
+  // 6. Seed Catalog Products (Idempotent)
+  if (supplierId) {
+    const store = await StoreModel.findOne({ supplierId });
+    if (store) {
+      console.log('🧵 Seeding Test Products for Supplier...');
+      const cottonCategoryId = categoryMap.get('cotton') || categoryMap.get('fabrics');
+      const brandId = brandMap.get('egyptian-cotton');
+
+      const sampleProducts = [
+        {
+          sku: 'EGY-COT-1001',
+          name: 'Premium 100% Egyptian Cotton Twill Fabric',
+          slug: 'premium-100-egyptian-cotton-twill-fabric',
+          shortDescription: 'Luxurious long-staple combed cotton twill for apparel.',
+          description: 'High thread count Egyptian cotton twill fabric suitable for shirts, trousers, and uniforms.',
+          productType: 'physical',
+          price: 150,
+          compareAtPrice: 180,
+          currency: 'EGP',
+          minimumOrderQuantity: 50,
+          stockQuantity: 5000,
+          unit: 'meter',
+          leadTimeDays: 3,
+          status: 'active',
+          visibility: 'public',
+          isFeatured: true,
+          isNegotiable: true,
+          allowRFQ: true,
+          originCountry: 'Egypt',
+          originCity: 'Alexandria',
+          specifications: [
+            { key: 'Material', value: '100% Long-Staple Cotton' },
+            { key: 'Weight', value: '220 GSM' },
+            { key: 'Width', value: '160 cm' },
+          ],
+          keywords: ['cotton', 'egyptian', 'twill', 'fabric', 'apparel'],
+        },
+        {
+          sku: 'DEN-RAW-2002',
+          name: 'Heavyweight Indigo Raw Denim Roll',
+          slug: 'heavyweight-indigo-raw-denim-roll',
+          shortDescription: '14oz rigid indigo selvedge raw denim.',
+          description: 'Durable 14oz indigo raw denim for jeans and jacket production.',
+          productType: 'physical',
+          price: 220,
+          currency: 'EGP',
+          minimumOrderQuantity: 100,
+          stockQuantity: 2500,
+          unit: 'meter',
+          leadTimeDays: 5,
+          status: 'active',
+          visibility: 'public',
+          isFeatured: true,
+          isNegotiable: true,
+          allowRFQ: true,
+          originCountry: 'Egypt',
+          originCity: 'Alexandria',
+          specifications: [
+            { key: 'Material', value: '98% Cotton, 2% Elastane' },
+            { key: 'Weight', value: '14 oz' },
+          ],
+          keywords: ['denim', 'indigo', 'raw', 'jeans'],
+        },
+      ];
+
+      for (const p of sampleProducts) {
+        let existingProd = await ProductModel.findOne({ sku: p.sku });
+        if (!existingProd) {
+          existingProd = await ProductModel.create({
+            _id: crypto.randomUUID(),
+            supplierId,
+            storeId: store._id,
+            categoryId: cottonCategoryId || '',
+            brandId: brandId || undefined,
+            sku: p.sku,
+            name: p.name,
+            slug: p.slug,
+            shortDescription: p.shortDescription,
+            description: p.description,
+            productType: p.productType as any,
+            price: p.price,
+            compareAtPrice: p.compareAtPrice,
+            currency: p.currency,
+            minimumOrderQuantity: p.minimumOrderQuantity,
+            stockQuantity: p.stockQuantity,
+            unit: p.unit,
+            leadTimeDays: p.leadTimeDays,
+            status: p.status as any,
+            visibility: p.visibility as any,
+            isFeatured: p.isFeatured,
+            isNegotiable: p.isNegotiable,
+            allowRFQ: p.allowRFQ,
+            rating: 4.8,
+            ratingCount: 12,
+            totalOrders: 45,
+            viewCount: 320,
+            originCountry: p.originCountry,
+            originCity: p.originCity,
+            specifications: p.specifications,
+            attributes: {},
+            keywords: p.keywords,
+            publishedAt: new Date(),
+          });
+
+          await ProductMediaModel.create({
+            _id: crypto.randomUUID(),
+            productId: existingProd._id,
+            type: 'image',
+            url: 'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2',
+            fileSize: 1024 * 500,
+            mimeType: 'image/jpeg',
+            sortOrder: 0,
+            isPrimary: true,
+          });
+
+          if (cottonCategoryId) {
+            await CategoryModel.findByIdAndUpdate(cottonCategoryId, { $inc: { productCount: 1 } });
+          }
+        }
+      }
+      console.log('✅ Seeded Sample Supplier Products & Media.');
+    }
   }
 
   console.log('🎉 Database Seeding Completed Successfully.');

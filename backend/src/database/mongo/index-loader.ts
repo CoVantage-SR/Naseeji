@@ -11,6 +11,10 @@ import { SecurityLogModel } from '../../modules/auth/infrastructure/database/sec
 import { VerificationRequestModel } from '../../modules/auth/infrastructure/database/verification-request.schema.js';
 import { RoleModel } from '../../modules/auth/infrastructure/database/role.schema.js';
 import { PermissionModel } from '../../modules/auth/infrastructure/database/permission.schema.js';
+import { CategoryModel } from '../../modules/catalog/infrastructure/database/category.schema.js';
+import { BrandModel } from '../../modules/catalog/infrastructure/database/brand.schema.js';
+import { ProductModel } from '../../modules/catalog/infrastructure/database/product.schema.js';
+import { ProductMediaModel } from '../../modules/catalog/infrastructure/database/product-media.schema.js';
 
 export class MongoIndexLoader {
   public static async loadIndexes(): Promise<void> {
@@ -35,6 +39,10 @@ export class MongoIndexLoader {
         VerificationRequestModel,
         RoleModel,
         PermissionModel,
+        CategoryModel,
+        BrandModel,
+        ProductModel,
+        ProductMediaModel,
       ];
 
       for (const model of models) {
