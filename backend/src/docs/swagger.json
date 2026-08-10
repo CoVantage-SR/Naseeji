@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "NASEEJI B2B Marketplace - User Management, RBAC & Authentication API",
+    "title": "NASEEJI B2B Marketplace - Supplier, Store & Enterprise API",
     "version": "1.0.0",
-    "description": "Production-ready Enterprise User Management, Role-Based Access Control (RBAC), Permission Matrix, Employee Management, Identity, Verification, Wallet, and Session Management API for NASEEJI Digital Textile Marketplace."
+    "description": "Production-ready Enterprise User Management, Role-Based Access Control (RBAC), Supplier & Store Domain, Identity, Verification, Wallet, and Marketplace APIs for NASEEJI Digital Textile Marketplace."
   },
   "servers": [
     {
@@ -57,160 +57,123 @@
           "address": { "type": "string", "example": "10 El-Tahrir Sq" }
         }
       },
-      "LoginRequest": {
+      "UpdateSupplierProfileRequest": {
         "type": "object",
-        "required": ["identifier", "password"],
         "properties": {
-          "identifier": { "type": "string", "example": "factory@textile.com" },
-          "password": { "type": "string", "example": "Pass@1234" },
-          "rememberMe": { "type": "boolean", "example": true }
+          "companyName": { "type": "string", "example": "Naseeji Master Textile Mills" },
+          "description": { "type": "string", "example": "Premier Egyptian Cotton Manufacturer" },
+          "supplierCategory": { "type": "string", "example": "fabric_manufacturer" },
+          "businessType": { "type": "string", "enum": ["manufacturer", "wholesaler", "distributor", "importer", "agent"], "example": "manufacturer" },
+          "phone": { "type": "string", "example": "+201000000002" },
+          "email": { "type": "string", "example": "supplier@naseeji.com" },
+          "governorate": { "type": "string", "example": "Alexandria" },
+          "city": { "type": "string", "example": "Alexandria" },
+          "address": { "type": "string", "example": "Textile Hub, Zone 2" },
+          "website": { "type": "string", "example": "https://naseejitextiles.com" }
         }
       },
-      "UpdateMeRequest": {
+      "SubmitVerificationRequest": {
         "type": "object",
+        "required": ["commercialRegistration", "taxNumber", "documents"],
         "properties": {
-          "phone": { "type": "string", "example": "+201000000001" },
-          "email": { "type": "string", "example": "updated@factory.com" },
-          "companyName": { "type": "string", "example": "Updated Textile Mill" },
-          "governorate": { "type": "string", "example": "Cairo" },
-          "city": { "type": "string", "example": "New Cairo" },
-          "address": { "type": "string", "example": "Industrial Zone 2" }
-        }
-      },
-      "CreateEmployeeRequest": {
-        "type": "object",
-        "required": ["fullName", "email", "phone"],
-        "properties": {
-          "fullName": { "type": "string", "example": "Ahmed Procurement Manager" },
-          "email": { "type": "string", "example": "ahmed.procurement@factory.com" },
-          "phone": { "type": "string", "example": "+201099887766" },
-          "password": { "type": "string", "example": "Employee@123" },
-          "position": { "type": "string", "example": "Procurement Manager" },
-          "role": { "type": "string", "example": "employee" },
-          "permissions": {
+          "commercialRegistration": { "type": "string", "example": "CR-500600700" },
+          "taxNumber": { "type": "string", "example": "TAX-400300200" },
+          "documents": {
             "type": "array",
-            "items": { "type": "string" },
-            "example": ["rfq.create", "rfq.read", "orders.read"]
-          }
-        }
-      },
-      "CreateRoleRequest": {
-        "type": "object",
-        "required": ["code", "name"],
-        "properties": {
-          "code": { "type": "string", "example": "PROCUREMENT_MANAGER" },
-          "name": { "type": "string", "example": "Procurement Manager" },
-          "description": { "type": "string", "example": "Manages RFQs and purchase orders" },
-          "permissionCodes": {
-            "type": "array",
-            "items": { "type": "string" },
-            "example": ["rfq.create", "rfq.read", "orders.create", "orders.read"]
-          }
-        }
-      },
-      "UpdateUserStatusRequest": {
-        "type": "object",
-        "required": ["status"],
-        "properties": {
-          "status": {
-            "type": "string",
-            "enum": ["active", "pending", "deactivated", "deleted", "suspended", "blocked", "rejected"],
-            "example": "suspended"
+            "items": {
+              "type": "object",
+              "properties": {
+                "documentType": { "type": "string", "example": "commercial_registration_pdf" },
+                "url": { "type": "string", "example": "https://cdn.naseeji.com/docs/cr.pdf" }
+              }
+            }
           },
-          "reason": { "type": "string", "example": "Violation of marketplace terms" }
+          "notes": { "type": "string", "example": "Updated tax card attached" }
+        }
+      },
+      "CreateStoreRequest": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string", "example": "Naseeji Master Textile Mills Official Store" },
+          "description": { "type": "string", "example": "Official Marketplace Store for Premium Egyptian Cotton Fabrics" },
+          "logo": { "type": "string", "example": "https://cdn.naseeji.com/stores/logo.png" },
+          "coverImage": { "type": "string", "example": "https://cdn.naseeji.com/stores/cover.jpg" },
+          "isPublic": { "type": "boolean", "example": true }
         }
       }
     }
   },
   "paths": {
-    "/users/me": {
+    "/suppliers": {
       "get": {
-        "summary": "Get current authenticated user profile, organization, wallet & permissions",
-        "tags": ["User Profile"],
-        "security": [{ "bearerAuth": [] }],
-        "responses": { "200": { "description": "User profile details" }, "401": { "description": "Unauthenticated" } }
-      },
-      "patch": {
-        "summary": "Update current authenticated user profile (whitelisted attributes only)",
-        "tags": ["User Profile"],
-        "security": [{ "bearerAuth": [] }],
-        "requestBody": {
-          "required": true,
-          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateMeRequest" } } }
-        },
-        "responses": { "200": { "description": "Profile updated successfully" }, "400": { "description": "Invalid input or restricted field modification attempt" } }
-      }
-    },
-    "/users": {
-      "get": {
-        "summary": "Admin list & search users with filtering and pagination",
-        "tags": ["Admin User Management"],
-        "security": [{ "bearerAuth": [] }],
+        "summary": "Public marketplace directory search and list active suppliers",
+        "tags": ["Supplier Domain"],
         "parameters": [
           { "name": "search", "in": "query", "schema": { "type": "string" } },
-          { "name": "role", "in": "query", "schema": { "type": "string" } },
-          { "name": "status", "in": "query", "schema": { "type": "string" } },
+          { "name": "category", "in": "query", "schema": { "type": "string" } },
+          { "name": "governorate", "in": "query", "schema": { "type": "string" } },
+          { "name": "city", "in": "query", "schema": { "type": "string" } },
           { "name": "page", "in": "query", "schema": { "type": "integer", "default": 1 } },
           { "name": "limit", "in": "query", "schema": { "type": "integer", "default": 20 } }
         ],
-        "responses": { "200": { "description": "Paginated user list" }, "403": { "description": "Forbidden" } }
+        "responses": { "200": { "description": "Paginated public supplier list" } }
       }
     },
-    "/users/{id}/status": {
+    "/suppliers/me": {
+      "get": {
+        "summary": "Get authenticated supplier self company profile",
+        "tags": ["Supplier Domain"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Private supplier profile" }, "401": { "description": "Unauthorized" } }
+      },
       "patch": {
-        "summary": "Admin transition user account status (active, suspended, blocked, etc.)",
-        "tags": ["Admin User Management"],
+        "summary": "Update authenticated supplier company profile (Whitelisted)",
+        "tags": ["Supplier Domain"],
         "security": [{ "bearerAuth": [] }],
-        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateUserStatusRequest" } } }
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/UpdateSupplierProfileRequest" } } }
         },
-        "responses": { "200": { "description": "Status updated successfully" }, "403": { "description": "Forbidden" } }
+        "responses": { "200": { "description": "Supplier profile updated" }, "400": { "description": "Validation error" } }
       }
     },
-    "/employees": {
-      "get": {
-        "summary": "List employees within current organization boundary",
-        "tags": ["Employee Management"],
-        "security": [{ "bearerAuth": [] }],
-        "responses": { "200": { "description": "Organization employees" } }
-      },
+    "/suppliers/me/verification": {
       "post": {
-        "summary": "Create new employee bound to organization context",
-        "tags": ["Employee Management"],
+        "summary": "Submit or resubmit business verification documents",
+        "tags": ["Supplier Verification"],
         "security": [{ "bearerAuth": [] }],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CreateEmployeeRequest" } } }
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/SubmitVerificationRequest" } } }
         },
-        "responses": { "201": { "description": "Employee created successfully" } }
+        "responses": { "201": { "description": "Verification submitted" } }
       }
     },
-    "/roles": {
-      "get": {
-        "summary": "List all system and custom RBAC roles",
-        "tags": ["Roles & Permissions"],
-        "security": [{ "bearerAuth": [] }],
-        "responses": { "200": { "description": "Role list" } }
-      },
+    "/suppliers/me/store": {
       "post": {
-        "summary": "Create custom RBAC role",
-        "tags": ["Roles & Permissions"],
+        "summary": "Create primary store for authenticated supplier",
+        "tags": ["Store Domain"],
         "security": [{ "bearerAuth": [] }],
         "requestBody": {
           "required": true,
-          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CreateRoleRequest" } } }
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CreateStoreRequest" } } }
         },
-        "responses": { "201": { "description": "Role created successfully" } }
+        "responses": { "201": { "description": "Store created successfully" } }
+      },
+      "get": {
+        "summary": "Get authenticated supplier store profile",
+        "tags": ["Store Domain"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": { "200": { "description": "Supplier store" } }
       }
     },
-    "/permissions": {
+    "/stores/{slug}": {
       "get": {
-        "summary": "List all standard system permissions",
-        "tags": ["Roles & Permissions"],
-        "security": [{ "bearerAuth": [] }],
-        "responses": { "200": { "description": "Permission list" } }
+        "summary": "Public marketplace store details by unique slug",
+        "tags": ["Store Domain"],
+        "parameters": [{ "name": "slug", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Public store representation" }, "404": { "description": "Store not found" } }
       }
     }
   }

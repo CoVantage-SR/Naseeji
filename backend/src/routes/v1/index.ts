@@ -8,6 +8,8 @@ import {
   roleApiRouter,
   permissionApiRouter,
 } from '../../modules/auth/authorization/presentation/routes/role-permission.routes.js';
+import { supplierRouter } from '../../modules/supplier/presentation/routes/supplier.routes.js';
+import { storeRouter } from '../../modules/supplier/presentation/routes/store.routes.js';
 
 const router = Router();
 
@@ -18,5 +20,7 @@ router.use('/users', userRouter);
 router.use('/employees', employeeRouter);
 router.use('/roles', roleApiRouter);
 router.use('/permissions', permissionApiRouter);
+router.use('/suppliers', supplierRouter);
+router.use('/stores', storeRouter);
 
 export const v1Router = router;

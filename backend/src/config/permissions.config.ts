@@ -45,6 +45,21 @@ export const PERMISSIONS_CATALOG: PermissionDefinition[] = [
     group: 'suppliers',
     description: 'Verify supplier business documents',
   },
+  {
+    code: 'suppliers.suspend',
+    group: 'suppliers',
+    description: 'Suspend or reactivate supplier marketplace access',
+  },
+
+  // Store permissions
+  { code: 'store.read', group: 'store', description: 'View store information and settings' },
+  { code: 'store.create', group: 'store', description: 'Create supplier marketplace store' },
+  { code: 'store.update', group: 'store', description: 'Update supplier marketplace store' },
+  {
+    code: 'store.delete',
+    group: 'store',
+    description: 'Delete or close supplier marketplace store',
+  },
 
   // Factory permissions
   {
@@ -147,6 +162,10 @@ export const DEFAULT_ROLE_PERMISSIONS: Record<string, string[]> = {
     'users.update',
     'suppliers.read',
     'suppliers.update',
+    'store.read',
+    'store.create',
+    'store.update',
+    'store.delete',
     'products.read',
     'products.create',
     'products.update',
@@ -168,6 +187,10 @@ export const DEFAULT_ROLE_PERMISSIONS: Record<string, string[]> = {
     'users.update',
     'suppliers.read',
     'suppliers.update',
+    'store.read',
+    'store.create',
+    'store.update',
+    'store.delete',
     'products.read',
     'products.create',
     'products.update',

@@ -7,6 +7,7 @@ import path from 'path';
 import { UserModel } from '../../modules/auth/infrastructure/database/user.schema.js';
 import { FactoryModel } from '../../modules/auth/infrastructure/database/factory.schema.js';
 import { SupplierModel } from '../../modules/auth/infrastructure/database/supplier.schema.js';
+import { StoreModel } from '../../modules/supplier/infrastructure/database/store.schema.js';
 import { WalletModel } from '../../modules/auth/infrastructure/database/wallet.schema.js';
 import { RoleModel } from '../../modules/auth/infrastructure/database/role.schema.js';
 import { PermissionModel } from '../../modules/auth/infrastructure/database/permission.schema.js';
@@ -123,7 +124,6 @@ export const seedDatabase = async (): Promise<void> => {
       });
       roleCount++;
     } else {
-      // Update system role permissions to stay in sync with config
       await RoleModel.updateOne(
         { _id: existing._id },
         {
@@ -180,8 +180,9 @@ export const seedDatabase = async (): Promise<void> => {
     console.log('ℹ️ Factory User already exists.');
   }
 
-  // 3b. Supplier User
+  // 3b. Verified Supplier User & Store
   let supplierUser = await UserModel.findOne({ email: 'supplier@naseeji.com' });
+  let supplierId: string;
   if (!supplierUser) {
     const supplierUserId = crypto.randomUUID();
     supplierUser = await UserModel.create({
@@ -195,19 +196,27 @@ export const seedDatabase = async (): Promise<void> => {
       isPhoneVerified: true,
     });
 
+    supplierId = crypto.randomUUID();
     await SupplierModel.create({
-      _id: crypto.randomUUID(),
+      _id: supplierId,
       userId: supplierUserId,
       companyName: 'Naseeji Master Textile Mills',
+      slug: 'naseeji-master-textile-mills',
+      description: 'Premier Egyptian B2B Cotton & Synthetic Fabric Manufacturer',
       supplierCategory: 'fabric_manufacturer',
+      businessType: 'manufacturer',
       phone: '+201000000002',
       email: 'supplier@naseeji.com',
       governorate: 'Alexandria',
+      city: 'Alexandria',
       address: 'Textile Hub, Zone 2, Alexandria',
       commercialRegistration: 'CR-500600700',
       taxNumber: `TAX-400300200`,
       verificationStatus: 'verified',
+      verificationLevel: 'verified',
+      isVerified: true,
       subscriptionStatus: 'active',
+      isActive: true,
     });
 
     await WalletModel.create({
@@ -218,9 +227,29 @@ export const seedDatabase = async (): Promise<void> => {
       currency: 'EGP',
     });
 
-    console.log('✅ Supplier User Seeded (email: supplier@naseeji.com / pass: Password@123)');
+    console.log(
+      '✅ Verified Supplier User Seeded (email: supplier@naseeji.com / pass: Password@123)',
+    );
   } else {
+    const existingSupplier = await SupplierModel.findOne({ userId: supplierUser._id });
+    supplierId = existingSupplier ? existingSupplier._id : '';
     console.log('ℹ️ Supplier User already exists.');
+  }
+
+  if (supplierId) {
+    const existingStore = await StoreModel.findOne({ supplierId });
+    if (!existingStore) {
+      await StoreModel.create({
+        _id: crypto.randomUUID(),
+        supplierId,
+        name: 'Naseeji Master Textile Mills Official Store',
+        slug: 'naseeji-master-textile-mills',
+        description: 'Official Marketplace Store for Premium Egyptian Cotton Fabrics',
+        status: 'active',
+        isPublic: true,
+      });
+      console.log('✅ Supplier Official Store Seeded (slug: naseeji-master-textile-mills)');
+    }
   }
 
   // 3c. Admin User

@@ -37,7 +37,7 @@ export class FactoryRepository {
 
   public async updateVerificationStatus(
     userId: string,
-    status: 'verified' | 'rejected' | 'pending',
+    status: 'verified' | 'rejected' | 'pending' | 'need_more_documents',
     notes?: string,
   ): Promise<IFactoryDocument | null> {
     if (mongoose.connection.readyState !== 1) return null;
